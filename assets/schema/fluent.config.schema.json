@@ -1,0 +1,334 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Rohithreddy7123/fluent-ui/blob/main/assets/schema/fluent.config.schema.json",
+  "title": "Fluent 2 UI preset configuration (fluent.config.json)",
+  "description": "User-authored design presets for building AND adopting Microsoft Fluent 2 (Fluent UI 2.0) UIs across Web (React v9 / Web Components), Power BI, and Power Platform. Every field maps to concrete Fluent 2 design tokens or component props. See research/config-design.md for the full field-to-token mapping and rationale.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "title": "Schema reference",
+      "description": "Path or URL to this JSON Schema so editors (VS Code) provide validation and IntelliSense."
+    },
+    "version": {
+      "type": "string",
+      "title": "Config version",
+      "description": "Version of the fluent.config schema this file targets. Lets tools evolve the format safely.",
+      "pattern": "^\\d+\\.\\d+$",
+      "default": "1.0"
+    },
+    "brand": { "$ref": "#/$defs/brand" },
+    "theme": { "$ref": "#/$defs/theme" },
+    "typography": { "$ref": "#/$defs/typography" },
+    "shape": { "$ref": "#/$defs/shape" },
+    "density": { "$ref": "#/$defs/density" },
+    "accessibility": { "$ref": "#/$defs/accessibility" },
+    "iconStyle": {
+      "type": "string",
+      "title": "Icon style",
+      "description": "Default @fluentui/react-icons variant. 'regular' for wayfinding and most UI; 'filled' for selected/emphasis states. Maps to the icon component name suffix (e.g. Home24Regular vs Home24Filled).",
+      "enum": ["regular", "filled"],
+      "default": "regular"
+    },
+    "targets": { "$ref": "#/$defs/targets" },
+    "migration": { "$ref": "#/$defs/migration" },
+    "content": { "$ref": "#/$defs/content" },
+    "preferences": {
+      "type": "object",
+      "title": "Freeform preferences",
+      "description": "Escape hatch for team-specific presets not covered by the schema. Not strictly validated; the only object where additional keys are allowed.",
+      "additionalProperties": true
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes",
+      "description": "Freeform prose describing design intent, brand voice, constraints, or reference links."
+    }
+  },
+  "$defs": {
+    "hexColor": {
+      "type": "string",
+      "description": "A 6-digit hex color, with or without a leading '#'.",
+      "pattern": "^#?[0-9a-fA-F]{6}$"
+    },
+    "cornerRadius": {
+      "type": "string",
+      "title": "Corner radius preset",
+      "description": "Maps to a Fluent 2 borderRadius token: sharp=borderRadiusNone (0px); small=borderRadiusSmall (2px); medium=borderRadiusMedium (4px, Fluent control default); large=borderRadiusLarge (6px); xlarge=borderRadiusXLarge (8px, Fluent card default); pill=borderRadiusCircular (9999px).",
+      "enum": ["sharp", "small", "medium", "large", "xlarge", "pill"]
+    },
+    "brand": {
+      "type": "object",
+      "title": "Brand",
+      "description": "Brand color inputs that drive the Fluent 2 BrandVariants ramp and createLightTheme / createDarkTheme.",
+      "additionalProperties": false,
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/hexColor",
+          "title": "Brand color",
+          "description": "Primary brand color (hex). Becomes BrandVariants slot 80 and seeds the 16-slot ramp (via fluent_generate_theme). Drives colorBrandBackground, colorBrandForeground1, colorCompoundBrandForeground1, colorBrandStroke1, and the rest of the colorBrand* tokens. Omit to use the Fluent default brand (#0f6cbd, i.e. webLightTheme).",
+          "default": "#0f6cbd"
+        },
+        "name": {
+          "type": "string",
+          "title": "Theme identifier",
+          "description": "Valid JS identifier used to name the exported theme variables (matches the fluent_generate_theme 'name' argument).",
+          "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$",
+          "default": "brand"
+        },
+        "ramp": {
+          "type": "object",
+          "title": "BrandVariants ramp override",
+          "description": "Optional explicit 16-slot BrandVariants ramp (keys 10..160). Overrides or patches the ramp generated from 'color'. Supply all 16 slots to fully replace it; a partial set patches individual slots. Feeds createLightTheme / createDarkTheme and the --colorBrandNN CSS variables.",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "10": { "$ref": "#/$defs/hexColor" },
+            "20": { "$ref": "#/$defs/hexColor" },
+            "30": { "$ref": "#/$defs/hexColor" },
+            "40": { "$ref": "#/$defs/hexColor" },
+            "50": { "$ref": "#/$defs/hexColor" },
+            "60": { "$ref": "#/$defs/hexColor" },
+            "70": { "$ref": "#/$defs/hexColor" },
+            "80": { "$ref": "#/$defs/hexColor" },
+            "90": { "$ref": "#/$defs/hexColor" },
+            "100": { "$ref": "#/$defs/hexColor" },
+            "110": { "$ref": "#/$defs/hexColor" },
+            "120": { "$ref": "#/$defs/hexColor" },
+            "130": { "$ref": "#/$defs/hexColor" },
+            "140": { "$ref": "#/$defs/hexColor" },
+            "150": { "$ref": "#/$defs/hexColor" },
+            "160": { "$ref": "#/$defs/hexColor" }
+          }
+        }
+      }
+    },
+    "theme": {
+      "type": "object",
+      "title": "Theme",
+      "description": "Color scheme and base theme selection. Resolves which set of Fluent 2 semantic color tokens is applied.",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "title": "Color mode",
+          "description": "light -> createLightTheme / webLightTheme; dark -> createDarkTheme / webDarkTheme; system -> follow the OS prefers-color-scheme. Selects the semanticLight vs semanticDark token values.",
+          "enum": ["light", "dark", "system"],
+          "default": "system"
+        },
+        "base": {
+          "type": "string",
+          "title": "Base theme family",
+          "description": "Fluent base theme. web -> webLightTheme / webDarkTheme; teams -> teamsLightTheme / teamsDarkTheme / teamsHighContrastTheme.",
+          "enum": ["web", "teams"],
+          "default": "web"
+        },
+        "highContrast": {
+          "type": "boolean",
+          "title": "Support high contrast",
+          "description": "When true, agents also wire up Windows High Contrast: teamsHighContrastTheme (the semanticHighContrast token values) and @media (forced-colors: active). Don't hardcode colors that would override it.",
+          "default": false
+        }
+      }
+    },
+    "typography": {
+      "type": "object",
+      "title": "Typography",
+      "description": "Font family and size inputs. Overrides the Fluent type ramp tokens.",
+      "additionalProperties": false,
+      "properties": {
+        "fontFamily": {
+          "type": "string",
+          "title": "Base font family",
+          "description": "Overrides the fontFamilyBase token; applied to every type-ramp style (caption/body/subtitle/title/display).",
+          "default": "'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif"
+        },
+        "monospaceFontFamily": {
+          "type": "string",
+          "title": "Monospace font family",
+          "description": "Overrides the fontFamilyMonospace token (code, numeric-tabular contexts).",
+          "default": "Consolas, 'Courier New', Courier, monospace"
+        },
+        "baseSize": {
+          "type": "integer",
+          "title": "Base font size (px)",
+          "description": "Body font size in px. Maps to fontSizeBase300 (Fluent default 14px) and anchors the fontSizeBase* ramp.",
+          "minimum": 10,
+          "maximum": 20,
+          "default": 14
+        },
+        "scale": {
+          "type": "number",
+          "title": "Type scale multiplier",
+          "description": "Advisory multiplier applied across the fontSizeBase*/fontSizeHero* ramp and matching lineHeight* tokens. NOTE: Fluent's ramp is a fixed, discrete set; a value other than 1 is applied app-side (Fluent has no native global type-scale multiplier).",
+          "minimum": 0.75,
+          "maximum": 1.5,
+          "default": 1
+        }
+      }
+    },
+    "shape": {
+      "type": "object",
+      "title": "Shape",
+      "description": "Corner-radius personality, mapped to Fluent borderRadius* tokens. Controls and cards can differ.",
+      "additionalProperties": false,
+      "properties": {
+        "cornerRadius": {
+          "allOf": [{ "$ref": "#/$defs/cornerRadius" }],
+          "title": "Global corner radius",
+          "description": "Overall roundness personality. Used as the control radius when 'control' is omitted, and as the basis for 'card' (one step rounder).",
+          "default": "medium"
+        },
+        "control": {
+          "allOf": [{ "$ref": "#/$defs/cornerRadius" }],
+          "title": "Control corner radius",
+          "description": "Corner radius for interactive controls (Button, Input, Menu, Dropdown). Fluent default medium=borderRadiusMedium (4px). Maps to the Fluent v9 Button 'shape' prop: sharp->square, pill->circular, otherwise rounded with the mapped borderRadius token.",
+          "default": "medium"
+        },
+        "card": {
+          "allOf": [{ "$ref": "#/$defs/cornerRadius" }],
+          "title": "Card corner radius",
+          "description": "Corner radius for cards and larger surfaces. Fluent default xlarge=borderRadiusXLarge (8px).",
+          "default": "xlarge"
+        }
+      }
+    },
+    "density": {
+      "type": "object",
+      "title": "Size / density",
+      "description": "Default control size and layout spacing rhythm.",
+      "additionalProperties": false,
+      "properties": {
+        "controlSize": {
+          "type": "string",
+          "title": "Default control size",
+          "description": "Default Fluent component 'size' prop (Button, Input, Dropdown, etc.). Approximate control heights: small=24px, medium=32px, large=40px.",
+          "enum": ["small", "medium", "large"],
+          "default": "medium"
+        },
+        "spacing": {
+          "type": "string",
+          "title": "Spacing rhythm",
+          "description": "Layout spacing density expressed with Fluent spacing tokens. compact ~ spacingVerticalS (8px) / spacingHorizontalSNudge (6px); comfortable ~ spacingVerticalM/spacingHorizontalM (12px); spacious ~ spacingVerticalL (16px) / spacingHorizontalXL (20px). NOTE: Fluent has no single global density prop; agents realize density by choosing the control 'size' plus these spacing tokens.",
+          "enum": ["compact", "comfortable", "spacious"],
+          "default": "comfortable"
+        }
+      }
+    },
+    "accessibility": {
+      "type": "object",
+      "title": "Accessibility",
+      "description": "Accessibility targets that agents enforce and that fluent-design-review / fluent_accessibility_checklist validate against.",
+      "additionalProperties": false,
+      "properties": {
+        "targetLevel": {
+          "type": "string",
+          "title": "WCAG conformance target",
+          "description": "WCAG 2.2 conformance target. Fluent 2 components meet or exceed AA out of the box.",
+          "enum": ["AA", "AAA"],
+          "default": "AA"
+        },
+        "minTargetSize": {
+          "type": "integer",
+          "title": "Minimum target size (px)",
+          "description": "Minimum pointer target size in CSS px. 24 = WCAG 2.5.8 Target Size (Minimum), Level AA; 44 = WCAG 2.5.5 Target Size (Enhanced), Level AAA. Drives the default control 'size' / minimum hit area.",
+          "enum": [24, 44],
+          "default": 24
+        },
+        "minContrast": {
+          "type": "number",
+          "title": "Minimum text contrast",
+          "description": "Minimum contrast ratio for normal text. WCAG 1.4.3 (AA) = 4.5:1; WCAG 1.4.6 (AAA) = 7:1. Checked against colorNeutralForeground* on colorNeutralBackground* and text on colorBrandBackground.",
+          "minimum": 1,
+          "maximum": 21,
+          "default": 4.5
+        },
+        "minContrastLargeText": {
+          "type": "number",
+          "title": "Minimum large-text contrast",
+          "description": "Minimum contrast for large text (>= 18.5px bold or >= 24px regular). WCAG AA = 3:1.",
+          "minimum": 1,
+          "maximum": 21,
+          "default": 3
+        },
+        "minContrastNonText": {
+          "type": "number",
+          "title": "Minimum non-text contrast",
+          "description": "Minimum contrast for icons, control borders, focus indicators, and state. WCAG 1.4.11 Non-text Contrast = 3:1.",
+          "minimum": 1,
+          "maximum": 21,
+          "default": 3
+        },
+        "reducedMotion": {
+          "type": "string",
+          "title": "Reduced motion policy",
+          "description": "respect = honor prefers-reduced-motion; reduce = always minimize animation; allow = never reduce. Maps to the Fluent duration* / curve* motion tokens (reduced -> near-zero durations / no non-essential motion).",
+          "enum": ["respect", "reduce", "allow"],
+          "default": "respect"
+        },
+        "forcedColors": {
+          "type": "string",
+          "title": "Forced colors policy",
+          "description": "respect = support Windows High Contrast via @media (forced-colors: active) and the semanticHighContrast token set; off = opt out (not recommended).",
+          "enum": ["respect", "off"],
+          "default": "respect"
+        }
+      }
+    },
+    "targets": {
+      "type": "array",
+      "title": "Build / adoption targets",
+      "description": "Which Fluent 2 surfaces to build or adopt for. Routes to MCP tools: web-react -> fluent_generate_code (react); web-components -> fluent_generate_code (webcomponents); powerbi -> fluent_generate_powerbi_theme / fluent_scaffold_pbip; powerapps/powerpages/pcf -> fluent_powerplatform_guidance.",
+      "items": {
+        "type": "string",
+        "enum": ["web-react", "web-components", "powerbi", "powerapps", "powerpages", "pcf"]
+      },
+      "uniqueItems": true,
+      "minItems": 1,
+      "default": ["web-react"]
+    },
+    "migration": {
+      "type": "object",
+      "title": "Migration",
+      "description": "Adoption context when introducing Fluent 2 into an existing app or report.",
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "type": "string",
+          "title": "Migrating from",
+          "description": "Existing design system. Maps to a fluent_migration_guidance scenario: fluent-v8 -> v8-to-v9; mui/bootstrap/antd/chakra -> from-design-system; css -> hardcoded-to-tokens; none -> greenfield (no migration).",
+          "enum": ["fluent-v8", "mui", "bootstrap", "antd", "chakra", "css", "none"],
+          "default": "none"
+        },
+        "strategy": {
+          "type": "string",
+          "title": "Adoption strategy",
+          "description": "incremental / side-by-side = add FluentProvider at a subtree boundary and migrate screen-by-screen; greenfield = a fresh Fluent 2 build.",
+          "enum": ["incremental", "side-by-side", "greenfield"],
+          "default": "incremental"
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "title": "Content design",
+      "description": "Copy conventions that shape generated labels, headings, and button text.",
+      "additionalProperties": false,
+      "properties": {
+        "capitalization": {
+          "type": "string",
+          "title": "Capitalization",
+          "description": "Label/heading/button casing. Fluent content design: sentence-case for Windows, Android, and web; title-case for iOS and macOS.",
+          "enum": ["sentence", "title"],
+          "default": "sentence"
+        },
+        "voice": {
+          "type": "string",
+          "title": "Voice & tone",
+          "description": "Freeform tone/voice notes for generated copy (e.g., 'friendly, concise, second person, present tense, active voice')."
+        }
+      }
+    }
+  }
+}

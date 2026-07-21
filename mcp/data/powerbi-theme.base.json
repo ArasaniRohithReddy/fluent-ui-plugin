@@ -1,0 +1,166 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.155.json",
+  "name": "Fluent 2",
+  "dataColors": [
+    "#0F6CBD",
+    "#107C10",
+    "#CA5010",
+    "#5C2E91",
+    "#038387",
+    "#A4262C",
+    "#C19C00",
+    "#8764B8",
+    "#B4009E",
+    "#005B70",
+    "#498205",
+    "#4F6BED"
+  ],
+  "good": "#107C10",
+  "neutral": "#C19C00",
+  "bad": "#C50F1F",
+  "maximum": "#0F6CBD",
+  "center": "#5C9FD6",
+  "minimum": "#CFE4F7",
+  "null": "#BDBDBD",
+  "firstLevelElements": "#242424",
+  "secondLevelElements": "#616161",
+  "thirdLevelElements": "#D1D1D1",
+  "fourthLevelElements": "#BDBDBD",
+  "background": "#FFFFFF",
+  "secondaryBackground": "#F0F0F0",
+  "tableAccent": "#0F6CBD",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 28,
+      "color": "#242424"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 14,
+      "color": "#242424"
+    },
+    "largeTitle": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 18,
+      "color": "#242424"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#242424"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#242424"
+    },
+    "largeLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 14,
+      "color": "#242424"
+    },
+    "smallLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#616161"
+    },
+    "lightLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#616161"
+    },
+    "boldLabel": {
+      "fontFace": "Segoe UI Bold",
+      "fontSize": 12,
+      "color": "#242424"
+    },
+    "semiboldLabel": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#242424"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#FFFFFF" } },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#D1D1D1" } },
+            "radius": 8
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false,
+            "color": { "solid": { "color": "#000000" } },
+            "position": "Outer",
+            "preset": "BottomRight"
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": true,
+            "foreground": { "solid": { "color": "#616161" } },
+            "background": { "solid": { "color": "#FFFFFF" } },
+            "border": { "solid": { "color": "#D1D1D1" } },
+            "transparency": 0
+          }
+        ],
+        "visualTooltip": [
+          {
+            "titleFontColor": { "solid": { "color": "#242424" } },
+            "valueFontColor": { "solid": { "color": "#616161" } },
+            "background": { "solid": { "color": "#FFFFFF" } }
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontColor": { "solid": { "color": "#242424" } },
+            "fontSize": 14,
+            "fontFamily": "Segoe UI Semibold",
+            "alignment": "left"
+          }
+        ],
+        "spacing": [
+          {
+            "customizeSpacing": true,
+            "verticalSpacing": 8
+          }
+        ],
+        "outspace": [
+          {
+            "color": { "solid": { "color": "#F5F5F5" } },
+            "transparency": 0
+          }
+        ],
+        "outspacePane": [
+          {
+            "backgroundColor": { "solid": { "color": "#FFFFFF" } },
+            "foregroundColor": { "solid": { "color": "#242424" } },
+            "borderColor": { "solid": { "color": "#D1D1D1" } },
+            "transparency": 0
+          }
+        ]
+      }
+    },
+    "textSlicer": {
+      "*": {
+        "inputText": [
+          {
+            "pillCornerRadius": 4
+          }
+        ]
+      }
+    }
+  }
+}

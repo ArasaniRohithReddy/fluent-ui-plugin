@@ -1,0 +1,108 @@
+{
+  "$comment": "Machine-readable catalog of Power BI report-theme visualStyles knobs used to apply Fluent 2 'visual defaults'. Serves as the documented reference for Fluent 2 visual defaults and a defensive fallback: the fluent_generate_powerbi_theme tool loads this and fills any of these knobs missing from the base theme (the shipped base already embeds them). JSON paths are relative to the theme root and use the shape visualStyles.<visualType>.<styleName>.<card>[<index>].<property>. Use '*' for visualType/styleName to target all visuals / the default style.",
+  "themeName": "Fluent 2",
+  "baseTheme": "CY24SU10",
+  "themeSchema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.155.json",
+  "sourceDocs": [
+    "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-visual-defaults",
+    "https://learn.microsoft.com/en-us/power-bi/create-reports/report-themes-create-custom",
+    "https://github.com/microsoft/powerbi-desktop-samples/tree/main/Report%20Theme%20JSON%20Schema"
+  ],
+  "fluentTokens": {
+    "brand": "#0F6CBD",
+    "neutralForeground1": "#242424",
+    "neutralForeground2": "#424242",
+    "neutralForeground3": "#616161",
+    "neutralStroke1": "#D1D1D1",
+    "neutralStroke2": "#BDBDBD",
+    "neutralBackground1": "#FFFFFF",
+    "neutralBackground2": "#FAFAFA",
+    "neutralBackground3": "#F5F5F5",
+    "canvasWallpaper": "#F0F0F0",
+    "cornerRadiusControl": 4,
+    "cornerRadiusCard": 8,
+    "spacingS": 8,
+    "fontFamily": "Segoe UI",
+    "fontFamilyStrong": "Segoe UI Semibold"
+  },
+  "valueEncodings": {
+    "color": "Structural fill object { \"solid\": { \"color\": \"#RRGGBB\" } }. 3, 6, or 8-digit hex allowed (last octet = alpha, since schema 2.115). Since 2.152 the color may also be a named structural color, e.g. { \"solid\": { \"color\": \"foreground\" } }, or a data color via { \"solid\": { \"color\": { \"expr\": { \"ThemeDataColor\": { \"ColorId\": 0, \"Percent\": 0 } } } } }.",
+    "boolean": "true or false (unquoted).",
+    "number": "Unquoted number. Pixels for size/radius/spacing, points for fontSize, 0-100 for transparency percentages.",
+    "enum": "Quoted string equal to a formatting-pane option (for example alignment: \"left\")."
+  },
+  "globalDefaults": {
+    "selector": "visualStyles.*.*",
+    "purpose": "Base 'visual defaults' applied to every visual type and every style preset. Values here must be scalar or a structural fill (enforced by the schema under visualStyles > * > *).",
+    "knobs": [
+      { "id": "visualBackgroundShow", "card": "background", "property": "show", "path": "visualStyles.*.*.background[0].show", "valueType": "boolean", "purpose": "Turn the visual container fill on.", "fluentValue": true },
+      { "id": "visualBackgroundColor", "card": "background", "property": "color", "path": "visualStyles.*.*.background[0].color", "valueType": "color", "purpose": "Visual container fill color (card surface).", "fluentValue": { "solid": { "color": "#FFFFFF" } } },
+      { "id": "visualBackgroundTransparency", "card": "background", "property": "transparency", "path": "visualStyles.*.*.background[0].transparency", "valueType": "number", "purpose": "Container fill transparency (%).", "fluentValue": 0 },
+      { "id": "cornerRadius", "card": "border", "property": "radius", "path": "visualStyles.*.*.border[0].radius", "valueType": "number", "purpose": "Rounded corners on visual containers (Fluent 2 card radius).", "fluentValue": 8 },
+      { "id": "borderShow", "card": "border", "property": "show", "path": "visualStyles.*.*.border[0].show", "valueType": "boolean", "purpose": "Show the subtle 1px neutral container border.", "fluentValue": true },
+      { "id": "borderColor", "card": "border", "property": "color", "path": "visualStyles.*.*.border[0].color", "valueType": "color", "purpose": "Container border color (Fluent Neutral Stroke 1).", "fluentValue": { "solid": { "color": "#D1D1D1" } } },
+      { "id": "dropShadowShow", "card": "dropShadow", "property": "show", "path": "visualStyles.*.*.dropShadow[0].show", "valueType": "boolean", "purpose": "Toggle a soft elevation shadow on containers. Off by default for a flat Fluent surface; set true for elevation.", "fluentValue": false },
+      { "id": "dropShadowPreset", "card": "dropShadow", "property": "preset", "path": "visualStyles.*.*.dropShadow[0].preset", "valueType": "enum", "purpose": "Shadow direction preset when the shadow is shown.", "fluentValue": "BottomRight" },
+      { "id": "visualHeaderShow", "card": "visualHeader", "property": "show", "path": "visualStyles.*.*.visualHeader[0].show", "valueType": "boolean", "purpose": "Show the modern (stylable) visual header.", "fluentValue": true },
+      { "id": "visualHeaderForeground", "card": "visualHeader", "property": "foreground", "path": "visualStyles.*.*.visualHeader[0].foreground", "valueType": "color", "purpose": "Header icon color.", "fluentValue": { "solid": { "color": "#616161" } } },
+      { "id": "visualHeaderBackground", "card": "visualHeader", "property": "background", "path": "visualStyles.*.*.visualHeader[0].background", "valueType": "color", "purpose": "Header background color.", "fluentValue": { "solid": { "color": "#FFFFFF" } } },
+      { "id": "visualHeaderBorder", "card": "visualHeader", "property": "border", "path": "visualStyles.*.*.visualHeader[0].border", "valueType": "color", "purpose": "Header border color.", "fluentValue": { "solid": { "color": "#D1D1D1" } } },
+      { "id": "tooltipTitleColor", "card": "visualTooltip", "property": "titleFontColor", "path": "visualStyles.*.*.visualTooltip[0].titleFontColor", "valueType": "color", "purpose": "Modern tooltip title text color.", "fluentValue": { "solid": { "color": "#242424" } } },
+      { "id": "tooltipValueColor", "card": "visualTooltip", "property": "valueFontColor", "path": "visualStyles.*.*.visualTooltip[0].valueFontColor", "valueType": "color", "purpose": "Modern tooltip value text color.", "fluentValue": { "solid": { "color": "#616161" } } },
+      { "id": "tooltipBackground", "card": "visualTooltip", "property": "background", "path": "visualStyles.*.*.visualTooltip[0].background", "valueType": "color", "purpose": "Modern tooltip background color.", "fluentValue": { "solid": { "color": "#FFFFFF" } } },
+      { "id": "titleFontFamily", "card": "title", "property": "fontFamily", "path": "visualStyles.*.*.title[0].fontFamily", "valueType": "enum", "purpose": "Visual title font family.", "fluentValue": "Segoe UI Semibold" },
+      { "id": "titleFontColor", "card": "title", "property": "fontColor", "path": "visualStyles.*.*.title[0].fontColor", "valueType": "color", "purpose": "Visual title color.", "fluentValue": { "solid": { "color": "#242424" } } },
+      { "id": "titleFontSize", "card": "title", "property": "fontSize", "path": "visualStyles.*.*.title[0].fontSize", "valueType": "number", "purpose": "Visual title size (pt).", "fluentValue": 14 },
+      { "id": "titleAlignment", "card": "title", "property": "alignment", "path": "visualStyles.*.*.title[0].alignment", "valueType": "enum", "purpose": "Visual title horizontal alignment.", "fluentValue": "left" },
+      { "id": "pageWallpaper", "card": "outspace", "property": "color", "path": "visualStyles.*.*.outspace[0].color", "valueType": "color", "purpose": "Report wallpaper / outspace behind the page (Fluent 2 uses light grey for contrast).", "fluentValue": { "solid": { "color": "#F5F5F5" } } },
+      { "id": "filterPaneBackground", "card": "outspacePane", "property": "backgroundColor", "path": "visualStyles.*.*.outspacePane[0].backgroundColor", "valueType": "color", "purpose": "Filter pane background color.", "fluentValue": { "solid": { "color": "#FFFFFF" } } },
+      { "id": "filterPaneForeground", "card": "outspacePane", "property": "foregroundColor", "path": "visualStyles.*.*.outspacePane[0].foregroundColor", "valueType": "color", "purpose": "Filter pane text/icon color.", "fluentValue": { "solid": { "color": "#242424" } } },
+      { "id": "spacingVertical", "card": "spacing", "property": "verticalSpacing", "path": "visualStyles.*.*.spacing[0].verticalSpacing", "valueType": "number", "purpose": "Internal vertical spacing/padding rhythm (Fluent spacing S).", "fluentValue": 8 }
+    ]
+  },
+  "perVisualExamples": [
+    {
+      "id": "slicerPillRadius",
+      "visualType": "textSlicer",
+      "selector": "visualStyles.textSlicer.*",
+      "card": "inputText",
+      "property": "pillCornerRadius",
+      "path": "visualStyles.textSlicer.*.inputText[0].pillCornerRadius",
+      "valueType": "number",
+      "purpose": "Rounded corner radius of the slicer input pill (Fluent control radius ~4px).",
+      "fluentValue": 4,
+      "verified": "documented in report-themes-create-custom (Find visual properties)"
+    },
+    {
+      "id": "scatterBubbleSize",
+      "visualType": "scatterChart",
+      "selector": "visualStyles.scatterChart.*",
+      "card": "bubbles",
+      "property": "bubbleSize",
+      "path": "visualStyles.scatterChart.*.bubbles[0].bubbleSize",
+      "valueType": "number",
+      "purpose": "Adjusts scatter/bubble marker size (example of a per-visual default).",
+      "fluentValue": -10,
+      "verified": "documented in report-themes-create-custom (Set properties for visual types)"
+    }
+  ],
+  "textClasses": [
+    { "class": "callout", "primary": true, "fontFace": "Segoe UI Semibold", "fontSize": 28, "color": "#242424", "maps": "Card data labels, KPI indicators (big numbers)" },
+    { "class": "title", "primary": true, "fontFace": "Segoe UI Semibold", "fontSize": 14, "color": "#242424", "maps": "Axis titles, multi-row card title, slicer header" },
+    { "class": "largeTitle", "primary": false, "fontFace": "Segoe UI Semibold", "fontSize": 18, "color": "#242424", "maps": "Visual titles" },
+    { "class": "header", "primary": true, "fontFace": "Segoe UI Semibold", "fontSize": 12, "color": "#242424", "maps": "Key influencers headers" },
+    { "class": "label", "primary": true, "fontFace": "Segoe UI", "fontSize": 12, "color": "#242424", "maps": "Table/matrix headers, rows, grid and values" },
+    { "class": "largeLabel", "primary": false, "fontFace": "Segoe UI", "fontSize": 14, "color": "#242424", "maps": "Multi-row card data labels" },
+    { "class": "smallLabel", "primary": false, "fontFace": "Segoe UI", "fontSize": 10, "color": "#616161", "maps": "Reference line labels, slicer date range/search" },
+    { "class": "lightLabel", "primary": false, "fontFace": "Segoe UI", "fontSize": 12, "color": "#616161", "maps": "Legend text, button text, category axis labels, slicer items" },
+    { "class": "boldLabel", "primary": false, "fontFace": "Segoe UI Bold", "fontSize": 12, "color": "#242424", "maps": "Matrix subtotals/grand totals, table totals" },
+    { "class": "semiboldLabel", "primary": false, "fontFace": "Segoe UI Semibold", "fontSize": 12, "color": "#242424", "maps": "Key influencers profile text" }
+  ],
+  "notes": [
+    "The base 'visual defaults' behavior (uniform fonts, titles on, increased padding, rounded corners, grey wallpaper) is provided by the Fluent 2 base theme in Power BI Desktop; a custom theme layers on top and overrides only the properties it declares.",
+    "In PBIR, the base theme is a SharedResources entry (StaticResources/SharedResources/BaseThemes/CY24SU10.json) and a custom theme is a RegisteredResources entry (StaticResources/RegisteredResources/<name>.json). Both are referenced from definition/report.json (themeCollection + resourcePackages).",
+    "Under visualStyles > * > *, only scalar or structural (fill) property values are allowed by the schema; nested expression objects are rejected there. Per-specific-visual entries (for example textSlicer) accept the full property schema for that visual.",
+    "Card and property names in the theme file do not always match the Formatting pane labels. Use the report theme JSON schema or the PBIR visual.json (the visual objects node) to discover the exact names.",
+    "The Fluent 2 base theme is in preview and can only be enabled in Power BI Desktop (File > Options > Preview features > 'Modern visual defaults and customize theme improvements')."
+  ]
+}

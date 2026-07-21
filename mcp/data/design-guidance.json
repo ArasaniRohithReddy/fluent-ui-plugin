@@ -1,0 +1,528 @@
+{
+  "$meta": {
+    "title": "Fluent 2 design-language reference",
+    "source": "Synthesized faithfully from the official Fluent 2 guide pages on https://fluent2.microsoft.design (see research/fluent-design.md; the handoffs, onboarding, and wait-ux topics are grounded in research/raw/{handoffs,onboarding,wait-ux}.html). Concrete values (type ramp, spacing scale, corner radii, shadow ramp, breakpoints, motion tokens) are quoted from the source pages; motion token values come from mcp/data/fluent-tokens.json.",
+    "docBase": "https://fluent2.microsoft.design"
+  },
+  "topics": {
+    "design-principles": {
+      "title": "Design principles",
+      "summary": "Fluent 2 is grounded in four principles. Each is framed by what makes it functional and what makes it emotional.",
+      "keyPoints": [
+        "Natural on every platform — experiences adapt to the device and build off the familiar; a layout that adapts to screen sizes and is platform-aware lets teams reuse native platform components ~80% of the time and focus energy on signature experiences. Emotional: intuitive and expected, creating reliability and trust.",
+        "Built for focus — inspire action and keep people in flow, simply and seamlessly; technology that communicates and performs stays out of the way. Emotional: less visual clutter keeps people centered, calm, and confident.",
+        "One for all, all for one — consider, learn from, and reflect a range of perspectives and abilities; including diverse abilities and perspectives early makes better solutions. Emotional: when you're included, you feel like you belong.",
+        "Unmistakably Microsoft — feel like one Microsoft, one product and moment at a time; signature experiences (color, sound, illustration, icons) increase brand recognition. Emotional: a little personality goes a long way."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/design-principles"
+    },
+    "color": {
+      "title": "Color",
+      "summary": "Color expresses style, evokes emotion, and communicates meaning. Fluent defines three palettes, each with a specific role, and delivers them through the design-token system so palette usage stays consistent.",
+      "palettes": {
+        "neutral": "The black, white, and grays that ground an interface — used on surfaces, text, and layout, and to connote state changes in components. Use lighter neutrals on surfaces to highlight primary focus and create hierarchy.",
+        "shared": "Colors aligned across the M365 suite, used in high-value, reusable components (avatars, calendars, badges) for quick mental recognition. Use them sparingly to accent and highlight. In dark mode they shift in saturation and brightness to reduce eye strain and meet accessibility needs.",
+        "semanticStatus": "A subset of shared colors that communicate feedback, status, or urgency, building on real-world associations: red = danger, yellow = caution, green = positive. Always pair them with text/graphics/other indicators — don't rely on color alone.",
+        "brand": "Key to immediate product recognition; M365 products are distinguishable by dedicated brand colors. Apply brand color to create visual prominence and anchor people (buttons/CTAs, selected states). Avoid overusing brand colors or using them on large surfaces — it dilutes hierarchy and makes navigation difficult."
+      },
+      "keyPoints": [
+        "Three palettes with distinct roles: Neutral (ground the UI), Shared (accent/recognition, use sparingly), Brand (product recognition, don't overuse).",
+        "Semantic/status colors: red = danger, yellow = caution, green = positive — always accompanied by non-color indicators.",
+        "Interaction states: components generally get darker as someone interacts — lightest rest -> darker hover -> darkest pressed/selected. For focus, the control color doesn't change; the container gets a thicker stroke to distinguish mouse vs. keyboard. Platform distinction: Windows reverses this — controls get lighter on interaction.",
+        "Accessibility: ensure contrast perceivable to low-vision / color-blind users; let people personalize their color scheme where possible; never use color as the only way to communicate.",
+        "Prefer alias/semantic tokens over raw hex so light/dark/high-contrast adapt automatically (see the design-tokens and color-tokens guidance)."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/color"
+    },
+    "typography": {
+      "title": "Typography",
+      "summary": "Clear typographic hierarchy organizes content and makes experiences easy to navigate. Segoe UI is Fluent's signature typeface; the system otherwise defaults to native platform fonts.",
+      "fontStacks": {
+        "primary": "Segoe UI — Fluent's primary, signature typeface (friendly, legible, unmistakably Microsoft), used across Windows OS, WinUI native apps, and web.",
+        "windows": "Segoe UI Variable",
+        "appleMacIos": "San Francisco Pro",
+        "android": "Roboto",
+        "weights": ["Regular", "Semibold", "Bold"]
+      },
+      "typeRamp": [
+        { "name": "Caption 2", "weight": "Regular", "size": "10px", "lineHeight": "14px" },
+        { "name": "Caption 2 Strong", "weight": "Semibold", "size": "10px", "lineHeight": "14px" },
+        { "name": "Caption 1", "weight": "Regular", "size": "12px", "lineHeight": "16px" },
+        { "name": "Caption 1 Strong", "weight": "Semibold", "size": "12px", "lineHeight": "16px" },
+        { "name": "Caption 1 Stronger", "weight": "Bold", "size": "12px", "lineHeight": "16px" },
+        { "name": "Body 1", "weight": "Regular", "size": "14px", "lineHeight": "20px" },
+        { "name": "Body 1 Strong", "weight": "Semibold", "size": "14px", "lineHeight": "20px" },
+        { "name": "Body 1 Stronger", "weight": "Bold", "size": "14px", "lineHeight": "20px" },
+        { "name": "Subtitle 2", "weight": "Semibold", "size": "16px", "lineHeight": "22px" },
+        { "name": "Subtitle 2 Stronger", "weight": "Bold", "size": "16px", "lineHeight": "22px" },
+        { "name": "Subtitle 1", "weight": "Semibold", "size": "20px", "lineHeight": "26px" },
+        { "name": "Title 3", "weight": "Semibold", "size": "24px", "lineHeight": "32px" },
+        { "name": "Title 2", "weight": "Semibold", "size": "28px", "lineHeight": "36px" },
+        { "name": "Title 1", "weight": "Semibold", "size": "32px", "lineHeight": "40px" },
+        { "name": "Large Title", "weight": "Semibold", "size": "40px", "lineHeight": "52px" },
+        { "name": "Display", "weight": "Semibold", "size": "68px", "lineHeight": "92px" }
+      ],
+      "styling": {
+        "casing": "Use sentence case; it fits most contexts. Don't use all caps to get attention — it's difficult to read.",
+        "alignment": "Fluent uses baseline alignment to distribute vertical space and create a consistent rhythm. Left-align for LTR, right-align for RTL (or short notes). Don't right-align long blocks in LTR. Center only small pieces of copy.",
+        "color": "A primary color gives text more prominence; a lighter neutral subdues it.",
+        "contrast": "Standard text needs >= 4.5:1 contrast; large text (above 18.5px Bold or 24px Regular) needs >= 3:1."
+      },
+      "keyPoints": [
+        "Segoe UI is the signature web typeface; per-platform native fonts are the default (Segoe UI Variable on Windows, San Francisco Pro on Apple, Roboto on Android).",
+        "Web type ramp spans Caption 2 (10px) to Display (68px) with Regular/Semibold/Bold weights; body default is Body 1 = 14px/20px.",
+        "Sentence case, no all caps; baseline alignment; left-align LTR, right-align RTL; center only short copy.",
+        "Contrast: standard text >= 4.5:1; large text (>18.5px Bold or >24px Regular) >= 3:1."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/typography"
+    },
+    "layout": {
+      "title": "Layout",
+      "summary": "Fluent's layout system uses space (not lines) to create relationships, highlight importance, and help people decide comfortably on any screen. Proximity implies relationship; empty space creates hierarchy and focus.",
+      "spacingRamp": {
+        "baseUnit": "4px (a 4x system)",
+        "units": "Web/React measures in px, iOS in points (PT), Android in density-independent pixels (DP). Values 2, 6, and 10 fall outside the 4px unit to account for extra padding in Fluent icons and align them to the 4px grid. Space is measured from an element's bounding box.",
+        "values": [
+          { "token": "sizeNone", "px": 0 },
+          { "token": "size20", "px": 2 },
+          { "token": "size40", "px": 4 },
+          { "token": "size60", "px": 6 },
+          { "token": "size80", "px": 8 },
+          { "token": "size100", "px": 10 },
+          { "token": "size120", "px": 12 },
+          { "token": "size160", "px": 16 },
+          { "token": "size200", "px": 20 },
+          { "token": "size240", "px": 24 },
+          { "token": "size280", "px": 28 },
+          { "token": "size320", "px": 32 },
+          { "token": "size360", "px": 36 },
+          { "token": "size400", "px": 40 },
+          { "token": "size480", "px": 48 },
+          { "token": "size520", "px": 52 },
+          { "token": "size560", "px": 56 }
+        ]
+      },
+      "touchTargets": "Minimum touch targets: iOS & Web 44 x 44, Android 48 x 48.",
+      "grid": "All grids are made of columns, gutters, and margins (plus regions — groupings of columns/rows/modules). A 12-column framework is common for its flexibility (halves, thirds, fourths, sixths). Gutter widths should be a multiple of the base unit and can change at breakpoints; margins can be fixed or percentage-based. Grid types: baseline, column (most common for web), manuscript (single column), and modular (columns x rows matrix).",
+      "breakpoints": [
+        { "sizeClass": "small", "range": "320-479", "breakpoint": "< 479 px" },
+        { "sizeClass": "medium", "range": "480-639", "breakpoint": "< 639 px" },
+        { "sizeClass": "large", "range": "640-1023", "breakpoint": "< 1023 px" },
+        { "sizeClass": "x-large", "range": "1024-1365", "breakpoint": "> 1024 px" },
+        { "sizeClass": "xx-large", "range": "1366-1919", "breakpoint": "> 1366 px" },
+        { "sizeClass": "xxx-large", "range": "1920 and up", "breakpoint": "> 1920 px" }
+      ],
+      "responsiveVsAdaptive": "Responsive uses one fluid layout with media queries that adapts to any size (build once). Adaptive swaps between multiple fixed layouts triggered at breakpoints (progressive enhancement).",
+      "responsiveTechniques": [
+        "Reposition — alter position of elements.",
+        "Resize — adjust size/margins.",
+        "Reflow — rearrange, e.g. one column to two.",
+        "Show/Hide — optimize content for the window.",
+        "Re-architect — fork or collapse elements (progressive disclosure for different window sizes)."
+      ],
+      "keyPoints": [
+        "Base unit is 4px; the spacing ramp runs sizeNone (0) to size560 (56); 2/6/10 sit off-grid to align Fluent icons.",
+        "Minimum touch targets: iOS & Web 44x44, Android 48x48.",
+        "Grids = columns + gutters + margins (+ regions); 12-column is the common web framework.",
+        "Six size classes from small (320) to xxx-large (1920+); choose responsive (one fluid layout) or adaptive (fixed layouts per breakpoint).",
+        "Five responsive techniques: reposition, resize, reflow, show/hide, re-architect."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/layout"
+    },
+    "elevation": {
+      "title": "Elevation",
+      "summary": "Elevation is the perceived distance between an object and the surface behind it, conveyed with shadow and light. Sharp/crisp shadows indicate closeness; larger/softer shadows indicate greater distance. Consistent shadow direction implies a single light source.",
+      "shadowSystem": "A set of equations generates consistent shadows for any value; the ramp references increasing blur to indicate size/distance (shadow2 = 2px blur, shadow64 = 64px blur). Fluent shadows combine a sharp directional key shadow (defines edges) with a soft diffused ambient shadow (implies distance). Platform distinction: Windows uses strokes instead of key shadows to outline objects.",
+      "shadowRamp": [
+        { "token": "shadow2", "elevation": "Low", "usage": "Cards without an edge; floating action buttons when pressed; ribbon, icons, hero buttons" },
+        { "token": "shadow4", "elevation": "Low", "usage": "Cards without an edge; cards, grid items, list items" },
+        { "token": "shadow8", "elevation": "Low", "usage": "Floating action buttons, raised cards, raised app bars; command bars, command dropdowns, tooltips" },
+        { "token": "shadow16", "elevation": "Low", "usage": "Cards without edge; callouts and hover cards" },
+        { "token": "shadow28", "elevation": "High", "usage": "Bottom sheet, side navigation, raised tab bars" },
+        { "token": "shadow64", "elevation": "High", "usage": "Panels and pop-up dialogs" }
+      ],
+      "shadowsOnColorSurfaces": {
+        "rule": "The same shadow value on brand colors may not read as the same elevation, so Fluent adjusts shadow opacity by surface luminosity. Use the brand shadow tokens for color surfaces. Don't use the main (neutral) shadow ramp on colored surfaces.",
+        "luminosity": "0.2126 * R + 0.7152 * G + 0.0722 * B",
+        "shadow1Opacity": "Round(42 - 0.116 * luminosity)",
+        "shadow2Opacity": "Round(34 - 0.09 * luminosity)"
+      },
+      "keyPoints": [
+        "Elevation is conveyed by shadow + light; blur encodes distance (shadow2 = 2px blur ... shadow64 = 64px blur).",
+        "Each shadow combines a sharp directional key shadow and a soft ambient shadow; Windows substitutes strokes for key shadows.",
+        "Ramp: shadow2/4/8/16 (low) through shadow28/64 (high); flyouts ~shadow16, dialogs/panels ~shadow64.",
+        "On colored surfaces use brand shadow tokens and adjust opacity by luminosity — never the neutral ramp."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/elevation"
+    },
+    "shapes": {
+      "title": "Shapes",
+      "summary": "Shapes make UI personable, easier to process, and recognizable. They're defined by three properties: form, corner radius, and stroke.",
+      "forms": [
+        "Rectangle — the basic shape for most components/containers (buttons, textareas, menus, cards, images).",
+        "Circle — avatars and components representing people.",
+        "Pill — paths like a slider track or toggle channel; tags, keywords, or a selection in a list.",
+        "Beak — a reference point for floating surfaces tied to one object (callouts, popovers)."
+      ],
+      "formEmphasis": "Forms are distinguished by fill (defines/emphasizes a shape) or border (identifies the bounding container on unfilled shapes like cards).",
+      "cornerRadius": {
+        "rule": "By default, rectangles use 4px corners. For shapes smaller than 32px, the radius reduces to 2px; large/extra-large components use 8px and 12px. Follow iOS/Android guidance for mobile. Skip rounded corners at the screen's edge and wherever they'd create awkward gaps.",
+        "scale": [
+          { "token": "None", "usage": "Navigation bars, tab bars", "value": "0 pixels" },
+          { "token": "Small", "usage": "Small badges", "value": "2 pixels" },
+          { "token": "Medium", "usage": "Buttons, dropdown", "value": "4 pixels" },
+          { "token": "Large", "usage": "Large buttons", "value": "8 pixels" },
+          { "token": "X-Large", "usage": "Button sheets, popovers", "value": "12 pixels" },
+          { "token": "Circle", "usage": "Personas", "value": "50%" }
+        ]
+      },
+      "strokeThickness": [
+        { "token": "Thin", "web": "1 pixel", "mobile": "1 pixel" },
+        { "token": "Thick", "web": "2 pixels", "mobile": "2 pixels" },
+        { "token": "Thicker", "web": "3 pixels", "mobile": "4 pixels" },
+        { "token": "Thickest", "web": "4 pixels", "mobile": "6 pixels" }
+      ],
+      "keyPoints": [
+        "Four forms: rectangle, circle, pill, beak — distinguished by fill or border.",
+        "Default corner radius 4px; <32px shapes drop to 2px; large/x-large use 8px/12px; personas 50%.",
+        "Skip rounded corners at screen edges and where they'd create awkward gaps.",
+        "Stroke thickness Thin/Thick/Thicker/Thickest; match thickness to element size; round stroke caps (avoid square caps); dash arrays scale with thickness."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/shapes"
+    },
+    "iconography": {
+      "title": "Iconography",
+      "summary": "Icons represent concepts, objects, or actions and carry semantic purpose — they should be recognizable, functional, and easily understood. Fluent icons are divided into three collections: system, product launch, and file icons.",
+      "collections": {
+        "systemIcons": "Fluent System Icons — used inside a UI for command bars, navigation, or status indicators. Open-source under the MIT License. Two themes: Regular (primarily a wayfinding device to identify/select actions) and Filled (highlights selected states, or smaller moments that need more weight/readability).",
+        "productLaunchIcons": "Represent Microsoft apps and the productivity they enable; can also enable actions (buy/download/launch). They draw a connection to the Microsoft brand but must never replace the Microsoft logo. Below 48px they simplify detail for readability — use specific sizes rather than scaling. Scale up by factors of four (48 -> 64 -> 96 -> 192) using the full-fidelity icon for pixel perfection.",
+        "fileTypeIcons": "Indicate specific files/formats. Multicolor file icons look best at 16, 48, and 96px. Available as SVG (versatile, resizable, not universally supported) and PNG/.webp (wider support, needs multiple sizes to stay crisp)."
+      },
+      "sizes": "Sizes vary by use case and platform. Smaller icons inform or reinforce an idea but shouldn't be used for interaction; 12px icons are for giving information (generally too small to interact with). Match icon size to the tool at hand; use larger icons on smaller screens where people need a larger touch target.",
+      "usage": {
+        "naming": "System icons are literal metaphors, named for the shape/object they represent, not the functionality (e.g., 'shield,' not 'security').",
+        "modifiers": "Add a modifier to express a more specific metaphor/action. Modifiers are always the Filled theme (for contrast) and placed in the bottom-right corner. Don't introduce too much visual/semantic complexity.",
+        "color": "Adding color can disrupt visual balance; if used, use one color and mind contrast. Only use solid colors on system icons; never change the color of product launch icons.",
+        "localization": "Understand cultural connotations; validate icon choices in the context where they'll be used."
+      },
+      "keyPoints": [
+        "Three collections: system icons (MIT-licensed, Regular + Filled themes), product launch icons, and file type icons.",
+        "System icons are named literally (shape/object, not function); modifiers are always Filled and sit bottom-right.",
+        "Sizes are use-case driven; 12px is informational only; product launch icons use fixed sizes and scale up by 4x (48->64->96->192).",
+        "Use at most one color on system icons and mind contrast; never recolor product launch icons or use them to replace the Microsoft logo."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/iconography"
+    },
+    "motion": {
+      "title": "Motion",
+      "summary": "Motion defines relationships and transitions so people recognize changes and move toward their goals, adding humanity and delight. Durations and easing are exposed as design tokens.",
+      "principles": [
+        "Functional — applied with purpose: identify the next step, inform of UI changes, celebrate accomplishments.",
+        "Natural — feels fluid and real by following physical laws (inertia, gravity, weight, velocity), making animation believable and predictable.",
+        "Consistent — unifies Microsoft experiences and strengthens the Unmistakably Microsoft principle.",
+        "Appealing — delightful animation draws people in and makes experiences memorable."
+      ],
+      "durationAndEasing": "Balance between too sluggish and too abrupt; make it feel natural and quick. Give larger elements more time than smaller ones; consider element size and distance traveled. Easing types: Linear (constant speed; can feel unnatural, use only where a consistent rate is needed such as rotations), Ease-in (starts slow, speeds up), Ease-out (starts fast, slows down), Ease-in-out (slow, fast in the middle, then slow before ending).",
+      "durationTokens": {
+        "durationUltraFast": "50ms",
+        "durationFaster": "100ms",
+        "durationFast": "150ms",
+        "durationNormal": "200ms",
+        "durationGentle": "250ms",
+        "durationSlow": "300ms",
+        "durationSlower": "400ms",
+        "durationUltraSlow": "500ms"
+      },
+      "curveTokens": {
+        "curveEasyEase": "cubic-bezier(0.33,0,0.67,1)",
+        "curveEasyEaseMax": "cubic-bezier(0.8,0,0.2,1)",
+        "curveLinear": "cubic-bezier(0,0,1,1)",
+        "curveAccelerateMin": "cubic-bezier(0.8,0,0.78,1)",
+        "curveAccelerateMid": "cubic-bezier(1,0,1,1)",
+        "curveAccelerateMax": "cubic-bezier(0.9,0.1,1,0.2)",
+        "curveDecelerateMin": "cubic-bezier(0.33,0,0.1,1)",
+        "curveDecelerateMid": "cubic-bezier(0,0,0,1)",
+        "curveDecelerateMax": "cubic-bezier(0.1,0.9,0.2,1)"
+      },
+      "transitions": [
+        "Enter and Exit — introduce/dismiss elements (from off-screen or within the screen); common for menus, dialogs.",
+        "Elevation — visually indicate changes in depth (button states, drag-and-drop, hierarchy).",
+        "Top level — navigate between pages/destinations using a quick fade (not sliding large elements) to avoid unintended hierarchy and disorientation.",
+        "Container transform — change a container's layout/position via resize/reposition (common in responsive design)."
+      ],
+      "choreography": {
+        "staggering": "Delay the start of one or more animations to soften large entries or shift gaze; use short offsets. Prefer staggered animation for most scenarios; use non-staggered only for very large groups where staggering takes too long.",
+        "hierarchy": "The order in which elements animate; give important elements more emphasis (more prominent movement, longer duration) and group less significant elements with synchronized timing."
+      },
+      "accessibleMotion": [
+        "Design and include a 'no motion' setting (per WCAG).",
+        "Keep durations short and movement natural.",
+        "Avoid flashes, jarring or sudden movements that could trigger a seizure.",
+        "Keep motion constrained to the element in focus.",
+        "Consider other ways to convey information carried by animation (e.g., ARIA live regions).",
+        "Groups affected by motion include people with vestibular disorders, low vision, screen-reader users, and those sensitive to visual stimuli."
+      ],
+      "keyPoints": [
+        "Four principles: functional, natural, consistent, appealing.",
+        "Duration tokens: durationUltraFast 50ms, durationFaster 100ms, durationFast 150ms, durationNormal 200ms, durationGentle 250ms, durationSlow 300ms, durationSlower 400ms, durationUltraSlow 500ms — give larger elements more time.",
+        "Curve tokens include curveEasyEase, curveLinear, and curveAccelerate*/curveDecelerate* (Min/Mid/Max).",
+        "Four transitions: enter/exit, elevation, top level (quick fade between pages), container transform.",
+        "Choreography: prefer short staggered offsets; animate by hierarchy. Accessible motion: honor a 'no motion' setting, keep it short, avoid flashes, and provide non-motion alternatives."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/motion"
+    },
+    "material": {
+      "title": "Material",
+      "summary": "Material describes the texture of a surface. Fluent supports four materials — solid, acrylic, mica, and smoke — spanning solid, occluding, and transparent types. Occluding materials (Acrylic, Mica) appear widely on Windows as base layers; transparent materials (Smoke) are used sparingly. Check technical limitations before choosing.",
+      "materials": {
+        "solid": "The most common, opaque material; uses color and varying elevation to highlight UI regions and interactions. Mode-aware (light and dark).",
+        "acrylic": "A semi-transparent material replicating frosted glass. Use for transient, light-dismiss surfaces such as popovers and menus. Mode-aware.",
+        "mica": "An opaque material subtly tinted with the desktop background color on an active window (neutral when inactive) — a built-in Windows indication of window focus. Mode-aware.",
+        "smoke": "Emphasizes an important surface by dimming the interface beneath it; signals blocking interactions below a modal (e.g., a dialog). Not mode-aware — always translucent black."
+      },
+      "keyPoints": [
+        "Four materials: solid, acrylic, mica, smoke.",
+        "Solid (opaque, mode-aware) is most common; acrylic (frosted glass, mode-aware) is for transient light-dismiss surfaces like popovers/menus.",
+        "Mica (opaque, tints with the desktop on active windows) indicates Windows window focus.",
+        "Smoke dims the UI beneath a modal to signal blocking interaction and is always translucent black (not mode-aware)."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/material"
+    },
+    "accessibility": {
+      "title": "Accessibility",
+      "summary": "Microsoft's mission — help everyone achieve more — means recognizing and remedying exclusion, solving for one and extending to many, and learning from diversity. Fluent's components meet or surpass WCAG 2.1 AA, and design tokens support light, dark, high-contrast, and branded theming with sufficient contrast out of the box.",
+      "areas": {
+        "structure": "Organize information logically and predictably. Use the type ramp, text formatting, color, dividers, and spacing to create groupings and levels. Create scannable headings and use heading elements in a logical order; don't mix up heading levels or overuse large headings.",
+        "keyboardAndAt": "Account for keyboard navigation and tools like screen readers/text-to-braille. Manage focus: focus should follow a 'Z' pattern (left->right, top->bottom) and not be 'lost' after a temporary UI (like a dialog) closes.",
+        "colorContrast": "Must pass WCAG AA: standard text >= 4.5:1; large text (above 18.5px Bold or 24px Regular) >= 3:1; interactive & non-textual components (e.g., icons) >= 3:1 against adjacent colors.",
+        "responsiveLayouts": "Content should reflow without horizontal scrolling at zoom up to 400% (design down to a 320px breakpoint) and support text zoom up to 200% without clipping.",
+        "richMedia": "Provide alternatives to rich media: descriptive alt text for visual media; customizable closed captions (or sufficient contrast if not customizable).",
+        "meaningfulText": "Use helpful, plain, concise, consistent, descriptive language so skimming is easy (also helps non-native speakers).",
+        "codeStandards": "Write logical, semantic code; follow WAI-ARIA authoring practices.",
+        "designSpecs": "Document focus order, screen-reader annotations, and semantic structure alongside padding and colors."
+      },
+      "keyPoints": [
+        "Fluent components meet or surpass WCAG 2.1 AA.",
+        "Contrast: standard text >= 4.5:1; large text (>18.5px Bold or >24px Regular) >= 3:1; interactive/non-textual elements (icons) >= 3:1.",
+        "Reflow without horizontal scroll at up to 400% zoom (design down to 320px) and support 200% text zoom without clipping.",
+        "Manage focus in a Z pattern; never lose focus after a temporary UI closes; use semantic code + WAI-ARIA practices.",
+        "Tokens ship light/dark/high-contrast/branded theming with sufficient contrast."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/accessibility"
+    },
+    "content-design": {
+      "title": "Content design",
+      "summary": "Content design is giving your audience the information they need, when they need it. Words are an essential design material — content is key. Start by answering: who is your audience, what do they want to accomplish, and how might they feel?",
+      "writingStyleTips": [
+        "Keep it simple — plain language, short sentences and fragments are easier to scan.",
+        "Get to the point fast — make choices and next steps obvious; prune every excess word.",
+        "Talk like a person — informal, conversational voice, one-to-one."
+      ],
+      "bestPractices": [
+        "Present tense — easier to understand; fits most contexts.",
+        "Active voice — almost always; keeps content direct and focused on people. Use passive only to avoid saying 'we'/'Microsoft' or when the action matters more than the actor.",
+        "Capitalize based on platform — sentence-case for Windows, Android, and web; title-case for iOS and macOS.",
+        "Write simply — simplify jargon for a broad audience.",
+        "Use headings to organize content (an outline for the reader).",
+        "Second person ('you/your') is best; avoid first person except when writing from the reader's point of view.",
+        "Punctuate carefully — question marks where needed; periods only after full sentences (avoid them in headers, buttons, labels, bullet lists); avoid exclamation points except for genuinely exciting/celebratory moments.",
+        "Accessible & global-ready — short, descriptive link text (avoid 'Click here'); provide alt text; organize with headings, tables, and lists.",
+        "Don't use directional terms ('above,' 'below,' 'right,' 'left') — they assume sight and don't localize well."
+      ],
+      "do": [
+        "Write in sentence case (Windows, Android, web).",
+        "Use present tense and active voice.",
+        "Get to the point fast and use second person ('you').",
+        "Use short, descriptive link text and provide alt text.",
+        "Use headings, tables, and lists to organize content."
+      ],
+      "dont": [
+        "Don't use all caps to get attention.",
+        "Don't add periods to headers, buttons, labels, or bullet lists.",
+        "Don't use exclamation points except for genuinely celebratory moments.",
+        "Don't use directional terms like 'above,' 'below,' 'left,' or 'right.'",
+        "Don't use vague link text like 'Click here.'"
+      ],
+      "keyPoints": [
+        "Design content around audience, goal, and feeling; keep it simple, get to the point, talk like a person.",
+        "Present tense, active voice, second person; sentence-case on Windows/Android/web and title-case on iOS/macOS.",
+        "Periods only after full sentences (not headers/buttons/labels/lists); avoid all caps, exclamation points, and directional terms.",
+        "Write accessible, global-ready copy: descriptive link text, alt text, and structure via headings/tables/lists."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/content-design"
+    },
+    "handoffs": {
+      "title": "Handoffs",
+      "summary": "A handoff is when a user moves from one part of their workflow to another. Handoffs keep important content and provide the right tools and support so users can pick up where they left off and finish their work confidently — within an app or between multiple apps.",
+      "principles": [
+        "Guide seamlessly — Copilot sets the stage for what comes next and clearly communicates when a task can or should be completed elsewhere, guiding users to their next logical step and taking the onus off them.",
+        "Maintain context — carry all important context between one step and the next and don't carry over things the user no longer needs; bookending messages clarify wayfinding so users can find their way back if needed.",
+        "Unify experiences — when handoffs work across endpoints, experiences feel intentional and unified; clear CTAs keep the user in control and let them initiate handoffs."
+      ],
+      "roleOfAI": [
+        "Understanding content — reads and parses content for structure, purpose, and key points to determine a logical next step.",
+        "Transforming content — reshapes/reformats content to fit the new app (e.g., outline to slides, data visualization to table).",
+        "Enhancing content — adjusts formatting, tone, summarizes, expands, or cleans up; can enhance with images and additional materials.",
+        "Guide users — decides the best app for content based on intent and walks the user through the handoff with suggestions, previews, and optional adjustments.",
+        "Learn user preferences — helps the user through handoffs with suggestions, optional adjustments, and previews."
+      ],
+      "userIntent": {
+        "strong": "Goal-oriented; the prompt clearly expresses a specific goal or action. Copilot can confidently suggest or trigger a relevant next step without further clarification.",
+        "semiFormed": "Exploring a concept with some structure in mind; the prompt hints at a possible goal but lacks clarity or specificity on the end state.",
+        "loose": "Just brainstorming with no format or end point in mind; Copilot should surface handy possibilities and communicate its feature capabilities."
+      },
+      "visualPatterns": [
+        "Chat responses — output presented in the chat interface to address the prompt (text, visual artifacts, or entities).",
+        "Artifacts — chat-created rich responses that can be edited and are interactive; stored only in chat.",
+        "Entities — representations of M365 files in chat.",
+        "Side-by-side — entities shown alongside chat with full, view-only, or limited editing capabilities.",
+        "Module inline — CTA elements embedded directly within AI hub pages to guide users to the next step."
+      ],
+      "contentPatterns": {
+        "systemMessages": "System messages are always written in third person, describing what Copilot did and where. The message is a full sentence ending with a period. Use a conversational voice and tone but keep it as brief as possible — one line is ideal.",
+        "commonCTAs": [
+          "Create... / Create in [app] / Create [file type] — when users want to build something new out of existing content (normally in a new app).",
+          "Open in... — when users want to access already existing content, not create or transform anything (little or no AI involvement).",
+          "Continue in [app] — when users want to continue working somewhere with deeper functionality (e.g., an outline drafted in Pages continued in Word).",
+          "Try in [app] — when users want to experiment or explore an output; best for loose intent and playful/experimental flows, works well with test data."
+        ],
+        "bookends": "When handing off from chat to other apps, use system-message pairs (bookends) shown in the initiating and destination apps to announce what Copilot did and where. Pattern: 'Copilot [past-tense verb] [an object] [in/from] [AppName].'"
+      },
+      "keyPoints": [
+        "Three principles: guide seamlessly, maintain context, unify experiences.",
+        "AI facilitates handoffs by understanding, transforming, enhancing, and guiding content, and by learning preferences.",
+        "Infer user intent: strong (confident next step), semi-formed (hints), loose (surface possibilities).",
+        "Common CTAs: Create..., Open in..., Continue in..., Try in... — each maps to a distinct intent.",
+        "System messages are third-person, one line, ending with a period; use bookend pairs following 'Copilot [verb] [object] [in/from] [AppName].'"
+      ],
+      "docUrl": "https://fluent2.microsoft.design/handoffs"
+    },
+    "onboarding": {
+      "title": "Onboarding",
+      "summary": "Onboarding experiences guide people through how to get started with a product or feature. Instead of a once-and-done event, offer information at different teaching points when people are ready — first use, when using a related feature, or after an update.",
+      "principles": [
+        "Relevant — present onboarding content within the context of a closely related task; the more related it is to what the user is doing, the more likely they'll attend to, understand, and retain it.",
+        "Non-distracting — avoid being a barrier to the user's primary goal.",
+        "Optional — allow people to exit and finish what they're doing, but give them a way to come back later.",
+        "Benefit-focused — tell people up front how they'll benefit so they're motivated to pay attention.",
+        "Coherent — use standard Fluent components so users know what to expect."
+      ],
+      "goals": {
+        "welcome": "Reassure people they're in the right place with a simple welcome screen, banner, or modal dialog. Show it once, focus on the benefit, and keep content short and scannable (one or two points).",
+        "orient": "Show helpful features in context after welcoming; use empty states or teaching popovers (especially in the brand color) to point directly to features.",
+        "notify": "When functionality is added or changed, tell users what they gain and how to adapt; use banners, empty states, teaching popovers, or toasts.",
+        "explain": "Never let the user feel stuck; put hints in the UI. Empty states are excellent for short explanatory messages, optionally with a sentence or two of description.",
+        "takeAction": "When users must complete preliminary steps, try a first-run experience (FRE), a setup wizard/carousel, or a multi-step flow in a drawer; show progress and remaining steps."
+      },
+      "content": [
+        "Write for action more than explanation — use active voice and strong verbs; CTA buttons should complete 'I want to ...'; break steps into digestible, progressive actions; avoid passive onboarding (long text without interaction).",
+        "Make help easy to find — embed just-in-time help (tooltips, 'Learn more' links, teaching popovers); use inclusive, nonjudgmental language ('Need help?' beats 'Stuck?').",
+        "Set reasonable expectations — be clear about what's involved and how long it takes (e.g., 'This takes 2-3 minutes,' 'We'll guide you through 3 quick steps'); avoid surprises unless they're delightful."
+      ],
+      "keyPoints": [
+        "Five principles: relevant, non-distracting, optional, benefit-focused, coherent.",
+        "Five goals: welcome, orient, notify, explain, take action — narrow down the primary goal to choose the right UX.",
+        "Match UX to goal: welcome screens/modals, teaching popovers/empty states, banners/toasts, and FREs/wizards for setup.",
+        "Write for action (active voice, CTAs that complete 'I want to...'), make help easy to find, and set clear time/step expectations."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/onboarding"
+    },
+    "wait-ux": {
+      "title": "Wait UX",
+      "summary": "Wait UX is the design of experiences during moments of delay — when a system is processing, loading, or retrieving data. A well-designed wait experience communicates clearly, maintains user context, and minimizes perceived delay, across both AI-first (Copilot) and traditional productivity scenarios.",
+      "principles": [
+        "Communicate clearly and honestly — users should always know what's happening and why; use descriptive labels ('Uploading photo ...', 'Loading dashboard ...'). Prefer determinate indicators that show actual progress; use indeterminate indicators only for short waits.",
+        "Optimize perceived performance — micro-interactions, shimmer effects, and skeleton screens shift attention away from wait time and reassure users; avoid blank screens or static loaders. For short waits under one second, don't show any animation.",
+        "Maintain context and limit simultaneous feedback — keep users in the same view unless navigation is necessary; tie feedback to the most relevant content/action and don't let multiple indicators compete for attention."
+      ],
+      "visualPatterns": {
+        "spinner": "Best for short, indeterminate waits (typically under three seconds); accompany with a short -ing verb label ending in an ellipsis ('Loading ...', 'Connecting ...'). Use a nonbreaking space before the ellipsis.",
+        "progressBar": "Ideal for longer waits where progress can be tracked; include a label above the bar and optionally a status message below ('Applying settings ...' then 'Estimated time: 1 minute'). If there are consequences for not waiting, include recovery instructions.",
+        "skeleton": "Useful for content rendering delays; in AI-first Copilot experiences, use the Copilot gradient shimmer to reinforce the theme and reassure users content is loading.",
+        "toast": "Appropriate for long back-end processes that affect current content; lets users monitor progress without staying in view. Include clear labels and status updates.",
+        "morseCode": "Used specifically in AI-forward Copilot scenarios; mimics human typing dots while balancing the responsible-AI principle of not anthropomorphizing AI.",
+        "pulsingDot": "A lighter-weight wait animation used in Chain of Thought."
+      },
+      "behavior": {
+        "timingThresholds": "Under one second: don't show an indicator (the flash can confuse users). One to three seconds: a spinner is appropriate. Over three seconds: switch to a progress bar or a content string to reassure users. In AI chat, response indicators should appear immediately to maintain conversational flow.",
+        "fallbackMessaging": "When progress details are unavailable, use generic but informative strings ('Working on it ...', 'Getting things ready ...') — especially useful in conversational AI where timing is unpredictable.",
+        "hardcodedVsGenerated": "In productivity apps (e.g., Outlook), hardcoded strings ensure consistency and clarity; in AI chat, dynamically generated strings allow personalized, context-aware feedback. Both should follow the same content principles."
+      },
+      "accessibility": "Use ARIA labels to announce state changes, such as role=\"status\", and format ellipses with a nonbreaking space so screen readers convey the current state accurately.",
+      "contentPatterns": {
+        "labeling": "Use -ing verbs for in-progress states and past tense for completed states ('Uploading file ...' vs. 'File uploaded'); avoid passive constructions like 'File is being uploaded.'",
+        "conciseness": "Keep messages short and direct — ideally one phrase or sentence fragment.",
+        "settingExpectations": "In non-AI scenarios include estimated times when possible ('About 30 seconds remaining'); in conversational AI it may matter more to indicate the process is still active than to estimate time."
+      },
+      "keyPoints": [
+        "Three principles: communicate clearly and honestly, optimize perceived performance, maintain context and limit simultaneous feedback.",
+        "Timing thresholds: <1s no indicator; 1-3s spinner; >3s progress bar or content string; AI chat indicators appear immediately.",
+        "Patterns: spinner, progress bar, skeleton (Copilot shimmer), toast, morse code, pulsing dot.",
+        "Content: -ing verbs for in-progress, past tense for done; short messages; nonbreaking space before ellipses; expose estimated times where possible.",
+        "Accessibility: announce state changes with ARIA (role=\"status\")."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/wait-ux"
+    },
+    "responsible-ai": {
+      "title": "Working with AI (Responsible AI)",
+      "summary": "Fluent 2's Responsible AI (RAI) guidance helps teams design AI experiences that are trustworthy, transparent, and user-centered — complementing Microsoft's Responsible AI Standard by focusing on UI mitigations that reduce the risk of AI harm. The meta-goal is to build appropriate trust: clearly communicate AI functionality and deliver value without overpromising.",
+      "principles": [
+        "Be transparent — communicate AI's presence, reasoning logic, and limitations via interactions, behaviors, visuals, and text.",
+        "Set appropriate expectations — clearly communicate capabilities and limitations to build accurate mental models.",
+        "Prevent overreliance on AI — support user judgment and reduce blind trust in AI-generated content.",
+        "Keep users in control — let users steer the AI and correct its behavior/actions when it errs.",
+        "Collect feedback on output — gather explicit and implicit (telemetry) feedback to identify RAI issues and improve."
+      ],
+      "uxStrategies": [
+        "Labeling & attribution — make AI presence and reasoning visible; let users verify sources and accuracy; clearly communicate where/how AI is used.",
+        "System & data scope — be specific about what data is and isn't used; explain recommendations; clarify what's saved to an agent's memory and how it's used.",
+        "Voice & tone — don't suggest the AI has emotions, consciousness, or social bonds; use first-person only when functional and factual; don't refer to agents as human-like or 'team members'; avoid sycophantic/false familiarity.",
+        "Scope & latency messaging — include an AI disclaimer on generated content; communicate limitations at first-run/entry points; use meaningful latency messaging that describes what the AI is doing (e.g., 'Gathering sources'), not anthropomorphized filler.",
+        "Output framing — always include the approved AI disclaimer; never present output as fully reliable without verification; differentiate AI vs. non-AI content; add friction points that encourage critical thinking.",
+        "Control, consent & settings — users can stop/change/edit/confirm/delete/revert inputs and outputs; give meaningful consent language; make RAI settings discoverable and understandable.",
+        "Agents — because agents have greater autonomy, always inform users when an agent is activated and communicate its triggers, access permissions, and action rights; let users approve/reject actions before they happen; use consistent naming/visual cues."
+      ],
+      "contentPatterns": "AI presence indicators at every entry point; required AI disclaimer on all AI-generated content; availability messaging that explains why a feature is unavailable; agent-memory clarity; actionable error messaging (name what failed, why, and offer two paths forward — language approved by content design); feedback prompts with categorization; neutral, descriptive feedback tooltips.",
+      "evaluationCriteria": {
+        "scoring": "Designs are scored 0-3 per criterion (N/A criteria are excluded and the percentage recalculated against the adjusted total).",
+        "rubric": [
+          { "grade": "A", "score": "90%+", "meaning": "Ready to ship" },
+          { "grade": "B", "score": "80-90%", "meaning": "Conditionally ready — all criteria must score >= 2; share an improvement plan for any 0s (require re-review)" },
+          { "grade": "C", "score": "75-80%", "meaning": "Needs improvement before shipping — all 0s resolved; 0s and 1s require re-assessment" },
+          { "grade": "Fail", "score": "Below 75%", "meaning": "Adjust and return for another RAI review" },
+          { "grade": "Fail", "score": "Two or more 0s", "meaning": "Bring all 0 scores to >= 2 and return for re-review" },
+          { "grade": "Automatic fail", "score": "Overreliance score of 0 or 1", "meaning": "Fails regardless of overall score" },
+          { "grade": "Automatic fail", "score": "Agent expectations score of 0 or 1", "meaning": "Failing to communicate agent activation/autonomy fails regardless of overall score" }
+        ]
+      },
+      "keyPoints": [
+        "Meta-goal: build appropriate trust — communicate AI functionality and deliver value without overpromising.",
+        "Five RAI principles: be transparent, set appropriate expectations, prevent overreliance, keep users in control, collect feedback.",
+        "UX strategies cover labeling/attribution, data scope, voice & tone (don't anthropomorphize), latency messaging, output framing, consent/settings, and agents.",
+        "Always include the approved AI disclaimer and differentiate AI vs. non-AI content; add verification friction.",
+        "RAI rubric scores 0-3 per criterion (A 90%+, B 80-90%, C 75-80%, Fail <75%); overreliance or agent-expectations scored 0/1 is an automatic fail."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/responsible-AI"
+    },
+    "ai-harm": {
+      "title": "Types of AI harm",
+      "summary": "AI systems can produce outputs or behaviors that harm users, organizations, or society — often unintentionally — but still erode trust. Understanding harm categories helps teams apply the right RAI principles and prioritize mitigations.",
+      "harms": [
+        { "type": "Inaccurate", "description": "Factually wrong, fabricated, or misleading output (hallucinated citations, wrong statistics, misleading summaries).", "mitigations": "Always show the approved disclaimer ('AI-generated content may be incorrect. Check for accuracy.'), surface sources, add verification friction." },
+        { "type": "Incomplete", "description": "Omits critical information, leaves tasks unfinished, or misses context needed for safe use.", "mitigations": "Scope tasks clearly, use progressive disclosure, communicate when a response is partial." },
+        { "type": "Biased", "description": "Reflects or amplifies unfair assumptions based on identity, group, or culture.", "mitigations": "Inclusive content review, diverse testing, feedback to flag bias." },
+        { "type": "Inappropriate or unsafe", "description": "Offensive, harmful, discriminatory, or content that could facilitate real-world harm.", "mitigations": "Feedback categorization to report unsafe content, clear escalation to safety review." },
+        { "type": "Non-transparent", "description": "Failure to disclose AI involvement, sources, limitations, or the implications of choices — foundational, because it undermines the ability to evaluate every other harm.", "mitigations": "Label AI content, surface sources inline, use the approved disclaimer, communicate scope at entry points." },
+        { "type": "Overreliance", "description": "Users accept output without critical review, often because the UX failed to encourage verification — a design-level harm.", "mitigations": "Surface accuracy caveats inline, provide source links, avoid patterns that make output feel authoritative, add review friction. A 0 or 1 on the Prevent overreliance principle is an automatic RAI fail." }
+      ],
+      "feedbackAndReporting": "Use specific harm categories (e.g., 'Output wasn't factual / Incomplete output / No sources provided / Unsafe or problematic content / Questionable sources / Other'), not vague prompts ('Give us your feedback'). Be explicit about what data is collected when feedback is submitted.",
+      "keyPoints": [
+        "Six harm types: inaccurate, incomplete, biased, inappropriate/unsafe, non-transparent, overreliance.",
+        "Non-transparent is foundational (blocks evaluation of other harms); overreliance is a design-level harm and an automatic RAI fail at 0-1.",
+        "Match mitigations to harm: disclaimers + sources + verification friction for inaccurate; clear escalation for unsafe; inclusive review for biased.",
+        "Collect feedback with specific harm categories, not vague prompts, and disclose what data is collected."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/ai-harm"
+    }
+  }
+}

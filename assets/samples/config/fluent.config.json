@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schema/fluent.config.schema.json",
+  "version": "1.0",
+  "brand": {
+    "color": "#5B2E91",
+    "name": "contoso"
+  },
+  "theme": {
+    "mode": "system",
+    "base": "web",
+    "highContrast": true
+  },
+  "typography": {
+    "fontFamily": "'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif",
+    "baseSize": 14,
+    "scale": 1
+  },
+  "shape": {
+    "cornerRadius": "medium",
+    "control": "medium",
+    "card": "xlarge"
+  },
+  "density": {
+    "controlSize": "medium",
+    "spacing": "comfortable"
+  },
+  "accessibility": {
+    "targetLevel": "AA",
+    "minTargetSize": 24,
+    "minContrast": 4.5,
+    "minContrastLargeText": 3,
+    "minContrastNonText": 3,
+    "reducedMotion": "respect",
+    "forcedColors": "respect"
+  },
+  "iconStyle": "regular",
+  "targets": ["web-react", "powerbi"],
+  "migration": {
+    "from": "mui",
+    "strategy": "incremental"
+  },
+  "content": {
+    "capitalization": "sentence",
+    "voice": "Friendly and concise. Second person, present tense, active voice."
+  },
+  "notes": "Contoso design presets. The purple brand color seeds a Fluent 2 BrandVariants ramp (slot 80) via fluent_generate_theme. We are adopting Fluent 2 incrementally inside an existing MUI app, starting with the web React app and the Power BI report theme; high contrast is required for our enterprise users."
+}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  HelloFluent — illustrative PCF *virtual* (React) code component using Fluent UI React v9.
+
+  Key Fluent-2 essentials shown here:
+    1. control-type="virtual"  -> React control (updateView returns a ReactElement; init has no div).
+    2. <platform-library> for React AND Fluent  -> shares the host's React + Fluent v9 instances,
+       so the component automatically picks up the app's Fluent 2 (modern) theme.
+
+  Scaffold an equivalent project with:
+    pac pcf init -n HelloFluent -ns SampleNamespace -t field -fw react -npm
+  (Power Platform CLI >= 1.37. This file is an illustration, not a full build.)
+
+  Docs:
+    - React controls & platform libraries: https://learn.microsoft.com/power-apps/developer/component-framework/react-controls-platform-libraries
+    - platform-library element:            https://learn.microsoft.com/power-apps/developer/component-framework/manifest-schema-reference/platform-library
+-->
+<manifest>
+  <control namespace="SampleNamespace"
+           constructor="HelloFluent"
+           version="0.0.1"
+           display-name-key="HelloFluent_Display"
+           description-key="HelloFluent_Desc"
+           control-type="virtual">
+
+    <!-- Bound text property: shown on the card/button and echoed back to the app. -->
+    <property name="label"
+              display-name-key="Label_Display"
+              description-key="Label_Desc"
+              of-type="SingleLine.Text"
+              usage="bound"
+              required="true" />
+
+    <!-- Bound number property: incremented on click to demonstrate getOutputs/notifyOutputChanged. -->
+    <property name="clickCount"
+              display-name-key="ClickCount_Display"
+              description-key="ClickCount_Desc"
+              of-type="Whole.None"
+              usage="bound"
+              required="false" />
+
+    <resources>
+      <code path="index.ts" order="1" />
+      <!--
+        Platform libraries: reuse the host's React + Fluent v9.
+        - Declared versions must fall in the supported range; the platform may load a higher
+          compatible version at runtime (e.g. Fluent 9.46.2 declared -> ~9.68.0 loaded).
+        - Remove the Fluent line if you don't use Fluent. Fluent 8 and Fluent 9 cannot both
+          be declared in the same manifest.
+      -->
+      <platform-library name="React" version="16.14.0" />
+      <platform-library name="Fluent" version="9.46.2" />
+    </resources>
+
+    <!-- Uncomment to opt into the model-driven "modern, refreshed look" feature usage.
+    <feature-usage>
+      <uses-feature name="Utility" required="true" />
+    </feature-usage>
+    -->
+  </control>
+</manifest>

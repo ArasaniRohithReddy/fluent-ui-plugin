@@ -1,0 +1,108 @@
+{
+  "$meta": {
+    "title": "Adopting / migrating to Fluent 2 (Fluent UI 2.0)",
+    "description": "Structured guidance for adopting Fluent 2 in an EXISTING app or report — Fluent UI v8 -> v9, from another design system, replacing hardcoded values with tokens, and per-surface adoption (Power BI, Power Apps, Power Pages).",
+    "source": "Microsoft Learn + react.fluentui.dev migration docs + verified npm packages (retrieved 2026-07).",
+    "packageVersionsSeen": {
+      "@fluentui/react-components": "9.74.3 (v9)",
+      "@fluentui/react": "8.125.7 (v8, legacy)",
+      "@fluentui/react-migration-v8-v9": "9.74.3-experimental.* (shims; experimental/preview channel — verify the latest tag on npm)"
+    }
+  },
+  "scenarios": {
+    "v8ToV9": {
+      "title": "Fluent UI React v8 (@fluentui/react) -> v9 (@fluentui/react-components)",
+      "summary": "v9 is the code implementation of Fluent 2. Migrate incrementally, running v8 and v9 side-by-side; prefer full v9 for new code and use shims only to avoid big-bang rewrites.",
+      "packages": [
+        { "name": "@fluentui/react-components", "purpose": "v9 (Fluent 2) components + tokens + theming." },
+        { "name": "@fluentui/react-migration-v8-v9", "purpose": "Shim components: expose a v8 props interface but render v9 underneath, for hybrid apps." },
+        { "name": "@fluentui/react-portal-compat", "purpose": "Makes v9 portaled surfaces (Dialog/Popover/Tooltip) themable when mounted inside a v8 tree (wrap with PortalCompatProvider)." }
+      ],
+      "strategy": [
+        "Add a FluentProvider (v9) at the app root (or a subtree boundary) alongside the existing v8 ThemeProvider.",
+        "Bridge the theme: derive a v9 BrandVariants/theme from your v8 palette (or use createV8Theme from @fluentui/react-migration-v8-v9 to run v8 components under a v9-derived theme).",
+        "Migrate screen-by-screen or component-by-component using the v8->v9 mapping. Replace v8 imports with v9; use shims only where a full rewrite is too costly.",
+        "Wrap the app (or v8 islands) in PortalCompatProvider so v9 overlays render themed.",
+        "Prefer full v9 components for new code; treat shims as temporary. Watch bundle size (shims pull in both v8 and v9)."
+      ],
+      "componentMapping": [
+        { "v8": "DefaultButton / PrimaryButton / IconButton / ActionButton", "v9": "Button (appearance='primary' for PrimaryButton; icon slot for IconButton)", "notes": "CompoundButton, ToggleButton, MenuButton, SplitButton also exist." },
+        { "v8": "TextField", "v9": "Input / Textarea wrapped in Field", "notes": "Field provides label + validation + aria wiring." },
+        { "v8": "Dropdown", "v9": "Dropdown or Combobox", "notes": "Combobox for free-text/filtering." },
+        { "v8": "Toggle", "v9": "Switch", "notes": "renamed." },
+        { "v8": "Checkbox / ChoiceGroup", "v9": "Checkbox / RadioGroup + Radio", "notes": "" },
+        { "v8": "Slider / SpinButton / Rating", "v9": "Slider / SpinButton / Rating", "notes": "" },
+        { "v8": "Dialog", "v9": "Dialog", "notes": "new composition (DialogSurface/DialogBody/DialogTitle/DialogActions)." },
+        { "v8": "Panel", "v9": "Drawer", "notes": "OverlayDrawer / InlineDrawer." },
+        { "v8": "Callout / Coachmark / TeachingBubble", "v9": "Popover / TeachingPopover", "notes": "" },
+        { "v8": "TooltipHost", "v9": "Tooltip", "notes": "relationship + positioning props." },
+        { "v8": "ContextualMenu", "v9": "Menu (Menu/MenuTrigger/MenuPopover/MenuList/MenuItem)", "notes": "" },
+        { "v8": "Persona / Facepile", "v9": "Persona / Avatar / AvatarGroup", "notes": "" },
+        { "v8": "DetailsList", "v9": "DataGrid or Table", "notes": "DataGrid for interactive; Table for static." },
+        { "v8": "Nav", "v9": "Nav", "notes": "" },
+        { "v8": "Pivot", "v9": "TabList + Tab", "notes": "" },
+        { "v8": "Breadcrumb", "v9": "Breadcrumb", "notes": "" },
+        { "v8": "MessageBar", "v9": "MessageBar", "notes": "new intent + composition." },
+        { "v8": "Spinner / ProgressIndicator / Shimmer", "v9": "Spinner / ProgressBar / Skeleton", "notes": "" },
+        { "v8": "Stack", "v9": "makeStyles flex (no Stack in v9)", "notes": "use display:flex + gap: tokens.spacing*; or a div with griffel styles." },
+        { "v8": "Text / Label / Link / Icon / Image", "v9": "Text/Title* / Label / Link / Icon (@fluentui/react-icons) / Image", "notes": "" }
+      ],
+      "theming": "Two bridges: (1) createV8Theme(brandVariants, v9Theme) from @fluentui/react-migration-v8-v9 renders v8 under a v9-derived theme; (2) generate a v9 brand theme from your existing brand color with the fluent_generate_theme MCP tool and wrap new v9 UI in FluentProvider.",
+      "steps": [
+        "Install @fluentui/react-components (+ @fluentui/react-migration-v8-v9 and @fluentui/react-portal-compat if going hybrid).",
+        "Add FluentProvider at the root; keep v8 ThemeProvider until fully migrated.",
+        "Bridge theme (createV8Theme or a generated v9 brand theme).",
+        "Migrate incrementally using the mapping; replace hardcoded styles with tokens (fluent_get_token).",
+        "Wrap v8 islands in PortalCompatProvider for themed v9 overlays.",
+        "Verify each migrated screen (fluent-design-review + fluent_accessibility_checklist); remove shims as you finish."
+      ],
+      "gotchas": [
+        "Shims increase bundle size (both v8 + v9 loaded) - use temporarily.",
+        "v9 has no Stack - replace with flex + spacing tokens.",
+        "Portaled v9 components lose theme without PortalCompatProvider inside a v8 tree.",
+        "Some v8 components have no 1:1 v9 (e.g., GroupedList) - re-compose with v9 primitives."
+      ],
+      "docs": [
+        "https://react.fluentui.dev (Concepts > Migration from v8; v8 component mapping)",
+        "https://www.npmjs.com/package/@fluentui/react-migration-v8-v9",
+        "https://github.com/microsoft/fluentui/wiki/Fluent-UI-React-v9-Release"
+      ]
+    },
+    "fromOtherDesignSystem": {
+      "title": "Adopt Fluent 2 in an app using another design system (MUI, Chakra, Ant Design, Bootstrap, plain CSS)",
+      "summary": "Introduce Fluent 2 incrementally at a boundary and migrate screen-by-screen; there is no automated converter, so map components + tokens deliberately.",
+      "approach": "Wrap a route/subtree in <FluentProvider theme={webLightTheme}> and build/replace that area with Fluent 2 components. Avoid mixing two design systems in the same component. Map your palette to a Fluent brand theme (fluent_generate_theme) and your spacing/typography/radius to Fluent tokens (fluent_get_token). Replace components using fluent_search_components / fluent_get_component.",
+      "steps": [
+        "Pick a screen/route to convert first (lowest risk, high visibility).",
+        "Add FluentProvider at that boundary; generate a brand theme from your primary color.",
+        "Replace that screen's components with Fluent 2 equivalents (search the catalog).",
+        "Swap hardcoded colors/spacing/radius for tokens.*; verify a11y.",
+        "Repeat screen-by-screen; keep the two systems isolated per subtree until done."
+      ],
+      "docs": ["https://react.fluentui.dev", "https://fluent2.microsoft.design"]
+    },
+    "hardcodedToTokens": {
+      "title": "Replace hardcoded colors/spacing/radius/shadows with Fluent 2 tokens",
+      "summary": "The highest-ROI adoption step in any codebase: map magic values to Fluent design tokens so light/dark/high-contrast and theming just work.",
+      "steps": [
+        "Inventory hardcoded values (hex, px paddings/margins, radii, box-shadows, font sizes).",
+        "For each, find the nearest Fluent token with fluent_get_token / fluent_list_tokens.",
+        "Replace with tokens.* (Griffel) or var(--tokenName); wrap in FluentProvider so they resolve.",
+        "Re-check contrast + high contrast; run fluent-design-review."
+      ],
+      "examples": [
+        { "from": "color:#242424", "to": "tokens.colorNeutralForeground1" },
+        { "from": "padding:12px", "to": "tokens.spacingHorizontalM" },
+        { "from": "border-radius:4px", "to": "tokens.borderRadiusMedium" },
+        { "from": "box-shadow: 0 4px 8px rgba(0,0,0,.14)", "to": "tokens.shadow8" }
+      ],
+      "docs": ["https://fluent2.microsoft.design/design-tokens"]
+    },
+    "perSurface": {
+      "powerbi": "Apply a Fluent 2 theme to an EXISTING report: generate with fluent_generate_powerbi_theme, then Power BI Desktop > View > Themes > Browse for themes. Visual defaults restyle all existing visuals; no rebuild needed.",
+      "powerapps": "In an EXISTING canvas app: Settings > Updates > New > enable 'Modern controls and themes', set App.Theme from your brand, then replace classic controls with modern equivalents screen-by-screen (see fluent-powerapps).",
+      "powerpages": "On an EXISTING site: add a custom CSS file that declares Fluent 2 tokens as :root variables and maps Bootstrap selectors onto them (see fluent-powerpages) - no rebuild required.",
+      "pcf": "Rebuild a legacy virtual control with a current CLI to pick up Fluent v9 platform libraries + context.fluentDesignLanguage theming (see fluent-pcf-component)."
+    }
+  }
+}

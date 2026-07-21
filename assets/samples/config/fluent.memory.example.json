@@ -1,0 +1,46 @@
+{
+  "version": "1.0",
+  "updatedAt": "2026-07-21T06:42:00.000Z",
+  "source": "Agent-maintained. Reads fluent.config.json + built-in defaults, records resolved effective presets and clarifications so they are not re-asked. See research/config-design.md.",
+  "preferences": {
+    "brand": { "color": "#5B2E91", "name": "contoso" },
+    "theme": { "mode": "system", "base": "web", "highContrast": true },
+    "typography": { "fontFamily": "'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif", "baseSize": 14, "scale": 1 },
+    "shape": { "cornerRadius": "medium", "control": "medium", "card": "xlarge" },
+    "density": { "controlSize": "medium", "spacing": "comfortable" },
+    "accessibility": { "targetLevel": "AA", "minTargetSize": 24, "minContrast": 4.5, "minContrastNonText": 3, "reducedMotion": "respect", "forcedColors": "respect" },
+    "iconStyle": "regular",
+    "targets": ["web-react", "powerbi"],
+    "migration": { "from": "mui", "strategy": "incremental" },
+    "content": { "capitalization": "sentence" }
+  },
+  "decisions": [
+    {
+      "id": "brand-ramp-source",
+      "question": "Confirm the brand color and how to build the Fluent BrandVariants ramp: generate all 16 slots from #5B2E91, or use a hand-authored ramp?",
+      "answer": "Use #5B2E91 as brand slot 80 and generate the full 16-slot ramp with fluent_generate_theme; no hand-authored ramp override.",
+      "scope": "global",
+      "surface": "all",
+      "timestamp": "2026-07-21T06:31:12.000Z",
+      "source": "user"
+    },
+    {
+      "id": "icon-only-button-target-size",
+      "question": "Icon-only buttons must still meet the 24px minimum target size (WCAG 2.5.8, AA). Which default control size satisfies this?",
+      "answer": "Use size='medium' (32px control height) for icon-only buttons so the hit area exceeds the 24px minimum; reserve size='small' (24px) for dense toolbars only.",
+      "scope": "component",
+      "surface": "web-react",
+      "timestamp": "2026-07-21T06:38:05.000Z",
+      "source": "agent"
+    },
+    {
+      "id": "powerbi-categorical-palette",
+      "question": "For the Power BI report theme, derive the categorical dataColors from the brand ramp or use Fluent's default categorical set?",
+      "answer": "Derive the categorical palette from the brand ramp, verified >= 3:1 contrast against the report background; keep colorBrandBackground for primary emphasis only.",
+      "scope": "surface",
+      "surface": "powerbi",
+      "timestamp": "2026-07-21T06:41:47.000Z",
+      "source": "user"
+    }
+  ]
+}

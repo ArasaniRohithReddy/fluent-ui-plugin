@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fluent 2 Web Components v3 — sample</title>
+
+    <!--
+      Fluent UI Web Components v3 (@fluentui/web-components@3.0.2).
+
+      Option A — with a bundler (Vite/webpack). Install:
+        npm i @fluentui/web-components @fluentui/tokens
+      then use the bare imports below (this is the pattern from the package README).
+
+      Option B — zero build via CDN. Replace the bare specifiers with a CDN, e.g.:
+        import { setTheme } from 'https://esm.sh/@fluentui/web-components@3';
+        import { webLightTheme, webDarkTheme } from 'https://esm.sh/@fluentui/tokens@1';
+      or load every element at once:
+        <script type="module" src="https://unpkg.com/@fluentui/web-components"></script>
+    -->
+    <script type="module">
+      // Side-effect imports register the custom elements (<fluent-*>).
+      import '@fluentui/web-components/button.js';
+      import '@fluentui/web-components/text-input.js';
+      import '@fluentui/web-components/field.js';
+      import '@fluentui/web-components/checkbox.js';
+      import '@fluentui/web-components/switch.js';
+      import '@fluentui/web-components/slider.js';
+      import '@fluentui/web-components/badge.js';
+      import '@fluentui/web-components/tablist.js';
+      import '@fluentui/web-components/tab.js';
+
+      // Required theming. setTheme(theme, node?) sets token CSS variables (defaults to document).
+      import { setTheme } from '@fluentui/web-components';
+      import { webLightTheme, webDarkTheme } from '@fluentui/tokens';
+
+      setTheme(webLightTheme);
+
+      // Dark-mode toggle: just call setTheme again with a different theme.
+      document.addEventListener('DOMContentLoaded', () => {
+        const toggle = document.getElementById('dark');
+        toggle?.addEventListener('change', (e) => {
+          setTheme(e.target.currentChecked ? webDarkTheme : webLightTheme);
+        });
+      });
+    </script>
+
+    <style>
+      /* You can consume the very same tokens FluentProvider/setTheme emit, as CSS variables. */
+      body {
+        margin: 0;
+        padding: 24px;
+        font-family: var(--fontFamilyBase);
+        color: var(--colorNeutralForeground1);
+        background-color: var(--colorNeutralBackground2);
+      }
+      .stack { display: flex; flex-direction: column; gap: 12px; max-width: 360px; }
+      .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    </style>
+  </head>
+
+  <body>
+    <div class="row">
+      <fluent-badge appearance="filled" color="brand">Fluent 2</fluent-badge>
+      <fluent-switch id="dark">Dark mode</fluent-switch>
+    </div>
+
+    <fluent-tablist selectedvalue="form" aria-label="Sections">
+      <fluent-tab value="form">Form</fluent-tab>
+      <fluent-tab value="about">About</fluent-tab>
+    </fluent-tablist>
+
+    <div class="stack" style="margin-top:16px;">
+      <fluent-field>
+        <label slot="label" for="name">Name</label>
+        <fluent-text-input id="name" slot="input" placeholder="Ada Lovelace"></fluent-text-input>
+      </fluent-field>
+
+      <fluent-field>
+        <label slot="label" for="volume">Volume</label>
+        <fluent-slider id="volume" slot="input" min="0" max="100" value="50"></fluent-slider>
+      </fluent-field>
+
+      <fluent-checkbox>Email me product updates</fluent-checkbox>
+
+      <div class="row">
+        <fluent-button appearance="secondary">Cancel</fluent-button>
+        <fluent-button appearance="primary">Save</fluent-button>
+      </div>
+    </div>
+  </body>
+</html>

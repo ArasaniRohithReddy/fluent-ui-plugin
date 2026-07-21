@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output is shipped so the server runs out-of-the-box; uncomment to build-on-install instead.
+# mcp/dist/
+
+# Scratch / local
+.smoke-out/
+.playwright-mcp/
+*.log
+*.tmp
+
+# Internal research notes + gated/verbatim Microsoft source content — kept local, NOT republished publicly
+research/
+
+# Screenshots of Microsoft's Fluent 2 site (copyright/gated) — kept local, not published
+assets/screenshots/

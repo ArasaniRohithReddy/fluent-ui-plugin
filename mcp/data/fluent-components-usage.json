@@ -1,0 +1,2130 @@
+[
+  {
+    "name": "Accordion",
+    "slug": "accordion",
+    "category": "core",
+    "platform": "web/react",
+    "description": "An accordion groups sections of related content that can be opened and closed.",
+    "whenToUse": "Accordions decrease cognitive load by letting people choose which sections of content they see, like questions in an FAQ. Never put information that's required for the current task inside an accordion. Consider a treatment that gives it more prominence.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Closed by default: By default, accordions items are closed. If it’s helpful to give information prominence and have it be seen automatically, specify which accordion items should be open by default.",
+      "Multiple open items: Accordion items automatically close when another is opened. Sometimes, people may prefer to have multiple items open at once.",
+      "The chevron icon signifies additional content and indicates an accordion item’s interaction. The chevron can be either at the start or the end of the header."
+    ],
+    "accessibility": [
+      "Accordion headers have a button role that makes them perceivable to assistive technologies. When an accordion item is open, its aria-expanded and active properties should be set to true."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use sentence-style capitalization—only capitalize the first word."
+      ],
+      "dont": [
+        "Don’t use periods at the end of titles. For more info, see Periods in the Microsoft Writing Style Guide."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-accordion--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/accordion/usage"
+  },
+  {
+    "name": "Avatar",
+    "slug": "avatar",
+    "category": "core",
+    "platform": "web/react",
+    "description": "An avatar shows an image or text to represent a person or group as well as give additional information like their status and activity.",
+    "whenToUse": "If you need to represent many avatars, try avatar group.",
+    "anatomy": [],
+    "states": [
+      "Standard: Standard avatars are circular containers that generally represent an individual.",
+      "Group: Group avatars are square containers and represent many people, like teams, organizations, or companies."
+    ],
+    "behavior": [
+      "Avatars can include presence badges to indicate the status of an associated person.",
+      "Avatars can include activity rings to indicate when a person is currently collaborating in a shared activity, like speaking in a Teams call or typing in an Office document."
+    ],
+    "accessibility": [
+      "It may be difficult for people with visibility impairments to perceive the icon in presence badges on medium avatars (32px) and smaller. Where possible, accompany these avatars with a textual representation of their status, like a tooltip.",
+      "By default, avatars are static elements that don’t have states built in. However, if you include additional interactions to provide more context or information, be sure to author in states and keyboarding interactions.",
+      "Be sure to include a tab index so that the interaction the avatar enables is accessible to people navigating via keyboard."
+    ],
+    "bestPractices": {
+      "do": [],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-avatar--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/avatar/usage"
+  },
+  {
+    "name": "Avatar group",
+    "slug": "avatargroup",
+    "category": "core",
+    "platform": "web/react",
+    "description": "An avatar group shows multiple avatars.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [
+      "Avatar spread: The avatar spread is the default configuration for multiple avatars.",
+      "Avatar stack: The avatar stack is a more condensed configuration in which the avatars overlap each other.",
+      "Avatar pie: The avatar pie shows two to three avatars in a single circular container. It’s used in cases where space is extremely limited, like the Teams group chats."
+    ],
+    "behavior": [
+      "Overflow: If there are more than five people or groups to represent, the fifth avatar slot can show an overflow avatar to indicate an exact number of associated entities. Single avatars are not always interactive and may not receive focus.",
+      "Activity and presence: Both the avatar spread and stack support displaying activity rings. The spread can also display presence badges.",
+      "The avatar pie can’t display activity or presence."
+    ],
+    "accessibility": [
+      "It may be difficult for people with visibility impairments to perceive the icon in presence badges on medium avatars (32 pixels) and smaller. Where possible, accompany these avatars with a text representation of their status, like a tooltip.",
+      "By default, avatars are static elements that don’t have states built in. However, if you include additional interactions to provide more context or information, be sure to author in states and keyboarding interactions.",
+      "Be sure to include a tab index so that the interaction the avatar enables is accessible to people navigating via keyboard."
+    ],
+    "bestPractices": {
+      "do": [],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-avatargroup--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/avatargroup/usage"
+  },
+  {
+    "name": "Badge",
+    "slug": "badge",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A badge is a visual indicator that communicates a status or description of an associated component. They use short text, color, and icons for quick recognition and are placed near the relavant content.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Badges don’t have a built-in max-width and will keep growing. If you need to add truncation, you have to add your own max-width and truncation styles.",
+      "Placement: Badges should be placed on or near the component they describe. They should be close enough that people can make intuitive connections between a badge and its associated component.",
+      "Placed on top",
+      "Placed next to",
+      "Color: Use badge color intentionally within a layout to draw focus to the areas of highest importance. If you need to use warning and danger colors on a badge, give people a way to resolve the problem whenever possible.",
+      "Use color, especially semantic color, to show what to do next.",
+      "Size: Avoid mixing badge sizes in the same context."
+    ],
+    "accessibility": [
+      "Focus: By default, badges don’t receive focus. If you build interaction into a badge, like including a tooltip for more context, make sure to include focus.",
+      "Tooltips can help surface additional information without cluttering a layout.",
+      "Aria labeling: If a badge is only an icon, its information needs to be communicated with an aria label. If the badge is connected to another component, that component’s aria label should communicate the badge’s information."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use color, especially semantic color, to show what to do next.",
+        "Use sentence style capitalization—only capitalize the first letter of the first word.",
+        "Use words that describe a state or status."
+      ],
+      "dont": [
+        "Avoid mixing badge sizes in the same context.",
+        "Avoid labels that will truncate."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-badge-badge--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/badge/usage"
+  },
+  {
+    "name": "Breadcrumb",
+    "slug": "breadcrumb",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A breadcrumb helps people understand and move through the hierarchy of a complex site or app. It lists at least two location names, usually links, separated by dividers.",
+    "whenToUse": "Breadcrumbs are secondary navigation. They provide wayfinding and fast access to higher levels of the hierarchy. Don’t use breadcrumbs alone. Always combine them with other navigation elements, like top or sidebar navigation.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Breadcrumb width and overflow: Keep in mind the available space in your layout when determining the width of your breadcrumbs. Breadcrumbs will never wrap, but they may scroll horizontally if not constrained.",
+      "It’s safe to keep breadcrumbs between 30% and 50% of the overall surface width. This ensures people have enough space to derive context from the breadcrumbs, while also accommodating 400% zoom.",
+      "In some cases, breadcrumbs can span the entire width of their containers. Reserve this behavior for secondary content surfaces, like drawers.",
+      "When the maximum width is exceeded, the breadcrumb will collapse into an overflow menu, starting with the second item. This makes navigating upward easy and helps people maintain their current context.",
+      "For the best experience, include a tooltip on hover to give people an indication of the overflow items without having to open the menu.",
+      "Show a tooltip on hover or focus over the overflow trigger. Overflow menu appears on selection.",
+      "If there are many items in the overflow menu, consider a tooltip that tells people how many items there are instead of listing each breadcrumb item in a very long tooltip.",
+      "In tooltips, consider a count instead of listing each item",
+      "Long static text in the tooltip is difficult to scan",
+      "Disabled items: Use a disabled breadcrumb item to indicate a step in the hierarchy with no associated landing page, such as a category or top-level menu item.",
+      "Remember, breadcrumbs help people understand the hierarchy of an app at-a-glance. To create equitable experiences for everyone, make sure that disabled breadcrumb items are focusable with the disabledFocusable prop set to true and have an aria-label that lets screen readers know the full hierarchy.",
+      "Truncating breadcrumb items: By default, an interactive breadcrumb item label truncates when that name is longer than 30 characters, including spaces. Add a tooltip to display the full breadcrumb item name.",
+      "You can set a different maximum character count for each of these, but we recommend enforcing a length limit of some kind. Truncation applies to item names at any level.",
+      "Truncate text over the character count limit",
+      "Do not wrap long item names: Be sure to also provide a tooltip on hover or focus of any truncated breadcrumb item that shows the entire link name.",
+      "Expand on truncated breadcrumb items in a tooltip",
+      "Non-interactive file paths: If you need to communicate a file path that provides context but no navigation, use a text string following the non-interactive file path pattern.",
+      "The non-interactive file path is a text-only variant that’s purely informational. It’s best used for file paths in a task flow where people can’t navigate or wouldn’t want to leave their current context."
+    ],
+    "accessibility": [
+      "Most aria labels are built into the links that form the breadcrumb. However, because the current page is non-interactive, add aria-current=Pagename to the last item in the breadcrumb.",
+      "Use <nav> landmark: To make the breadcrumbs accessible to users navigating the page using landmarks, use the nav element to wrap your markup. Use aria-label to label this landmark.",
+      "The end developer might call out the aria-label here depending on the experience.",
+      "Keyboard focus goes to the first interactive element within the container. Depending on the experience, either arrows or Tab key can be used to navigate the items in the breadcrumb.",
+      "Use <ol> to indicate hierarchy: In order to make the set of links structured as a hierarchy, use an ordered list tag.",
+      "Add aria-current to selected link on the breadcrumb: Make sure to add the aria-current to the last link (the selected page).",
+      "Reflow: At 400% zoom and in small viewports, shorten the trail to show only the last level."
+    ],
+    "bestPractices": {
+      "do": [
+        "Keep in mind the available space in your layout when determining the width of your breadcrumbs.",
+        "Show a tooltip on hover or focus over the overflow trigger.",
+        "Use a disabled breadcrumb item to indicate a step in the hierarchy with no associated landing page, such as a category or top-level menu item.",
+        "Make sure to add the aria-current to the last link (the selected page)."
+      ],
+      "dont": [
+        "Do not wrap long item names",
+        "Don’t use breadcrumbs to track session history"
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-breadcrumb--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/breadcrumb/usage"
+  },
+  {
+    "name": "Button",
+    "slug": "button",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A button triggers a single action or event.",
+    "whenToUse": "Use buttons for important actions like submitting a response, committing a change, or moving to the next step. For navigating to another place, try a link instead.",
+    "anatomy": [],
+    "states": [
+      "Button: A standard button initiates a single action or event.",
+      "Split button: A split button lets someone take one of several related actions. The dominant action is the button label and additional actions are tucked away in a menu.",
+      "Menu button: A menu button toggles the display of a menu of options. Unlike the split button, the menu button does not surface a primary action.",
+      "Compound button: A compound button includes a main title and an additional description of the title. Use it when it’s helpful to include more detail."
+    ],
+    "behavior": [
+      "Toggle button: A toggle button is a two-state behavior that switches a state between on and off. A button’s rest state indicates “off” while the selected state indicates “on.” The button and compound button types can have toggle behavior.",
+      "Toggle buttons are typically used in toolbars. In other scenarios like a settings panel, use a switch to let someone choose between two mutually exclusive options and trigger an immediate change.",
+      "To display toggle behavior, manipulate a button’s state properties. In the code, use the ToggleButton component and pass the checked prop.",
+      "Only use one primary button in a layout for the most important action. If there are more than two buttons with equal priority, all buttons should have neutral backgrounds.",
+      "When there are many available minor actions, use the outline, subtle, or transparent appearances on all buttons to avoid a busy layout.",
+      "Always give the primary button action prominent placement, either on top of or to the left of other actions. In right-to-left languages, primary button placement will be on the right."
+    ],
+    "accessibility": [
+      "Toggle button actions and states: Toggle buttons communicate two pieces of complementary information—the current status of a component and what happens when someone interacts with the component. When possible, use text as well as a change in visible indicator, like a change in icon or color, to convey both pieces of information.",
+      "Give context that communicates both state and action",
+      "Color contrast on buttons: To ensure buttons are visually accessible, any button text must pass 4.5:1 and icons must pass 3:1 contrast against their background in all interactive states. As long as text and icons within buttons meet the contrast requirement, there’s no contrast requirement for the button stroke.",
+      "Disabled buttons aren’t interactive and don’t need to pass color contrast.",
+      "Tooltips and ARIA labels: For disabled buttons, show a tooltip that states what is unavailable and why, and/or how to gain access to it.",
+      "For split buttons where part of the primary button label is not repeated in the secondary button options, include the skipped words in aria-describedby labels to make sure the meaning of each option is accessible to screen readers.",
+      "For example, in a split button that says New message as the primary button label, and just Event as the visible label for secondary option (without the word New), use New event as aria-describedby for that menu option."
+    ],
+    "bestPractices": {
+      "do": [
+        "Give primary buttons prominence",
+        "Always give the primary button action prominent placement, either on top of or to the left of other actions. In right-to-left languages, primary button placement will be on the right.",
+        "Give context that communicates both state and action",
+        "Use “Done” on the final screen of multi-step flows that only requires user acknowledgement.",
+        "Use “Finish” when the options you select during the task are only committed by expressly selecting a button.",
+        "Use “Cancel” to stop a task in progress, close the surface the task is running on, if applicable, and return to the previous state without saving changes.",
+        "Use “Got it” to indicate that it’s important to read the content before closing."
+      ],
+      "dont": [
+        "Don’t give secondary actions the same visual weight",
+        "Don’t confuse Close with Cancel."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-button-button--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+  },
+  {
+    "name": "Card",
+    "slug": "card",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A card is a container that holds information and actions related to a single concept or object, like a document or a contact.",
+    "whenToUse": "Cards can give information prominence and create predictable patterns. While they're very flexible, it's important to use them consistently for particular use cases across experiences.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Card interactions: Cards can provide people with interactions in a number of ways. When there are multiple available actions, a card can hold buttons and links.",
+      "If there is one obvious action, the entire card surface can function as a button.",
+      "Cards can also be used to let people make a selection, similar to checkboxes or radio groups.",
+      "By default, there is no indicator on cards that signifies they are selectable but interaction states like hover and focus can hint to selectability. For a stronger signifier, use the floatingAction prop to build in additional cues.",
+      "Anatomy: Card anatomy is flexible based on the needs of the card. Use the CardPreview, CardHeader, and CardFooter components to organize images, titles, body content, and actions within the card.",
+      "Consider the hierarchy of information within the card and how it can be organized into sections. For example, names and titles in the header and actions in the footer.",
+      "Alignment: Cards can be aligned vertically or horizontally. Vertical cards are made up of slots for a header, a body, and a footer.",
+      "Horizontal",
+      "Vertical",
+      "Size: Card sizes are variable to accommodate a range of different content needs. The following sizing behaviors are built into cards to ensure they can adapt to many different circumstances."
+    ],
+    "accessibility": [
+      "Aria labels: Make sure to provide meaningful aria-label, aria-describedby and aria-labelledby whenever needed, especially for selectable cards.",
+      "Focus order in cards: Cards can treat focus in different ways to ensure they meet the needs of each experience. By using the focusMode prop, you can specify the focus behavior of a card as well as the actions it contains."
+    ],
+    "bestPractices": {
+      "do": [
+        "Consider the hierarchy of information within the card and how it can be organized into sections.",
+        "Make sure to provide meaningful aria-label, aria-describedby and aria-labelledby whenever needed, especially for selectable cards."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-card-card--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/card/usage"
+  },
+  {
+    "name": "Carousel",
+    "slug": "carousel",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A carousel is a dynamic component that lets users cycle through content, like featured articles, products, or services, without leaving the current page. It can be used on a page, within an app, in a drawer, or in a modal to display items such as people, cards, dates, and images. Unlike modals, carousel navigation is independent of the rest of the page, providing a self-contained experience.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Carousels have a few noteworthy behaviors: clickable actions and auto-play.",
+      "Clickable actions: If there are clickable actions within the content area, the user may opt into interacting with it.",
+      "Auto-play: If the carousel is on auto-play, the user must always have the option of pausing the auto-play feature.",
+      "Navigation: The carousel supports two distinct navigation options: Steps and Image preview.",
+      "Steps: Setting the Nav Type to Steps displays the chevrons and step element.",
+      "Image gallery: Setting the Nav Type to Image Gallery replaces the steps with image thumbnails.",
+      "The carousel is a versatile component that can showcase a variety of elements, such as images, applications, or other content, providing designers with the flexibility to curate collections that offer users access to contextually relevant materials in unique combinations.",
+      "Card layout: Use card-style carousels to showcase individual items like products, team members, or testimonials. Each card can contain a mix of images, text, and buttons.",
+      "Web banner layout: The web banner is ideal for highlighting promotions, announcements, or featured content. These banners typically span the full width of the screen and rotate through images or messages.",
+      "Image gallery layout: Use the image gallery layout for displaying a collection of images or videos. This type of carousel allows users to browse through visual content seamlessly."
+    ],
+    "accessibility": [
+      "Carousels must reflow to accommodate the 400% zoom WCAG criteria. This means at when the window is 600 pixels wide and under the Carousel will snap to full screen."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use card-style carousels to showcase individual items like products, team members, or testimonials.",
+        "Use the image gallery layout for displaying a collection of images or videos."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-carousel-carousel--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/carousel/usage"
+  },
+  {
+    "name": "Checkbox",
+    "slug": "checkbox",
+    "category": "core",
+    "platform": "web/react",
+    "description": "Checkboxes let people select multiple options from a group or switch a single option on or off.",
+    "whenToUse": "To restrict someone to picking one option, try a radio group or dropdown. Checkboxes don't trigger an immediate change and require a submission step, like selecting a button. If you need a component that has immediate effect, try a switch.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Indeterminate state: If one checkbox can control a subset of options, selecting or clearing the parent checkbox selects or clears all of the children. Use an indeterminate state to show when some, but not all, of the options are selected.",
+      "Create a visual separation between parent and child checkboxes to increase scannability. For example, indenting the children makes it easy to infer what will happen if someone selects the parent.",
+      "Single: Use a single checkbox when there’s a yes or no choice to make.",
+      "Group: Use a checkbox group when someone can select multiple options. It’s best to limit checkbox groups to seven options."
+    ],
+    "accessibility": [
+      "Checkbox groups should be associated with a descriptive label component. Use the checkbox field component for built-in label functionality.",
+      "Passing the label prop within the checkbox provides a text label for single checkboxes."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use a single checkbox when there’s a yes or no choice to make.",
+        "Group label (optional) describes a group of checkboxes.",
+        "Use a label component to describe a group of checkboxes."
+      ],
+      "dont": [
+        "Avoid labels that make a negative statement, which can be confusing. Stick with statements that make it obvious that checked means yes."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-checkbox--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/checkbox/usage"
+  },
+  {
+    "name": "Combobox",
+    "slug": "combobox",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A combobox lets people choose one or more options from a list or enter text in a connected input. Entering text will filter options or allow someone to submit a free form answer.",
+    "whenToUse": "Comboboxes work well in situations where the list of options is very long. If the list is not very long or you can't accept free form answers, try a dropdown or a select. For a standardized form component including helper text and validation styles, use the combobox field component.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Placeholder text and default selection: If the placeholder prop is not set, comboboxes will show as empty until a selection is made. Use placeholder text as an extra hint that helps people understand the options in a combobox or what they can enter in the field.",
+      "To display a default selection instead of placeholder text, use the defaultSelectedOptions prop.",
+      "Single select comboboxes: Selecting a closed field opens the list of options. Choosing an option from the list will close the field and the selected text replaces the placeholder text.",
+      "Multi-select comboboxes: For multi-select interactions, each list item is accompanied by a checkbox. The list of options won’t close until it is dismissed it, either by clicking off the list or by pressing Esc.",
+      "Because combobox inputs always allow people to enter information, the selections will not replace the placeholder text by default. For best usability, build in other ways to show people the selections they’ve made without opening the menu, like showing their choices as tags in the input.",
+      "Filtering and free form submission: Comboboxes allow people to filter the list of options as they type. If the someone types a string that doesn’t match any option in the list, you can allow submission of their free form entry by using the freeform prop."
+    ],
+    "accessibility": [
+      "The text prop: Use the text prop to define a string value for complex options, especially ones that contain JSX. Setting the text prop ensures that people can navigate dropdown options by typing a letter or string of letters to find matching options and that the closed dropdown will display the correct data once a selection’s been made.",
+      "Selecting with the Spacebar: Generally, people navigating via keyboard can use the Spacebar to enter a selection in a combobox. However, in situations where any options in the list may have multiple words, it’s important to count the space as part of the string for filtering.",
+      "Optimize for screen readers: Set inlinePopup={true} when possible for better VoiceOver support. The inlinePopup prop will cause the listbox popup to be rendered immediately after the button in the DOM."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use descriptive labels that tell people what they can find in the menu.",
+        "Write dropdown options using parallel construction, for example all nouns or all verbs, but don’t repeat the same word or phrase at the beginning of each option.",
+        "Use sentence-style capitalization—only capitalize the first word."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-combobox--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/combobox/usage"
+  },
+  {
+    "name": "Dialog",
+    "slug": "dialog",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A dialog is a supplemental surface that can provide helpful interactions or require someone to take an action before they can continue their task, like confirming a deletion.",
+    "whenToUse": "Dialogs are often interruptions, so use them for important actions. If you need to give someone an update on an action they just took but that they don't need to act on, try a toast. If you need to give someone additional context that doesn't affect their current workflow, try a popover.",
+    "anatomy": [],
+    "states": [
+      "Modal: A modal dialog disables the page content behind it and usually obscures or dims it to surface its content. Use it when someone needs to perform a focused task, like signing into an app.",
+      "Non-modal: A non-modal dialog allows someone to continue interacting with the page content behind the window and aids in their workflow, like find and replace. Use it as a helper in a task.",
+      "Alert: An alert dialog is a modal that requires someone to make a decision. Alert dialogs have a special role that allows assistive technologies to treat them more urgently than other dialogs, like playing a system alert sound.",
+      "Alert dialogs are forceful interruptions. Use them only in cases of potential loss, like unsaved changes or confirming destructive actions."
+    ],
+    "behavior": [
+      "Dismissal: Someone can dismiss a modal dialog by selecting an area outside of the container, using the Esc key, or selecting a footer button. You can include a Close button in the top right of modal dialogs if there is no Cancel button that will close the dialog.",
+      "Non-modal dialogs contain a Close button in the top right by default. Someone can dismiss a non-modal dialog by selecting the Close button, using the Esc key, or selecting a footer button.",
+      "Alert dialogs can only be dismissed by selecting one of the available buttons in the footer.",
+      "Stick with the necessary actions: For best usability, reduce the number of additional keystrokes to exit a modal dialog.",
+      "Don’t include redundant options: Including too many actions increases cognitive load.",
+      "Dialogs should help people take action, so keep options simple. Overloading dialogs with too many actions might make it harder for people to make a decision and can require extra keystrokes to exit the dialog.",
+      "Scrolling: By default, headers (including dialog title and dismiss icon) and footers (including any button actions) will remain persistent at the top and bottom of the dialog container, even on scroll. Overflow body content will scroll behind.",
+      "Forms in dialogs: Fields can be placed in dialogs to ask people for information that’s related to their current task. Keep forms within dialogs focused and relevant to the main goal.",
+      "To implement a form in a dialog, include a <Form> element between <DialogSurface> and <DialogBody>. This allows a button in the footer to function correctly as a submission action.",
+      "For information on validating forms in dialogs, see the field component.",
+      "Dialogs are laid out in three sections:",
+      "A header, which can contain a title and a dismiss icon",
+      "Optional body content",
+      "Optional footer, which can contain up to three actions. If using the dialog without a footer, include an additional 24-pixel padding to the bottom of the container."
+    ],
+    "accessibility": [
+      "Nesting dialogs: Don’t nest dialogs. Selecting an action in a dialog should move people forward in their workflow.",
+      "Dialog focus: When a dialog is opened, keyboard focus should go to the first interactive element within the container. Modal and alert dialogs trap keyboard focus.",
+      "Dialogs must have at least one interactive element so that people have a way to exit the dialog without pressing the Esc key or selecting the area outside the dialog.",
+      "When the dialog is closed, set keyboard focus back to the component that triggered the dialog."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use sentence style capitalization—only capitalize the first word—and don’t use end punctuation."
+      ],
+      "dont": [
+        "Don’t include redundant options",
+        "Don’t nest dialogs. Selecting an action in a dialog should move people forward in their workflow."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-dialog--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/dialog/usage"
+  },
+  {
+    "name": "Divider",
+    "slug": "divider",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A divider groups sections of content to create visual rhythm and hierarchy. Use dividers along with spacing and headers to organize content in your layout.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [
+      "Block: Block dividers span the width of their container. Use them to create strict distinctions between items.",
+      "Inset: Inset dividers don’t extend to the edges of a container and imply closer relationships. Use them to group similar items."
+    ],
+    "behavior": [
+      "Margins: Margins are not baked into the divider component to allow for flexibility in different layouts. Minimally, default dividers and dividers with content should have 12 pixels of space on top and bottom.",
+      "Creating text hierarchy: In long texts, place dividers above text headings to create content groupings.",
+      "Put the divider above the header",
+      "Don’t underline headers with dividers"
+    ],
+    "accessibility": [
+      "If a divider only creates visual separation but not content separation, hide it from screen readers with aria-hidden."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use sentence style capitalization—only capitalize the first word."
+      ],
+      "dont": [
+        "Don’t underline headers with dividers"
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-divider--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/divider/usage"
+  },
+  {
+    "name": "Drawer",
+    "slug": "drawer",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A drawer is a secondary content surface that slides in from one edge of a layout. Use drawers for supplemental info and simple actions related to the main content.",
+    "whenToUse": "For short information that’s related to a specific part of the main layout, a drawer may be overwhelming. Try a tooltip or a popover instead. If you need people to confirm an action they’re trying to take, use a dialog.",
+    "anatomy": [
+      "Header (required) contains a descriptive drawer title, an optional close button, and any top-level quick actions, like back or refresh.",
+      "Body (required) contains the main information or actions in the drawer. Drawer bodies are flexible to fit many different content types that will help people accomplish their tasks: lists, data visualizations, checkboxes and radio groups, etc.",
+      "Footer (optional) contains any prominent button actions. Make sure to place primary buttons to the left of other buttons."
+    ],
+    "states": [
+      "Inline: An inline drawer is a passive surface that sits side-by-side with main page content. Use inline drawers when it’s helpful to view and interact with main content and drawer content at the same time.",
+      "Overlay: An overlay drawer is an intrusive surface that covers all or part of the main page content. Use overlay drawers to draw more attention to the content in the drawer."
+    ],
+    "behavior": [
+      "Modality: Overlay drawers are elevated above main page content and are modal by default. The default behavior will gray out main page content and disable interaction with it.",
+      "Save modality for important tasks that are clear and quick to accomplish. As with all modal patterns, avoid surfacing too many of them at a time.",
+      "Don’t invoke multiple overlay drawers at a time",
+      "Drawers should give people helpful context and a clear next step.",
+      "Optionally, you can turn off modality to allow people to continue interacting with the main page content. This behavior is helpful for content that is more informational than actionable and easily dismissed, like viewing items in a cart or checking new notifications.",
+      "Use overlay drawers to provide at-a-glance info that can be easily dismissed",
+      "Use overlay drawers with caution. They almost always block something, images or text on the page and even actions like dismissal.",
+      "Collapsing vs dismissing: Drawers are usually opened by interacting with a button on screen. They can be closed again by interacting with the same button or an included dismiss icon.",
+      "Dismiss",
+      "Collapse",
+      "Prolonged flows and multi-step tasks: Drawers allow for multi-step tasks, but should be kept to two to three steps. Drawers should always offer information and actions relevant to the parent view.",
+      "For longer or more complex tasks and workflows, consider a more focused surface.",
+      "Errors and confirmation messages: Communicate the status of drawer contents using message bars or empty states in the drawer. Place the components closest to the status they’re communicating.",
+      "If the whole drawer can’t be rendered, try an empty state.",
+      "One section failed to load",
+      "Multiple sections failed to load",
+      "Entire drawer can’t be rendered: Use a dialog to confirm actions someone tries to take in a drawer, especially if those actions might lead to data loss. Avoid putting actions in drawers that need confirmation frequently, especially in overlay drawers.",
+      "Wrapping and overflow: Drawer content will wrap to fit the width of the drawer. If content exceeds the height of the drawer, the overlow content won’t scroll by default."
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [
+        "Use overlay drawers to provide at-a-glance info that can be easily dismissed",
+        "Use overlay drawers with caution.",
+        "Use sentence style capitalization—only capitalize the first word.",
+        "Use the body to get to the point—fast."
+      ],
+      "dont": [
+        "Don’t invoke multiple overlay drawers at a time",
+        "Don’t break conventions. For example, people generally expect navigation patterns on the left and notification patterns on the right."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-drawer--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/drawer/usage"
+  },
+  {
+    "name": "Dropdown",
+    "slug": "dropdown",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A dropdown lets people choose one or more options from a list. It can be used in forms to gather information where the options require custom styling or in UI to filter and sort information.",
+    "whenToUse": "If you're designing a form, especially for mobile platforms, consider using a select for baked-in accessibility. If you need to let someone type in the visible field to submit a free form answer, or to filter the list, try a combobox.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Placeholder text and default selection: If the placeholder prop is not set, dropdowns will show as empty until a selection is made. Use placeholder text as an extra hint that helps people understand the options in a dropdown.",
+      "To display a default selection instead of placeholder text, use the defaultSelectedOptions prop.",
+      "Single select dropdowns: Selecting a closed field opens the list of options. Choosing an option from the list will close the field and the selected text replaces any placeholder text.",
+      "Multi-select dropdowns: For multi-select interactions, each list item is accompanied by a checkbox. The list of options won’t close until someone dismisses it, either by clicking off the list or by pressing Esc."
+    ],
+    "accessibility": [
+      "The text prop: Use the text prop to define a string value for complex options, especially ones that contain JSX. Setting the text prop ensures that people can navigate dropdown options by typing a letter or string of letters to find matching options and that the closed dropdown will display the correct data once a selection’s been made.",
+      "Optimize for screen readers: Set inlinePopup to true when possible for better VoiceOver support. The inlinePopup prop will cause the listbox popup to be rendered immediately after the button in the DOM."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use descriptive labels that tell people what they can find in the menu.",
+        "Write dropdown options using parallel construction, for example all nouns or all verbs, but don’t repeat the same word or phrase at the beginning of each option.",
+        "Use sentence-style capitalization—only capitalize the first word."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-dropdown--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/dropdown/usage"
+  },
+  {
+    "name": "Field",
+    "slug": "field",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A field is a combination of a label and any form component, like an input or a select. Optionally, fields can also have info buttons, helper text, and validation states to give people clues about the information they need to enter.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [
+      "Fields can be used with any component that asks someone to enter information. For more information on which type of field is best for your use case, see the following pages:"
+    ],
+    "behavior": [
+      "Validation: Fields have styles baked in to support inline feedback after validation. Validation states will change the visual presentation of the field, for example changing to a red border in the error state.",
+      "Validation states also allow for a validation message to guide people in how to move forward. Use the validationMessage prop to display a message describing the state.",
+      "Success",
+      "Warning",
+      "Error",
+      "Required entries: To let people know they have to fill in a field before they move on, use the required prop. Visually, a red asterisk will appear next to the label.",
+      "For forms where all fields are required, it’s unnecessary to add the required prop to every field. Instead, try a general instruction before the form begins to explain that all fields are required.",
+      "You can provide an additional signal that all fields are required by disabling the Save or Submit button until all fields are complete.",
+      "Disabled fields: If a field is disabled, only the form component will appear disabled. The label will remain in the enabled state so that it’s still perceivable to people who use assistive technologies.",
+      "By default, field labels are top-aligned above the form component. This layout is best for quickly scanning a page and entering information.",
+      "Optionally, you can left align labels if space is limited and if fields are of a consistent type and width. Use caution when left aligning the labels as it can decrease readability.",
+      "Vertical alignment",
+      "Horizontal alignment"
+    ],
+    "accessibility": [
+      "Avoid using placeholder text for essential information that people will need to complete the field. If you do include placeholder text, be sure it’s combined with a label.",
+      "Placeholder text must be associated with an aria-label for assistive technologies."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use sentence-style capitalization—only capitalize the first word."
+      ],
+      "dont": [
+        "Avoid using placeholder text for essential information that people will need to complete the field. If you do include placeholder text, be sure it’s combined with a label."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/preview-components-field--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+  },
+  {
+    "name": "Fluent provider",
+    "slug": "fluentprovider",
+    "category": "core",
+    "platform": "web/react",
+    "description": "The Fluent provider defines the styles that are used in your app. Fluent provider can provide styling for the entire experience or can be used to override and redefine particular sections.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [],
+    "behavior": [],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-fluentprovider--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/fluentprovider/usage"
+  },
+  {
+    "name": "Icon",
+    "slug": "icon",
+    "category": "core",
+    "platform": "web/react",
+    "description": "Icons represent concepts, objects, or actions, and have semantic purpose within a layout. They should always be recognizable, functional, and easily understood.",
+    "whenToUse": "This page offers guidance on how to implement icons in Fluent UI React. For guidance on proper icon usage, see the iconography page.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/concepts-developer-icons-icons--page",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/icon/usage"
+  },
+  {
+    "name": "Image",
+    "slug": "image",
+    "category": "core",
+    "platform": "web/react",
+    "description": "Images, like photos and illustrations, help reinforce a message and express your product or app's style.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "To give an image additional prominence, you can use the shadow prop to make it appear elevated. Too many shadows can cause a busy layout, so use them sparingly."
+    ],
+    "accessibility": [
+      "Use the alt prop to provide a text attribution for images. Alt text should be brief but accurate—one or two sentences that describe the image and its context.",
+      "Don’t repeat information that’s on the page in alt text since screen readers will read it twice.",
+      "If images are solely decorative and don’t provide useful information or context, use role=\"presentation\" to hide them from assistive technologies."
+    ],
+    "bestPractices": {
+      "do": [],
+      "dont": [
+        "Don’t repeat information that’s on the page in alt text since screen readers will read it twice."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-image--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/image/usage"
+  },
+  {
+    "name": "Info label",
+    "slug": "infolabel",
+    "category": "core",
+    "platform": "web/react",
+    "description": "An info label is a label paired with an info button that shows additional content in a popover when selected. Use an info label whenever you need to show supplemental info in a popover.",
+    "whenToUse": "If you don’t need to show additional info, use a standard Label for better performance. Don’t use the info button for critical information needed to complete a task. Instead, put critical content where it’s always visible, like in helper text. For more info on surfacing information, go to Field and Popover.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "When the info button option is applied to an info label, an info button appears next to the label. When someone selects the info button, a popover appears and remains visible until they select something else or press Esc to dismiss it.",
+      "The info label accounts for proper placement between the label, info button, and popover. When the popover appears, its beak is centered on the info button, and the popover appears above, below, or to either side of the info button.",
+      "Avoid cluttering an interface with multiple info labels, as this can result in cognitive overload, especially for people using keyboards and screen readers. If you think you need more than a two or three in one area, it may point to larger design issues that prevent at-a-glance clarity and ease of use.",
+      "If the information in the popover is long or critical to completing the task, consider summarizing some or all of it in an introductory paragraph instead of using an info label with popover.",
+      "Place critical info in a persistent place so that people can easily find it",
+      "Don’t hide critical info in an info button because people might miss it"
+    ],
+    "accessibility": [
+      "When the info button is enabled, the aria-label automatically combines the visible label with “more information” so a screen reader reads “{visible label} more information button.” If someone presses Enter while the info button is selected, the popover opens.",
+      "Make sure the info button is included in the tab order of the page so that keyboard users can get to it.",
+      "Avoid cluttering the interface with multiple info buttons, as this can result in cognitive overload, especially for people using keyboards and screen readers.",
+      "Trapping focus: By default, popovers don’t trap focus. The popover is rendered inline, so people can use the Tab key to move into the popover, and Tab again to close the popover.",
+      "Target size requirements: Info labels at a small size (20 x 20 pixels) should have at least a two (2) pixel margin between them and other interactive elements, like in Field. Don’t choose the small size if it’s right next to other components or unless the end user explicitly chose a small or compact density layout."
+    ],
+    "bestPractices": {
+      "do": [
+        "Place critical info in a persistent place so that people can easily find it",
+        "Make sure the info button is included in the tab order of the page so that keyboard users can get to it."
+      ],
+      "dont": [
+        "Avoid cluttering an interface with multiple info labels, as this can result in cognitive overload, especially for people using keyboards and screen readers. If you think you need more than a two or three in one area, it may point to larger design issues that prevent at-a-glance clarity and ease of use.",
+        "Don’t hide critical info in an info button because people might miss it",
+        "Avoid cluttering the interface with multiple info buttons, as this can result in cognitive overload, especially for people using keyboards and screen readers.",
+        "Don’t repeat information that already appears in visible labels.",
+        "Don’t repeat information that’s available elsewhere"
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-infolabel--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/infolabel/usage"
+  },
+  {
+    "name": "Input",
+    "slug": "input",
+    "category": "core",
+    "platform": "web/react",
+    "description": "An input allows people to enter short, free-form text data.",
+    "whenToUse": "If you need to collect more than one line of information, try a textarea.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Masks: Inputs can be masked or have custom type attributes that will affect their formatting. Input masking can work like placeholder text to help people enter data in a specific format, like a phone number with hyphens at particular intervals.",
+      "Fluent doesn’t currently apply custom styling to masked inputs and some input types may trigger browser-based formats that don’t align with Fluent’s design language.",
+      "Inputs can appear standalone, as full-width block elements, or inline with text. The width of the input should fit the approximate length of the content that you expect people to enter."
+    ],
+    "accessibility": [
+      "Avoid using placeholder text for essential information that people will need to complete the input. If you do include placeholder text, be sure it is combined with a label.",
+      "Placeholder text must be associated with an aria-label for assistive technologies."
+    ],
+    "bestPractices": {
+      "do": [],
+      "dont": [
+        "Avoid using placeholder text for essential information that people will need to complete the input. If you do include placeholder text, be sure it is combined with a label.",
+        "Don’t use placeholder text for essential information, which should appear either in the label or in helper text below the input, so it’s always visible. If you do include placeholder text, be sure it is combined with a label."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-input--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/input/usage"
+  },
+  {
+    "name": "Label",
+    "slug": "label",
+    "category": "core",
+    "platform": "web/react",
+    "description": "Labels give a name to a component or group of components. Pair them with components like checkboxes and inputs to prompt someone to enter certain information, or with plain text to categorize information.",
+    "whenToUse": "When using a label with a form component to gather information, use the asterisk to indicate whether the information is required before moving on.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Disabled states: In addition to its rest state, a label can display a disabled state if the component it’s naming is also disabled. This is common for components with the label built in, like switch, checkbox, or radio groups.",
+      "In the disabled state, labels don’t need to meet color contrast requirements.",
+      "Label wrapping: If a label is longer than its container, the text will wrap onto the next line. Labels will never truncate.",
+      "Generally, the label should go above a component. However it can also appear inline where layouts allow."
+    ],
+    "accessibility": [
+      "Don’t use placeholder text in place of labels."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use sentence-style capitalization—only capitalize the first word."
+      ],
+      "dont": [
+        "Don’t use placeholder text in place of labels.",
+        "Don’t use end punctuation unless the label forms a question. Don’t use colons after labels."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-label--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/label/usage"
+  },
+  {
+    "name": "Link",
+    "slug": "link",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A link is interactive text that lets people navigate somewhere else, either within an experience or to a different app or site.",
+    "whenToUse": "Don't use links for triggering actions other than navigation. To create a secondary action with low visual emphasis, try a transparent or subtle button instead.",
+    "anatomy": [],
+    "states": [
+      "Default: Default links are styled the theme color. These are the most accessible link style and should be used most of the time.",
+      "Subtle: Subtle links are the same color as body copy and are less accessible than default links. Use subtle links for less visual weight but consider adding other cues that they’re selectable, like an icon.",
+      "Inverted: Inverted links are useful for darker background colors.",
+      "On-brand: On-brand styling should be used when links are shown on brand colors."
+    ],
+    "behavior": [
+      "Inline links: By default, all links show an underline in the hover, focus, and pressed states. The optional inline link behavior also includes an underline in the rest and visited states.",
+      "Inline links add an underline in rest and visited states for additional visual cues",
+      "Default vs. subtle links: In most cases, the default link type is the best option for ensuring people can easily scan and recognize links within an interface.",
+      "Use subtle links with caution. Out of the box, they don’t have any visual indications that they’re interactive.",
+      "Subtle links don’t indicate interaction until hover or focus and are less accessible",
+      "It’s safe to eliminate the inline behavior on subtle links in obvious lists of links, like in footers or navigation panels. Because people typically understand these patterns provide navigation options, the additional visual cues aren’t needed.",
+      "Subtle links are OK in parts of the UI dedicated to navigation, like footers",
+      "Icons in links: Using icons in addition to link text can give people hints about what will happen if they select a link, like the open icon signifying an external link destination. Icons, like chevron right >, can also provide additional visual cues that a link is selectable if the inline treatment isn’t used.",
+      "Open icon signifies the link opens a new context",
+      "Chevron signifies the text is interactive: The coded Link component does not include an icon slot by default. To include an icon in your link, place an <i> or <span> as a child of the <Link> component.",
+      "Link spacing: Keep discrete links far enough apart that people can tell they lead to different places. Spacing out links also helps people with reduced motor skills select the right one easily.",
+      "Links that are too close together can he hard to distinguish and select"
+    ],
+    "accessibility": [
+      "Visual cues: Links need to have at least two visual indications that they’re interactive. Be sure to use a combination of cues like color, underline, icons, focus, and cursor change to let people know they can select a link.",
+      "Link text: People who use assistive technology can navigate by accessing a list of all links on a page, so link text must make sense out of context. Be careful when embedding links in sentences since sentence parts read in isolation can be confusing.",
+      "If you can’t avoid vague link text in the UI, be sure to include a more descriptive aria-label that identifies the link’s destination.",
+      "Steer clear of multiple identical links on a page. They can create ambiguity for everyone and complicate navigation for some people, like those who use voice control.",
+      "Opening new contexts: Use caution when using a link to navigate to a new context as it can be disorienting. If a link opens in a new tab or window, be sure to inform people beforehand."
+    ],
+    "bestPractices": {
+      "do": [
+        "It should be obvious where a link will lead",
+        "Link text should be short and specific",
+        "Make it clear what people will learn about",
+        "Use subtle links with caution.",
+        "Keep discrete links far enough apart that people can tell they lead to different places.",
+        "Use sentence style capitalization—only capitalize the first word."
+      ],
+      "dont": [
+        "Ambiguous link text is inaccessible",
+        "Avoid vague link text",
+        "Avoid using “Learn more” links without specifying what someone will learn more about. Consider dropping “more” in cases where you need to save space."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-link--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/link/usage"
+  },
+  {
+    "name": "List",
+    "slug": "list",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A list is a collection of like items or information repeated in a vertical stack. Use lists to make information easy to scan and access.",
+    "whenToUse": "Items in a list are independent of one another. If you need a way to display information in columns that relate to each other, try a DataGrid or Table. If you need nested hierarchy in your list, try Tree.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Single action: Some lists include a single action per list item. People can initiate that action by clicking on that item, and pressing Enter or Space while that item has focus.",
+      "Single action triggered on click, Enter, or Space",
+      "Multiple actions: For list items that also include secondary actions, people can navigate to those secondary actions by hovering with a mouse, or using the Right Arrow key to navigate into the list item. Both Space and Enter will trigger the action that has focus.",
+      "Use the Left Arrow key or Esc to get back to the parent container.",
+      "Selection as primary action: In many scenarios, list items are selectable. If selection is the only available action, clicking anywhere on the list item, as well as Space and Enter while the item has focus, will trigger the selection.",
+      "If selection is the primary action and there are other available actions on the list item, people can select by clicking the parent container, or using Space or Enter while the parent container has focus.",
+      "If any of the children have focus, Space and Enter will initiate that action.",
+      "Hover on a list item. Clicking on this parent container will select the list item.",
+      "Clicking on a list action will trigger that specific action.",
+      "Hover on checkbox. Clicking will select the check box.",
+      "List item shows selection.",
+      "Selection as secondary action: If selection is possible, but is not the primary action, define a custom click event to trigger the primary action. This way, when the list item has focus, clicking and using Enter will trigger the primary action.",
+      "Hover on a list item. Clicking on this parent container will trigger the primary action but not select the item.",
+      "List item showing active state.",
+      "Hover on the checkbox: Item shows selection only when user has clicked the checkbox.",
+      "Secondary list item actions can still be clicked.",
+      "Users can continue to click on checkboxes of other list items to multiselect (if multiselect is available).",
+      "Clicking on any other list item will trigger the primary action for that list item as well as remove selection from the previous list item."
+    ],
+    "accessibility": [
+      "list, listbox, and grid roles: Lists can have different aria roles. These roles provide a navigation mode that is appropriate for the list contents and intended functionality.",
+      "If does not have focusable elements inside of it, It can either be a list or listbox. If selection is necessary, Fluent lists apply a listbox role to the parent and option role to the list items.",
+      "grid is not an appropriate role option for Lists. List items could have icon buttons or action buttons that are not on all other list items, which would lead to empty cells if a grid structure was applied."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use the Left Arrow key or Esc to get back to the parent container.",
+        "Make sure the purpose of the list is clear."
+      ],
+      "dont": [
+        "Don’t use a period at the end of list items unless they’re complete sentences, even if the complete sentence is very short.",
+        "Don’t use semicolons, commas, or conjunctions (like “and” or “or”) at the end of list items."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-list--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/list/usage"
+  },
+  {
+    "name": "Menu",
+    "slug": "menu",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A menu is a hidden list of options that is shown when someone interacts with a trigger component, like a button, an avatar, or an icon.",
+    "whenToUse": "Usually, the options in a menu initiate an immediate action or navigate someone to a new context. If you need to collect information from people, try a select, dropdown, or combobox instead.",
+    "anatomy": [],
+    "states": [
+      "Default: The default menu option treats each menu item as a button that initiates an action.",
+      "Checkbox: The checkbox menu option lets people select multiple items from the menu, like when filtering a list by multiple criteria.",
+      "Radio: The radio menu option lets people select one menu item that turns a setting on or off, like sorting a list by one criterion or applying a text formatting style."
+    ],
+    "behavior": [
+      "Text wrapping: Menus have a max width of 300 pixels. By default, menu items that have long labels will wrap onto the next line if they go over this width.",
+      "Submenus: Sometimes, an option in a menu can open additional related options in a new submenu. In these scenarios, be sure to add an aria-label to the trigger component for people who use screen readers.",
+      "It’s best to avoid nesting too many menus whenever possible since they can be difficult to invoke and make it hard to remember the original context.",
+      "Grouping options: Options in a menu should be listed in an order that makes sense, like most frequent actions first or most dangerous actions last.",
+      "Group items to make them easier to scan: Use a divider for more visual distinction between groups"
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [
+        "Group items to make them easier to scan",
+        "Use a divider for more visual distinction between groups",
+        "Keep menu item labels brief."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-menu-menu--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/menu/usage"
+  },
+  {
+    "name": "Message bar",
+    "slug": "messagebar",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A message bar communicates important information about the state of the entire product or the surface where it appears, such as a page, drawer, dialog, or card.",
+    "whenToUse": "If the message is intended to prevent a destructive action, try a dialog instead. If the message is time-sensitive, but relates to an activity or status from a different location, try a toast notification instead.",
+    "anatomy": [],
+    "states": [
+      "Info: Use an info message bar to communicate helpful information that doesn’t require immediate action but that could improve an experience. For example, when an app has updates or a report can be personalized.",
+      "Success: Use a success message bar to communicate that something went right related to the surface where it appears, the whole app, or a task someone just completed. Link and buttons are optional.",
+      "Warning: Use a warning message bar to inform about temporary states, like connectivity issues, or states that could become harmful or destructive. Warnings alert people to potential consequences, but don’t prevent them from moving forward in a task.",
+      "Error: Use an error message bar when something goes wrong that needs to be addressed before continuing, like an application losing connection or entering invalid information. Errors block people from moving forward in a task."
+    ],
+    "behavior": [
+      "Reflow: The container for message bars is flexible, allowing growth in both height and width to accommodate the content and the surface the message bar is on. Message bar content never truncates.",
+      "A full-page bar fits the width of the page while growing in height to show the entire message.",
+      "Messages within containers likewise fit the width of the content area for that container and reflow as needed.",
+      "Dismissal: Message bars are always dismissible with a Close button (X) to allow people to get them out of the way. However, if someone dismisses a warning or error message without taking a necessary action, the message bar will reappear in their next session and continue to reappear until action is taken to resolve the problem.",
+      "You can also set conditions for the system to proactively dismiss the message.",
+      "Stacking multiple message bars: There can be more than one message bar at the top of a page or content container. When stacking message bars, order them by type, from most critical to least, as follows:",
+      "Error",
+      "Warning",
+      "Success",
+      "Informational",
+      "Collapsible message bars: When multiple message bars are present, they can optionally be grouped within an accordion to save space. In this case, the message with the highest severity is surfaced at the top and used as the heading, accompanied by a badge that shows the number of remaining messages.",
+      "When multiple messages are dismissed and only a single message remains, the “Dismiss all” action changes to “Dismiss,” and the message bar transitions to the single-line state. By default, message bars wrap and display the full content when messages are long.",
+      "App or feature-level message bars: A page-level message bar communicates information about the state of the whole app or the specific page it is on. It appears below the command bar in the main content area.",
+      "Container-level message bars: A container-level message bar informs about the state of the content within a specific content container such as a section, tab, card, dialog, or drawer.",
+      "Generally, place message bars at the top of a container, or just below a title or header. If you need to communicate feedback in multiple areas, use more than one message bar on a page.",
+      "Consider the margins when using a container-level message bar, which has rounded corners. The message bar may be smaller than the 320 pixel width for container-level instances.",
+      "Tab-level: A tab-level message bar informs about the state of content within a tab. Place it just below the tabs and above the main content for that tab.",
+      "Card-level: A card-level message bar informs about the state of a card. On a card with dividers, place it below the card title."
+    ],
+    "accessibility": [
+      "Error and warning message bars have an assertive aria-live, so they interrupt any other announcement a screen reader is making. Informational and success message bars are polite; they’re only read if someone selects them.",
+      "Too many interruptions can disrupt someone’s flow. Highlight only critical messages so you don’t overload a flow with too many assertive message bars."
+    ],
+    "bestPractices": {
+      "do": [
+        "Consider the margins when using a container-level message bar, which has rounded corners.",
+        "Use sentence style capitalization—only capitalize the first word.",
+        "Provide clear, concise, actionable information that the user needs in order to proceed.",
+        "Use links for supplementary information related to the message, to help people make informed decisions and understand why they’re seeing the message.",
+        "Use links to provide additional info related to the message"
+      ],
+      "dont": [
+        "Avoid messages longer than 2 lines of about 100 characters each. Additional content will always wrap, never truncate and can make the message bar large and hard to scan."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-messagebar--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/messagebar/usage"
+  },
+  {
+    "name": "Nav",
+    "slug": "nav",
+    "category": "core",
+    "platform": "web/react",
+    "description": "Nav, or navigation, provides a list of links that lets people move through the main sections of an app or site. It’s a high-level wayfinding component that’s always easily accessible but can be minimized to free up space.",
+    "whenToUse": "Nav only supports one level of nesting and might not show all available items. If you need to show a deeper and more complex hierarchy, use Tree instead.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Structure and strategy: Good navigation quickly funnels people to the things they want most. Poor content can leave people lost and frustrated.",
+      "Keep it brief",
+      "Use plain language",
+      "Make it easy to scan",
+      "Focus on the user’s goals",
+      "Clearly state where each link goes or what people are looking for",
+      "Creating navs can take a substantial investment in time. How you approach your menu will depend on whether it’s a new product or a redesign of an existing one.",
+      "Task oriented navigation",
+      "Feature focused navigation",
+      "Selection: The selection indicator tells people at a glance which page is active. If a nav sub-item is the active page and the category is closed, the selection indicator will display on the nav category.",
+      "Selection indicator on a sub-item",
+      "Selection shifts to NavCategory when closed",
+      "Secondary actions: NavItem and NavSubItem can have associated secondary actions. Secondary actions are visible on hover and useful for actions like pinning or accessing an overflow menu.",
+      "Minimize available actions in nav nodes. In most cases, stick with only one secondary action.",
+      "NavCategoryItem cannot have secondary actions.",
+      "Hamburger icon: The hamburger menu icon is a persistent and predictable UX pattern to expand and collapse Nav across different applications.",
+      "Grouping: Navs can be organized with up to two levels of hierarchy. Simple navs list the spaces in a site or app as links on the same level.",
+      "Simple nav"
+    ],
+    "accessibility": [
+      "Secondary actions on hover: Secondary actions need to be in the DOM at all times, not only on hover or focus. If secondary actions don’t appear in the DOM until hover or focus, people who use touch screen readers or desktop screen readers using virtual cursor will be blocked from accessing those options.",
+      "When showing actions only on hover and focus, they should also be accessible via a context menu so that people using voice control, eye gaze, switch, and other alternative input setups can access them."
+    ],
+    "bestPractices": {
+      "do": [
+        "Correct chevron location",
+        "Keep it brief",
+        "Use plain language",
+        "Use sentence-style capitalization—only capitalize the first word of each nav item.",
+        "Use the word that feels right for the navigation."
+      ],
+      "dont": [
+        "Incorrect chevron location"
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/preview-components-nav--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/nav/usage"
+  },
+  {
+    "name": "Persona",
+    "slug": "persona",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A persona is a representation of a person with additional contextual information.",
+    "whenToUse": "Personas usually include an avatar, a presence badge, and up to four lines of text content that provide additional data about that person.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Text slot wrapping: By default, the text slots in the persona will wrap to the next line when the container becomes too small.",
+      "Presence only: In busy layouts, or layout where space is confined, use the presenceOnly prop to remove the avatar from the persona. This results in the presence badge showing near the person’s name."
+    ],
+    "accessibility": [
+      "By default, personas are static elements that don’t have states built in. However, if you include additional interactions to provide more context or information, be sure to author in states and keyboarding interactions.",
+      "To include a focus state, use createFocusOutlineStyle. Be sure to include a tab index so that the interaction the persona enables is accessible to people navigating via keyboard."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use sentence-style capitalization—only capitalize the first word—and skip the periods in persona text slots."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-persona--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/persona/usage"
+  },
+  {
+    "name": "Popover",
+    "slug": "popover",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A popover is a small surface that appears when someone interacts with a component to give nonessential, contextual information without blocking them.",
+    "whenToUse": "Popovers can have structured content and interactive components. If you need to show a more complex layout or block the page behind, try a dialog. For unstructured plain text, try a tooltip.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Sizing and overflow: By default, there are no size constraints on popovers. They’ll grow to accommodate the content within them.",
+      "For overflow content in a popover, set overflow: scroll to make any hidden content accessible.",
+      "Vertical scroll",
+      "Horizontal scroll: If content exceeds the available width or height of the popover. The overflow content is available through scrolling.",
+      "Positioning: Position popovers so that people can tell what the information relates to. Don’t cover important information that’s helpful to see at the same time as the popover content.",
+      "In Figma, set the beak position with the beak component property. In code, use the positioning prop and positioning shorthand ."
+    ],
+    "accessibility": [
+      "Nesting popovers: Don’t nest popovers. Too many popovers can distract from the original context and make it hard for people to interact with the content.",
+      "Trapping focus: Using the trapFocus prop sets aria-hidden to true on parent elements when the popover is open. People who navigate by keyboard can still interact with the browser by tabbing in and out but won’t be able to access other focusable elements on the page without selecting Esc to dismiss the popover."
+    ],
+    "bestPractices": {
+      "do": [
+        "Position popovers so that people can tell what the information relates to."
+      ],
+      "dont": [
+        "Don’t nest popovers. Too many popovers can distract from the original context and make it hard for people to interact with the content."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-popover--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/popover/usage"
+  },
+  {
+    "name": "Progress bar",
+    "slug": "progressbar",
+    "category": "core",
+    "platform": "web/react",
+    "description": "Progress bars communicate system information, like how much cloud storage someone is using in OneDrive, or task information, like how long until a download is complete.",
+    "whenToUse": "Progress bars should only be used for tasks that take longer than a second. If you’re loading new content with a known structure that doesn’t block the UI, try a skeleton.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Static progress bars: Use progress bars with no animation to communicate a static percentage. For example to show system progress scenarios, like indicating how much storage is left.",
+      "Determinate and indeterminate: Progress bars can be either determinate or indeterminate, depending on the needs of your app and the capabilities of the technology you’re building on.",
+      "Determinate: Determinate progress bars let people know how much of a task has been completed and how much remains. Use determinate progress bars whenever possible.",
+      "Indeterminate: Sometimes, it’s not possible to gauge how long something will take and it’s necessary to use an indeterminate progress bar. Indeterminate progress bars don’t provide any reassurance that things are still working, so only use them for short tasks.",
+      "If enough data is gathered after a task starts and it becomes possible to communicate how much time is left, switch to a determinate progress bar. If there’s very little time left, complete an animation cycle before transitioning from the loading state.",
+      "Combining steps: Combine related steps into one progress bar to avoid “rewinding” the bar. For example, if checking for updates and then installing updates, only show one progress bar.",
+      "When the bar appears to move backward, people lose confidence in it.",
+      "Combine multiple steps of a longer task into one progress bar",
+      "Restarting the progress bar for each task step can make people lose confidence",
+      "A progress bar can appear in a new drawer, in a callout, or under the UI that initiates the task. It can even replace the initiating UI if the UI can return to its original state if the task is canceled.",
+      "If the task can be canceled, place a Close button in the upper right, aligned with the baseline of the progress bar label."
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [
+        "Use progress bars with no animation to communicate a static percentage.",
+        "Include a short label above the progress bar that describes what’s taking place.",
+        "Use status text to communicate how much progress is being made, set expectations for how long a task might take, or to let people know what could happen if they don’t wait.",
+        "Use descriptive -ing verbs for communicating a task’s progress.",
+        "Use units that are informative and relevant to give the best idea of how long the task will take to complete.",
+        "Use an error to communicate when a task can’t continue"
+      ],
+      "dont": [
+        "Avoid time units in status text"
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-progressbar--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/progressbar/usage"
+  },
+  {
+    "name": "Radio group",
+    "slug": "radiogroup",
+    "category": "core",
+    "platform": "web/react",
+    "description": "Radio groups let people select a single item from a short list. Use them in layouts that offer enough space to list up to five options or if it's important to view all options at once.",
+    "whenToUse": "If there isn't enough space, try a dropdown instead. If you need to let people select more than one option, use checkboxes. To let them immediately turn a setting on or off, try a switch.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Default selection: Present a selected option in radio groups by default. The default selection should be placed first and should be the most logical response.",
+      "Radio groups can be aligned vertically or horizontally. When horizontally aligned, the label can appear next to or under the input.",
+      "Vertical alignment (preferred): Vertically aligned radios allow for better scannability and localization.",
+      "Horizontal alignment: Horizontally aligned radios work well in crowded layouts to save space."
+    ],
+    "accessibility": [
+      "Include intuitive labels with radio groups.",
+      "When tabbing, focus will fall on the first option if no options are selected. If there is a selection, focus will fall on that option first."
+    ],
+    "bestPractices": {
+      "do": [
+        "Include intuitive labels with radio groups.",
+        "Use sentence style capitalization—only capitalize the first word."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-radiogroup--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/radiogroup/usage"
+  },
+  {
+    "name": "Rating",
+    "slug": "rating",
+    "category": "core",
+    "platform": "web/react",
+    "description": "Rating is used to communicate user sentiment. It also allows customers to determine a sense of value of a good or a service.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [
+      "Rating display: This format shows a full set of icons along with the rating and review count, giving users a clear and detailed view. It works well when there’s enough space for more information.",
+      "Rating: An outlined rating that users can interact with to rate their experience. The outlined style shows that it’s clickable for providing feedback.",
+      "Rating display, compact: This version condenses the rating into one icon with the numerical rating and review count, perfect for tight spaces while still showing key info."
+    ],
+    "behavior": [
+      "Interaction: The rating component has hover, focus, and pressed states. The default size of an interactive rating is XLarge.",
+      "Rating displays are used to show ratings that have already been submitted and are non-interactive.",
+      "Appearance: The rating icons have can appear in three different ways – empty, partially filled, and filled.",
+      "Default (empty)",
+      "Partially filled (0.5 step)",
+      "Filled",
+      "Shape: The rating icons have can appear in three different ways – empty, partially filled, and filled.",
+      "Star",
+      "Circle",
+      "Square",
+      "The component scales on the same scale as the Fluent icons with default size being 16 and the largest 20. Use the XLarge variant when asking for user input.",
+      "Small",
+      "Medium",
+      "Large"
+    ],
+    "accessibility": [
+      "Contrast ratio: Star ratings should maintain a 3:1 ratio for both Foreground to Background and Selected to Unselected. However, this requirement can be bypassed if the rating value is explicit (e.g."
+    ],
+    "bestPractices": {
+      "do": [],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-rating--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/rating/usage"
+  },
+  {
+    "name": "Searchbox",
+    "slug": "searchbox",
+    "category": "core",
+    "platform": "web/react",
+    "description": "Searchbox lets people access information with ease, providing flexibility and the ability to clear and filter the search.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Focus animation: The animation between the rest and focus state is the same as the input field animation. It appears once the searchbox receives focus.",
+      "A consistent layout in the search form creates a learned pattern and brings ease to our users. The Close button is only present when there’s content in the searchbox."
+    ],
+    "accessibility": [
+      "Responsiveness: The searchbox is fully responsive to the container it lives in. While zoom levels and page sizes affect the space the searchbox holds, it keeps the same functionality."
+    ],
+    "bestPractices": {
+      "do": [
+        "Make sure to always show the most relevant options closest to what the user is looking to find first."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-searchbox--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/searchbox/usage"
+  },
+  {
+    "name": "Select",
+    "slug": "select",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A select lets people choose a single option from a list of at least four options. Selects use browser native styling for the listed options. They are ideal for data submission in forms and ease of use on mobile platforms.",
+    "whenToUse": "If you need to control the styles or format the options in the list, try a dropdown. If you need to let someone type in the visible field to submit a free form answer, or to filter the list of options, try a combobox. For a standardized form component including helper text and validation styles, use the select field component.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Default selection: On first render, selects will show the first option in the menu as the default selection. You can change the default selection by defining the defaultValue prop on the select element or by using the selected prop on the appropriate option element.",
+      "Default selection behavior"
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [
+        "Use descriptive labels that tell people what they can find in the menu.",
+        "Write select options using parallel construction, for example all nouns or all verbs, but don’t repeat the same word or phrase at the beginning of each option.",
+        "Use sentence-style capitalization—only capitalize the first word."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-select--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/select/usage"
+  },
+  {
+    "name": "Skeleton",
+    "slug": "skeleton",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A skeleton lets people know that a section of content is loading without blocking other parts of the page.",
+    "whenToUse": "Skeletons are great for hinting at the structure of information in a layout. Use them to gradually load content that takes longer than a second. If you don’t know the structure, try a progress bar or spinner. Skeletons let people know something is happening, but not how long until it’s done. Avoid them for long processes.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Skeletons have two animation styles, wave and pulse. Wave is the default animation and provides the smoothest transition.",
+      "Whenever possible, make simultaneous calls for data to avoid staggered loading. If a staggered load is unavoidable, make sure the skeleton animations stay in sync.",
+      "Communicate what’s essential: Use skeletons to prep people for new data. Don’t use them for fixed parts of a layout, like tabs in an app bar.",
+      "When loading dynamic components with variable final content, use the skeleton to communicate consistent, high-level information. Most importantly, keep it simple."
+    ],
+    "accessibility": [
+      "Focusable components: If a loading component is focusable and showing skeleton content, make sure to include an accessible name or label to communicate that it’s loading. After content is loaded, ensure that keyboard focus doesn’t get disrupted.",
+      "Live regions and aria-busy: For larger or more important blocks of skeleton content, consider implementing a live region ( aria-live) to inform screen readers when the content is finished loading. Live regions can become disruptive if used incorrectly, so be sure that aren’t too many live regions and set the appropriate politeness level to avoid constantly…",
+      "If you have multiple skeletons in a live region but aren’t sure they will update simultaneously, try aria-busy. You can set aria-busy to true to make screen readers wait until all content is loaded before making an announcement."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use skeletons to prep people for new data."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/preview-components-skeleton--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/skeleton/usage"
+  },
+  {
+    "name": "Slider",
+    "slug": "slider",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A slider lets someone set a value from a given range. Sliders can take immediate effect, like a volume control, or can require a submission, like in a form.",
+    "whenToUse": "Use a slider for imprecise values. Don't use them for ranges that are very small or very large. For precise numerical inputs, like a dollar amount, try an input.",
+    "anatomy": [],
+    "states": [
+      "Default: Default sliders let someone choose any approximate value along an unmarked range, like brightness controls.",
+      "Step: Step sliders divide a track into discrete values, like screen resolutions settings, and will snap the thumb to the specific value closest to the where the track was selected."
+    ],
+    "behavior": [
+      "Sliders can be manipulated by moving the thumb along the track, or by selecting a spot along the track that the thumb will jump to. All interactions are optimized for mouse, keyboard, and touch.",
+      "Thumb selection",
+      "Track selection",
+      "Sliders can be laid out vertically or horizontally.",
+      "Vertical alignment",
+      "Horizontal alignment"
+    ],
+    "accessibility": [
+      "Use sliders with a label, even if that label is hidden. It’s common to use a tooltip to label the current value of a slider."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use sliders with a label, even if that label is hidden."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-slider--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/slider/usage"
+  },
+  {
+    "name": "Spin button",
+    "slug": "spin",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A spin button is a specialized input that lets someone easily increase or decrease a value within a set range, like dates in a month.",
+    "whenToUse": "Spin buttons are good for precise increments in small ranges. If the range is very large or very small (less than three values), use an input instead. If the values can be imprecise and a visual representation of the value on the range is helpful, try a slider.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Spin button interactions: People can choose a value by entering the it directly into the input, using the keyboard arrows to change the value, or selecting the spin buttons to change the value.",
+      "The increments should be reasonable. For example if choosing dates in a month, increment by one.",
+      "Disabled spin buttons: When min or max values are reached, the appropriate spin button is disabled to let people know that they’ve reached the end of the range and can’t go any higher or lower.",
+      "While the spin buttons may be disabled, the input itself must always be enabled to reach an accessible target size."
+    ],
+    "accessibility": [
+      "Use aria-valuemin and aria-valuemax to define the size of the range. This communicates to screen readers the size of the acceptable range."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use aria-valuemin and aria-valuemax to define the size of the range.",
+        "Use sentence-style capitalization—only capitalize the first word."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-spinbutton--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/spin/usage"
+  },
+  {
+    "name": "Spinner",
+    "slug": "spinner",
+    "category": "core",
+    "platform": "web/react",
+    "description": "Spinners visually communicate that something is processing. They’re used for loading states that take more than a second.",
+    "whenToUse": "Spinners don’t show how much time is left before the process is done. To communicate a more specific status, try a determinate progress bar instead.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Spinners should be centered over the section of the page that’s loading. If only one section is loading, the spinner shouldn’t block interaction with other sections on the page."
+    ],
+    "accessibility": [
+      "If you know a process will take longer than three seconds, use a label with the spinner to let people know what’s happening in the background. The label text will be used in an aria-labelledby attribute and identified to screen readers."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use short, -ing verbs for spinner labels.",
+        "Use sentence style capitalization—only capitalize the first word."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-spinner--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/spinner/usage"
+  },
+  {
+    "name": "Switch",
+    "slug": "switch",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A switch lets someone choose between two mutually exclusive options, like on or off. Activating a switch triggers an immediate change.",
+    "whenToUse": "If you need a component that requires a submission step before applying a change, or if you need to specify an indeterminate state, try a checkbox.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Use switches with labels in most cases. Labels can appear on top of or on either side of the switch.",
+      "Keep switch labels close enough for intuitive associations"
+    ],
+    "accessibility": [
+      "If using a switch with an icon, use a hidden text label to identify the switch’s purpose to screen readers."
+    ],
+    "bestPractices": {
+      "do": [
+        "Keep switch labels close enough for intuitive associations",
+        "Use a noun or short noun phrase for the label that describes the switch setting.",
+        "Use specific verbs in switch labels if it helps clarity",
+        "Use sentence case with no end punctuation in switch labels."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-switch--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/switch/usage"
+  },
+  {
+    "name": "Tablist",
+    "slug": "tablist",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A tablist allows people to switch between categories of related information without going to different pages. They’re are ideal for dividing content-heavy pages into distinct but related categories that are easier to process and require less scrolling. Tabs can also be used for navigation between a small set of closely related, frequently accessed pages.",
+    "whenToUse": "For navigation beyond closely related categories, use a link instead. To initiate an action, use a button instead.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Default selection: By default, one tab—usually the first—should always be active on first render. Keep this in mind when ordering your content.",
+      "Tablists are laid out horizontally by default but can optionally be laid out vertically. Tabs in a horizontal tablist won’t scroll or wrap to the next line.",
+      "Horizontal",
+      "Vertical: Tab labels may be text-only, text with an icon, or icon-only. Choose a single format that works for all tabs in the tablist.",
+      "Tablists are less effective in smaller layouts that push several tabs into an overflow menu, making them harder to find. When space is limited, consider other options for switching content views, like an accordion or dropdown.",
+      "In smaller layouts, a dropdown might be preferable to a tablist"
+    ],
+    "accessibility": [
+      "Tabs that show an icon without a visible text label must include an aria-label to identify each tab to screen readers. Always include a tooltip that describes the icon to sighted users as well.",
+      "When creating a custom overflow menu button, include role=”tab” on the button element so that screen readers can identify it as a tab.",
+      "Make sure that the current selection is identified to screen raders using aria-current."
+    ],
+    "bestPractices": {
+      "do": [
+        "Make sure that the current selection is identified to screen raders using aria-current.",
+        "Keep tab labels brief, usually a noun or short phrase is best.",
+        "Keep tab labels parallel to one another, grammatically and conceptually, so they read as related categories for a single set of information.",
+        "Use sentence-style capitalization for all tab names, and no end punctuation."
+      ],
+      "dont": [
+        "Don’t combine phrases that aren’t parallel"
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-tablist--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/tablist/usage"
+  },
+  {
+    "name": "Tag",
+    "slug": "tag",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A tag is a representation of a value that someone has picked, like recipients for an email or categories on a planner task.",
+    "whenToUse": "Tags create a visual pattern that lets people know they can change or remove the selection. To show system-generated data that people can’t change, use a badge instead.",
+    "anatomy": [],
+    "states": [
+      "Tag: Use a tag when you only need to provide information and when the only possible action is dismissal.",
+      "Interaction tag: Use an interaction tag when you can provide more information or actions related to what the tag represents."
+    ],
+    "behavior": [
+      "Dismissal: Both tag types are optionally dismissible. Enable dismissal actions to let people undo their choices.",
+      "Non-dismissible tags communicate that a selection is not editable in the current context. Use them to continue the visual pattern that people can change the selection when they enter an editable state.",
+      "Interaction tag primary and secondary actions: In addition to dismissibility, interaction tags can have one other action. Don’t include actions that may be irrelevant or disruptive to the task at hand.",
+      "The secondary action in an interaction tag is always dismiss.",
+      "Reflow and overflow: By default, tags will reflow onto the next line if they can’t fit the container.",
+      "Optionally, you can include an overflow tag by using a tag of the same size and changing the primary text to +n, where n is the number of tags not displayed.",
+      "Tags that represent overflow must be interaction tags, so that people can interact to get more information.",
+      "Tags with wrapping behavior",
+      "Tags with overflow behavior: Consider a person’s goals when applying reflow and overflow behavior. For example, if it’s helpful for someone to see a list of tags to edit or remove them, make sure they wrap so all tags are visible.",
+      "Minimally, there should be 4 pixels of space between extra small tags, 6 pixels between small tags, and 8 pixels between medium tags.",
+      "Read the layout and spacing guidelines to learn how to appropriately apply space around tags.",
+      "Medium",
+      "Small",
+      "Extra small"
+    ],
+    "accessibility": [
+      "Tag interaction states: By default, tags have no interaction states and are static elements. If optional dismissibility is enabled, hover and focus states will also be enabled on the entire tag container.",
+      "Because interaction tags always have available actions, their interaction states are always enabled.",
+      "Truncation: Don’t truncate tag content. It’s important for people to understand at a glance what the tag represents so they can know how to interact with it."
+    ],
+    "bestPractices": {
+      "do": [
+        "Consider a person’s goals when applying reflow and overflow behavior.",
+        "Use the tag for the main info"
+      ],
+      "dont": [
+        "Don’t truncate tag content. It’s important for people to understand at a glance what the tag represents so they can know how to interact with it."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-tag-tag--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/tag/usage"
+  },
+  {
+    "name": "Tag picker",
+    "slug": "tagpicker",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A Tag picker combines a text input and a dropdown giving people a way to select an option from a list or enter their own choice. These selections are represented as tags.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Selecting from a dropdown: When a user clicks into a tag picker, they invoke a dropdown that shows a list of items the user can choose. These are provided by the system and can represent files, people, and meetings.",
+      "Type to filter and select: Users can type when focused on an input to filter the list to match exactly what they’re looking for. Active descendant will always land on the first item, and will be the closest match to what the user has typed.",
+      "Secondary action: A tag picker provides a secondary action slot for extra functionality if needed. An example would be the option to “Clear all” tags within the input.",
+      "Wrapping tags: By default, tags that get inserted to the input wrap and will make the height grow to fit the content. Text within tags themselves can truncate, although it’s not provided out of the box as it is heavily opinionated by the product.",
+      "Truncating text in tags: If truncating is needed to fit in more content, a max width can be assigned so that if text in a tag exceeds it, it will truncate."
+    ],
+    "accessibility": [
+      "Provide a clear name for the input: Use aria-label on TagPickerInput to provide an accessible name for the input. This attribute helps screen readers understand the purpose of the input.",
+      "Deletion interaction: When TagPickerInput is focused, pressing Backspace will remove the last tag. This behavior should be communicated to the user to avoid confusion."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use aria-label on TagPickerInput to provide an accessible name for the input."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-tagpicker--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/tagpicker/usage"
+  },
+  {
+    "name": "Text",
+    "slug": "text",
+    "category": "core",
+    "platform": "web/react",
+    "description": "The text component codifies Fluent's opinions on typography to make them easy to use and standardize across products.",
+    "whenToUse": "Use the text component for plain text. For hypertext, try a link instead.",
+    "anatomy": [],
+    "states": [
+      "For easy implementation, use the text preset components. The presets map to the main text styles defined in the Fluent 2 Web UI kit.",
+      "Presets don’t allow for altering font family, size, or weight. If you need to adjust any of these attributes, use Text with the appropriate props."
+    ],
+    "behavior": [
+      "Font families: Use the font prop to choose a font family. Stick with the base font, Segoe UI, in most scenarios.",
+      "Alignment: The align prop allows you to change text alignment. In most cases, left aligned text is the easiest to read.",
+      "Avoid justified text in web pages. The consistent line length and inconsistent spacing might make scanning information more difficult.",
+      "For more info, see our typography guidelines."
+    ],
+    "accessibility": [
+      "By default, text components result in span elements. Use the as prop to produce semantic HTML.",
+      "Avoid using the appearance of a font to convey meaning. Bold and italic text should be used only when necessary, as not all screen readers communicate when text is bold or italicized."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use the font prop to choose a font family."
+      ],
+      "dont": [
+        "Avoid justified text in web pages. The consistent line length and inconsistent spacing might make scanning information more difficult.",
+        "Avoid using the appearance of a font to convey meaning. Bold and italic text should be used only when necessary, as not all screen readers communicate when text is bold or italicized."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-text--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/text/usage"
+  },
+  {
+    "name": "Textarea",
+    "slug": "textarea",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A textarea allows people to enter long, free-form text data, like a comment.",
+    "whenToUse": "If you only need someone to enter one line of information, try an input instead.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "By default, textareas are not resizable. If there is overflow content, the textarea will scroll.",
+      "The size of the textarea should fit the approximate volume of the content you expect people to enter."
+    ],
+    "accessibility": [
+      "Don’t use placeholder text in the textarea for essential information that people will need to complete the textarea. If you do include placeholder text, be sure it is combined with a label.",
+      "Placeholder text must be associated with an aria-label for assistive technologies.",
+      "Include a label and use the placeholder to reinforce it",
+      "Don’t put too much information in the placeholder"
+    ],
+    "bestPractices": {
+      "do": [
+        "Include a label and use the placeholder to reinforce it"
+      ],
+      "dont": [
+        "Don’t use placeholder text in the textarea for essential information that people will need to complete the textarea. If you do include placeholder text, be sure it is combined with a label.",
+        "Don’t put too much information in the placeholder",
+        "Don’t use placeholder text for essential information, which should appear either in the label or in helper text below the textarea, so it’s always visible. If you do include placeholder text, be sure it is combined with a label."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-textarea--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/textarea/usage"
+  },
+  {
+    "name": "Toast",
+    "slug": "toast",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A toast communicates the status of an action someone is trying to take or that something happened elsewhere in the app. Toasts are temporary surfaces. Use them for information that's useful and relevant, but not critical.",
+    "whenToUse": "For critical messages, try a modal Dialog, Field error, or Message bar instead.",
+    "anatomy": [],
+    "states": [
+      "Toasts generally fall into three categories: confirmation, progress, and communication. The toast component has slots that can be turned on and off to best help people achieve their goals.",
+      "Confirmation toast: Confirmation toasts are shown to someone as a direct result of their action. A confirmation toast’s state can be success, error, warning, informational, or progress.",
+      "Progress toast: Progress toasts inform someone about the status of an operation they initiated.",
+      "Communication toast: Communication toasts inform someone of messages from the system or another person’s actions. These messages can include mentions, event reminders, replies, and system updates.",
+      "They include a call to action directly linking to a solution or the content that they reference. They can be either temporary or persistent."
+    ],
+    "behavior": [
+      "Dismissal: Toasts can have timed, conditional, or express dismissals, dependent on their use case.",
+      "Timed dismissal: If there is no action to take, toast will time out after seven seconds. Timed dismissal is best when there is no further action to take, like for a successful confirmation toast.",
+      "People who navigate via mouse can pause the timer by hovering over the toast. However, toasts that don’t include actions won’t receive keyboard focus for people who navigate primarily by keyboard.",
+      "Conditional dismissal: Use conditional dismissal for toasts that should persist until a condition is met, like a progress toast that dismisses once a task is complete.",
+      "Don’t use toasts for necessary actions. If you need the encourage people to take an action before moving forward, try a more forceful surface like a message bar or a dialog.",
+      "Express dismissal: Include the Close button to allow people to expressly dismiss toasts only if they can find that information again elsewhere, like in a notification center.",
+      "Determinate and indeterminate progress: Progress toasts can be either determinate or indeterminate, depending on the needs of your app and the capabilities of the technology you’re building on.",
+      "When the completion time can be predicted, show a determinate progress bar and percentage of completion. Determinate progress bars offer a reliable user experience since they communicate status and assure people things are still working.",
+      "If the completion time is unknown or its accuracy is unreliable, show an indeterminate spinner icon instead. Don’t show both a spinner and a progress bar in the same toast.",
+      "Don’t use both a spinner and a progress bar in a toast",
+      "Keep location predictable: Toasts should always appear in a consistent location within your app, where they are least likely to block the main content. This is usually the top-right or bottom-right.",
+      "Choose a location that works best for your product. For example, if you can toggle a notifications drawer from the top-right, place toasts there as well so that people will become used to looking for information in that part of the layout.",
+      "Place toasts in a consistent location",
+      "Don’t block the main content",
+      "Don’t overload the toaster: Toasts are wrapped in a container that handles their positioning, called a toaster.",
+      "New toasts always appear at the edge of a layout, pushing older toasts in the toaster toward the center. For example, if the toaster is at the top of the screen, a new toast will appear at the top and push any older toasts down.",
+      "Don’t show more than four toasts in a toaster and keep 16 pixels of space between them.",
+      "Stack up to 4 toasts"
+    ],
+    "accessibility": [
+      "Use the intent prop to properly determine the semantic styles, icons and aria-live regions and roles used in the toast.",
+      "All feedback states except info have an “assertive” aria-live and interrupt any other announcement a screen reader is making. Too many interruptions can disrupt someone’s flow, so don’t overload people with too many assertive toasts."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use conditional dismissal for toasts that should persist until a condition is met, like a progress toast that dismisses once a task is complete.",
+        "Include the Close button to allow people to expressly dismiss toasts only if they can find that information again elsewhere, like in a notification center.",
+        "Place toasts in a consistent location",
+        "Use the intent prop to properly determine the semantic styles, icons and aria-live regions and roles used in the toast.",
+        "Give people the most accurate description of progress possible.",
+        "Write button labels that are specific responses to the main message in the title."
+      ],
+      "dont": [
+        "Don’t use toasts for necessary actions. If you need the encourage people to take an action before moving forward, try a more forceful surface like a message bar or a dialog.",
+        "Don’t use both a spinner and a progress bar in a toast",
+        "Don’t block the main content",
+        "Don’t show more than four toasts in a toaster and keep 16 pixels of space between them."
+      ]
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-toast--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/toast/usage"
+  },
+  {
+    "name": "Toolbar",
+    "slug": "toolbar",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A toolbar gives access to frequently used actions related to someone’s current view or task, like text formatting in an editor.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Overflow: A toolbar will grow to fit its parent container but will never wrap onto a second line. In cases where there are more options than can fit, use the overflow utility.",
+      "Create logical groupings: Actions in a toolbar should be logically grouped to help people find related subtasks. Use dividers and white space to communicate groupings.",
+      "If there are destructive actions or actions that can affect the status of someone’s work, group them away from other options.",
+      "Toolbars support the main task: Place toolbars so that they’re useful when people need them, with the commands that people are most likely to want. For example, in a text editing app where someone’s focus is always on creating content, it makes sense to have the toolbar with formatting options pinned to the top of the app.",
+      "When a toolbar isn’t supporting the main task, add an option for it to be hidden so that people can focus without distractions."
+    ],
+    "accessibility": [
+      "Identify multiple toolbars: If an app contains more than one toolbar, each one should be labeled using aria-label or aria-labelledby if there’s an available text label.",
+      "Icons as button labels: Toolbars can use icons as button labels as a space-saving measure when there are many options to present. It’s important to use icons that are familiar and not force people to guess what each icon does."
+    ],
+    "bestPractices": {
+      "do": [
+        "Keep text labels on toolbar buttons or in tooltips brief."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-toolbar--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/toolbar/usage"
+  },
+  {
+    "name": "Tooltip",
+    "slug": "tooltip",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A tooltip provides supplemental, contextual information elevated near its target component.",
+    "whenToUse": "Tooltips should be used to provide helpful but non-essential, plaintext information. Don't use them to communicate system feedback. If you need to deliver robust, formatted information, use a popover instead.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Tooltips are triggered on hover or focus of the target component and dismissed on blur or mouse-out of the target or tooltip container.",
+      "By default, tooltips are placed 4 pixels away from their target element on hover or focus. Adjust the tooltip’s placement using system spacing tokens to ensure the tooltip doesn’t obscure important information.",
+      "In busy layouts, consider using an info button to indicate there’s more information within a tooltip."
+    ],
+    "accessibility": [
+      "For screen reader users, connect tooltips to their target element with an id attribute and aria-describedby."
+    ],
+    "bestPractices": {
+      "do": [],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-tooltip--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/tooltip/usage"
+  },
+  {
+    "name": "Tree",
+    "slug": "tree",
+    "category": "core",
+    "platform": "web/react",
+    "description": "A tree is used to display a hierarchical view of nested data. It's useful for representing a menu structure, folder hierarchy, or nested categories at a glance. Each tree has a parent node and one or more levels of child nodes that can expand or collapse.",
+    "whenToUse": "To show or hide information without regard to hierarchy, use an accordion instead. For information that's organized in a simpler structure, consider using a list or table instead.",
+    "anatomy": [],
+    "states": [
+      "Basic tree: A basic tree item displays text and icons, and can have interactive buttons appear on hover.",
+      "Persona tree: A persona tree item displays an avatar or image alongside text and sometimes includes additional metadata.",
+      "Item types: Each item in the tree represents a data point. Depending on its position in the tree, it’s classified either as a branch (parent) or a leaf (child) in the tree.",
+      "Branches are always parents, sometimes children: Use branches to group related items into categories and subcategories within a hierarchical tree structure. A branch is always a parent of some items, but might also be a child of another item.",
+      "A leaf is a child only: A leaf is a child item that contains no other child items below it. Leaf items signify the end of the branching path."
+    ],
+    "behavior": [
+      "Interaction modes",
+      "Expand-and-collapse only: Expand-and-collapse-only mode is useful to show how information is organized. People can select any branch to expand it to show child nodes, and can select the branch again to hide them.",
+      "Navigation: In navigation mode, people can still expand and collapse items by selecting the chevron. But they can also select an item to see a detailed view on another surface.",
+      "Multiselect: Multiselect mode can be useful for performing batch operations on multiple items, such as deleting or moving them, or for selecting multiple items to view or edit at once.",
+      "Selecting a parent item also selects all of its children",
+      "If a child item is deselected, the parent checkbox shows a mixed selection state.",
+      "Reflow and overflow: By default, the content of each tree item wraps. The maximum width is defined by the container that it sits in.",
+      "However, you can change the behavior of tree items from wrapping text to truncating. Only choose this if truncated items are still easily differentiated from one another at a glance.",
+      "A tree item has several optional additions, including icons, badges, and quick actions.",
+      "Icons: Use simple, easily recognizable icons. Avoid complex or abstract icons that might confuse users.",
+      "Leading icons",
+      "Trailing icons",
+      "Badges: Badges can be used to provide more information about a node or to indicate its status. For example, a badge could indicate unread messages, recently updated, needs attention, or the number of child nodes that the node contains.",
+      "Each badge provides a text equivalent in a tooltip on hover.",
+      "This tree item has badges to indicate that something needs attention (!) and one new notification (1).",
+      "Quick actions: Quick actions can be added to tree items to provide contextual information and functionality without cluttering the UI or requiring the user to click on the node. For example, a quick action can trigger a pop-up menu that allows the user to perform actions on the node, such as editing its properties or deleting it.",
+      "When a tree node has both badging and quick actions, the default behavior is for the quick actions to replace the badges. However, if it’s necessary to keep the badges visible while hovering, they can be pushed to the side to make room for the quick actions.",
+      "For accessibility, make sure that these actions are also available by a more visible method, such as a toolbar or menu. Limit the number of quick actions to one or two at the most."
+    ],
+    "accessibility": [
+      "Customization options such as the positioning of icons before or after a tree item are communicated to screen reader users through their slot properties.",
+      "To help screen readers understand the purpose of the tree overall, use the aria-label to provide an accessible name for the tree.",
+      "Quick actions are accessible for navigation, but are an unexpected pattern according to WAI-ARIA. To mitigate this, make sure that all quick actions are also available by an alternate method, such as a toolbar or menu."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use sentence style capitalization—only capitalize the first word."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-tree--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/tree/usage"
+  },
+  {
+    "name": "Chat input",
+    "slug": "chatinput",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "The chat input is the area in a Copilot chat where a user can enter their Copilot prompt or question. It’s aimed more at conversational UX than durable content generation. If you need a component to help people create entities, try the Prompt input.",
+    "whenToUse": "",
+    "anatomy": [
+      "Prompt textarea",
+      "Submit prompt",
+      "Suggestion list OPTIONAL",
+      "Prompt guide OPTIONAL",
+      "Attachment list",
+      "Attachments",
+      "Plugins OPTIONAL",
+      "Voice input OPTIONAL"
+    ],
+    "states": [],
+    "behavior": [
+      "The submit button is hidden until the user inserts content into the textarea.",
+      "The add button opens a menu with options to add files, people, meetings, and other entities to the prompt, or to chat with an agent.",
+      "Suggestions appear above the chat input, and the AI generated disclaimer is shown below it.",
+      "Chat input is a highly composed Copilot pattern and, on its own, doesn’t dictate many UX behaviors. Instead, to understand how to help users get the most of this pattern, see the documentation for its component parts."
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [],
+      "dont": []
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-copilotchat--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/usage"
+  },
+  {
+    "name": "Attachment",
+    "slug": "attachment",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "An attachment represents an entity that Copilot should use for grounding a response. They appear as interactive tags in the input footer.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Loading: Use the loading state of the attachment to communicate that it’s being included in the Copilot prompt.",
+      "Handoff: Selecting the attachment title will initiate handoff and open the file in the appropriate app.",
+      "Dismissal: Attachments are always dismissible so people can choose to remove and change attachments as needed. Attachments can be dismissed by selecting the dismiss button.",
+      "Attachment list overflow: When attachments reach the max width of 180 pixels, remaining attachments collapse into an overflow menu. The overflow menu can also display a loading state to indicate that there are more attachments that are processing than the ones currently in view.",
+      "Attachments in the overflow are dismissible from the menu.",
+      "Naming attachments: Attachments should match file names exactly. Exclude the document type from the attachment name.",
+      "Attachment icons: Use the icon slot to indicate what type of file the attachment is. Keep logical relationships between visual indicators in the icon slot and attachment types."
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [
+        "Use the loading state of the attachment to communicate that it’s being included in the Copilot prompt."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-attachments-attachment--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/attachment/usage"
+  },
+  {
+    "name": "Suggestions",
+    "slug": "suggestions",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "A suggestion is a helpful prompt that gives users ideas of how they can continue to interact with Copilot. Suggestions are AI-generated and based in a user’s context to help teach Copilot’s capabilities in a conversational way.",
+    "whenToUse": "Use suggestions to provide shortcuts for submitting prompts and to reply to or build on top of previous outputs. Suggestions are similar to prompt starters, but emphasize conversational context and multi-turn prompting instead of teaching prompt building.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Chat input autofill: Selecting a suggestion always inserts the prompt text into the chat input. Inserting into the chat input gives people the opportunity to edit the prompt either by changing it or expanding on it if needed.",
+      "Avoid buttons: Avoid using buttons within the output when a prompt would be submitted. Reserve buttons instead for system actions and confirmations.",
+      "Text wrapping: Suggestions will grow to fit their content. If content is longer than the width of the container, suggestion text will wrap.",
+      "Avoid text wrapping whenever possible to keep suggestions easy to scan.",
+      "Try to keep suggestion text to one line",
+      "Don’t include too much information because suggestions become hard to scan",
+      "Suggestion overflow: Multiple suggestions will expand to fill the width of their container. If there are more suggestions than will fit, limit them to two lines of suggestions in full chat experiences and three lines in sidecar experiences.",
+      "Limit suggestion overflow to two lines in full chat experiences",
+      "Limit suggestion overflow to three lines in sidecar experiences",
+      "Keep it short and actionable when possible: Keep text short to prevent text wrapping. Text should never truncate.",
+      "Progressive disclosure: Sometimes, a good prompt needs to be long and descriptive in order to get the best output. In these cases, don’t include the whole prompt in the suggestion.",
+      "Progressively disclosing the longer prompt helps people understand how to build robust prompts that can best accomplish a particular task."
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [
+        "Limit suggestion overflow to two lines in full chat experiences",
+        "Limit suggestion overflow to three lines in sidecar experiences",
+        "Keep it short and actionable when possible",
+        "Keep text short to prevent text wrapping."
+      ],
+      "dont": [
+        "Avoid buttons: Avoid using buttons within the output when a prompt would be submitted. Reserve buttons instead for system actions and confirmations.",
+        "Avoid text wrapping whenever possible to keep suggestions easy to scan.",
+        "Don’t include too much information because suggestions become hard to scan"
+      ]
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-suggestions--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/suggestions/usage"
+  },
+  {
+    "name": "Chat output",
+    "slug": "chatoutput",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "Chat output shows the back and forth interactions between Copilot and the user. The Chat output pattern includes all subcomponents between the header and the chat input.",
+    "whenToUse": "",
+    "anatomy": [
+      "Timestamp",
+      "Secondary actions (shown on hover)",
+      "User message",
+      "Copilot or GPT branding",
+      "AI notice",
+      "Citations OUTPUT DEPENDENT",
+      "References OUTPUT DEPENDENT",
+      "Contextual buttons OPTIONAL",
+      "Secondary actions",
+      "Citations and references are dependent on the output that Copilot generates. They will only appear if Copilot references a graph entity."
+    ],
+    "states": [],
+    "behavior": [
+      "Chat output is a highly composed Copilot pattern and, on its own, doesn’t dictate many UX behaviors. Instead, to understand how to help users get the most of this pattern, see the documentation for its component parts."
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [],
+      "dont": []
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-copilotchat--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/usage"
+  },
+  {
+    "name": "Citations and references",
+    "slug": "citationsandreferences",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "Citations and references help build trust for AI experiences by surfacing the information Copilot used to create its output. References represent the source grounding data. Citations connect a Copilot output to a reference.",
+    "whenToUse": "Citations and references always appear in tandem.",
+    "anatomy": [],
+    "states": [
+      "Citations",
+      "Citations let a user know in context that Copilot has generated an answer from a graph entity. The citation connects the output to a reference listed in the output footer.",
+      "References",
+      "References represent source grounding data Copilot used to build a response."
+    ],
+    "behavior": [
+      "Entity preview on hover: When hovering over a citation or a reference, users will see a popover showing a preview of that entity. Previews can either show summaries of the file, as seen below, or can have actionable suggestions within them to help users find an obvious next step.",
+      "App handoff on entity selection: When selecting a reference, that entity will open in its respective Office Web app, Teams, or Outlook.",
+      "Reference overflow: References are shown in the output footer until they reach the max width of their container. If there is overflow, use a Show more button to indicate that there are more references used to build the output that a user can interact with.",
+      "Naming references: References will match file names exactly. Exclude the document type from the reference name.",
+      "Reference icons: Use the icon slot to indicate what type of file the reference is."
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [
+        "Use the icon slot to indicate what type of file the reference is."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-citations-and-references-citations-and-references--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/citationsandreferences/usage"
+  },
+  {
+    "name": "Copilot message",
+    "slug": "copilotmessage",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "Copilot message is the Copilot response in conversational UX scenarios.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Latency and loading: To communicate that a message is still being generated, use the progress properties. This will trigger the loading state on the individual Copilot message.",
+      "Loading an immediate response: The Copilot title and AI disclaimer are hidden during the immediate response phase of the latency pattern. Copilot provides the user with a series of statements and the Copilot Loader until it’s ready to move into the streaming phase.",
+      "The submit button on the input turns into a stop button so that users might cancel the action Copilot is taking.",
+      "Streaming a response: When the streaming phase begins, the immediate response statements are replaced with the Copilot title and AI disclaimer. The Copilot Loader is appended to the bottom of the component and appears whenever Copilot needs a moment to continue processing the output.",
+      "Streaming below the fold: When the content generated by Copilot extends below the viewable area, a down button appears above of the output content. The Copilot Loader and the down button should not be visible at the same time.",
+      "Copilot messages output directly onto the main surface instead of in an elevated or contained card. In addition to the Copilot avatar, name, and AI disclaimer, placing the Copilot message on the main surface helps to create the distinction between a Copilot message and a message from another human.",
+      "Footnote: Copilot messages can contain footnotes that house contextual information or metadata related to that particular response. Footnotes are comprised of Sensitivity and Reference subcomponents.",
+      "Actions: Any actions related to that particular Copilot message appear at the bottom of the Copilot message, beneath the output text and footnote. Emphasize primary actions in this space."
+    ],
+    "accessibility": [
+      "Focus: Pressing Enter on a focused Copilot message will trap and cycle focus within the message so that users can access the information and interactions within. Pressing Esc will move focus out of the Copilot message and back to the Copilot chat container so that users can move from message to message.",
+      "If there are available contextual actions on hover, they are also available on a focused message."
+    ],
+    "bestPractices": {
+      "do": [],
+      "dont": []
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-copilotmessagev2--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/copilotmessage/usage"
+  },
+  {
+    "name": "Sensitivity",
+    "slug": "sensitivity",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "Sensitivity indicates that a Copilot output is derived from sensitive data. Copilot generated responses will inherit the most restrictive sensitive from the sources it references.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [
+      "Sensitivity icon",
+      "Place the sensitivity icon on a Copilot response or output to indicate that that output was generated from sensitive data. In chat, always include a citation linking to the source entity.",
+      "Sensitivity label",
+      "Use the sensitivity label on the relevant reference to indicate the sensitivity classification."
+    ],
+    "behavior": [
+      "Sensitivity popover: On hover, the sensitivity popover shows the sensitivity label, which alerts users to the exact sensitivity level. The sensitivity popover also gives a brief summary of the file and its contents."
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [],
+      "dont": []
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-sensitivity-sensitivityicon--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/sensitivity/usage"
+  },
+  {
+    "name": "Timestamp",
+    "slug": "timestamp",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "Timestamps divide messages by day in a chat thread.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Use relative timing until it exceeds one week. After that, use dates without the year until it exceeds one year.",
+      "For example:",
+      "Today, Yesterday, Wednesday, Tuesday, Monday",
+      "August 21, August 8, etc.",
+      "September 4, 2023"
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [
+        "Use relative timing until it exceeds one week."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-timestamp--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/timestamp/usage"
+  },
+  {
+    "name": "User message",
+    "slug": "usermessage",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "The user message is the chat card that represents the user’s input to Copilot. User messages look identical to user messages in Teams to reinforce the mental model of synchronous conversation.",
+    "whenToUse": "",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Secondary actions: User messages can have a secondary action menu available on focus or hover. This menu is not immediately discoverable and should be reserved for lesser actions like copying, bookmarking, or sharing.",
+      "Secondary actions are helpful when a user has a particular task they associate with that prompt, like saving it to reuse or sharing it with colleagues. Copilot actions should never appear in the hover menu."
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [],
+      "dont": []
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-usermessagev2--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/usermessage/usage"
+  },
+  {
+    "name": "Copilot FRE",
+    "slug": "copilotfre",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "The Copilot FRE is used to introduce Copilot the first time it becomes available to someone within a particular app or service. It is made up of the Fluent dialog combined with Fluent carousel, with some customizations.",
+    "whenToUse": "If you want to introduce a new Copilot feature to someone who has already seen Copilot in your app or service, use prompt starters, zero-prompt, and/or the prompt guide instead.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Triggers: The Copilot FRE dialog is triggered when someone opens an app, file, or web service where Copilot is available to them for the first time.",
+      "If another FRE is being shown for the host app or service, postpone the Copilot FRE to the next session.",
+      "Dismissal: The FRE dialog is modal and blocking, that is, people must dismiss or complete the FRE before they can take any other action in the host app or service.",
+      "To dismiss it, they must select Close, Not now, or Try Copilot. Note that, in React, there is no X (Close) button, but in Win32, an X appears in the top right corner.",
+      "If they close the FRE by selecting Close or Not now, the FRE reappears the next time they open the app or service.",
+      "If they select Try Copilot, the FRE closes, the Copilot chat panel opens, and we don’t show the FRE again to that person.",
+      "To avoid annoying people, show the FRE a maximum of two times per platform, per app, and per user.",
+      "Placement: The Copilot FRE appears in the center of the app screen, in focus, with an overlay obscuring the app behind it. Because it is a modal dialog, users can’t interact with the content behind the FRE until it’s closed.",
+      "Anatomy: Each Copilot FRE page consists of:",
+      "Illustration that shows Copilot in context of the host app or service",
+      "Title, with a call to action for using Copilot",
+      "Body content, describing ways to use Copilot in the app",
+      "Temporary dismissal (Not now), or navigation (Previous) button",
+      "Progress indicator (page 1 of 2, page 2 of 2)",
+      "Navigation (Next) or completion (Try Copilot) button",
+      "The FRE introduces Copilot to new users with a summary of basic functionality, and tips on how to get started.",
+      "The FRE should consist of no more than two pages, because research has found that users rarely click through or pay attention to more than two pages in a FRE carousel.",
+      "Page 1 describes what you can do with Copilot: The content follows a template, with blank parts that can be modified per app to highlight the most common and useful scenarios for Copilot within that app.",
+      "Title: Starts with an action verb and describes the overall value for Copilot in that app.",
+      "Body:"
+    ],
+    "accessibility": [
+      "For screen readers, provide alt text and an ARIA description for the illustration on each page. Because learning new things requires cognitive energy, keep the information brief, conveying the general idea of the illustration, not every detail.",
+      "An ARIA description for the progress indicator states the page and total number of pages, for example, “Page 1 of 2”.",
+      "Do",
+      "For the illustration, provide ARIA text with a short, general description of what is being illustrated.",
+      "Don’t",
+      "Don’t go into unnecessary visual detail in ARIA descriptions for screen readers."
+    ],
+    "bestPractices": {
+      "do": [],
+      "dont": [
+        "Don’t go into unnecessary visual detail in ARIA descriptions for screen readers."
+      ]
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-firstrunexperience--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/copilotfre/usage"
+  },
+  {
+    "name": "Entity cards",
+    "slug": "entitycards",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "An entity is a content type that is stored in Substrate such as a file, meeting, or person. Entity cards contain AI generated insights and actions that represent the content in each entity and suggest next steps based on that content. Each type of entity card has variations that add new features.",
+    "whenToUse": "Use entity cards to represent a document, meeting, or person stored in substrate. Don’t use entity cards to represent a prompt, action, or agent. If you need to represent a prompt, action, or agent, use the corresponding card type instead.",
+    "anatomy": [],
+    "states": [
+      "An entity card can present as a full horizontal or vertical card, an abbreviated vertical or horizontal card, a list item, a chicklet.",
+      "Document cards",
+      "Designed to represent people in an organization. May include details to summarize reasons for displaying each card.",
+      "People cards",
+      "Meeting cards"
+    ],
+    "behavior": [
+      "Relationship to Glance cards and AI Overviews: Entity cards, glance cards, and AI Overviews are all connected. One is an extension of the other and they work as building blocks to each other.",
+      "AI Insights: A team can choose to hide insights or quick actions by default. When insights are not visible at rest, selecting the AI sparkle button reveals them.",
+      "Quick actions: Users can access quick actions through the overflow menu. The buttons appear on hover, providing easy access to commonly used actions.",
+      "Handoff to app: Selecting either the title or product icon hands off users to the corresponding app. These interactions are commonly observed across Microsoft products but can be adapted to meet unique requirements.",
+      "Interactive preview: Selecting the “Play” button enables users to interact with the preview. For a PowerPoint file, this allows users to navigate through the slides in an expanded card view.",
+      "Width and height: Card width and height for web experiences should remain consistent. Card width should stay within 240 and 680 pixels while card height should stay within 580 pixels depending on the card type being used.",
+      "Content structure: Entity cards are meant to hold information about the entity in a way that prioritizes readability and consistency. Most elements are optional aside from the title, icon and backplate, and overflow menu to maintain the card’s function.",
+      "Required: Title + sensitivity label",
+      "Icon + backplate",
+      "Quick actions / Overflow",
+      "Optional: Metadata",
+      "Reason marker",
+      "Preview (static or interactive, play button appears on hover)",
+      "Insights or summary",
+      "Suggested actions",
+      "Additional Action",
+      "Reason marker: Reason markers are an optional element that let users know why they’re seeing a given Entity card.",
+      "Keep reason markers brief and to the point to avoid truncation and localization issues. Avoid repetition of any information already visible on the card.",
+      "AI Insights and summaries: AI Insights and summaries provide AI generated information about an entity. In full length cards, AI Insights are static.",
+      "Quick actions: Quick actions suggest next steps for the user based on the entity and the information provided in the insights."
+    ],
+    "accessibility": [
+      "In insights-shy cards, the Insights button must be exposed in order to be accessible by the user. In general, revealing buttons only on hover is known to cause accessibility issues."
+    ],
+    "bestPractices": {
+      "do": [
+        "Use sentence-style capitalization—only capitalize the first word."
+      ],
+      "dont": []
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-entitycards-entitycard--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/entitycards/usage"
+  },
+  {
+    "name": "Ghost text",
+    "slug": "ghosttext",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "Ghost text, also known as placeholder text, helps provide guidance for user input. Once a user starts to type, the ghost text disappears.",
+    "whenToUse": "Ghost text is intended to quickly and simply describe the action the user should take or help them understand the information Copilot needs to generate a good output.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "Temporary and transient: Ghost text disappears once users begin to add their prompt. Because of this, it’s important to make sure that the information included is only helpful, not necessary for the user to complete the prompt.",
+      "Contextual changes: Ghost text may also change once the text area is selected, to give a new hint to the user and show them more ways to get value from Copilot.",
+      "In the zero state, the ghost text can encourage the user to start a draft.",
+      "Once Copilot has generated a draft, the ghost text can let the user know they can use Copilot to make changes.",
+      "Type ahead: There are times when Copilot will attempt to guess the remainder of a user’s prompt. These are prompt suggestions and aren’t ghost text, but behave in the same way by being transparent text and changing as a user types.",
+      "Use ghost text to give a short, supplementary hint for how to get the best response from Copilot or a clue as to how to move forward. Keep the content contextual to what the user is trying to accomplish.",
+      "Unlike prompt starters, ghost text doesn’t always have to be action oriented. Use your best judgement to discern what information would be most helpful to a user, a suggested action or a question.",
+      "Skip the period in placeholder text. For more info, see Periods in the Microsoft Writing Style Guide.",
+      "Ghost text can spark ideas by asking questions.",
+      "Ghost text can point to a path forward by suggesting actions."
+    ],
+    "accessibility": [
+      "Don’t use ghost text for essential information that people will need in order to interact with Copilot. When someone focuses on the input, the placeholder disappears, and removing the prompt can make it difficult for some people, including those with cognitive impairments, to enter information.",
+      "Ghost text must be associated with an aria-label for assistive technologies."
+    ],
+    "bestPractices": {
+      "do": [],
+      "dont": [
+        "Don’t use ghost text for essential information that people will need in order to interact with Copilot. When someone focuses on the input, the placeholder disappears, and removing the prompt can make it difficult for some people, including those with cognitive impairments, to enter information."
+      ]
+    },
+    "storybookUrl": "",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/ghosttext/usage"
+  },
+  {
+    "name": "Prompt starters",
+    "slug": "promptstarters",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "Prompt starters give people hints about how they can interact with Copilot. Use them to teach how to build prompts, give users a starting point for building a robust prompt, and show Copilot capabilities. Prompt starters are most often found in zero prompt experiences or inside the prompt library dialog.",
+    "whenToUse": "Prompt starters teach people how to build effective prompts. If you need to help people build additional conversational context, use prompt suggestions.",
+    "anatomy": [],
+    "states": [
+      "Chat starter",
+      "The chat starter appears in side car experiences and sends the suggested prompt to the input where people can tweak it or send it to Copilot. They’re lightweight and straightforward and should help people accomplish and in-context task.",
+      "Library starter",
+      "The library starter is a more heavyweight card that provides more information and actions around a card. Use library starters to show people many different kinds of prompts they can try."
+    ],
+    "behavior": [
+      "Textarea autofill: Selecting a prompt starter always inserts the prompt text into the textarea, even if no additional information is required to finish the prompt. If a reference is required, the CiQ menu will also open automatically.",
+      "Inserting into the textarea gives people the opportunity to edit the prompt either by changing it or expanding on it if needed.",
+      "Visual cues to fill in the blank: Prompt starters give users an idea of what a prompt can accomplish with data of their choice. To indicate that choice, there are different visual cues to direct people toward Microsoft Graph entities or free-form text entry.",
+      "Blue text or tags for Microsoft Graph entities: Entities that exist in the Microsoft Graph, like meetings, calendar events, emails, chats, and people, are represented by blue text. By default, the text is comms blue but can be changed to reflect the color of the product it appears in.",
+      "When a user selects a prompt starter that calls for a Microsoft Graph entry, the blue text doesn’t autofill into the textarea. Instead, the CiQ menu opens and has focus so that the user can choose the entity they want to complete the prompt.",
+      "Badge for CiQ",
+      "Blue text for CiQ",
+      "Gray texts in brackets for free-form entry: To prompt users to enter free-form text that doesn’t map to Microsoft Graph data points, use gray texts in brackets. The content of that text should be general so that the distinction between a free-form entry and graph data remains clear.",
+      "When a user selects a prompt starter that calls for free-form entry, the gray, bracketed text doesn’t autofill into the textarea. Instead, the cursor appears to suggest that the user can complete the prompt on their own.",
+      "Free-form entry in chat starters",
+      "Free-form entry in library starter",
+      "Chat starter limits: Don’t use more than three chat prompt starters. Space is limited so highlight the most helpful prompts.",
+      "Writing library starters: Prompt library starters tend to have more screen real estate that chat starters. Therefore, titles in library starters can be more descriptive.",
+      "Library starter body text summarizes a long, in-depth prompt that will appear in the input. Keep the starter body text brief, usually the first sentence of the larger prompt.",
+      "Writing chat starters: Prompts represent user agency. Use third person to represent a command to Copilot.",
+      "Include ellipses ( … ) to indicate that open-ended information should be added to complete the prompt. Try to truncate prompts at the end of a word and use a space before the ellipses.",
+      "If no additional information is required to submit the prompt, format content regularly."
+    ],
+    "accessibility": [],
+    "bestPractices": {
+      "do": [],
+      "dont": [
+        "Don’t use more than three chat prompt starters. Space is limited so highlight the most helpful prompts."
+      ]
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-promptstarter--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/promptstarters/usage"
+  },
+  {
+    "name": "System message",
+    "slug": "systemmessage",
+    "category": "ai",
+    "platform": "web/react",
+    "description": "System messages are used in Copilot for messages from the system that need to sit outside the chat conversation. They are typically used to inform someone about an action related to the chat but occurring somewhere else or in the background.",
+    "whenToUse": "If Copilot performs an action for the user that is visible in the main canvas without switching contexts, use chat output for this message instead. For system-level errors like Copilot being unavailable, use a message bar instead.",
+    "anatomy": [],
+    "states": [],
+    "behavior": [
+      "In handoff scenarios, the system message is triggered when the user chooses an action button in the Copilot chat that requires handoff, such as “Edit in Word” or “Create a policy.”",
+      "When handoff goes to a different app or service, a system message appears in both the initiating app chatS and the destination app chat, with slight variation in content to fit each context.",
+      "Placement and styling: After Copilot takes action on behalf of the user, the system message appears below the last message or option in the chat. It uses muted styling to deemphasize and differentiate it from the main conversation.",
+      "It may include an icon related to the action performed. For handoff messages, this is usually the Open icon, which indicates opening something in a different window or browser tab.",
+      "System messages are always written in third person, describing what Copilot did and where. The message is a full sentence, and ends with a period.",
+      "Handoff messages: System messages are most commonly used for handoffs, which can be used to:",
+      "Navigate to another page or file in the same app or service",
+      "Navigate to a different app or service (on the web, opens in a different tab)",
+      "When Copilot takes a requested action on behalf of the user and hands the user off to another page, file, app, or service to continue working, a system message appears in Copilot chat. This is called a handoff.",
+      "When the handoff goes to a different app or service in a new window or browser tab, separate messages, called bookends, appear in the originating and destination chat panes.",
+      "Handoff messages are tailored to fit the context where they appear. In the originating app, the message clarifies where the user will go to continue working, and in the destination app, they include where the action was initiated.",
+      "Each handoff message includes an action and a noun. The action is typically ”opened” or “created,” and the noun is the name of the page, guide, app, or location that Copilot opened.",
+      "The system message should also inform if any styling, content, filters, or fields were applied or altered by Copilot.",
+      "In bookended handoff messages, the action and noun text should be the same for both the initiating and receiving apps.",
+      "For the app initiating, describe where the noun will be handed off to.",
+      "For the receiving app, describe where the noun is coming from.",
+      "Shown in initiating app: In the initiating app, messages generally follow the format “Copilot/Copilot chat [verbed] an [object] in [destination app].” For messages about opening a different web page, use the phrase “…opened [destination] in a new browser tab.” Examples:",
+      "Copilot opened an email draft in Outlook. [origin: Word; destination: Outlook]",
+      "Copilot opened a workbook in Excel. [origin: Word; destination: Excel]",
+      "Copilot opened a presentation in PowerPoint. [origin: Copilot Chat; destination: PowerPoint]"
+    ],
+    "accessibility": [
+      "When the system message is in focus, pressing Enter moves focus to any focusable elements, such as a link, when present. Pressing Esc moves focus back to the whole system message.",
+      "By default, the system message announces “system message” followed by the contents of the message. An announcement property can optionally be added to announce a custom message."
+    ],
+    "bestPractices": {
+      "do": [],
+      "dont": []
+    },
+    "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-systemmessage--docs",
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/systemmessage/usage"
+  }
+]

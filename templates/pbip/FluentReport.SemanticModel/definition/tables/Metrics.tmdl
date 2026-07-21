@@ -1,0 +1,32 @@
+table Metrics
+	lineageTag: 44444444-4444-4444-4444-444444444444
+
+	column Category
+		dataType: string
+		lineageTag: 55555555-5555-5555-5555-555555555555
+		summarizeBy: none
+		sourceColumn: [Category]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		dataType: int64
+		formatString: 0
+		lineageTag: 66666666-6666-6666-6666-666666666666
+		summarizeBy: sum
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Metrics = calculated
+		mode: import
+		source =
+				DATATABLE(
+				    "Category", STRING,
+				    "Value", INTEGER,
+				    {
+				        { "Fluent Blue", 42 },
+				        { "Fluent Teal", 30 },
+				        { "Fluent Green", 18 }
+				    }
+				)

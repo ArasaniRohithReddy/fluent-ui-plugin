@@ -1,0 +1,2721 @@
+{
+  "meta": {
+    "title": "Microsoft Fluent 2 (Fluent UI React v9) component catalog",
+    "fluentVersion": "Fluent 2 / Fluent UI React v9",
+    "reactPackage": "@fluentui/react-components",
+    "reactPackageVersion": "9.74.3",
+    "webComponentsPackage": "@fluentui/web-components",
+    "webComponentsPackageVersion": "3.0.2",
+    "generatedFrom": "Component names and prop types/defaults extracted from the installed @fluentui/react-components and @fluentui/web-components d.ts files; categories, a11y notes and samples authored to Fluent 2 guidance.",
+    "generatedAt": "2026-07-20",
+    "totalReactComponentExports": 232,
+    "componentsCatalogued": 82,
+    "notes": [
+      "keyProps types and @default values are taken verbatim from the shipped TypeScript definitions; props inherited from HTML elements are omitted for brevity.",
+      "webComponent is the Fluent Web Components v3 custom-element tag when one exists; null means there is no direct v3 web component (use the React component).",
+      "All components must be rendered inside a <FluentProvider theme={...}> to receive tokens."
+    ],
+    "aiCopilot": {
+      "suitePackage": "@fluentui-copilot/react-copilot",
+      "suiteVersion": "0.30.5",
+      "docs": "https://ai.fluentui.dev/",
+      "publiclyInstallable": true,
+      "supportStatus": "Published on the PUBLIC npm registry and installable, but every @fluentui-copilot/* package README states: 'For internal use only. External use is not supported at this time.' Treat these as an internal/preview surface: APIs (all 0.x) can change without notice and there is no external support SLA.",
+      "githubStatus": "No public source repo: https://github.com/microsoft/fluentui-copilot returns 404. Source lives in the microsoft/fluentui monorepo / internal; docs at https://ai.fluentui.dev/ require Microsoft sign-in for full component pages.",
+      "buildsOnFluent2": "All packages peer-depend on @fluentui/react-components >=9.69.0 <10 and render inside CopilotProvider (a superset of FluentProvider), reusing Fluent 2 tokens.",
+      "aggregatedFrom": "@fluentui-copilot/react-copilot@0.30.5 dependency graph and each sub-package dist/index.d.ts (installed from npm).",
+      "totalSuiteComponentsDiscovered": 95
+    }
+  },
+  "components": [
+    {
+      "name": "Button",
+      "category": "Actions",
+      "description": "Buttons give people a way to trigger an action.",
+      "reactImport": "import { Button } from '@fluentui/react-components';",
+      "webComponent": "<fluent-button>",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'secondary' | 'primary' | 'outline' | 'subtle' | 'transparent'",
+          "default": "'secondary'"
+        },
+        {
+          "name": "shape",
+          "type": "'rounded' | 'circular' | 'square'",
+          "default": "'rounded'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "iconPosition",
+          "type": "'before' | 'after'",
+          "default": "'before'"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "disabledFocusable",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Renders a native <button>. Provide an aria-label when the button has only an icon. Use disabledFocusable instead of disabled to keep it in the tab order for screen-reader users.",
+      "sample": "<Button appearance=\"primary\" icon={<AddRegular />}>Save</Button>"
+    },
+    {
+      "name": "MenuButton",
+      "category": "Actions",
+      "description": "Second line of text that describes the action this button takes. / secondaryContent?: Slot<'span'>; /** Container that wraps the children and the secondaryContent slot. / contentContainer: NonNullable<Slot<'span'>>; }; export declare type CompoundButtonState = ComponentState<CompoundButtonSlots> & Omit<ButtonState, keyof ButtonSlots | 'components'>; /** MenuButtons are buttons that have a chevron icon after the button contents and are usually clicked to open/close menus.",
+      "reactImport": "import { MenuButton } from '@fluentui/react-components';",
+      "webComponent": "<fluent-menu-button>",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'secondary' | 'primary' | 'outline' | 'subtle' | 'transparent'",
+          "default": "'secondary'"
+        },
+        {
+          "name": "shape",
+          "type": "'rounded' | 'circular' | 'square'",
+          "default": "'rounded'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        }
+      ],
+      "a11y": "A Button that opens a Menu; sets aria-haspopup and aria-expanded automatically when used as a MenuTrigger.",
+      "sample": "<Menu>\n  <MenuTrigger disableButtonEnhancement>\n    <MenuButton>Actions</MenuButton>\n  </MenuTrigger>\n  <MenuPopover><MenuList><MenuItem>New</MenuItem></MenuList></MenuPopover>\n</Menu>"
+    },
+    {
+      "name": "ToggleButton",
+      "category": "Actions",
+      "description": "Root of the component that wraps the primary action button and menu button. / root: NonNullable<Slot<'div'>>; /** Button that opens menu with secondary actions in SplitButton. / menuButton?: Slot<typeof MenuButton>; /** Button to perform primary action in SplitButton. / primaryActionButton?: Slot<typeof Button>; }; export declare type SplitButtonState = ComponentState<SplitButtonSlots> & Omit<ButtonState, 'components' | 'iconOnly' | 'root'> & Omit<MenuButtonState, 'components' | 'iconOnly' | 'root'>; /** ToggleButtons are buttons that toggle between two defined states when triggered.",
+      "reactImport": "import { ToggleButton } from '@fluentui/react-components';",
+      "webComponent": "<fluent-toggle-button>",
+      "keyProps": [
+        {
+          "name": "defaultChecked",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "checked",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "isAccessible",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "appearance",
+          "type": "'secondary' | 'primary' | 'outline' | 'subtle' | 'transparent'",
+          "default": "'secondary'"
+        },
+        {
+          "name": "shape",
+          "type": "'rounded' | 'circular' | 'square'",
+          "default": "'rounded'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        }
+      ],
+      "a11y": "A Button with a pressed state. Exposes aria-pressed reflecting checked. Provide an aria-label for icon-only toggle buttons.",
+      "sample": "<ToggleButton checked={bold} onClick={() => setBold(!bold)} icon={<TextBoldRegular />} />"
+    },
+    {
+      "name": "SplitButton",
+      "category": "Actions",
+      "description": "MenuButton Props without the `appearance`/`size`/`shape` styling props, for headless usage. / export declare type MenuButtonBaseProps = ComponentProps<MenuButtonSlots> & Pick<ButtonBaseProps, 'disabled' | 'disabledFocusable'>; /** MenuButton State without the `appearance`/`size`/`shape` styling props, for headless usage. / export declare type MenuButtonBaseState = ComponentState<MenuButtonSlots> & Omit<ButtonBaseState, keyof ButtonSlots | 'components' | 'iconPosition'>; export declare const menuButtonClassNames: SlotClassNames<MenuButtonSlots>; export declare type MenuButtonProps = ComponentProps<MenuButtonSlots> & Pick<ButtonProps, 'appearance' | 'disabledFocusable' | 'disabled' | 'shape' | 'size'>; export declare type MenuButtonSlots = ButtonSlots & { /** Menu icon that indicates that this button has a menu that can be expanded. / menuIcon?: Slot<'span'>; }; export declare type MenuButtonState = ComponentState<MenuButtonSlots> & Omit<ButtonState, keyof ButtonSlots | 'components' | 'iconPosition'>; /** Renders a Button component by passing the state defined props to the appropriate slots. / declare const renderButton_unstable: (state: ButtonBaseState) => JSXElement; export { renderButton_unstable } export { renderButton_unstable as renderToggleButton_unstable } /** Renders a CompoundButton component by passing the state defined props to the appropriate slots. / export declare const renderCompoundButton_unstable: (state: CompoundButtonState) => JSXElement; /** Renders a MenuButton component by passing the state defined props to the appropriate slots. / export declare const renderMenuButton_unstable: (state: MenuButtonBaseState) => JSXElement; /** Renders a SplitButton component by passing the state defined props to the appropriate slots. / export declare const renderSplitButton_unstable: (state: SplitButtonState) => JSXElement; /** SplitButtons are a grouping of two interactive surfaces where interacting with the first one triggers a primary action, while interacting with the second one opens a menu with secondary actions.",
+      "reactImport": "import { SplitButton } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'secondary' | 'primary' | 'outline' | 'subtle' | 'transparent'",
+          "default": "'secondary'"
+        },
+        {
+          "name": "shape",
+          "type": "'rounded' | 'circular' | 'square'",
+          "default": "'rounded'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Composed of a primary action button plus a menu button; render the menu button inside a MenuTrigger for correct aria-haspopup/expanded.",
+      "sample": "<Menu>\n  <MenuTrigger disableButtonEnhancement>\n    {(triggerProps) => (\n      <SplitButton menuButton={triggerProps} primaryActionButton={{ children: \"Save\" }} appearance=\"primary\" />\n    )}\n  </MenuTrigger>\n  <MenuPopover><MenuList><MenuItem>Save as…</MenuItem></MenuList></MenuPopover>\n</Menu>"
+    },
+    {
+      "name": "CompoundButton",
+      "category": "Actions",
+      "description": "Internal context provider used to update default values between internal components *",
+      "reactImport": "import { CompoundButton } from '@fluentui/react-components';",
+      "webComponent": "<fluent-compound-button>",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'secondary' | 'primary' | 'outline' | 'subtle' | 'transparent'",
+          "default": "'secondary'"
+        },
+        {
+          "name": "shape",
+          "type": "'rounded' | 'circular' | 'square'",
+          "default": "'rounded'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "A Button with primary text plus secondaryContent (a description). Both are announced; keep secondaryContent concise.",
+      "sample": "<CompoundButton icon={<CalendarRegular />} secondaryContent=\"Choose a date\">Schedule</CompoundButton>"
+    },
+    {
+      "name": "Link",
+      "category": "Actions",
+      "description": "A Link is a reference to data that a user can follow by clicking or tapping it.",
+      "reactImport": "import { Link } from '@fluentui/react-components';",
+      "webComponent": "<fluent-link>",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'default' | 'subtle'",
+          "default": "'default'"
+        },
+        {
+          "name": "inline",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "disabledFocusable",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Renders <a> when href is set, otherwise a <button role=\"link\">. Use inline within body text; give descriptive link text (avoid \"click here\").",
+      "sample": "<Link href=\"https://fluent2.microsoft.design\" inline>Fluent 2 guidelines</Link>"
+    },
+    {
+      "name": "Input",
+      "category": "Forms & Inputs",
+      "description": "The Input component allows people to enter and edit text.",
+      "reactImport": "import { Input } from '@fluentui/react-components';",
+      "webComponent": "<fluent-text-input>",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'outline' | 'underline' | 'filled-darker' | 'filled-lighter' | 'filled-darker-shadow' | 'filled-lighter-shadow'",
+          "default": "'outline'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "type",
+          "type": "'text' | 'email' | 'password' | 'search' | 'tel' | 'url' | 'date' | 'datetime-local' | 'month' | 'number' | 'time' | ...",
+          "default": "'text'"
+        },
+        {
+          "name": "onChange",
+          "type": "(ev: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => void"
+        }
+      ],
+      "a11y": "Always associate a Label (via Field or htmlFor/id). Supports contentBefore/contentAfter slots for icons or units.",
+      "sample": "<Field label=\"Email\">\n  <Input type=\"email\" placeholder=\"you@contoso.com\" />\n</Field>"
+    },
+    {
+      "name": "Textarea",
+      "category": "Forms & Inputs",
+      "description": "The Textarea component allows the user to enter and edit text in multiple lines.",
+      "reactImport": "import { Textarea } from '@fluentui/react-components';",
+      "webComponent": "<fluent-textarea>",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'outline' | 'filled-darker' | 'filled-lighter' | 'filled-darker-shadow' | 'filled-lighter-shadow'",
+          "default": "'outline'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "resize",
+          "type": "'none' | 'horizontal' | 'vertical' | 'both'",
+          "default": "'none'"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string"
+        },
+        {
+          "name": "onChange",
+          "type": "(ev: React.ChangeEvent<HTMLTextAreaElement>, data: TextareaOnChangeData) => void"
+        }
+      ],
+      "a11y": "Associate a Label via Field. resize controls whether the user can resize; default is none.",
+      "sample": "<Field label=\"Notes\">\n  <Textarea resize=\"vertical\" />\n</Field>"
+    },
+    {
+      "name": "SpinButton",
+      "category": "Forms & Inputs",
+      "description": "A SpinButton allows someone to incrementally adjust a value in small steps.",
+      "reactImport": "import { SpinButton } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'outline' | 'underline' | 'filled-darker' | 'filled-lighter'",
+          "default": "'outline'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium'",
+          "default": "'medium'"
+        },
+        {
+          "name": "defaultValue",
+          "type": "number | null"
+        },
+        {
+          "name": "min",
+          "type": "number"
+        },
+        {
+          "name": "max",
+          "type": "number"
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "default": "1"
+        },
+        {
+          "name": "stepPage",
+          "type": "number",
+          "default": "1"
+        },
+        {
+          "name": "precision",
+          "type": "number"
+        },
+        {
+          "name": "displayValue",
+          "type": "string"
+        },
+        {
+          "name": "onChange",
+          "type": "(event: SpinButtonChangeEvent, data: SpinButtonOnChangeData) => void"
+        }
+      ],
+      "a11y": "Implements role=\"spinbutton\"; arrow keys and Page Up/Down change the value. Provide a Label via Field.",
+      "sample": "<Field label=\"Quantity\">\n  <SpinButton defaultValue={1} min={0} max={10} />\n</Field>"
+    },
+    {
+      "name": "Slider",
+      "category": "Forms & Inputs",
+      "description": "The Slider allows users to quickly select a value by dragging a thumb across a rail.",
+      "reactImport": "import { Slider } from '@fluentui/react-components';",
+      "webComponent": "<fluent-slider>",
+      "keyProps": [
+        {
+          "name": "size",
+          "type": "'small' | 'medium'",
+          "default": "'medium'"
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "default": "0"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "default": "100"
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "default": "1"
+        },
+        {
+          "name": "value",
+          "type": "number"
+        },
+        {
+          "name": "defaultValue",
+          "type": "number"
+        },
+        {
+          "name": "vertical",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": "false (renders enabled)"
+        },
+        {
+          "name": "onChange",
+          "type": "(ev: React.ChangeEvent<HTMLInputElement>, data: SliderOnChangeData) => void"
+        }
+      ],
+      "a11y": "Renders an <input type=\"range\">. Provide a Label via Field; keyboard arrows and Home/End adjust the value.",
+      "sample": "<Field label=\"Volume\">\n  <Slider min={0} max={100} defaultValue={50} />\n</Field>"
+    },
+    {
+      "name": "SearchBox",
+      "category": "Forms & Inputs",
+      "description": "SearchBox is an Input specialized for search, with a search icon and a clear (dismiss) button.",
+      "reactImport": "import { SearchBox } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "onChange",
+          "type": "(event: SearchBoxChangeEvent, data: InputOnChangeData) => void"
+        }
+      ],
+      "a11y": "Based on Input; renders type=\"search\" with a dismiss button. Provide an aria-label or a Field label.",
+      "sample": "<SearchBox placeholder=\"Search\" onChange={(e, d) => setQuery(d.value)} />"
+    },
+    {
+      "name": "Field",
+      "category": "Forms & Inputs",
+      "description": "Field adds a label, validation message and hint text to a form control.",
+      "reactImport": "import { Field } from '@fluentui/react-components';",
+      "webComponent": "<fluent-field>",
+      "keyProps": [
+        {
+          "name": "orientation",
+          "type": "'vertical' | 'horizontal'",
+          "default": "'vertical'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "required",
+          "type": "boolean"
+        }
+      ],
+      "a11y": "Wires up label, hint and validationMessage to the child control via aria-labelledby/aria-describedby and aria-invalid.",
+      "sample": "<Field label=\"Name\" required validationMessage=\"This field is required\" validationState=\"error\">\n  <Input />\n</Field>"
+    },
+    {
+      "name": "Label",
+      "category": "Forms & Inputs",
+      "description": "A label component provides a title or name to a component.",
+      "reactImport": "import { Label } from '@fluentui/react-components';",
+      "webComponent": "<fluent-label>",
+      "keyProps": [
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "weight",
+          "type": "'regular' | 'semibold'",
+          "default": "'regular'"
+        },
+        {
+          "name": "required",
+          "type": "boolean | Slot<'span'>",
+          "default": "false"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Use htmlFor to associate the Label with a control by id, or let Field manage the association.",
+      "sample": "<Label htmlFor=\"pw\" required>Password</Label>\n<Input id=\"pw\" type=\"password\" />"
+    },
+    {
+      "name": "InfoLabel",
+      "category": "Forms & Inputs",
+      "description": "InfoLabel is a Label with an adjacent InfoButton that reveals more information in a popover.",
+      "reactImport": "import { InfoLabel } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "info",
+          "type": "InfoButtonProps['info']"
+        }
+      ],
+      "a11y": "The InfoButton is keyboard focusable and opens a Popover; put supplementary guidance in the info slot.",
+      "sample": "<InfoLabel info=\"Shown on your public profile\">Display name</InfoLabel>"
+    },
+    {
+      "name": "Checkbox",
+      "category": "Selection",
+      "description": "Checkboxes give people a way to select one or more items from a group, or switch between two mutually exclusive options.",
+      "reactImport": "import { Checkbox } from '@fluentui/react-components';",
+      "webComponent": "<fluent-checkbox>",
+      "keyProps": [
+        {
+          "name": "checked",
+          "type": "'mixed' | boolean",
+          "default": "false"
+        },
+        {
+          "name": "defaultChecked",
+          "type": "'mixed' | boolean"
+        },
+        {
+          "name": "shape",
+          "type": "'square' | 'circular'",
+          "default": "'square'"
+        },
+        {
+          "name": "size",
+          "type": "'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "labelPosition",
+          "type": "'before' | 'after'",
+          "default": "'after'"
+        },
+        {
+          "name": "onChange",
+          "type": "(ev: React.ChangeEvent<HTMLInputElement>, data: CheckboxOnChangeData) => void"
+        }
+      ],
+      "a11y": "Supports an indeterminate (\"mixed\") state via checked=\"mixed\". Provide a label as children or via Field.",
+      "sample": "<Checkbox label=\"I agree to the terms\" />"
+    },
+    {
+      "name": "Radio",
+      "category": "Selection",
+      "description": "Radio is a wrapper for a radio button with a label; use inside a RadioGroup.",
+      "reactImport": "import { Radio } from '@fluentui/react-components';",
+      "webComponent": "<fluent-radio>",
+      "keyProps": [
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "labelPosition",
+          "type": "'after' | 'below'"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "name": "onChange",
+          "type": "(ev: React.ChangeEvent<HTMLInputElement>, data: RadioOnChangeData) => void"
+        }
+      ],
+      "a11y": "Must be used inside a RadioGroup, which manages roving focus and the shared name.",
+      "sample": "<Radio value=\"a\" label=\"Option A\" />"
+    },
+    {
+      "name": "RadioGroup",
+      "category": "Selection",
+      "description": "RadioGroup groups related Radio items and manages single selection.",
+      "reactImport": "import { RadioGroup } from '@fluentui/react-components';",
+      "webComponent": "<fluent-radio-group>",
+      "keyProps": [
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string"
+        },
+        {
+          "name": "layout",
+          "type": "'vertical' | 'horizontal' | 'horizontal-stacked'",
+          "default": "'vertical'"
+        },
+        {
+          "name": "onChange",
+          "type": "(ev: React.FormEvent<HTMLDivElement>, data: RadioGroupOnChangeData) => void"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "name": "required",
+          "type": "boolean"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "a11y": "Implements role=\"radiogroup\". Wrap in a Field to add a group label.",
+      "sample": "<Field label=\"Size\">\n  <RadioGroup defaultValue=\"m\">\n    <Radio value=\"s\" label=\"Small\" />\n    <Radio value=\"m\" label=\"Medium\" />\n  </RadioGroup>\n</Field>"
+    },
+    {
+      "name": "Switch",
+      "category": "Selection",
+      "description": "Switches enable users to trigger an option on or off.",
+      "reactImport": "import { Switch } from '@fluentui/react-components';",
+      "webComponent": "<fluent-switch>",
+      "keyProps": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "defaultChecked",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium'",
+          "default": "'medium'"
+        },
+        {
+          "name": "labelPosition",
+          "type": "'above' | 'after' | 'before'",
+          "default": "'after'"
+        },
+        {
+          "name": "onChange",
+          "type": "(ev: React.ChangeEvent<HTMLInputElement>, data: SwitchOnChangeData) => void"
+        },
+        {
+          "name": "disabledFocusable",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Renders an <input type=\"checkbox\" role=\"switch\">. Provide a label via the label slot or Field.",
+      "sample": "<Switch label=\"Wi-Fi\" checked={on} onChange={(e, d) => setOn(d.checked)} />"
+    },
+    {
+      "name": "Combobox",
+      "category": "Selection",
+      "description": "Combobox is a selection control that lets users choose from a list of options, with optional free typing.",
+      "reactImport": "import { Combobox } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "freeform",
+          "type": "boolean"
+        },
+        {
+          "name": "appearance",
+          "type": "'filled-darker' | 'filled-lighter' | 'outline' | 'underline'",
+          "default": "'outline'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "open",
+          "type": "boolean"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string"
+        },
+        {
+          "name": "placeholder",
+          "type": "string"
+        },
+        {
+          "name": "clearable",
+          "type": "boolean"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(e: ComboboxBaseOpenEvents, data: ComboboxBaseOpenChangeData) => void"
+        }
+      ],
+      "a11y": "Implements the ARIA combobox pattern (aria-expanded, aria-activedescendant). Wrap in Field for a label. Use freeform for typeable input.",
+      "sample": "<Field label=\"Fruit\">\n  <Combobox placeholder=\"Select a fruit\">\n    <Option>Apple</Option>\n    <Option>Banana</Option>\n  </Combobox>\n</Field>"
+    },
+    {
+      "name": "Dropdown",
+      "category": "Selection",
+      "description": "Dropdown is a selection control that lets users choose from a list of options (no free typing).",
+      "reactImport": "import { Dropdown } from '@fluentui/react-components';",
+      "webComponent": "<fluent-dropdown>",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'filled-darker' | 'filled-lighter' | 'outline' | 'underline'",
+          "default": "'outline'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "open",
+          "type": "boolean"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string"
+        },
+        {
+          "name": "placeholder",
+          "type": "string"
+        },
+        {
+          "name": "clearable",
+          "type": "boolean"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(e: ComboboxBaseOpenEvents, data: ComboboxBaseOpenChangeData) => void"
+        }
+      ],
+      "a11y": "Implements the ARIA combobox/listbox pattern. Selection is via Option children; supports multiselect. Wrap in Field for a label.",
+      "sample": "<Field label=\"Country\">\n  <Dropdown placeholder=\"Select\">\n    <Option>Canada</Option>\n    <Option>Mexico</Option>\n  </Dropdown>\n</Field>"
+    },
+    {
+      "name": "Select",
+      "category": "Selection",
+      "description": "Select is a styled wrapper around the native HTML <select> element.",
+      "reactImport": "import { Select } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'outline' | 'underline' | 'filled-darker' | 'filled-lighter'",
+          "default": "'outline'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "onChange",
+          "type": "(ev: React.ChangeEvent<HTMLSelectElement>, data: SelectOnChangeData) => void"
+        }
+      ],
+      "a11y": "Renders a native <select>, inheriting native keyboard and screen-reader behavior. Use <option> children and a Field label.",
+      "sample": "<Field label=\"Color\">\n  <Select>\n    <option>Red</option>\n    <option>Green</option>\n  </Select>\n</Field>"
+    },
+    {
+      "name": "TagPicker",
+      "category": "Selection",
+      "description": "TagPicker lets users select multiple values from a list, displaying selections as dismissible tags.",
+      "reactImport": "import { TagPicker } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "onOptionSelect",
+          "type": "EventHandler<TagPickerOnOptionSelectData>"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "EventHandler<TagPickerOnOpenChangeData>"
+        },
+        {
+          "name": "noPopover",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Combines a TagGroup of selected values with a Combobox-style listbox; manages focus between input and tags.",
+      "sample": "<TagPicker onOptionSelect={onSelect} selectedOptions={selected}>\n  <TagPickerControl>\n    <TagPickerGroup>{/* selected tags */}</TagPickerGroup>\n    <TagPickerInput aria-label=\"Assignees\" />\n  </TagPickerControl>\n  <TagPickerList>{/* options */}</TagPickerList>\n</TagPicker>"
+    },
+    {
+      "name": "SwatchPicker",
+      "category": "Selection",
+      "description": "SwatchPicker lets users pick a color from a set of color swatches.",
+      "reactImport": "import { SwatchPicker } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "selectedValue",
+          "type": "string"
+        },
+        {
+          "name": "defaultSelectedValue",
+          "type": "string"
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "EventHandler<SwatchPickerOnSelectionChangeData>"
+        },
+        {
+          "name": "size",
+          "type": "'extra-small' | 'small' | 'medium' | 'large'"
+        },
+        {
+          "name": "shape",
+          "type": "'rounded' | 'square' | 'circular'"
+        },
+        {
+          "name": "layout",
+          "type": "'row' | 'grid'"
+        },
+        {
+          "name": "spacing",
+          "type": "'small' | 'medium'"
+        }
+      ],
+      "a11y": "Implements a radiogroup of color swatches; each ColorSwatch needs an accessible name (aria-label).",
+      "sample": "<SwatchPicker aria-label=\"Theme color\" defaultSelectedValue=\"blue\">\n  <ColorSwatch color=\"#0f6cbd\" value=\"blue\" aria-label=\"Blue\" />\n  <ColorSwatch color=\"#d13438\" value=\"red\" aria-label=\"Red\" />\n</SwatchPicker>"
+    },
+    {
+      "name": "Rating",
+      "category": "Selection",
+      "description": "Rating lets users view and set a star (or custom icon) rating.",
+      "reactImport": "import { Rating } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "value",
+          "type": "number"
+        },
+        {
+          "name": "defaultValue",
+          "type": "number"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "default": "5"
+        },
+        {
+          "name": "step",
+          "type": "0.5 | 1",
+          "default": "1"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large' | 'extra-large'",
+          "default": "'extra-large'"
+        },
+        {
+          "name": "color",
+          "type": "'brand' | 'marigold' | 'neutral'",
+          "default": "'neutral'"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "iconFilled",
+          "type": "React.ElementType"
+        },
+        {
+          "name": "iconOutline",
+          "type": "React.ElementType"
+        },
+        {
+          "name": "onChange",
+          "type": "EventHandler<RatingOnChangeEventData>"
+        }
+      ],
+      "a11y": "Implements a radiogroup of rating items. Provide a name and an accessible group label; itemLabel customizes per-item labels.",
+      "sample": "<Rating name=\"quality\" defaultValue={3} max={5} />"
+    },
+    {
+      "name": "TabList",
+      "category": "Navigation",
+      "description": "A tab list provides single selection from a set of tabs.",
+      "reactImport": "import { TabList } from '@fluentui/react-components';",
+      "webComponent": "<fluent-tablist>",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'transparent' | 'subtle' | 'subtle-circular' | 'filled-circular'",
+          "default": "'transparent'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "vertical",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "selectedValue",
+          "type": "TabValue"
+        },
+        {
+          "name": "defaultSelectedValue",
+          "type": "TabValue"
+        },
+        {
+          "name": "onTabSelect",
+          "type": "SelectTabEventHandler"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "reserveSelectedTabSpace",
+          "type": "boolean",
+          "default": "true"
+        }
+      ],
+      "a11y": "Implements the ARIA tabs pattern with roving tabindex. Pair each Tab value with a corresponding panel.",
+      "sample": "<TabList defaultSelectedValue=\"tab1\" onTabSelect={(e, d) => setTab(d.value)}>\n  <Tab value=\"tab1\">Overview</Tab>\n  <Tab value=\"tab2\">Details</Tab>\n</TabList>"
+    },
+    {
+      "name": "Tab",
+      "category": "Navigation",
+      "description": "A tab provides a selectable item in a tab list.",
+      "reactImport": "import { Tab } from '@fluentui/react-components';",
+      "webComponent": "<fluent-tab>",
+      "keyProps": [
+        {
+          "name": "value",
+          "type": "TabValue"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Rendered with role=\"tab\"; the value links it to its panel. Manage panel visibility from the selected value.",
+      "sample": "<Tab value=\"settings\" icon={<SettingsRegular />}>Settings</Tab>"
+    },
+    {
+      "name": "Breadcrumb",
+      "category": "Navigation",
+      "description": "Breadcrumb shows the path to the current location and lets users navigate back up the hierarchy.",
+      "reactImport": "import { Breadcrumb } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "focusMode",
+          "type": "'arrow' | 'tab'",
+          "default": "'tab'"
+        }
+      ],
+      "a11y": "Renders a <nav> with an ordered list; add aria-label=\"Breadcrumb\". Compose BreadcrumbItem/BreadcrumbButton/BreadcrumbDivider.",
+      "sample": "<Breadcrumb aria-label=\"Breadcrumb\">\n  <BreadcrumbItem><BreadcrumbButton>Home</BreadcrumbButton></BreadcrumbItem>\n  <BreadcrumbDivider />\n  <BreadcrumbItem><BreadcrumbButton current>Files</BreadcrumbButton></BreadcrumbItem>\n</Breadcrumb>"
+    },
+    {
+      "name": "Menu",
+      "category": "Navigation",
+      "description": "Menu displays a list of actions or options in a popover triggered by a button or right-click.",
+      "reactImport": "import { Menu } from '@fluentui/react-components';",
+      "webComponent": "<fluent-menu>",
+      "keyProps": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "openOnHover",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "openOnContext",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "positioning",
+          "type": "PositioningShorthand"
+        },
+        {
+          "name": "inline",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "persistOnItemClick",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(e: MenuOpenEvent, data: MenuOpenChangeData) => void"
+        }
+      ],
+      "a11y": "Implements the ARIA menu pattern (menu/menuitem, arrow-key navigation). Compose MenuTrigger + MenuPopover + MenuList.",
+      "sample": "<Menu>\n  <MenuTrigger disableButtonEnhancement>\n    <MenuButton>Options</MenuButton>\n  </MenuTrigger>\n  <MenuPopover>\n    <MenuList>\n      <MenuItem icon={<CutRegular />}>Cut</MenuItem>\n      <MenuItem icon={<CopyRegular />}>Copy</MenuItem>\n    </MenuList>\n  </MenuPopover>\n</Menu>"
+    },
+    {
+      "name": "MenuItem",
+      "category": "Navigation",
+      "description": "A single actionable item within a MenuList.",
+      "reactImport": "import { MenuItem } from '@fluentui/react-components';",
+      "webComponent": "<fluent-menu-item>",
+      "keyProps": [
+        {
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "name": "disabledFocusable",
+          "type": "boolean"
+        },
+        {
+          "name": "hasSubmenu",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "persistOnClick",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Rendered with role=\"menuitem\". Variants MenuItemCheckbox/MenuItemRadio provide selectable states.",
+      "sample": "<MenuItem icon={<EditRegular />} onClick={onRename}>Rename</MenuItem>"
+    },
+    {
+      "name": "MenuList",
+      "category": "Navigation",
+      "description": "MenuList is the container of MenuItems; it manages selection state for checkbox/radio menu items.",
+      "reactImport": "import { MenuList } from '@fluentui/react-components';",
+      "webComponent": "<fluent-menu-list>",
+      "keyProps": [
+        {
+          "name": "checkedValues",
+          "type": "Record<string, string[]>"
+        },
+        {
+          "name": "defaultCheckedValues",
+          "type": "Record<string, string[]>"
+        },
+        {
+          "name": "hasCheckmarks",
+          "type": "boolean"
+        },
+        {
+          "name": "hasIcons",
+          "type": "boolean"
+        },
+        {
+          "name": "onCheckedValueChange",
+          "type": "(e: MenuCheckedValueChangeEvent, data: MenuCheckedValueChangeData) => void"
+        }
+      ],
+      "a11y": "Rendered with role=\"menu\". Use MenuItemCheckbox/MenuItemRadio children with checkedValues for selectable menus.",
+      "sample": "<MenuList>\n  <MenuItemRadio name=\"sort\" value=\"name\">Name</MenuItemRadio>\n  <MenuItemRadio name=\"sort\" value=\"date\">Date</MenuItemRadio>\n</MenuList>"
+    },
+    {
+      "name": "Nav",
+      "category": "Navigation",
+      "description": "Nav (NavDrawer) is a vertical side navigation for moving between top-level areas of an app.",
+      "reactImport": "import { Nav } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "selectedValue",
+          "type": "NavItemValue",
+          "default": "undefined"
+        },
+        {
+          "name": "defaultSelectedValue",
+          "type": "NavItemValue"
+        },
+        {
+          "name": "openCategories",
+          "type": "NavItemValue[]"
+        },
+        {
+          "name": "onNavItemSelect",
+          "type": "EventHandler<OnNavItemSelectData>"
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "default": "true, indicating that multiple categories can be open at the same time."
+        }
+      ],
+      "a11y": "Renders a <nav> landmark; NavItem/NavCategory manage selection and expandable groups. Provide an aria-label.",
+      "sample": "<NavDrawer open type=\"inline\" defaultSelectedValue=\"1\">\n  <NavDrawerBody>\n    <NavItem value=\"1\" icon={<HomeRegular />}>Home</NavItem>\n    <NavItem value=\"2\" icon={<PersonRegular />}>People</NavItem>\n  </NavDrawerBody>\n</NavDrawer>"
+    },
+    {
+      "name": "Tree",
+      "category": "Navigation",
+      "description": "Tree displays hierarchical data that users can expand, collapse and select.",
+      "reactImport": "import { Tree } from '@fluentui/react-components';",
+      "webComponent": "<fluent-tree>",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'subtle' | 'subtle-alpha' | 'transparent'",
+          "default": "'subtle'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium'",
+          "default": "'medium'"
+        },
+        {
+          "name": "navigationMode",
+          "type": "'tree' | 'treegrid'",
+          "default": "'tree'"
+        },
+        {
+          "name": "openItems",
+          "type": "Iterable<TreeItemValue>"
+        },
+        {
+          "name": "defaultOpenItems",
+          "type": "Iterable<TreeItemValue>"
+        },
+        {
+          "name": "selectionMode",
+          "type": "SelectionMode_2",
+          "default": "undefined"
+        },
+        {
+          "name": "checkedItems",
+          "type": "Iterable<TreeItemValue | [TreeItemValue, TreeSelectionValue]>"
+        }
+      ],
+      "a11y": "Implements the ARIA tree pattern. Use FlatTree for large or virtualized data sets to keep the DOM flat.",
+      "sample": "<Tree aria-label=\"Files\">\n  <TreeItem itemType=\"branch\">\n    <TreeItemLayout>src</TreeItemLayout>\n    <Tree>\n      <TreeItem itemType=\"leaf\"><TreeItemLayout>index.ts</TreeItemLayout></TreeItem>\n    </Tree>\n  </TreeItem>\n</Tree>"
+    },
+    {
+      "name": "Toolbar",
+      "category": "Navigation",
+      "description": "Toolbar groups a set of related controls (buttons, toggles, menus) on a single horizontal or vertical bar.",
+      "reactImport": "import { Toolbar } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "vertical",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "checkedValues",
+          "type": "Record<string, string[]>"
+        },
+        {
+          "name": "defaultCheckedValues",
+          "type": "Record<string, string[]>"
+        },
+        {
+          "name": "onCheckedValueChange",
+          "type": "(e: ToolbarCheckedValueChangeEvent, data: ToolbarCheckedValueChangeData) => void"
+        }
+      ],
+      "a11y": "Implements role=\"toolbar\" with arrow-key navigation. Use ToolbarButton/ToolbarToggleButton/ToolbarDivider inside.",
+      "sample": "<Toolbar aria-label=\"Formatting\">\n  <ToolbarButton icon={<TextBoldRegular />} aria-label=\"Bold\" />\n  <ToolbarDivider />\n  <ToolbarToggleButton name=\"align\" value=\"left\" icon={<TextAlignLeftRegular />} aria-label=\"Align left\" />\n</Toolbar>"
+    },
+    {
+      "name": "Card",
+      "category": "Layout & Surfaces",
+      "description": "A card provides scaffolding for hosting actions and content for a single topic.",
+      "reactImport": "import { Card } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'filled' | 'filled-alternative' | 'outline' | 'subtle'",
+          "default": "'filled'"
+        },
+        {
+          "name": "orientation",
+          "type": "'horizontal' | 'vertical'",
+          "default": "'vertical'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "defaultSelected",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "focusMode",
+          "type": "'off' | 'no-tab' | 'tab-exit' | 'tab-only'",
+          "default": "'off'"
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "(event: CardOnSelectionChangeEvent, data: CardOnSelectData) => void"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "focusMode controls keyboard interaction (off/no-tab/tab-exit/tab-only). For selectable cards, set focusMode and onSelectionChange.",
+      "sample": "<Card>\n  <CardHeader header={<Text weight=\"semibold\">Quarterly report</Text>} description={<Caption1>Updated 2h ago</Caption1>} />\n  <p>Body content…</p>\n  <CardFooter><Button>Open</Button></CardFooter>\n</Card>"
+    },
+    {
+      "name": "CardHeader",
+      "category": "Layout & Surfaces",
+      "description": "The header region of a Card, with image, header (title) and description slots plus an optional action.",
+      "reactImport": "import { CardHeader } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "image",
+          "type": "Slot<'div', 'img'>"
+        },
+        {
+          "name": "header",
+          "type": "Slot<'div'>"
+        },
+        {
+          "name": "description",
+          "type": "Slot<'div'>"
+        },
+        {
+          "name": "action",
+          "type": "Slot<'div'>"
+        }
+      ],
+      "a11y": "Uses semantic slots; put the primary title in header and secondary text in description.",
+      "sample": "<CardHeader image={<Avatar name=\"Kat\" />} header={<b>Kat Larsson</b>} description=\"5 min ago\" action={<Button appearance=\"transparent\" icon={<MoreHorizontalRegular />} />} />"
+    },
+    {
+      "name": "CardPreview",
+      "category": "Layout & Surfaces",
+      "description": "A full-bleed preview area (image/media) inside a Card, with an optional logo overlay.",
+      "reactImport": "import { CardPreview } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "logo",
+          "type": "Slot<'div', 'img'>"
+        }
+      ],
+      "a11y": "Provide alt text on preview images; the logo slot is decorative overlay content.",
+      "sample": "<Card>\n  <CardPreview logo={<img src=\"/logo.svg\" alt=\"\" />}>\n    <img src=\"/thumbnail.png\" alt=\"Document preview\" />\n  </CardPreview>\n</Card>"
+    },
+    {
+      "name": "CardFooter",
+      "category": "Layout & Surfaces",
+      "description": "The footer region of a Card for actions, with an optional trailing action slot.",
+      "reactImport": "import { CardFooter } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "action",
+          "type": "Slot<'div'>"
+        }
+      ],
+      "a11y": "Place primary/secondary actions here; keep them keyboard reachable.",
+      "sample": "<CardFooter action={<Button appearance=\"transparent\" icon={<ShareRegular />}>Share</Button>}>\n  <Button appearance=\"primary\">Open</Button>\n</CardFooter>"
+    },
+    {
+      "name": "Divider",
+      "category": "Layout & Surfaces",
+      "description": "A divider visually segments content into groups.",
+      "reactImport": "import { Divider } from '@fluentui/react-components';",
+      "webComponent": "<fluent-divider>",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'brand' | 'default' | 'strong' | 'subtle'",
+          "default": "'default'"
+        },
+        {
+          "name": "alignContent",
+          "type": "'start' | 'center' | 'end'",
+          "default": "'center'"
+        },
+        {
+          "name": "inset",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "vertical",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Decorative by default (role=\"separator\"); when it has text children it labels the following section.",
+      "sample": "<Divider>Section</Divider>"
+    },
+    {
+      "name": "Accordion",
+      "category": "Layout & Surfaces",
+      "description": "Accordion lets users show and hide sections of related content.",
+      "reactImport": "import { Accordion } from '@fluentui/react-components';",
+      "webComponent": "<fluent-accordion>",
+      "keyProps": [
+        {
+          "name": "openItems",
+          "type": "Value | Value[]"
+        },
+        {
+          "name": "defaultOpenItems",
+          "type": "Value | Value[]"
+        },
+        {
+          "name": "multiple",
+          "type": "boolean"
+        },
+        {
+          "name": "collapsible",
+          "type": "boolean"
+        },
+        {
+          "name": "navigation",
+          "type": "'linear' | 'circular'"
+        },
+        {
+          "name": "onToggle",
+          "type": "AccordionToggleEventHandler<Value>"
+        }
+      ],
+      "a11y": "Each AccordionHeader renders a button controlling its AccordionPanel via aria-expanded/aria-controls.",
+      "sample": "<Accordion collapsible>\n  <AccordionItem value=\"1\">\n    <AccordionHeader>Shipping</AccordionHeader>\n    <AccordionPanel>Ships in 2–3 days.</AccordionPanel>\n  </AccordionItem>\n</Accordion>"
+    },
+    {
+      "name": "Drawer",
+      "category": "Layout & Surfaces",
+      "description": "Drawer contains supplementary content and is used for complex creation, edit or management experiences.",
+      "reactImport": "import { Drawer } from '@fluentui/react-components';",
+      "webComponent": "<fluent-drawer>",
+      "keyProps": [
+        {
+          "name": "type",
+          "type": "'inline' | 'overlay'",
+          "default": "'overlay'"
+        }
+      ],
+      "a11y": "OverlayDrawer traps focus and renders a backdrop (dialog semantics); InlineDrawer pushes page content. Provide a DrawerHeaderTitle.",
+      "sample": "<OverlayDrawer open={open} position=\"end\" onOpenChange={(e, d) => setOpen(d.open)}>\n  <DrawerHeader><DrawerHeaderTitle>Details</DrawerHeaderTitle></DrawerHeader>\n  <DrawerBody>Content…</DrawerBody>\n</OverlayDrawer>"
+    },
+    {
+      "name": "Persona",
+      "category": "People",
+      "description": "A Persona is a visual representation of a person or status showcasing an Avatar, presence, primary and secondary text.",
+      "reactImport": "import { Persona } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "size",
+          "type": "'extra-small' | 'small' | 'medium' | 'large' | 'extra-large' | 'huge'",
+          "default": "'medium'"
+        },
+        {
+          "name": "textAlignment",
+          "type": "'center' | 'start'",
+          "default": "'start'"
+        },
+        {
+          "name": "textPosition",
+          "type": "'after' | 'before' | 'below'",
+          "default": "'after'"
+        },
+        {
+          "name": "presenceOnly",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Compose primary/secondary/tertiary text slots; the Avatar derives initials/color from name when no image is given.",
+      "sample": "<Persona name=\"Kat Larsson\" secondaryText=\"Available\" presence={{ status: \"available\" }} avatar={{ image: { src: katImg } }} />"
+    },
+    {
+      "name": "Avatar",
+      "category": "People",
+      "description": "Avatar shows a graphical representation of a person or entity via an image, initials or an icon.",
+      "reactImport": "import { Avatar } from '@fluentui/react-components';",
+      "webComponent": "<fluent-avatar>",
+      "keyProps": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "size",
+          "type": "16 | 20 | 24 | 28 | 32 | 36 | 40 | 48 | 56 | 64 | 72 | 96 | 120 | 128",
+          "default": "32"
+        },
+        {
+          "name": "shape",
+          "type": "'circular' | 'square'",
+          "default": "'circular'"
+        },
+        {
+          "name": "color",
+          "type": "'neutral' | 'brand' | 'colorful' | AvatarNamedColor",
+          "default": "'neutral'"
+        },
+        {
+          "name": "active",
+          "type": "'active' | 'inactive' | 'unset'",
+          "default": "'unset'"
+        },
+        {
+          "name": "activeAppearance",
+          "type": "'ring' | 'shadow' | 'ring-shadow'",
+          "default": "'ring'"
+        }
+      ],
+      "a11y": "Give a name so initials and an accessible label are generated; sizes are fixed pixel values (16–128).",
+      "sample": "<Avatar name=\"Mona Kane\" size={48} badge={{ status: \"available\" }} />"
+    },
+    {
+      "name": "AvatarGroup",
+      "category": "People",
+      "description": "AvatarGroup displays a collection of Avatars, stacked, spread, or in a pie layout, with overflow.",
+      "reactImport": "import { AvatarGroup } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "layout",
+          "type": "'spread' | 'stack' | 'pie'",
+          "default": "'spread'"
+        },
+        {
+          "name": "size",
+          "type": "16 | 20 | 24 | 28 | 32 | 36 | 40 | 48 | 56 | 64 | 72 | 96 | 120 | 128",
+          "default": "32"
+        }
+      ],
+      "a11y": "Use AvatarGroupItem for each person and AvatarGroupPopover for overflow via partitionAvatarGroupItems.",
+      "sample": "<AvatarGroup layout=\"stack\">\n  <AvatarGroupItem name=\"Ana\" />\n  <AvatarGroupItem name=\"Ben\" />\n  <AvatarGroupItem name=\"Cara\" />\n</AvatarGroup>"
+    },
+    {
+      "name": "Badge",
+      "category": "Data display",
+      "description": "Badge is a compact status or metadata indicator, optionally with an icon.",
+      "reactImport": "import { Badge } from '@fluentui/react-components';",
+      "webComponent": "<fluent-badge>",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'filled' | 'ghost' | 'outline' | 'tint'"
+        },
+        {
+          "name": "color",
+          "type": "'brand' | 'danger' | 'important' | 'informative' | 'severe' | 'subtle' | 'success' | 'warning'"
+        },
+        {
+          "name": "shape",
+          "type": "'circular' | 'rounded' | 'square'"
+        },
+        {
+          "name": "size",
+          "type": "'tiny' | 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large'"
+        },
+        {
+          "name": "iconPosition",
+          "type": "'before' | 'after'"
+        }
+      ],
+      "a11y": "Decorative by default; if the badge conveys meaning on its own, provide an accessible label on a wrapping element.",
+      "sample": "<Badge appearance=\"filled\" color=\"success\">New</Badge>"
+    },
+    {
+      "name": "CounterBadge",
+      "category": "Data display",
+      "description": "CounterBadge shows a numeric count, with dot and overflow (99+) support.",
+      "reactImport": "import { CounterBadge } from '@fluentui/react-components';",
+      "webComponent": "<fluent-counter-badge>",
+      "keyProps": [
+        {
+          "name": "count",
+          "type": "number",
+          "default": "0"
+        },
+        {
+          "name": "appearance",
+          "type": "'filled' | 'ghost'",
+          "default": "'filled'"
+        },
+        {
+          "name": "color",
+          "type": "Extract<BadgeProps['color'], 'brand' | 'danger' | 'important' | 'informative'>",
+          "default": "'brand'"
+        },
+        {
+          "name": "shape",
+          "type": "'circular' | 'rounded'",
+          "default": "'circular'"
+        },
+        {
+          "name": "dot",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "overflowCount",
+          "type": "number",
+          "default": "99"
+        },
+        {
+          "name": "showZero",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Announce the meaning of the count on the associated control (e.g. aria-label=\"3 unread messages\").",
+      "sample": "<CounterBadge count={128} overflowCount={99} />"
+    },
+    {
+      "name": "PresenceBadge",
+      "category": "Data display",
+      "description": "PresenceBadge shows a person's availability status (available, busy, away, etc.).",
+      "reactImport": "import { PresenceBadge } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "status",
+          "type": "'busy' | 'out-of-office' | 'away' | 'available' | 'offline' | 'do-not-disturb' | 'unknown' | 'blocked'",
+          "default": "'available'"
+        },
+        {
+          "name": "outOfOffice",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Convey status textually as well (e.g. in Persona secondary text) since color alone is not sufficient.",
+      "sample": "<PresenceBadge status=\"busy\" outOfOffice />"
+    },
+    {
+      "name": "Table",
+      "category": "Data display",
+      "description": "Table presents tabular data with headers, rows and cells; the primitive, unopinionated table.",
+      "reactImport": "import { Table } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "size",
+          "type": "'extra-small' | 'small' | 'medium'",
+          "default": "'medium'"
+        },
+        {
+          "name": "noNativeElements",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "sortable",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Renders native table elements by default (best a11y). Set noNativeElements to use div-based flex layout when you need custom layout.",
+      "sample": "<Table aria-label=\"Files\">\n  <TableHeader>\n    <TableRow><TableHeaderCell>Name</TableHeaderCell><TableHeaderCell>Size</TableHeaderCell></TableRow>\n  </TableHeader>\n  <TableBody>\n    <TableRow><TableCell>report.pdf</TableCell><TableCell>1.2 MB</TableCell></TableRow>\n  </TableBody>\n</Table>"
+    },
+    {
+      "name": "DataGrid",
+      "category": "Data display",
+      "description": "DataGrid builds on Table to add sorting, selection, column sizing and keyboard navigation via a column-definition API.",
+      "reactImport": "import { DataGrid } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "selectionMode",
+          "type": "SelectionMode_2",
+          "default": "false"
+        },
+        {
+          "name": "onSortChange",
+          "type": "(e: React.MouseEvent, sortState: SortState) => void"
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "(e: React.MouseEvent | React.KeyboardEvent, data: OnSelectionChangeData) => void"
+        },
+        {
+          "name": "columnSizingOptions",
+          "type": "TableColumnSizingOptions"
+        }
+      ],
+      "a11y": "Uses grid semantics with full keyboard navigation. Define columns with createTableColumn; provide items and a getRowId.",
+      "sample": "<DataGrid items={items} columns={columns} sortable selectionMode=\"multiselect\">\n  <DataGridHeader>\n    <DataGridRow>{({ renderHeaderCell }) => <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>}</DataGridRow>\n  </DataGridHeader>\n  <DataGridBody>\n    {({ item, rowId }) => (\n      <DataGridRow key={rowId}>{({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}</DataGridRow>\n    )}\n  </DataGridBody>\n</DataGrid>"
+    },
+    {
+      "name": "Tag",
+      "category": "Data display",
+      "description": "Tag is a visual representation of an attribute, with optional media/icon, text and a dismiss action.",
+      "reactImport": "import { Tag } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'filled' | 'outline' | 'brand'",
+          "default": "'filled'"
+        },
+        {
+          "name": "shape",
+          "type": "'rounded' | 'circular'",
+          "default": "'rounded'"
+        },
+        {
+          "name": "size",
+          "type": "'extra-small' | 'small' | 'medium'",
+          "default": "'medium'"
+        },
+        {
+          "name": "dismissible",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "value",
+          "type": "Value"
+        }
+      ],
+      "a11y": "For dismissible tags, the dismiss control is keyboard focusable; use TagGroup to coordinate dismissal.",
+      "sample": "<TagGroup onDismiss={(e, d) => remove(d.value)}>\n  <Tag dismissible value=\"1\" media={<Avatar name=\"Ana\" />}>Ana</Tag>\n</TagGroup>"
+    },
+    {
+      "name": "TagGroup",
+      "category": "Data display",
+      "description": "TagGroup is a container for multiple Tags; it provides context to size or dismiss child tags.",
+      "reactImport": "import { TagGroup } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "onDismiss",
+          "type": "TagDismissHandler<Value>"
+        },
+        {
+          "name": "defaultSelectedValues",
+          "type": "Value[]"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "size",
+          "type": "'extra-small' | 'small' | 'medium'"
+        },
+        {
+          "name": "appearance",
+          "type": "'filled' | 'outline' | 'brand'"
+        }
+      ],
+      "a11y": "Manages roving focus across tags and fires onDismiss with the dismissed value.",
+      "sample": "<TagGroup onDismiss={handleDismiss} size=\"small\">\n  <Tag value=\"a\">Design</Tag>\n  <Tag value=\"b\">Research</Tag>\n</TagGroup>"
+    },
+    {
+      "name": "Text",
+      "category": "Data display",
+      "description": "Text applies Fluent typography ramp styles to a block or inline run of text.",
+      "reactImport": "import { Text } from '@fluentui/react-components';",
+      "webComponent": "<fluent-text>",
+      "keyProps": [
+        {
+          "name": "size",
+          "type": "100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 1000",
+          "default": "300"
+        },
+        {
+          "name": "weight",
+          "type": "'regular' | 'medium' | 'semibold' | 'bold'",
+          "default": "'regular'"
+        },
+        {
+          "name": "font",
+          "type": "'base' | 'monospace' | 'numeric'",
+          "default": "'base'"
+        },
+        {
+          "name": "align",
+          "type": "'start' | 'center' | 'end' | 'justify'",
+          "default": "'start'"
+        },
+        {
+          "name": "block",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "italic",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "underline",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "strikethrough",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "truncate",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "wrap",
+          "type": "boolean",
+          "default": "true"
+        }
+      ],
+      "a11y": "Prefer the semantic wrappers (Body1, Subtitle1, Title3, Caption1, Display, LargeTitle) for consistent ramp styling.",
+      "sample": "<Text size={400} weight=\"semibold\">Section heading</Text>"
+    },
+    {
+      "name": "Image",
+      "category": "Data display",
+      "description": "Image renders an <img> with Fluent styling options (fit, shape, shadow, border).",
+      "reactImport": "import { Image } from '@fluentui/react-components';",
+      "webComponent": "<fluent-image>",
+      "keyProps": [
+        {
+          "name": "fit",
+          "type": "'none' | 'center' | 'contain' | 'cover' | 'default'",
+          "default": "'default'"
+        },
+        {
+          "name": "shape",
+          "type": "'square' | 'circular' | 'rounded'",
+          "default": "'square'"
+        },
+        {
+          "name": "block",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "bordered",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "shadow",
+          "type": "boolean",
+          "default": "false"
+        }
+      ],
+      "a11y": "Always provide alt text; use empty alt=\"\" for purely decorative images.",
+      "sample": "<Image src=\"/hero.png\" alt=\"Product hero\" fit=\"cover\" shape=\"rounded\" bordered />"
+    },
+    {
+      "name": "Dialog",
+      "category": "Overlays",
+      "description": "Dialog is a window overlaid on the app requiring interaction, for modal or non-modal tasks.",
+      "reactImport": "import { Dialog } from '@fluentui/react-components';",
+      "webComponent": "<fluent-dialog>",
+      "keyProps": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "modalType",
+          "type": "'modal' | 'non-modal' | 'alert'",
+          "default": "'modal'"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "DialogOpenChangeEventHandler"
+        },
+        {
+          "name": "inertTrapFocus",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "unmountOnClose",
+          "type": "boolean",
+          "default": "true"
+        }
+      ],
+      "a11y": "Manages focus trapping and aria-modal. Compose DialogTrigger/DialogSurface/DialogBody/DialogTitle/DialogActions. modalType controls dismiss behavior.",
+      "sample": "<Dialog>\n  <DialogTrigger disableButtonEnhancement><Button>Open</Button></DialogTrigger>\n  <DialogSurface>\n    <DialogBody>\n      <DialogTitle>Delete item?</DialogTitle>\n      <DialogContent>This cannot be undone.</DialogContent>\n      <DialogActions>\n        <DialogTrigger disableButtonEnhancement><Button appearance=\"secondary\">Cancel</Button></DialogTrigger>\n        <Button appearance=\"primary\">Delete</Button>\n      </DialogActions>\n    </DialogBody>\n  </DialogSurface>\n</Dialog>"
+    },
+    {
+      "name": "Popover",
+      "category": "Overlays",
+      "description": "Popover displays rich content in a floating surface anchored to a trigger.",
+      "reactImport": "import { Popover } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "appearance",
+          "type": "'brand' | 'inverted'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "withArrow",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "openOnHover",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "openOnContext",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "trapFocus",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "inertTrapFocus",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "positioning",
+          "type": "PositioningShorthand"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(e: OpenPopoverEvents, data: OnOpenChangeData) => void"
+        }
+      ],
+      "a11y": "For interactive content set trapFocus. Compose PopoverTrigger + PopoverSurface; positioning controls placement.",
+      "sample": "<Popover withArrow>\n  <PopoverTrigger disableButtonEnhancement><Button>More info</Button></PopoverTrigger>\n  <PopoverSurface>Details shown in a floating surface.</PopoverSurface>\n</Popover>"
+    },
+    {
+      "name": "Tooltip",
+      "category": "Overlays",
+      "description": "Tooltip shows a brief text label for an element on hover or focus.",
+      "reactImport": "import { Tooltip } from '@fluentui/react-components';",
+      "webComponent": "<fluent-tooltip>",
+      "keyProps": [
+        {
+          "name": "relationship",
+          "type": "'label' | 'description' | 'inaccessible'"
+        },
+        {
+          "name": "positioning",
+          "type": "PositioningShorthand",
+          "default": "above"
+        },
+        {
+          "name": "withArrow",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "appearance",
+          "type": "'normal' | 'inverted'",
+          "default": "'normal'"
+        },
+        {
+          "name": "showDelay",
+          "type": "number",
+          "default": "250"
+        },
+        {
+          "name": "hideDelay",
+          "type": "number",
+          "default": "250"
+        },
+        {
+          "name": "visible",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "onVisibleChange",
+          "type": "(event: React.PointerEvent<HTMLElement> | React.FocusEvent<HTMLElement> | undefined, data: OnVisibleChangeData) =..."
+        }
+      ],
+      "a11y": "relationship is required: \"label\" (names the target) or \"description\" (describes it). The child must be focusable to be keyboard-accessible.",
+      "sample": "<Tooltip content=\"Save\" relationship=\"label\">\n  <Button icon={<SaveRegular />} />\n</Tooltip>"
+    },
+    {
+      "name": "TeachingPopover",
+      "category": "Overlays",
+      "description": "TeachingPopover is a Popover for onboarding/coach-mark experiences, optionally paged as a carousel. It composes Popover, so it accepts the Popover props below.",
+      "reactImport": "import { TeachingPopover } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "appearance",
+          "type": "'brand' | 'inverted'"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "withArrow",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "positioning",
+          "type": "PositioningShorthand"
+        },
+        {
+          "name": "trapFocus",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(e: OpenPopoverEvents, data: OnOpenChangeData) => void"
+        }
+      ],
+      "a11y": "Focus is trapped while open; compose TeachingPopoverSurface/Header/Body/Title/Footer and provide a dismiss control.",
+      "sample": "<TeachingPopover>\n  <TeachingPopoverTrigger><Button>Show tip</Button></TeachingPopoverTrigger>\n  <TeachingPopoverSurface>\n    <TeachingPopoverHeader>New!</TeachingPopoverHeader>\n    <TeachingPopoverBody><TeachingPopoverTitle>Try filters</TeachingPopoverTitle>Narrow results quickly.</TeachingPopoverBody>\n  </TeachingPopoverSurface>\n</TeachingPopover>"
+    },
+    {
+      "name": "MessageBar",
+      "category": "Feedback & Status",
+      "description": "MessageBar communicates a status, message or condition inline, with intent-based styling.",
+      "reactImport": "import { MessageBar } from '@fluentui/react-components';",
+      "webComponent": "<fluent-message-bar>",
+      "keyProps": [
+        {
+          "name": "intent",
+          "type": "'info' | 'success' | 'warning' | 'error'",
+          "default": "'info'"
+        },
+        {
+          "name": "shape",
+          "type": "'square' | 'rounded'",
+          "default": "'rounded'"
+        },
+        {
+          "name": "politeness",
+          "type": "'assertive' | 'polite'"
+        }
+      ],
+      "a11y": "Sets an appropriate aria-live politeness based on intent; error/warning use assertive. Compose MessageBarBody/Title/Actions.",
+      "sample": "<MessageBar intent=\"warning\">\n  <MessageBarBody>\n    <MessageBarTitle>Storage almost full.</MessageBarTitle> Free up space to continue syncing.\n  </MessageBarBody>\n</MessageBar>"
+    },
+    {
+      "name": "ProgressBar",
+      "category": "Feedback & Status",
+      "description": "A ProgressBar shows the progression of a task, determinate or indeterminate.",
+      "reactImport": "import { ProgressBar } from '@fluentui/react-components';",
+      "webComponent": "<fluent-progress-bar>",
+      "keyProps": [
+        {
+          "name": "value",
+          "type": "number"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "default": "1"
+        },
+        {
+          "name": "thickness",
+          "type": "'medium' | 'large'",
+          "default": "'medium'"
+        },
+        {
+          "name": "shape",
+          "type": "'rounded' | 'square'",
+          "default": "'rounded'"
+        },
+        {
+          "name": "color",
+          "type": "'brand' | 'success' | 'warning' | 'error'",
+          "default": "'brand'"
+        }
+      ],
+      "a11y": "Renders role=\"progressbar\". Omit value for an indeterminate bar; wrap in a Field to add a visible label.",
+      "sample": "<Field validationMessage=\"Uploading…\" validationState=\"none\">\n  <ProgressBar value={0.6} />\n</Field>"
+    },
+    {
+      "name": "Spinner",
+      "category": "Feedback & Status",
+      "description": "Spinner indicates an indeterminate, ongoing operation.",
+      "reactImport": "import { Spinner } from '@fluentui/react-components';",
+      "webComponent": "<fluent-spinner>",
+      "keyProps": [
+        {
+          "name": "size",
+          "type": "'extra-tiny' | 'tiny' | 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large' | 'huge'",
+          "default": "'medium'"
+        },
+        {
+          "name": "appearance",
+          "type": "'primary' | 'inverted'",
+          "default": "'primary'"
+        },
+        {
+          "name": "labelPosition",
+          "type": "'above' | 'below' | 'before' | 'after'",
+          "default": "'after'"
+        },
+        {
+          "name": "delay",
+          "type": "number",
+          "default": "0"
+        }
+      ],
+      "a11y": "Provide a label (or aria-label) describing what is loading; use appearance=\"inverted\" on dark backgrounds.",
+      "sample": "<Spinner label=\"Loading…\" />"
+    },
+    {
+      "name": "Skeleton",
+      "category": "Feedback & Status",
+      "description": "Skeleton is an animated placeholder shown while content is loading.",
+      "reactImport": "import { Skeleton } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "animation",
+          "type": "'wave' | 'pulse'"
+        },
+        {
+          "name": "appearance",
+          "type": "'opaque' | 'translucent'"
+        }
+      ],
+      "a11y": "Mark the loading region with aria-busy=\"true\"; SkeletonItem defines the shape/size of each placeholder.",
+      "sample": "<Skeleton aria-label=\"Loading\">\n  <SkeletonItem shape=\"circle\" size={48} />\n  <SkeletonItem />\n</Skeleton>"
+    },
+    {
+      "name": "Toast",
+      "category": "Feedback & Status",
+      "description": "Toast is a transient notification; render toasts through a Toaster and dispatch them with useToastController.",
+      "reactImport": "import { Toast } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "BackgroundAppearanceContextValue"
+        }
+      ],
+      "a11y": "The Toaster announces toasts politely/assertively based on intent. Give the Toaster an id and dispatch via useToastController(toasterId).",
+      "sample": "const { dispatchToast } = useToastController(toasterId);\ndispatchToast(\n  <Toast>\n    <ToastTitle>Saved</ToastTitle>\n    <ToastBody>Your changes were saved.</ToastBody>\n  </Toast>,\n  { intent: \"success\" }\n);"
+    },
+    {
+      "name": "Toaster",
+      "category": "Feedback & Status",
+      "description": "Toaster is the container/portal that renders and positions Toast notifications.",
+      "reactImport": "import { Toaster } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "inline",
+          "type": "boolean"
+        },
+        {
+          "name": "announce",
+          "type": "ToastAnnounce"
+        }
+      ],
+      "a11y": "Place one Toaster near the app root; it manages the aria-live region and stacking of toasts.",
+      "sample": "<Toaster toasterId={toasterId} position=\"top-end\" />"
+    },
+    {
+      "name": "CopilotProvider",
+      "category": "AI / Copilot",
+      "description": "The required theming/context provider for Fluent AI Copilot components. It extends Fluent UI v9 FluentProvider (its context is a superset of FluentProviderContextValues) and layers Copilot-specific theme tokens and an announce (aria-live) context on top.",
+      "reactImport": "import { CopilotProvider } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-provider",
+        "version": "0.12.7",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "theme",
+          "type": "PartialTheme & Partial<CopilotThemeExtension>"
+        },
+        {
+          "name": "themeExtension",
+          "type": "Partial<CopilotThemeExtension>"
+        },
+        {
+          "name": "customStyleHooks",
+          "type": "CopilotProviderCustomStyleHooks"
+        },
+        {
+          "name": "announce",
+          "type": "AnnounceFn"
+        }
+      ],
+      "a11y": "Provides a shared aria-live announcer used by chat components. Use it as the app-level provider (it supplies Fluent 2 theming); pass a theme via the theme prop.",
+      "sample": "<CopilotProvider>\n  {/* Copilot chat surface */}\n</CopilotProvider>"
+    },
+    {
+      "name": "CopilotChat",
+      "category": "AI / Copilot",
+      "description": "The scrollable container that lays out a conversation as a vertical list of message components (UserMessage / CopilotMessage / SystemMessage).",
+      "reactImport": "import { CopilotChat } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-copilot-chat",
+        "version": "0.13.2",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [],
+      "a11y": "Renders the message list region; place UserMessage/CopilotMessage children inside. Pair with ScrollDownButton for long conversations.",
+      "sample": "<CopilotChat>\n  <UserMessage>How do I center a div?</UserMessage>\n  <CopilotMessage name=\"Copilot\" loadingState=\"none\">Use display:flex with justify-content and align-items center.</CopilotMessage>\n</CopilotChat>"
+    },
+    {
+      "name": "UserMessage",
+      "category": "AI / Copilot",
+      "description": "A chat bubble representing the user's message in a Copilot conversation.",
+      "reactImport": "import { UserMessage } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-copilot-chat",
+        "version": "0.13.2",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "announcement",
+          "type": "string"
+        }
+      ],
+      "a11y": "Set announcement to control what screen readers announce when the message is added.",
+      "sample": "<UserMessage>Summarize this document.</UserMessage>"
+    },
+    {
+      "name": "CopilotMessage",
+      "category": "AI / Copilot",
+      "description": "A chat bubble representing the AI/Copilot response, with avatar and name slots and a loading/streaming state.",
+      "reactImport": "import { CopilotMessage } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-copilot-chat",
+        "version": "0.13.2",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "loadingState",
+          "type": "'loading' | 'streaming' | 'none'",
+          "default": "none"
+        },
+        {
+          "name": "announcement",
+          "type": "string"
+        },
+        {
+          "name": "defaultFocused",
+          "type": "boolean"
+        }
+      ],
+      "a11y": "loadingState (\"loading\" | \"streaming\" | \"none\") drives the busy/streaming affordance and announcements. Provide name and avatar slots to identify the assistant.",
+      "sample": "<CopilotMessage name=\"Copilot\" loadingState=\"streaming\" avatar={<Avatar name=\"Copilot\" />}>\n  Here is a summary…\n</CopilotMessage>"
+    },
+    {
+      "name": "SystemMessage",
+      "category": "AI / Copilot",
+      "description": "A non-conversational system/status line in a Copilot chat (e.g. \"Copilot is thinking\", context notices).",
+      "reactImport": "import { SystemMessage } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-copilot-chat",
+        "version": "0.13.2",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "announcement",
+          "type": "string"
+        },
+        {
+          "name": "defaultFocused",
+          "type": "boolean"
+        }
+      ],
+      "a11y": "Use for status/context text; set announcement for screen-reader output.",
+      "sample": "<SystemMessage>Copilot used 2 sources to answer.</SystemMessage>"
+    },
+    {
+      "name": "ChatInput",
+      "category": "AI / Copilot",
+      "description": "The rich chat composer: a multiline editor with a send action, optional character count/limit, attachments and expand/collapse behavior. onSubmit fires with { value: string }.",
+      "reactImport": "import { ChatInput } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-chat-input",
+        "version": "0.16.3",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "ChatInputLineMode",
+          "default": "'multi'"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "name": "isSending",
+          "type": "boolean"
+        },
+        {
+          "name": "maxLength",
+          "type": "number"
+        },
+        {
+          "name": "charactersRemainingMessage",
+          "type": "(remaining: number) => string  (required by the props union: pass a callback with maxLength, or `undefined` when unlimited)"
+        },
+        {
+          "name": "showCount",
+          "type": "boolean"
+        },
+        {
+          "name": "disableSend",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "hideSendWhenEmpty",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "onSubmit",
+          "type": "(ev: ChatInputSubmitEvents, data: EditorInputValueData) => void"
+        },
+        {
+          "name": "onStop",
+          "type": "(ev: ChatInputSubmitEvents) => void"
+        },
+        {
+          "name": "expanded",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "defaultExpanded",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "maxNumberOfLinesWhenCollapsed",
+          "type": "number",
+          "default": "10"
+        },
+        {
+          "name": "characterLimitErrorMessage",
+          "type": "string"
+        }
+      ],
+      "a11y": "Provide an aria-label (there is no placeholder prop; the editor is contentEditable). ChatInputProps is a discriminated union: charactersRemainingMessage is required (a (remaining:number)=>string callback with maxLength, or undefined without). onSubmit fires on Enter/Send; onStop cancels an in-flight response while isSending.",
+      "sample": "<ChatInput\n  aria-label=\"Ask Copilot\"\n  maxLength={2000}\n  charactersRemainingMessage={(remaining) => `${remaining} characters remaining`}\n  showCount\n  onSubmit={(_, data) => sendMessage(data.value)}\n/>"
+    },
+    {
+      "name": "PromptStarter",
+      "category": "AI / Copilot",
+      "description": "A suggested starting prompt rendered as a button, with icon, category and prompt text slots (and an optional badge). Clicking it seeds the conversation.",
+      "reactImport": "import { PromptStarter } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-prompt-starter",
+        "version": "0.10.9",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "icon",
+          "type": "Slot<'span'> (required)"
+        },
+        {
+          "name": "category",
+          "type": "Slot<'span'> (required)"
+        },
+        {
+          "name": "prompt",
+          "type": "Slot<'span'>"
+        },
+        {
+          "name": "badge",
+          "type": "Slot<BadgeProps>"
+        }
+      ],
+      "a11y": "Rendered as a <button>; the category + prompt slots form its accessible name. Group multiple inside PromptStarterList.",
+      "sample": "<PromptStarter\n  icon={<LightbulbRegular />}\n  category=\"Draft\"\n  prompt=\"Write a project kickoff email\"\n  onClick={() => usePrompt(\"Write a project kickoff email\")}\n/>"
+    },
+    {
+      "name": "PromptStarterList",
+      "category": "AI / Copilot",
+      "description": "A collapsible container that lays out multiple PromptStarter buttons in rows, with a show more/less toggle.",
+      "reactImport": "import { PromptStarterList } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-prompt-starter",
+        "version": "0.10.9",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "defaultExpanded",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "isExpanded",
+          "type": "boolean"
+        },
+        {
+          "name": "onExpandedChange",
+          "type": "(event: React.MouseEvent<HTMLElement>, data: { isExpanded: boolean; }) => void"
+        },
+        {
+          "name": "visibleRows",
+          "type": "number",
+          "default": "1"
+        },
+        {
+          "name": "animateOnMount",
+          "type": "boolean",
+          "default": "true"
+        },
+        {
+          "name": "expandButtonLabel",
+          "type": "string"
+        },
+        {
+          "name": "collapseButtonLabel",
+          "type": "string"
+        }
+      ],
+      "a11y": "Manages arrow-key navigation across starters; provide expandButtonLabel/collapseButtonLabel for the toggle.",
+      "sample": "<PromptStarterList visibleRows={2}>\n  <PromptStarter category=\"Draft\" prompt=\"Write a summary\" icon={<EditRegular />} />\n  <PromptStarter category=\"Code\" prompt=\"Explain this function\" icon={<CodeRegular />} />\n</PromptStarterList>"
+    },
+    {
+      "name": "Suggestion",
+      "category": "AI / Copilot",
+      "description": "A single clickable follow-up suggestion / quick reply chip (built on Fluent UI Button).",
+      "reactImport": "import { Suggestion } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-suggestions",
+        "version": "0.13.7",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "(extends Button)",
+          "type": "ButtonSlots — a clickable suggestion chip built on Fluent Button"
+        }
+      ],
+      "a11y": "Rendered as a button; the visible text is its accessible name. Group inside SuggestionList.",
+      "sample": "<Suggestion onClick={() => ask(\"Show me an example\")}>Show me an example</Suggestion>"
+    },
+    {
+      "name": "SuggestionList",
+      "category": "AI / Copilot",
+      "description": "A container that lays out follow-up Suggestion chips, aligned to the start or end of the conversation.",
+      "reactImport": "import { SuggestionList } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-suggestions",
+        "version": "0.13.7",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "horizontalAlignment",
+          "type": "'start' | 'end'",
+          "default": "'end'"
+        }
+      ],
+      "a11y": "Groups suggestions; horizontalAlignment (\"start\" | \"end\", default \"end\") aligns them under the message.",
+      "sample": "<SuggestionList>\n  <Suggestion>Summarize it</Suggestion>\n  <Suggestion>Translate to French</Suggestion>\n</SuggestionList>"
+    },
+    {
+      "name": "Reference",
+      "category": "AI / Copilot",
+      "description": "An inline citation/reference chip linking a Copilot answer to a grounding source, shown as a numbered button or link.",
+      "reactImport": "import { Reference } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-reference",
+        "version": "0.16.7",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "root",
+          "type": "Slot<'button','a'> — renders as a button or anchor"
+        },
+        {
+          "name": "citation",
+          "type": "Slot<'span'> — the citation number"
+        },
+        {
+          "name": "content",
+          "type": "Slot<'span'> — the reference label (ellipsized on overflow)"
+        }
+      ],
+      "a11y": "Rendered as a button or anchor; give it a descriptive accessible name for the source it links to.",
+      "sample": "<ReferenceList>\n  <Reference href=\"https://contoso.com/policy\">Contoso travel policy</Reference>\n</ReferenceList>"
+    },
+    {
+      "name": "ReferenceList",
+      "category": "AI / Copilot",
+      "description": "A container that lays out multiple Reference citations, with overflow handling.",
+      "reactImport": "import { ReferenceList } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-reference",
+        "version": "0.16.7",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [],
+      "a11y": "Groups references; use ReferenceOverflowButton for overflow when there are many sources.",
+      "sample": "<ReferenceList>\n  <Reference href=\"/a\">Source A</Reference>\n  <Reference href=\"/b\">Source B</Reference>\n</ReferenceList>"
+    },
+    {
+      "name": "Citation",
+      "category": "AI / Copilot",
+      "description": "An inline superscript citation marker (e.g. a numbered footnote) placed within Copilot answer text.",
+      "reactImport": "import { Citation } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-reference",
+        "version": "0.16.7",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [],
+      "a11y": "Provide an accessible label describing the cited source.",
+      "sample": "Machine learning is a subset of AI<Citation>1</Citation>."
+    },
+    {
+      "name": "FeedbackButtons",
+      "category": "AI / Copilot",
+      "description": "Thumbs up / thumbs down controls letting users rate a Copilot response.",
+      "reactImport": "import { FeedbackButtons } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-feedback-buttons",
+        "version": "0.12.7",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "name": "selected",
+          "type": "'positive' | 'negative'"
+        }
+      ],
+      "a11y": "Each button is an independent toggle; selected (\"positive\" | \"negative\") reflects the current rating. Provide aria-labels for the up/down actions.",
+      "sample": "<FeedbackButtons selected={rating} onLikeClicked={onLike} onDislikeClicked={onDislike} />"
+    },
+    {
+      "name": "OutputCard",
+      "category": "AI / Copilot",
+      "description": "A surface that frames rich Copilot output (generated content, canvas/sidecar experiences), with a loading state.",
+      "reactImport": "import { OutputCard } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-output-card",
+        "version": "0.13.2",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "isLoading",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "mode",
+          "type": "'canvas' | 'sidecar'"
+        }
+      ],
+      "a11y": "Set isLoading to expose a busy state while content streams; mode (\"canvas\" | \"sidecar\") selects the layout.",
+      "sample": "<OutputCard isLoading={false} mode=\"canvas\">\n  {/* generated content */}\n</OutputCard>"
+    },
+    {
+      "name": "LatencyLoader",
+      "category": "AI / Copilot",
+      "description": "An animated \"Copilot is working\" latency/loading indicator shown while awaiting a response.",
+      "reactImport": "import { LatencyLoader } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-latency",
+        "version": "0.11.9",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [],
+      "a11y": "Conveys a busy state; pair with descriptive text so screen readers announce that a response is being generated. LatencyCancel lets the user stop generation.",
+      "sample": "<LatencyLoader />"
+    },
+    {
+      "name": "SendButton",
+      "category": "AI / Copilot",
+      "description": "The submit/stop button used inside ChatInput; shows a send icon, a stop state while sending, and an optional dictation state.",
+      "reactImport": "import { SendButton } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-send-button",
+        "version": "0.1.7",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "isSending",
+          "type": "boolean"
+        },
+        {
+          "name": "isSendIconFilled",
+          "type": "boolean"
+        },
+        {
+          "name": "isDictationActive",
+          "type": "boolean"
+        }
+      ],
+      "a11y": "Toggles between \"send\" and \"stop\" affordances via isSending; provide an aria-label for each state.",
+      "sample": "<SendButton isSending={sending} aria-label={sending ? \"Stop\" : \"Send\"} onClick={onSendOrStop} />"
+    },
+    {
+      "name": "ResponseCount",
+      "category": "AI / Copilot",
+      "description": "A small indicator of remaining/consumed responses or quota status in a Copilot experience.",
+      "reactImport": "import { ResponseCount } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-response-count",
+        "version": "0.2.21",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [
+        {
+          "name": "status",
+          "type": "'success' | 'warning' | 'danger'"
+        }
+      ],
+      "a11y": "status (\"success\" | \"warning\" | \"danger\") should be paired with text, not conveyed by color alone.",
+      "sample": "<ResponseCount status=\"warning\">3 of 5 responses used</ResponseCount>"
+    },
+    {
+      "name": "AiGeneratedDisclaimer",
+      "category": "AI / Copilot",
+      "description": "A standardized \"AI-generated content may be incorrect\" disclaimer line for Copilot surfaces.",
+      "reactImport": "import { AiGeneratedDisclaimer } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-copilot-chat",
+        "version": "0.13.2",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [],
+      "a11y": "Static informative text; keep it visible near the chat input or responses.",
+      "sample": "<AiGeneratedDisclaimer>AI-generated content may be incorrect.</AiGeneratedDisclaimer>"
+    },
+    {
+      "name": "Timestamp",
+      "category": "AI / Copilot",
+      "description": "A relative/absolute timestamp label attached to a chat message.",
+      "reactImport": "import { Timestamp } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-copilot-chat",
+        "version": "0.13.2",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "keyProps": [],
+      "a11y": "Provide a full date/time as an accessible label when showing a relative time.",
+      "sample": "<Timestamp>2:14 PM</Timestamp>"
+    }
+  ]
+}

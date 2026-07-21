@@ -1,0 +1,12 @@
+fluent-ui — unofficial, community-built tooling for Microsoft Fluent 2 (Fluent UI 2.0).
+
+This project is NOT affiliated with, authorized, maintained, sponsored, or endorsed by
+Microsoft Corporation. "Microsoft", "Fluent", "Fluent 2", "Fluent UI", "Power BI",
+"Power Apps", "Power Pages", and "Power Platform" are trademarks of Microsoft Corporation.
+
+Design guidance and reference data in this repository are derived from the publicly
+available, MIT-licensed @fluentui/* npm packages and publicly available Fluent 2
+documentation, and are provided for interoperability and developer reference. No
+Microsoft-internal or sign-in-gated content is redistributed in this repository.
+
+This software is licensed under the MIT License — see LICENSE.

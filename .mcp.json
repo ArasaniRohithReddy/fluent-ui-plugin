@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fluent-ui": {
+      "type": "local",
+      "command": "node",
+      "args": [
+        "mcp/dist/index.js"
+      ],
+      "tools": ["*"]
+    }
+  }
+}

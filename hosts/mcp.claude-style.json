@@ -1,0 +1,9 @@
+{
+  "$comment": "Claude-style dialect: Cursor (.cursor/mcp.json), Claude Desktop (claude_desktop_config.json), Claude Code (.mcp.json), Gemini CLI (~/.gemini/settings.json), Google Antigravity, Windsurf (~/.codeium/windsurf/mcp_config.json), Cline. Uses 'mcpServers' with no 'type'. Replace the args path if the plugin lives elsewhere.",
+  "mcpServers": {
+    "fluent-ui": {
+      "command": "node",
+      "args": ["C:\\Users\\v-arasanir\\Downloads\\Rohith's Rough\\fluent.ui\\mcp\\dist\\index.js"]
+    }
+  }
+}

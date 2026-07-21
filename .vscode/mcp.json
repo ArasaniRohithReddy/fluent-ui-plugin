@@ -1,0 +1,10 @@
+{
+  "$comment": "Auto-discovered by VS Code, VS Code Insiders, and Visual Studio when this repo is opened as a workspace/solution. Uses the 'servers'/'stdio' dialect with a workspace-relative path so it works without editing. (The root .mcp.json is the Copilot/Claude-Code registration and uses a different dialect.)",
+  "servers": {
+    "fluent-ui": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${workspaceFolder}/mcp/dist/index.js"]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$comment": "GitHub Copilot dialect (CLI ~/.copilot/mcp-config.json, Copilot desktop app, coding agent). Merge this into your Copilot MCP config. Replace the args path if the plugin lives elsewhere.",
+  "mcpServers": {
+    "fluent-ui": {
+      "type": "local",
+      "command": "node",
+      "args": ["C:\\Users\\v-arasanir\\Downloads\\Rohith's Rough\\fluent.ui\\mcp\\dist\\index.js"],
+      "tools": ["*"]
+    }
+  }
+}
