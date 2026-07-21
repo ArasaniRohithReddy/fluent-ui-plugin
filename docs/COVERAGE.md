@@ -22,7 +22,7 @@
 
 Every component and topic page was re-parsed to full depth (subsection headings, body text, ordered sections) and **every image was captured** — then indexed with its real URL so agents can hand users direct links:
 
-- **720 documented media items**, **100% with descriptive `alt` and a direct URL** — **415** on component pages + **288** on topic pages + **17 Motion demo videos** (`.mp4`).
+- **705 documented media items**, **100% with descriptive `alt` and a direct URL** — **688 images** (410 on component pages + 278 on topic pages) + **17 Motion demo videos** (`.mp4`).
 - Served by the **`fluent_get_images`** MCP tool (`fluent-images.json`): ask for a component/topic + kind (anatomy, do/don't, state, type, layout, video…) and it returns the real CDN URLs + markdown embeds + source doc pages — so an agent can *show* a diagram, not just describe it.
 - **233 of the images were empty-`alt` diagrams** on the site (anatomy diagrams, do/don't pairs, flow diagrams) that HTML parsing alone drops entirely. These were recovered with **vision OCR** (Opus-4.8 sub-agents): 110 core-component + 22 AI-component + 101 topic-page diagrams.
 - **29 oversized diagrams** (e.g. 2048×2048 hero illustrations, 2.6–5.6 MB) that exceed the vision request size limit were **downscaled and re-read one-at-a-time** so none were silently dropped. Anatomy call-outs recovered this way include **Card** (header/preview/footer), **Message bar** (title/body/dismiss/hyperlink/action), **Progress bar** (label/description), and **Entity cards** (title/metadata/reason-marker/actions).

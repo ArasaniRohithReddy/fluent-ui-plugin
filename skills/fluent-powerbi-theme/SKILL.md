@@ -7,6 +7,18 @@ description: Create and apply a Fluent 2-aligned Power BI report theme (theme JS
 
 A Power BI **report theme JSON** is how you express Fluent 2 in Power BI. It sets the palette, text styles, and — via `visualStyles` — the **visual defaults** applied to every visual (rounded corners, spacing, borders, backgrounds). A ready base theme ships at `mcp/data/powerbi-theme.base.json`; generate a brand-specific one with the `fluent_generate_powerbi_theme` MCP tool.
 
+## Base theme: Fluent 2 (preview)
+Power BI has three **base themes**; your **custom theme layers on top**, overriding only the properties it declares:
+- **Fluent 2 (preview)** — modern Fluent 2 styling: uniform fonts/colors/sizes; **titles + subtitles on, axis titles off**; more padding + rounded corners; grey wallpaper; new pages default to 1920×1080.
+- **Classic 2026** — current default base theme for new reports.
+- **Classic 2018** — legacy base theme.
+
+The Fluent 2 base theme applies **consistent defaults across every visual category** — bars, columns, lines, area, combo, ribbon/waterfall, part-to-whole, scatter, table/matrix, maps, cards/callouts, AI-powered, and more (the official 21-page Fluent 2 showcase report demonstrates all of them). So a **custom theme only needs to override brand palette + type**; the structural Fluent look (cards, spacing, borders, titles, grey canvas) comes from the base theme.
+
+**Enable Fluent 2:** Desktop → *File ▸ Options and Settings ▸ Options ▸ Preview features* → **Modern visual defaults and customize theme improvements** → restart. Switch base themes in *View ▸ Themes ▸ Customize current theme ▸ Base theme*. **Preview is Desktop-only** — to use Fluent 2 in the Power BI *service*, create/update the report in Desktop first (Customize-theme options aren't available in the service).
+
+**Built-in style presets** (per visual, *Format visual ▸ Style*): Charts — *Default* (axis, no labels) / *Data labels*; Line — smooth default, *Straight lines with/without data labels*; Buttons — *Default / Outline / Transparent / Icon & Text* (button color = first data color; default/hover/pressed states); Navigators — *Default / Tab*; Slicers — *Default* (dropdown) / *List* / *Tile* (each also sets slicer mode); Cards — less padding, no reference-label background; Small multiples — *1×4/4×1*; Tables/matrix — existing presets, modernized. A custom theme can add its own via `visualStyles.<visualType>.<presetName>`.
+
 ## Structure (Fluent 2 mapping)
 ```jsonc
 {
@@ -37,7 +49,7 @@ A Power BI **report theme JSON** is how you express Fluent 2 in Power BI. It set
 - **Fluent radius/spacing/elevation → `visualStyles` defaults** (corner radius ~4px controls / ~8px cards).
 
 ## Visual defaults
-`visualStyles."*"."*"` sets the report-wide default; add per-visual entries (e.g. `"textSlicer"`, `"card"`) to override. The Learn "Visual defaults" page demonstrates this with a **live interactive report** (no static screenshots) — modern Fluent defaults for corners, padding, and borders. See `mcp/data/powerbi-visual-defaults.json` for the property knobs (JSON paths + Fluent values).
+`visualStyles."*"."*"` sets the report-wide default; add per-visual entries (e.g. `"textSlicer"`, `"card"`) to override. The Learn "Visual defaults" page demonstrates this with a **live interactive report** (no static screenshots) — modern Fluent defaults for corners, padding, and borders. These come from the **base theme**; your custom theme overrides only what it declares (including **structural colors** like `firstLevelElements`/`background`). See `mcp/data/powerbi-visual-defaults.json` for the property knobs, structural colors, base themes, canvas, and style presets (JSON paths + Fluent values).
 
 ## Apply it
 Power BI Desktop → **View ▸ Themes ▸ Browse for themes** → pick the JSON. In a PBIP project, register it under `StaticResources` (see the `fluent-pbip-report` skill). Keep `dataColors` accessible against the background (≥ 3:1).
@@ -45,8 +57,9 @@ Power BI Desktop → **View ▸ Themes ▸ Browse for themes** → pick the JSON
 ## Learn more
 | Topic | How to find |
 |---|---|
-| Report themes | `microsoft_docs_fetch(url="https://learn.microsoft.com/power-bi/create-reports/desktop-report-themes")` |
-| Visual defaults | `microsoft_docs_fetch(url="https://learn.microsoft.com/power-bi/create-reports/power-bi-reports-visual-defaults")` |
+| Base themes (Fluent 2 preview) | `microsoft_docs_fetch(url="https://learn.microsoft.com/power-bi/create-reports/power-bi-reports-visual-defaults")` |
+| Report themes (apply) | `microsoft_docs_fetch(url="https://learn.microsoft.com/power-bi/create-reports/desktop-report-themes")` |
+| Custom theme JSON (structural colors, style presets) | `microsoft_docs_fetch(url="https://learn.microsoft.com/power-bi/create-reports/report-themes-create-custom")` |
 | Theme schema | `https://github.com/microsoft/powerbi-desktop-samples/tree/main/Report%20Theme%20JSON%20Schema` |
 
 ### CLI alternative (if the Learn MCP server is unavailable)

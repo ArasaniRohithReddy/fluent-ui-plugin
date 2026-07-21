@@ -7,8 +7,16 @@ description: Scaffold and understand Fluent 2-themed Power BI projects in the PB
 
 **PBIP** is Power BI Desktop's text/folder project format (developer mode); **PBIR** is the enhanced report format that stores a report as a folder of JSON files (source-controllable, code-reviewable, programmatically editable). Use the `fluent_scaffold_pbip` MCP tool to generate a Fluent 2-themed project from the template in `templates/pbip/`.
 
+## Programmatic Fluent 2 requires PBIP/PBIR
+To apply/edit Fluent 2 **programmatically** (as files, in source control, without opening Desktop), the report must be in **PBIP + PBIR**. A binary **`.pbix` is not file-editable** by file-editing tools (and a PBIR report embedded in a `.pbix` isn't exposed as loose JSON).
+- A **custom theme JSON** can be generated and applied to **any** report **manually** in Desktop via *View ▸ Themes ▸ Browse for themes* — no PBIR needed.
+- But **wiring the theme + setting the Fluent 2 base theme + canvas size + per-visual defaults as files** (no Desktop) needs **PBIR** — the `visualStyles` theme, `report.json` `themeCollection`, and each page's size all live in editable JSON. PBIR is a *publicly documented format that supports modifications from non-Power BI applications*.
+- **Preview nuance:** during preview, `report.json` can't be edited to *add a brand-new* resource; edits are supported only for resources Desktop already registered. So register/scaffold once in Desktop (or start from `templates/pbip`, which already registers `Fluent2.json`), then edit the theme JSON, `page.json` canvas, and `visual.json` defaults as files.
+
 ## Enable in Power BI Desktop
 Options → **Preview features** → enable **Power BI Project (.pbip) save option** and **Store reports using enhanced metadata format (PBIR)**. Then *File ▸ Save as ▸ .pbip*.
+
+Also enable **Modern visual defaults and customize theme improvements** to get the **Fluent 2 (preview)** base theme, then restart. Fluent 2 is **Desktop-only during preview** — to use it in the Power BI *service*, create/update the report in Desktop first (the Customize-theme options aren't available in the service).
 
 ## Folder structure (from `templates/pbip/`)
 ```
@@ -37,7 +45,8 @@ FluentReport.SemanticModel/
 ```
 
 ## Theme + visual defaults
-- The **base theme** goes under `StaticResources/SharedResources/BaseThemes`; the **custom Fluent theme** under `StaticResources/RegisteredResources` and is referenced from `report.json` (`themeCollection.customTheme`).
+- **Base theme** (`StaticResources/SharedResources/BaseThemes/<name>.json`, e.g. `CY24SU10`) is referenced from `report.json` as `themeCollection.baseTheme` (`type: "SharedResources"`); the **custom Fluent theme** (`StaticResources/RegisteredResources/<name>.json`) as `themeCollection.customTheme` (`type: "RegisteredResources"`), each with a matching `resourcePackages` item (`BaseTheme` / `CustomTheme`).
+- **Canvas:** Fluent 2 new pages default to **1920×1080** (the initial page keeps **1280×720**); set per page in `definition/pages/<page>/page.json` (`width`/`height`). Wallpaper/background are grey.
 - **Visual defaults** live in the theme's `visualStyles` (see `fluent-powerbi-theme`) and apply report-wide — the Fluent look (corners/spacing/borders/type) comes from there.
 
 ## Steps
@@ -52,6 +61,7 @@ FluentReport.SemanticModel/
 |---|---|
 | Projects (PBIP) overview | `microsoft_docs_fetch(url="https://learn.microsoft.com/power-bi/developer/projects/projects-overview")` |
 | Report format (PBIR) | `microsoft_docs_fetch(url="https://learn.microsoft.com/power-bi/developer/projects/projects-report")` |
+| Base themes (Fluent 2 preview) | `microsoft_docs_fetch(url="https://learn.microsoft.com/power-bi/create-reports/power-bi-reports-visual-defaults")` |
 | Fabric item JSON schemas | `https://developer.microsoft.com/json-schemas/fabric/` |
 
 ### CLI alternative (if the Learn MCP server is unavailable)

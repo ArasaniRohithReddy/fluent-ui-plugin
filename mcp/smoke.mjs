@@ -69,6 +69,9 @@ console.log('get_images(motion videos): ok=' + (imgVidText.includes('/assets/vid
 const imgDont = await client.callTool({ name: 'fluent_get_images', arguments: { owner: 'responsible-ai', verdict: 'dont', limit: 5 } });
 const imgDontText = imgDont.content[0].text;
 console.log('get_images(responsible-ai dont): ok=' + (imgDontText.includes('DONT') || imgDontText.toLowerCase().includes("don't") || imgDontText.includes('assets/img/responsible-ai')));
+const imgBtn = await client.callTool({ name: 'fluent_get_images', arguments: { owner: 'button', kind: 'dodont', verdict: 'dont' } });
+const imgBtnText = imgBtn.content[0].text;
+console.log('get_images(button dodont dont): ok=' + (imgBtnText.includes('fluent2websitecdn') && (imgBtnText.includes('DONT') || imgBtnText.toLowerCase().includes("don't"))));
 
 const mig = await client.callTool({ name: 'fluent_migration_guidance', arguments: { scenario: 'v8-to-v9' } });
 const migText = mig.content[0].text;

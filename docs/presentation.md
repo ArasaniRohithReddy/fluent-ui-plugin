@@ -20,7 +20,7 @@ A slide-by-slide script for presenting the plugin to managers, leaders, and expe
 
 ## 4. Why it's trustworthy (grounding)
 - Crawled the **official Fluent 2 site** — 69 public pages **+ 14 gated AI/Copilot pages** (authenticated).
-- Token & component values **extracted from the real `@fluentui` packages** (`react-theme`, `tokens`, `react-components`) — not guessed. 366 color tokens ×3 themes; 99 components with real props; **720 source visuals** (diagrams, do/don't, anatomy, Motion videos) indexed with direct URLs.
+- Token & component values **extracted from the real `@fluentui` packages** (`react-theme`, `tokens`, `react-components`) — not guessed. 366 color tokens ×3 themes; 99 components with real props; **705 source visuals** (diagrams, do/don't, anatomy, Motion videos) indexed with direct URLs.
 - Power BI theme **schema-validated**; PBIP/PBIR validated against Fabric schemas.
 - Everything cites Microsoft Learn; uncertainties are flagged, not hidden.
 

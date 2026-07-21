@@ -5200,21 +5200,21 @@
     "images": [
       {
         "file": "Card+Image",
-        "url": "https://fluent2websitecdn.azureedge.net/cdn/Card+Image.DY654sUS.png",
+        "url": "https://fluent2websitecdn.azureedge.net/cdn/Card%20Image.DY654sUS.png",
         "alt": "Basic",
         "kind": "type",
         "section": "Types"
       },
       {
         "file": "Card+Image-2",
-        "url": "https://fluent2websitecdn.azureedge.net/cdn/Card+Image-2.ClBOUbew.png",
+        "url": "https://fluent2websitecdn.azureedge.net/cdn/Card%20Image-2.ClBOUbew.png",
         "alt": "Persona",
         "kind": "type",
         "section": "Types"
       },
       {
         "file": "Card+Image-1",
-        "url": "https://fluent2websitecdn.azureedge.net/cdn/Card+Image-1.DjYne_ow.png",
+        "url": "https://fluent2websitecdn.azureedge.net/cdn/Card%20Image-1.DjYne_ow.png",
         "alt": "Nodes",
         "kind": "type",
         "section": "A leaf is a child only"

@@ -6,6 +6,9 @@
   "sourceDocs": [
     "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-visual-defaults",
     "https://learn.microsoft.com/en-us/power-bi/create-reports/report-themes-create-custom",
+    "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-report-themes",
+    "https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview",
+    "https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-report",
     "https://github.com/microsoft/powerbi-desktop-samples/tree/main/Report%20Theme%20JSON%20Schema"
   ],
   "fluentTokens": {
@@ -98,11 +101,151 @@
     { "class": "boldLabel", "primary": false, "fontFace": "Segoe UI Bold", "fontSize": 12, "color": "#242424", "maps": "Matrix subtotals/grand totals, table totals" },
     { "class": "semiboldLabel", "primary": false, "fontFace": "Segoe UI Semibold", "fontSize": 12, "color": "#242424", "maps": "Key influencers profile text" }
   ],
+  "baseThemes": {
+    "$comment": "Power BI base themes. Every report has a base theme that defines default colors, fonts, and styles for all visuals; a custom theme layers on top and overrides only the properties it declares. Documentation only (not consumed by the generator); the shipped base theme file already embeds the Fluent 2 visual defaults.",
+    "sourceDocs": [
+      "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-visual-defaults",
+      "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-report-themes"
+    ],
+    "concept": "A custom theme layers on top of the base theme, overriding specific styles while inheriting the rest. Microsoft manages the base theme; it can update with Power BI releases but existing reports keep their original base theme until updated.",
+    "themes": [
+      { "name": "Fluent 2 (preview)", "id": "fluent2", "preview": true, "description": "Modern styling aligned with the Microsoft Fluent 2 design system. After enabling the preview, new reports use this base theme by default.", "pbirBaseThemeName": "CY24SU10", "note": "Base-theme codenames are monthly-versioned SharedResources names; verify the exact Fluent 2 BaseThemes name for your Desktop build." },
+      { "name": "Classic 2026", "id": "classic2026", "preview": false, "description": "Current default base theme for new reports when the Fluent 2 preview is not enabled." },
+      { "name": "Classic 2018", "id": "classic2018", "preview": false, "description": "Original base theme for legacy compatibility (reports created before 2026)." }
+    ],
+    "enableFluent2Preview": {
+      "flag": "Modern visual defaults and customize theme improvements",
+      "steps": [
+        "Power BI Desktop > File > Options and Settings > Options",
+        "Preview features",
+        "Enable 'Modern visual defaults and customize theme improvements'",
+        "Select OK and restart Power BI Desktop"
+      ],
+      "desktopOnly": true,
+      "serviceNote": "During preview the Fluent 2 base theme can only be enabled in Power BI Desktop; to use Fluent 2 styling in the Power BI service, create or update the report in Desktop first. 'Customize current theme' and other lower Themes-dropdown options aren't available in the service."
+    },
+    "uniformStyling": {
+      "fonts": "Uniform font style, colors, and sizes across visuals.",
+      "titles": "Titles and subtitles are on by default; axis titles are off by default.",
+      "paddingBorders": "Increased padding with rounded corners across visuals.",
+      "structuralColors": "The base theme uses structural colors throughout, so edits via View > Themes > Customize current theme flow to all visuals."
+    },
+    "chooseOrUpdateBaseTheme": {
+      "choose": "View > Themes > Customize current theme > Base theme dropdown > Fluent 2 (preview) | Classic 2026 | Classic 2018 > Apply.",
+      "update": "View > Themes > Customize current theme; if an update banner appears, select Update theme > Apply (undo to revert).",
+      "resetToDefault": "The 'Reset to default' tile (first theme in the Power BI section of the Themes dropdown) removes any custom theme/customizations and applies the latest base theme; it doesn't reset per-visual formatting-pane overrides."
+    }
+  },
+  "canvas": {
+    "$comment": "Fluent 2 base theme canvas defaults. In PBIR, page size is set per page in definition/pages/<page>/page.json (width/height).",
+    "sourceDocs": [
+      "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-visual-defaults"
+    ],
+    "newPageSize": { "width": 1920, "height": 1080 },
+    "initialPageSize": { "width": 1280, "height": 720 },
+    "background": "Wallpaper and page background are shades of grey for better contrast so visuals stand out.",
+    "existingPagesNote": "Existing reports and existing pages don't resize when switching to the Fluent 2 base theme; only new pages use the 1920x1080 default."
+  },
+  "stylePresets": {
+    "$comment": "Built-in Fluent 2 per-visual style presets (Format visual > Style dropdown). A custom theme can define its own presets under visualStyles.<visualType>.<presetName> and mark a default via visualStyles.<visualType>.*.stylePreset[0].name.",
+    "sourceDocs": [
+      "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-visual-defaults",
+      "https://learn.microsoft.com/en-us/power-bi/create-reports/report-themes-create-custom"
+    ],
+    "byVisual": [
+      { "visual": "Charts", "presets": [
+        { "name": "Default", "effect": "Shows the axis without labels." },
+        { "name": "Data labels", "effect": "Turns off the axis in favor of data labels and markers; useful for small multiples." }
+      ] },
+      { "visual": "Line charts", "note": "Smooth lines by default.", "presets": [
+        { "name": "Straight lines with data labels" },
+        { "name": "Straight lines without data labels" }
+      ] },
+      { "visual": "Tables and matrix", "presets": [
+        { "name": "Existing presets (modernized)", "effect": "Existing table/matrix style presets, updated to match the modern styling." }
+      ] },
+      { "visual": "Buttons", "note": "Button color uses the first theme data color; each button has default, hover, and pressed states.", "presets": [
+        { "name": "Default", "effect": "Standard button appearance." },
+        { "name": "Outline", "effect": "Border only, no fill." },
+        { "name": "Transparent", "effect": "No border or fill." },
+        { "name": "Icon & Text", "effect": "Icon displayed alongside button text." }
+      ] },
+      { "visual": "Navigators", "presets": [
+        { "name": "Default", "effect": "Standard button appearance." },
+        { "name": "Tab", "effect": "Tab-style navigation." }
+      ] },
+      { "visual": "Cards", "presets": [
+        { "name": "Default", "effect": "Less padding and no reference-label background for a cleaner look." }
+      ] },
+      { "visual": "Slicers", "note": "Each preset sets both the visual style and the slicer mode. Preview quirk: a classic slicer may first appear as a list with dropdown styling; reset the slicer to default to switch it to dropdown mode.", "presets": [
+        { "name": "Default", "effect": "Dropdown mode with modern styling." },
+        { "name": "List", "effect": "List view mode." },
+        { "name": "Tile", "effect": "Tile view mode." }
+      ] },
+      { "visual": "Small multiples", "presets": [
+        { "name": "1x4 or 4x1", "effect": "Consolidate to the categorical axis; start in a 1x4 or 4x1 layout (by orientation) instead of 2x2." }
+      ] }
+    ]
+  },
+  "structuralColors": {
+    "$comment": "The six theme-root color classes (plus tableAccent) that set structural colors for report elements (gridlines, highlights, backgrounds). The Fluent 2 base theme uses structural colors throughout; a custom theme overrides them at the theme root as siblings of dataColors/textClasses. 'alsoCalled' is the alternate JSON name accepted by the schema.",
+    "sourceDocs": [
+      "https://learn.microsoft.com/en-us/power-bi/create-reports/report-themes-create-custom"
+    ],
+    "classes": [
+      { "class": "firstLevelElements", "alsoCalled": "foreground", "fluentValue": "#242424", "formats": "Primary text/labels: table & matrix values/totals, card data labels, KPI text, trend line, data bars axis, slicer header/item (focus mode), filter pane text, modern tooltip text/icon." },
+      { "class": "secondLevelElements", "alsoCalled": "foregroundNeutralSecondary", "fluentValue": "#616161", "formats": "Secondary text: legend labels, axis labels, table/matrix header font, slicer item/outline, button text/icon/outline, light text classes." },
+      { "class": "thirdLevelElements", "alsoCalled": "backgroundLight", "fluentValue": "#D1D1D1", "formats": "Axis gridlines, table/matrix grid, shape fill, gauge arc background, applied-filter card background, disabled button fill/outline (background #FFFFFF)." },
+      { "class": "fourthLevelElements", "alsoCalled": "foregroundNeutralTertiary", "fluentValue": "#BDBDBD", "formats": "Legend dimmed color, card / multi-row card category labels, disabled button text/icon." },
+      { "class": "background", "alsoCalled": null, "fluentValue": "#FFFFFF", "formats": "Label background (inside data points), slicer dropdown items background, button fill, filter pane / available filter card background, modern tooltip background." },
+      { "class": "secondaryBackground", "alsoCalled": "backgroundNeutral", "fluentValue": "#F0F0F0", "formats": "Table/matrix grid outline, shape map default, disabled button fill/outline (background other than #FFFFFF), modern tooltip separator/hover." },
+      { "class": "tableAccent", "alsoCalled": null, "fluentValue": "#0F6CBD", "formats": "Table & matrix grid outline color (when present)." }
+    ]
+  },
+  "programmaticApplication": {
+    "$comment": "How to apply/edit Fluent 2 in a report programmatically (as files, in source control, without opening Power BI Desktop).",
+    "sourceDocs": [
+      "https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview",
+      "https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-report",
+      "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-report-themes",
+      "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-visual-defaults"
+    ],
+    "requirement": "Programmatic Fluent 2 implementation requires the report in PBIP + PBIR (text/JSON) format. A binary .pbix is not file-editable by file-editing tools.",
+    "pbixNotEditable": "A .pbix is a packaged binary file; file-editing tools can't edit the report inside it (and a PBIR report embedded in a .pbix isn't exposed as loose, editable JSON). Use a PBIP project whose report is saved as PBIR (a definition/ folder of JSON).",
+    "themeJsonManualPath": "A custom theme JSON can be generated by us and applied to ANY report by a person in Power BI Desktop via View > Themes > Browse for themes. That is a manual Desktop step; it does not require PBIR.",
+    "requiresPbir": [
+      "Wiring the custom theme so it loads automatically (report.json themeCollection.customTheme + a resourcePackages RegisteredResources entry).",
+      "Setting the Fluent 2 base theme (report.json themeCollection.baseTheme, type SharedResources).",
+      "Setting canvas size such as 1920x1080 (page.json width/height).",
+      "Setting per-visual visual defaults and style presets via the theme's visualStyles."
+    ],
+    "pbirMechanics": {
+      "baseTheme": "report.json > themeCollection.baseTheme = { name, type: 'SharedResources' }; file at StaticResources/SharedResources/BaseThemes/<name>.json.",
+      "customTheme": "report.json > themeCollection.customTheme = { name: '<file>.json', type: 'RegisteredResources' } plus a matching resourcePackages RegisteredResources item (type CustomTheme); file at StaticResources/RegisteredResources/<file>.json.",
+      "publiclyEditable": "PBIR is a publicly documented format that supports modifications from non-Power BI applications; each file carries a public JSON schema for editor validation.",
+      "previewNuance": "During preview, report.json doesn't support editing to ADD a brand-new resource entry; edits to RegisteredResources files are only supported for resources already registered by Power BI Desktop. Practically: register/scaffold the theme once in Desktop (or start from templates/pbip, which already registers Fluent2.json), then edit the theme JSON, page.json canvas, and visual.json defaults as files."
+    },
+    "enablePbir": "Power BI Desktop > File > Options and settings > Options > Preview features > enable 'Power BI Project (.pbip) save option' and 'Store reports using enhanced metadata format (PBIR)'; then File > Save as > .pbip.",
+    "serviceNote": "The Fluent 2 base theme is Desktop-only during preview; create/update the report in Desktop first to use it in the service."
+  },
+  "showcaseReport": {
+    "$comment": "The official Fluent 2 base-theme SHOWCASE report: 21 pages (one per Power BI visual category) demonstrating the Fluent 2 base theme applied across ALL visual types (grey wallpaper, rounded-corner cards, Fluent-blue #0F6CBD-family data colors, Segoe UI, titles on). This is the live interactive example that the Learn 'visual defaults' page refers to (it embeds a live report instead of static screenshots).",
+    "reference": "https://msit.powerbi.com/view (Power BI embed/view; the ?r= report token is internal-tenant)",
+    "access": "Internal-tenant embed — cite as a reference only; NOT fetchable by our tools (do not attempt microsoft_docs_fetch/web_fetch on it).",
+    "learnPage": "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-visual-defaults",
+    "demonstrates": "The Fluent 2 base theme styles every visual category consistently; a custom theme only needs to override the brand palette and type — the structural Fluent look (cards, spacing, borders, titles, grey canvas) comes from the base theme.",
+    "visualCategories": [
+      "Bars", "Columns", "Lines", "Area", "Combo", "Ribbon & Waterfall", "Part-to-whole", "Scatter", "Table & Matrix", "Maps", "Cards or callouts", "AI-powered", "Filtering", "Other", "Custom", "Conditional formatting", "Tooltips", "Analytics", "Visual calcs", "Report 1", "Report 2"
+    ]
+  },
   "notes": [
     "The base 'visual defaults' behavior (uniform fonts, titles on, increased padding, rounded corners, grey wallpaper) is provided by the Fluent 2 base theme in Power BI Desktop; a custom theme layers on top and overrides only the properties it declares.",
     "In PBIR, the base theme is a SharedResources entry (StaticResources/SharedResources/BaseThemes/CY24SU10.json) and a custom theme is a RegisteredResources entry (StaticResources/RegisteredResources/<name>.json). Both are referenced from definition/report.json (themeCollection + resourcePackages).",
     "Under visualStyles > * > *, only scalar or structural (fill) property values are allowed by the schema; nested expression objects are rejected there. Per-specific-visual entries (for example textSlicer) accept the full property schema for that visual.",
     "Card and property names in the theme file do not always match the Formatting pane labels. Use the report theme JSON schema or the PBIR visual.json (the visual objects node) to discover the exact names.",
-    "The Fluent 2 base theme is in preview and can only be enabled in Power BI Desktop (File > Options > Preview features > 'Modern visual defaults and customize theme improvements')."
+    "The Fluent 2 base theme is in preview and can only be enabled in Power BI Desktop (File > Options > Preview features > 'Modern visual defaults and customize theme improvements'). See baseThemes.enableFluent2Preview.",
+    "Applying/editing Fluent 2 programmatically (as files, in source control, without opening Desktop) requires PBIP + PBIR; a binary .pbix is not file-editable. A custom theme JSON can still be applied manually to any report in Desktop via View > Themes > Browse for themes. See programmaticApplication.",
+    "The Fluent 2 base theme expresses uniform styling via structural colors (see structuralColors) and ships per-visual style presets (see stylePresets); new pages default to 1920x1080 while the initial page keeps 1280x720 (see canvas).",
+    "The official Fluent 2 base-theme showcase report (see showcaseReport) demonstrates the base theme across all 21 visual-category pages (Bars, Columns, Lines, Area, Combo, Ribbon & Waterfall, Part-to-whole, Scatter, Table & Matrix, Maps, Cards or callouts, AI-powered, Filtering, Other, Custom, Conditional formatting, Tooltips, Analytics, Visual calcs, Report 1, Report 2); it is an internal-tenant embed cited as a reference, not fetched by our tools."
   ]
 }

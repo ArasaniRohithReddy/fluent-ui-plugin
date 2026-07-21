@@ -1,6 +1,15 @@
 import { z } from 'zod';
 import { loadJson, textResult } from '../util.js';
 const norm = (s) => (s || '').toLowerCase().trim();
+/** Infer do/don't polarity from alt text when an explicit verdict is absent. */
+function inferVerdict(alt) {
+    const a = (alt || '').toLowerCase();
+    if (/\bdon'?t\b|\bdo not\b|incorrect|\bavoid\b|\bwrong\b|not recommended/.test(a))
+        return 'dont';
+    if (/\bdo\b|correct|\bright\b|recommended/.test(a))
+        return 'do';
+    return undefined;
+}
 function matchesOwner(m, owner) {
     const o = norm(owner);
     return norm(m.owner).includes(o) || norm(m.slug).includes(o) || norm(m.slug).replace(/-/g, ' ').includes(o);
@@ -47,7 +56,7 @@ export function registerImages(server) {
             kind: z
                 .string()
                 .optional()
-                .describe('Filter by visual kind: anatomy | dodont | state | type | layout | behavior | content | example | hero | principle | accessibility | pattern | workflow | video. Omit for all kinds.'),
+                .describe('Filter by visual kind: anatomy | dodont | state | type | layout | behavior | content | example | hero | principle | accessibility | pattern | workflow | video | other. Omit for all kinds.'),
             type: z
                 .enum(['image', 'video', 'all'])
                 .default('all')
@@ -75,7 +84,7 @@ export function registerImages(server) {
         if (type && type !== 'all')
             items = items.filter((m) => m.type === type);
         if (verdict && verdict !== 'any')
-            items = items.filter((m) => m.verdict === verdict);
+            items = items.filter((m) => (m.verdict || inferVerdict(m.alt)) === verdict);
         if (query)
             items = items.filter((m) => matchesQuery(m, query));
         // No filters at all → return an overview so the caller can narrow down.

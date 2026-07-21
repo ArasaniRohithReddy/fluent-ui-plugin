@@ -68,7 +68,8 @@
       "kind": "dodont",
       "section": "Layout",
       "alt": "Arrow icon position correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/accordion3.DUzOdXmk.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/accordion3.DUzOdXmk.webp",
+      "verdict": "do"
     },
     {
       "id": "component/accordion/accordion4",
@@ -82,7 +83,8 @@
       "kind": "dodont",
       "section": "Layout",
       "alt": "Arrow icon position incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/accordion4.Bdb0BpD7.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/accordion4.Bdb0BpD7.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/accordion/accordion5",
@@ -656,7 +658,8 @@
       "kind": "dodont",
       "section": "Layout",
       "alt": "Buton layout do",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/button6.GuDqDYc9.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/button6.GuDqDYc9.webp",
+      "verdict": "do"
     },
     {
       "id": "component/button/button7",
@@ -670,7 +673,8 @@
       "kind": "dodont",
       "section": "Layout",
       "alt": "Button layout don't",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/button7.BJ2-aOBB.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/button7.BJ2-aOBB.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/button/button8",
@@ -1126,7 +1130,8 @@
       "kind": "dodont",
       "section": "Keep it short and clear",
       "alt": "Short and clear correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/checkbox5.sirdHGbj.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/checkbox5.sirdHGbj.webp",
+      "verdict": "do"
     },
     {
       "id": "component/checkbox/checkbox6",
@@ -1140,7 +1145,8 @@
       "kind": "dodont",
       "section": "Keep it short and clear",
       "alt": "Short and clear incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/checkbox6.3sFadVSX.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/checkbox6.3sFadVSX.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/checkbox/checkbox7",
@@ -1840,7 +1846,8 @@
       "kind": "dodont",
       "section": "Accessibility",
       "alt": "Labels correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/input2.Cl5csQ8N.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/input2.Cl5csQ8N.webp",
+      "verdict": "do"
     },
     {
       "id": "component/field/input3",
@@ -1854,7 +1861,8 @@
       "kind": "dodont",
       "section": "Accessibility",
       "alt": "Labels incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/input3.DwaNWi0R.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/input3.DwaNWi0R.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/field/field8",
@@ -1868,7 +1876,8 @@
       "kind": "dodont",
       "section": "Labels",
       "alt": "Labels correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/field8.BgQyZr9A.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/field8.BgQyZr9A.webp",
+      "verdict": "do"
     },
     {
       "id": "component/field/field9",
@@ -1882,7 +1891,8 @@
       "kind": "dodont",
       "section": "Labels",
       "alt": "Labels incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/field9.CNGW0V7i.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/field9.CNGW0V7i.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/field/field10",
@@ -2039,7 +2049,8 @@
       "kind": "dodont",
       "section": "Accessibility",
       "alt": "Input Correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/input2.Cl5csQ8N.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/input2.Cl5csQ8N.webp",
+      "verdict": "do"
     },
     {
       "id": "component/input/input3",
@@ -2053,7 +2064,8 @@
       "kind": "dodont",
       "section": "Accessibility",
       "alt": "Input incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/input3.DwaNWi0R.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/input3.DwaNWi0R.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/input/input4",
@@ -2067,7 +2079,8 @@
       "kind": "dodont",
       "section": "Placeholder text",
       "alt": "Input Correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/input4.nURthki8.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/input4.nURthki8.png",
+      "verdict": "do"
     },
     {
       "id": "component/input/input5",
@@ -2081,7 +2094,8 @@
       "kind": "dodont",
       "section": "Placeholder text",
       "alt": "Input incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/input5.CDfPDu2R.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/input5.CDfPDu2R.png",
+      "verdict": "dont"
     },
     {
       "id": "component/input/input6",
@@ -2151,7 +2165,8 @@
       "kind": "dodont",
       "section": "Accessibility",
       "alt": "Placeholder correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/label4.9OofrtoG.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/label4.9OofrtoG.webp",
+      "verdict": "do"
     },
     {
       "id": "component/label/label5",
@@ -2165,7 +2180,8 @@
       "kind": "dodont",
       "section": "Accessibility",
       "alt": "Placeholder incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/label5.Ik0vVR0L.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/label5.Ik0vVR0L.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/label/label7",
@@ -2179,7 +2195,8 @@
       "kind": "dodont",
       "section": "Content",
       "alt": "Content incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/label7.C2XVL4vJ.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/label7.C2XVL4vJ.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/label/label8",
@@ -2193,7 +2210,8 @@
       "kind": "dodont",
       "section": "Content",
       "alt": "Content correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/label8.D9FlH53t.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/label8.D9FlH53t.webp",
+      "verdict": "do"
     },
     {
       "id": "component/label/label9",
@@ -2207,7 +2225,8 @@
       "kind": "dodont",
       "section": "Content",
       "alt": "Content incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/label9.CVC8EiJH.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/label9.CVC8EiJH.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/link/web-link-types-01",
@@ -2375,7 +2394,8 @@
       "kind": "dodont",
       "section": "Link text",
       "alt": "Correct example",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/web-link-accessibility-02.DMsZUKVm.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/web-link-accessibility-02.DMsZUKVm.webp",
+      "verdict": "do"
     },
     {
       "id": "component/link/web-link-accessibility-03",
@@ -2389,7 +2409,8 @@
       "kind": "dodont",
       "section": "Link text",
       "alt": "Incorrect example",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/web-link-accessibility-03.CIj3H4um.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/web-link-accessibility-03.CIj3H4um.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/link/web-link-content-01",
@@ -2403,7 +2424,8 @@
       "kind": "dodont",
       "section": "Make it short, descriptive, and actionable",
       "alt": "Correct example",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/web-link-content-01.CjkCr_uV.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/web-link-content-01.CjkCr_uV.webp",
+      "verdict": "do"
     },
     {
       "id": "component/link/web-link-content-02",
@@ -2417,7 +2439,8 @@
       "kind": "dodont",
       "section": "Make it short, descriptive, and actionable",
       "alt": "Incorrect example",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/web-link-content-02.M4TQOjGz.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/web-link-content-02.M4TQOjGz.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/link/web-link-content-03",
@@ -2431,7 +2454,8 @@
       "kind": "dodont",
       "section": "Make it short, descriptive, and actionable",
       "alt": "Correct example",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/web-link-content-03.Cp40bHyT.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/web-link-content-03.Cp40bHyT.webp",
+      "verdict": "do"
     },
     {
       "id": "component/link/web-link-content-04",
@@ -2459,7 +2483,8 @@
       "kind": "dodont",
       "section": "Skip the period",
       "alt": "Don't link punctuation",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/web-link-content-05.DWL_whu8.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/web-link-content-05.DWL_whu8.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/list/list1",
@@ -2739,7 +2764,8 @@
       "kind": "dodont",
       "section": "Text wrapping",
       "alt": "Text wrapping correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/menu6.BQkJITGM.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/menu6.BQkJITGM.webp",
+      "verdict": "do"
     },
     {
       "id": "component/menu/menu7",
@@ -2753,7 +2779,8 @@
       "kind": "dodont",
       "section": "Text wrapping",
       "alt": "Text wrapping incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/menu7.DT94STwx.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/menu7.DT94STwx.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/menu/menu8",
@@ -3244,7 +3271,8 @@
       "kind": "dodont",
       "section": "Chevron",
       "alt": "Correct chevron location",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/nav11.ME2eTGbp.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/nav11.ME2eTGbp.png",
+      "verdict": "do"
     },
     {
       "id": "component/nav/nav12",
@@ -3258,7 +3286,8 @@
       "kind": "dodont",
       "section": "Chevron",
       "alt": "Incorrect chevron location",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/nav12.Dx-sLKn1.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/nav12.Dx-sLKn1.png",
+      "verdict": "dont"
     },
     {
       "id": "component/nav/nav13",
@@ -4225,7 +4254,8 @@
       "kind": "dodont",
       "section": "Content",
       "alt": "Content correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/slider8.Btj2F246.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/slider8.Btj2F246.webp",
+      "verdict": "do"
     },
     {
       "id": "component/slider/slider9",
@@ -4239,7 +4269,8 @@
       "kind": "dodont",
       "section": "Content",
       "alt": "Content incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/slider9.k0RjG1f0.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/slider9.k0RjG1f0.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/spin/spin1",
@@ -4253,7 +4284,8 @@
       "kind": "dodont",
       "section": "Disabled spin buttons",
       "alt": "Disabled spin button correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/spin1.M3sINi3T.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/spin1.M3sINi3T.webp",
+      "verdict": "do"
     },
     {
       "id": "component/spin/spin2",
@@ -4267,7 +4299,8 @@
       "kind": "dodont",
       "section": "Disabled spin buttons",
       "alt": "Disabled spin button incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/spin2.Brnj1DbU.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/spin2.Brnj1DbU.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/spin/spin3",
@@ -4323,7 +4356,8 @@
       "kind": "dodont",
       "section": "Content",
       "alt": "Process description correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/spinner3.BnI2vkV8.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/spinner3.BnI2vkV8.webp",
+      "verdict": "do"
     },
     {
       "id": "component/spinner/spinner4",
@@ -4337,7 +4371,8 @@
       "kind": "dodont",
       "section": "Content",
       "alt": "Process description incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/spinner4.De8rgj8D.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/spinner4.De8rgj8D.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/spinner/spinner5",
@@ -4351,7 +4386,8 @@
       "kind": "dodont",
       "section": "Content",
       "alt": "Less specific correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/spinner5.SZ6a3pmR.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/spinner5.SZ6a3pmR.webp",
+      "verdict": "do"
     },
     {
       "id": "component/spinner/spinner6",
@@ -4365,7 +4401,8 @@
       "kind": "dodont",
       "section": "Content",
       "alt": "Less specific incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/spinner6.Df-BirH1.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/spinner6.Df-BirH1.webp",
+      "verdict": "dont"
     },
     {
       "id": "component/switch/switch1",
@@ -5289,7 +5326,7 @@
       "kind": "type",
       "section": "Types",
       "alt": "Basic",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/Card+Image.DY654sUS.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/Card%20Image.DY654sUS.png"
     },
     {
       "id": "component/tree/Card+Image-2",
@@ -5303,7 +5340,7 @@
       "kind": "type",
       "section": "Types",
       "alt": "Persona",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/Card+Image-2.ClBOUbew.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/Card%20Image-2.ClBOUbew.png"
     },
     {
       "id": "component/tree/Card+Image-1",
@@ -5317,7 +5354,7 @@
       "kind": "type",
       "section": "A leaf is a child only",
       "alt": "Nodes",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/Card+Image-1.DjYne_ow.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/Card%20Image-1.DjYne_ow.png"
     },
     {
       "id": "component/tree/tree-expandcollapse",
@@ -10204,7 +10241,7 @@
       "kind": "dodont",
       "section": "",
       "alt": "Short and clear correct",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/Pt-Bullet+points-Y.CJsxO3yV.png",
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/Pt-Bullet%20points-Y.CJsxO3yV.png",
       "verdict": "do"
     },
     {
@@ -10219,7 +10256,7 @@
       "kind": "dodont",
       "section": "",
       "alt": "Short and clear incorrect",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/Pt-Bullet+points-N.CqXABoUK.png",
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/Pt-Bullet%20points-N.CqXABoUK.png",
       "verdict": "dont"
     },
     {

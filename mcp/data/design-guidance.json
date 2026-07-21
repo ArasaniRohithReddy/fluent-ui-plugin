@@ -6242,7 +6242,7 @@
           "alt": "Short and clear correct",
           "section": "",
           "asset": "Pt-Bullet+points-Y",
-          "url": "https://fluent2websitecdn.azureedge.net/cdn/Pt-Bullet+points-Y.CJsxO3yV.png",
+          "url": "https://fluent2websitecdn.azureedge.net/cdn/Pt-Bullet%20points-Y.CJsxO3yV.png",
           "kind": "dodont",
           "verdict": "do",
           "source": "site"
@@ -6251,7 +6251,7 @@
           "alt": "Short and clear incorrect",
           "section": "",
           "asset": "Pt-Bullet+points-N",
-          "url": "https://fluent2websitecdn.azureedge.net/cdn/Pt-Bullet+points-N.CqXABoUK.png",
+          "url": "https://fluent2websitecdn.azureedge.net/cdn/Pt-Bullet%20points-N.CqXABoUK.png",
           "kind": "dodont",
           "verdict": "dont",
           "source": "site"
