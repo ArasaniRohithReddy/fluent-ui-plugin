@@ -44,7 +44,12 @@
     "design language",
     "iconography",
     "motion",
-    "elevation"
+    "elevation",
+    "config",
+    "presets",
+    "user config",
+    "memory",
+    "theme config"
   ],
   "category": "ui-design-systems",
   "tags": [

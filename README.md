@@ -11,6 +11,7 @@ Fluent 2 is large and precise — the right component, the right token, the righ
 
 Beyond greenfield, it also:
 - **Adopt/migrate existing UIs to Fluent 2** — Fluent UI v8→v9 (keeps Fluent 1 alongside Fluent 2), from other design systems, and hardcoded values → tokens.
+- **Optional user presets (`fluent.config.json`) + persistent memory** — agents honor your brand/accessibility/shape/size presets and remember your decisions; fully zero-config by default (no setup required).
 
 ## What's inside
 
@@ -25,7 +26,7 @@ Beyond greenfield, it also:
 | `fluent-design-reviewer` | Audits UI against Fluent 2 + a11y |
 
 ### 📚 Skills (`skills/`)
-`fluent-web-ui` · `fluent-theming` · `fluent-design-tokens` · `fluent-design-language` · `fluent-accessibility` · `fluent-ai-copilot-ui` · `fluent-powerbi-theme` · `fluent-pbip-report` · `fluent-powerapps` · `fluent-powerpages` · `fluent-pcf-component` · `fluent-migration` · `fluent-design-review`
+`fluent-web-ui` · `fluent-theming` · `fluent-design-tokens` · `fluent-design-language` · `fluent-accessibility` · `fluent-ai-copilot-ui` · `fluent-powerbi-theme` · `fluent-pbip-report` · `fluent-powerapps` · `fluent-powerpages` · `fluent-pcf-component` · `fluent-migration` · `fluent-design-review` · `fluent-config`
 
 ### 🛠️ MCP tools (`mcp/`, Node + TypeScript)
 | Tool | Does |
@@ -40,6 +41,9 @@ Beyond greenfield, it also:
 | `fluent_accessibility_checklist` | Fluent 2 WCAG 2.1 AA checklist |
 | `fluent_design_guidance` | Fluent 2 design-language foundations: color, typography, layout, elevation, iconography, motion, shapes, material, content, responsible AI |
 | `fluent_migration_guidance` | Adopt/migrate to Fluent 2 — Fluent UI v8→v9, from another design system, hardcoded→tokens, per-surface |
+| `fluent_get_config` / `fluent_recall` | Load the user's resolved presets (config > memory > default) + the recorded decision log |
+| `fluent_init_config` / `fluent_set_config` | Scaffold (first-run) or update the user's `fluent.config.json` presets |
+| `fluent_remember` | Record a design decision to `.fluent/memory.json` (append-only) |
 
 ## Works in every major host
 The MCP server is a standard stdio server; agents/skills/instructions fan out via `AGENTS.md`, `CLAUDE.md`, and `.github/`. Priority hosts: **GitHub Copilot CLI, VS Code, VS Code Insiders, Visual Studio, GitHub Copilot desktop app**; also Cursor, Claude, Gemini, Antigravity, Windsurf, Cline. See **[`hosts/README.md`](hosts/README.md)** for copy-paste configs (3 MCP dialects).
@@ -75,8 +79,8 @@ plugin.json            # plugin manifest (+ mirrors in .claude-plugin/.codex-plu
 .mcp.json              # bundled MCP server registration (Copilot dialect)
 AGENTS.md · CLAUDE.md  # portable instructions (fan out to most hosts)
 agents/                # 6 agents (*.agent.md)
-skills/                # 13 skills (SKILL.md)
-mcp/                   # MCP server (src/, dist/, data/)
+skills/                # 14 skills (SKILL.md)
+mcp/                   # MCP server — 17 tools (src/, dist/, data/)
 templates/pbip/        # PBIP/PBIR project template
 hosts/                 # per-IDE MCP config templates + install guide
 docs/                  # architecture + presentation

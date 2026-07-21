@@ -115,7 +115,7 @@
           "title": "Color mode",
           "description": "light -> createLightTheme / webLightTheme; dark -> createDarkTheme / webDarkTheme; system -> follow the OS prefers-color-scheme. Selects the semanticLight vs semanticDark token values.",
           "enum": ["light", "dark", "system"],
-          "default": "system"
+          "default": "light"
         },
         "base": {
           "type": "string",

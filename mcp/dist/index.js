@@ -11,6 +11,7 @@ import { registerTheme } from './tools/theme.js';
 import { registerCode } from './tools/code.js';
 import { registerMigration } from './tools/migration.js';
 import { registerDesignGuidance } from './tools/designGuidance.js';
+import { registerConfig } from './tools/config.js';
 const server = new McpServer({
     name: 'fluent-ui',
     version: '1.0.0',
@@ -30,6 +31,9 @@ registerCode(server);
 // (grounded in research/fluent-design.md + migration.json).
 registerDesignGuidance(server);
 registerMigration(server);
+// User-defined presets config (fluent.config.json) + persistent agent memory
+// (.fluent/memory.json). Zero-config safe: sensible Fluent 2 defaults, never throws.
+registerConfig(server);
 async function main() {
     const transport = new StdioServerTransport();
     await server.connect(transport);

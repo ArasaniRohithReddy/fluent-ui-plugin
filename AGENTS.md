@@ -19,12 +19,21 @@ This project is the **fluent-ui** plugin: **agents + skills + an MCP server** th
 | `fluent_accessibility_checklist` | Fluent 2 accessibility checklist to self-review against |
 | `fluent_design_guidance` | Fluent 2 design-language foundations (color, typography, layout, elevation, iconography, motion, shapes, material, content, responsible AI) |
 | `fluent_migration_guidance` | Scenario guidance to adopt/migrate existing UI to Fluent 2 (Fluent UI v8→v9, from another design system, hardcoded→tokens, per-surface) |
+| `fluent_get_config` / `fluent_recall` | Load the user's resolved presets (config > memory > default) + the recorded decision log |
+| `fluent_init_config` / `fluent_set_config` | Scaffold (first-run) or update the user's `fluent.config.json` presets |
+| `fluent_remember` | Record a clarified design decision to `.fluent/memory.json` |
 
 ## Golden rules (never violate)
 1. **Never hardcode token values.** No raw hex/px that duplicates a token — look them up (`fluent_get_token`) and consume as `tokens.*` (Griffel), CSS variables, or theme values.
 2. **Always theme via `FluentProvider`** (web) with a real theme (`webLightTheme`/`webDarkTheme` or a brand theme). Support light, dark, and high-contrast.
 3. **Choose components from the real catalog** (`fluent_search_components`/`fluent_get_component`); prefer composition/slots over custom markup.
 4. **Accessibility is non-negotiable** (`fluent_accessibility_checklist`): names/roles, focus order, 4.5:1 contrast, 24px targets, keyboard.
+
+## Presets config & memory (optional, zero-config)
+Users may declare presets in **`fluent.config.json`** (brand, theme, typography, shape, size/density, accessibility, iconStyle, targets, migration, content) and agents persist decisions in **`.fluent/memory.json`**. Both are optional — **zero-config always works** on built-in Fluent 2 defaults; readers never throw on missing files.
+- **Precedence (first wins):** explicit `fluent.config.json` value → recorded `.fluent/memory.json` decision → built-in Fluent 2 default. (A runtime tool argument overrides all three for that one call.)
+- **Start of task:** call `fluent_get_config` to load resolved presets. If `configExists:false` **and** memory has no `presets-optout` decision, make the **first-run offer once** — "set up design presets now, or use Fluent 2 defaults?" — on yes run `fluent_init_config`; on no/silent `fluent_remember` a `presets-optout` decision and build on defaults.
+- **Record decisions:** persist clarified choices with `fluent_remember` (append-only) so they're never re-asked; `fluent_recall` reads them back; `fluent_set_config` updates the config. Load the `fluent-config` skill for the field→token mapping.
 
 ## Surface quickstarts
 - **Web (React v9):** `npm i @fluentui/react-components` → wrap app in `<FluentProvider theme={webLightTheme}>` → style with `makeStyles` + `tokens`.
@@ -34,7 +43,7 @@ This project is the **fluent-ui** plugin: **agents + skills + an MCP server** th
 - **Power Apps:** modern controls + `App.Theme` (seed `#0f6cbd`). **Power Pages:** Fluent design-token CSS over Bootstrap. **PCF:** Fluent React v9 + `FluentProvider` with `context.fluentDesignLanguage.tokenTheme`.
 
 ## Skills (load for depth)
-`fluent-web-ui` · `fluent-theming` · `fluent-design-tokens` · `fluent-design-language` · `fluent-accessibility` · `fluent-ai-copilot-ui` · `fluent-powerbi-theme` · `fluent-pbip-report` · `fluent-powerapps` · `fluent-powerpages` · `fluent-pcf-component` · `fluent-migration` · `fluent-design-review`
+`fluent-web-ui` · `fluent-theming` · `fluent-design-tokens` · `fluent-design-language` · `fluent-accessibility` · `fluent-ai-copilot-ui` · `fluent-powerbi-theme` · `fluent-pbip-report` · `fluent-powerapps` · `fluent-powerpages` · `fluent-pcf-component` · `fluent-migration` · `fluent-design-review` · `fluent-config`
 
 ## Agents
 `fluent-ui-builder` (primary/router) · `fluent-web-engineer` · `fluent-powerbi-designer` · `fluent-power-platform-engineer` · `fluent-migration-engineer` · `fluent-design-reviewer`

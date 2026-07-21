@@ -6,6 +6,7 @@ node_modules/
 
 # Scratch / local
 .smoke-out/
+.cfg-smoke/
 .playwright-mcp/
 *.log
 *.tmp
