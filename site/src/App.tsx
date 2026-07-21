@@ -1,80 +1,101 @@
 import * as React from 'react';
 import {
   FluentProvider, webLightTheme, webDarkTheme, makeStyles, tokens, shorthands,
-  Button, Card, Badge, TabList, Tab, Title1, Title3, Subtitle1, Subtitle2,
+  Button, Badge, TabList, Tab, Title1, Title3, Subtitle1, Subtitle2,
   Body1, Body1Strong, Caption1, Link, Divider,
 } from '@fluentui/react-components';
 import {
   Code24Regular, DataBarVertical24Regular, Flash24Regular, Color24Regular,
   PaintBrush24Regular, ArrowSwap24Regular, Accessibility24Regular, Image24Regular,
   Brain24Regular, WeatherMoon20Regular, WeatherSunny20Regular, Copy20Regular,
-  Checkmark20Regular, ArrowRight20Regular, Star20Regular, Open16Regular, Sparkle24Regular,
+  Checkmark20Regular, ArrowRight20Regular, Star20Regular, Open16Regular, Sparkle20Filled,
 } from '@fluentui/react-icons';
 
 const REPO = 'https://github.com/Rohithreddy7123/fluent-ui-plugin';
 
-// Convert a Fluent accent hex to a subtle tint for icon chips (professional, not "rainbow").
 function tint(hex: string): string {
   const h = hex.replace('#', '');
   const r = parseInt(h.slice(0, 2), 16), g = parseInt(h.slice(2, 4), 16), b = parseInt(h.slice(4, 6), 16);
-  return `rgba(${r},${g},${b},0.13)`;
+  return `rgba(${r},${g},${b},0.14)`;
 }
 
 const useStyles = makeStyles({
-  root: { backgroundColor: tokens.colorNeutralBackground2, color: tokens.colorNeutralForeground1, minHeight: '100vh' },
-  wrap: { maxWidth: '1120px', marginLeft: 'auto', marginRight: 'auto', paddingLeft: '24px', paddingRight: '24px' },
-  header: {
-    position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'saturate(180%) blur(12px)',
-    backgroundColor: tokens.colorNeutralBackground1Hover,
-    borderBottom: `1px solid ${tokens.colorNeutralStroke2}`,
+  root: { position: 'relative', color: tokens.colorNeutralForeground1, minHeight: '100vh', backgroundColor: tokens.colorNeutralBackground2, overflowX: 'hidden' },
+  bg: {
+    position: 'fixed', inset: '0', zIndex: 0, pointerEvents: 'none',
+    background: 'radial-gradient(42% 46% at 12% -2%, rgba(40,134,222,.22), transparent 60%), radial-gradient(38% 42% at 92% 4%, rgba(3,131,135,.16), transparent 60%), radial-gradient(46% 42% at 72% 108%, rgba(92,46,145,.14), transparent 60%)',
   },
-  nav: { display: 'flex', alignItems: 'center', gap: '16px', height: '60px' },
-  brand: { display: 'flex', alignItems: 'center', gap: '10px', fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase400 },
+  layer: { position: 'relative', zIndex: 1 },
+  wrap: { maxWidth: '1140px', marginLeft: 'auto', marginRight: 'auto', paddingLeft: '24px', paddingRight: '24px' },
+  header: {
+    position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'saturate(180%) blur(16px)', WebkitBackdropFilter: 'saturate(180%) blur(16px)',
+    backgroundColor: 'var(--glass-bg)', borderBottom: `1px solid var(--glass-brd)`,
+  },
+  nav: { display: 'flex', alignItems: 'center', gap: '16px', height: '62px' },
+  brand: { display: 'flex', alignItems: 'center', gap: '11px', fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase400 },
   logo: {
-    width: '30px', height: '30px', borderRadius: tokens.borderRadiusMedium, display: 'grid', placeItems: 'center',
-    backgroundColor: tokens.colorBrandBackground, color: tokens.colorNeutralForegroundOnBrand,
-    fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase400, fontFamily: tokens.fontFamilyBase,
+    width: '34px', height: '34px', borderRadius: '11px', display: 'grid', placeItems: 'center', color: '#fff',
+    background: 'linear-gradient(140deg,#2886de,#0f6cbd 52%,#0a7c86)',
+    boxShadow: 'inset 0 1px 0 rgba(255,255,255,.45), inset 0 -6px 12px rgba(0,0,0,.18), 0 6px 14px rgba(15,108,189,.42)',
   },
   navlinks: { display: 'flex', gap: '2px', marginLeft: 'auto' },
-  navlink: { ...shorthands.padding('6px', '12px'), borderRadius: tokens.borderRadiusMedium, color: tokens.colorNeutralForeground2, textDecorationLine: 'none', fontWeight: tokens.fontWeightMedium },
-  section: { ...shorthands.padding('56px', 0) },
-  sectionHead: { maxWidth: '720px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '32px', textAlign: 'center' },
-  eyebrow: { color: tokens.colorBrandForeground1, fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase200, letterSpacing: '.06em', textTransform: 'uppercase', display: 'block', marginBottom: '8px' },
-  hero: { position: 'relative', overflow: 'hidden', paddingTop: '56px', paddingBottom: '24px' },
-  heroGlow: {
-    position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none',
-    background: 'radial-gradient(48% 52% at 12% 0%, rgba(15,108,189,.10), transparent 62%)',
+  navlink: { ...shorthands.padding('7px', '13px'), borderRadius: tokens.borderRadiusMedium, color: tokens.colorNeutralForeground2, textDecorationLine: 'none', fontWeight: tokens.fontWeightMedium, ':hover': { backgroundColor: 'var(--glass-bg)', color: tokens.colorNeutralForeground1 } },
+  section: { ...shorthands.padding('44px', 0) },
+  sectionHead: { maxWidth: '740px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '28px', textAlign: 'center' },
+  eyebrow: { color: tokens.colorBrandForeground1, fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase200, letterSpacing: '.08em', textTransform: 'uppercase', display: 'block', marginBottom: '10px' },
+
+  // glass surface
+  glass: {
+    backgroundColor: 'var(--glass-bg)',
+    ...shorthands.border('1px', 'solid', 'var(--glass-brd)'),
+    backdropFilter: 'blur(20px) saturate(150%)', WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+    boxShadow: `${tokens.shadow8}, inset 0 1px 0 var(--glass-hi)`,
   },
-  heroInner: { position: 'relative', zIndex: 1 },
-  h1: { fontSize: 'clamp(34px,6vw,60px)', lineHeight: 1.08, fontWeight: tokens.fontWeightBold, letterSpacing: '-.02em', margin: '16px 0 12px', maxWidth: '18ch' },
+  hoverable: {
+    transition: 'transform .25s cubic-bezier(.1,.9,.2,1), box-shadow .25s, border-color .25s',
+    ':hover': { transform: 'translateY(-5px)', boxShadow: `${tokens.shadow28}, inset 0 1px 0 var(--glass-hi)`, borderTopColor: 'rgba(15,108,189,.5)', borderRightColor: 'rgba(15,108,189,.5)', borderBottomColor: 'rgba(15,108,189,.5)', borderLeftColor: 'rgba(15,108,189,.5)' },
+  },
+
+  hero: { position: 'relative', paddingTop: '40px', paddingBottom: '16px' },
+  h1: { fontSize: 'clamp(36px,6.4vw,66px)', lineHeight: 1.04, fontWeight: tokens.fontWeightBold, letterSpacing: '-.025em', margin: '18px 0 14px', maxWidth: '18ch' },
   brandText: { color: tokens.colorBrandForeground1 },
-  lead: { fontSize: 'clamp(16px,2.2vw,20px)', color: tokens.colorNeutralForeground2, maxWidth: '62ch', display: 'block' },
-  cta: { display: 'flex', flexWrap: 'wrap', gap: '12px', margin: '20px 0 24px' },
-  stats: { display: 'flex', flexWrap: 'wrap', gap: '8px' },
-  stat: { ...shorthands.padding('12px', '16px'), minWidth: '108px' },
-  statB: { display: 'block', fontSize: tokens.fontSizeBase600, fontWeight: tokens.fontWeightBold },
-  grid3: { display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '16px' },
-  grid2: { display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '8px' },
-  cardPad: { ...shorthands.padding('20px') },
-  ic: { width: '44px', height: '44px', borderRadius: tokens.borderRadiusLarge, display: 'grid', placeItems: 'center', marginBottom: '14px' },
-  tool: { display: 'flex', flexDirection: 'column', ...shorthands.padding('12px', '16px'), ...shorthands.gap('2px') },
+  lead: { fontSize: 'clamp(16px,2.2vw,21px)', color: tokens.colorNeutralForeground2, maxWidth: '64ch', display: 'block', lineHeight: 1.5 },
+  cta: { display: 'flex', flexWrap: 'wrap', gap: '12px', margin: '24px 0 28px' },
+  ctaGlow: { boxShadow: '0 8px 24px rgba(15,108,189,.5)' },
+  stats: { display: 'flex', flexWrap: 'wrap', gap: '10px' },
+  stat: { ...shorthands.padding('12px', '18px'), minWidth: '112px', borderRadius: '14px' },
+  statB: { display: 'block', fontSize: tokens.fontSizeBase600, fontWeight: tokens.fontWeightBold, lineHeight: 1.1 },
+
+  grid3: { display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '18px' },
+  grid2: { display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '12px' },
+  card: { ...shorthands.padding('22px'), borderRadius: '18px' },
+  ic: { width: '46px', height: '46px', borderRadius: '13px', display: 'grid', placeItems: 'center', marginBottom: '15px', boxShadow: 'inset 0 1px 0 rgba(255,255,255,.25)' },
+  tool: { display: 'flex', flexDirection: 'column', ...shorthands.padding('13px', '17px'), ...shorthands.gap('3px'), borderRadius: '14px' },
   toolCode: { color: tokens.colorBrandForeground1, fontFamily: tokens.fontFamilyMonospace, fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase300 },
-  tabsPanel: { marginTop: '16px' },
-  code: { position: 'relative', backgroundColor: '#0b1220', color: '#e6edf3', borderRadius: tokens.borderRadiusLarge, ...shorthands.border('1px', 'solid', tokens.colorNeutralStroke2), overflow: 'hidden', margin: '12px 0' },
-  pre: { margin: 0, ...shorthands.padding('16px'), paddingRight: '52px', overflowX: 'auto', fontFamily: tokens.fontFamilyMonospace, fontSize: tokens.fontSizeBase200, lineHeight: 1.6, whiteSpace: 'pre' },
-  copyBtn: { position: 'absolute', top: '8px', right: '8px' },
-  note: { borderLeft: `3px solid ${tokens.colorBrandForeground1}`, backgroundColor: tokens.colorNeutralBackground3, ...shorthands.padding('12px', '16px'), borderRadius: tokens.borderRadiusMedium, margin: '12px 0' },
-  dogfood: {
-    ...shorthands.padding('20px', '24px'), borderRadius: tokens.borderRadiusXLarge, marginTop: '16px',
-    backgroundColor: tokens.colorNeutralBackground1,
-    ...shorthands.border('1px', 'solid', tokens.colorNeutralStroke2),
-    borderLeft: `4px solid ${tokens.colorBrandForeground1}`,
-    display: 'flex', gap: '16px', alignItems: 'flex-start', flexWrap: 'wrap', boxShadow: tokens.shadow4,
+
+  tabsPanel: { marginTop: '18px' },
+  code: {
+    position: 'relative', backgroundColor: 'var(--code-bg)', color: '#e9eef5', borderRadius: '14px',
+    ...shorthands.border('1px', 'solid', 'var(--glass-brd)'),
+    backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+    boxShadow: `${tokens.shadow8}, inset 0 1px 0 rgba(255,255,255,.08)`, overflow: 'hidden', margin: '12px 0',
   },
-  band: { backgroundColor: tokens.colorBrandBackground, color: tokens.colorNeutralForegroundOnBrand, borderRadius: tokens.borderRadiusXLarge, ...shorthands.padding('48px', '24px'), boxShadow: tokens.shadow16 },
-  bandStat: { ...shorthands.padding('12px', '16px'), backgroundColor: 'rgba(255,255,255,.12)', borderRadius: tokens.borderRadiusLarge, ...shorthands.border('1px', 'solid', 'rgba(255,255,255,.22)') },
-  footer: { borderTop: `1px solid ${tokens.colorNeutralStroke2}`, backgroundColor: tokens.colorNeutralBackground1, ...shorthands.padding('32px', 0), marginTop: '24px' },
-  footRow: { display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center', justifyContent: 'space-between' },
+  pre: { margin: 0, ...shorthands.padding('16px'), paddingRight: '52px', overflowX: 'auto', fontFamily: tokens.fontFamilyMonospace, fontSize: tokens.fontSizeBase200, lineHeight: 1.65, whiteSpace: 'pre' },
+  copyBtn: { position: 'absolute', top: '9px', right: '9px' },
+  note: { borderLeftWidth: '3px', borderLeftStyle: 'solid', borderLeftColor: tokens.colorBrandForeground1, ...shorthands.padding('13px', '17px'), borderTopRightRadius: '12px', borderBottomRightRadius: '12px', margin: '14px 0' },
+  dogfood: { ...shorthands.padding('22px', '24px'), borderRadius: '20px', marginTop: '20px', borderLeftWidth: '4px', borderLeftStyle: 'solid', borderLeftColor: tokens.colorBrandForeground1, display: 'flex', gap: '16px', alignItems: 'flex-start', flexWrap: 'wrap' },
+
+  band: {
+    position: 'relative', overflow: 'hidden', borderRadius: '26px', ...shorthands.padding('52px', '36px'), color: '#fff',
+    background: 'linear-gradient(135deg, rgba(24,134,222,.96), rgba(14,71,117,.96))',
+    ...shorthands.border('1px', 'solid', 'rgba(255,255,255,.18)'),
+    boxShadow: `${tokens.shadow28}, inset 0 1px 0 rgba(255,255,255,.28)`,
+  },
+  bandSheen: { position: 'absolute', inset: '0', pointerEvents: 'none', background: 'radial-gradient(60% 80% at 82% -10%, rgba(255,255,255,.30), transparent 55%)' },
+  bandStat: { position: 'relative', ...shorthands.padding('14px', '18px'), backgroundColor: 'rgba(255,255,255,.13)', borderRadius: '16px', ...shorthands.border('1px', 'solid', 'rgba(255,255,255,.26)'), backdropFilter: 'blur(6px)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,.3)' },
+
+  footer: { borderTop: `1px solid var(--glass-brd)`, ...shorthands.padding('34px', 0), marginTop: '28px', backgroundColor: 'var(--glass-bg)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' },
+  footRow: { display: 'flex', flexWrap: 'wrap', gap: '18px', alignItems: 'center', justifyContent: 'space-between' },
 });
 
 type Feat = { c: string; Icon: React.FC<any>; t: string; d: string };
@@ -157,13 +178,10 @@ const HOSTS: { id: string; label: string; steps: React.ReactNode; code?: string 
 function CodeBlock({ code }: { code: string }) {
   const s = useStyles();
   const [done, setDone] = React.useState(false);
-  const copy = () => {
-    navigator.clipboard?.writeText(code).then(() => { setDone(true); setTimeout(() => setDone(false), 1400); }, () => {});
-  };
+  const copy = () => { navigator.clipboard?.writeText(code).then(() => { setDone(true); setTimeout(() => setDone(false), 1400); }, () => {}); };
   return (
     <div className={s.code}>
-      <Button className={s.copyBtn} size="small" appearance="subtle" icon={done ? <Checkmark20Regular /> : <Copy20Regular />}
-        style={{ color: '#e6edf3' }} onClick={copy} aria-label="Copy code" />
+      <Button className={s.copyBtn} size="small" appearance="subtle" icon={done ? <Checkmark20Regular /> : <Copy20Regular />} style={{ color: '#e9eef5' }} onClick={copy} aria-label="Copy code" />
       <pre className={s.pre}>{code}</pre>
     </div>
   );
@@ -178,150 +196,160 @@ export function App() {
   const [tab, setTab] = React.useState('cli');
   const s = useStyles();
   const host = HOSTS.find((h) => h.id === tab)!;
+  const glass = `${s.glass}`;
+
+  const rootVars = {
+    ['--glass-bg' as any]: dark ? 'rgba(255,255,255,0.055)' : 'rgba(255,255,255,0.66)',
+    ['--glass-brd' as any]: dark ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.85)',
+    ['--glass-hi' as any]: dark ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.95)',
+    ['--code-bg' as any]: dark ? 'rgba(10,15,24,0.66)' : 'rgba(13,20,34,0.94)',
+  } as React.CSSProperties;
 
   return (
     <FluentProvider theme={dark ? webDarkTheme : webLightTheme}>
-      <div className={s.root} id="top">
-        <header className={s.header}>
-          <div className={`${s.wrap} ${s.nav}`}>
-            <span className={s.brand}><span className={s.logo}>F</span> Fluent UI 2.0 Plugin</span>
-            <nav className={s.navlinks}>
-              <Link className={s.navlink} href="#features">Features</Link>
-              <Link className={s.navlink} href="#tools">Tools</Link>
-              <Link className={s.navlink} href="#install">Install</Link>
-              <Link className={s.navlink} href="#coverage">Coverage</Link>
-              <Link className={s.navlink} href={REPO}>GitHub</Link>
-            </nav>
-            <Button appearance="subtle" icon={dark ? <WeatherSunny20Regular /> : <WeatherMoon20Regular />}
-              aria-label="Toggle light or dark theme" onClick={() => setDark(!dark)} />
-          </div>
-        </header>
-
-        {/* HERO */}
-        <section className={s.hero}>
-          <div className={s.heroGlow} />
-          <div className={`${s.wrap} ${s.heroInner}`}>
-            <Badge appearance="tint" color="success" size="large">Open source, MIT licensed, works in 12+ AI IDEs</Badge>
-            <Title1 as="h1" className={s.h1} block>Build and adopt <span className={s.brandText}>Microsoft Fluent 2</span>, everywhere.</Title1>
-            <Subtitle2 className={s.lead} block>An AI-assistant plugin (Agents, Skills and MCP tools) that turns the official Fluent 2 design system into grounded, on-demand guidance and accessible code, inside the tools your teams already use. For Web, Power BI and Power Platform.</Subtitle2>
-            <div className={s.cta}>
-              <Button appearance="primary" size="large" icon={<ArrowRight20Regular />} iconPosition="after" as="a" href="#install">Get started</Button>
-              <Button appearance="secondary" size="large" icon={<Star20Regular />} as="a" href={REPO}>View on GitHub</Button>
+      <div className={s.root} id="top" style={rootVars}>
+        <div className={s.bg} />
+        <div className={s.layer}>
+          <header className={s.header}>
+            <div className={`${s.wrap} ${s.nav}`}>
+              <span className={s.brand}><span className={s.logo}><Sparkle20Filled /></span> Fluent UI 2.0 Plugin</span>
+              <nav className={s.navlinks}>
+                <Link className={s.navlink} href="#features">Features</Link>
+                <Link className={s.navlink} href="#tools">Tools</Link>
+                <Link className={s.navlink} href="#install">Install</Link>
+                <Link className={s.navlink} href="#coverage">Coverage</Link>
+                <Link className={s.navlink} href={REPO}>GitHub</Link>
+              </nav>
+              <Button appearance="subtle" icon={dark ? <WeatherSunny20Regular /> : <WeatherMoon20Regular />} aria-label="Toggle light or dark theme" onClick={() => setDark(!dark)} />
             </div>
-            <div className={s.stats}>
-              {[['61', 'Components (47 core, 14 AI)'], ['22', 'Design-language topics'], ['705', 'Source visuals indexed'], ['19', 'MCP tools'], ['366', 'Design tokens, 3 themes']].map(([b, l]) => (
-                <Card key={l} className={s.stat} appearance="outline"><span className={s.statB}>{b}</span><Caption1>{l}</Caption1></Card>
-              ))}
-            </div>
+          </header>
 
-            {/* DOGFOOD PROOF */}
-            <div className={s.dogfood}>
-              <span className={s.ic} style={{ background: tint('#0f6cbd'), color: tokens.colorBrandForeground1, marginBottom: 0, flex: '0 0 auto' }}><Sparkle24Regular /></span>
-              <div style={{ flex: '1 1 320px' }}>
-                <Body1Strong block>This page is a live demo, built with the plugin using Fluent UI 2.0.</Body1Strong>
-                <Body1 block style={{ color: tokens.colorNeutralForeground2, marginTop: 4 }}>
-                  This site is a <b>Fluent UI React v9</b> app: every button, card, badge, tab and icon comes from <code>@fluentui/react-components</code> and <code>@fluentui/react-icons</code>, and every color, type ramp, spacing, corner radius and elevation is a real Fluent 2 <b>design token</b>, the same output the plugin generates. Use the toggle above to theme it light or dark.
-                </Body1>
+          {/* HERO */}
+          <section className={s.hero}>
+            <div className={s.wrap}>
+              <Badge appearance="tint" color="success" size="large">Open source, MIT licensed, works in 12+ AI IDEs</Badge>
+              <Title1 as="h1" className={s.h1} block>Build and adopt <span className={s.brandText}>Microsoft Fluent 2</span>, everywhere.</Title1>
+              <Subtitle2 className={s.lead} block>An AI-assistant plugin (Agents, Skills and MCP tools) that turns the official Fluent 2 design system into grounded, on-demand guidance and accessible code, inside the tools your teams already use. For Web, Power BI and Power Platform.</Subtitle2>
+              <div className={s.cta}>
+                <Button appearance="primary" size="large" className={s.ctaGlow} icon={<ArrowRight20Regular />} iconPosition="after" as="a" href="#install">Get started</Button>
+                <Button appearance="secondary" size="large" icon={<Star20Regular />} as="a" href={REPO}>View on GitHub</Button>
+              </div>
+              <div className={s.stats}>
+                {[['61', 'Components (47 core, 14 AI)'], ['22', 'Design-language topics'], ['705', 'Source visuals indexed'], ['19', 'MCP tools'], ['366', 'Design tokens, 3 themes']].map(([b, l]) => (
+                  <div key={l} className={`${glass} ${s.stat}`}><span className={s.statB}>{b}</span><Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{l}</Caption1></div>
+                ))}
+              </div>
+
+              {/* DOGFOOD PROOF */}
+              <div className={`${glass} ${s.dogfood}`}>
+                <span className={s.ic} style={{ background: 'linear-gradient(140deg,#2886de,#0a7c86)', color: '#fff', marginBottom: 0, flex: '0 0 auto' }}><Sparkle20Filled /></span>
+                <div style={{ flex: '1 1 320px' }}>
+                  <Body1Strong block>This page is a live demo, built with the plugin using Fluent UI 2.0.</Body1Strong>
+                  <Body1 block style={{ color: tokens.colorNeutralForeground2, marginTop: 4 }}>
+                    This site is a <b>Fluent UI React v9</b> app: every button, card, badge, tab and icon comes from <code>@fluentui/react-components</code> and <code>@fluentui/react-icons</code>, and every color, type ramp, spacing, corner radius and elevation is a real Fluent 2 <b>design token</b>, the same output the plugin generates. Use the toggle above to theme it light or dark.
+                  </Body1>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* FEATURES */}
-        <section id="features" className={s.section}>
-          <div className={s.wrap}>
-            <div className={s.sectionHead}>
-              <Caption1 className={s.eyebrow}>What it does</Caption1>
-              <Title3 as="h2" block>One plugin. The whole Fluent 2 surface.</Title3>
-              <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>Every fact is grounded in the official <Link href="https://fluent2.microsoft.design">fluent2.microsoft.design</Link> site and the real <code>@fluentui</code> packages, so it is verified, not guessed.</Body1>
-            </div>
-            <div className={s.grid3}>
-              {FEATURES.map((f) => (
-                <Card key={f.t} className={s.cardPad}>
-                  <span className={s.ic} style={{ background: tint(f.c), color: f.c }}><f.Icon /></span>
-                  <Body1Strong block>{f.t}</Body1Strong>
-                  <Body1 block style={{ color: tokens.colorNeutralForeground2, marginTop: 4 }}>{f.d}</Body1>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* TOOLS */}
-        <section id="tools" className={s.section} style={{ backgroundColor: tokens.colorNeutralBackground3 }}>
-          <div className={s.wrap}>
-            <div className={s.sectionHead}>
-              <Caption1 className={s.eyebrow}>Under the hood</Caption1>
-              <Title3 as="h2" block>19 deterministic MCP tools</Title3>
-              <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>Portable, standard MCP over stdio, so the same server runs in every host below.</Body1>
-            </div>
-            <div className={s.grid2}>
-              {TOOLS.map(([name, desc]) => (
-                <Card key={name} className={s.tool} appearance="outline">
-                  <span className={s.toolCode}>{name}</span>
-                  <Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{desc}</Caption1>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* INSTALL */}
-        <section id="install" className={s.section}>
-          <div className={s.wrap}>
-            <div className={s.sectionHead}>
-              <Caption1 className={s.eyebrow}>Installation</Caption1>
-              <Title3 as="h2" block>Install in your IDE in two steps</Title3>
-              <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>The MCP server is universal. Agents, skills and instructions load natively where supported.</Body1>
-            </div>
-
-            <Subtitle1 block>Step 1: build once</Subtitle1>
-            <CodeBlock code={`git clone ${REPO}.git\ncd fluent-ui-plugin/mcp\nnpm install\nnpm run build          # produces mcp/dist/index.js`} />
-            <div className={s.note}><Body1>Every host launches the same command: <code>node &lt;PATH&gt;/fluent-ui-plugin/mcp/dist/index.js</code>. Replace <code>&lt;PATH&gt;</code> with where you cloned the repo.</Body1></div>
-
-            <Subtitle1 block style={{ marginTop: 24 }}>Step 2: register it in your host</Subtitle1>
-            <TabList selectedValue={tab} onTabSelect={(_, d) => setTab(d.value as string)} style={{ flexWrap: 'wrap' }}>
-              {HOSTS.map((h) => <Tab key={h.id} value={h.id}>{h.label}</Tab>)}
-            </TabList>
-            <div className={s.tabsPanel}>
-              <Subtitle2 block>{host.label}</Subtitle2>
-              <Body1 block style={{ color: tokens.colorNeutralForeground2, margin: '8px 0' }}>{host.steps}</Body1>
-              {host.code && <CodeBlock code={host.code} />}
-            </div>
-            <div className={s.note}><Body1>Verify it is live by asking your host to run <code>fluent_accessibility_checklist</code> or <code>fluent_powerbi_visuals</code>. Full per-host details are in <Link href={`${REPO}/blob/main/hosts/README.md`}>hosts/README.md <Open16Regular /></Link>.</Body1></div>
-          </div>
-        </section>
-
-        {/* COVERAGE */}
-        <section id="coverage" className={s.section}>
-          <div className={s.wrap}>
-            <div className={s.band}>
-              <div className={s.sectionHead} style={{ marginBottom: 20 }}>
-                <Title3 as="h2" block style={{ color: '#fff' }}>Verified against the source of truth</Title3>
-                <Body1 block style={{ color: 'rgba(255,255,255,.85)' }}>Every route in the official Fluent 2 site's own sitemap (114 routes) was cross-checked, so this is measured coverage, not an estimate.</Body1>
+          {/* FEATURES */}
+          <section id="features" className={s.section}>
+            <div className={s.wrap}>
+              <div className={s.sectionHead}>
+                <Caption1 className={s.eyebrow}>What it does</Caption1>
+                <Title3 as="h2" block>One plugin. The whole Fluent 2 surface.</Title3>
+                <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>Every fact is grounded in the official <Link href="https://fluent2.microsoft.design">fluent2.microsoft.design</Link> site and the real <code>@fluentui</code> packages, so it is verified, not guessed.</Body1>
               </div>
               <div className={s.grid3}>
-                {[['61 / 61', 'Web components (100%)'], ['22 / 22', 'Design and UX topics'], ['705', 'Source visuals with URLs'], ['35+', 'Power BI visuals catalogued'], ['12+', 'AI IDEs supported'], ['MIT', 'Open source license']].map(([b, l]) => (
-                  <div key={l} className={s.bandStat}><span className={s.statB} style={{ color: '#fff' }}>{b}</span><Caption1 style={{ color: 'rgba(255,255,255,.8)' }}>{l}</Caption1></div>
+                {FEATURES.map((f) => (
+                  <div key={f.t} className={`${glass} ${s.hoverable} ${s.card}`}>
+                    <span className={s.ic} style={{ background: tint(f.c), color: f.c }}><f.Icon /></span>
+                    <Body1Strong block>{f.t}</Body1Strong>
+                    <Body1 block style={{ color: tokens.colorNeutralForeground2, marginTop: 4 }}>{f.d}</Body1>
+                  </div>
                 ))}
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <footer className={s.footer}>
-          <div className={`${s.wrap} ${s.footRow}`}>
-            <div>
-              <span className={s.brand} style={{ marginBottom: 6 }}><span className={s.logo}>F</span> Fluent UI 2.0 Plugin</span>
-              <Caption1 block style={{ color: tokens.colorNeutralForeground3, marginTop: 6, maxWidth: '54ch' }}>Built with the Microsoft Fluent 2 design system (Fluent UI React v9). This site is a demo of the plugin's own output. It is not an official Microsoft product.</Caption1>
+          {/* TOOLS */}
+          <section id="tools" className={s.section}>
+            <div className={s.wrap}>
+              <div className={s.sectionHead}>
+                <Caption1 className={s.eyebrow}>Under the hood</Caption1>
+                <Title3 as="h2" block>19 deterministic MCP tools</Title3>
+                <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>Portable, standard MCP over stdio, so the same server runs in every host below.</Body1>
+              </div>
+              <div className={s.grid2}>
+                {TOOLS.map(([name, desc]) => (
+                  <div key={name} className={`${glass} ${s.hoverable} ${s.tool}`}>
+                    <span className={s.toolCode}>{name}</span>
+                    <Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{desc}</Caption1>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div style={{ display: 'flex', gap: 12 }}>
-              <Button appearance="secondary" as="a" href={REPO} icon={<Star20Regular />}>GitHub</Button>
-              <Button appearance="subtle" as="a" href="https://fluent2.microsoft.design" icon={<Open16Regular />} iconPosition="after">fluent2.microsoft.design</Button>
+          </section>
+
+          {/* INSTALL */}
+          <section id="install" className={s.section}>
+            <div className={s.wrap}>
+              <div className={s.sectionHead}>
+                <Caption1 className={s.eyebrow}>Installation</Caption1>
+                <Title3 as="h2" block>Install in your IDE in two steps</Title3>
+                <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>The MCP server is universal. Agents, skills and instructions load natively where supported.</Body1>
+              </div>
+
+              <Subtitle1 block>Step 1: build once</Subtitle1>
+              <CodeBlock code={`git clone ${REPO}.git\ncd fluent-ui-plugin/mcp\nnpm install\nnpm run build          # produces mcp/dist/index.js`} />
+              <div className={`${glass} ${s.note}`}><Body1>Every host launches the same command: <code>node &lt;PATH&gt;/fluent-ui-plugin/mcp/dist/index.js</code>. Replace <code>&lt;PATH&gt;</code> with where you cloned the repo.</Body1></div>
+
+              <Subtitle1 block style={{ marginTop: 26 }}>Step 2: register it in your host</Subtitle1>
+              <TabList selectedValue={tab} onTabSelect={(_, d) => setTab(d.value as string)} style={{ flexWrap: 'wrap' }}>
+                {HOSTS.map((h) => <Tab key={h.id} value={h.id}>{h.label}</Tab>)}
+              </TabList>
+              <div className={s.tabsPanel}>
+                <Subtitle2 block>{host.label}</Subtitle2>
+                <Body1 block style={{ color: tokens.colorNeutralForeground2, margin: '8px 0' }}>{host.steps}</Body1>
+                {host.code && <CodeBlock code={host.code} />}
+              </div>
+              <div className={`${glass} ${s.note}`}><Body1>Verify it is live by asking your host to run <code>fluent_accessibility_checklist</code> or <code>fluent_powerbi_visuals</code>. Full per-host details are in <Link href={`${REPO}/blob/main/hosts/README.md`}>hosts/README.md <Open16Regular /></Link>.</Body1></div>
             </div>
-          </div>
-          <Divider style={{ marginTop: 20 }} />
-        </footer>
+          </section>
+
+          {/* COVERAGE */}
+          <section id="coverage" className={s.section}>
+            <div className={s.wrap}>
+              <div className={s.band}>
+                <div className={s.bandSheen} />
+                <div className={s.sectionHead} style={{ marginBottom: 22, position: 'relative' }}>
+                  <Title3 as="h2" block style={{ color: '#fff' }}>Verified against the source of truth</Title3>
+                  <Body1 block style={{ color: 'rgba(255,255,255,.9)' }}>Every route in the official Fluent 2 site's own sitemap (114 routes) was cross-checked, so this is measured coverage, not an estimate.</Body1>
+                </div>
+                <div className={s.grid3}>
+                  {[['61 / 61', 'Web components (100%)'], ['22 / 22', 'Design and UX topics'], ['705', 'Source visuals with URLs'], ['35+', 'Power BI visuals catalogued'], ['12+', 'AI IDEs supported'], ['MIT', 'Open source license']].map(([b, l]) => (
+                    <div key={l} className={s.bandStat}><span className={s.statB} style={{ color: '#fff' }}>{b}</span><Caption1 style={{ color: 'rgba(255,255,255,.82)' }}>{l}</Caption1></div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer className={s.footer}>
+            <div className={`${s.wrap} ${s.footRow}`}>
+              <div>
+                <span className={s.brand} style={{ marginBottom: 8 }}><span className={s.logo}><Sparkle20Filled /></span> Fluent UI 2.0 Plugin</span>
+                <Caption1 block style={{ color: tokens.colorNeutralForeground3, marginTop: 8, maxWidth: '54ch' }}>Built with the Microsoft Fluent 2 design system (Fluent UI React v9). This site is a demo of the plugin's own output. It is not an official Microsoft product.</Caption1>
+              </div>
+              <div style={{ display: 'flex', gap: 12 }}>
+                <Button appearance="secondary" as="a" href={REPO} icon={<Star20Regular />}>GitHub</Button>
+                <Button appearance="subtle" as="a" href="https://fluent2.microsoft.design" icon={<Open16Regular />} iconPosition="after">fluent2.microsoft.design</Button>
+              </div>
+            </div>
+            <Divider style={{ marginTop: 22 }} />
+          </footer>
+        </div>
       </div>
     </FluentProvider>
   );
