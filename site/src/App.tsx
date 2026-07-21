@@ -72,6 +72,8 @@ const useStyles = makeStyles({
   ic: { width: '46px', height: '46px', borderRadius: '13px', display: 'grid', placeItems: 'center', marginBottom: '15px', boxShadow: 'inset 0 1px 0 rgba(255,255,255,.25)' },
   tool: { display: 'flex', flexDirection: 'column', ...shorthands.padding('13px', '17px'), ...shorthands.gap('3px'), borderRadius: '14px' },
   toolCode: { color: tokens.colorBrandForeground1, fontFamily: tokens.fontFamilyMonospace, fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase300 },
+  promptBubble: { display: 'inline-block', ...shorthands.padding('9px', '13px'), borderTopLeftRadius: '13px', borderTopRightRadius: '13px', borderBottomRightRadius: '13px', borderBottomLeftRadius: '4px', backgroundColor: tint('#0f6cbd'), color: tokens.colorNeutralForeground1, fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase300, lineHeight: 1.4 },
+  usageResp: { display: 'flex', gap: '8px', marginTop: '13px', alignItems: 'flex-start' },
 
   tabsPanel: { marginTop: '18px' },
   code: {
@@ -109,6 +111,15 @@ const FEATURES: Feat[] = [
   { c: '#a4262c', Icon: Accessibility24Regular, t: 'Accessibility built in', d: 'A WCAG-aligned Fluent 2 checklist is enforced by default: names, roles, focus order, 4.5:1 contrast, and target sizes.' },
   { c: '#e3008c', Icon: Image24Regular, t: 'Source visuals on demand', d: '705 diagrams, do/don\'t examples, anatomy illustrations and Motion videos, each with its real source URL.' },
   { c: '#0f6cbd', Icon: Brain24Regular, t: 'Presets and memory', d: 'Optional per-team brand and accessibility presets, plus persistent memory so agents respect your conventions.' },
+];
+
+const USAGE: [string, string][] = [
+  ['Build an accessible Fluent 2 sign-in form with email and password.', 'The web engineer generates FluentProvider, Field, Input and Button code with accessibility baked in.'],
+  ['What is the design token for the brand color?', 'fluent_get_token returns colorBrandBackground = #0f6cbd, ready to use in makeStyles.'],
+  ['Show me the Card component anatomy.', 'fluent_get_images returns the official anatomy diagram URL from fluent2.microsoft.design.'],
+  ['Make my Power BI report look like Fluent 2.', 'fluent_generate_powerbi_theme plus fluent_scaffold_pbip produce a themed PBIP/PBIR project.'],
+  ['Migrate this Fluent UI v8 button to v9.', 'fluent_migration_guidance maps the v8 API to the v9 component and tokens.'],
+  ['Set our brand color to #742774 and remember it.', 'fluent_init_config, fluent_set_config and fluent_remember persist your preset for next time.'],
 ];
 
 const TOOLS: [string, string][] = [
@@ -215,6 +226,7 @@ export function App() {
               <span className={s.brand}><span className={s.logo}><Sparkle20Filled /></span> Fluent UI 2.0 Plugin</span>
               <nav className={s.navlinks}>
                 <Link className={s.navlink} href="#features">Features</Link>
+                <Link className={s.navlink} href="#usage">Usage</Link>
                 <Link className={s.navlink} href="#tools">Tools</Link>
                 <Link className={s.navlink} href="#install">Install</Link>
                 <Link className={s.navlink} href="#coverage">Coverage</Link>
@@ -267,6 +279,31 @@ export function App() {
                     <span className={s.ic} style={{ background: tint(f.c), color: f.c }}><f.Icon /></span>
                     <Body1Strong block>{f.t}</Body1Strong>
                     <Body1 block style={{ color: tokens.colorNeutralForeground2, marginTop: 4 }}>{f.d}</Body1>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* USAGE */}
+          <section id="usage" className={s.section}>
+            <div className={s.wrap}>
+              <div className={s.sectionHead}>
+                <Caption1 className={s.eyebrow}>How to use it</Caption1>
+                <Title3 as="h2" block>Just ask. It routes to the right tool.</Title3>
+                <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>After installing, talk to your AI assistant in natural language. The router agent picks the right specialist, skill and MCP tool, so you never call tools by hand. Here are real examples.</Body1>
+                <div style={{ marginTop: 18 }}>
+                  <Button appearance="primary" as="a" href={`${REPO}/blob/main/GUIDE.md`} icon={<ArrowRight20Regular />} iconPosition="after">Read the full install and usage guide</Button>
+                </div>
+              </div>
+              <div className={s.grid3}>
+                {USAGE.map(([q, a]) => (
+                  <div key={q} className={`${glass} ${s.hoverable} ${s.card}`}>
+                    <span className={s.promptBubble}>{q}</span>
+                    <div className={s.usageResp}>
+                      <ArrowRight20Regular style={{ color: tokens.colorBrandForeground1, flex: '0 0 auto', marginTop: 1 }} />
+                      <Caption1 style={{ color: tokens.colorNeutralForeground2, lineHeight: 1.45 }}>{a}</Caption1>
+                    </div>
                   </div>
                 ))}
               </div>
