@@ -1,0 +1,570 @@
+{
+  "$comment": "Machine-readable catalog of every Power BI visual (and the report FEATURES demonstrated alongside them), mapped to the official Fluent 2 base-theme SHOWCASE report (21 pages). Purpose: let an agent/skill tell a user WHICH visual to use, hand them the official Microsoft Learn doc URL, and explain HOW the Fluent 2 base theme styles it. Every 'learnDoc' and 'sourceDocs' URL was fetched/verified (HTTP 200) against Microsoft Learn. Fluent 2 styling notes are grounded in mcp/data/powerbi-visual-defaults.json (tokens, structural colors, and per-visual style presets) — read that file for the JSON knobs; do NOT edit it. This catalog is documentation/reference only (not consumed by the generator).",
+  "source": "Microsoft Learn 'Visualizations in Power BI reports' overview (https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualizations-overview), mapped to the official Fluent 2 base-theme showcase report referenced from the Learn 'visual defaults' page.",
+  "retrieved": "2026-07",
+  "overviewDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualizations-overview",
+  "sourceDocs": [
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualizations-overview",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-column-charts",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-line-chart",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-basic-area-chart",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-combo-chart",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/desktop-ribbon-charts",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-waterfall-charts",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-pie-donut-chart",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-treemaps",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-funnel-charts",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-scatter",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-tables",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-matrix-visual",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-map-visualizations-overview",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-filled-maps-choropleths",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-map-tips-and-tricks",
+    "https://learn.microsoft.com/en-us/azure/azure-maps/power-bi-visual-getting-started",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualizations-arcgis",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-shape-map",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-card",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-kpi",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-radial-gauge-charts",
+    "https://learn.microsoft.com/en-us/power-bi/create-reports/service-goals-create",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-decomposition-tree",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-influencers",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-smart-narrative",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-anomaly-detection",
+    "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-report-filter",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-slicers",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-image-visual",
+    "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-add-text-and-shapes",
+    "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-buttons",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/paginated-report-visual",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-q-and-a",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/service-r-visuals",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-powerapp",
+    "https://learn.microsoft.com/en-us/power-bi/developer/visuals/power-bi-custom-visuals",
+    "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-conditional-formatting",
+    "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-tooltips",
+    "https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-visual-calculations-overview",
+    "https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-analytics-pane"
+  ],
+  "correctedDocs": [
+    { "topic": "Conditional formatting", "requested": "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-conditional-formatting", "status": 404, "resolved": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-conditional-formatting" },
+    { "topic": "Analytics pane", "requested": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-analytics-pane", "status": 404, "resolved": "https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-analytics-pane" }
+  ],
+  "showcaseReport": {
+    "note": "Official Fluent 2 base-theme showcase report: 21 pages, one per Power BI visual category, all rendering the same Contoso 'Sales by Segment/Year/Country' demo data as a different visual type, styled by the Fluent 2 base theme (grey wallpaper, rounded-corner cards, Fluent-blue #0F6CBD-family data colors, Segoe UI, titles on / axis titles off).",
+    "reference": "https://msit.powerbi.com/view?r=... (internal-tenant publish-to-web / embed token)",
+    "access": "Reference-only: this is an internal-tenant embed. It is NOT downloadable and NOT programmatically paginable, so cite it as a reference — do not attempt to fetch it or page through it with tools.",
+    "learnPage": "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-visual-defaults",
+    "pageCount": 21,
+    "pages": [
+      "Bars", "Columns", "Lines", "Area", "Combo", "Ribbon & Waterfall", "Part-to-whole", "Scatter", "Table & Matrix", "Maps", "Cards or callouts", "AI-powered", "Filtering", "Other", "Custom", "Conditional formatting", "Tooltips", "Analytics", "Visual calcs", "Report 1", "Report 2"
+    ],
+    "pageNotes": {
+      "Ribbon & Waterfall": "Single page demonstrating two visual types (ribbon chart + waterfall chart).",
+      "Conditional formatting / Tooltips / Analytics / Visual calcs": "These four pages demonstrate report FEATURES applied to visuals, not new visual types (see featurePages).",
+      "Report 1 / Report 2": "Composite, full-report example pages that combine many visuals into finished dashboards rather than showcasing one visual type."
+    },
+    "demonstrates": "The Fluent 2 base theme styles every visual category consistently; a custom theme only needs to override the brand palette + type — the structural Fluent look (cards, spacing, borders, titles, grey canvas) comes from the base theme."
+  },
+  "fluent2BaseTheme": {
+    "summary": "The Fluent 2 (preview) base theme applies uniform Fluent styling to ALL visual categories: grey wallpaper for contrast, rounded-corner cards (~8px container / ~4px controls), the #0F6CBD-led categorical data palette, Segoe UI / Segoe UI Semibold type, titles + subtitles on and axis titles off by default, and more padding. A custom theme layers on top and overrides only the brand palette + type.",
+    "keyTokens": {
+      "brand": "#0F6CBD",
+      "canvasWallpaper": "#F0F0F0 / #F5F5F5 (grey)",
+      "cardBackground": "#FFFFFF",
+      "cornerRadiusCard": 8,
+      "cornerRadiusControl": 4,
+      "fontFamily": "Segoe UI",
+      "fontFamilyStrong": "Segoe UI Semibold",
+      "neutralForeground1": "#242424",
+      "neutralForeground3": "#616161",
+      "gridlineNeutralStroke": "#D1D1D1",
+      "tableAccent": "#0F6CBD"
+    },
+    "stylePresets": {
+      "$comment": "Built-in Fluent 2 per-visual style presets (Format visual > Style). Condensed from mcp/data/powerbi-visual-defaults.json > stylePresets; see that file for the authoritative list.",
+      "Charts": ["Default (axis shown, no labels)", "Data labels (axis off; data labels + markers — good for small multiples)"],
+      "Line charts": ["Smooth lines (default)", "Straight lines with data labels", "Straight lines without data labels"],
+      "Tables and matrix": ["Existing presets, modernized to the Fluent look"],
+      "Buttons": ["Default", "Outline", "Transparent", "Icon & Text (button color = first theme data color; default/hover/pressed states)"],
+      "Navigators": ["Default", "Tab"],
+      "Cards": ["Default (less padding, no reference-label background)"],
+      "Slicers": ["Default (dropdown)", "List", "Tile (each preset also sets the slicer mode)"],
+      "Small multiples": ["1x4 or 4x1 starting layout"]
+    },
+    "seeAlso": "mcp/data/powerbi-visual-defaults.json (JSON paths, structural colors, tokens, canvas defaults, and style presets) and mcp/data/powerbi-theme.base.json (the shipped base theme)."
+  },
+  "categories": [
+    {
+      "name": "Comparison & trends",
+      "showcasePages": ["Bars", "Columns", "Lines", "Area", "Combo", "Ribbon & Waterfall"],
+      "visuals": [
+        {
+          "name": "Column & bar charts",
+          "showcasePage": "Bars, Columns",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-column-charts",
+          "description": "Column charts (vertical bars) and bar charts (horizontal) compare numeric values across categories or time periods; the bar length/height encodes the value. Available as clustered, stacked, and 100% stacked. Support drill-down hierarchies, zoom sliders, cross-filtering, and conditional formatting.",
+          "whenToUse": "Use columns for time-based or category comparisons; use bars when category names are long. Clustered compares series side by side; stacked / 100% stacked show part-to-whole within each bar.",
+          "fluent2": "Series color from the #0F6CBD-led palette; titles on, axis titles off, Segoe UI labels, gridlines in Neutral Stroke #D1D1D1, rounded card on grey canvas. Charts preset 'Default' shows the axis without labels; 'Data labels' turns the axis off for data labels + markers (small multiples start 1x4/4x1).",
+          "stylePreset": "Charts: Default | Data labels",
+          "subTypes": ["Clustered column/bar", "Stacked column/bar", "100% stacked column/bar"],
+          "preview": false
+        },
+        {
+          "name": "Line chart",
+          "showcasePage": "Lines",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-line-chart",
+          "description": "Line charts plot points connected by lines to show trends over a continuous axis (usually time). Multiple series come from multiple measures or a Legend field. Support markers, interpolation (straight/smooth/step), zoom sliders, and Analytics-pane overlays.",
+          "whenToUse": "Best for trends, seasonality, and change over ordered/time data; preferred over area charts when comparing more than ~3 measures (avoids occlusion).",
+          "fluent2": "Fluent palette with smooth lines by default, titles on, Segoe UI labels. Line style presets: 'Straight lines with data labels' and 'Straight lines without data labels'.",
+          "stylePreset": "Line: smooth (default) | Straight lines with/without data labels",
+          "preview": false
+        },
+        {
+          "name": "Area chart",
+          "showcasePage": "Area",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-basic-area-chart",
+          "description": "The basic (layered) area chart is a line chart with the area between the axis and line filled to emphasize the magnitude/volume of change over time; overlapping series use transparency.",
+          "whenToUse": "Use to show volume trends over time for one or a few series; avoid more than two or three series (occlusion) — use line charts for many-series trends or treemaps for volume comparison.",
+          "fluent2": "Filled from the #0F6CBD-led palette with transparency for overlap; titles on, axis titles off, Segoe UI. Uses the shared Charts presets (Default vs Data labels).",
+          "subTypes": ["Basic / layered area", "Stacked area", "100% stacked area"],
+          "preview": false
+        },
+        {
+          "name": "Combo chart (line and column)",
+          "showcasePage": "Combo",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-combo-chart",
+          "description": "A combo chart overlays a line chart and a column chart on a shared X-axis, with one or two Y-axes so measures with very different value ranges can be compared in a single visual.",
+          "whenToUse": "Use to compare measures with different scales, show correlation, check a value against a target line, or conserve canvas space.",
+          "fluent2": "Column and line series colored from the Fluent palette; titles on, axis titles off; the secondary Y-axis is themed consistently. Set both axes to the same range to share one scale.",
+          "subTypes": ["Line and clustered column", "Line and stacked column"],
+          "preview": false
+        },
+        {
+          "name": "Ribbon chart",
+          "showcasePage": "Ribbon & Waterfall",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/desktop-ribbon-charts",
+          "description": "Ribbon charts show how the rank of categories changes over time — the highest value sits on top for each period, and ribbons connect a category's value across periods, making rank increases/decreases obvious at a glance.",
+          "whenToUse": "Use when rank order over time (not just the raw value) is the key insight.",
+          "fluent2": "Styled like a Fluent stacked column: series from the #0F6CBD palette, Segoe UI labels; ribbon-specific knobs (spacing, match-series color, ~30% transparency, optional border) inherit the theme colors.",
+          "preview": false
+        },
+        {
+          "name": "Waterfall chart",
+          "showcasePage": "Ribbon & Waterfall",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-waterfall-charts",
+          "description": "Waterfall (bridge) charts show a running total as values are added and subtracted, color-coding increases vs decreases; an optional Breakdown field splits each total column into its top-N contributing categories.",
+          "whenToUse": "Use to explain how a start value becomes an end value through positive/negative changes — P&L, cash flow, headcount, or variance analysis.",
+          "fluent2": "Increase / decrease / total columns use the theme's structural status colors (good/neutral/bad); titles on, Segoe UI; the grey canvas makes the cascade stand out.",
+          "preview": false
+        }
+      ]
+    },
+    {
+      "name": "Part-to-whole",
+      "showcasePages": ["Part-to-whole"],
+      "visuals": [
+        {
+          "name": "Pie & donut chart",
+          "showcasePage": "Part-to-whole",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-pie-donut-chart",
+          "description": "Pie charts show category proportions as slices of a circle; donut charts are the same with a hollow center. Both support hierarchy drill-down, cross-filtering, and cross-highlighting. The doc recommends 3-6 slices for clarity.",
+          "whenToUse": "Use to show proportion / share of a total with a small number of categories (3-6 slices).",
+          "fluent2": "Slices colored from the #0F6CBD-led categorical palette; detail labels + legend in Segoe UI; rounded card on grey canvas. Note: conditional formatting is not officially supported on pie/donut.",
+          "subTypes": ["Pie", "Donut"],
+          "preview": false
+        },
+        {
+          "name": "Treemap",
+          "showcasePage": "Part-to-whole",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-treemaps",
+          "description": "Treemaps display hierarchical data as nested rectangles sized by a measure (largest top-left to smallest bottom-right); a color-saturation dimension can shade the rectangles.",
+          "whenToUse": "Use for large hierarchical part-to-whole data where a bar chart would be too crowded, or to reveal top contributors, patterns, and outliers.",
+          "fluent2": "Rectangles colored from the Fluent palette; a color-saturation gradient can encode a second measure; titles on, Segoe UI. (Color Saturation and Details fields can't be used together.)",
+          "preview": false
+        },
+        {
+          "name": "Funnel chart",
+          "showcasePage": "Part-to-whole",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-funnel-charts",
+          "description": "Funnel charts visualize a linear, staged process (e.g., a sales pipeline: Lead -> Qualified -> Prospect -> Contract -> Close); each stage bar is a share of the total and drop-off between stages is shown.",
+          "whenToUse": "Use for sequential pipeline / conversion data with 4+ stages where the first stage is largest; spot bottlenecks and drop-off.",
+          "fluent2": "Stage bars colored from the #0F6CBD palette; data labels show counts and stage-to-stage drop rate; Segoe UI, rounded card, grey canvas.",
+          "preview": false
+        }
+      ]
+    },
+    {
+      "name": "Distribution & relationships",
+      "showcasePages": ["Scatter"],
+      "visuals": [
+        {
+          "name": "Scatter, bubble & dot plot",
+          "showcasePage": "Scatter",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-scatter",
+          "description": "Scatter charts plot points on numeric X/Y axes to reveal relationships and clusters; bubble charts add a third dimension via bubble size; dot plots use a categorical X-axis. Up to 10,000 data points.",
+          "whenToUse": "Use to show correlation between two or three numeric measures, find clusters/outliers, compare large datasets irrespective of time, or compare categories (dot plot).",
+          "fluent2": "Markers colored from the Fluent palette; the base theme even ships a per-visual default that nudges bubble size (scatterChart.bubbles.bubbleSize in the visual-defaults). The Analytics pane adds trend/constant/min/max/average/median/percentile lines and symmetry shading.",
+          "subTypes": ["Scatter", "Bubble", "Dot plot"],
+          "preview": false
+        }
+      ]
+    },
+    {
+      "name": "Tables & matrices",
+      "showcasePages": ["Table & Matrix"],
+      "visuals": [
+        {
+          "name": "Table",
+          "showcasePage": "Table & Matrix",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-tables",
+          "description": "A table is a grid of rows and columns (with an optional totals row) for comparing many measures for a single category. Supports per-column formatting, flexible column sizing, conditional formatting, and custom totals (powered by visual calculations).",
+          "whenToUse": "Use when users need exact values across multiple measures rather than a chart-based representation.",
+          "fluent2": "Existing table style presets are modernized: gridlines in Neutral Stroke #D1D1D1, headers/values in Segoe UI 12pt #242424, totals bold, tableAccent #0F6CBD for the grid outline. Conditional formatting (background, data bars, icons, font color) inherits the palette.",
+          "stylePreset": "Tables/matrix: existing presets, modernized",
+          "preview": false
+        },
+        {
+          "name": "Matrix",
+          "showcasePage": "Table & Matrix",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-matrix-visual",
+          "description": "The matrix is a pivot-table visual with row and column hierarchies, drill-down, expand/collapse, and a stepped layout; each cell is an aggregated value.",
+          "whenToUse": "Use for cross-dimensional analysis (e.g., sales by region x product category) that needs hierarchical row and column headers.",
+          "fluent2": "Same modernized presets as Table: Segoe UI headers/values, subtotals & grand totals bold #242424, grid in #D1D1D1, tableAccent #0F6CBD; conditional formatting (including fx-driven column widths) uses the theme palette.",
+          "stylePreset": "Tables/matrix: existing presets, modernized",
+          "preview": false
+        }
+      ]
+    },
+    {
+      "name": "Maps",
+      "showcasePages": ["Maps"],
+      "mapsOverviewDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-map-visualizations-overview",
+      "visuals": [
+        {
+          "name": "Filled map (choropleth)",
+          "showcasePage": "Maps",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-filled-maps-choropleths",
+          "description": "Filled maps shade geographic regions (country, state, county) by the intensity of a measure — a classic choropleth.",
+          "whenToUse": "Use to show how a value varies across regions (relative magnitude by area).",
+          "fluent2": "The color-intensity scale seeds from the Fluent brand blue; titles on, rounded card, grey canvas from the base theme.",
+          "preview": false
+        },
+        {
+          "name": "Bubble / basic map (Bing)",
+          "showcasePage": "Maps",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-map-tips-and-tricks",
+          "description": "The basic map places bubbles at geocoded locations (via Bing) sized and/or colored by measures.",
+          "whenToUse": "Use for point/location data; Microsoft recommends migrating to Azure Maps for new reports.",
+          "fluent2": "Bubbles colored from the #0F6CBD palette; base-theme card/canvas styling.",
+          "preview": false,
+          "notes": "Bing-based basic (and filled) maps are on a deprecation path; Microsoft recommends Azure Maps instead (exceptions: China, Korea, and government clouds)."
+        },
+        {
+          "name": "Azure Maps",
+          "showcasePage": "Maps",
+          "learnDoc": "https://learn.microsoft.com/en-us/azure/azure-maps/power-bi-visual-getting-started",
+          "description": "Azure Maps is the enterprise-grade map visual supporting bubble, 3D column, heat map, filled, reference, and pie-chart-overlay layers plus clustering.",
+          "whenToUse": "Use for advanced/enterprise geospatial analysis; the recommended successor to Bing-based maps.",
+          "fluent2": "Layer colors (bubbles, heat map, pie overlays) seed from the Fluent palette; the visual container is styled by the base theme.",
+          "preview": false,
+          "notes": "Admin-gated: must be enabled in the Power BI Admin portal (Integration settings)."
+        },
+        {
+          "name": "ArcGIS maps for Power BI (Esri)",
+          "showcasePage": "Maps",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualizations-arcgis",
+          "description": "ArcGIS maps by Esri add advanced GIS capabilities: smart themes, drive-time analysis, reference layers, infographics, and demographic enrichment.",
+          "whenToUse": "Use for professional GIS analysis and demographic enrichment beyond the built-in maps.",
+          "fluent2": "The container/title are styled by the base theme; ArcGIS symbology is largely governed by Esri's own themes and the ArcGIS license tier.",
+          "preview": false,
+          "notes": "Feature depth depends on the ArcGIS/Esri license; subject to the tenant admin toggle."
+        },
+        {
+          "name": "Shape map",
+          "showcasePage": "Maps",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-shape-map",
+          "description": "Shape maps color-code regions using standard or custom TopoJSON/GeoJSON maps (sales territories, floor plans, custom regions).",
+          "whenToUse": "Use to compare regions by color — especially with custom shapes — rather than for precise geographic location.",
+          "fluent2": "Region fill and borders seed from the Fluent palette; base-theme card/canvas.",
+          "preview": true,
+          "notes": "Preview visual."
+        }
+      ]
+    },
+    {
+      "name": "Cards, KPIs & gauges",
+      "showcasePages": ["Cards or callouts"],
+      "visuals": [
+        {
+          "name": "Card",
+          "showcasePage": "Cards or callouts",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-card",
+          "description": "The card visual displays one or more measure values in a flexible multi-section layout (callout, hero/callout images, reference labels), optionally broken down by category, and supports data-driven SVG images.",
+          "whenToUse": "Use to surface single or multiple KPIs prominently; combine several measures in one card to reduce visual load and optimize queries.",
+          "fluent2": "Cards style preset = less padding and no reference-label background for a cleaner look; the callout uses Segoe UI Semibold ~28pt #242424 (callout text class); rounded card on grey canvas.",
+          "stylePreset": "Cards: Default (less padding, no reference-label background)",
+          "preview": false,
+          "notes": "The modern ('new') card visual went generally available in the November 2025 Power BI release; the legacy card visual still exists for older reports."
+        },
+        {
+          "name": "KPI",
+          "showcasePage": "Cards or callouts",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-kpi",
+          "description": "The KPI visual shows a callout value against a target with a trend sparkline behind it. It needs an indicator measure, a target, and a trend axis; direction (high-is-good vs low-is-good) sets favorable coloring and icons.",
+          "whenToUse": "Use to show progress toward a goal where both the trend over time and the distance to target matter.",
+          "fluent2": "Callout in Segoe UI Semibold; favorable/unfavorable icons and target coloring use the theme's good/neutral/bad structural colors; rounded card on grey canvas.",
+          "preview": false
+        },
+        {
+          "name": "Gauge (radial gauge)",
+          "showcasePage": "Cards or callouts",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-radial-gauge-charts",
+          "description": "A radial gauge shows a single value's progress along an arc toward a target needle, with a callout of the current value; min and max define the arc range (Power BI defaults max to 2x the value if unset).",
+          "whenToUse": "Use for at-a-glance status of one measure against a target on a dashboard.",
+          "fluent2": "The progress arc uses the brand blue; the arc background uses Neutral #D1D1D1 (thirdLevelElements); callout in Segoe UI Semibold.",
+          "preview": false
+        },
+        {
+          "name": "Goals / metrics (scorecards)",
+          "showcasePage": "Cards or callouts",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/create-reports/service-goals-create",
+          "description": "Power BI scorecards (metrics / goals) let you define and track business goals — current value, target, status, owners, and due dates — in one pane, set manually or connected to report visuals; subgoals and goal-level permissions are supported.",
+          "whenToUse": "Use in the Power BI service to build a shareable goal-tracking hub that consolidates multiple metrics and their progress.",
+          "fluent2": "Service artifact — Fluent 2 report theming applies to reports, not to scorecards, which carry their own status styling.",
+          "preview": false,
+          "notes": "Power BI service only (not available in Desktop); requires a Pro license plus a workspace role and Build permission on the semantic model."
+        }
+      ]
+    },
+    {
+      "name": "AI-powered",
+      "showcasePages": ["AI-powered"],
+      "visuals": [
+        {
+          "name": "Decomposition tree",
+          "showcasePage": "AI-powered",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-decomposition-tree",
+          "description": "The decomposition tree aggregates a measure and lets you drill across dimensions in any order (no preset hierarchy); AI Splits automatically find the dimension producing the highest/lowest value (light-bulb icon).",
+          "whenToUse": "Use for ad-hoc exploration and root-cause analysis when you don't want to predefine the drill path.",
+          "fluent2": "Bars/nodes colored from the #0F6CBD palette; AI-split highlights and connectors inherit the theme colors; Segoe UI, rounded card.",
+          "preview": false
+        },
+        {
+          "name": "Key influencers",
+          "showcasePage": "AI-powered",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-influencers",
+          "description": "The key influencers visual uses AI to rank the factors that most drive a chosen outcome, with 'Key influencers' and 'Top segments' views, for categorical or continuous metrics.",
+          "whenToUse": "Use to automatically discover and rank the drivers of an outcome (churn, low ratings, sales) without manual slicing.",
+          "fluent2": "Influencer bars/bubbles and the right-pane chart use the Fluent palette; headers in Segoe UI Semibold (header text class).",
+          "preview": false
+        },
+        {
+          "name": "Smart narrative",
+          "showcasePage": "AI-powered",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-smart-narrative",
+          "description": "Smart narrative auto-generates an editable natural-language summary of a page or a single visual (trends, growth rates, expected ranges), with dynamic values bound to fields/measures — no DAX required.",
+          "whenToUse": "Use to explain key takeaways in text, or to keep a narrative that updates on refresh when the report page is embedded in PowerPoint.",
+          "fluent2": "Text follows the theme's label/type colors (Segoe UI, #242424); the container gets the rounded card + grey canvas styling.",
+          "preview": false
+        },
+        {
+          "name": "Anomaly detection",
+          "showcasePage": "AI-powered, Analytics",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-anomaly-detection",
+          "description": "Anomaly detection (SR-CNN algorithm) marks outliers on a time-series line chart, overlays an expected-range band, and ranks the dimensions that most likely explain each anomaly in natural language.",
+          "whenToUse": "Use on time-series line charts to automatically flag outliers and get root-cause explanations without manual slicing.",
+          "fluent2": "Configured via the Analytics pane; the anomaly marker (shape/size/color) and expected-range band (color/transparency) inherit the theme palette.",
+          "preview": false,
+          "notes": "Applies only to line charts with a time axis and >= 4 data points; unsupported with legends, multiple/secondary values, and some DirectQuery/live-connection sources."
+        },
+        {
+          "name": "Q&A visual",
+          "showcasePage": "AI-powered",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-q-and-a",
+          "description": "The Q&A visual lets users type natural-language questions and returns a suitable chart; it includes suggestions, a convert-to-standard-visual icon, and supports themes and standard formatting.",
+          "whenToUse": "Use to embed an ad-hoc natural-language query experience directly on a report page.",
+          "fluent2": "Supports report themes — the question box and result inherit Fluent type/colors and the rounded card / grey canvas.",
+          "preview": false,
+          "deprecation": "Scheduled for deprecation in December 2026. Doc wording: 'Q&A experiences are going away in December 2026. We recommend using Copilot for Power BI...' Use Copilot for Power BI instead."
+        }
+      ]
+    },
+    {
+      "name": "Filtering",
+      "showcasePages": ["Filtering"],
+      "visuals": [
+        {
+          "name": "Slicers",
+          "showcasePage": "Filtering",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-slicers",
+          "description": "Slicers are on-canvas interactive filter controls. Power BI provides several slicer visuals — Slicer (list/tile/dropdown/date-picker modes), Button slicer, List slicer, and Input slicer — that filter other visuals (and each other).",
+          "whenToUse": "Use to expose frequently used filters directly on the canvas so consumers can see and change the current filter state at a glance.",
+          "fluent2": "Slicer style presets set both style and mode — Default (dropdown), List, Tile; header and item/pill corner radius use the ~4px control radius (see textSlicer.inputText.pillCornerRadius in the visual-defaults).",
+          "stylePreset": "Slicers: Default (dropdown) | List | Tile",
+          "subTypes": ["Slicer", "Button slicer", "List slicer (preview)", "Input slicer", "Date picker mode (preview)"],
+          "preview": false,
+          "notes": "The List slicer and the Slicer's date-picker mode are preview; the Input slicer can write back (translytical task flows)."
+        },
+        {
+          "name": "Filters pane",
+          "showcasePage": "Filtering",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-report-filter",
+          "description": "The Filters pane is a built-in report panel (not a canvas visual) for configuring visual-, page-, and report-level filters; filter cards can be locked or hidden, and the pane's open/visibility state is bookmarkable.",
+          "whenToUse": "Use for centralized filter management, or for filters that must be hidden or locked from consumers rather than exposed as on-canvas slicers.",
+          "fluent2": "Themeable via the outspacePane / filterCard theme objects — the base theme sets a white pane (#FFFFFF) with #242424 text and distinct Applied vs Available card states, matching the Fluent surface.",
+          "preview": false,
+          "notes": "Feature / pane, not a canvas visual."
+        }
+      ]
+    },
+    {
+      "name": "Other",
+      "showcasePages": ["Other"],
+      "visuals": [
+        {
+          "name": "Image visual",
+          "showcasePage": "Other",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-image-visual",
+          "description": "The Image visual displays a logo, photo, or graphic from an upload, a web URL, or a data-bound field, with Default/Hover/Pressed interaction states so it can act as a branded navigation tile.",
+          "whenToUse": "Use for branded imagery or image-based navigation that changes appearance on hover/press and links to a page or URL.",
+          "fluent2": "Shape corner radius, border, and background follow Fluent card styling; the three interaction states (Default/Hover/Pressed) can be themed consistently.",
+          "preview": false
+        },
+        {
+          "name": "Text box & shapes",
+          "showcasePage": "Other",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-add-text-and-shapes",
+          "description": "Add freeform rich-text boxes (with dynamic measure values that update with filters) and geometric shapes (arrows, rectangles) to the canvas for annotations, callouts, dividers, and layout.",
+          "whenToUse": "Use for narrative annotations, metric callouts, or decorative layout elements without a data-bound visual.",
+          "fluent2": "Text uses Segoe UI with theme colors; dynamic values inherit number formatting; shapes fill from the Fluent palette/neutrals.",
+          "preview": false
+        },
+        {
+          "name": "Buttons & navigators",
+          "showcasePage": "Other",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-buttons",
+          "description": "Buttons trigger actions (page/bookmark navigation, drillthrough, Q&A, Web URL, Apply/Clear all slicers) with five formattable states; page and bookmark navigators auto-generate tab strips.",
+          "whenToUse": "Use to build app-like navigation and interactive controls in a report.",
+          "fluent2": "Button color = the first theme data color #0F6CBD, with default/hover/pressed states; style presets Default / Outline / Transparent / Icon & Text; navigators use the Default or Tab preset.",
+          "stylePreset": "Buttons: Default | Outline | Transparent | Icon & Text; Navigators: Default | Tab",
+          "subTypes": ["Button", "Page navigator", "Bookmark navigator"],
+          "preview": false
+        },
+        {
+          "name": "Paginated report visual",
+          "showcasePage": "Other",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/paginated-report-visual",
+          "description": "Embeds a published paginated report as a native canvas visual, mapping Power BI fields to its parameters and exposing a toolbar that can export up to 1,000,000 rows (Excel/PDF/CSV/PowerPoint/Word), far beyond the standard export limit.",
+          "whenToUse": "Use for pixel-perfect tabular output or large-volume data export integrated into a Power BI page alongside other visuals.",
+          "fluent2": "Only the visual container (background/border/title) is styled by the base theme; the interior paginated content is styled in the paginated report itself.",
+          "preview": false,
+          "notes": "Requires Premium / Fabric capacity (P or F64+); keep the paginated report and the Power BI report in the same workspace."
+        },
+        {
+          "name": "Power Apps visual",
+          "showcasePage": "Other",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-powerapp",
+          "description": "Embeds a Power Apps canvas app inside a report; the app receives the selected Power BI fields, updates with slicers/cross-filters, and can write back to data sources for interactive scenarios.",
+          "whenToUse": "Use for form-based data entry, write-back, or rich interactive app logic embedded alongside analytical visuals.",
+          "fluent2": "Only the Power BI container is themed; the embedded app is styled in Power Apps Studio (Fluent themes there, not the report theme).",
+          "preview": false,
+          "notes": "Requires a Power Apps subscription and a specific Power Apps environment."
+        }
+      ]
+    },
+    {
+      "name": "Custom & advanced",
+      "showcasePages": ["Custom"],
+      "visuals": [
+        {
+          "name": "Custom visuals (AppSource / SDK)",
+          "showcasePage": "Custom",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/developer/visuals/power-bi-custom-visuals",
+          "description": "Beyond built-ins, Power BI supports AppSource marketplace visuals (Microsoft-tested, some Certified), organization-deployed visuals (Organizational Store), and developer-built visuals via the Power BI Visuals SDK.",
+          "whenToUse": "Use AppSource when built-in types don't fit, the Organizational Store for IT-governed rollout, or the SDK to build proprietary visuals with custom rendering.",
+          "fluent2": "Theme support depends on whether each visual implements the Power BI formatting/theming API; certified visuals follow Microsoft's code requirements but aren't guaranteed to honor every theme token.",
+          "preview": false,
+          "notes": "Sources: free / licensed (managed in the M365 admin center) / freemium. 'Certified' visuals are a vetted subset."
+        },
+        {
+          "name": "R & Python visuals",
+          "showcasePage": "Custom",
+          "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/service-r-visuals",
+          "description": "R (and Python) visuals run embedded scripts authored in Power BI Desktop and render as static images in the service, enabling advanced analytics/plots from the R/Python ecosystems. In the service they can't show tooltips or cross-filter other visuals.",
+          "whenToUse": "Use when advanced statistical/ML visualization (forecasting, clustering, custom plots) can't be built with native visuals.",
+          "fluent2": "Report themes don't reach inside the script-generated image; only the visual container (title/background/border) is themed.",
+          "preview": false,
+          "notes": "This doc covers R visuals; Python visuals are documented on a sibling page. Requires Pro/PPU or capacity to render in the service."
+        }
+      ]
+    }
+  ],
+  "featurePages": [
+    {
+      "name": "Conditional formatting",
+      "showcasePage": "Conditional formatting",
+      "learnDoc": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-conditional-formatting",
+      "description": "Conditional formatting changes a visual's appearance from its data using three styles — Gradient (color scale), Rules (thresholds), and Field value (color returned by a field/measure) — across tables, matrices, column/bar/stacked charts, cards, gauges, KPIs, and button slicers.",
+      "whenToUse": "Use to highlight outliers, trends, and KPI status at a glance (heat maps, traffic-light coding, data bars) without making viewers read raw numbers.",
+      "fluent2": "Colors default to the Fluent palette but are fully overridable per rule; the fx button also drives expression-based titles/subtitles. Line charts have limited support.",
+      "appliesTo": ["Tables/matrix (background, font, data bars, icons, web URLs)", "Charts (series colors)", "Cards/KPI/gauge (callout & indicator colors)", "Button slicers"],
+      "notes": "Feature, not a visual type. Doc URL corrected from /create-reports/desktop-conditional-formatting (404) to /visuals/power-bi-visualization-conditional-formatting."
+    },
+    {
+      "name": "Tooltips",
+      "showcasePage": "Tooltips",
+      "learnDoc": "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-tooltips",
+      "description": "Report tooltips are rich, hover-activated popups built from dedicated report pages, auto-filtered to the hovered data point; multiple tooltip pages can each bind to specific fields, or be pinned manually to a visual.",
+      "whenToUse": "Use to surface supplementary context (a mini-report, extra KPIs, images) on hover without cluttering the main canvas.",
+      "fluent2": "The base theme styles the modern default tooltip (white background #FFFFFF, title #242424, value #616161 via visualTooltip tokens); custom tooltip pages inherit page-level Fluent styling.",
+      "notes": "Feature, not a visual type. Set the page's Tooltip toggle On (Page Information) and add Tooltip fields in the Visualizations pane."
+    },
+    {
+      "name": "Visual calculations",
+      "showcasePage": "Visual calcs",
+      "learnDoc": "https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-visual-calculations-overview",
+      "description": "Visual calculations are DAX expressions stored on a visual that operate on its already-aggregated rows (running totals, moving averages, rank, % of parent) with simpler DAX than measures; they also power table/matrix custom totals.",
+      "whenToUse": "Use when you need visual-scoped calculations without adding complexity to the shared semantic model, and the math can be expressed on the visual's displayed rows.",
+      "fluent2": "They appear as extra columns/rows and inherit the visual's Fluent number format, conditional formatting, and palette — no distinct theme knobs of their own.",
+      "notes": "Feature, not a visual type. Can't use model-relationship functions (RELATED, RELATEDTABLE, USERELATIONSHIP)."
+    },
+    {
+      "name": "Analytics pane",
+      "showcasePage": "Analytics",
+      "learnDoc": "https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-analytics-pane",
+      "description": "The Analytics pane adds statistical overlays to supported charts — trend, X/Y constant, min/max/average/median/percentile lines, symmetry shading, error bars, forecast, and anomaly detection — each independently styled.",
+      "whenToUse": "Use to overlay reference marks (thresholds, averages, trend, forecast ranges, anomaly flags) that contextualize a chart without changing the model.",
+      "fluent2": "Each line's color, transparency, line style, position, and data label can be pre-set via theme JSON; defaults draw from the Fluent palette and neutrals.",
+      "notes": "Feature, not a visual type. Support is type-specific (e.g., forecast/anomaly = line charts only; symmetry shading = scatter; not available on maps). Doc URL corrected from /visuals/power-bi-analytics-pane (404) to /transform-model/desktop-analytics-pane."
+    }
+  ],
+  "counts": {
+    "visuals": 35,
+    "featurePages": 4,
+    "sourceDocs": 41,
+    "showcasePages": 21,
+    "byCategory": {
+      "Comparison & trends": 6,
+      "Part-to-whole": 3,
+      "Distribution & relationships": 1,
+      "Tables & matrices": 2,
+      "Maps": 5,
+      "Cards, KPIs & gauges": 4,
+      "AI-powered": 5,
+      "Filtering": 2,
+      "Other": 5,
+      "Custom & advanced": 2
+    }
+  },
+  "notes": [
+    "The Fluent 2 base theme styles ALL these visual categories consistently (grey wallpaper, rounded ~8px cards, Fluent-blue #0F6CBD data colors, Segoe UI, titles on / axis titles off, more padding). A custom theme only needs to override the brand palette + type; the structural Fluent look comes from the base theme. See mcp/data/powerbi-visual-defaults.json.",
+    "The 21-page Fluent 2 base-theme showcase report demonstrates every category on the same Contoso 'Sales by Segment/Year/Country' data. 'Ribbon & Waterfall' shows two visual types; 'Conditional formatting', 'Tooltips', 'Analytics', and 'Visual calcs' pages demonstrate FEATURES (see featurePages); 'Report 1' and 'Report 2' are composite full-report examples.",
+    "The showcase report is an internal-tenant publish-to-web embed (msit.powerbi.com/view?r=...): reference-only. It is NOT downloadable and NOT programmatically paginable, so cite it as a reference — do not attempt to fetch it or page through it with tools.",
+    "Q&A visual is scheduled for deprecation in December 2026 — Microsoft recommends Copilot for Power BI instead.",
+    "Preview / limited visuals: Shape map (preview), the List slicer and the Slicer's date-picker mode (preview). Bing-based basic/filled maps are on a deprecation path (migrate to Azure Maps, except China/Korea/government clouds); Azure Maps is admin-gated (Integration settings); ArcGIS is Esri-licensed.",
+    "Licensing/host caveats: Goals/scorecards are Power BI service-only (Pro license); the paginated report visual needs Premium/Fabric capacity; Power Apps and R/Python visuals are styled outside the report theme (in Power Apps Studio / the script image).",
+    "Two source docs were relocated on Learn: Conditional formatting -> /power-bi/visuals/power-bi-visualization-conditional-formatting (old /create-reports/desktop-conditional-formatting returns 404); Analytics pane -> /power-bi/transform-model/desktop-analytics-pane (old /power-bi/visuals/power-bi-analytics-pane returns 404). See correctedDocs.",
+    "Internal theme visualStyles type names differ from Formatting-pane labels; see mcp/data/powerbi-visual-defaults.json for verified examples (e.g., scatterChart.bubbles.bubbleSize, textSlicer.inputText.pillCornerRadius) and the report theme JSON schema for exact card/property names."
+  ]
+}

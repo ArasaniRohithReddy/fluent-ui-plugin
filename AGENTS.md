@@ -14,6 +14,7 @@ This project is the **fluent-ui** plugin: **agents + skills + an MCP server** th
 | `fluent_generate_theme` | Turn a brand color into a Fluent light+dark brand theme (brand ramp + CSS vars) |
 | `fluent_generate_powerbi_theme` | Produce a valid, Fluent-aligned Power BI report theme JSON |
 | `fluent_scaffold_pbip` | Scaffold a Fluent-themed Power BI **PBIP/PBIR** project |
+| `fluent_powerbi_visuals` | Catalog of every Power BI visual + its Learn doc URL and how the Fluent 2 base theme styles it (mapped to the 21-page Fluent 2 showcase) |
 | `fluent_powerplatform_guidance` | Power Apps / Power Pages / PCF Fluent guidance + snippets |
 | `fluent_generate_code` | Scaffold a Fluent web component/layout (React v9 or Web Components) |
 | `fluent_accessibility_checklist` | Fluent 2 accessibility checklist to self-review against |

@@ -48,6 +48,7 @@ FluentReport.SemanticModel/
 - **Base theme** (`StaticResources/SharedResources/BaseThemes/<name>.json`, e.g. `CY24SU10`) is referenced from `report.json` as `themeCollection.baseTheme` (`type: "SharedResources"`); the **custom Fluent theme** (`StaticResources/RegisteredResources/<name>.json`) as `themeCollection.customTheme` (`type: "RegisteredResources"`), each with a matching `resourcePackages` item (`BaseTheme` / `CustomTheme`).
 - **Canvas:** Fluent 2 new pages default to **1920×1080** (the initial page keeps **1280×720**); set per page in `definition/pages/<page>/page.json` (`width`/`height`). Wallpaper/background are grey.
 - **Visual defaults** live in the theme's `visualStyles` (see `fluent-powerbi-theme`) and apply report-wide — the Fluent look (corners/spacing/borders/type) comes from there.
+- **Visual catalog:** `mcp/data/powerbi-visuals.json` maps **every Power BI visual** to its official Learn doc + how the Fluent 2 base theme styles it (the 21-page Fluent 2 showcase report demonstrates each category).
 
 ## Steps
 1. `fluent_scaffold_pbip` (or copy `templates/pbip/`) → rename `FluentReport` to your report name (file + folder names and internal references). 2. Drop in your Fluent theme (or `fluent_generate_powerbi_theme`). 3. Point the semantic model at your data (edit TMDL / connect in Desktop). 4. Open the `.pbip` in Power BI Desktop; it upgrades preview schemas as needed. 5. Author visuals — they inherit the Fluent visual defaults.
@@ -62,6 +63,7 @@ FluentReport.SemanticModel/
 | Projects (PBIP) overview | `microsoft_docs_fetch(url="https://learn.microsoft.com/power-bi/developer/projects/projects-overview")` |
 | Report format (PBIR) | `microsoft_docs_fetch(url="https://learn.microsoft.com/power-bi/developer/projects/projects-report")` |
 | Base themes (Fluent 2 preview) | `microsoft_docs_fetch(url="https://learn.microsoft.com/power-bi/create-reports/power-bi-reports-visual-defaults")` |
+| Visualizations overview (all visual types) | `microsoft_docs_fetch(url="https://learn.microsoft.com/power-bi/visuals/power-bi-visualizations-overview")` — per-visual docs + Fluent 2 styling are catalogued in `mcp/data/powerbi-visuals.json` |
 | Fabric item JSON schemas | `https://developer.microsoft.com/json-schemas/fabric/` |
 
 ### CLI alternative (if the Learn MCP server is unavailable)

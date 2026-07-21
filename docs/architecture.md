@@ -15,7 +15,7 @@
                          └───────────────┬─────────────────────────────┘
                                          │ call for facts / generation
                          ┌───────────────▼─────────────────────────────┐
-                         │  MCP server (mcp/, stdio) — 18 tools         │
+                         │  MCP server (mcp/, stdio) — 19 tools         │
                          │   components · tokens · theme · powerbi …    │
                          └───────────────┬─────────────────────────────┘
                                          │ reads
@@ -39,6 +39,7 @@
 - `fluent-components.json` — 99 components (incl. 33 AI/Copilot) with real props from `.d.ts`.
 - `fluent-components-usage.json` — 61 usage entries (when-to-use, anatomy, do/don't) from the official site.
 - `powerbi-theme.base.json` (+ `powerbi-visual-defaults.json`) — schema-valid Fluent Power BI theme.
+- `powerbi-visuals.json` — catalog of every Power BI visual (≈35) + its Learn doc URL + Fluent 2 base-theme styling, mapped to the 21-page Fluent 2 showcase report (powers `fluent_powerbi_visuals`).
 - `powerplatform.json` — Power Apps / Power Pages / PCF guidance.
 - `design-guidance.json` — Fluent 2 design-language foundations (color, typography, layout, elevation, iconography, motion, shapes, material, content, responsible AI).
 - `fluent-images.json` — media index: every diagram, do/don't example, anatomy illustration and Motion video from the site with its real CDN URL + alt text (vision-OCR-recovered where the site alt was empty); powers `fluent_get_images`.

@@ -8,7 +8,7 @@ await client.connect(transport);
 
 const tools = await client.listTools();
 console.log('TOOLS(' + tools.tools.length + '):', tools.tools.map((t) => t.name).join(', '));
-console.log('tool_count: ok=' + (tools.tools.length === 18));
+console.log('tool_count: ok=' + (tools.tools.length === 19));
 
 const pbi = await client.callTool({ name: 'fluent_generate_powerbi_theme', arguments: { brandColor: '#D13438', name: 'Fluent Red' } });
 const pbiText = pbi.content[0].text;
@@ -18,6 +18,12 @@ console.log('powerbi_theme: recolored=' + pbiText.includes('#D13438') + ' named=
 
 const pp = await client.callTool({ name: 'fluent_powerplatform_guidance', arguments: { surface: 'pcf' } });
 console.log('powerplatform(pcf): ok=' + pp.content[0].text.includes('fluentDesignLanguage'));
+
+const pbv = await client.callTool({ name: 'fluent_powerbi_visuals', arguments: { category: 'AI-powered' } });
+const pbvText = pbv.content[0].text;
+console.log('powerbi_visuals(AI-powered): ok=' + (pbvText.includes('learn.microsoft.com') && (pbvText.toLowerCase().includes('decomposition') || pbvText.toLowerCase().includes('key influencers'))));
+const pbvQ = await client.callTool({ name: 'fluent_powerbi_visuals', arguments: { query: 'trend over time' } });
+console.log('powerbi_visuals(query trend): ok=' + (pbvQ.content[0].text.toLowerCase().includes('line') && pbvQ.content[0].text.includes('learn.microsoft.com')));
 
 const a11y = await client.callTool({ name: 'fluent_accessibility_checklist', arguments: {} });
 console.log('accessibility: ok=' + a11y.content[0].text.includes('4.5:1'));
