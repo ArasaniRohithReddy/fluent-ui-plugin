@@ -1640,12 +1640,6 @@
           "url": "https://fluent2websitecdn.azureedge.net/cdn/designlanguage-elevation-lowelevationramp-09.Df9mC4w2.webp"
         },
         {
-          "alt": "High elevation ramp",
-          "section": "High elevation ramp",
-          "asset": "designlanguage-elevation-lowelevationramp-01",
-          "url": "https://fluent2websitecdn.azureedge.net/cdn/designlanguage-elevation-lowelevationramp-01.xOb21Bwn.webp"
-        },
-        {
           "alt": "Light Shadow 28",
           "section": "High elevation ramp",
           "asset": "designlanguage-elevation-highelevationramp-02",
@@ -1662,12 +1656,6 @@
           "section": "High elevation ramp",
           "asset": "designlanguage-elevation-highelevationramp-04",
           "url": "https://fluent2websitecdn.azureedge.net/cdn/designlanguage-elevation-highelevationramp-04.BLvRjLUi.webp"
-        },
-        {
-          "alt": "Dark Shadow 64",
-          "section": "High elevation ramp",
-          "asset": "designlanguage-elevation-lowelevationramp-05",
-          "url": "https://fluent2websitecdn.azureedge.net/cdn/designlanguage-elevation-lowelevationramp-05.PbMmAA1x.webp"
         },
         {
           "alt": "Shadows on color surfaces",
@@ -2273,54 +2261,6 @@
           "kind": "hero",
           "source": "ocr-vision",
           "url": "https://fluent2websitecdn.azureedge.net/cdn/motion-main.yvK1DPfJ.webp"
-        },
-        {
-          "alt": "Play",
-          "section": "Motion principles",
-          "asset": "play-button",
-          "url": "https://fluent2websitecdn.azureedge.net/cdn/play-button.NPGwC2d8.svg"
-        },
-        {
-          "alt": "Play",
-          "section": "Duration",
-          "asset": "play-button",
-          "url": "https://fluent2websitecdn.azureedge.net/cdn/play-button.NPGwC2d8.svg"
-        },
-        {
-          "alt": "Play",
-          "section": "Easing",
-          "asset": "play-button",
-          "url": "https://fluent2websitecdn.azureedge.net/cdn/play-button.NPGwC2d8.svg"
-        },
-        {
-          "alt": "Play",
-          "section": "Enter and exit",
-          "asset": "play-button",
-          "url": "https://fluent2websitecdn.azureedge.net/cdn/play-button.NPGwC2d8.svg"
-        },
-        {
-          "alt": "Play",
-          "section": "Elevation",
-          "asset": "play-button",
-          "url": "https://fluent2websitecdn.azureedge.net/cdn/play-button.NPGwC2d8.svg"
-        },
-        {
-          "alt": "Play",
-          "section": "Top level",
-          "asset": "play-button",
-          "url": "https://fluent2websitecdn.azureedge.net/cdn/play-button.NPGwC2d8.svg"
-        },
-        {
-          "alt": "Play",
-          "section": "Container transform",
-          "asset": "play-button",
-          "url": "https://fluent2websitecdn.azureedge.net/cdn/play-button.NPGwC2d8.svg"
-        },
-        {
-          "alt": "Play",
-          "section": "Hierarchy",
-          "asset": "play-button",
-          "url": "https://fluent2websitecdn.azureedge.net/cdn/play-button.NPGwC2d8.svg"
         },
         {
           "alt": "Motion principle demo — Functional (motion serves a purpose)",

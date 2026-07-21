@@ -927,13 +927,6 @@
         "section": "Card layout"
       },
       {
-        "file": "Light",
-        "url": "https://fluent2websitecdn.azureedge.net/cdn/Light.DZ47kVER.png",
-        "alt": "Carousel with image gallery style",
-        "kind": "layout",
-        "section": "Web banner layout"
-      },
-      {
         "file": "Component-1",
         "url": "https://fluent2websitecdn.azureedge.net/cdn/Component-1.C9gx3YqC.png",
         "alt": "Carousel with image gallery style",
@@ -1771,20 +1764,6 @@
         "section": "Helper text"
       },
       {
-        "file": "field1",
-        "url": "https://fluent2websitecdn.azureedge.net/cdn/field1.DSPNY6N5.webp",
-        "alt": "Validation success",
-        "kind": "content",
-        "section": "Validation messages"
-      },
-      {
-        "file": "field2",
-        "url": "https://fluent2websitecdn.azureedge.net/cdn/field2.Dv9QFu81.webp",
-        "alt": "Validation warning",
-        "kind": "content",
-        "section": "Validation messages"
-      },
-      {
         "file": "field13",
         "url": "https://fluent2websitecdn.azureedge.net/cdn/field13.VbF2KLA9.webp",
         "alt": "Validation warning",
@@ -2173,13 +2152,6 @@
         "alt": "Placeholder incorrect",
         "kind": "dodont",
         "section": "Accessibility"
-      },
-      {
-        "file": "label4",
-        "url": "https://fluent2websitecdn.azureedge.net/cdn/label4.9OofrtoG.webp",
-        "alt": "Content correct",
-        "kind": "dodont",
-        "section": "Content"
       },
       {
         "file": "label7",
@@ -3671,13 +3643,6 @@
         "alt": "Filled",
         "kind": "state",
         "section": "Appearance"
-      },
-      {
-        "file": "rating1",
-        "url": "https://fluent2websitecdn.azureedge.net/cdn/rating1.48ZFe1Iu.png",
-        "alt": "Star",
-        "kind": "behavior",
-        "section": "Shape"
       },
       {
         "file": "rating17",
