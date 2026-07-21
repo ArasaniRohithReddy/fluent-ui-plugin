@@ -11,6 +11,7 @@ import { registerTheme } from './tools/theme.js';
 import { registerCode } from './tools/code.js';
 import { registerMigration } from './tools/migration.js';
 import { registerDesignGuidance } from './tools/designGuidance.js';
+import { registerImages } from './tools/images.js';
 import { registerConfig } from './tools/config.js';
 const server = new McpServer({
     name: 'fluent-ui',
@@ -31,6 +32,9 @@ registerCode(server);
 // (grounded in research/fluent-design.md + migration.json).
 registerDesignGuidance(server);
 registerMigration(server);
+// Fluent 2 media index: direct URLs to every diagram, do/don't example,
+// anatomy illustration and Motion video (fluent-images.json).
+registerImages(server);
 // User-defined presets config (fluent.config.json) + persistent agent memory
 // (.fluent/memory.json). Zero-config safe: sensible Fluent 2 defaults, never throws.
 registerConfig(server);

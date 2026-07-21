@@ -9,7 +9,7 @@
     "generatedFrom": "Component names and prop types/defaults extracted from the installed @fluentui/react-components and @fluentui/web-components d.ts files; categories, a11y notes and samples authored to Fluent 2 guidance.",
     "generatedAt": "2026-07-20",
     "totalReactComponentExports": 232,
-    "componentsCatalogued": 82,
+    "componentsCatalogued": 99,
     "notes": [
       "keyProps types and @default values are taken verbatim from the shipped TypeScript definitions; props inherited from HTML elements are omitted for brevity.",
       "webComponent is the Fluent Web Components v3 custom-element tag when one exists; null means there is no direct v3 web component (use the React component).",
@@ -24,7 +24,9 @@
       "githubStatus": "No public source repo: https://github.com/microsoft/fluentui-copilot returns 404. Source lives in the microsoft/fluentui monorepo / internal; docs at https://ai.fluentui.dev/ require Microsoft sign-in for full component pages.",
       "buildsOnFluent2": "All packages peer-depend on @fluentui/react-components >=9.69.0 <10 and render inside CopilotProvider (a superset of FluentProvider), reusing Fluent 2 tokens.",
       "aggregatedFrom": "@fluentui-copilot/react-copilot@0.30.5 dependency graph and each sub-package dist/index.d.ts (installed from npm).",
-      "totalSuiteComponentsDiscovered": 95
+      "totalSuiteComponentsDiscovered": 95,
+      "aiSiteComponents": 14,
+      "aiSiteCoverage": "Every one of the 14 gated Fluent 2 AI site components (by SITE display name) resolves to its real @fluentui-copilot package component(s) + props; the package-named AI entries remain for discoverability."
     }
   },
   "components": [
@@ -2140,6 +2142,153 @@
       "sample": "<Toaster toasterId={toasterId} position=\"top-end\" />"
     },
     {
+      "name": "FluentProvider",
+      "category": "Theming",
+      "description": "FluentProvider applies a Fluent theme to everything inside it. Wrap the app once at the root so its design tokens are emitted as CSS custom properties to every descendant; nest additional providers to re-theme a subtree. Required for every Fluent UI React v9 app — components rendered outside a provider have no tokens and appear unstyled.",
+      "reactImport": "import { FluentProvider, webLightTheme } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "theme",
+          "type": "PartialTheme"
+        },
+        {
+          "name": "dir",
+          "type": "'ltr' | 'rtl'"
+        },
+        {
+          "name": "targetDocument",
+          "type": "Document"
+        },
+        {
+          "name": "applyStylesToPortals",
+          "type": "boolean",
+          "default": "true"
+        }
+      ],
+      "a11y": "Set dir=\"rtl\" for right-to-left languages so layout and navigation mirror correctly. Choose a theme whose tokens meet Fluent's contrast requirements (standard text >= 4.5:1). The provider is a styling/context boundary, not a landmark, so keep semantic structure (headings, landmarks) inside it. Set targetDocument when rendering into another window/iframe so portaled content resolves correctly.",
+      "sample": "<FluentProvider theme={webLightTheme}>\n  <App />\n</FluentProvider>"
+    },
+    {
+      "name": "Carousel",
+      "category": "Layout & Surfaces",
+      "description": "A carousel lets people cycle through a set of content — cards, web banners, or an image gallery — without leaving the page. Carousel is the root of a component family (CarouselSlider, CarouselCard, CarouselViewport, CarouselNav / CarouselNavButton / CarouselNavImageButton / CarouselNavContainer, CarouselButton, CarouselAutoplayButton) that composes the slider, cards, and navigation.",
+      "reactImport": "import { Carousel, CarouselSlider, CarouselCard, CarouselNav, CarouselNavButton, CarouselButton } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "align",
+          "type": "'center' | 'start' | 'end'"
+        },
+        {
+          "name": "activeIndex",
+          "type": "number"
+        },
+        {
+          "name": "defaultActiveIndex",
+          "type": "number"
+        },
+        {
+          "name": "appearance",
+          "type": "'flat' | 'elevated'",
+          "default": "'flat'"
+        },
+        {
+          "name": "circular",
+          "type": "boolean"
+        },
+        {
+          "name": "groupSize",
+          "type": "number | 'auto'",
+          "default": "'auto'"
+        },
+        {
+          "name": "draggable",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "whitespace",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "motion",
+          "type": "'slide' | 'fade' | { kind: 'slide'; duration?: number }",
+          "default": "'slide'"
+        },
+        {
+          "name": "autoplayInterval",
+          "type": "number",
+          "default": "4000"
+        }
+      ],
+      "a11y": "Carousel must reflow to satisfy the 400% zoom (WCAG reflow) criterion — at ~600px wide and under it snaps to full screen. Always provide a pause control when autoplay is on, and localize page-change announcements via the announcement prop (a CarouselAnnouncerFunction) so screen readers hear the current position. Give each CarouselNavButton an aria-label.",
+      "sample": "<Carousel groupSize={1} circular>\n  <CarouselSlider>\n    <CarouselCard aria-label=\"Slide 1\">Slide 1</CarouselCard>\n    <CarouselCard aria-label=\"Slide 2\">Slide 2</CarouselCard>\n  </CarouselSlider>\n  <CarouselNav>{(index) => <CarouselNavButton aria-label={`Go to slide ${index + 1}`} />}</CarouselNav>\n</Carousel>"
+    },
+    {
+      "name": "List",
+      "category": "Data display",
+      "description": "A list is a vertical stack of like items, optionally selectable. Compose List with ListItem; each ListItem can carry a primary onAction and, when selection is enabled, a checkmark slot. Use Table/DataGrid for columns of related data and Tree for nested hierarchy.",
+      "reactImport": "import { List, ListItem } from '@fluentui/react-components';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "navigationMode",
+          "type": "'items' | 'composite'"
+        },
+        {
+          "name": "selectionMode",
+          "type": "'single' | 'multiselect'"
+        },
+        {
+          "name": "selectedItems",
+          "type": "SelectionItemId[]"
+        },
+        {
+          "name": "defaultSelectedItems",
+          "type": "SelectionItemId[]"
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "EventHandler<OnListSelectionChangeData>"
+        }
+      ],
+      "a11y": "Renders a <ul> by default. With no focusable children a List uses the list role; when selection is enabled it applies the listbox role to the root and option to each ListItem (grid is intentionally not used, to avoid empty cells). Use Left Arrow or Esc to return focus from a list item's actions to the parent container.",
+      "sample": "<List selectionMode=\"multiselect\">\n  <ListItem value=\"1\">Inbox</ListItem>\n  <ListItem value=\"2\">Drafts</ListItem>\n</List>"
+    },
+    {
+      "name": "Icon",
+      "category": "Data display",
+      "description": "There is no generic <Icon> component in @fluentui/react-components. Fluent 2 icons ship as individual components in the separate @fluentui/react-icons package, each in a Regular (outlined) and Filled variant (e.g. AddRegular / AddFilled). Every icon is a React.FC<FluentIconsProps> that renders an inline SVG; pair a Filled + Regular icon with bundleIcon() to toggle appearance via the filled prop. Resizable icons (AddRegular) scale via fontSize (they render at 1em); sized variants (Send24Regular) render at a fixed design size and ignore fontSize.",
+      "reactImport": "import { AddRegular, AddFilled, bundleIcon } from '@fluentui/react-icons';",
+      "webComponent": null,
+      "keyProps": [
+        {
+          "name": "fontSize",
+          "type": "string | number"
+        },
+        {
+          "name": "primaryFill",
+          "type": "string"
+        },
+        {
+          "name": "className",
+          "type": "string"
+        },
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "filled",
+          "type": "boolean"
+        }
+      ],
+      "a11y": "Icons are decorative by default and inherit the text color (currentColor via primaryFill). For a purely decorative icon add aria-hidden or render it inside an already-labeled control; for a meaningful standalone icon give it an accessible name via the title prop or a wrapping element's aria-label. Never rely on color alone to convey meaning.",
+      "sample": "// Resizable icon sized via fontSize (renders at 1em)\n<AddRegular fontSize={24} aria-hidden />\n\n// Bundle Filled + Regular and toggle with the filled prop\nconst Add = bundleIcon(AddFilled, AddRegular);\n<Add filled aria-label=\"Add item\" />"
+    },
+    {
       "name": "CopilotProvider",
       "category": "AI / Copilot",
       "description": "The required theming/context provider for Fluent AI Copilot components. It extends Fluent UI v9 FluentProvider (its context is a superset of FluentProviderContextValues) and layers Copilot-specific theme tokens and an announce (aria-live) context on top.",
@@ -2715,7 +2864,660 @@
       "docs": "https://ai.fluentui.dev/",
       "keyProps": [],
       "a11y": "Provide a full date/time as an accessible label when showing a relative time.",
-      "sample": "<Timestamp>2:14 PM</Timestamp>"
+      "sample": "<Timestamp>2:14 PM</Timestamp>",
+      "apiComponents": [
+        "Timestamp"
+      ],
+      "siteComponent": true,
+      "slug": "timestamp",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-timestamp--docs"
+    },
+    {
+      "name": "Chat input",
+      "category": "AI / Copilot",
+      "description": "The chat input is the area in a Copilot chat where a user can enter their Copilot prompt or question. It’s aimed more at conversational UX than durable content generation. If you need a component to help people create entities, try the Prompt input. Composed input surface: the primary component is ChatInput (a rich, contentEditable Lexical composer) wired to a SendButton, with optional attachments, character count and an expand/collapse ExpandButton.",
+      "reactImport": "import { ChatInput } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-chat-input",
+        "version": "0.16.3",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "ChatInput",
+        "ExpandButton",
+        "SendButton"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "chatinput",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-copilotchat--docs",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "ChatInputLineMode ('auto' | 'multi' | 'single' | 'responsive')",
+          "default": "'multi'"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "name": "isSending",
+          "type": "boolean"
+        },
+        {
+          "name": "maxLength",
+          "type": "number"
+        },
+        {
+          "name": "charactersRemainingMessage",
+          "type": "(charactersRemaining: number) => string  (required by the props union: pass a callback with maxLength, or `undefined` when unlimited)"
+        },
+        {
+          "name": "characterLimitErrorMessage",
+          "type": "string"
+        },
+        {
+          "name": "characterCountVisibilityThreshold",
+          "type": "number",
+          "default": "0.1"
+        },
+        {
+          "name": "showCount",
+          "type": "boolean"
+        },
+        {
+          "name": "disableSend",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "hideSendWhenEmpty",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "onSubmit",
+          "type": "(ev: ChatInputSubmitEvents, data: EditorInputValueData) => void"
+        },
+        {
+          "name": "onStop",
+          "type": "(ev: ChatInputSubmitEvents) => void"
+        },
+        {
+          "name": "expanded",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "defaultExpanded",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "maxNumberOfLinesWhenCollapsed",
+          "type": "number",
+          "default": "10"
+        }
+      ],
+      "a11y": "No placeholder prop (the editor is contentEditable) — label it with aria-label. ChatInputProps is a discriminated union: charactersRemainingMessage is required (a (remaining:number)=>string callback with maxLength, or undefined without). onSubmit fires on Enter/Send; onStop cancels an in-flight response while isSending.",
+      "sample": "<ChatInput\n  aria-label=\"Ask Copilot\"\n  maxLength={2000}\n  charactersRemainingMessage={(remaining) => `${remaining} characters remaining`}\n  showCount\n  onSubmit={(_, data) => sendMessage(data.value)}\n/>"
+    },
+    {
+      "name": "Attachment",
+      "category": "AI / Copilot",
+      "description": "An attachment represents an entity that Copilot should use for grounding a response. They appear as interactive tags in the input footer. Rendered as interactive tags in the input footer, usually wrapped in an AttachmentList (which adds overflow via AttachmentOverflowMenu / AttachmentOverflowMenuButton and an onAttachmentDismiss callback + maxVisibleAttachments).",
+      "reactImport": "import { Attachment, AttachmentList } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-attachments",
+        "version": "0.13.8",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "Attachment",
+        "AttachmentList",
+        "AttachmentOverflowMenu",
+        "AttachmentOverflowMenuButton",
+        "AgentTag"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "attachment",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-attachments-attachment--docs",
+      "keyProps": [
+        {
+          "name": "imageOnly",
+          "type": "boolean  (use when the attachment has no text content)",
+          "default": "false"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium'",
+          "default": "'medium'"
+        },
+        {
+          "name": "dismissOnly",
+          "type": "boolean  (render as a single dismiss button with no primary action)"
+        },
+        {
+          "name": "mode",
+          "type": "'canvas' | 'sidecar'  (from CopilotMode)"
+        },
+        {
+          "name": "designVersion",
+          "type": "'current' | 'previous' | 'next'  (from DesignVersion)"
+        }
+      ],
+      "a11y": "Give the dismiss button an aria-label. Attachment has primaryAction and dismissButton slots and an optional progress bar for uploads; AttachmentList exposes onAttachmentDismiss and maxVisibleReferences-style overflow via maxVisibleAttachments.",
+      "sample": "<AttachmentList onAttachmentDismiss={(_, d) => remove(d.id)}>\n  <Attachment id=\"a1\" media={<DocumentRegular />}>Q3-report.pdf</Attachment>\n</AttachmentList>"
+    },
+    {
+      "name": "Suggestions",
+      "category": "AI / Copilot",
+      "description": "A suggestion is a helpful prompt that gives users ideas of how they can continue to interact with Copilot. Suggestions are AI-generated and based in a user’s context to help teach Copilot’s capabilities in a conversational way. Rendered as a SuggestionList of individual Suggestion chips. Each Suggestion extends Fluent Button (SuggestionProps = ButtonProps & CopilotMode & DesignVersion), so it accepts icon, appearance, disabled and onClick.",
+      "reactImport": "import { Suggestion, SuggestionList } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-suggestions",
+        "version": "0.13.7",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "Suggestion",
+        "SuggestionList"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "suggestions",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-suggestions--docs",
+      "keyProps": [
+        {
+          "name": "horizontalAlignment",
+          "type": "'start' | 'end'  — SuggestionList: horizontal alignment of the list",
+          "default": "'end'"
+        },
+        {
+          "name": "mode",
+          "type": "'canvas' | 'sidecar'  — Suggestion (from CopilotMode)"
+        },
+        {
+          "name": "designVersion",
+          "type": "'current' | 'previous' | 'next'  — Suggestion (from DesignVersion)"
+        },
+        {
+          "name": "appearance",
+          "type": "'secondary' | 'primary' | 'outline' | 'subtle' | 'transparent'  — Suggestion (inherited from ButtonProps)"
+        }
+      ],
+      "a11y": "Suggestion is a Button under the hood — provide an accessible label/onClick. SuggestionList is a div wrapper that lays out and aligns the chips.",
+      "sample": "<SuggestionList>\n  <Suggestion icon={<SparkleRegular />} onClick={() => ask('Summarize this thread')}>\n    Summarize this thread\n  </Suggestion>\n</SuggestionList>"
+    },
+    {
+      "name": "Chat output",
+      "category": "AI / Copilot",
+      "description": "Chat output shows the back and forth interactions between Copilot and the user. The Chat output pattern includes all subcomponents between the header and the chat input. This is a composed pattern with no single scalar-prop component: CopilotChat is a slot-only scrollable container that lays out UserMessage / CopilotMessage / SystemMessage (plus Timestamp, AiGeneratedDisclaimer and a ScrollDownButton). See those component entries for props.",
+      "reactImport": "import { CopilotChat } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-copilot-chat",
+        "version": "0.13.2",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "CopilotChat",
+        "CopilotMessage",
+        "UserMessage",
+        "SystemMessage",
+        "Timestamp",
+        "ScrollDownButton",
+        "AiGeneratedDisclaimer"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "chatoutput",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-copilotchat--docs",
+      "keyProps": [],
+      "a11y": "CopilotChat renders the message-list region; place UserMessage/CopilotMessage/SystemMessage children inside and pair with ScrollDownButton for long conversations. Props live on the child message components, not on CopilotChat.",
+      "sample": "<CopilotChat>\n  <UserMessage>How do I center a div?</UserMessage>\n  <CopilotMessage name=\"Copilot\" loadingState=\"none\">Use display:flex with justify-content and align-items center.</CopilotMessage>\n</CopilotChat>",
+      "note": "Composed pattern: props live on the composing components listed in apiComponents."
+    },
+    {
+      "name": "Citations and references",
+      "category": "AI / Copilot",
+      "description": "Citations and references help build trust for AI experiences by surfacing the information Copilot used to create its output. References represent the source grounding data. Citations connect a Copilot output to a reference. A cluster: Citation is the inline marker that connects an answer to a source; Reference is the grounding chip (slot-based: root, citation, divider, content, graphic + designVersion); ReferenceList lays out references with overflow. keyProps below are annotated with their owning component.",
+      "reactImport": "import { Citation, Reference, ReferenceList } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-reference",
+        "version": "0.16.7",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "Citation",
+        "Reference",
+        "ReferenceList",
+        "ReferenceOverflowButton"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "citationsandreferences",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-citations-and-references-citations-and-references--docs",
+      "keyProps": [
+        {
+          "name": "referenceHref",
+          "type": "string  — Citation: HREF to the associated Reference"
+        },
+        {
+          "name": "block",
+          "type": "boolean  — Citation: block (no margins) vs inline marker",
+          "default": "false"
+        },
+        {
+          "name": "maxVisibleReferences",
+          "type": "number  — ReferenceList: max references before overflow",
+          "default": "undefined"
+        },
+        {
+          "name": "minVisibleReferences",
+          "type": "number  — ReferenceList: min references always shown",
+          "default": "undefined"
+        },
+        {
+          "name": "text",
+          "type": "string | ((overflowCount: number) => React.ReactNode)  — ReferenceOverflowButton"
+        }
+      ],
+      "a11y": "Give each Citation/Reference an accessible label describing the cited source. useReferenceCitationPreview / generateReferenceCitationPreview wire a Citation–Reference pair with matching preview surfaces.",
+      "sample": "Machine learning is a subset of AI<Citation referenceHref=\"#ref-1\">1</Citation>.\n\n<ReferenceList maxVisibleReferences={3}>\n  <Reference>Contoso ML overview</Reference>\n</ReferenceList>"
+    },
+    {
+      "name": "Copilot message",
+      "category": "AI / Copilot",
+      "description": "Copilot message is the Copilot response in conversational UX scenarios. The Copilot response bubble in conversational UX. CopilotMessageV2 is a deprecated alias of CopilotMessage. Slots include avatar, name, disclaimer, content, footnote, actions and a streaming progress bar.",
+      "reactImport": "import { CopilotMessage } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-copilot-chat",
+        "version": "0.13.2",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "CopilotMessage",
+        "CopilotMessageV2",
+        "AiGeneratedDisclaimer"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "copilotmessage",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-copilotmessagev2--docs",
+      "keyProps": [
+        {
+          "name": "loadingState",
+          "type": "'loading' | 'streaming' | 'none'",
+          "default": "'none'"
+        },
+        {
+          "name": "announcement",
+          "type": "string"
+        },
+        {
+          "name": "defaultFocused",
+          "type": "boolean"
+        },
+        {
+          "name": "mode",
+          "type": "'canvas' | 'sidecar'  (from CopilotMode)"
+        }
+      ],
+      "a11y": "Set announcement to control what screen readers say when the message is added; use loadingState to reflect loading/streaming. Pair with AiGeneratedDisclaimer in the disclaimer slot.",
+      "sample": "<CopilotMessage name=\"Copilot\" loadingState=\"none\" avatar={<Avatar name=\"Copilot\" />}>\n  Here is an answer…\n</CopilotMessage>"
+    },
+    {
+      "name": "Sensitivity",
+      "category": "AI / Copilot",
+      "description": "Sensitivity indicates that a Copilot output is derived from sensitive data. Copilot generated responses will inherit the most restrictive sensitive from the sources it references. SensitivityLabel is the labelled wrapper (with a SensitivityTooltip); SensitivityIcon is the standalone shield glyph. keyProps below are annotated with their owning component.",
+      "reactImport": "import { SensitivityLabel, SensitivityIcon } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-sensitivity-label",
+        "version": "0.8.7",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "SensitivityLabel",
+        "SensitivityIcon",
+        "SensitivityTooltip"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "sensitivity",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-sensitivity-sensitivityicon--docs",
+      "keyProps": [
+        {
+          "name": "description",
+          "type": "string  — SensitivityLabel: the sensitivity description (required)"
+        },
+        {
+          "name": "fillColor",
+          "type": "string  — SensitivityIcon: icon fill color"
+        },
+        {
+          "name": "withLock",
+          "type": "boolean  — SensitivityIcon: overlay a lock glyph"
+        },
+        {
+          "name": "withArrow",
+          "type": "boolean  — SensitivityTooltip: show a pointing arrow"
+        },
+        {
+          "name": "withBackplate",
+          "type": "boolean  — SensitivityTooltip: show a backplate behind the tooltip"
+        }
+      ],
+      "a11y": "SensitivityLabel.description is required and is surfaced to assistive tech. Do not rely on the icon color alone — the label/tooltip provides the text meaning.",
+      "sample": "<SensitivityLabel description=\"Confidential – Contoso\">\n  <SensitivityIcon withLock />\n</SensitivityLabel>"
+    },
+    {
+      "name": "User message",
+      "category": "AI / Copilot",
+      "description": "The user message is the chat card that represents the user’s input to Copilot. User messages look identical to user messages in Teams to reinforce the mental model of synchronous conversation. The chat card representing the user's input. UserMessageV2 is a deprecated alias of UserMessage. Slots include timestamp, actionBar and message.",
+      "reactImport": "import { UserMessage } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-copilot-chat",
+        "version": "0.13.2",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "UserMessage",
+        "UserMessageV2"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "usermessage",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-usermessagev2--docs",
+      "keyProps": [
+        {
+          "name": "announcement",
+          "type": "string  (controls the screen-reader announcement when the message is added)"
+        }
+      ],
+      "a11y": "Set announcement to control what screen readers announce when the message is added.",
+      "sample": "<UserMessage>Summarize this document.</UserMessage>"
+    },
+    {
+      "name": "Copilot FRE",
+      "category": "AI / Copilot",
+      "description": "The Copilot FRE is used to introduce Copilot the first time it becomes available to someone within a particular app or service. It is made up of the Fluent dialog combined with Fluent carousel, with some customizations. Built from a Fluent dialog + carousel: FirstRunExperience is the root carousel; FirstRunContent holds each slide (image/header/text); FirstRunFooter + FirstRunProgressIndicator drive Next/Back. keyProps annotated with owner.",
+      "reactImport": "import { FirstRunExperience, FirstRunContent, FirstRunFooter } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-first-run-experience",
+        "version": "0.9.7",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "FirstRunExperience",
+        "FirstRunContent",
+        "FirstRunFooter",
+        "FirstRunProgressIndicator"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "copilotfre",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-firstrunexperience--docs",
+      "keyProps": [
+        {
+          "name": "index",
+          "type": "number  — FirstRunExperience: controlled index of the visible FirstRunContent (0-based)"
+        },
+        {
+          "name": "defaultIndex",
+          "type": "number  — FirstRunExperience: uncontrolled initial content index"
+        },
+        {
+          "name": "onIndexChange",
+          "type": "(data: { index: number }) => void  — FirstRunExperience"
+        },
+        {
+          "name": "designVersion",
+          "type": "'current' | 'previous' | 'next'  (from DesignVersion)"
+        },
+        {
+          "name": "numberOfsteps",
+          "type": "number  — FirstRunProgressIndicator: total steps"
+        },
+        {
+          "name": "selectedStep",
+          "type": "number  — FirstRunProgressIndicator: active step"
+        }
+      ],
+      "a11y": "Use useFirstRunNavigation to bound-check index when controlling the FRE. Provide a dismiss control in the header slot and progress via FirstRunProgressIndicator.",
+      "sample": "<FirstRunExperience defaultIndex={0}>\n  <FirstRunContent header=\"Meet Copilot\" text=\"Your AI assistant…\" />\n  <FirstRunFooter />\n</FirstRunExperience>"
+    },
+    {
+      "name": "Entity cards",
+      "category": "AI / Copilot",
+      "description": "An entity is a content type that is stored in Substrate such as a file, meeting, or person. Entity cards contain AI generated insights and actions that represent the content in each entity and suggest next steps based on that content. Each type of entity card has variations that add new features. EntityCard is the base card (slots: reasonMarker, entityTitle, content, insights, actions). The package also ships EntityCardList/Grid, EntityDialogCard, EntityTitle, EventTitle, Insights/InsightsButton and ReasonMarker. keyProps annotated with owner.",
+      "reactImport": "import { EntityCard, EntityCardList, EntityTitle } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-entity-cards",
+        "version": "0.4.8",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "EntityCard",
+        "EntityCardList",
+        "EntityCardGrid",
+        "EntityDialogCard",
+        "EntityTitle",
+        "EventTitle",
+        "Insights",
+        "InsightsButton",
+        "ReasonMarker"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "entitycards",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-entitycards-entitycard--docs",
+      "keyProps": [
+        {
+          "name": "appearance",
+          "type": "'default' | 'composable'  — EntityCard",
+          "default": "'default'"
+        },
+        {
+          "name": "orientation",
+          "type": "'horizontal' | 'vertical'  — EntityCard",
+          "default": "'vertical'"
+        },
+        {
+          "name": "designVersion",
+          "type": "'current' | 'previous' | 'next'  (from DesignVersion)"
+        },
+        {
+          "name": "textPosition",
+          "type": "'after' | 'before' | 'below'  — EntityTitle",
+          "default": "'after'"
+        },
+        {
+          "name": "status",
+          "type": "'tentative' | 'accepted' | 'free' | 'cancelled'  — EventTitle",
+          "default": "'accepted'"
+        },
+        {
+          "name": "selected",
+          "type": "boolean  — InsightsButton",
+          "default": "false"
+        }
+      ],
+      "a11y": "Use the composable appearance when nesting an EntityCard inside a Popover. EntityCardGrid builds on Fluent DataGrid — keep column headers and action cells labelled.",
+      "sample": "<EntityCardList>\n  <EntityCard orientation=\"horizontal\">\n    <EntityTitle primaryText=\"Q3 Plan.docx\" secondaryText=\"Modified 2h ago\" />\n  </EntityCard>\n</EntityCardList>"
+    },
+    {
+      "name": "Ghost text",
+      "category": "AI / Copilot",
+      "description": "Ghost text, also known as placeholder text, helps provide guidance for user input. Once a user starts to type, the ghost text disappears. Realized as an inline AI text-completion node inside the ChatInput Lexical editor (there is no `placeholder` prop on the contentEditable editor). GhostTextPlugin wires an async completion provider; GhostText is the rendered node; ManualGhostTextPlugin exposes an imperative set/commit/cancel API.",
+      "reactImport": "import { GhostText, GhostTextPlugin } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-chat-input-plugins",
+        "version": "0.5.9",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "GhostText",
+        "GhostTextPlugin",
+        "ManualGhostTextPlugin"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "ghosttext",
+      "storybookUrl": null,
+      "keyProps": [
+        {
+          "name": "id",
+          "type": "string  — GhostTextPlugin: unique plugin id (required)"
+        },
+        {
+          "name": "$getGhostText",
+          "type": "(editor: LexicalEditor, editorState: EditorState, prevEditorState: EditorState) => Promise<string | undefined>  — GhostTextPlugin: async completion provider"
+        },
+        {
+          "name": "exposeText",
+          "type": "boolean  — GhostTextPlugin: include the ghost text in the editor's text content"
+        },
+        {
+          "name": "allowCompletion",
+          "type": "boolean  — GhostTextPlugin: allow committing the suggestion (e.g. on Tab)"
+        },
+        {
+          "name": "nodeKey",
+          "type": "string  — GhostText: Lexical node key of the rendered ghost-text node"
+        }
+      ],
+      "a11y": "Ghost/inline-completion text is advisory only and disappears once the user types — never place essential guidance solely in ghost text. Committing a completion should be an explicit key (e.g. Tab).",
+      "sample": "// inside the ChatInput editor's plugins\n<GhostTextPlugin\n  id=\"completion\"\n  allowCompletion\n  $getGhostText={async (editor, state) => predictCompletion(state)}\n/>"
+    },
+    {
+      "name": "Prompt starters",
+      "category": "AI / Copilot",
+      "description": "Prompt starters give people hints about how they can interact with Copilot. Use them to teach how to build prompts, give users a starting point for building a robust prompt, and show Copilot capabilities. Prompt starters are most often found in zero prompt experiences or inside the prompt library dialog. PromptStarterList is the container (grid + show more/less); each item is a PromptStarterV2 (slots: icon, category, prompt, reasonMarker, actions). PromptStarter (the v1 item) is deprecated (10/21/2025) — use PromptStarterV2. keyProps below are PromptStarterList props.",
+      "reactImport": "import { PromptStarterList, PromptStarterV2 } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-prompt-starter",
+        "version": "0.10.9",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "PromptStarter",
+        "PromptStarterList",
+        "PromptStarterV2"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "promptstarters",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-promptstarter--docs",
+      "keyProps": [
+        {
+          "name": "visibleRows",
+          "type": "number  — PromptStarterList: rows visible in the 2/3-column layouts",
+          "default": "1"
+        },
+        {
+          "name": "defaultExpanded",
+          "type": "boolean  — PromptStarterList",
+          "default": "false"
+        },
+        {
+          "name": "isExpanded",
+          "type": "boolean  — PromptStarterList: controlled expanded state"
+        },
+        {
+          "name": "onExpandedChange",
+          "type": "(event, data: { isExpanded: boolean }) => void  — PromptStarterList"
+        },
+        {
+          "name": "expandButtonLabel",
+          "type": "string  — PromptStarterList (default \"Show more\")"
+        },
+        {
+          "name": "collapseButtonLabel",
+          "type": "string  — PromptStarterList (default \"Show less\")"
+        },
+        {
+          "name": "animateOnMount",
+          "type": "boolean  — PromptStarterList",
+          "default": "true"
+        }
+      ],
+      "a11y": "PromptStarterList uses arrow-key navigation (customizable via arrowNavigationOptions). Label the expand/collapse button with expandButtonLabel / collapseButtonLabel.",
+      "sample": "<PromptStarterList visibleRows={2}>\n  <PromptStarterV2>\n    <span>Draft</span>\n    <span>Write a kickoff email</span>\n  </PromptStarterV2>\n</PromptStarterList>"
+    },
+    {
+      "name": "System message",
+      "category": "AI / Copilot",
+      "description": "System messages are used in Copilot for messages from the system that need to sit outside the chat conversation. They are typically used to inform someone about an action related to the chat but occurring somewhere else or in the background. Sits outside the chat conversation to inform about an action occurring elsewhere/in the background. Slots: icon, message, accessibleHeading.",
+      "reactImport": "import { SystemMessage } from '@fluentui-copilot/react-copilot';",
+      "package": {
+        "name": "@fluentui-copilot/react-copilot-chat",
+        "version": "0.13.2",
+        "umbrella": "@fluentui-copilot/react-copilot"
+      },
+      "apiComponents": [
+        "SystemMessage"
+      ],
+      "webComponent": null,
+      "public": true,
+      "stability": "internal-preview",
+      "docs": "https://ai.fluentui.dev/",
+      "siteComponent": true,
+      "slug": "systemmessage",
+      "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-systemmessage--docs",
+      "keyProps": [
+        {
+          "name": "announcement",
+          "type": "string"
+        },
+        {
+          "name": "defaultFocused",
+          "type": "boolean"
+        },
+        {
+          "name": "mode",
+          "type": "'canvas' | 'sidecar'  (from CopilotMode)"
+        }
+      ],
+      "a11y": "Set announcement to control the screen-reader announcement. accessibleHeading gives the message an addressable heading.",
+      "sample": "<SystemMessage>Copilot updated your calendar.</SystemMessage>"
     }
   ]
 }

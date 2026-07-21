@@ -1,6 +1,6 @@
 ---
 name: fluent-design-language
-description: Apply the Microsoft Fluent 2 design language end to end — design principles, color, typography, layout/grid, elevation, shapes, iconography, motion, material, accessibility, content design, plus the guideline guides (handoffs, onboarding, wait UX, Responsible AI, and types of AI harm). Use whenever making design-language decisions beyond raw token values, so the UI stays faithful to https://fluent2.microsoft.design.
+description: Apply the Microsoft Fluent 2 design language end to end — design principles, color, typography, layout/grid, elevation, shapes, iconography, motion, material, accessibility, content design, design tokens, plus the guideline guides (handoffs, onboarding, wait UX, Responsible AI, types of AI harm, content engineering, entry points, personality principles, Copilot errors, and data usage and sharing). Use whenever making design-language decisions beyond raw token values, so the UI stays faithful to https://fluent2.microsoft.design.
 ---
 
 # Fluent 2 design language
@@ -40,20 +40,28 @@ Fluent components meet or surpass **WCAG 2.1 AA**. Contrast: text ≥ 4.5:1, lar
 ## Content design
 Design around audience, goal, and feeling. Keep it simple, get to the point, talk like a person. Use **present tense**, **active voice**, **second person**; sentence-case on Windows/Android/web (title-case on iOS/macOS). Periods only after full sentences (not headers/buttons/labels/lists). **Do:** descriptive link text, alt text, headings/tables/lists. **Don't:** all caps, exclamation points, or directional terms ("above"/"below").
 
+## Design tokens
+Stored values that assign Fluent styles (color, typography, spacing, elevation) instead of hardcoded hex/px, so teams share one language and stay consistent across platforms and disciplines. **Two layers:** **global tokens** (context-agnostic raw values — hex, typography, border radius, stroke width, animation) and **alias tokens** (semantic meaning; for shadows/type they condense many values into one format). Alias names are self-describing (`colorNeutralForeground1`, `spacingHorizontalM`, `shadow4`). Tokens drive **light / dark / high-contrast / branded** theming out of the box with guaranteed contrast. **Never hardcode hex/px** — reference tokens (`import { tokens } from '@fluentui/react-components'` in makeStyles/griffel; each token is also the CSS var `--X`). Exact values live in the `fluent-design-tokens` skill / `fluent_list_tokens`.
+
 ## Guideline guides (AI & flow)
 - **Handoffs** — moving between workflow steps/apps. Principles: guide seamlessly, maintain context, unify experiences. Common CTAs: *Create…*, *Open in…*, *Continue in…*, *Try in…*. System messages are third-person and end with a period.
 - **Onboarding** — teach at the point of need. Principles: relevant, non-distracting, optional, benefit-focused, coherent. Goals: welcome, orient, notify, explain, take action. Write for action and set clear time/step expectations.
 - **Wait UX** — communicate clearly, optimize perceived performance, maintain context. Thresholds: **<1s** no indicator, **1–3s** spinner, **>3s** progress bar/content string. Use `-ing` verbs + a nonbreaking space before the ellipsis; announce state with `role="status"`.
 - **Responsible AI** — build *appropriate trust* without overpromising. Principles: be transparent, set appropriate expectations, prevent overreliance, keep users in control, collect feedback. Always show the approved **AI disclaimer** and differentiate AI vs. non-AI content. The RAI rubric scores 0–3; a 0/1 on overreliance or agent expectations is an automatic fail.
 - **Types of AI harm** — inaccurate, incomplete, biased, inappropriate/unsafe, non-transparent, overreliance. Match mitigations to harm (disclaimers + sources for inaccurate; escalation for unsafe); collect feedback with **specific** harm categories.
+- **Content engineering** — shape AI model behavior through **system prompts**. Structure a prompt into **role, task, rules, example output**. Write tasks that are specific, sequential, and explicit about response shape; encode voice/tone (contractions, sentence case, no evaluative language, apologize only for real mistakes); constrain with non-anthropomorphic language, honest capability claims, and anti-sycophancy; cover **failure modes** by naming the condition, the response, and a path forward.
+- **Entry points** — the first moments of interaction with Copilot, simplified into two types: **chat** (expansive, Copilot-forward; reserved full-color rainbow Copilot icon) and **non-chat** (focused AI actions; black-and-white sparkle modifier on an outcome-representing icon). Five principles: One Copilot, coherent & familiar, outcome-oriented, clear & predictable, focused. Use the sparkle modifier sparingly and group secondary AI actions in an **AI-action menu**. `https://fluent2.microsoft.design/entry-points/`
+- **Personality principles** — voice and tone for Copilot and agents. M365 Copilot's six principles: **trustworthy, empathetic, humble, transparent, explicitly digital, supportive**. Agents split into **digital worker** (engagement-oriented) and **task-oriented** (utility) personas. Keep a calm, professional tone — use contractions, avoid exclamation points, and use emoji sparingly. `https://fluent2.microsoft.design/personality-principles/`
+- **Copilot errors** — keep messages simple, clear, consistent, and helpful. Three principles: provide critical information quickly, be serious and empathetic, highlight the path forward. Two types: **system-level** (blocks Copilot; full-page/drawer) and **input-level** (can't answer this prompt; inline). Lead with one concrete fix, never blame the user, and avoid casual "sorry." `https://fluent2.microsoft.design/copilot-errors/`
+- **Data usage and sharing** — consent UX for storing/using data. Four principles: **awareness, understanding, freedom of choice, control**. Progressively disclose across five stages (**discovery, prompt, request, receipt, management**) to meet GDPR. Start with content; keep sharing opt-in and off by default; give opt-in/opt-out equal prominence; avoid radio buttons. `https://fluent2.microsoft.design/data-usage-sharing/`
 
 ## Learn more
 | Topic | How to find |
 |---|---|
 | Grounded guidance per foundation | MCP `fluent_design_guidance` (`topic` = a heading above, or `all`) |
 | Exact token values | `fluent-design-tokens` skill · MCP `fluent_list_tokens` / `fluent_get_token` |
-| Design-language pages | `https://fluent2.microsoft.design/design-principles` · `/color` · `/typography` · `/layout` · `/elevation` · `/shapes` · `/iconography` · `/motion` · `/material` · `/accessibility` · `/content-design` |
-| Guideline guides | `https://fluent2.microsoft.design/handoffs` · `/onboarding` · `/wait-ux` · `/responsible-AI` · `/ai-harm` |
+| Design-language pages | `https://fluent2.microsoft.design/design-principles` · `/color` · `/typography` · `/layout` · `/elevation` · `/shapes` · `/iconography` · `/motion` · `/material` · `/accessibility` · `/content-design` · `/design-tokens` |
+| Guideline guides | `https://fluent2.microsoft.design/handoffs` · `/onboarding` · `/wait-ux` · `/responsible-AI` · `/ai-harm` · `/content-engineering` · `/entry-points` · `/personality-principles` · `/copilot-errors` · `/data-usage-sharing` |
 | Official docs | `microsoft_docs_search(query="Fluent 2 design language color typography")` |
 
 ### CLI alternative (if the Learn MCP server is unavailable)

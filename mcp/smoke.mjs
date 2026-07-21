@@ -8,7 +8,7 @@ await client.connect(transport);
 
 const tools = await client.listTools();
 console.log('TOOLS(' + tools.tools.length + '):', tools.tools.map((t) => t.name).join(', '));
-console.log('tool_count: ok=' + (tools.tools.length === 17));
+console.log('tool_count: ok=' + (tools.tools.length === 18));
 
 const pbi = await client.callTool({ name: 'fluent_generate_powerbi_theme', arguments: { brandColor: '#D13438', name: 'Fluent Red' } });
 const pbiText = pbi.content[0].text;
@@ -49,7 +49,26 @@ console.log('design_guidance(motion): ok=' + (dgText.length > 0 && dgText.includ
 const dgAll = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'all' } });
 const dgAllText = dgAll.content[0].text;
 let dgTopics = 0; try { const j = JSON.parse(dgAllText); dgTopics = Object.keys(j.topics || {}).length; } catch {}
-console.log('design_guidance(all): topics=' + dgTopics + ' ok=' + (dgTopics === 16 && dgAllText.includes('design-principles')));
+console.log('design_guidance(all): topics=' + dgTopics + ' ok=' + (dgTopics === 22 && dgAllText.includes('design-principles') && dgAllText.includes('design-tokens')));
+const dgCE = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'content-engineering' } });
+const dgCEText = dgCE.content[0].text;
+console.log('design_guidance(content-engineering): ok=' + (dgCEText.length > 0 && dgCEText.includes('system prompt') && dgCEText.includes('content-engineering')));
+const dgErr = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'copilot-errors' } });
+const dgErrText = dgErr.content[0].text;
+console.log('design_guidance(copilot-errors): ok=' + (dgErrText.length > 0 && dgErrText.includes('input-level') && dgErrText.includes('copilot-errors')));
+const dgDT = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'design-tokens' } });
+const dgDTText = dgDT.content[0].text;
+console.log('design_guidance(design-tokens): ok=' + (dgDTText.length > 0 && dgDTText.includes('Alias tokens') && dgDTText.includes('design-tokens')));
+
+const imgAnat = await client.callTool({ name: 'fluent_get_images', arguments: { owner: 'Card', kind: 'anatomy' } });
+const imgAnatText = imgAnat.content[0].text;
+console.log('get_images(Card anatomy): ok=' + (imgAnatText.includes('https://fluent2websitecdn.azureedge.net/cdn/card1') && imgAnatText.toLowerCase().includes('card header')));
+const imgVid = await client.callTool({ name: 'fluent_get_images', arguments: { owner: 'motion', type: 'video' } });
+const imgVidText = imgVid.content[0].text;
+console.log('get_images(motion videos): ok=' + (imgVidText.includes('/assets/video/motion/') && imgVidText.includes('.mp4')));
+const imgDont = await client.callTool({ name: 'fluent_get_images', arguments: { owner: 'responsible-ai', verdict: 'dont', limit: 5 } });
+const imgDontText = imgDont.content[0].text;
+console.log('get_images(responsible-ai dont): ok=' + (imgDontText.includes('DONT') || imgDontText.toLowerCase().includes("don't") || imgDontText.includes('assets/img/responsible-ai')));
 
 const mig = await client.callTool({ name: 'fluent_migration_guidance', arguments: { scenario: 'v8-to-v9' } });
 const migText = mig.content[0].text;

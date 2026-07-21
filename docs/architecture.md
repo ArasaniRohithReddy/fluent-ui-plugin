@@ -15,7 +15,7 @@
                          └───────────────┬─────────────────────────────┘
                                          │ call for facts / generation
                          ┌───────────────▼─────────────────────────────┐
-                         │  MCP server (mcp/, stdio) — 17 tools         │
+                         │  MCP server (mcp/, stdio) — 18 tools         │
                          │   components · tokens · theme · powerbi …    │
                          └───────────────┬─────────────────────────────┘
                                          │ reads
@@ -36,11 +36,12 @@
 
 **Data** (`mcp/data/`, `templates/`) — the source of truth the tools serve:
 - `fluent-tokens.json` — 366 color tokens × light/dark/high-contrast + type ramp, spacing, radius, stroke, shadow, motion (extracted from `@fluentui/react-theme` + `@fluentui/tokens`).
-- `fluent-components.json` — 82 components (incl. 20 AI/Copilot) with real props from `.d.ts`.
+- `fluent-components.json` — 99 components (incl. 33 AI/Copilot) with real props from `.d.ts`.
 - `fluent-components-usage.json` — 61 usage entries (when-to-use, anatomy, do/don't) from the official site.
 - `powerbi-theme.base.json` (+ `powerbi-visual-defaults.json`) — schema-valid Fluent Power BI theme.
 - `powerplatform.json` — Power Apps / Power Pages / PCF guidance.
 - `design-guidance.json` — Fluent 2 design-language foundations (color, typography, layout, elevation, iconography, motion, shapes, material, content, responsible AI).
+- `fluent-images.json` — media index: every diagram, do/don't example, anatomy illustration and Motion video from the site with its real CDN URL + alt text (vision-OCR-recovered where the site alt was empty); powers `fluent_get_images`.
 - `migration.json` — adopt/migrate scenarios (Fluent UI v8→v9, from another design system, hardcoded→tokens, per-surface).
 - `templates/pbip/` — schema-valid PBIP/PBIR project the scaffolder clones.
 

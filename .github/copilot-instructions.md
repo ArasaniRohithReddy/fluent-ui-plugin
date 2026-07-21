@@ -9,7 +9,7 @@ When helping in this repository (or any project that uses Microsoft **Fluent 2 /
 - **Verify accessibility** with `fluent_accessibility_checklist` (names/roles, visible focus, keyboard, 4.5:1 contrast, 24px targets).
 
 ## MCP tools
-`fluent_search_components`, `fluent_get_component`, `fluent_list_tokens`, `fluent_get_token`, `fluent_generate_theme`, `fluent_generate_powerbi_theme`, `fluent_scaffold_pbip`, `fluent_powerplatform_guidance`, `fluent_generate_code`, `fluent_accessibility_checklist`, `fluent_design_guidance`, `fluent_migration_guidance`, `fluent_get_config`, `fluent_init_config`, `fluent_set_config`, `fluent_remember`, `fluent_recall`.
+`fluent_search_components`, `fluent_get_component`, `fluent_list_tokens`, `fluent_get_token`, `fluent_generate_theme`, `fluent_generate_powerbi_theme`, `fluent_scaffold_pbip`, `fluent_powerplatform_guidance`, `fluent_generate_code`, `fluent_accessibility_checklist`, `fluent_design_guidance`, `fluent_migration_guidance`, `fluent_get_images`, `fluent_get_config`, `fluent_init_config`, `fluent_set_config`, `fluent_remember`, `fluent_recall`.
 
 For **design-language foundations** (color, typography, layout, elevation, iconography, motion, shapes, material, content, responsible AI) call `fluent_design_guidance`. To **adopt/migrate an existing UI to Fluent 2** — Fluent UI **v8→v9** (Fluent 1 stays alongside Fluent 2), from another design system, or hardcoded values → tokens — call `fluent_migration_guidance`.
 

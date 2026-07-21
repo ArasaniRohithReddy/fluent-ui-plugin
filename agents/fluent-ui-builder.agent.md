@@ -44,6 +44,7 @@ You build directly. Use `task` only for scoped helpers (`explore` to map a large
 | `fluent_accessibility_checklist` | Fluent 2 accessibility checklist to self-review against |
 | `fluent_design_guidance` | Fluent 2 design-language foundations (color, typography, layout, elevation, iconography, motion, shapes, material, content, responsible AI) |
 | `fluent_migration_guidance` | Scenario guidance to adopt/migrate existing UI to Fluent 2 (Fluent UI v8→v9, from another design system, hardcoded→tokens, per-surface) |
+| `fluent_get_images` | Direct URLs to the official Fluent 2 visuals — anatomy diagrams, do/don't examples, state/type illustrations, and Motion demo videos — for any component or topic. Use to **show** a user a diagram or hand them a source link |
 | `fluent_get_config` / `fluent_recall` | Load the user's **resolved presets** (config > memory > default) + the recorded decision log |
 | `fluent_init_config` / `fluent_set_config` | Scaffold (first-run) or update the user's `fluent.config.json` presets |
 | `fluent_remember` | Record a clarified design decision to `.fluent/memory.json` so it isn't re-asked |

@@ -19,6 +19,7 @@ This project is the **fluent-ui** plugin: **agents + skills + an MCP server** th
 | `fluent_accessibility_checklist` | Fluent 2 accessibility checklist to self-review against |
 | `fluent_design_guidance` | Fluent 2 design-language foundations (color, typography, layout, elevation, iconography, motion, shapes, material, content, responsible AI) |
 | `fluent_migration_guidance` | Scenario guidance to adopt/migrate existing UI to Fluent 2 (Fluent UI v8→v9, from another design system, hardcoded→tokens, per-surface) |
+| `fluent_get_images` | Direct URLs to the official Fluent 2 visuals — anatomy diagrams, do/don't examples, state/type illustrations, and Motion demo videos — for any component or topic. Use to **show** a user a diagram or hand them a source link |
 | `fluent_get_config` / `fluent_recall` | Load the user's resolved presets (config > memory > default) + the recorded decision log |
 | `fluent_init_config` / `fluent_set_config` | Scaffold (first-run) or update the user's `fluent.config.json` presets |
 | `fluent_remember` | Record a clarified design decision to `.fluent/memory.json` |
@@ -34,6 +35,7 @@ Users may declare presets in **`fluent.config.json`** (brand, theme, typography,
 - **Precedence (first wins):** explicit `fluent.config.json` value → recorded `.fluent/memory.json` decision → built-in Fluent 2 default. (A runtime tool argument overrides all three for that one call.)
 - **Start of task:** call `fluent_get_config` to load resolved presets. If `configExists:false` **and** memory has no `presets-optout` decision, make the **first-run offer once** — "set up design presets now, or use Fluent 2 defaults?" — on yes run `fluent_init_config`; on no/silent `fluent_remember` a `presets-optout` decision and build on defaults.
 - **Record decisions:** persist clarified choices with `fluent_remember` (append-only) so they're never re-asked; `fluent_recall` reads them back; `fluent_set_config` updates the config. Load the `fluent-config` skill for the field→token mapping.
+- **Show, don't just tell:** when the user asks to *see* or get a *link* to a Fluent 2 diagram, anatomy, do/don't example, or Motion video, call `fluent_get_images` (filter by `owner`/`kind`/`type`) and hand back the real source URLs — never invent image links.
 
 ## Surface quickstarts
 - **Web (React v9):** `npm i @fluentui/react-components` → wrap app in `<FluentProvider theme={webLightTheme}>` → style with `makeStyles` + `tokens`.
