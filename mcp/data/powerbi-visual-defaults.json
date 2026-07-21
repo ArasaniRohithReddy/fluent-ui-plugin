@@ -229,12 +229,12 @@
     "serviceNote": "The Fluent 2 base theme is Desktop-only during preview; create/update the report in Desktop first to use it in the service."
   },
   "showcaseReport": {
-    "$comment": "The official Fluent 2 base-theme SHOWCASE report: 21 pages (one per Power BI visual category) demonstrating the Fluent 2 base theme applied across ALL visual types (grey wallpaper, rounded-corner cards, Fluent-blue #0F6CBD-family data colors, Segoe UI, titles on). This is the live interactive example that the Learn 'visual defaults' page refers to (it embeds a live report instead of static screenshots).",
-    "reference": "https://msit.powerbi.com/view (Power BI embed/view; the ?r= report token is internal-tenant)",
+    "$comment": "The official Fluent 2 base-theme SHOWCASE report: 21 pages spanning every visual category plus feature and composite-report pages, demonstrating the Fluent 2 base theme applied across ALL visual types (grey wallpaper, rounded-corner cards, Fluent-blue #0F6CBD-family data colors, Segoe UI, titles on). This is the live interactive example that the Learn 'visual defaults' page refers to (it embeds a live report instead of static screenshots).",
+    "reference": "https://msit.powerbi.com/view (authenticated internal-tenant secure embed; the ?r= report token is internal-tenant)",
     "access": "Internal-tenant embed — cite as a reference only; NOT fetchable by our tools (do not attempt microsoft_docs_fetch/web_fetch on it).",
     "learnPage": "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-visual-defaults",
     "demonstrates": "The Fluent 2 base theme styles every visual category consistently; a custom theme only needs to override the brand palette and type — the structural Fluent look (cards, spacing, borders, titles, grey canvas) comes from the base theme.",
-    "visualCategories": [
+    "pages": [
       "Bars", "Columns", "Lines", "Area", "Combo", "Ribbon & Waterfall", "Part-to-whole", "Scatter", "Table & Matrix", "Maps", "Cards or callouts", "AI-powered", "Filtering", "Other", "Custom", "Conditional formatting", "Tooltips", "Analytics", "Visual calcs", "Report 1", "Report 2"
     ]
   },
@@ -246,6 +246,6 @@
     "The Fluent 2 base theme is in preview and can only be enabled in Power BI Desktop (File > Options > Preview features > 'Modern visual defaults and customize theme improvements'). See baseThemes.enableFluent2Preview.",
     "Applying/editing Fluent 2 programmatically (as files, in source control, without opening Desktop) requires PBIP + PBIR; a binary .pbix is not file-editable. A custom theme JSON can still be applied manually to any report in Desktop via View > Themes > Browse for themes. See programmaticApplication.",
     "The Fluent 2 base theme expresses uniform styling via structural colors (see structuralColors) and ships per-visual style presets (see stylePresets); new pages default to 1920x1080 while the initial page keeps 1280x720 (see canvas).",
-    "The official Fluent 2 base-theme showcase report (see showcaseReport) demonstrates the base theme across all 21 visual-category pages (Bars, Columns, Lines, Area, Combo, Ribbon & Waterfall, Part-to-whole, Scatter, Table & Matrix, Maps, Cards or callouts, AI-powered, Filtering, Other, Custom, Conditional formatting, Tooltips, Analytics, Visual calcs, Report 1, Report 2); it is an internal-tenant embed cited as a reference, not fetched by our tools."
+    "The official Fluent 2 base-theme showcase report (see showcaseReport) demonstrates the base theme across all 21 showcase pages (Bars, Columns, Lines, Area, Combo, Ribbon & Waterfall, Part-to-whole, Scatter, Table & Matrix, Maps, Cards or callouts, AI-powered, Filtering, Other, Custom, Conditional formatting, Tooltips, Analytics, Visual calcs, Report 1, Report 2 — spanning every visual category plus feature and composite-report pages); it is an authenticated internal-tenant embed cited as a reference, not fetched by our tools."
   ]
 }

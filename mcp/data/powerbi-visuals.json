@@ -51,8 +51,8 @@
     { "topic": "Analytics pane", "requested": "https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-analytics-pane", "status": 404, "resolved": "https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-analytics-pane" }
   ],
   "showcaseReport": {
-    "note": "Official Fluent 2 base-theme showcase report: 21 pages, one per Power BI visual category, all rendering the same Contoso 'Sales by Segment/Year/Country' demo data as a different visual type, styled by the Fluent 2 base theme (grey wallpaper, rounded-corner cards, Fluent-blue #0F6CBD-family data colors, Segoe UI, titles on / axis titles off).",
-    "reference": "https://msit.powerbi.com/view?r=... (internal-tenant publish-to-web / embed token)",
+    "note": "Official Fluent 2 base-theme showcase report: 21 pages spanning every visual category plus feature and composite-report pages, all rendering the same Contoso 'Sales by Segment/Year/Country' demo data as a different visual type, styled by the Fluent 2 base theme (grey wallpaper, rounded-corner cards, Fluent-blue #0F6CBD-family data colors, Segoe UI, titles on / axis titles off).",
+    "reference": "https://msit.powerbi.com/view?r=... (authenticated internal-tenant secure embed token)",
     "access": "Reference-only: this is an internal-tenant embed. It is NOT downloadable and NOT programmatically paginable, so cite it as a reference — do not attempt to fetch it or page through it with tools.",
     "learnPage": "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-visual-defaults",
     "pageCount": 21,
@@ -386,7 +386,8 @@
           "whenToUse": "Use to embed an ad-hoc natural-language query experience directly on a report page.",
           "fluent2": "Supports report themes — the question box and result inherit Fluent type/colors and the rounded card / grey canvas.",
           "preview": false,
-          "deprecation": "Scheduled for deprecation in December 2026. Doc wording: 'Q&A experiences are going away in December 2026. We recommend using Copilot for Power BI...' Use Copilot for Power BI instead."
+          "deprecation": "Scheduled for deprecation in December 2026. Doc wording: 'Q&A experiences are going away in December 2026. We recommend using Copilot for Power BI...' Use Copilot for Power BI instead.",
+          "notes": "Catalogued under AI-powered here (it's a natural-language/AI experience); the official visualizations-overview doc lists it under 'Other visuals'."
         }
       ]
     },
@@ -560,7 +561,7 @@
   "notes": [
     "The Fluent 2 base theme styles ALL these visual categories consistently (grey wallpaper, rounded ~8px cards, Fluent-blue #0F6CBD data colors, Segoe UI, titles on / axis titles off, more padding). A custom theme only needs to override the brand palette + type; the structural Fluent look comes from the base theme. See mcp/data/powerbi-visual-defaults.json.",
     "The 21-page Fluent 2 base-theme showcase report demonstrates every category on the same Contoso 'Sales by Segment/Year/Country' data. 'Ribbon & Waterfall' shows two visual types; 'Conditional formatting', 'Tooltips', 'Analytics', and 'Visual calcs' pages demonstrate FEATURES (see featurePages); 'Report 1' and 'Report 2' are composite full-report examples.",
-    "The showcase report is an internal-tenant publish-to-web embed (msit.powerbi.com/view?r=...): reference-only. It is NOT downloadable and NOT programmatically paginable, so cite it as a reference — do not attempt to fetch it or page through it with tools.",
+    "The showcase report is an authenticated internal-tenant secure embed (msit.powerbi.com/view?r=...): reference-only. It is NOT downloadable and NOT programmatically paginable, so cite it as a reference — do not attempt to fetch it or page through it with tools.",
     "Q&A visual is scheduled for deprecation in December 2026 — Microsoft recommends Copilot for Power BI instead.",
     "Preview / limited visuals: Shape map (preview), the List slicer and the Slicer's date-picker mode (preview). Bing-based basic/filled maps are on a deprecation path (migrate to Azure Maps, except China/Korea/government clouds); Azure Maps is admin-gated (Integration settings); ArcGIS is Esri-licensed.",
     "Licensing/host caveats: Goals/scorecards are Power BI service-only (Pro license); the paginated report visual needs Premium/Fabric capacity; Power Apps and R/Python visuals are styled outside the report theme (in Power Apps Studio / the script image).",
