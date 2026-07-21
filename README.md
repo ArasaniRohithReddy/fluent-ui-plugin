@@ -2,6 +2,8 @@
 
 > Agents · Skills · MCP tools that help developers, designers, and UI engineers implement **Microsoft Fluent 2 (Fluent UI 2.0)** correctly and fast — across **Web**, **Power BI**, and **Power Platform** — from any AI IDE.
 
+**🌐 Live site (itself a Fluent UI React v9 app, built with this plugin): [rohithreddy7123.github.io/fluent-ui-plugin](https://rohithreddy7123.github.io/fluent-ui-plugin/)** · **[Install guide](hosts/README.md)**
+
 **Version:** 1.0.0 · **License:** MIT · **Fluent 2 is the core** of everything here: every surface applies the *same* design language (tokens, Segoe UI type ramp, spacing, corner radius, elevation, motion, accessibility).
 
 ---

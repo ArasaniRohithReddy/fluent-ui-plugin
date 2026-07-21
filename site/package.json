@@ -1,0 +1,23 @@
+{
+  "name": "fluent-ui-plugin-site",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "GitHub Pages site for the Fluent UI 2.0 plugin — itself built with Fluent UI React v9 (Fluent 2).",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@fluentui/react-components": "9.74.3",
+    "@fluentui/react-icons": "2.0.333",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.11",
+    "@types/react-dom": "18.3.0",
+    "@vitejs/plugin-react": "4.3.3",
+    "vite": "5.4.10"
+  }
+}
