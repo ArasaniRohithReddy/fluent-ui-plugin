@@ -18,7 +18,7 @@ const pbi = await client.callTool({ name: 'fluent_generate_powerbi_theme', argum
 const pbiText = pbi.content[0].text;
 let pbiValid = false, hasVS = false;
 try { const j = JSON.parse(pbiText); pbiValid = true; hasVS = !!(j.visualStyles && j.visualStyles['*'] && j.visualStyles['*']['*']); } catch {}
-console.log('powerbi_theme: recolored=' + pbiText.includes('#D13438') + ' named=' + pbiText.includes('Fluent Red') + ' validJSON=' + pbiValid + ' visualStyles=' + hasVS + ' bytes=' + pbiText.length);
+console.log('powerbi_theme: recolored=' + pbiText.includes('#D13438') + ' named=' + pbiText.includes('Fluent Red') + ' validJSON=' + pbiValid + ' visualStyles=' + hasVS + ' bytes=' + pbiText.length + ' ok=' + (pbiText.includes('#D13438') && pbiText.includes('Fluent Red') && pbiValid && hasVS));
 
 const pp = await client.callTool({ name: 'fluent_powerplatform_guidance', arguments: { surface: 'pcf' } });
 console.log('powerplatform(pcf): ok=' + pp.content[0].text.includes('fluentDesignLanguage'));
@@ -37,7 +37,7 @@ const scaf = await client.callTool({ name: 'fluent_scaffold_pbip', arguments: { 
 console.log('scaffold_pbip:', scaf.content[0].text.split('\n')[0]);
 const hasPbip = existsSync('./.smoke-out/SmokeReport.pbip');
 const fileCount = existsSync('./.smoke-out') ? readdirSync('./.smoke-out', { recursive: true }).length : 0;
-console.log('scaffold: SmokeReport.pbip=' + hasPbip + ' entries=' + fileCount);
+console.log('scaffold: SmokeReport.pbip=' + hasPbip + ' entries=' + fileCount + ' ok=' + (hasPbip && fileCount > 0));
 rmSync('./.smoke-out', { recursive: true, force: true });
 
 const tk = await client.callTool({ name: 'fluent_list_tokens', arguments: { category: 'borderRadius' } });
@@ -139,7 +139,7 @@ console.log('recall(filter=pill): found=' + c6j.decisions.length + ' ok=' + (c6j
 
 // 7) security: prototype-pollution keys are rejected and no pollution occurs
 const c7 = await client.callTool({ name: 'fluent_set_config', arguments: { projectDir: CFG_DIR, key: '__proto__.polluted', value: 'PWNED' } });
-console.log('set_config(__proto__): rejected=' + c7.content[0].text.includes('not allowed') + ' noPollution=' + (({}).polluted === undefined));
+console.log('set_config(__proto__): rejected=' + c7.content[0].text.includes('not allowed') + ' noPollution=' + (({}).polluted === undefined) + ' ok=' + (c7.content[0].text.includes('not allowed') && (({}).polluted === undefined)));
 
 // 8) coercion: a numeric preset is stored as a number (keeps the config schema-valid)
 const c8 = await client.callTool({ name: 'fluent_set_config', arguments: { projectDir: CFG_DIR, key: 'accessibility.minTargetSize', value: '44' } });
