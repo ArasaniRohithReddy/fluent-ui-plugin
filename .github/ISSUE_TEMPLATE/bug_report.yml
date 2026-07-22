@@ -1,0 +1,93 @@
+name: Bug report
+description: Report something that is not working as expected
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. Please fill out the sections below so we can reproduce and fix it quickly.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: A clear description of the bug and its impact.
+      placeholder: When I ask the plugin to ... it ...
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce the behavior?
+      placeholder: |
+        1. Install in ...
+        2. Ask ...
+        3. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: dropdown
+    id: host
+    attributes:
+      label: Host or IDE
+      description: Where were you running the plugin?
+      options:
+        - GitHub Copilot CLI
+        - VS Code
+        - VS Code Insiders
+        - Visual Studio
+        - Cursor
+        - Claude
+        - Gemini
+        - Antigravity
+        - Windsurf
+        - Cline
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      description: Which surface does this involve?
+      options:
+        - Web (React v9 or Web Components)
+        - Power BI
+        - Power Platform
+        - Tokens and theming
+        - MCP tools
+        - Documentation or site
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Plugin version
+      placeholder: "1.0.0"
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Paste any relevant logs or attach screenshots. Do not include secrets.
+      render: shell
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues and did not find a duplicate.
+          required: true
+        - label: I confirmed the MCP server builds with npm run build.
+          required: false

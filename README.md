@@ -1,5 +1,10 @@
 # fluent-ui: build flawless Fluent 2 UIs, automatically
 
+[![CI](https://github.com/Rohithreddy7123/fluent-ui-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/Rohithreddy7123/fluent-ui-plugin/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-informational.svg)](LICENSE)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![GitHub Discussions](https://img.shields.io/badge/GitHub-Discussions-5c2e91.svg)](https://github.com/Rohithreddy7123/fluent-ui-plugin/discussions)
+
 > Agents · Skills · MCP tools that help developers, designers, and UI engineers implement **Microsoft Fluent 2 (Fluent UI 2.0)** correctly and fast, across **Web**, **Power BI**, and **Power Platform**, from any AI IDE.
 
 **🌐 Live site (itself a Fluent UI React v9 app, built with this plugin): [rohithreddy7123.github.io/fluent-ui-plugin](https://rohithreddy7123.github.io/fluent-ui-plugin/)** · **[Install & usage guide](GUIDE.md)** · **[Per-host matrix](hosts/README.md)**
@@ -95,6 +100,16 @@ assets/screenshots/    # Fluent 2 reference captures
 ## Docs
 - [`docs/architecture.md`](docs/architecture.md): how the pieces fit together.
 - [`docs/presentation.md`](docs/presentation.md): leadership presentation outline.
+
+## Contributing and community
+This is an open-source project (MIT) and contributions are welcome.
+- **Bugs:** open a [bug report](https://github.com/Rohithreddy7123/fluent-ui-plugin/issues/new?template=bug_report.yml).
+- **Features:** open a [feature request](https://github.com/Rohithreddy7123/fluent-ui-plugin/issues/new?template=feature_request.yml).
+- **Questions and ideas:** join [GitHub Discussions](https://github.com/Rohithreddy7123/fluent-ui-plugin/discussions).
+- **Pull requests:** see [`CONTRIBUTING.md`](CONTRIBUTING.md) for the dev setup and process.
+- **Security:** please follow the [Security Policy](SECURITY.md).
+
+By participating you agree to the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 MIT © Rohith Reddy Arasani. Fluent, Fluent 2, Power BI, and Power Platform are trademarks of Microsoft.

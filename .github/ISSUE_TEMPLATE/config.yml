@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question or share an idea
+    url: https://github.com/Rohithreddy7123/fluent-ui-plugin/discussions
+    about: Use Discussions for questions, ideas, and general conversation.
+  - name: Install and usage guide
+    url: https://github.com/Rohithreddy7123/fluent-ui-plugin/blob/main/GUIDE.md
+    about: Read the full install and usage guide before filing an issue.
+  - name: Report a security vulnerability
+    url: https://github.com/Rohithreddy7123/fluent-ui-plugin/security/advisories/new
+    about: Please report vulnerabilities privately, not as public issues.

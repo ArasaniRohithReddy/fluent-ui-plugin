@@ -2,6 +2,10 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { rmSync, existsSync, readdirSync } from 'node:fs';
 
+const _realLog = console.log.bind(console);
+const _lines = [];
+console.log = (...a) => { const s = a.map(String).join(' '); _lines.push(s); _realLog(s); };
+
 const transport = new StdioClientTransport({ command: 'node', args: ['dist/index.js'] });
 const client = new Client({ name: 'smoke', version: '1.0.0' });
 await client.connect(transport);
@@ -148,4 +152,12 @@ console.log('theme.mode default=light: ok=' + (c1j.config.theme.mode === 'light'
 rmSync(CFG_DIR, { recursive: true, force: true });
 
 await client.close();
+
+const failures = _lines.filter((l) => /ok\s*=\s*false/i.test(l));
+if (failures.length) {
+  _realLog('\nSMOKE FAILED: ' + failures.length + ' check(s) did not pass:');
+  for (const f of failures) _realLog('  - ' + f);
+  process.exit(1);
+}
+_realLog('\nSMOKE PASSED: ' + _lines.filter((l) => /ok\s*=\s*true/i.test(l)).length + ' checks ok');
 process.exit(0);

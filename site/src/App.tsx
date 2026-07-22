@@ -9,6 +9,7 @@ import {
   PaintBrush24Regular, ArrowSwap24Regular, Accessibility24Regular, Image24Regular,
   Brain24Regular, WeatherMoon20Regular, WeatherSunny20Regular, Copy20Regular,
   Checkmark20Regular, ArrowRight20Regular, Star20Regular, Open16Regular, Sparkle20Filled,
+  Bug24Regular, Lightbulb24Regular, Chat24Regular, BranchFork24Regular, ShieldCheckmark24Regular, PeopleCommunity24Regular,
 } from '@fluentui/react-icons';
 
 const REPO = 'https://github.com/Rohithreddy7123/fluent-ui-plugin';
@@ -144,6 +145,15 @@ const TOOLS: [string, string][] = [
   ['fluent_recall', 'Read back recorded decisions'],
 ];
 
+const COMMUNITY: { c: string; Icon: React.FC<any>; t: string; d: string; href: string; cta: string }[] = [
+  { c: '#a4262c', Icon: Bug24Regular, t: 'Report a bug', d: 'Found something broken? File a detailed bug report and we will take a look.', href: `${REPO}/issues/new?template=bug_report.yml`, cta: 'Open a bug report' },
+  { c: '#986f0b', Icon: Lightbulb24Regular, t: 'Request a feature', d: 'Have an idea for a new tool, skill, or surface? Tell us what you need.', href: `${REPO}/issues/new?template=feature_request.yml`, cta: 'Request a feature' },
+  { c: '#038387', Icon: Chat24Regular, t: 'Ask and discuss', d: 'Questions, ideas, and show and tell all live in GitHub Discussions.', href: `${REPO}/discussions`, cta: 'Open Discussions' },
+  { c: '#0f6cbd', Icon: BranchFork24Regular, t: 'Send a pull request', d: 'Fork the repo, make your change, and open a PR. The guide has the setup.', href: `${REPO}/blob/main/CONTRIBUTING.md`, cta: 'Read the contributing guide' },
+  { c: '#5c2e91', Icon: ShieldCheckmark24Regular, t: 'Report a vulnerability', d: 'Please report security issues privately, never as a public issue.', href: `${REPO}/security/policy`, cta: 'See the security policy' },
+  { c: '#107c10', Icon: PeopleCommunity24Regular, t: 'Star and share', d: 'If this helps you, a star and a share go a long way. It is MIT licensed.', href: REPO, cta: 'Star on GitHub' },
+];
+
 const COPILOT = `{
   "mcpServers": {
     "fluent-ui": {
@@ -230,6 +240,7 @@ export function App() {
                 <Link className={s.navlink} href="#tools">Tools</Link>
                 <Link className={s.navlink} href="#install">Install</Link>
                 <Link className={s.navlink} href="#coverage">Coverage</Link>
+                <Link className={s.navlink} href="#community">Community</Link>
                 <Link className={s.navlink} href={REPO}>GitHub</Link>
               </nav>
               <Button appearance="subtle" icon={dark ? <WeatherSunny20Regular /> : <WeatherMoon20Regular />} aria-label="Toggle light or dark theme" onClick={() => setDark(!dark)} />
@@ -369,6 +380,27 @@ export function App() {
                     <div key={l} className={s.bandStat}><span className={s.statB} style={{ color: '#fff' }}>{b}</span><Caption1 style={{ color: 'rgba(255,255,255,.82)' }}>{l}</Caption1></div>
                   ))}
                 </div>
+              </div>
+            </div>
+          </section>
+
+          {/* COMMUNITY */}
+          <section id="community" className={s.section}>
+            <div className={s.wrap}>
+              <div className={s.sectionHead}>
+                <Caption1 className={s.eyebrow}>Open source</Caption1>
+                <Title3 as="h2" block>Built in the open. Shaped by you.</Title3>
+                <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>fluent-ui is MIT licensed. Report bugs, request features, ask questions, and send pull requests. Every contribution is welcome.</Body1>
+              </div>
+              <div className={s.grid3}>
+                {COMMUNITY.map((c) => (
+                  <div key={c.t} className={`${glass} ${s.hoverable} ${s.card}`}>
+                    <span className={s.ic} style={{ background: tint(c.c), color: c.c }}><c.Icon /></span>
+                    <Body1Strong block>{c.t}</Body1Strong>
+                    <Body1 block style={{ color: tokens.colorNeutralForeground2, margin: '4px 0 14px' }}>{c.d}</Body1>
+                    <Link href={c.href}>{c.cta} <Open16Regular /></Link>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
