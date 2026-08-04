@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/Rohithreddy7123/fluent-ui/blob/main/assets/schema/fluent.config.schema.json",
+  "$id": "https://github.com/ArasaniRohithReddy/fluent-ui/blob/main/assets/schema/fluent.config.schema.json",
   "title": "Fluent 2 UI preset configuration (fluent.config.json)",
   "description": "User-authored design presets for building AND adopting Microsoft Fluent 2 (Fluent UI 2.0) UIs across Web (React v9 / Web Components), Power BI, and Power Platform. Every field maps to concrete Fluent 2 design tokens or component props. See research/config-design.md for the full field-to-token mapping and rationale.",
   "type": "object",

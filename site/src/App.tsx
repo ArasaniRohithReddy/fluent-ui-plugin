@@ -12,7 +12,7 @@ import {
   Bug24Regular, Lightbulb24Regular, Chat24Regular, BranchFork24Regular, ShieldCheckmark24Regular, PeopleCommunity24Regular,
 } from '@fluentui/react-icons';
 
-const REPO = 'https://github.com/Rohithreddy7123/fluent-ui-plugin';
+const REPO = 'https://github.com/ArasaniRohithReddy/fluent-ui-plugin';
 
 function tint(hex: string): string {
   const h = hex.replace('#', '');

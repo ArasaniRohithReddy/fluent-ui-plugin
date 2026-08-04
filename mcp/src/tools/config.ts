@@ -13,7 +13,7 @@ import { textResult } from '../util.js';
 
 /** Canonical URL of the fluent.config.json JSON Schema (editor IntelliSense + validation). */
 const SCHEMA_URL =
-  'https://raw.githubusercontent.com/Rohithreddy7123/fluent-ui-plugin/main/assets/schema/fluent.config.schema.json';
+  'https://raw.githubusercontent.com/ArasaniRohithReddy/fluent-ui-plugin/main/assets/schema/fluent.config.schema.json';
 
 /**
  * Built-in Fluent 2 defaults (research/config-design.md §5.3). A zero-config

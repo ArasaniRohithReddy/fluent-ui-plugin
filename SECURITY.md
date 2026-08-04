@@ -16,11 +16,11 @@ discussions, or pull requests.
 
 Instead, use GitHub private vulnerability reporting:
 
-1. Go to the [Security tab](https://github.com/Rohithreddy7123/fluent-ui-plugin/security) of the repository.
+1. Go to the [Security tab](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/security) of the repository.
 2. Click "Report a vulnerability" to open a private advisory.
 
 Alternatively, you can contact the maintainer through their GitHub profile:
-[@Rohithreddy7123](https://github.com/Rohithreddy7123).
+[@ArasaniRohithReddy](https://github.com/ArasaniRohithReddy).
 
 Please include:
 

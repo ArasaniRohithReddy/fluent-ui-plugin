@@ -61,9 +61,9 @@ representative at an online or offline event.
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement by opening a
 private report through the repository's
-[security advisories](https://github.com/Rohithreddy7123/fluent-ui-plugin/security/advisories/new)
+[security advisories](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/security/advisories/new)
 or by contacting the maintainer at
-[@Rohithreddy7123](https://github.com/Rohithreddy7123).
+[@ArasaniRohithReddy](https://github.com/ArasaniRohithReddy).
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the
