@@ -59,7 +59,10 @@ console.log('design_guidance(motion): ok=' + (dgText.length > 0 && dgText.includ
 const dgAll = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'all' } });
 const dgAllText = dgAll.content[0].text;
 let dgTopics = 0; try { const j = JSON.parse(dgAllText); dgTopics = Object.keys(j.topics || {}).length; } catch {}
-console.log('design_guidance(all): topics=' + dgTopics + ' ok=' + (dgTopics === 22 && dgAllText.includes('design-principles') && dgAllText.includes('design-tokens')));
+console.log('design_guidance(all): topics=' + dgTopics + ' ok=' + (dgTopics === 23 && dgAllText.includes('design-principles') && dgAllText.includes('design-tokens')));
+const dgEvals = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'content-engineering-evals' } });
+const dgEvalsText = dgEvals.content[0].text;
+console.log('design_guidance(content-engineering-evals): ok=' + (dgEvalsText.includes('golden set') && dgEvalsText.includes('prompt set') && dgEvalsText.includes('rubric')));
 const dgCE = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'content-engineering' } });
 const dgCEText = dgCE.content[0].text;
 console.log('design_guidance(content-engineering): ok=' + (dgCEText.length > 0 && dgCEText.includes('system prompt') && dgCEText.includes('content-engineering')));
@@ -86,6 +89,9 @@ console.log('get_images(button dodont dont): ok=' + (imgBtnText.includes('fluent
 const mig = await client.callTool({ name: 'fluent_migration_guidance', arguments: { scenario: 'v8-to-v9' } });
 const migText = mig.content[0].text;
 console.log('migration(v8-to-v9): ok=' + (migText.length > 0 && migText.includes('FluentProvider') && migText.includes('react-migration-v8-v9')));
+const migPbi = await client.callTool({ name: 'fluent_migration_guidance', arguments: { scenario: 'powerbi-report' } });
+const migPbiText = migPbi.content[0].text;
+console.log('migration(powerbi-report): ok=' + (migPbiText.includes('effectMap') && migPbiText.includes('neverRename') && migPbiText.toLowerCase().includes('bookmark')));
 
 // ---- Config presets + persistent agent memory round-trip (zero-config safe) ----
 const CFG_DIR = './.cfg-smoke';

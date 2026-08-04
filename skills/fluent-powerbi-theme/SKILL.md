@@ -22,7 +22,7 @@ The Fluent 2 base theme applies **consistent defaults across every visual catego
 ## Structure (Fluent 2 mapping)
 ```jsonc
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.155.json",
+  "$schema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.156.json",
   "name": "Fluent 2",
   "dataColors": ["#0F6CBD","#107C10","#CA5010","#5C2E91","#038387","#A4262C", "..."],
   "good": "#107C10", "neutral": "#C19C00", "bad": "#C50F1F",
@@ -50,6 +50,9 @@ The Fluent 2 base theme applies **consistent defaults across every visual catego
 
 ## Visual defaults
 `visualStyles."*"."*"` sets the report-wide default; add per-visual entries (e.g. `"textSlicer"`, `"card"`) to override. The Learn "Visual defaults" page demonstrates this with a **live interactive report** (no static screenshots) — modern Fluent defaults for corners, padding, and borders. These come from the **base theme**; your custom theme overrides only what it declares (including **structural colors** like `firstLevelElements`/`background`). See `mcp/data/powerbi-visual-defaults.json` for the property knobs, structural colors, base themes, canvas, and style presets (JSON paths + Fluent values).
+
+### Data visuals vs chrome (borderless overrides)
+Fluent 2 rounds and softly shadows **data** visuals (charts, tables, cards) via `visualStyles."*"."*"` (radius 8px, 1px neutral-stroke border, subtle drop shadow, Segoe UI Semibold title, subtitle off). It **deliberately keeps chrome visuals borderless and shadowless** so they are not boxed: the shipped theme adds per-visual-type overrides that turn `border`, `dropShadow` (and for text/image, `background`/`title`) **off** for `textbox`, `image`, `shape`, `basicShape`, and `actionButton`. Preserve this split when editing the theme, so captions, logos, background shapes, and navigation buttons keep their designed look. The theme also turns chart **data labels on** and moves the **legend to the bottom** for the common bar, column, line, combo, pie, and donut charts. See `perVisualTypeOverrides` in `mcp/data/powerbi-visual-defaults.json`.
 
 **Visual catalog:** `mcp/data/powerbi-visuals.json` lists **every Power BI visual** (35 across 10 categories, plus the report features) — each with its official Learn doc URL, when-to-use, and how the Fluent 2 base theme styles it — mapped to the 21-page Fluent 2 base-theme showcase report that demonstrates them. Use it to recommend the right visual and hand the user its doc.
 

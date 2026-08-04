@@ -14,7 +14,7 @@ A complete guide to installing and using the **fluent-ui** plugin, which helps y
 
 1. **MCP tools** (19): a portable, standard MCP server (stdio) that runs everywhere. It returns grounded Fluent 2 data and generates code, themes, and projects.
 2. **Agents** (6): a router plus specialists for web, Power BI, Power Platform, migration, and design review.
-3. **Skills** (14) and **instructions** (`AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`): loaded natively by hosts that support them.
+3. **Skills** (15) and **instructions** (`AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`): loaded natively by hosts that support them.
 
 Everything is grounded in the official `fluent2.microsoft.design` site and the real `@fluentui` packages, so results are verified, not guessed.
 

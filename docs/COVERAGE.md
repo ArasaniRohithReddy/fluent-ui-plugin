@@ -16,7 +16,7 @@
 | **Component roadmap** | 1 | ⚪ out of scope | lifecycle/roadmap meta |
 | **Native components** — iOS (12), Android (5), Windows/RN (index) | 21 | ⚪ out of scope | separate native SDKs (Fluent Apple / Fluent Android / WinUI). Cross-platform **design language IS covered**; native code-gen is a future extension. |
 
-**Totals covered on-mission:** 61 web components · 22 design/UX/AI topics · full web token system · dev setup — **100% of the plugin's Web + Power BI + Power Platform mission surface.**
+**Totals covered on-mission:** 61 web components · 23 design/UX/AI topics · full web token system · dev setup — **100% of the plugin's Web + Power BI + Power Platform mission surface.**
 
 ## Deep content + image coverage (this pass)
 
@@ -37,10 +37,10 @@ Chat input (+ Attachment, + Suggestions) · Chat output (+ Citations and referen
 
 *(Guidance captured from the gated design pages; APIs linked to the public `@fluentui-copilot/*` packages — noted as internal-preview.)*
 
-## Design language, UX & AI topics — 22/22 ✅
+## Design language, UX & AI topics — 23/23 ✅
 **Design language (9):** Design principles · Color · Elevation · Iconography · Layout · Material · Motion · Shapes · Typography
 **UX frameworks & guidelines (6):** Accessibility · Content design · Design tokens · Handoffs · Onboarding · Wait UX
-**Working with AI (7):** Content engineering · Responsible AI · Types of AI harm · Entry points · Personality principles · Copilot errors · Data usage & sharing
+**Working with AI (8):** Content engineering · Evaluating output quality · Responsible AI · Types of AI harm · Entry points · Personality principles · Copilot errors · Data usage & sharing
 
 ## Scope note — native platforms & meta pages
 The site offers a platform switcher for **Web / iOS / Android / Windows**. This plugin targets **Web** (Fluent UI React v9 + Web Components) with **Power BI** and **Power Platform** — where Fluent 2 web/product development happens. The **iOS / Android / Windows** catalogs are separate *native* SDKs (Fluent UI Apple, Fluent UI Android, WinUI) and are intentionally out of scope; the cross-platform **design language** (color, type, motion, tokens, principles, responsible-AI) **is** covered and applies to them. Design-system meta pages (Figma UI-kit onboarding, what's-new, contribution guide, component roadmap) are likewise out of scope for a code-generation plugin.
