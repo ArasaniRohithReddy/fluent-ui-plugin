@@ -1,13 +1,13 @@
 # fluent-ui: build flawless Fluent 2 UIs, automatically
 
-[![CI](https://github.com/Rohithreddy7123/fluent-ui-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/Rohithreddy7123/fluent-ui-plugin/actions/workflows/ci.yml)
+[![CI](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-informational.svg)](LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![GitHub Discussions](https://img.shields.io/badge/GitHub-Discussions-5c2e91.svg)](https://github.com/Rohithreddy7123/fluent-ui-plugin/discussions)
+[![GitHub Discussions](https://img.shields.io/badge/GitHub-Discussions-5c2e91.svg)](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/discussions)
 
 > Agents · Skills · MCP tools that help developers, designers, and UI engineers implement **Microsoft Fluent 2 (Fluent UI 2.0)** correctly and fast, across **Web**, **Power BI**, and **Power Platform**, from any AI IDE.
 
-**🌐 Live site (itself a Fluent UI React v9 app, built with this plugin): [rohithreddy7123.github.io/fluent-ui-plugin](https://rohithreddy7123.github.io/fluent-ui-plugin/)** · **[Install & usage guide](GUIDE.md)** · **[Per-host matrix](hosts/README.md)**
+**🌐 Live site (itself a Fluent UI React v9 app, built with this plugin): [arasanirohithreddy.github.io/fluent-ui-plugin](https://arasanirohithreddy.github.io/fluent-ui-plugin/)** · **[Install & usage guide](GUIDE.md)** · **[Per-host matrix](hosts/README.md)**
 
 **Version:** 1.0.0 · **License:** MIT · **Fluent 2 is the core** of everything here: every surface applies the *same* design language (tokens, Segoe UI type ramp, spacing, corner radius, elevation, motion, accessibility).
 
@@ -103,9 +103,9 @@ assets/screenshots/    # Fluent 2 reference captures
 
 ## Contributing and community
 This is an open-source project (MIT) and contributions are welcome.
-- **Bugs:** open a [bug report](https://github.com/Rohithreddy7123/fluent-ui-plugin/issues/new?template=bug_report.yml).
-- **Features:** open a [feature request](https://github.com/Rohithreddy7123/fluent-ui-plugin/issues/new?template=feature_request.yml).
-- **Questions and ideas:** join [GitHub Discussions](https://github.com/Rohithreddy7123/fluent-ui-plugin/discussions).
+- **Bugs:** open a [bug report](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/issues/new?template=bug_report.yml).
+- **Features:** open a [feature request](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/issues/new?template=feature_request.yml).
+- **Questions and ideas:** join [GitHub Discussions](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/discussions).
 - **Pull requests:** see [`CONTRIBUTING.md`](CONTRIBUTING.md) for the dev setup and process.
 - **Security:** please follow the [Security Policy](SECURITY.md).
 

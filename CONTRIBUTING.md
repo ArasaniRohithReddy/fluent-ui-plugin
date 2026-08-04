@@ -6,9 +6,9 @@ By participating you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Ways to contribute
 
-- **Report a bug:** open a [bug report](https://github.com/Rohithreddy7123/fluent-ui-plugin/issues/new?template=bug_report.yml).
-- **Request a feature:** open a [feature request](https://github.com/Rohithreddy7123/fluent-ui-plugin/issues/new?template=feature_request.yml).
-- **Ask a question or share an idea:** start a thread in [Discussions](https://github.com/Rohithreddy7123/fluent-ui-plugin/discussions).
+- **Report a bug:** open a [bug report](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/issues/new?template=bug_report.yml).
+- **Request a feature:** open a [feature request](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/issues/new?template=feature_request.yml).
+- **Ask a question or share an idea:** start a thread in [Discussions](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/discussions).
 - **Report a vulnerability:** please follow the [Security Policy](SECURITY.md). Do not open a public issue for a security problem.
 - **Send a pull request:** fix a bug, add a tool or skill, expand the grounded data, or improve the docs.
 

@@ -2,8 +2,8 @@
 
 A complete guide to installing and using the **fluent-ui** plugin, which helps you build and adopt **Microsoft Fluent 2 (Fluent UI 2.0)** across Web, Power BI, and Power Platform, from any major AI IDE.
 
-- Live site: https://rohithreddy7123.github.io/fluent-ui-plugin/
-- Repository: https://github.com/Rohithreddy7123/fluent-ui-plugin
+- Live site: https://arasanirohithreddy.github.io/fluent-ui-plugin/
+- Repository: https://github.com/ArasaniRohithReddy/fluent-ui-plugin
 - Per-host install matrix: [`hosts/README.md`](hosts/README.md)
 
 ---
@@ -28,7 +28,7 @@ Everything is grounded in the official `fluent2.microsoft.design` site and the r
 ### Step 1: build the MCP server once
 
 ```bash
-git clone https://github.com/Rohithreddy7123/fluent-ui-plugin.git
+git clone https://github.com/ArasaniRohithReddy/fluent-ui-plugin.git
 cd fluent-ui-plugin/mcp
 npm install
 npm run build          # produces mcp/dist/index.js
@@ -167,7 +167,7 @@ If you get a grounded Fluent 2 response, the plugin is live.
 
 ## 8. Links
 
-- Live site: https://rohithreddy7123.github.io/fluent-ui-plugin/
+- Live site: https://arasanirohithreddy.github.io/fluent-ui-plugin/
 - Per-host install matrix: [`hosts/README.md`](hosts/README.md)
 - Coverage report: [`docs/COVERAGE.md`](docs/COVERAGE.md)
 - Architecture: [`docs/architecture.md`](docs/architecture.md)

@@ -9,7 +9,7 @@ import { textResult } from '../util.js';
  * See research/config-design.md (§5 precedence, §5.3 defaults, §6 tool contracts).
  */
 /** Canonical URL of the fluent.config.json JSON Schema (editor IntelliSense + validation). */
-const SCHEMA_URL = 'https://raw.githubusercontent.com/Rohithreddy7123/fluent-ui-plugin/main/assets/schema/fluent.config.schema.json';
+const SCHEMA_URL = 'https://raw.githubusercontent.com/ArasaniRohithReddy/fluent-ui-plugin/main/assets/schema/fluent.config.schema.json';
 /**
  * Built-in Fluent 2 defaults (research/config-design.md §5.3). A zero-config
  * build is a valid Fluent 2 build (the stock webLightTheme look). Used as the
