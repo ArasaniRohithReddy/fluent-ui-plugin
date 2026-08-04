@@ -3,36 +3,48 @@
     "title": "Fluent 2 across the Power Platform",
     "description": "Structured guidance on how Fluent UI 2.0 (Fluent React v9) is used and themed across Power Apps (canvas modern controls), Power Pages, and PCF code components.",
     "fluentVersion": "Fluent 2 = Fluent UI React v9 (@fluentui/react-components); Fluent v8 = @fluentui/react (legacy)",
-    "confidence": "High for Power Apps modern controls/themes and PCF platform-library theming; Medium on the two 'uncertain' items flagged below.",
-    "uncertain": [
-      "PCF context.fluentDesignLanguage property name: docs use both 'tokenTheme' (Theming reference + Custom theme providers example) and '.theme'/'.brand' (v8 bridge + non-Fluent examples).",
-      "Power Pages Bootstrap version: 'Bootstrap overview' says v5 is supported (opt-in), while 'Manage CSS' and the custom-CSS tutorial say sites use Bootstrap 3.3.x and custom themes must be v3-compatible.",
-      "PCF platform-library versions are a moving target: you declare a version in an allowed range but the platform loads a higher one at runtime (e.g. Fluent 9.46.2 declared, 9.68.0 loaded)."
+    "confidence": "High. The three items previously flagged as uncertain are now resolved against Microsoft Learn and the official microsoft/PowerApps-Samples source (see resolvedNotes).",
+    "resolvedNotes": [
+      "PCF context.fluentDesignLanguage: tokenTheme is authoritative. Microsoft's own sample (microsoft/PowerApps-Samples component-framework/FluentThemingAPIControl) reads context.fluentDesignLanguage.tokenTheme; the '.theme' seen in some how-to prose is a documentation inconsistency. Use tokenTheme with optional chaining.",
+      "Power Pages Bootstrap: v3.3.6 AND v5 are supported; new sites are set up on v5, existing v3 sites can migrate (configure/bootstrap-overview).",
+      "PCF platform-library version drift is expected by design: you declare a version in the allowed range (Fluent v9 >=9.4.0 <=9.46.2) but the platform loads a higher one at runtime (9.68.0); React loads 17.0.2 model-driven / 16.14.0 canvas. This is documented, not an error."
     ],
-    "source": "Microsoft Learn (learn.microsoft.com), retrieved 2026-07."
+    "source": "Microsoft Learn (learn.microsoft.com) + microsoft/PowerApps-Samples (component-framework/FluentThemingAPIControl), retrieved 2026-08.",
+    "officialMcpServers": "There is no official Microsoft MCP server for Fluent 2 design tokens or theming. Two adjacent official MCPs are complementary: the Power BI Modeling MCP Server (TMDL/PBIP semantic-model edits + DAX; it does not generate visual theme JSON) and the Power Platform CLI built-in MCP (pac copilot mcp --run)."
   },
   "powerapps": {
     "title": "Power Apps canvas — Modern controls & modern themes",
     "summary": "Canvas apps ship 'modern controls' and 'modern themes' based on the Fluent 2 design system. Enabling the feature swaps the studio palette to Fluent-styled controls and unlocks a Themes pane that drives color, typography, borders and shadows from App.Theme.",
     "enableFeature": "Open app > Settings > Updates > New > toggle 'Modern controls and themes' to On.",
+    "controlsCount": "25 modern controls as of the modern-controls-reference (updated 2026-07-21). The set grows roughly monthly; verify against the reference.",
     "fluentControls": [
+      { "modernControl": "Avatar", "fluentEquivalent": "Avatar", "notes": "Person or entity image/initials." },
+      { "modernControl": "Badge", "fluentEquivalent": "Badge / CounterBadge", "notes": "Status or count indicator." },
       { "modernControl": "Button", "fluentEquivalent": "Button", "notes": "Appearance maps to Fluent variants (Primary/Secondary/Outline/Subtle/Transparent). Key props: Text, Appearance, OnSelect." },
-      { "modernControl": "Text", "fluentEquivalent": "Text / Label", "notes": "Display text or field label." },
-      { "modernControl": "Text input", "fluentEquivalent": "Input (v9) / TextField (v8)", "notes": "OnChange now fires on blur (focus-out), not per keystroke. Reference TextInput1.Text directly for live search." },
-      { "modernControl": "Number input", "fluentEquivalent": "SpinButton", "notes": "OnChange fires on blur plus step-button clicks." },
-      { "modernControl": "Toggle", "fluentEquivalent": "Switch", "notes": "Fluent v9 renamed Toggle to Switch. Props: Checked, Label, OnCheck/OnUncheck." },
-      { "modernControl": "Dropdown", "fluentEquivalent": "Dropdown", "notes": "Fluent-themed flyout on desktop. DefaultSelectedItems renamed Default; FontSize renamed Size." },
+      { "modernControl": "Card (preview)", "fluentEquivalent": "Card", "notes": "Grouping surface for related content. Preview." },
+      { "modernControl": "Checkbox", "fluentEquivalent": "Checkbox", "notes": "Single boolean selection with label." },
       { "modernControl": "Combo box", "fluentEquivalent": "Combobox", "notes": "SelectMultiple defaults to true; OnChange fires on every selection/deselection." },
+      { "modernControl": "Copilot answer (preview)", "fluentEquivalent": "Copilot answer control", "notes": "Embeds a Copilot answer experience. Preview AI control." },
+      { "modernControl": "Data Grid", "fluentEquivalent": "DataGrid", "notes": "Interactive tabular data; now a distinct control from Table." },
       { "modernControl": "Date picker", "fluentEquivalent": "DatePicker (@fluentui/react-datepicker-compat)", "notes": "Honors format and DateTimeZone." },
+      { "modernControl": "Dropdown (preview)", "fluentEquivalent": "Dropdown", "notes": "Fluent-themed flyout on desktop. DefaultSelectedItems renamed Default; FontSize renamed Size. Preview." },
+      { "modernControl": "Form", "fluentEquivalent": "Modern Edit/Display form", "notes": "Modern data form for create/edit/view." },
+      { "modernControl": "Header", "fluentEquivalent": "Header", "notes": "App/page header band." },
+      { "modernControl": "Info button", "fluentEquivalent": "InfoLabel / Popover", "notes": "Content flyout on demand." },
+      { "modernControl": "Link", "fluentEquivalent": "Link", "notes": "Adds URL security (XSS) validation." },
+      { "modernControl": "Number input", "fluentEquivalent": "SpinButton", "notes": "OnChange fires on blur plus step-button clicks." },
+      { "modernControl": "Progress bar", "fluentEquivalent": "ProgressBar", "notes": "Determinate or indeterminate progress." },
       { "modernControl": "Radio (group)", "fluentEquivalent": "RadioGroup / Radio", "notes": "Item order preserved; View mode is read-only, not disabled." },
       { "modernControl": "Slider", "fluentEquivalent": "Slider", "notes": "Value renamed Default; Layout renamed LayoutDirection." },
+      { "modernControl": "Spinner", "fluentEquivalent": "Spinner", "notes": "Indeterminate loading indicator." },
+      { "modernControl": "Stream (preview)", "fluentEquivalent": "Stream", "notes": "Renders a live/streamed content feed. Preview." },
+      { "modernControl": "Table (preview)", "fluentEquivalent": "Table", "notes": "Tabular or list data. Preview (Data Grid is the interactive counterpart)." },
       { "modernControl": "Tab list (Tabs)", "fluentEquivalent": "TabList / Tab", "notes": "New Appearance property; Items auto-refresh." },
-      { "modernControl": "Link", "fluentEquivalent": "Link", "notes": "Adds URL security (XSS) validation." },
-      { "modernControl": "Info button", "fluentEquivalent": "InfoLabel / Popover", "notes": "Content flyout on demand." },
-      { "modernControl": "Icon", "fluentEquivalent": "Fluent UI System Icons", "notes": "Style renamed IconStyle (Outline/Filled); gained OnSelect." },
-      { "modernControl": "Table (preview)", "fluentEquivalent": "Table / DataGrid", "notes": "Tabular or list data. Preview." }
+      { "modernControl": "Text", "fluentEquivalent": "Text / Label", "notes": "Display text or field label." },
+      { "modernControl": "Text input", "fluentEquivalent": "Input (v9) / TextField (v8)", "notes": "OnChange now fires on blur (focus-out), not per keystroke. Reference TextInput1.Text directly for live search." },
+      { "modernControl": "Toggle", "fluentEquivalent": "Switch", "notes": "Fluent v9 renamed Toggle to Switch. Props: Checked, Label, OnCheck/OnUncheck." }
     ],
-    "fluentControlsNote": "Mappings are conceptual (same Fluent 2 design language/behavior), not a literal 1:1 code re-export. The modern control set grows roughly monthly; verify against the modern-controls-reference and modern-control-updates docs.",
+    "fluentControlsNote": "Mappings are conceptual (same Fluent 2 design language/behavior), not a literal 1:1 code re-export. The modern control set grows roughly monthly; verify against the modern-controls-reference and modern-control-updates docs. A standalone 'Icon' control appeared in earlier releases but is not in the current reference list; use the icon slot on modern controls or Fluent UI System Icons.",
     "theming": {
       "howTo": "Enable modern controls, open the Themes pane, then pick a built-in theme or Add a theme > Create custom theme (seed color, font, torsion, vibrancy, per-slot overrides) or Paste theme (YAML). Selecting a theme sets App.Theme and applies app-wide. A theme exposes a 16-slot brand color ramp, a Font, and a Name, reachable in Power Fx via App.Theme (e.g. Button.Fill = App.Theme.Colors.Primary).",
       "themeFormat": "YAML (copy/paste from the Themes pane). Represented here as an object; required keys: Font, BasePaletteColor, HueTorsion, Vibrancy. ColorOverrides is optional.",
@@ -78,7 +90,43 @@
       "https://learn.microsoft.com/power-apps/maker/canvas-apps/controls/modern-controls/modern-theming",
       "https://learn.microsoft.com/power-apps/maker/canvas-apps/controls/modern-controls/modern-controls-reference",
       "https://learn.microsoft.com/power-apps/maker/canvas-apps/controls/modern-controls/modern-control-updates",
+      "https://learn.microsoft.com/power-apps/maker/canvas-apps/controls/modern-controls/modern-control-updates",
       "https://fluent2.microsoft.design"
+    ]
+  },
+  "modelDriven": {
+    "title": "Model-driven apps — the modern 'New Look' + modern theme overrides",
+    "summary": "Model-driven apps modernize to Fluent 2 through the 'New Look'. Wave 1 (the refreshed look) is generally available and mandatory as of the 2026 release wave 1: makers can no longer revert to the classic look. Wave 2 (header and navigation refresh) is in public preview. This is the model-driven counterpart to canvas modern themes, and it is what a PCF control's context.fluentDesignLanguage inherits from in model-driven apps.",
+    "newLook": {
+      "status": "Wave 1 'The New Look' is GA and mandatory as of 2026 release wave 1 (no revert to classic). Wave 2 'header and navigation refresh' is public preview. Aligned to Fluent 2 and the foundation for future dark mode.",
+      "doc": "https://learn.microsoft.com/power-apps/user/modern-fluent-design"
+    },
+    "theming": {
+      "summary": "Classic theming is not honored under the New Look. Instead, supply a CustomTheme XML web resource referenced from an app setting; the platform generates the Fluent 2 ramp from your seed color, matching the canvas modern-theme model.",
+      "mechanism": "Create a web resource of type XML whose root is a <CustomTheme> element, then reference it via the app's theme app setting.",
+      "customThemeAttributes": {
+        "basePaletteColor": "Seed hex color the 16-slot ramp is generated from.",
+        "lockPrimary": "If true, pins the seed into the primary slot (can break WCAG contrast; leave off for an accessibility-optimized ramp).",
+        "vibrancy": "-100..100 saturation shift.",
+        "hueTorsion": "-100..100 hue shift (cool to warm).",
+        "font": "CSS font-family stack for the app.",
+        "logoWebResource": "Web resource name of the app logo (recommended 156x48 px).",
+        "logoTooltip": "Tooltip text for the logo.",
+        "perSlotOverrides": "Optional overrides across the 16 slots (darker70..primary..lighter80).",
+        "AppHeaderColors": "Optional child element to theme the app header (background, foreground, backgroundHover/Pressed/Selected, etc.)."
+      },
+      "customThemeExample": "<CustomTheme basePaletteColor=\"#0f6cbd\" vibrancy=\"0\" hueTorsion=\"0\" font=\"'Segoe UI', sans-serif\" logoWebResource=\"contoso_company-logo\" logoTooltip=\"Contoso\" />",
+      "notThemedYet": "Some areas are not yet themed under the New Look (legacy grids, row summaries, focus view, sales pipeline).",
+      "doc": "https://learn.microsoft.com/power-apps/maker/model-driven-apps/modern-theme-overrides"
+    },
+    "pcfRelationship": "A PCF (React/virtual) control in a model-driven app inherits this theme through context.fluentDesignLanguage.tokenTheme, exactly as it inherits canvas modern themes. See the pcf section.",
+    "gotchas": [
+      "There is no toggle literally named 'Fluent 2'. Canvas uses the 'Modern controls and themes' toggle; model-driven uses the New Look (now mandatory) plus the header/navigation refresh (preview). Both are the Fluent 2 implementation.",
+      "Classic theme records are ignored under the New Look; migrate branding to a CustomTheme XML web resource + app setting."
+    ],
+    "docs": [
+      "https://learn.microsoft.com/power-apps/user/modern-fluent-design",
+      "https://learn.microsoft.com/power-apps/maker/model-driven-apps/modern-theme-overrides"
     ]
   },
   "powerpages": {
@@ -86,10 +134,11 @@
     "summary": "Power Pages has no first-party Fluent 2 theme. Sites are built on Bootstrap with a Styling workspace (design studio). Achieve a Fluent 2 look by combining the Styling workspace brand kit with custom CSS that maps Bootstrap/site variables onto Fluent v9 design tokens exposed as CSS custom properties.",
     "approach": "Bootstrap (v3.3.6 or v5) + Styling workspace brand kit + custom CSS defining Fluent 2 tokens as CSS variables and mapping Bootstrap onto them.",
     "platform": {
-      "bootstrap": "Supports Bootstrap 3.3.6 and Bootstrap 5. New sites must enable Bootstrap v5; existing v3 sites can migrate. Do not replace Bootstrap - some Power Pages scenarios depend on it.",
+      "bootstrap": "Supports Bootstrap 3.3.6 and Bootstrap 5. New sites are set up on Bootstrap v5; existing v3 sites can migrate. Do not replace Bootstrap - some Power Pages scenarios depend on it.",
       "stylingWorkspace": "13 preset themes; per theme customize color palette (9 mapped colors + 3 user slots), background, font styles (basic fonts + 30+ Google Fonts), button styles, section margins. Brand kit = logo + palette + fonts.",
       "defaultCssFiles": ["bootstrap.min.css", "theme.css", "portalbasictheme.css"],
-      "customCss": "Upload via Styling > ... > Manage CSS (<= 1 MB). Files lower in the list take higher precedence. Editable in Visual Studio Code for the Web. The per-component paintbrush overrides Styling workspace and custom CSS unless !important is used."
+      "customCss": "Upload via Styling > ... > Manage CSS (<= 1 MB). Files lower in the list take higher precedence. Editable in Visual Studio Code for the Web. The per-component paintbrush overrides Styling workspace and custom CSS unless !important is used.",
+      "codeComponents": "Standard PCF code components ARE supported in Power Pages: add a standard code component to a Dataverse form field (Data workspace form designer > + Component, or Portals Management > Basic Form Metadata > Control Style = Code Component), or embed with the Liquid tag {% codecomponent name:<namespace.Control> prop:'value' %}. Web client only. Not supported: React (virtual) controls + platform libraries (React controls don't re-render on other fields' changes), several Device.* APIs, Utility, uses-feature=true, and multi-field binding. So the Fluent-v9-via-platform-library path does not apply, but a standard control that bundles its own Fluent does work."
     },
     "fluentTokensCssExample": ":root {\n  --colorBrandBackground: #0f6cbd;        /* brand.80 - primary */\n  --colorBrandBackgroundHover: #115ea3;   /* brand.70 */\n  --colorNeutralForeground1: #242424;     /* body text */\n  --colorNeutralBackground1: #ffffff;     /* surface */\n  --fontFamilyBase: 'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;\n  --fontSizeBase300: 14px;\n  --borderRadiusMedium: 4px;\n}\nbody { font-family: var(--fontFamilyBase); color: var(--colorNeutralForeground1); }\n.btn-primary {\n  background-color: var(--colorBrandBackground);\n  border-color: var(--colorBrandBackground);\n  border-radius: var(--borderRadiusMedium);\n}\n.btn-primary:hover { background-color: var(--colorBrandBackgroundHover); }\n/* Bootstrap 5 vars can point at Fluent tokens */\n:root { --bs-primary: var(--colorBrandBackground); --bs-body-font-family: var(--fontFamilyBase); }",
     "fluentTokensNote": "CSS variable names mirror Fluent v9's tokens object. Pull authoritative values from @fluentui/tokens (webLightTheme) instead of hardcoding. Default brand color is #0f6cbd; default font is Segoe UI.",
@@ -102,8 +151,8 @@
       "Preview across web/tablet/mobile; confirm the site's Bootstrap version before relying on version-specific CSS."
     ],
     "gotchas": [
-      "Bootstrap version is ambiguous in the docs (overview says v5 opt-in; Manage CSS + custom-CSS tutorial say v3.3.x). Confirm the actual version before writing CSS.",
-      "PCF React controls & platform libraries are NOT supported in Power Pages (React controls don't re-render on other fields' changes) - the PCF Fluent path does not apply here.",
+      "Bootstrap version: v3.3.6 and v5 are both supported; new sites are on v5, existing v3 sites can migrate. Confirm the actual version before writing version-specific CSS.",
+      "PCF React (virtual) controls and platform libraries are NOT supported in Power Pages (React controls don't re-render on other fields' changes), so the Fluent-v9-via-platform-library path does not apply. Standard code components that bundle their own Fluent DO work (see platform.codeComponents).",
       "Manage CSS precedence is bottom-wins; the paintbrush per-component styling overrides Styling workspace and custom CSS unless !important.",
       "No fluentDesignLanguage bridge in Power Pages - you own the token values in CSS."
     ],
@@ -112,7 +161,8 @@
       "https://learn.microsoft.com/power-pages/configure/manage-css",
       "https://learn.microsoft.com/power-pages/getting-started/tutorial-add-custom-style",
       "https://learn.microsoft.com/power-pages/configure/bootstrap-overview",
-      "https://learn.microsoft.com/power-pages/configure/bootstrap-version-5"
+      "https://learn.microsoft.com/power-pages/configure/component-framework",
+      "https://learn.microsoft.com/power-pages/configure/liquid/component-framework-liquid"
     ]
   },
   "pcf": {
@@ -140,9 +190,9 @@
     "fluentProviderPattern": "With Fluent v9 controls + platform libraries the modern theme flows in automatically via the shared React context - often no FluentProvider is needed. To force a specific theme (or re-theme portaled components like menus/dialogs/tooltips), wrap the tree: <FluentProvider theme={context.fluentDesignLanguage.tokenTheme}>{/* control */}</FluentProvider>.",
     "usePlatformThemeExample": "// index.ts (updateView)\npublic updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {\n  const theme = context.fluentDesignLanguage?.tokenTheme ?? webLightTheme;\n  return React.createElement(\n    FluentProvider,\n    { theme },\n    React.createElement(HelloFluent, {\n      label: context.parameters.label.raw ?? \"Hello, Fluent 2!\",\n      onClick: () => this.notifyOutputChanged()\n    })\n  );\n}",
     "themingApproaches": [
-      "Fluent v9 controls (easiest): add platform libraries; modern theme applies automatically via shared React context.",
-      "Fluent v8 controls: createV8Theme(context.fluentDesignLanguage.brand, context.fluentDesignLanguage.theme) from @fluentui/react-migration-v8-v9, then ThemeProvider.",
-      "Non-Fluent HTML: read tokens directly, e.g. style={{ fontSize: context.fluentDesignLanguage.theme.fontSizeBase300 }}.",
+      "Fluent v9 controls (easiest): add platform libraries; modern theme applies automatically via shared React context for non-portaled controls.",
+      "Fluent v8 controls: createV8Theme(context.fluentDesignLanguage.brand, context.fluentDesignLanguage.tokenTheme) from @fluentui/react-migration-v8-v9, then ThemeProvider.",
+      "Non-Fluent HTML: read tokens directly, e.g. style={{ fontSize: context.fluentDesignLanguage.tokenTheme.fontSizeBase300 }}.",
       "Custom theme provider: wrap in your own FluentProvider when you want a different theme; or IdPrefixProvider with a custom idPrefix to opt out of modern theming."
     ],
     "steps": [
@@ -153,13 +203,14 @@
       "npm start to test in the harness; then package into a solution for canvas or model-driven apps (not Power Pages)."
     ],
     "gotchas": [
-      "context.fluentDesignLanguage property naming is inconsistent in the docs: reference + Custom theme providers use tokenTheme; v8 bridge + non-Fluent examples use .theme/.brand. Prefer tokenTheme for FluentProvider and use optional chaining.",
-      "Portaled Fluent v9 components (menus, dialogs, tooltips) can lose theme tokens - re-wrap them in a FluentProvider.",
+      "context.fluentDesignLanguage.tokenTheme is authoritative for FluentProvider (verified in microsoft/PowerApps-Samples component-framework/FluentThemingAPIControl). The '.theme' seen in some how-to prose is a documentation inconsistency; prefer tokenTheme and use optional chaining.",
+      "Non-portaled v9 controls (Label, Button, Checkbox) inherit the modern theme automatically. Portaled v9 components (Combobox, Menu, Dialog, Tooltip) must be re-wrapped in a FluentProvider (and optionally IdPrefixProvider) or they lose theme tokens.",
       "You can't convert a standard control to a virtual React control in place - scaffold fresh with -fw react.",
       "Rebuild legacy virtual controls with CLI >= 1.37 for future React version upgrades.",
-      "React controls & platform libraries are not supported in Power Pages.",
-      "Platform library versions are a moving target: declared manifest version may differ from the version loaded at runtime."
+      "React controls and platform libraries are not supported in Power Pages (standard code components are; see powerpages).",
+      "Platform library version drift is by design: the declared manifest version (Fluent v9 <=9.46.2) differs from the version loaded at runtime (9.68.0); React loads 17.0.2 model-driven / 16.14.0 canvas."
     ],
+    "sampleRepo": "microsoft/PowerApps-Samples > component-framework/FluentThemingAPIControl demonstrates four patterns: v9 theme inheritance, a custom v9 FluentProvider, the v8 createV8Theme bridge, and non-Fluent token use. https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/FluentThemingAPIControl",
     "docs": [
       "https://learn.microsoft.com/power-apps/developer/component-framework/",
       "https://learn.microsoft.com/power-apps/developer/component-framework/react-controls-platform-libraries",
@@ -167,7 +218,8 @@
       "https://learn.microsoft.com/power-apps/developer/component-framework/reference/theming",
       "https://learn.microsoft.com/power-apps/developer/component-framework/manifest-schema-reference/platform-library",
       "https://learn.microsoft.com/power-apps/developer/component-framework/reference/react-control",
-      "https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/modern-theming-api-control"
+      "https://learn.microsoft.com/power-apps/developer/component-framework/sample-controls/modern-theming-api-control",
+      "https://github.com/microsoft/PowerApps-Samples/tree/master/component-framework/FluentThemingAPIControl"
     ]
   }
 }

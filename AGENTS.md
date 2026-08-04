@@ -46,7 +46,7 @@ Users may declare presets in **`fluent.config.json`** (brand, theme, typography,
 - **Power Apps:** modern controls + `App.Theme` (seed `#0f6cbd`). **Power Pages:** Fluent design-token CSS over Bootstrap. **PCF:** Fluent React v9 + `FluentProvider` with `context.fluentDesignLanguage.tokenTheme`.
 
 ## Skills (load for depth)
-`fluent-web-ui` · `fluent-theming` · `fluent-design-tokens` · `fluent-design-language` · `fluent-accessibility` · `fluent-ai-copilot-ui` · `fluent-powerbi-theme` · `fluent-pbip-report` · `fluent-powerapps` · `fluent-powerpages` · `fluent-pcf-component` · `fluent-migration` · `fluent-design-review` · `fluent-config`
+`fluent-web-ui` · `fluent-theming` · `fluent-design-tokens` · `fluent-design-language` · `fluent-accessibility` · `fluent-ai-copilot-ui` · `fluent-powerbi-theme` · `fluent-pbip-report` · `fluent-powerbi-adopt` · `fluent-powerapps` · `fluent-powerpages` · `fluent-pcf-component` · `fluent-migration` · `fluent-design-review` · `fluent-config`
 
 ## Agents
 `fluent-ui-builder` (primary/router) · `fluent-web-engineer` · `fluent-powerbi-designer` · `fluent-power-platform-engineer` · `fluent-migration-engineer` · `fluent-design-reviewer`

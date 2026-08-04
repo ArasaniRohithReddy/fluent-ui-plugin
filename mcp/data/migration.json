@@ -98,8 +98,71 @@
       ],
       "docs": ["https://fluent2.microsoft.design/design-tokens"]
     },
+    "powerbiReport": {
+      "title": "Apply Fluent 2 to an EXISTING Power BI PBIP/PBIR report and repair the layout distortion it causes",
+      "summary": "A Fluent 2 theme rarely changes a visual's stored x/y/width/height, but it changes each visual's rendered footprint (padding, rounded corners, borders, titles, slicer mode, small-multiple grid). That is what causes overlaps, clipped titles, and out-of-bounds visuals after the theme is applied. Apply the theme by editing the report-definition JSON on disk, then detect and repair the distortion without breaking bookmarks, navigation, drill-through, groups, or intentional overlaps. See the fluent-powerbi-adopt skill for the full workflow.",
+      "whenApplies": "The report must be PBIR: a *.Report folder with a definition/ folder that contains pages/. This is file-editable. It does NOT apply to a binary .pbix or PBIR-Legacy (a single report.json holding the whole model); convert first in Power BI Desktop (Options > Preview features > enable 'Store reports using enhanced metadata format (PBIR)', then re-save).",
+      "safetyRules": [
+        "Never edit the semantic model. Themes and layout live in the report layer only; no measure, column, DAX, or relationship changes.",
+        "Never edit without a restore point (a clean git working tree, or a full copy of the *.Report folder).",
+        "Never change any name, id, GUID, object name, pageBinding.name, or $schema value. Bookmarks, navigation, drill-through, and tooltips cross-reference these and break silently when renamed.",
+        "Never fix an overlap you have not classified as unintentional. Many overlaps are deliberate (bookmark toggle groups, background shapes, buttons over cards).",
+        "Never move or resize a bookmark-controlled visual without updating every affected *.bookmark.json, or the bookmark snaps it back.",
+        "Never produce invalid JSON. Every file must still satisfy the $schema declared at its top.",
+        "Never batch-move visuals to solve overlaps. Apply the smallest change that resolves each issue."
+      ],
+      "workflow": [
+        "Safety and baseline: confirm git is clean or make the backup copy, then snapshot every visual's name, position {x,y,z,width,height,tabOrder}, visual type, default visibility, and group membership.",
+        "Discover: map the PBIR tree; inventory pages, per-page canvas size, visuals, bookmarks, buttons and their actions, and registered resources. For large reports, run a small read-only script that walks pages/*/visuals/*/visual.json and emits a table.",
+        "Understand data bindings (optional, read-only): if a powerbi-model MCP server is available, list tables and measures so a geometry fix never disturbs a binding or a conditional-format rule. Skip if no model.",
+        "Acquire and validate the theme: generate with fluent_generate_powerbi_theme or fetch a theme JSON from a URL the user supplies; validate it parses and is a real Power BI theme. Never guess a theme URL.",
+        "Apply the theme: write it to StaticResources/RegisteredResources/<ThemeName>.json, add a resourcePackages item (type RegisteredResources, item type CustomTheme), and set report.json themeCollection.customTheme. During PBIR preview, adding a brand-new resource may be rejected; replace an already-registered custom theme instead, or register once via Desktop (View > Themes > Browse for themes). Do NOT fabricate a themeCollection.baseTheme.name for Fluent 2; write only the customTheme.",
+        "Detect distortion: combine the geometry checks with the effect map below; diff every finding against the baseline.",
+        "Classify each overlap before touching it: leave intentional pairs alone; fix only pairs where both visuals are default-visible content in no shared toggle or group relationship.",
+        "Repair minimally: prefer a theme-level fix, then per-visual formatting, then a small geometry nudge (kept inside the page, preserving relative arrangement and a consistent gap). Propagate every geometry change to bookmarks.",
+        "Preserve interactions: update every *.bookmark.json that captures a changed visual; verify each button action still targets a valid bookmark or page; keep z-order and tabOrder sensible.",
+        "Validate: every edited JSON still conforms to its $schema; re-run detection; confirm page/visual/bookmark/action counts match the baseline.",
+        "Report: theme applied and method, restore point, distortions found, fixes applied (theme-level, per-visual, geometry, before and after), bookmarks and navigation updated, what was left intentionally unchanged, anything needing manual review, and the integrity check. Ask the user to open the report in Power BI Desktop to confirm."
+      ],
+      "effectMap": [
+        { "change": "Increased padding and rounded corners on all visuals", "risk": "Content area shrinks, so content clips and tight neighbors collide on render." },
+        { "change": "Titles and subtitles on by default (axis titles off)", "risk": "Added header height pushes content down, so it overflows or clips." },
+        { "change": "Slicers change mode (list to dropdown or tile)", "risk": "Footprint height or width changes, so slicers overlap neighbors." },
+        { "change": "Small multiples reflow (2x2 to 1x4 or 4x1)", "risk": "Space requirement changes, so the visual overflows or leaves gaps." },
+        { "change": "Buttons and navigators restyled; button fill uses the first data color", "risk": "Nav bars misalign and button size or spacing shifts." },
+        { "change": "Cards use less padding and no reference-label background", "risk": "Card content re-anchors and alignment with neighbors drifts." },
+        { "change": "New pages default to 1920x1080 (existing pages keep their size)", "risk": "Out-of-bounds checks must use each page's actual width and height, not the new default." },
+        { "change": "Uniform fonts and sizes across visuals", "risk": "Text reflows, wraps, or clips where labels were tightly fit." }
+      ],
+      "detectionRules": {
+        "outOfBounds": "x < 0 || y < 0 || (x + width) > page.width || (y + height) > page.height, using each page's own page.json width/height (1280x720 initial page, 1920x1080 new Fluent 2 pages). Tolerance about 1px for float rounding. This is the only test grounded directly in the schema (VisualContainerPosition semantics: x+width should be less than the page width, y+height less than the height).",
+        "overlap": "Axis-aligned boxes A,B intersect when A.x < B.x+B.width && B.x < A.x+A.width && A.y < B.y+B.height && B.y < A.y+A.height. Flag as unintended only when same or adjacent z, not in the same visualGroup, and the overlap area exceeds about 25% of the smaller visual (heuristic).",
+        "collisionOnRender": "Fluent 2 grows each visual's visible footprint by roughly borderWidth + shadowDistance + shadowBlur + shadowSpread per edge. Flag adjacent visuals whose inter-box gap is under about 8 to 12px even if the boxes do not intersect (heuristic; exact Fluent 2 shadow defaults are not published).",
+        "headerOverflow": "Fluent 2 forces titles and subtitles on. Reserve a title band of about 24 to 32px (title 12pt / largeTitle 14pt, plus subtitle if present) and flag a visual whose content height leaves under about 4px of slack (heuristic; depends on font metrics).",
+        "typeBasedReflow": "Slicer mode switch, small-multiple reflow, and button restyle change rendered content rather than stored geometry. Detect them by type and preset transition, then re-run the geometry tests and treat any newly triggered flag as theme-induced.",
+        "exclusions": "Exclude background shapes and images (lowest z, page-spanning), currently-hidden visuals (visual.json isHidden), and grouped children (evaluate them through their parent)."
+      },
+      "neverRename": [
+        "Every file's $schema (a wrong report.json $schema is a blocking error).",
+        "page name (referenced by pages.json pageOrder/activePageName/landingPageName, bookmark activeSection/sections, and navigation).",
+        "pageBinding.name (referenced by drill-through and page tooltips; must stay unique).",
+        "visual name (referenced by bookmark targetVisualNames and group parentGroupName).",
+        "visualGroup container name and members' parentGroupName (preserve groups).",
+        "bookmark name (referenced by bookmarks.json order and children).",
+        "Do not alter position.z (z-order) or position.tabOrder (tab order) during geometry repair unless intentionally fixing them."
+      ],
+      "pbirFieldNotes": "A visual's hidden flag is visual.json isHidden (boolean), NOT a visibility enum; the visibility enum is a page-level field. report.json themeCollection.customTheme uses type RegisteredResources; the resource is registered as a resourcePackages item with item type CustomTheme and a path into StaticResources/RegisteredResources. From report schema 3.0.0, reportVersionAtImport is an object {visual, page, report}, not a string. Confirm exact field names against the $schema at the top of each file; PBIR schemas are versioned monthly (report 3.3.0, page 2.1.0, visualContainer 2.9.0, bookmark 2.1.0 at time of writing).",
+      "docs": [
+        "https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-report",
+        "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-visual-defaults",
+        "https://learn.microsoft.com/en-us/power-bi/create-reports/report-themes-create-custom",
+        "https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-report-themes",
+        "https://github.com/microsoft/json-schemas/tree/main/fabric/item/report/definition",
+        "https://github.com/microsoft/powerbi-desktop-samples/tree/main/Report%20Theme%20JSON%20Schema"
+      ]
+    },
     "perSurface": {
-      "powerbi": "Apply a Fluent 2 theme to an EXISTING report: generate with fluent_generate_powerbi_theme, then Power BI Desktop > View > Themes > Browse for themes. Visual defaults restyle all existing visuals; no rebuild needed.",
+      "powerbi": "Apply a Fluent 2 theme to an EXISTING report: generate with fluent_generate_powerbi_theme, then Power BI Desktop > View > Themes > Browse for themes. Visual defaults restyle all existing visuals; no rebuild needed. To also repair the layout distortion the theme introduces and edit the report as files, use the 'powerbi-report' scenario (fluent-powerbi-adopt skill).",
       "powerapps": "In an EXISTING canvas app: Settings > Updates > New > enable 'Modern controls and themes', set App.Theme from your brand, then replace classic controls with modern equivalents screen-by-screen (see fluent-powerapps).",
       "powerpages": "On an EXISTING site: add a custom CSS file that declares Fluent 2 tokens as :root variables and maps Bootstrap selectors onto them (see fluent-powerpages) - no rebuild required.",
       "pcf": "Rebuild a legacy virtual control with a current CLI to pick up Fluent v9 platform libraries + context.fluentDesignLanguage theming (see fluent-pcf-component)."

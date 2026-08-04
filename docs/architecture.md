@@ -10,7 +10,7 @@
                          └───────────────┬─────────────────────────────┘
                                          │ load for depth
                          ┌───────────────▼─────────────────────────────┐
-                         │  Skills (skills/<name>/SKILL.md) × 14        │
+                         │  Skills (skills/<name>/SKILL.md) × 15        │
                          │   web-ui · theming · tokens · a11y · ai …    │
                          └───────────────┬─────────────────────────────┘
                                          │ call for facts / generation
@@ -30,7 +30,7 @@
 
 **Agents** (`agents/*.agent.md`) — orchestration. A primary router (`fluent-ui-builder`) plus five specialists. Frontmatter declares `name`, `description`, and the `skills` each may load. They *do the work* and call MCP tools; they never hardcode Fluent values.
 
-**Skills** (`skills/<name>/SKILL.md`) — grounded, task-specific knowledge (14). Each carries concise Fluent 2 guidance + a Microsoft-Learn / `mslearn` CLI lookup path. Skills are read natively by Copilot, VS Code, Cursor, Claude Code, etc.
+**Skills** (`skills/<name>/SKILL.md`) — grounded, task-specific knowledge (15). Each carries concise Fluent 2 guidance + a Microsoft-Learn / `mslearn` CLI lookup path. Skills are read natively by Copilot, VS Code, Cursor, Claude Code, etc.
 
 **MCP server** (`mcp/`, Node + TypeScript, `@modelcontextprotocol/sdk`) — deterministic tools that make the guidance executable. Tool modules live in `mcp/src/tools/`; `mcp/src/util.ts` loads data + color math. Built to `mcp/dist/index.js` (stdio). The config tools (`fluent_get_config`, `fluent_init_config`, `fluent_set_config`, `fluent_remember`, `fluent_recall`) additionally read/write two optional **user-project** files — `fluent.config.json` (presets) and `.fluent/memory.json` (resolved presets + append-only decision log) — resolving each setting as **config > memory > built-in Fluent 2 default** (zero-config safe; never throws on missing files).
 

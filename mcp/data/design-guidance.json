@@ -1,7 +1,7 @@
 {
   "$meta": {
     "title": "Fluent 2 design-language reference",
-    "source": "Synthesized faithfully from the official Fluent 2 guide pages on https://fluent2.microsoft.design (see research/fluent-design.md). All 17 topics are deep-parsed from their research/raw/*.html source pages: each topic carries the page summary, expanded keyPoints, a 'sections' array (one entry per subsection heading + its text), a 'values' object of concrete stated values, an 'images' array (alt text, nearest-heading section, and CDN asset slug for every image/gif — empty-alt images retain a descriptive asset slug), and a 'doDont' object where the page pairs do/don't specimens. Concrete values (type ramp incl. per-platform ramps, spacing scale, corner radii, shadow ramp, breakpoints, motion tokens, RAI rubric) are quoted from the source pages; token values are cross-checked against mcp/data/fluent-tokens.json.",
+    "source": "Synthesized faithfully from the official Fluent 2 guide pages on https://fluent2.microsoft.design (see research/fluent-design.md). All 23 topics are deep-parsed from their source pages: each topic carries the page summary, expanded keyPoints, a 'sections' array (one entry per subsection heading + its text), a 'values' object of concrete stated values, an 'images' array (alt text, nearest-heading section, and CDN asset slug for every image/gif — empty-alt images retain a descriptive asset slug), and a 'doDont' object where the page pairs do/don't specimens. Concrete values (type ramp incl. per-platform ramps, spacing scale, corner radii, shadow ramp, breakpoints, motion tokens, RAI rubric) are quoted from the source pages; token values are cross-checked against mcp/data/fluent-tokens.json.",
     "docBase": "https://fluent2.microsoft.design"
   },
   "topics": {
@@ -5311,6 +5311,50 @@
       },
       "template": "The page ships a fill-in-the-blank system prompt template covering every component (Role, Task, and Rules — with Safety and responsible AI, Scope and task boundaries, Output quality and accuracy, and Failure modes — plus Example output). Required components are Role, Task, Rules, and Example output; fill in the placeholders, adapt the pre-populated rules to your product, and delete the comment blocks before sharing with engineering.",
       "docUrl": "https://fluent2.microsoft.design/content-engineering"
+    },
+    "content-engineering-evals": {
+      "title": "Evaluating output quality (Working with AI)",
+      "summary": "Defining what makes AI output good and testing against that standard is core UX design work. An eval is a test: you give an AI system an input, then apply defined criteria to judge whether the output is useful, trustworthy, and appropriate for a specific job and scenario. UX practitioners often contribute by defining scenarios, quality criteria, examples, and failure patterns that others formalize or automate.",
+      "keyPoints": [
+        "An eval is a test: give the system an input, then score the output against defined criteria for a specific job and scenario.",
+        "Evals clarify what 'good' means, compare approaches or iterations, and detect quality changes as systems evolve.",
+        "Without a human-centered lens, systems optimize for what is easiest to measure, not what matters most to people; UX makes human judgment explicit and repeatable.",
+        "Most evals share four core components: a prompt set, a context or data set, a rubric, and a golden set. Start with one or two and add the rest over time.",
+        "Seven human-centered decision points move you from user intent to measurable quality: define the audience and scenario; define the data boundary; build a prompt set; define 'good' behavior; turn quality criteria into assertions; test your eval; and refresh over time.",
+        "Assertions turn 'good' into clear, testable statements; some are automated (LLM) checks and some need human review, and most evals use both.",
+        "Prompt sets should use real user language (not internal feature terms) and include short, missing-context, and ambiguous or edge-case prompts to test clarifying behavior.",
+        "Evals are not set-and-forget: revisit prompts, examples, and criteria as real usage and risks change."
+      ],
+      "sections": [
+        { "heading": "What is an eval?", "text": "At its simplest, an eval is a test. You give an AI system an input, then apply defined criteria to judge whether the output meets expectations for a specific job and scenario. Evals are used to clarify what 'good' AI output means in a given context, compare approaches or iterations, and detect changes in quality as systems evolve. Many UX practitioners contribute without running evals directly, by helping define scenarios, quality criteria, examples, or failure patterns that others formalize or automate." },
+        { "heading": "Why evals matter for UX", "text": "An AI output can be technically correct and still be a poor user experience: confusing, low trust, misaligned with intent, or risky to act on. UX input is valuable because it focuses on whether behavior is useful in a real context, understandable without extra interpretation, and trustworthy enough to act on. Without a human-centered lens, systems optimize for what is easiest to measure rather than what matters most to people. Evals make human judgment more explicit and more repeatable." },
+        { "heading": "Core components of an eval", "text": "Most evals include some version of the same core components. Prompt set: a collection of prompts representing user goals or intents, written in natural language that reflects how people actually describe those goals. Context or data set: grounding material the system may reference, such as files, emails, chats, or records. Rubric: the criteria used to judge output quality or behavior. Golden set: a small collection of examples where the input and the expected correct answer (ground truth) have been reviewed and agreed on, used to compare the consistency of outputs. Start simple and add structure over time." },
+        { "heading": "1. Define the audience and scenario", "text": "Clarify who the output is for and what the user is trying to accomplish, so evals stay grounded in real customer scenarios. Ask: who is the system working for; what purpose does the output serve; which tasks do users need the system to do; and what does success look like from the customer's perspective." },
+        { "heading": "2. Define the data boundary", "text": "Clarify which information the system is allowed to access and rely on, and what it should ignore. These decisions are typically defined by humans (retrieval setup, system design, or MCP configuration) and reduce confident but unsupported outputs. Consider which sources are in scope, which are out of scope, what 'up to date' means (time window), and which source is authoritative when sources conflict." },
+        { "heading": "3. Build a prompt set", "text": "Prompt sets reflect how people actually ask for help, using real user language rather than internal feature terms, and include ambiguity to test clarifying questions. Include common straightforward prompts, short prompts with missing context, and ambiguous or edge-case requests." },
+        { "heading": "4. Define 'good' behavior", "text": "Define what good output looks like in this scenario, using examples and criteria that describe what information is present and how it should be presented, then use the learnings to guide model behavior, prompt design, and the end-to-end UX. Good output must not imply certainty when context is missing; if required information is unavailable, the response must not present guesses as facts." },
+        { "heading": "5. Turn quality criteria into assertions", "text": "Translate 'good' into clear, testable statements that can be checked consistently across outputs. Some assertions are for automated (LLM) evaluation and some require human judgment; most evals use both, so be clear which type you are writing and how they work together." },
+        { "heading": "6. Test your eval", "text": "Run the prompt set and score each output against your assertions using a mix of automated checks and human review. Automated checks verify specific, observable requirements; human review determines whether the output is actually useful and ready to act on. Record scores and failure reasons." },
+        { "heading": "7. Refresh over time", "text": "Evals are not set-and-forget. As the product changes and people use it in new ways, revisit prompts (add the requests you see in real usage), examples (update them when your preferred format or workflow changes), and criteria (adjust when expectations or risks change, for example stricter rules for high-stakes scenarios)." }
+      ],
+      "values": {
+        "coreComponents": [
+          { "component": "Prompt set", "description": "Prompts representing user goals or intents, in natural language that reflects how people actually describe those goals." },
+          { "component": "Context or data set", "description": "Grounding material the system may reference: files, emails, chats, or records." },
+          { "component": "Rubric", "description": "The criteria used to judge output quality or behavior." },
+          { "component": "Golden set", "description": "A small set of reviewed input plus expected-correct-answer (ground truth) examples, used to compare output consistency." }
+        ],
+        "sevenDecisions": [
+          "Define the audience and scenario",
+          "Define the data boundary",
+          "Build a prompt set",
+          "Define 'good' behavior",
+          "Turn quality criteria into assertions",
+          "Test your eval",
+          "Refresh over time"
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/evaluating-output-quality"
     },
     "entry-points": {
       "title": "Entry points (Working with AI)",

@@ -2,7 +2,7 @@
   "$comment": "Machine-readable catalog of Power BI report-theme visualStyles knobs used to apply Fluent 2 'visual defaults'. Serves as the documented reference for Fluent 2 visual defaults and a defensive fallback: the fluent_generate_powerbi_theme tool loads this and fills any of these knobs missing from the base theme (the shipped base already embeds them). JSON paths are relative to the theme root and use the shape visualStyles.<visualType>.<styleName>.<card>[<index>].<property>. Use '*' for visualType/styleName to target all visuals / the default style.",
   "themeName": "Fluent 2",
   "baseTheme": "CY24SU10",
-  "themeSchema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.155.json",
+  "themeSchema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.156.json",
   "sourceDocs": [
     "https://learn.microsoft.com/en-us/power-bi/create-reports/power-bi-reports-visual-defaults",
     "https://learn.microsoft.com/en-us/power-bi/create-reports/report-themes-create-custom",
@@ -44,8 +44,9 @@
       { "id": "cornerRadius", "card": "border", "property": "radius", "path": "visualStyles.*.*.border[0].radius", "valueType": "number", "purpose": "Rounded corners on visual containers (Fluent 2 card radius).", "fluentValue": 8 },
       { "id": "borderShow", "card": "border", "property": "show", "path": "visualStyles.*.*.border[0].show", "valueType": "boolean", "purpose": "Show the subtle 1px neutral container border.", "fluentValue": true },
       { "id": "borderColor", "card": "border", "property": "color", "path": "visualStyles.*.*.border[0].color", "valueType": "color", "purpose": "Container border color (Fluent Neutral Stroke 1).", "fluentValue": { "solid": { "color": "#D1D1D1" } } },
-      { "id": "dropShadowShow", "card": "dropShadow", "property": "show", "path": "visualStyles.*.*.dropShadow[0].show", "valueType": "boolean", "purpose": "Toggle a soft elevation shadow on containers. Off by default for a flat Fluent surface; set true for elevation.", "fluentValue": false },
-      { "id": "dropShadowPreset", "card": "dropShadow", "property": "preset", "path": "visualStyles.*.*.dropShadow[0].preset", "valueType": "enum", "purpose": "Shadow direction preset when the shadow is shown.", "fluentValue": "BottomRight" },
+      { "id": "borderWidth", "card": "border", "property": "width", "path": "visualStyles.*.*.border[0].width", "valueType": "number", "purpose": "Container border width (1px hairline stroke).", "fluentValue": 1 },
+      { "id": "dropShadowShow", "card": "dropShadow", "property": "show", "path": "visualStyles.*.*.dropShadow[0].show", "valueType": "boolean", "purpose": "Toggle the soft Fluent 2 elevation shadow on data-visual containers. On by default for the Fluent 2 subtle-elevation look; per-visual-type overrides turn it off for textboxes, images, shapes, and buttons.", "fluentValue": true },
+      { "id": "dropShadowPreset", "card": "dropShadow", "property": "preset", "path": "visualStyles.*.*.dropShadow[0].preset", "valueType": "enum", "purpose": "Shadow preset. 'Custom' enables the tuned Fluent 2 shadow (Outer position, spread 1, blur 3, angle 90, distance 1, transparency 90).", "fluentValue": "Custom" },
       { "id": "visualHeaderShow", "card": "visualHeader", "property": "show", "path": "visualStyles.*.*.visualHeader[0].show", "valueType": "boolean", "purpose": "Show the modern (stylable) visual header.", "fluentValue": true },
       { "id": "visualHeaderForeground", "card": "visualHeader", "property": "foreground", "path": "visualStyles.*.*.visualHeader[0].foreground", "valueType": "color", "purpose": "Header icon color.", "fluentValue": { "solid": { "color": "#616161" } } },
       { "id": "visualHeaderBackground", "card": "visualHeader", "property": "background", "path": "visualStyles.*.*.visualHeader[0].background", "valueType": "color", "purpose": "Header background color.", "fluentValue": { "solid": { "color": "#FFFFFF" } } },
@@ -89,6 +90,22 @@
       "verified": "documented in report-themes-create-custom (Set properties for visual types)"
     }
   ],
+  "perVisualTypeOverrides": {
+    "$comment": "Fluent 2 applies the rounded border, subtle drop shadow, and Semibold title to DATA visuals (charts, tables, cards). Non-data visual types are deliberately kept borderless and shadowless so captions, logos, background shapes, and navigation buttons are not boxed. These per-visual-type keys sit alongside visualStyles.*.* and override it for the named type. Baked into the shipped base theme.",
+    "borderless": [
+      { "visualType": "textbox", "off": ["background", "border", "dropShadow", "title", "subTitle"], "reason": "Captions and rich text should read as clean text, not a boxed card." },
+      { "visualType": "image", "off": ["background", "border", "dropShadow", "title"], "reason": "Logos and images should not gain a container border or shadow." },
+      { "visualType": "shape", "off": ["border", "dropShadow"], "reason": "Decorative and background shapes stay flat." },
+      { "visualType": "basicShape", "off": ["border", "dropShadow"], "reason": "Basic shapes (rectangles, lines) stay flat." },
+      { "visualType": "actionButton", "off": ["border", "dropShadow"], "reason": "Navigation and action buttons keep their own Fluent 2 button styling; a container border would double-box them." }
+    ],
+    "chartDefaults": {
+      "$comment": "Fluent 2 turns chart data labels on and moves the legend to the bottom for the common cartesian and part-to-whole charts.",
+      "labels": { "show": true },
+      "legend": { "show": true, "position": "Bottom" },
+      "visualTypes": ["barChart", "clusteredBarChart", "columnChart", "clusteredColumnChart", "lineChart", "lineClusteredColumnComboChart", "lineStackedColumnComboChart", "pieChart", "donutChart"]
+    }
+  },
   "textClasses": [
     { "class": "callout", "primary": true, "fontFace": "Segoe UI Semibold", "fontSize": 28, "color": "#242424", "maps": "Card data labels, KPI indicators (big numbers)" },
     { "class": "title", "primary": true, "fontFace": "Segoe UI Semibold", "fontSize": 14, "color": "#242424", "maps": "Axis titles, multi-row card title, slicer header" },

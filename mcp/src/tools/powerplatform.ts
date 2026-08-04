@@ -8,10 +8,10 @@ export function registerPowerplatform(server: McpServer): void {
     {
       title: 'Fluent 2 guidance for Power Platform',
       description:
-        'Return grounded, Microsoft-Learn-cited guidance for applying Fluent 2 on Power Platform: Power Apps (modern controls + modern themes), Power Pages (Bootstrap + Fluent design-token CSS), or PCF code components (Fluent React v9 via platform libraries + context.fluentDesignLanguage).',
+        'Return grounded, Microsoft-Learn-cited guidance for applying Fluent 2 on Power Platform: Power Apps canvas (modern controls + modern themes), model-driven apps (the New Look + modern theme overrides), Power Pages (Bootstrap + Fluent design-token CSS + standard code components), or PCF code components (Fluent React v9 via platform libraries + context.fluentDesignLanguage).',
       inputSchema: {
         surface: z
-          .enum(['powerapps', 'powerpages', 'pcf', 'all'])
+          .enum(['powerapps', 'model-driven', 'powerpages', 'pcf', 'all'])
           .default('all')
           .describe('Which Power Platform surface to return guidance for.'),
       },
@@ -28,6 +28,7 @@ export function registerPowerplatform(server: McpServer): void {
           JSON.stringify(
             {
               powerapps: data.powerapps,
+              modelDriven: data.modelDriven,
               powerpages: data.powerpages,
               pcf: data.pcf,
             },
@@ -36,7 +37,8 @@ export function registerPowerplatform(server: McpServer): void {
           )
         );
       }
-      const section = data[surface];
+      const key = surface === 'model-driven' ? 'modelDriven' : surface;
+      const section = data[key];
       if (!section) return textResult(`No guidance for surface "${surface}".`);
       return textResult(JSON.stringify(section, null, 2));
     }

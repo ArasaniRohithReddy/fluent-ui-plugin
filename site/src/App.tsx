@@ -104,9 +104,9 @@ const useStyles = makeStyles({
 type Feat = { c: string; Icon: React.FC<any>; t: string; d: string };
 const FEATURES: Feat[] = [
   { c: '#0f6cbd', Icon: Code24Regular, t: 'Web: React v9 and Web Components', d: 'All 61 components with real props, imports, usage, anatomy, states and do/don\'t guidance, plus accessible code generation.' },
-  { c: '#986f0b', Icon: DataBarVertical24Regular, t: 'Power BI', d: 'Every visual with its Learn doc, a Fluent 2 theme JSON, visual defaults, and PBIP/PBIR project scaffolding.' },
-  { c: '#5c2e91', Icon: Flash24Regular, t: 'Power Platform', d: 'Fluent 2 guidance for Power Apps, Power Pages, and PCF components.' },
-  { c: '#038387', Icon: Color24Regular, t: 'Design language', d: '22 topics covering color, typography, layout, motion, elevation, iconography, content, and responsible AI.' },
+  { c: '#986f0b', Icon: DataBarVertical24Regular, t: 'Power BI', d: 'Every visual with its Learn doc, a Fluent 2 theme JSON, and PBIP/PBIR scaffolding. Also applies Fluent 2 to an existing report and repairs the layout distortion the theme introduces.' },
+  { c: '#5c2e91', Icon: Flash24Regular, t: 'Power Platform', d: 'Fluent 2 guidance for Power Apps canvas, model-driven apps (the New Look), Power Pages, and PCF components.' },
+  { c: '#038387', Icon: Color24Regular, t: 'Design language', d: '23 topics covering color, typography, layout, motion, elevation, iconography, content, AI evaluation, and responsible AI.' },
   { c: '#107c10', Icon: PaintBrush24Regular, t: 'Tokens and theming', d: '366 design tokens across light, dark and high-contrast. Turn any brand color into a full Fluent theme.' },
   { c: '#ca5010', Icon: ArrowSwap24Regular, t: 'Migration', d: 'Adopt Fluent 2 in existing apps: Fluent UI v8 to v9, other design systems, or hardcoded values to tokens.' },
   { c: '#a4262c', Icon: Accessibility24Regular, t: 'Accessibility built in', d: 'A WCAG-aligned Fluent 2 checklist is enforced by default: names, roles, focus order, 4.5:1 contrast, and target sizes.' },
@@ -118,7 +118,7 @@ const USAGE: [string, string][] = [
   ['Build an accessible Fluent 2 sign-in form with email and password.', 'The web engineer generates FluentProvider, Field, Input and Button code with accessibility baked in.'],
   ['What is the design token for the brand color?', 'fluent_get_token returns colorBrandBackground = #0f6cbd, ready to use in makeStyles.'],
   ['Show me the Card component anatomy.', 'fluent_get_images returns the official anatomy diagram URL from fluent2.microsoft.design.'],
-  ['Make my Power BI report look like Fluent 2.', 'fluent_generate_powerbi_theme plus fluent_scaffold_pbip produce a themed PBIP/PBIR project.'],
+  ['Apply Fluent 2 to my existing Power BI report and fix the overlaps.', 'The Power BI designer applies the theme to your PBIR files, then detects and repairs theme-induced distortion while preserving bookmarks and navigation.'],
   ['Migrate this Fluent UI v8 button to v9.', 'fluent_migration_guidance maps the v8 API to the v9 component and tokens.'],
   ['Set our brand color to #742774 and remember it.', 'fluent_init_config, fluent_set_config and fluent_remember persist your preset for next time.'],
 ];
@@ -130,7 +130,7 @@ const TOOLS: [string, string][] = [
   ['fluent_get_token', 'Exact token value (color, type, spacing, radius)'],
   ['fluent_generate_theme', 'Turn a brand color into a Fluent light and dark theme'],
   ['fluent_generate_code', 'Accessible Fluent 2 React and Web-Components code'],
-  ['fluent_design_guidance', 'Design-language guidance across 22 topics'],
+  ['fluent_design_guidance', 'Design-language guidance across 23 topics'],
   ['fluent_migration_guidance', 'Adopt or migrate to Fluent 2 (v8 to v9)'],
   ['fluent_get_images', 'Direct URLs to diagrams, do/don\'t and Motion videos'],
   ['fluent_accessibility_checklist', 'Fluent 2 accessibility checklist'],
@@ -258,7 +258,7 @@ export function App() {
                 <Button appearance="secondary" size="large" icon={<Star20Regular />} as="a" href={REPO}>View on GitHub</Button>
               </div>
               <div className={s.stats}>
-                {[['61', 'Components (47 core, 14 AI)'], ['22', 'Design-language topics'], ['705', 'Source visuals indexed'], ['19', 'MCP tools'], ['366', 'Design tokens, 3 themes']].map(([b, l]) => (
+                {[['61', 'Components (47 core, 14 AI)'], ['23', 'Design-language topics'], ['705', 'Source visuals indexed'], ['19', 'MCP tools'], ['366', 'Design tokens, 3 themes']].map(([b, l]) => (
                   <div key={l} className={`${glass} ${s.stat}`}><span className={s.statB}>{b}</span><Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{l}</Caption1></div>
                 ))}
               </div>
@@ -376,7 +376,7 @@ export function App() {
                   <Body1 block style={{ color: 'rgba(255,255,255,.9)' }}>Every route in the official Fluent 2 site's own sitemap (114 routes) was cross-checked, so this is measured coverage, not an estimate.</Body1>
                 </div>
                 <div className={s.grid3}>
-                  {[['61 / 61', 'Web components (100%)'], ['22 / 22', 'Design and UX topics'], ['705', 'Source visuals with URLs'], ['35+', 'Power BI visuals catalogued'], ['12+', 'AI IDEs supported'], ['MIT', 'Open source license']].map(([b, l]) => (
+                  {[['61 / 61', 'Web components (100%)'], ['23 / 23', 'Design and UX topics'], ['705', 'Source visuals with URLs'], ['35+', 'Power BI visuals catalogued'], ['12+', 'AI IDEs supported'], ['MIT', 'Open source license']].map(([b, l]) => (
                     <div key={l} className={s.bandStat}><span className={s.statB} style={{ color: '#fff' }}>{b}</span><Caption1 style={{ color: 'rgba(255,255,255,.82)' }}>{l}</Caption1></div>
                   ))}
                 </div>

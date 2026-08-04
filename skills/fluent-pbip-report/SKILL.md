@@ -54,7 +54,7 @@ FluentReport.SemanticModel/
 1. `fluent_scaffold_pbip` (or copy `templates/pbip/`) → rename `FluentReport` to your report name (file + folder names and internal references). 2. Drop in your Fluent theme (or `fluent_generate_powerbi_theme`). 3. Point the semantic model at your data (edit TMDL / connect in Desktop). 4. Open the `.pbip` in Power BI Desktop; it upgrades preview schemas as needed. 5. Author visuals — they inherit the Fluent visual defaults.
 
 ## Caveats
-- PBIP/PBIR/TMDL and the Fluent base theme are **preview**; schemas are **monthly-versioned** (`$schema` like `report 3.0.0`, `visualContainer 2.4.0`, `reportThemeSchema-2.155`). Bump versions to target newer Desktop builds.
+- PBIP/PBIR/TMDL and the Fluent base theme are **preview**; schemas are **monthly-versioned** (`$schema` like `report 3.3.0`, `visualContainer 2.9.0`, `reportThemeSchema-2.156`). Bump versions to target newer Desktop builds.
 - TMDL is **tab-indented**. `compatibilityLevel` may auto-upgrade when opened in Desktop.
 
 ## Learn more

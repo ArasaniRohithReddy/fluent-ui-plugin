@@ -52,7 +52,7 @@ templates/pbip/
 | `page.json` | `fabric/item/report/definition/page/2.0.0` |
 | `visual.json` | `fabric/item/report/definition/visualContainer/2.4.0` |
 | `definition.pbism` | `fabric/item/semanticModel/definitionProperties/1.0.0` |
-| `Fluent2.json` (theme) | `…/powerbi-desktop-samples/…/reportThemeSchema-2.155.json` |
+| `Fluent2.json` (theme) | `…/powerbi-desktop-samples/…/reportThemeSchema-2.156.json` |
 
 ## Theme registration (how Fluent 2 is wired)
 

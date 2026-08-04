@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.155.json",
+  "$schema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.156.json",
   "name": "Fluent 2",
   "dataColors": [
     "#0F6CBD",
@@ -95,15 +95,21 @@
           {
             "show": true,
             "color": { "solid": { "color": "#D1D1D1" } },
-            "radius": 8
+            "radius": 8,
+            "width": 1
           }
         ],
         "dropShadow": [
           {
-            "show": false,
+            "show": true,
             "color": { "solid": { "color": "#000000" } },
             "position": "Outer",
-            "preset": "BottomRight"
+            "preset": "Custom",
+            "shadowSpread": 1,
+            "shadowBlur": 3,
+            "angle": 90,
+            "shadowDistance": 1,
+            "transparency": 90
           }
         ],
         "visualHeader": [
@@ -129,6 +135,11 @@
             "fontSize": 14,
             "fontFamily": "Segoe UI Semibold",
             "alignment": "left"
+          }
+        ],
+        "subTitle": [
+          {
+            "show": false
           }
         ],
         "spacing": [
@@ -161,6 +172,50 @@
           }
         ]
       }
-    }
+    },
+    "textbox": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }],
+        "title": [{ "show": false }],
+        "subTitle": [{ "show": false }]
+      }
+    },
+    "image": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }],
+        "title": [{ "show": false }]
+      }
+    },
+    "shape": {
+      "*": {
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }]
+      }
+    },
+    "basicShape": {
+      "*": {
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }]
+      }
+    },
+    "actionButton": {
+      "*": {
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }]
+      }
+    },
+    "barChart": { "*": { "labels": [{ "show": true }], "legend": [{ "show": true, "position": "Bottom" }] } },
+    "clusteredBarChart": { "*": { "labels": [{ "show": true }], "legend": [{ "show": true, "position": "Bottom" }] } },
+    "columnChart": { "*": { "labels": [{ "show": true }], "legend": [{ "show": true, "position": "Bottom" }] } },
+    "clusteredColumnChart": { "*": { "labels": [{ "show": true }], "legend": [{ "show": true, "position": "Bottom" }] } },
+    "lineChart": { "*": { "labels": [{ "show": true }], "legend": [{ "show": true, "position": "Bottom" }] } },
+    "lineClusteredColumnComboChart": { "*": { "labels": [{ "show": true }], "legend": [{ "show": true, "position": "Bottom" }] } },
+    "lineStackedColumnComboChart": { "*": { "labels": [{ "show": true }], "legend": [{ "show": true, "position": "Bottom" }] } },
+    "pieChart": { "*": { "labels": [{ "show": true }], "legend": [{ "show": true, "position": "Bottom" }] } },
+    "donutChart": { "*": { "labels": [{ "show": true }], "legend": [{ "show": true, "position": "Bottom" }] } }
   }
 }

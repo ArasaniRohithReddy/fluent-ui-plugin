@@ -33,7 +33,7 @@ Beyond greenfield, it also:
 | `fluent-design-reviewer` | Audits UI against Fluent 2 + a11y |
 
 ### 📚 Skills (`skills/`)
-`fluent-web-ui` · `fluent-theming` · `fluent-design-tokens` · `fluent-design-language` · `fluent-accessibility` · `fluent-ai-copilot-ui` · `fluent-powerbi-theme` · `fluent-pbip-report` · `fluent-powerapps` · `fluent-powerpages` · `fluent-pcf-component` · `fluent-migration` · `fluent-design-review` · `fluent-config`
+`fluent-web-ui` · `fluent-theming` · `fluent-design-tokens` · `fluent-design-language` · `fluent-accessibility` · `fluent-ai-copilot-ui` · `fluent-powerbi-theme` · `fluent-pbip-report` · `fluent-powerbi-adopt` · `fluent-powerapps` · `fluent-powerpages` · `fluent-pcf-component` · `fluent-migration` · `fluent-design-review` · `fluent-config`
 
 ### 🛠️ MCP tools (`mcp/`, Node + TypeScript)
 | Tool | Does |
@@ -79,7 +79,7 @@ Then ask your assistant things like:
 ## Grounding & provenance (why it's trustworthy)
 - **Design system:** crawled the official **fluent2.microsoft.design**, 69 public pages + **14 gated AI/Copilot component pages** (captured via authenticated employee session).
 - **Tokens & components:** extracted from installed **`@fluentui/react-theme` / `@fluentui/tokens` / `@fluentui/react-components`** source (real values, not guesses); 61 components catalogued with usage.
-- **Power BI:** theme JSON **schema-validated** against `reportThemeSchema-2.155`; PBIP/PBIR scaffold validated against the official Fabric item schemas.
+- **Power BI:** theme JSON **schema-validated** against `reportThemeSchema-2.156`; PBIP/PBIR scaffold validated against the official Fabric item schemas.
 - **Power Platform & host integration:** grounded in Microsoft Learn with cited sources.
 
 ## Repo layout
@@ -88,7 +88,7 @@ plugin.json            # plugin manifest (+ mirrors in .claude-plugin/.codex-plu
 .mcp.json              # bundled MCP server registration (Copilot dialect)
 AGENTS.md · CLAUDE.md  # portable instructions (fan out to most hosts)
 agents/                # 6 agents (*.agent.md)
-skills/                # 14 skills (SKILL.md)
+skills/                # 15 skills (SKILL.md)
 mcp/                   # MCP server: 19 tools (src/, dist/, data/)
 templates/pbip/        # PBIP/PBIR project template
 hosts/                 # per-IDE MCP config templates + install guide
