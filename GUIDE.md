@@ -38,7 +38,14 @@ Every host launches the same command: `node <PATH>/fluent-ui-plugin/mcp/dist/ind
 
 ### Step 2: register it in your host
 
-Pick your host below. There are three MCP config dialects; templates live in [`hosts/`](hosts/).
+The fastest path is the bundled helper, which registers `fluent-ui` into every AI IDE installed on your machine (absolute path, backs up each file, safe to re-run):
+
+```bash
+node hosts/register-mcp.mjs            # register into all installed hosts
+node hosts/register-mcp.mjs --dry-run  # preview first, write nothing
+```
+
+Then restart each host so it loads the tools. To register by hand instead, pick your host below. There are three MCP config dialects; templates live in [`hosts/`](hosts/).
 
 | Host | MCP config file | Dialect |
 |---|---|---|
