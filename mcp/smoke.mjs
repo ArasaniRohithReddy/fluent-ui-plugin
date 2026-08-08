@@ -6,6 +6,23 @@ const _realLog = console.log.bind(console);
 const _lines = [];
 console.log = (...a) => { const s = a.map(String).join(' '); _lines.push(s); _realLog(s); };
 
+/**
+ * True when the text contains a link whose hostname EXACTLY matches `hostname`
+ * (and whose path starts with `pathPrefix`). Parsing each URL avoids the
+ * substring checks that make host assertions unreliable.
+ */
+function hasLinkTo(text, hostname, pathPrefix = '') {
+  const urls = String(text).match(/https?:\/\/[^\s"'<>)\]]+/g) || [];
+  return urls.some((u) => {
+    try {
+      const parsed = new URL(u);
+      return parsed.hostname === hostname && parsed.pathname.startsWith(pathPrefix);
+    } catch {
+      return false;
+    }
+  });
+}
+
 const transport = new StdioClientTransport({ command: 'node', args: ['dist/index.js'] });
 const client = new Client({ name: 'smoke', version: '1.0.0' });
 await client.connect(transport);
@@ -25,9 +42,9 @@ console.log('powerplatform(pcf): ok=' + pp.content[0].text.includes('fluentDesig
 
 const pbv = await client.callTool({ name: 'fluent_powerbi_visuals', arguments: { category: 'AI-powered' } });
 const pbvText = pbv.content[0].text;
-console.log('powerbi_visuals(AI-powered): ok=' + (pbvText.includes('learn.microsoft.com') && (pbvText.toLowerCase().includes('decomposition') || pbvText.toLowerCase().includes('key influencers'))));
+console.log('powerbi_visuals(AI-powered): ok=' + (hasLinkTo(pbvText, 'learn.microsoft.com') && (pbvText.toLowerCase().includes('decomposition') || pbvText.toLowerCase().includes('key influencers'))));
 const pbvQ = await client.callTool({ name: 'fluent_powerbi_visuals', arguments: { query: 'trend over time' } });
-console.log('powerbi_visuals(query trend): ok=' + (pbvQ.content[0].text.toLowerCase().includes('line') && pbvQ.content[0].text.includes('learn.microsoft.com')));
+console.log('powerbi_visuals(query trend): ok=' + (pbvQ.content[0].text.toLowerCase().includes('line') && hasLinkTo(pbvQ.content[0].text, 'learn.microsoft.com')));
 
 const a11y = await client.callTool({ name: 'fluent_accessibility_checklist', arguments: {} });
 console.log('accessibility: ok=' + a11y.content[0].text.includes('4.5:1'));
@@ -75,7 +92,7 @@ console.log('design_guidance(design-tokens): ok=' + (dgDTText.length > 0 && dgDT
 
 const imgAnat = await client.callTool({ name: 'fluent_get_images', arguments: { owner: 'Card', kind: 'anatomy' } });
 const imgAnatText = imgAnat.content[0].text;
-console.log('get_images(Card anatomy): ok=' + (imgAnatText.includes('https://fluent2websitecdn.azureedge.net/cdn/card1') && imgAnatText.toLowerCase().includes('card header')));
+console.log('get_images(Card anatomy): ok=' + (hasLinkTo(imgAnatText, 'fluent2websitecdn.azureedge.net', '/cdn/card1') && imgAnatText.toLowerCase().includes('card header')));
 const imgVid = await client.callTool({ name: 'fluent_get_images', arguments: { owner: 'motion', type: 'video' } });
 const imgVidText = imgVid.content[0].text;
 console.log('get_images(motion videos): ok=' + (imgVidText.includes('/assets/video/motion/') && imgVidText.includes('.mp4')));

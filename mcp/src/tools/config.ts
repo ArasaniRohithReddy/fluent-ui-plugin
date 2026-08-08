@@ -143,6 +143,11 @@ function randomId(): string {
 /** Segment names that could pollute Object.prototype — never walked into or assigned. */
 const DANGEROUS_KEYS = new Set(['__proto__', 'prototype', 'constructor']);
 
+/** True when a key is safe to assign onto a plain object (blocks prototype pollution). */
+function isSafeKey(key: string): boolean {
+  return key !== '__proto__' && key !== 'prototype' && key !== 'constructor';
+}
+
 /** Set a nested value by dot-path, creating intermediate objects as needed. Refuses prototype-polluting paths. */
 function setPath(obj: Record<string, any>, dotPath: string, value: any): void {
   const parts = dotPath.split('.');
@@ -150,6 +155,7 @@ function setPath(obj: Record<string, any>, dotPath: string, value: any): void {
   let node = obj;
   for (let i = 0; i < parts.length - 1; i++) {
     const key = parts[i];
+    if (!isSafeKey(key)) return; // re-checked per segment so the guard always dominates the write
     if (
       !Object.prototype.hasOwnProperty.call(node, key) ||
       typeof node[key] !== 'object' ||
@@ -160,7 +166,9 @@ function setPath(obj: Record<string, any>, dotPath: string, value: any): void {
     }
     node = node[key];
   }
-  node[parts[parts.length - 1]] = value;
+  const leaf = parts[parts.length - 1];
+  if (!isSafeKey(leaf)) return;
+  node[leaf] = value;
 }
 
 /** Collect every leaf dot-path of an object (arrays are treated as leaves). */
@@ -197,6 +205,7 @@ function overlay(
 ): void {
   if (!src || typeof src !== 'object' || Array.isArray(src)) return;
   for (const [k, v] of Object.entries(src)) {
+    if (!isSafeKey(k)) continue; // never copy prototype-polluting keys out of user JSON
     if (prefix === '' && (k === '$schema' || k === 'version')) continue;
     if (v === undefined || v === null) continue;
     const path = prefix ? `${prefix}.${k}` : k;
