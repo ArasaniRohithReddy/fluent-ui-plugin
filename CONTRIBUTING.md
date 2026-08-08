@@ -16,7 +16,7 @@ By participating you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 | Path | What it holds |
 |------|---------------|
-| `mcp/` | The MCP server: 19 tools in `src/`, grounded data in `data/`, build output in `dist/`. |
+| `mcp/` | The MCP server: 23 tools in `src/`, grounded data in `data/`, build output in `dist/`. |
 | `agents/` | The 6 agent definitions (`*.agent.md`). |
 | `skills/` | The 15 skills (`SKILL.md`). |
 | `templates/pbip/` | The Power BI PBIP/PBIR project template. |
