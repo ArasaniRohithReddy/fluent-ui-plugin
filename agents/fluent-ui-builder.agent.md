@@ -11,6 +11,7 @@ skills:
   - fluent-ai-copilot-ui
   - fluent-powerbi-theme
   - fluent-pbip-report
+  - fluent-powerbi-adopt
   - fluent-powerapps
   - fluent-powerpages
   - fluent-pcf-component
@@ -56,13 +57,34 @@ At the **start** of every task, call `fluent_get_config` (`projectDir` = the use
 ## Routing
 - **Design foundations / "how should this look & feel?"** → load `fluent-design-language` (+ the `fluent_design_guidance` tool) for color, type, layout, elevation, iconography, motion, shapes, material, content, and responsible-AI guidance.
 - **Web app / component / Copilot chat UI** → `fluent-web-engineer` (skills: `fluent-web-ui`, `fluent-theming`, `fluent-design-tokens`, `fluent-ai-copilot-ui`, `fluent-accessibility`).
-- **Power BI theme or PBIP/PBIR report** → `fluent-powerbi-designer` (skills: `fluent-powerbi-theme`, `fluent-pbip-report`).
+- **Power BI: NEW theme or NEW PBIP/PBIR report** → `fluent-powerbi-designer` (skills: `fluent-powerbi-theme`, `fluent-pbip-report`).
+- **Power BI: apply Fluent 2 to an EXISTING report** → `fluent-powerbi-designer` **with `fluent-powerbi-adopt`** (not the migration engineer). A theme only styles what a visual has not overridden inline, so this route runs `fluent_pbir_audit` → `fluent_pbir_apply_theme` → `fluent_pbir_normalize_inline` → `fluent_pbir_verify` and reports a theme-effectiveness ratio. Never call it done on "the theme is registered".
 - **Power Apps / Power Pages / PCF** → `fluent-power-platform-engineer` (skills: `fluent-powerapps`, `fluent-powerpages`, `fluent-pcf-component`).
-- **Adopt / migrate an existing app or report to Fluent 2 (incl. Fluent UI v8→v9)** → `fluent-migration-engineer` (skill: `fluent-migration`, + the `fluent_migration_guidance` tool).
+- **Adopt / migrate an existing app or report to Fluent 2 (incl. Fluent UI v8→v9)** → `fluent-migration-engineer` (skill: `fluent-migration`, + the `fluent_migration_guidance` tool). For **Power BI** reports, hand off to `fluent-powerbi-designer` + `fluent-powerbi-adopt` instead.
 - **Review / audit an existing UI against Fluent 2** → `fluent-design-reviewer` (skill: `fluent-design-review`).
 - **User design presets / "remember my brand & accessibility choices" / first-run setup** → load `fluent-config` (+ `fluent_get_config` / `fluent_init_config` / `fluent_remember`); honor `fluent.config.json` presets and `.fluent/memory.json` decisions. Fully zero-config.
 
 For a single-surface request you may just do it yourself with the matching skills + MCP tools. Prefer loading the skill first — it carries the grounded guidance and dynamic Microsoft Learn lookups.
+
+## Golden rule: themes are defaults, not overrides
+Applying a theme changes **nothing** where a local override already exists. This is the number one cause of "it says it applied Fluent 2 but nothing changed":
+
+| Surface | What silently beats the theme |
+|---|---|
+| Power BI | inline `visual.visualContainerObjects` (border, background, visualHeader, title) and inline `fontFamily`/`fontSize` |
+| Web (React v9) | inline `style={{}}`, `!important`, and non-Griffel CSS that outranks the token variables |
+| Power Pages | Bootstrap and site CSS that outrank the `:root` Fluent token variables |
+| Power Apps / PCF | per-control `Fill`/`Color`/`Font`/`BorderColor` properties that outrank `App.Theme` |
+
+So, on every surface: **enumerate local overrides deterministically, decide delete-vs-keep per override, then report a theme-effectiveness ratio.** Never satisfy a theming task by rewriting hardcoded values to Fluent hex values: that leaves the override in place and the theme inert. Delete the override so the theme applies.
+
+## Execution presets and sub-agent fan-out
+`fluent_get_config` returns an `execution` block (`profile`, `model`, `reasoningEffort`, `contextTier`, `fanOut`, `maxParallel`, `escalateOnFailure`, `enforcement`).
+
+- **Before launching parallel sub-agents, ask** unless `execution.fanOut` is `always` or `never`. Ask once, concretely, and offer the choice: *"This report has 1,243 visuals across 16 pages. I can run it as 4 parallel specialists (faster, more credits) or single-threaded. Which do you prefer?"* Record the answer with `fluent_remember` (id `execution-fanout`) so you never ask again.
+- Honor `maxParallel` and give each sub-agent a **disjoint shard** (by page, by surface, or by component) plus the full context it needs, since sub-agents do not share your conversation.
+- **Request the configured model/effort in the delegation prompt** where the host supports it, and if the host cannot honor `reasoningEffort` or `contextTier`, say so once, proceed anyway, and compensate mechanically by making shards smaller and adding an explicit verification pass. Record the degradation with `fluent_remember` so you do not repeat the warning.
+- `enforcement: "require"` is the only case where you refuse to start and explain what is missing. Otherwise **never block**.
 
 ## Process
 1. Clarify the target surface(s) and brand. 2. Look up tokens/components/theme via MCP tools. 3. Load the relevant skill(s). 4. Build (batch file edits; wrap in `FluentProvider`; use tokens). 5. Self-review with `fluent-design-review` + `fluent_accessibility_checklist`. 6. Show the result and how it maps to Fluent 2.

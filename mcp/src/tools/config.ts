@@ -45,6 +45,50 @@ const DEFAULTS: Record<string, any> = {
   targets: ['web-react'],
   migration: { from: 'none', strategy: 'incremental' },
   content: { capitalization: 'sentence' },
+  // Per-surface presets. Every surface gets its own knobs so "apply Fluent 2"
+  // means something concrete on Power BI, web, Power Apps, Power Pages and PCF.
+  surfaces: {
+    powerbi: {
+      themeName: 'Fluent 2',
+      // Clearing theme-defeating inline overrides is what actually makes a report
+      // look like Fluent 2. ask | always | never.
+      normalizeInline: 'ask',
+      normalizeKeys: ['border', 'background', 'visualHeader', 'title', 'dropShadow', 'spacing'],
+      normalizeFonts: true,
+      preserveBookmarked: true,
+      effectivenessTarget: 0.9,
+      canvas: 'keep',
+    },
+    web: {
+      framework: 'react-v9',
+      styling: 'griffel',
+      ssr: false,
+      portalCompat: false,
+    },
+    powerapps: {
+      controls: 'modern',
+      themeSource: 'app-theme',
+    },
+    powerpages: {
+      bootstrap: 'v5',
+      tokenCss: true,
+    },
+    pcf: {
+      controlType: 'virtual',
+      platformLibraries: true,
+    },
+  },
+  // How heavy work should be run, and whether agents may fan out to sub-agents.
+  execution: {
+    profile: 'balanced',
+    model: 'inherit',
+    reasoningEffort: 'inherit',
+    contextTier: 'inherit',
+    fanOut: 'ask',
+    maxParallel: 4,
+    escalateOnFailure: true,
+    enforcement: 'advise',
+  },
 };
 
 /** Look up the built-in default value at a dot-path (or undefined). */
@@ -339,6 +383,28 @@ export function registerConfig(server: McpServer): void {
           .enum(['fluent-v8', 'mui', 'bootstrap', 'antd', 'chakra', 'css', 'none'])
           .optional()
           .describe('Existing design system being migrated from. Sets migration.from.'),
+        executionProfile: z
+          .enum(['fast', 'balanced', 'thorough'])
+          .optional()
+          .describe(
+            'How heavy work should be run. "fast" = cheaper, sequential; "balanced" = default; "thorough" = strongest model, highest effort, parallel specialists. Sets execution.profile and derives execution.reasoningEffort / contextTier / maxParallel.'
+          ),
+        fanOut: z
+          .enum(['ask', 'always', 'never'])
+          .optional()
+          .describe(
+            'Whether agents may launch parallel sub-agents for large jobs. "ask" (default) confirms with the user each time and remembers the answer; "always" proceeds; "never" stays single-agent. Sets execution.fanOut.'
+          ),
+        powerbiNormalizeInline: z
+          .enum(['ask', 'always', 'never'])
+          .optional()
+          .describe(
+            'Power BI: whether to clear the inline visual overrides that defeat the theme (this is what actually makes a report look like Fluent 2). Sets surfaces.powerbi.normalizeInline.'
+          ),
+        webFramework: z
+          .enum(['react-v9', 'web-components'])
+          .optional()
+          .describe('Web: which Fluent 2 implementation to build with. Sets surfaces.web.framework.'),
         force: z
           .boolean()
           .default(false)
@@ -355,6 +421,10 @@ export function registerConfig(server: McpServer): void {
       controlSize,
       iconStyle,
       migrationFrom,
+      executionProfile,
+      fanOut,
+      powerbiNormalizeInline,
+      webFramework,
       force,
     }) => {
       const root = projectRoot(projectDir);
@@ -394,6 +464,23 @@ export function registerConfig(server: McpServer): void {
       if (iconStyle) merged.iconStyle = iconStyle;
       if (targets && targets.length) merged.targets = targets;
       if (migrationFrom) merged.migration.from = migrationFrom;
+      if (executionProfile) {
+        merged.execution.profile = executionProfile;
+        // Derive the concrete knobs from the profile so users never hand-pick
+        // model IDs, token counts, or a parallelism number.
+        const derived: Record<string, { reasoningEffort: string; contextTier: string; maxParallel: number }> = {
+          fast: { reasoningEffort: 'medium', contextTier: 'default', maxParallel: 1 },
+          balanced: { reasoningEffort: 'high', contextTier: 'default', maxParallel: 2 },
+          thorough: { reasoningEffort: 'max', contextTier: 'long_context', maxParallel: 4 },
+        };
+        Object.assign(merged.execution, derived[executionProfile]);
+      }
+      if (fanOut) merged.execution.fanOut = fanOut;
+      if (powerbiNormalizeInline) merged.surfaces.powerbi.normalizeInline = powerbiNormalizeInline;
+      if (webFramework) {
+        merged.surfaces.web.framework = webFramework;
+        if (webFramework === 'web-components') merged.surfaces.web.styling = 'css-vars';
+      }
 
       const content = { $schema: SCHEMA_URL, version: '1.0', ...merged };
       const werr = tryWriteJson(cfgPath, content);

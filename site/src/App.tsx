@@ -10,6 +10,7 @@ import {
   Brain24Regular, WeatherMoon20Regular, WeatherSunny20Regular, Copy20Regular,
   Checkmark20Regular, ArrowRight20Regular, Star20Regular, Open16Regular, Sparkle20Filled,
   Bug24Regular, Lightbulb24Regular, Chat24Regular, BranchFork24Regular, ShieldCheckmark24Regular, PeopleCommunity24Regular,
+  Eye20Regular,
 } from '@fluentui/react-icons';
 
 const REPO = 'https://github.com/ArasaniRohithReddy/fluent-ui-plugin';
@@ -99,6 +100,13 @@ const useStyles = makeStyles({
 
   footer: { borderTop: `1px solid var(--glass-brd)`, ...shorthands.padding('34px', 0), marginTop: '28px', backgroundColor: 'var(--glass-bg)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' },
   footRow: { display: 'flex', flexWrap: 'wrap', gap: '18px', alignItems: 'center', justifyContent: 'space-between' },
+  visitors: {
+    display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '14px',
+    ...shorthands.padding('6px', '12px'), borderRadius: tokens.borderRadiusMedium,
+    backgroundColor: 'var(--glass-bg)', ...shorthands.border('1px', 'solid', 'var(--glass-brd)'),
+    color: tokens.colorNeutralForeground3,
+  },
+  visitorsImg: { display: 'block', height: '20px' },
 });
 
 type Feat = { c: string; Icon: React.FC<any>; t: string; d: string };
@@ -204,6 +212,28 @@ function CodeBlock({ code }: { code: string }) {
     <div className={s.code}>
       <Button className={s.copyBtn} size="small" appearance="subtle" icon={done ? <Checkmark20Regular /> : <Copy20Regular />} style={{ color: '#e9eef5' }} onClick={copy} aria-label="Copy code" />
       <pre className={s.pre}>{code}</pre>
+    </div>
+  );
+}
+
+/**
+ * Visitor counter. GitHub Pages is static, so the count comes from a hosted
+ * badge service; loading the image is what records the visit. The label and
+ * chrome are native Fluent so the footer stays on-brand, and the whole chip
+ * hides itself if the service is unavailable.
+ */
+function VisitorCount() {
+  const s = useStyles();
+  const [failed, setFailed] = React.useState(false);
+  if (failed) return null;
+  const src =
+    'https://hits.sh/arasanirohithreddy.github.io/fluent-ui-plugin.svg' +
+    '?style=flat-square&label=&color=0f6cbd&labelColor=0f6cbd';
+  return (
+    <div className={s.visitors}>
+      <Eye20Regular aria-hidden="true" />
+      <Caption1>Visitors</Caption1>
+      <img className={s.visitorsImg} src={src} alt="Total visitors to this site" loading="lazy" onError={() => setFailed(true)} />
     </div>
   );
 }
@@ -410,6 +440,7 @@ export function App() {
               <div>
                 <span className={s.brand} style={{ marginBottom: 8 }}><span className={s.logo}><Sparkle20Filled /></span> Fluent UI 2.0 Plugin</span>
                 <Caption1 block style={{ color: tokens.colorNeutralForeground3, marginTop: 8, maxWidth: '54ch' }}>Built with the Microsoft Fluent 2 design system (Fluent UI React v9). This site is a demo of the plugin's own output. It is not an official Microsoft product.</Caption1>
+                <VisitorCount />
               </div>
               <div style={{ display: 'flex', gap: 12 }}>
                 <Button appearance="secondary" as="a" href={REPO} icon={<Star20Regular />}>GitHub</Button>
