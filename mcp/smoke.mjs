@@ -112,7 +112,7 @@ console.log('design_guidance(motion): ok=' + (dgText.length > 0 && dgText.includ
 const dgAll = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'all' } });
 const dgAllText = dgAll.content[0].text;
 let dgTopics = 0; try { const j = JSON.parse(dgAllText); dgTopics = Object.keys(j.topics || {}).length; } catch {}
-console.log('design_guidance(all): topics=' + dgTopics + ' ok=' + (dgTopics === 23 && dgAllText.includes('design-principles') && dgAllText.includes('design-tokens')));
+console.log('design_guidance(all): topics=' + dgTopics + ' ok=' + (dgTopics === 36 && dgAllText.includes('design-principles') && dgAllText.includes('design-tokens')));
 const dgEvals = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'content-engineering-evals' } });
 const dgEvalsText = dgEvals.content[0].text;
 console.log('design_guidance(content-engineering-evals): ok=' + (dgEvalsText.includes('golden set') && dgEvalsText.includes('prompt set') && dgEvalsText.includes('rubric')));

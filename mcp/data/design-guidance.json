@@ -1,8 +1,9 @@
 {
   "$meta": {
     "title": "Fluent 2 design-language reference",
-    "source": "Synthesized faithfully from the official Fluent 2 guide pages on https://fluent2.microsoft.design (see research/fluent-design.md). All 23 topics are deep-parsed from their source pages: each topic carries the page summary, expanded keyPoints, a 'sections' array (one entry per subsection heading + its text), a 'values' object of concrete stated values, an 'images' array (alt text, nearest-heading section, and CDN asset slug for every image/gif — empty-alt images retain a descriptive asset slug), and a 'doDont' object where the page pairs do/don't specimens. Concrete values (type ramp incl. per-platform ramps, spacing scale, corner radii, shadow ramp, breakpoints, motion tokens, RAI rubric) are quoted from the source pages; token values are cross-checked against mcp/data/fluent-tokens.json.",
-    "docBase": "https://fluent2.microsoft.design"
+    "source": "Synthesized faithfully from the official Fluent 2 guide pages on https://fluent2.microsoft.design (see research/fluent-design.md). All 36 topics are deep-parsed from their source pages: each topic carries the page summary, expanded keyPoints, a 'sections' array (one entry per subsection heading + its text), a 'values' object of concrete stated values, an 'images' array (alt text, nearest-heading section, and CDN asset slug for every image/gif — empty-alt images retain a descriptive asset slug), and a 'doDont' object where the page pairs do/don't specimens. Concrete values (type ramp incl. per-platform ramps, spacing scale, corner radii, shadow ramp, breakpoints, motion tokens, RAI rubric) are quoted from the source pages; token values are cross-checked against mcp/data/fluent-tokens.json.",
+    "docBase": "https://fluent2.microsoft.design",
+    "topicCount": 36
   },
   "topics": {
     "design-principles": {
@@ -4909,22 +4910,86 @@
       "doDont": {
         "$comment": "Verified pair-by-pair against the live responsible-AI page (2026-08). Each entry keeps the DO and its matching DON'T together so the guidance can never be read inverted.",
         "pairs": [
-          { "section": "Labeling and attribution", "do": "Make AI presence and reasoning visible", "dont": "Without indicators, users can't tell they're looking at AI output" },
-          { "section": "System and data scope", "do": "Be specific about what data is and isn't used", "dont": "Vague data descriptions prevent users from giving meaningful consent" },
-          { "section": "Voice and tone", "do": "Avoid false familiarity", "dont": "Sycophantic language creates false familiarity and inflates trust" },
-          { "section": "Voice and tone", "do": "Report AI actions factually", "dont": "Suggesting AI has opinions or desires misleads users about how it works" },
-          { "section": "Scope communication", "do": "Represent capabilities and limitations accurately", "dont": "Overpromising scope sets false expectations that erode trust" },
-          { "section": "Latency messaging", "do": "Use meaningful latency messaging", "dont": "Vague latency messaging obscures what the AI is actually doing" },
-          { "section": "Output framing and accuracy cues", "do": "Frame output as potentially incomplete", "dont": "Presenting output as fully reliable encourages overreliance" },
-          { "section": "Action labels and controls", "do": "Label actions clearly and consistently", "dont": "Vague action labels make it unclear what will happen" },
-          { "section": "AI activation", "do": "Explicitly communicate when AI is activated", "dont": "Silent AI activation removes user awareness and the ability to opt out" },
-          { "section": "Consent and privacy language", "do": "Be specific about what data you're requesting permission to use", "dont": "Vague consent language prevents users from making informed decisions" },
-          { "section": "Settings access", "do": "Tell users exactly how to change a setting later", "dont": "Leaving settings vaguely accessible makes them hard to find later" },
-          { "section": "Feedback transparency", "do": "Be explicit about why feedback is collected", "dont": "Vague data-use language prevents informed consent" },
-          { "section": "Feedback categorization and controls", "do": "Give users meaningful feedback categories", "dont": "Sacrificing clarity for brevity makes feedback categories meaningless" },
-          { "section": "Agent interactions", "do": "Be transparent about agent capabilities and limitations", "dont": "Vague confidence about agent scope miscalibrates user expectations" },
-          { "section": "Agent interactions", "do": "Tell users how to correct, refine, or reverse agent actions", "dont": "Presenting agent actions as final removes user oversight" },
-          { "section": "Error messaging", "do": "Provide actionable error messages", "dont": "Error messages with no follow-up actions leave users with nowhere to go" }
+          {
+            "section": "Labeling and attribution",
+            "do": "Make AI presence and reasoning visible",
+            "dont": "Without indicators, users can't tell they're looking at AI output"
+          },
+          {
+            "section": "System and data scope",
+            "do": "Be specific about what data is and isn't used",
+            "dont": "Vague data descriptions prevent users from giving meaningful consent"
+          },
+          {
+            "section": "Voice and tone",
+            "do": "Avoid false familiarity",
+            "dont": "Sycophantic language creates false familiarity and inflates trust"
+          },
+          {
+            "section": "Voice and tone",
+            "do": "Report AI actions factually",
+            "dont": "Suggesting AI has opinions or desires misleads users about how it works"
+          },
+          {
+            "section": "Scope communication",
+            "do": "Represent capabilities and limitations accurately",
+            "dont": "Overpromising scope sets false expectations that erode trust"
+          },
+          {
+            "section": "Latency messaging",
+            "do": "Use meaningful latency messaging",
+            "dont": "Vague latency messaging obscures what the AI is actually doing"
+          },
+          {
+            "section": "Output framing and accuracy cues",
+            "do": "Frame output as potentially incomplete",
+            "dont": "Presenting output as fully reliable encourages overreliance"
+          },
+          {
+            "section": "Action labels and controls",
+            "do": "Label actions clearly and consistently",
+            "dont": "Vague action labels make it unclear what will happen"
+          },
+          {
+            "section": "AI activation",
+            "do": "Explicitly communicate when AI is activated",
+            "dont": "Silent AI activation removes user awareness and the ability to opt out"
+          },
+          {
+            "section": "Consent and privacy language",
+            "do": "Be specific about what data you're requesting permission to use",
+            "dont": "Vague consent language prevents users from making informed decisions"
+          },
+          {
+            "section": "Settings access",
+            "do": "Tell users exactly how to change a setting later",
+            "dont": "Leaving settings vaguely accessible makes them hard to find later"
+          },
+          {
+            "section": "Feedback transparency",
+            "do": "Be explicit about why feedback is collected",
+            "dont": "Vague data-use language prevents informed consent"
+          },
+          {
+            "section": "Feedback categorization and controls",
+            "do": "Give users meaningful feedback categories",
+            "dont": "Sacrificing clarity for brevity makes feedback categories meaningless"
+          },
+          {
+            "section": "Agent interactions",
+            "do": "Be transparent about agent capabilities and limitations",
+            "dont": "Vague confidence about agent scope miscalibrates user expectations"
+          },
+          {
+            "section": "Agent interactions",
+            "do": "Tell users how to correct, refine, or reverse agent actions",
+            "dont": "Presenting agent actions as final removes user oversight"
+          },
+          {
+            "section": "Error messaging",
+            "do": "Provide actionable error messages",
+            "dont": "Error messages with no follow-up actions leave users with nowhere to go"
+          }
         ],
         "do": [
           "Make AI presence and reasoning visible",
@@ -5385,23 +5450,65 @@
         "Evals are not set-and-forget: revisit prompts, examples, and criteria as real usage and risks change."
       ],
       "sections": [
-        { "heading": "What is an eval?", "text": "At its simplest, an eval is a test. You give an AI system an input, then apply defined criteria to judge whether the output meets expectations for a specific job and scenario. Evals are used to clarify what 'good' AI output means in a given context, compare approaches or iterations, and detect changes in quality as systems evolve. Many UX practitioners contribute without running evals directly, by helping define scenarios, quality criteria, examples, or failure patterns that others formalize or automate." },
-        { "heading": "Why evals matter for UX", "text": "An AI output can be technically correct and still be a poor user experience: confusing, low trust, misaligned with intent, or risky to act on. UX input is valuable because it focuses on whether behavior is useful in a real context, understandable without extra interpretation, and trustworthy enough to act on. Without a human-centered lens, systems optimize for what is easiest to measure rather than what matters most to people. Evals make human judgment more explicit and more repeatable." },
-        { "heading": "Core components of an eval", "text": "Most evals include some version of the same core components. Prompt set: a collection of prompts representing user goals or intents, written in natural language that reflects how people actually describe those goals. Context or data set: grounding material the system may reference, such as files, emails, chats, or records. Rubric: the criteria used to judge output quality or behavior. Golden set: a small collection of examples where the input and the expected correct answer (ground truth) have been reviewed and agreed on, used to compare the consistency of outputs. Start simple and add structure over time." },
-        { "heading": "1. Define the audience and scenario", "text": "Clarify who the output is for and what the user is trying to accomplish, so evals stay grounded in real customer scenarios. Ask: who is the system working for; what purpose does the output serve; which tasks do users need the system to do; and what does success look like from the customer's perspective." },
-        { "heading": "2. Define the data boundary", "text": "Clarify which information the system is allowed to access and rely on, and what it should ignore. These decisions are typically defined by humans (retrieval setup, system design, or MCP configuration) and reduce confident but unsupported outputs. Consider which sources are in scope, which are out of scope, what 'up to date' means (time window), and which source is authoritative when sources conflict." },
-        { "heading": "3. Build a prompt set", "text": "Prompt sets reflect how people actually ask for help, using real user language rather than internal feature terms, and include ambiguity to test clarifying questions. Include common straightforward prompts, short prompts with missing context, and ambiguous or edge-case requests." },
-        { "heading": "4. Define 'good' behavior", "text": "Define what good output looks like in this scenario, using examples and criteria that describe what information is present and how it should be presented, then use the learnings to guide model behavior, prompt design, and the end-to-end UX. Good output must not imply certainty when context is missing; if required information is unavailable, the response must not present guesses as facts." },
-        { "heading": "5. Turn quality criteria into assertions", "text": "Translate 'good' into clear, testable statements that can be checked consistently across outputs. Some assertions are for automated (LLM) evaluation and some require human judgment; most evals use both, so be clear which type you are writing and how they work together." },
-        { "heading": "6. Test your eval", "text": "Run the prompt set and score each output against your assertions using a mix of automated checks and human review. Automated checks verify specific, observable requirements; human review determines whether the output is actually useful and ready to act on. Record scores and failure reasons." },
-        { "heading": "7. Refresh over time", "text": "Evals are not set-and-forget. As the product changes and people use it in new ways, revisit prompts (add the requests you see in real usage), examples (update them when your preferred format or workflow changes), and criteria (adjust when expectations or risks change, for example stricter rules for high-stakes scenarios)." }
+        {
+          "heading": "What is an eval?",
+          "text": "At its simplest, an eval is a test. You give an AI system an input, then apply defined criteria to judge whether the output meets expectations for a specific job and scenario. Evals are used to clarify what 'good' AI output means in a given context, compare approaches or iterations, and detect changes in quality as systems evolve. Many UX practitioners contribute without running evals directly, by helping define scenarios, quality criteria, examples, or failure patterns that others formalize or automate."
+        },
+        {
+          "heading": "Why evals matter for UX",
+          "text": "An AI output can be technically correct and still be a poor user experience: confusing, low trust, misaligned with intent, or risky to act on. UX input is valuable because it focuses on whether behavior is useful in a real context, understandable without extra interpretation, and trustworthy enough to act on. Without a human-centered lens, systems optimize for what is easiest to measure rather than what matters most to people. Evals make human judgment more explicit and more repeatable."
+        },
+        {
+          "heading": "Core components of an eval",
+          "text": "Most evals include some version of the same core components. Prompt set: a collection of prompts representing user goals or intents, written in natural language that reflects how people actually describe those goals. Context or data set: grounding material the system may reference, such as files, emails, chats, or records. Rubric: the criteria used to judge output quality or behavior. Golden set: a small collection of examples where the input and the expected correct answer (ground truth) have been reviewed and agreed on, used to compare the consistency of outputs. Start simple and add structure over time."
+        },
+        {
+          "heading": "1. Define the audience and scenario",
+          "text": "Clarify who the output is for and what the user is trying to accomplish, so evals stay grounded in real customer scenarios. Ask: who is the system working for; what purpose does the output serve; which tasks do users need the system to do; and what does success look like from the customer's perspective."
+        },
+        {
+          "heading": "2. Define the data boundary",
+          "text": "Clarify which information the system is allowed to access and rely on, and what it should ignore. These decisions are typically defined by humans (retrieval setup, system design, or MCP configuration) and reduce confident but unsupported outputs. Consider which sources are in scope, which are out of scope, what 'up to date' means (time window), and which source is authoritative when sources conflict."
+        },
+        {
+          "heading": "3. Build a prompt set",
+          "text": "Prompt sets reflect how people actually ask for help, using real user language rather than internal feature terms, and include ambiguity to test clarifying questions. Include common straightforward prompts, short prompts with missing context, and ambiguous or edge-case requests."
+        },
+        {
+          "heading": "4. Define 'good' behavior",
+          "text": "Define what good output looks like in this scenario, using examples and criteria that describe what information is present and how it should be presented, then use the learnings to guide model behavior, prompt design, and the end-to-end UX. Good output must not imply certainty when context is missing; if required information is unavailable, the response must not present guesses as facts."
+        },
+        {
+          "heading": "5. Turn quality criteria into assertions",
+          "text": "Translate 'good' into clear, testable statements that can be checked consistently across outputs. Some assertions are for automated (LLM) evaluation and some require human judgment; most evals use both, so be clear which type you are writing and how they work together."
+        },
+        {
+          "heading": "6. Test your eval",
+          "text": "Run the prompt set and score each output against your assertions using a mix of automated checks and human review. Automated checks verify specific, observable requirements; human review determines whether the output is actually useful and ready to act on. Record scores and failure reasons."
+        },
+        {
+          "heading": "7. Refresh over time",
+          "text": "Evals are not set-and-forget. As the product changes and people use it in new ways, revisit prompts (add the requests you see in real usage), examples (update them when your preferred format or workflow changes), and criteria (adjust when expectations or risks change, for example stricter rules for high-stakes scenarios)."
+        }
       ],
       "values": {
         "coreComponents": [
-          { "component": "Prompt set", "description": "Prompts representing user goals or intents, in natural language that reflects how people actually describe those goals." },
-          { "component": "Context or data set", "description": "Grounding material the system may reference: files, emails, chats, or records." },
-          { "component": "Rubric", "description": "The criteria used to judge output quality or behavior." },
-          { "component": "Golden set", "description": "A small set of reviewed input plus expected-correct-answer (ground truth) examples, used to compare output consistency." }
+          {
+            "component": "Prompt set",
+            "description": "Prompts representing user goals or intents, in natural language that reflects how people actually describe those goals."
+          },
+          {
+            "component": "Context or data set",
+            "description": "Grounding material the system may reference: files, emails, chats, or records."
+          },
+          {
+            "component": "Rubric",
+            "description": "The criteria used to judge output quality or behavior."
+          },
+          {
+            "component": "Golden set",
+            "description": "A small set of reviewed input plus expected-correct-answer (ground truth) examples, used to compare output consistency."
+          }
         ],
         "sevenDecisions": [
           "Define the audience and scenario",
@@ -5674,7 +5781,10 @@
           "Don't use the full-color Copilot icon where it would cause visual clutter or a glaring divergence in the UI"
         ]
       },
-      "docUrl": "https://fluent2.microsoft.design/entry-points/"
+      "docUrl": "https://fluent2.microsoft.design/entry-points/",
+      "accessStatus": "employee-gated",
+      "capturedAt": "2026-07",
+      "accessNote": "This page now requires Microsoft employee sign-in (302 to login.microsoftonline.com). This snapshot cannot be re-validated from a public crawl, so treat it as a pinned capture rather than live content."
     },
     "personality-principles": {
       "title": "Personality principles (Working with AI)",
@@ -5795,7 +5905,10 @@
           "Use exclamatory introductions, unnecessary apologizing, or filler that doesn't contribute anything helpful"
         ]
       },
-      "docUrl": "https://fluent2.microsoft.design/personality-principles/"
+      "docUrl": "https://fluent2.microsoft.design/personality-principles/",
+      "accessStatus": "employee-gated",
+      "capturedAt": "2026-07",
+      "accessNote": "This page now requires Microsoft employee sign-in (302 to login.microsoftonline.com). This snapshot cannot be re-validated from a public crawl, so treat it as a pinned capture rather than live content."
     },
     "copilot-errors": {
       "title": "Copilot errors (Working with AI)",
@@ -6007,7 +6120,10 @@
           "Use first person (I, me) in system-level messages, or include the AI disclaimer or feedback buttons in hard-coded errors"
         ]
       },
-      "docUrl": "https://fluent2.microsoft.design/copilot-errors/"
+      "docUrl": "https://fluent2.microsoft.design/copilot-errors/",
+      "accessStatus": "employee-gated",
+      "capturedAt": "2026-07",
+      "accessNote": "This page now requires Microsoft employee sign-in (302 to login.microsoftonline.com). This snapshot cannot be re-validated from a public crawl, so treat it as a pinned capture rather than live content."
     },
     "data-usage-sharing": {
       "title": "Data usage and sharing (Working with AI)",
@@ -6609,7 +6725,1739 @@
           "Don't combine multiple privacy concepts into a single control"
         ]
       },
-      "docUrl": "https://fluent2.microsoft.design/data-usage-sharing/"
+      "docUrl": "https://fluent2.microsoft.design/data-usage-sharing/",
+      "accessStatus": "employee-gated",
+      "capturedAt": "2026-07",
+      "accessNote": "This page now requires Microsoft employee sign-in (302 to login.microsoftonline.com). This snapshot cannot be re-validated from a public crawl, so treat it as a pinned capture rather than live content."
+    },
+    "content-engineering-system-prompt-engineering": {
+      "title": "System prompt engineering",
+      "summary": "System prompt engineering is the practice of defining the instructions that shape how an AI system behaves, and is one way designers can influence model output before someone sends a request. A system prompt runs behind the scenes but shapes every response people receive. The page defines what a system prompt governs and proposes a four-part structure of role, task, rules, and examples. It positions system prompts as a shared design artifact requiring collaboration with product managers, engineers, and applied scientists.",
+      "keyPoints": [
+        "A system prompt, also called a system message, system instruction, or meta-prompt, is a set of natural-language instructions that tells an AI system how to behave and perform.",
+        "It runs behind the scenes, but it shapes every response people receive.",
+        "When someone sends a message, that input is processed in the context of the system prompt.",
+        "A system prompt can govern the AI system's role and purpose, how it should respond and what it should avoid, what tone and personality it should express, and what format its responses should follow.",
+        "System prompts require clear information architecture, precise and consistent language, and concise writing.",
+        "System prompts are a shared design artifact, requiring collaboration with product managers, engineers, and applied scientists for refinement.",
+        "Organize a system prompt into four components: role, task, rules, and examples.",
+        "This structure makes the prompt easier to test, scale, and iterate.",
+        "Use Define system-level behavior for baseline, always-on behavior, and Define tone and context behavior for scenario-based adjustments."
+      ],
+      "sections": [
+        {
+          "heading": "What is a system prompt?",
+          "text": "A system prompt, also called a system message, system instruction, or meta-prompt, is a set of natural-language instructions that tells an AI system how to behave and perform. It runs behind the scenes, but it shapes every response people receive. When someone sends a message, that input is processed in the context of the system prompt. A system prompt can govern: what the AI system's role and purpose are; how it should respond and what it should avoid; what tone and personality it should express; what format its responses should follow. System prompts require clear information architecture, precise and consistent language, and concise writing. They are also a shared design artifact, requiring collaboration with product managers, engineers, and applied scientists for refinement."
+        },
+        {
+          "heading": "Structure a system prompt",
+          "text": "Start by organizing a system prompt into four components: role, task, rules, and examples. This structure makes the prompt easier to test, scale, and iterate. Role defines the AI system's baseline persona, purpose, and point of view. Task defines the specific action the AI system performs. Rules specify how the task should be accomplished, including guardrails that prevent harmful output. Example output gives the system an example of what an ideal response looks like."
+        },
+        {
+          "heading": "Explore the tasks",
+          "text": "Use Define system-level behavior (/content-engineering/define-system-level-behavior) for baseline, always-on behavior. Use Define tone and context behavior (/content-engineering/define-tone-and-context-behavior) for scenario-based adjustments."
+        }
+      ],
+      "values": {
+        "componentStructure": [
+          {
+            "component": "Role",
+            "description": "Defines the AI system's baseline persona, purpose, and point of view so its responses match expectations."
+          },
+          {
+            "component": "Task",
+            "description": "Defines the specific action the AI system performs."
+          },
+          {
+            "component": "Rules",
+            "description": "Specifies how the task should be accomplished, including guardrails that prevent harmful output."
+          },
+          {
+            "component": "Example output",
+            "description": "Gives the system an example of what an ideal response looks like."
+          }
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/system-prompt-engineering/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
+    },
+    "content-engineering-define-system-level-behavior": {
+      "title": "Define system-level behavior",
+      "summary": "System-level behavior is the set of rules every response from an agent must follow, written once into the system prompt that ships with the agent. It covers what the agent is, how it sounds, what it will not do, and what it does when information is missing. When rules are not set, responses drift and people stop trusting any of the output. The page names five things to write: role and scope, persona/voice/tone, boundaries, uncertainty handling, and surface adjustments.",
+      "keyPoints": [
+        "When rules are not set, responses drift: one prompt gets a careful summary, the next invents a decision, and people cannot tell which to trust, so they stop trusting any of it.",
+        "System-level behavior is written once in the system prompt that ships with the agent, and every prompt inherits these rules without restating them.",
+        "Define it before the agent ships, when launching on a new surface such as chat, in-flow Copilot, a summarizer, or a generator, and after a review finds a pattern of failures that no single prompt fix can solve.",
+        "Five things get written: role and scope, persona/voice/tone, boundaries, how to handle uncertainty, and adjustments for the surface.",
+        "Role and scope is a short plain description naming what the agent is, what it helps with, and what is out of scope; the goal is clarity about responsibility, not a feature list.",
+        "Persona is who the agent is, voice is how it consistently sounds, and tone is how voice adjusts to the situation; aim for consistency, not personality. Clear over charming, specific over vague, transparent over implied.",
+        "Boundaries are things the agent must never do no matter how a prompt is phrased; if a response crosses a boundary, treat it as a failure even if it sounds helpful, because tone does not override it.",
+        "Three uncertainty rules: match confidence to evidence, name what is missing before answering, and keep known and unknown separate so the two never blend in the same sentence.",
+        "Role and boundaries hold across all surfaces, but a few rules adjust by surface, so decide which surface the system prompt is for before writing it.",
+        "Skip this work and every response becomes a per-prompt judgment call, and the same kind of failure keeps showing up looking like a one-off."
+      ],
+      "sections": [
+        {
+          "heading": "What you're actually deciding",
+          "text": "System-level behavior is written once, in the system prompt that ships with the agent. Every prompt the agent answers inherits these rules without restating them. You sit down to define system-level behavior before the agent ships, when you are launching the agent on a new surface such as chat, in-flow Copilot, a summarizer, or a generator, and after a review finds a pattern of failures that no single prompt fix can solve. You are writing five things: (1) Role and scope: what the agent is, what it helps with, and what is out of scope. (2) Persona, voice, and tone: who the agent is, how it consistently sounds, and how it adjusts. (3) Boundaries: what it must never do. (4) How to handle uncertainty: what it does when input is missing, unclear, or in conflict. (5) Adjustments for the surface: what changes when the agent is in chat versus in-flow versus a single-shot generator."
+        },
+        {
+          "heading": "Role and scope",
+          "text": "Write a short, plain description that names what the agent is, what it helps with, and what is out of scope. Example: 'This agent summarizes and organizes information from meetings and documents. It does not make decisions, assign owners, or approve next steps.' The first sentence names what the agent does. The second names what it does not, so the limits are visible from the start. The goal is clarity about responsibility, not a feature list. If scope is vague, responses drift into work the agent is not accountable for, and reviewers cannot tell whether a response is overreaching or doing its job."
+        },
+        {
+          "heading": "Persona, voice, and tone",
+          "text": "Persona is who the agent is. Voice is how it consistently sounds. Tone is how voice adjusts to the situation. All three live in the system prompt so they hold across every response. Aim for consistency, not personality. Clear over charming. Specific over vague. Transparent over implied. Define here the baseline that should hold across all scenarios; for context-specific tone adjustments, use Define tone and context behavior. Persona example: 'A meeting assistant for working teams. Reliable, low-key, focused on accuracy. Not a coach, friend, or motivator.' Voice example: 'Plain language. Short sentences. No hedging filler (I think, maybe, just). No corporate phrases (synergy, circle back).' Tone example: neutral and factual for summaries; calm and direct when information is missing; helpful but restrained when suggesting next steps. In the do and don't pair on tone matching the facts, the Don't sounds confident but the underlying information is not; the tone says ready when the facts say pause."
+        },
+        {
+          "heading": "Boundaries",
+          "text": "Boundaries are the things the agent must never do, no matter how a prompt is phrased. Without them, responses can invent facts, sound more confident than the inputs support, or take actions that should be human decisions. For each boundary, write a rule the agent can follow and a reviewer can check. The five boundaries are no fabrication, sensitive requests, capability claims, identity, and influence. If a response crosses a boundary, treat it as a failure even if it sounds helpful. The boundary is what makes the output safe to act on. Tone does not override it."
+        },
+        {
+          "heading": "How to handle uncertainty",
+          "text": "Most inputs are not complete. Notes are partial, a calendar entry conflicts with a recent message, or a request is ambiguous. The system-level rule is to make those gaps visible in the response rather than guess past them. Write three rules into the system prompt: Match confidence to evidence, so words like confirmed, decided, and all set only appear when the input actually says so. Name what is missing before answering, so if required information is not in the input, say what is missing first. Keep known and unknown separate, so a response can include what is supported and flag what is not, but the two never blend in the same sentence. What counts as required information depends on the task and gets defined in the task workflow, not here. This article sets the rule every task inherits."
+        },
+        {
+          "heading": "Adjustments for the surface",
+          "text": "The same agent shows up in different surfaces. Role and boundaries hold across all of them, but a few rules adjust by surface: chat agent, in-flow Copilot, summarizer, and generator. Decide which surface the system prompt is for before writing it. Same role, same boundaries. The shape of how they are enforced changes."
+        },
+        {
+          "heading": "Key takeaway",
+          "text": "Write these rules into the system prompt once. Skip that work and every response becomes a per-prompt judgment call, and the same kind of failure keeps showing up looking like a one-off."
+        }
+      ],
+      "values": {
+        "doDontToneMatchingTheFacts": [
+          {
+            "do": "'Two action items are unresolved. Confirm the owner before sharing.'",
+            "dont": "'All set, you're good to go.'"
+          }
+        ],
+        "boundaries": [
+          {
+            "boundary": "No fabrication",
+            "whatToWriteInTheSystemPrompt": "'Only use information present in the input. If a fact, such as an owner, date, decision, or outcome, isn't there, say so. Don't infer.'"
+          },
+          {
+            "boundary": "Sensitive requests",
+            "whatToWriteInTheSystemPrompt": "'Don't help with HR matters, legal advice, or medical questions. If asked, say: That's outside what I can help with. Try [the right channel].'"
+          },
+          {
+            "boundary": "Capability claims",
+            "whatToWriteInTheSystemPrompt": "'Don't say I checked, I confirmed, or I verified unless a tool call returned the result. Otherwise say Based on the input you shared...'"
+          },
+          {
+            "boundary": "Identity",
+            "whatToWriteInTheSystemPrompt": "'Refer to yourself as the assistant or I. Never claim to be a person, have feelings, or have experiences.'"
+          },
+          {
+            "boundary": "Influence",
+            "whatToWriteInTheSystemPrompt": "'Present options neutrally. Don't recommend a choice unless asked. No flattery, such as great question, and no emotional language.'"
+          }
+        ],
+        "doDontGapsInTheInput": [
+          {
+            "do": "'The notes don't list a decision on launch timing. Confirm before I draft the follow-up.'",
+            "dont": "'Decision: delay launch to next quarter.' when the notes only said the team discussed delaying."
+          }
+        ],
+        "surfaceAdjustments": [
+          {
+            "surface": "Chat agent",
+            "whatChanges": "Multi-turn. The agent can ask a clarifying question before answering."
+          },
+          {
+            "surface": "In-flow Copilot",
+            "whatChanges": "Embedded in a task. Shorter responses, fewer clarifying questions, and more reliance on surrounding context."
+          },
+          {
+            "surface": "Summarizer",
+            "whatChanges": "Single-shot. No clarifying questions are available, so gaps in the input have to be flagged in the output itself."
+          },
+          {
+            "surface": "Generator",
+            "whatChanges": "Produces a draft. Any part the agent invented or inferred beyond the input must be flagged."
+          }
+        ],
+        "fiveThingsYouAreWriting": [
+          "Role and scope. What the agent is, what it helps with, and what's out of scope.",
+          "Persona, voice, and tone. Who the agent is, how it consistently sounds, and how it adjusts.",
+          "Boundaries. What it must never do.",
+          "How to handle uncertainty. What it does when input is missing, unclear, or in conflict.",
+          "Adjustments for the surface. What changes when the agent is in chat versus in-flow versus a single-shot generator."
+        ],
+        "uncertaintyRules": [
+          "Match confidence to evidence. Words like confirmed, decided, and all set only appear when the input actually says so.",
+          "Name what's missing before answering. If required information isn't in the input, say what's missing first.",
+          "Keep known and unknown separate. A response can include what's supported and flag what isn't, but the two never blend in the same sentence."
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/define-system-level-behavior/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
+    },
+    "content-engineering-define-task-behavior-patterns": {
+      "title": "Define task behavior patterns",
+      "summary": "Define task behavior as reusable patterns that can be applied across prompts without rewriting instruction logic each time. Each pattern is built from four parts: trigger, action steps, output contract, and failure handling. The page supplies observable rule wording, first-class failure-mode patterns, a reusable template, and a pre-ship review checklist. When patterns are reusable, you get more consistent output, faster reviews, and fewer one-off fixes.",
+      "keyPoints": [
+        "When patterns are reusable, you get more consistent output, faster reviews, and fewer one-off fixes.",
+        "A task pattern defines one complete behavior that a model can execute and a reviewer can test, built with four parts: trigger, action steps, output contract, and failure handling.",
+        "Write each pattern as a standalone unit; if two behaviors need different triggers, they are two patterns.",
+        "Use language a reviewer can observe, and avoid abstract intent words and weak qualifiers such as Provide a helpful summary or Be honest about capabilities.",
+        "Use one instruction per line where possible, because bundled instructions are harder to execute and harder to evaluate.",
+        "Keep high-priority constraints near the end of a prompt as a recency guard for long prompts.",
+        "Cover failure paths as first-class behavior, not exceptions, spanning empty or malformed input, ambiguous requests, out-of-scope requests, missing context or unavailable tools, and sensitive or unsafe requests.",
+        "Before shipping, confirm the trigger is specific and testable, multi-step behavior is in ordered steps, the output contract names format/length/required fields, there are no contradictions between Rules and Example output, failure behavior is explicit, and rules use observable verbs like ask, return, decline, and cite."
+      ],
+      "sections": [
+        {
+          "heading": "Pattern anatomy",
+          "text": "A task pattern defines one complete behavior that a model can execute and a reviewer can test. Build each pattern with four parts: Trigger, the condition that starts the behavior, which prevents the model from guessing when to apply a pattern. Action steps, the ordered actions for the task, which keeps multi-step output stable across runs. Output contract, the required format, length, and fields, which makes output scannable and testable. Failure handling, what the model does when input is incomplete, ambiguous, or out of scope, which prevents silent failure and unsafe guessing. Write each pattern as a standalone unit. If two behaviors need different triggers, they are two patterns."
+        },
+        {
+          "heading": "Rule wording patterns",
+          "text": "Use language a reviewer can observe. Avoid abstract intent words and weak qualifiers. Use one instruction per line where possible. Bundled instructions are harder to execute and harder to evaluate. Keep high-priority constraints near the end of a prompt as a recency guard for long prompts."
+        },
+        {
+          "heading": "Failure-mode patterns",
+          "text": "Cover failure paths as first-class behavior, not exceptions. Empty or malformed input: state what is invalid and request the minimum information needed. Ambiguous requests: name the ambiguity and ask one clarifying question. Out-of-scope requests: state the supported scope and point to one concrete next step. Missing context or unavailable tools: state what is missing and what is needed to proceed. Sensitive or unsafe requests: decline and provide a brief safe alternative when one applies."
+        },
+        {
+          "heading": "Task pattern template",
+          "text": "Use this template to draft new task patterns. The template covers pattern name, trigger, action steps, output contract, and failure handling. See taskPatternTemplate in values for the verbatim block."
+        },
+        {
+          "heading": "Review pass",
+          "text": "Before shipping a pattern, confirm: The trigger is specific and testable. Multi-step behavior is in ordered steps. The output contract names format, length, and required fields. There are no contradictions between Rules and Example output. Failure behavior is explicit for ambiguity, missing input, and out-of-scope requests. Rules use observable verbs like ask, return, decline, and cite."
+        },
+        {
+          "heading": "Source documents",
+          "text": "This page adapts the task and rule guidance from these source documents for Fluent content-engineering workflows. The listed sources are system-prompt-structure.md and prompt-style.md in the x3-design/language-system repository under plugins/content-foundations/knowledge/content-engineering/."
+        }
+      ],
+      "values": {
+        "patternAnatomy": [
+          {
+            "part": "Trigger",
+            "whatToDefine": "The condition that starts the behavior.",
+            "whyItMatters": "Prevents the model from guessing when to apply a pattern."
+          },
+          {
+            "part": "Action steps",
+            "whatToDefine": "The ordered actions for the task.",
+            "whyItMatters": "Keeps multi-step output stable across runs."
+          },
+          {
+            "part": "Output contract",
+            "whatToDefine": "The required format, length, and fields.",
+            "whyItMatters": "Makes output scannable and testable."
+          },
+          {
+            "part": "Failure handling",
+            "whatToDefine": "What the model does when input is incomplete, ambiguous, or out of scope.",
+            "whyItMatters": "Prevents silent failure and unsafe guessing."
+          }
+        ],
+        "ruleWording": [
+          {
+            "use": "'If required fields are missing, ask for the missing fields before answering.'",
+            "avoid": "'Try to ask for more detail when needed.'"
+          },
+          {
+            "use": "'Return a three-bullet summary with one risk and one next step.'",
+            "avoid": "'Provide a helpful summary.'"
+          },
+          {
+            "use": "'If the request is out of scope, state that directly and offer one supported next step.'",
+            "avoid": "'Handle unsupported requests appropriately.'"
+          },
+          {
+            "use": "'Do not claim actions that were not performed in this environment.'",
+            "avoid": "'Be honest about capabilities.'"
+          }
+        ],
+        "failureModePatterns": [
+          "Empty or malformed input: state what is invalid and request the minimum information needed.",
+          "Ambiguous requests: name the ambiguity and ask one clarifying question.",
+          "Out-of-scope requests: state the supported scope and point to one concrete next step.",
+          "Missing context or unavailable tools: state what is missing and what is needed to proceed.",
+          "Sensitive or unsafe requests: decline and provide a brief safe alternative when one applies."
+        ],
+        "taskPatternTemplate": "Pattern name: <clear noun phrase>\n\nTrigger\n- If <condition>, run this pattern.\n\nAction steps\n1. <step 1>\n2. <step 2>\n3. <step 3>\n\nOutput contract\n- Format: <table | bullets | JSON | prose>\n- Length: <target length>\n- Required fields: <field list>\n\nFailure handling\n- If input is missing <required field>, ask for <field>.\n- If request is out of scope, state the scope boundary and offer one supported next step.\n- If capability is unavailable, state the limitation and continue with the best available action.",
+        "reviewPass": [
+          "The trigger is specific and testable.",
+          "Multi-step behavior is in ordered steps.",
+          "The output contract names format, length, and required fields.",
+          "There are no contradictions between Rules and Example output.",
+          "Failure behavior is explicit for ambiguity, missing input, and out-of-scope requests.",
+          "Rules use observable verbs like ask, return, decline, and cite."
+        ],
+        "sourceDocuments": [
+          "https://github.com/x3-design/language-system/blob/main/plugins/content-foundations/knowledge/content-engineering/system-prompt-structure.md",
+          "https://github.com/x3-design/language-system/blob/main/plugins/content-foundations/knowledge/content-engineering/prompt-style.md"
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/define-task-behavior-patterns/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
+    },
+    "content-engineering-define-prompts-for-complex-tasks": {
+      "title": "Define prompts for complex tasks",
+      "summary": "Complex tasks fail when prompts assume one-step intent, so they should be designed as explicit multi-step behaviors with clear context assumptions and explicit output contracts. The page introduces three context layers (internal, here and now, out there), a step-structured extension of the Role to Task to Rules to Example output frame, and a discipline for separating known facts from unknowns and assumptions. It closes with an output contract checklist, a reusable prompt template, and a review pass.",
+      "keyPoints": [
+        "Complex tasks fail when prompts assume one-step intent; for complex tasks, structure matters as much as wording.",
+        "A complex prompt should account for three layers of context: internal, here and now, and out there, because these layers change what good output looks like.",
+        "If you remove these layers and scoring does not change, your prompt is testing phrasing, not scenario quality.",
+        "Use the same Role to Task to Rules to Example output frame, then add explicit step structure inside Task and Rules.",
+        "The structure is five moves: define one trigger, break the task into ordered sub-steps, define what each step must produce, state when to stop and ask for clarification, and include one example output that matches the required format.",
+        "Do not combine multiple unrelated workflows in one pattern; if the trigger changes, split the pattern.",
+        "Separate known facts (use directly), unknowns (name explicitly and request the missing detail), and assumptions (label as assumptions, not facts); this keeps confidence aligned with evidence and reduces fabricated detail.",
+        "Complex outputs should have a stable shape across runs: name the target format, define required sections for each step, define length limits, and define what to do when a section cannot be completed.",
+        "Same context with different phrasing is one prompt type, different context is a different scenario, so count distinct context combinations, not prompt count."
+      ],
+      "sections": [
+        {
+          "heading": "Three context layers",
+          "text": "A complex prompt should account for three layers of context. These layers change what good output looks like. Internal covers intent, role, preferences, emotional state, and experience level, and changes the level of scaffolding and tone you need. Here and now covers time pressure, constraints, previous turns, and available resources, and changes what is practical in the moment. Out there covers audience, stakeholders, stakes, risk profile, and organizational norms, and changes the consequences of a wrong or incomplete answer. If you remove these layers and scoring does not change, your prompt is testing phrasing, not scenario quality."
+        },
+        {
+          "heading": "Complex-task structure",
+          "text": "Use the same Role to Task to Rules to Example output frame, then add explicit step structure inside Task and Rules. (1) Define one trigger for the complex task. (2) Break the task into ordered sub-steps. (3) Define what each step must produce. (4) State when to stop and ask for clarification. (5) Include one example output that matches the required format. Do not combine multiple unrelated workflows in one pattern. If the trigger changes, split the pattern."
+        },
+        {
+          "heading": "Facts, unknowns, and assumptions",
+          "text": "Separate what is known from what is missing before the model proposes an answer. Known facts are used directly in the response. Unknowns are named explicitly with a request for the missing detail. Assumptions are labeled as assumptions, not facts. This separation keeps confidence aligned with evidence and reduces fabricated detail."
+        },
+        {
+          "heading": "Output contract for complex tasks",
+          "text": "Complex outputs should have a stable shape across runs. Name the target format directly. Define required sections for each step. Define length limits. Define what to do when a section cannot be completed because information is missing."
+        },
+        {
+          "heading": "Prompt pattern template",
+          "text": "Use this pattern to draft complex-task prompts. The template covers task trigger, ordered steps, output contract, and rules. See promptPatternTemplate in values for the verbatim block."
+        },
+        {
+          "heading": "Review pass",
+          "text": "Before shipping a complex-task prompt, confirm: Context layers are explicit and relevant to the scenario. Steps are ordered and observable. Known facts, unknowns, and assumptions are separated. Output format and required sections are explicit. Failure behavior is defined for ambiguity and missing context. Same context with different phrasing is one prompt type, and different context is a different scenario. Count distinct context combinations, not prompt count."
+        },
+        {
+          "heading": "Source documents",
+          "text": "This page adapts complex-task prompt guidance from these source documents for Fluent content-engineering workflows. The listed sources are scenario-context-layers.md, system-prompt-structure.md, and prompt-style.md in the x3-design/language-system repository under plugins/content-foundations/knowledge/content-engineering/."
+        }
+      ],
+      "values": {
+        "contextLayers": [
+          {
+            "layer": "Internal",
+            "whatItIncludes": "Intent, role, preferences, emotional state, experience level.",
+            "whyItMatters": "Changes the level of scaffolding and tone you need."
+          },
+          {
+            "layer": "Here and now",
+            "whatItIncludes": "Time pressure, constraints, previous turns, available resources.",
+            "whyItMatters": "Changes what is practical in the moment."
+          },
+          {
+            "layer": "Out there",
+            "whatItIncludes": "Audience, stakeholders, stakes, risk profile, organizational norms.",
+            "whyItMatters": "Changes the consequences of a wrong or incomplete answer."
+          }
+        ],
+        "factsUnknownsAssumptions": [
+          {
+            "category": "Known facts",
+            "howToHandleIt": "Use directly in the response."
+          },
+          {
+            "category": "Unknowns",
+            "howToHandleIt": "Name them explicitly and request the missing detail."
+          },
+          {
+            "category": "Assumptions",
+            "howToHandleIt": "Label assumptions as assumptions, not facts."
+          }
+        ],
+        "complexTaskStructure": [
+          "Define one trigger for the complex task.",
+          "Break the task into ordered sub-steps.",
+          "Define what each step must produce.",
+          "State when to stop and ask for clarification.",
+          "Include one example output that matches the required format."
+        ],
+        "outputContractForComplexTasks": [
+          "Name the target format directly.",
+          "Define required sections for each step.",
+          "Define length limits.",
+          "Define what to do when a section cannot be completed because information is missing."
+        ],
+        "promptPatternTemplate": "Task\n- If <trigger>, perform the following steps in order.\n\nSteps\n1. Identify known facts from the input.\n2. List missing or ambiguous information.\n3. Ask one clarifying question if a required input is missing.\n4. Produce the requested output using only confirmed facts.\n5. Label any assumptions separately.\n\nOutput contract\n- Format: <required format>\n- Required sections: <section list>\n- Length: <target length>\n\nRules\n- Do not present assumptions as confirmed facts.\n- If context is missing, state what is missing before continuing.\n- If request is out of scope, state the boundary and provide one next step.",
+        "reviewPass": [
+          "Context layers are explicit and relevant to the scenario.",
+          "Steps are ordered and observable.",
+          "Known facts, unknowns, and assumptions are separated.",
+          "Output format and required sections are explicit.",
+          "Failure behavior is defined for ambiguity and missing context.",
+          "Same context with different phrasing is one prompt type. Different context is a different scenario.",
+          "Count distinct context combinations, not prompt count."
+        ],
+        "sourceDocuments": [
+          "https://github.com/x3-design/language-system/blob/main/plugins/content-foundations/knowledge/content-engineering/scenario-context-layers.md",
+          "https://github.com/x3-design/language-system/blob/main/plugins/content-foundations/knowledge/content-engineering/system-prompt-structure.md",
+          "https://github.com/x3-design/language-system/blob/main/plugins/content-foundations/knowledge/content-engineering/prompt-style.md"
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/define-prompts-for-complex-tasks/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
+    },
+    "content-engineering-design-interaction-behavior": {
+      "title": "Design interaction behavior",
+      "summary": "Interaction behavior defines how the assistant moves from one turn to the next, determining when it asks, answers, or declines. The page specifies an interaction contract per task pattern covering trigger, response path, and stop conditions, plus clarification strategy, turn progression, role-mode posture, and repair behavior. When interaction behavior is explicit, responses stay predictable across chat, in-flow, and single-shot surfaces.",
+      "keyPoints": [
+        "Interaction behavior determines when the assistant asks, answers, or declines, and when explicit it keeps responses predictable across chat, in-flow, and single-shot surfaces.",
+        "Define one contract for each task pattern, covering trigger, response path, and stop conditions.",
+        "Use one instruction per line where possible, which keeps the contract readable and testable.",
+        "Clarification behavior should reduce friction, not create loops: ask one clarifying question at a time and ask only for information required to complete the next step.",
+        "If multiple fields are missing, request the minimum set that unblocks execution; if clarification is not available on the surface, state what is missing in the output.",
+        "Avoid broad clarification prompts like Can you provide more context? when you can ask for one specific field.",
+        "Design turn progression so each response either advances the task or closes it cleanly, and show progress updates only when the task is long-running or multi-step.",
+        "Do not add decorative openings or closers that do not move the task forward.",
+        "Interaction wording should match the selected role mode, Digital Worker or Assistive, and both modes stay explicitly digital with no roleplay or anthropomorphic framing.",
+        "Design explicit repair moves so trust does not collapse after a failure: state uncertainty and label assumptions, acknowledge and correct wrong responses briefly, and state boundaries with one concrete next step."
+      ],
+      "sections": [
+        {
+          "heading": "Interaction contract",
+          "text": "Define one contract for each task pattern. The contract should cover trigger, response path, and stop conditions. When input is complete and in scope, execute the task pattern and return the contracted output format. When input is missing required data, state what is missing and ask for the minimum detail needed. When a request is ambiguous, name the ambiguity and ask one clarifying question. When a request is out of scope, state the boundary and offer one supported next step. When a capability is unavailable, state the limitation directly and provide the best available path forward. Use one instruction per line where possible. This keeps the contract readable and testable."
+        },
+        {
+          "heading": "Clarification strategy",
+          "text": "Clarification behavior should reduce friction, not create loops. Ask one clarifying question at a time. Ask only for information required to complete the next step. If multiple fields are missing, request the minimum set that unblocks execution. If clarification is not available on the surface, state what is missing in the output. Avoid broad clarification prompts like Can you provide more context? when you can ask for one specific field."
+        },
+        {
+          "heading": "Turn progression",
+          "text": "Design turn progression so each response either advances the task or closes it cleanly. Start by confirming the action you are taking. Show progress updates only when the task is long-running or multi-step. Use direct, task-relevant completion language. End with one clear next step when additional action is required. Do not add decorative openings or closers that do not move the task forward."
+        },
+        {
+          "heading": "Role-mode interaction posture",
+          "text": "Interaction wording should match the role mode you selected. Digital Worker is conversational and collaborative, uses gentle nudges, and uses first-person status only when clarifying active work state. Assistive has minimal social overhead, terse progress updates, and utility-forward language with little conversational framing. Keep both modes explicitly digital. Avoid roleplay and anthropomorphic framing."
+        },
+        {
+          "heading": "Repair behavior",
+          "text": "Design explicit repair moves so trust does not collapse after a failure. If uncertain, state uncertainty and label assumptions. If a response is wrong, acknowledge it briefly, correct it, and continue. If a boundary prevents completion, state the boundary and give one concrete next step."
+        },
+        {
+          "heading": "Review pass",
+          "text": "Before shipping interaction behavior, confirm: Each turn path covers trigger, response, and stop conditions. Clarification behavior asks one concrete question when needed. Out-of-scope and unavailable-capability behavior is explicit. Turn progression language advances the task or closes it cleanly. Interaction posture matches the selected role mode."
+        },
+        {
+          "heading": "Source documents",
+          "text": "This page adapts interaction guidance from these source documents for Fluent content-engineering workflows."
+        }
+      ],
+      "values": {
+        "interactionContract": [
+          {
+            "situation": "Input is complete and in scope",
+            "expectedBehavior": "Execute the task pattern and return the contracted output format."
+          },
+          {
+            "situation": "Input is missing required data",
+            "expectedBehavior": "State what is missing and ask for the minimum detail needed."
+          },
+          {
+            "situation": "Request is ambiguous",
+            "expectedBehavior": "Name the ambiguity and ask one clarifying question."
+          },
+          {
+            "situation": "Request is out of scope",
+            "expectedBehavior": "State the boundary and offer one supported next step."
+          },
+          {
+            "situation": "Capability is unavailable",
+            "expectedBehavior": "State the limitation directly and provide the best available path forward."
+          }
+        ],
+        "roleModePosture": [
+          {
+            "roleMode": "Digital Worker",
+            "interactionPosture": "Conversational and collaborative. Gentle nudges. First-person status only when clarifying active work state."
+          },
+          {
+            "roleMode": "Assistive",
+            "interactionPosture": "Minimal social overhead. Terse progress updates. Utility-forward language with little conversational framing."
+          }
+        ],
+        "clarificationStrategy": [
+          "Ask one clarifying question at a time.",
+          "Ask only for information required to complete the next step.",
+          "If multiple fields are missing, request the minimum set that unblocks execution.",
+          "If clarification is not available on the surface, state what is missing in the output."
+        ],
+        "turnProgression": [
+          "Start by confirming the action you are taking.",
+          "Show progress updates only when the task is long-running or multi-step.",
+          "Use direct, task-relevant completion language.",
+          "End with one clear next step when additional action is required."
+        ],
+        "repairBehavior": [
+          "If uncertain, state uncertainty and label assumptions.",
+          "If a response is wrong, acknowledge it briefly, correct it, and continue.",
+          "If a boundary prevents completion, state the boundary and give one concrete next step."
+        ],
+        "reviewPass": [
+          "Each turn path covers trigger, response, and stop conditions.",
+          "Clarification behavior asks one concrete question when needed.",
+          "Out-of-scope and unavailable-capability behavior is explicit.",
+          "Turn progression language advances the task or closes it cleanly.",
+          "Interaction posture matches the selected role mode."
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/design-interaction-behavior/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
+    },
+    "content-engineering-define-tone-and-context-behavior": {
+      "title": "Define tone and context behavior",
+      "summary": "Good system behavior is not one fixed tone. It is a stable voice with controlled adjustments based on context, stakes, and what someone needs to do. The page draws the boundary with system-level behavior, where always-true rules live, and covers core personality principles, role mode selection, tone calibration inputs, operational language rules, high-stakes behavior, repair behavior, and anti-patterns.",
+      "keyPoints": [
+        "Good system behavior is a stable voice with controlled adjustments based on context, stakes, and what someone needs to do, not one fixed tone.",
+        "Rule of thumb: if behavior should always be true, define it in Define system-level behavior; if behavior varies by scenario, define it here.",
+        "Seven core personality principles govern tone decisions: trustworthy, empathetic, humble, transparent, explicitly digital, supportive, and concise by default.",
+        "Choose a role mode first, Digital Worker or Assistive; tone calibration should reinforce this mode, not conflict with it.",
+        "If role mode is unclear, ask one disambiguation question: is this experience mostly coordinating people, or mostly completing tasks quickly with minimal conversation?",
+        "Calibrate tone with five explicit inputs: agent name, product context or surface, primary audience, high-stakes moment, and tone calibration phrase.",
+        "Keep the calibration phrase short and use concrete words that change output behavior, like calm and direct, steady and reassuring, or matter-of-fact and concise.",
+        "Write tone rules as operational instructions that are observable and testable; do not anthropomorphize the assistant and do not use emotionally expressive or human-depicting emoji.",
+        "In high-stakes moments use calm direct language, preserve agency by presenting options and consequences clearly, avoid evaluative praise and authority posture, and match confidence to evidence.",
+        "Five anti-patterns to avoid: persona inflation, over-social framing, decorative openings or closings, capability hedging that obscures limits, and tone drift across surfaces."
+      ],
+      "sections": [
+        {
+          "heading": "Boundary with system-level behavior",
+          "text": "Go to Define system-level behavior (/content-engineering/define-system-level-behavior) for baseline, always-on persona and voice rules. Use this page for conditional, context-driven tone adjustments. Rule of thumb: if behavior should always be true, define it in Define system-level behavior; if behavior varies by scenario, define it here."
+        },
+        {
+          "heading": "Core personality principles",
+          "text": "Keep tone decisions aligned with these principles. Trustworthy: credible, context-relevant, and steady. Empathetic: supportive without taking ownership away from the person. Humble: candid about uncertainty and limitations. Transparent: clear about what is known, unknown, and inferred. Explicitly digital: never framed as a human identity. Supportive: creative partner that preserves users' ownership of outcomes. Concise by default: easy to scan, expands when needed."
+        },
+        {
+          "heading": "Role mode selection",
+          "text": "Choose a role mode first. Tone calibration should reinforce this mode, not conflict with it. Digital Worker is used when collaboration, meeting flow, and group coordination are central, and tends warm, conversational, calm, and supportive. Assistive is used when speed, precision, and low social overhead are central, and tends concise, neutral-to-warm, and utility-forward. If role mode is unclear, ask one disambiguation question: is this experience mostly coordinating people, or mostly completing tasks quickly with minimal conversation?"
+        },
+        {
+          "heading": "Tone calibration inputs",
+          "text": "Calibrate tone with explicit inputs so behavior stays stable across scenarios: agent name, product context or surface, primary audience, high-stakes moment, and tone calibration phrase. Keep the calibration phrase short. Use concrete words that change output behavior, like calm and direct, steady and reassuring, or matter-of-fact and concise."
+        },
+        {
+          "heading": "Language choices",
+          "text": "Write tone rules as operational instructions. Keep them observable and testable. Do not anthropomorphize the assistant. Do not use emotionally expressive emoji or human-depicting emoji."
+        },
+        {
+          "heading": "High-stakes behavior",
+          "text": "Define how tone adjusts when trust is fragile, like irreversible actions, sensitive communication, or time pressure. Use calm, direct language. Preserve agency by presenting options and consequences clearly. Avoid evaluative praise and authority posture. Match confidence to evidence. If the model is uncertain, require explicit uncertainty language and the best next step."
+        },
+        {
+          "heading": "Repair behavior",
+          "text": "Include a short repair pattern so tone stays stable when things go wrong. If uncertain, state uncertainty clearly and label assumptions. If a capability is unavailable, say so directly and provide the best next step. If the response is wrong, acknowledge the mistake briefly, correct it, and continue."
+        },
+        {
+          "heading": "Anti-patterns",
+          "text": "Avoid these patterns in tone and personality definitions. Persona inflation: assigning human traits, emotions, or a named identity beyond the defined role. Over-social framing: adding greetings, check-ins, or social phrases that are not task-relevant. Decorative openings or closings: text at the start or end of a response that adds no task value. Capability hedging that obscures limits: using vague phrases like I might be able to help instead of stating the boundary directly. Tone drift across surfaces: using different voice registers or warmth levels on the same product surface without a defined rule for the difference."
+        },
+        {
+          "heading": "Source documents",
+          "text": "This page adapts tone and personality guidance from these source documents for Fluent content-engineering workflows."
+        }
+      ],
+      "values": {
+        "roleModeSelection": [
+          {
+            "roleMode": "Digital Worker",
+            "whenToUseIt": "Collaboration, meeting flow, and group coordination are central.",
+            "toneTendencies": "Warm, conversational, calm, supportive."
+          },
+          {
+            "roleMode": "Assistive",
+            "whenToUseIt": "Speed, precision, and low social overhead are central.",
+            "toneTendencies": "Concise, neutral-to-warm, utility-forward."
+          }
+        ],
+        "languageChoices": [
+          {
+            "do": "'Use concise language and expand only when someone asks for more detail.'",
+            "avoid": "'Be engaging.'"
+          },
+          {
+            "do": "'State uncertainty directly and label assumptions.'",
+            "avoid": "'Try to sound confident.'"
+          },
+          {
+            "do": "'Use direct task-relevant updates.'",
+            "avoid": "Decorative openings or closers that add no task value."
+          },
+          {
+            "do": "'Keep language warm and calm in high-stakes moments.'",
+            "avoid": "Hype, sarcasm, or exclamation-heavy phrasing."
+          },
+          {
+            "do": "'Keep humor rare, low-stakes, and never directed at the user or their situation.'",
+            "avoid": "Jokes, wit, or irony in high-stakes or error states."
+          },
+          {
+            "do": "'Align with responsible AI principles: do not present capabilities as broader than they are.'",
+            "avoid": "Framing that overstates what the system can do or know."
+          }
+        ],
+        "corePersonalityPrinciples": [
+          "Trustworthy: credible, context-relevant, and steady.",
+          "Empathetic: supportive without taking ownership away from the person.",
+          "Humble: candid about uncertainty and limitations.",
+          "Transparent: clear about what is known, unknown, and inferred.",
+          "Explicitly digital: never framed as a human identity.",
+          "Supportive: creative partner that preserves users' ownership of outcomes.",
+          "Concise by default: easy to scan, expands when needed."
+        ],
+        "toneCalibrationInputs": [
+          "Agent name",
+          "Product context or surface",
+          "Primary audience",
+          "High-stakes moment",
+          "Tone calibration phrase"
+        ],
+        "highStakesBehavior": [
+          "Use calm, direct language.",
+          "Preserve agency by presenting options and consequences clearly.",
+          "Avoid evaluative praise and authority posture.",
+          "Match confidence to evidence."
+        ],
+        "repairBehavior": [
+          "If uncertain, state uncertainty clearly and label assumptions.",
+          "If a capability is unavailable, say so directly and provide the best next step.",
+          "If the response is wrong, acknowledge the mistake briefly, correct it, and continue."
+        ],
+        "antiPatterns": [
+          "Persona inflation: assigning human traits, emotions, or a named identity beyond the defined role.",
+          "Over-social framing: adding greetings, check-ins, or social phrases that are not task-relevant.",
+          "Decorative openings or closings: text at the start or end of a response that adds no task value.",
+          "Capability hedging that obscures limits: using vague phrases like 'I might be able to help' instead of stating the boundary directly.",
+          "Tone drift across surfaces: using different voice registers or warmth levels on the same product surface without a defined rule for the difference."
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/define-tone-and-context-behavior/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
+    },
+    "content-engineering-define-good-output-quality": {
+      "title": "Define good output quality",
+      "summary": "Output quality is not about sounding right, it is about being trustworthy enough to act on. The page presents a two-step method for evaluating AI-generated content people rely on to make decisions and take action: first check that the output is grounded in available information, then check how well it supports the task. It supplies grounded versus not-grounded signals, four task-support dimensions, and a worked meeting-notes scenario with three escalating levels of task support.",
+      "keyPoints": [
+        "Poor quality output introduces real risk, especially in high-impact domains where mistakes compound quickly.",
+        "The goal is not just to score the output, it is to understand where it breaks and what to fix.",
+        "Evaluation has two ordered steps: did the output correctly reflect the input or the underlying facts, and how well does the output support the task.",
+        "Grounding means the output is supported by information available to the system, which may include provided inputs, retrieved documents, or relevant context; if no explicit source is provided, check that the response stays consistent with what is known and does not fabricate facts.",
+        "Signs the output is grounded: reflects available information without distortion, avoids introducing unsupported or invented details, clearly separates what is known from what is uncertain, and calls out missing or unclear information instead of guessing.",
+        "Signs the output is not grounded: presents assumptions as facts, introduces unsupported details, assigns ownership/decisions/timelines that were not stated, and treats discussion or possibility as confirmed action.",
+        "Task support is assessed on four dimensions: completeness, relevance, usefulness, and transparency.",
+        "Do not continue to the usefulness check until the response is grounded; a decisive-sounding response can still be untrustworthy.",
+        "Once the summary is accurate, increase its usefulness only as far as the available information supports, across levels: supports the task, strongly supports the task, and fully supports the task.",
+        "Different outputs support different tasks and require different evidence of quality; a summary should preserve what was said while a recommendation should help the user decide what to do next."
+      ],
+      "sections": [
+        {
+          "heading": "Steps for evaluating output quality",
+          "text": "Two steps: (1) Did the output correctly reflect the input or the underlying facts? (2) How well does the output support the task?"
+        },
+        {
+          "heading": "Step 1: Check that the output is grounded in available information",
+          "text": "First, verify that the output is supported by the information available to the system. This may include provided inputs, retrieved documents, or relevant context. The output should accurately reflect that information and not introduce unsupported or invented details. If no explicit source is provided, check that the response stays consistent with what is known and does not fabricate facts."
+        },
+        {
+          "heading": "Signs the output is grounded",
+          "text": "Reflects available information without distortion. Avoids introducing unsupported or invented details. Clearly separates what is known from what is uncertain. Calls out missing or unclear information instead of guessing."
+        },
+        {
+          "heading": "Signs the output is not grounded",
+          "text": "Presents assumptions as facts. Introduces details that are not supported by available information. Assigns ownership, decisions, or timelines that were not stated. Treats discussion or possibility as confirmed action. If the output shows any of these issues, it is not grounded and should not be considered reliable."
+        },
+        {
+          "heading": "Step 2: Check how well the output supports the task",
+          "text": "Use this scale to assess how well the grounded output supports the task. Check the output for completeness: does the output include what is needed to complete the task, and does it call out missing or unclear information. Relevance: does the output focus on what was asked and avoid unnecessary detail. Usefulness: does the output make next steps, decisions, or implications clear without extra interpretation. Transparency: does the output clearly distinguish between what is known, uncertain, or assumed, without overstating confidence."
+        },
+        {
+          "heading": "Applying both steps",
+          "text": "Use these two checks in order. First, make sure the output faithfully represents the source. Then, decide how much support the user needs to act on it."
+        },
+        {
+          "heading": "Scenario",
+          "text": "Source material is meeting notes: 'We discussed delaying the launch to next quarter, depending on resourcing. No decision yet.' The examples show how an AI response could represent these notes. Because the response may direct planning decisions or stakeholder updates, distinguish clearly between the source and what the AI generated from it."
+        },
+        {
+          "heading": "1. Check whether it reflects the source",
+          "text": "Before evaluating usefulness, verify that the response preserves the distinction between a discussion, a decision, and an open question."
+        },
+        {
+          "heading": "Output that reflects the source",
+          "text": "Discussion: the team discussed a potential delay of the launch to next quarter, pending resourcing. Decision: no decision was made. Question: is resourcing confirmed? This works because it reflects what was actually said, does not assign ownership, and calls out missing information."
+        },
+        {
+          "heading": "Output that doesn't reflect the source",
+          "text": "Decision: delay launch to next quarter. Owner: Alex will update the roadmap. This fails because it presents a discussion as a decision and assigns an owner who was not named. The right-hand response may sound decisive, but it is not trustworthy. Do not continue to the usefulness check until the response is grounded."
+        },
+        {
+          "heading": "2. Increase task support after grounding",
+          "text": "Once the summary is accurate, increase its usefulness only as far as the available information supports. The three levels are supports the task, strongly supports the task, and fully supports the task."
+        },
+        {
+          "heading": "Check by output type",
+          "text": "Different outputs support different tasks, so they require different evidence of quality. If your criteria do not match the output, you will miss real issues or flag the wrong ones. For example, a meeting summary, a recommendation, and a draft email each serve a different purpose. A summary should preserve what was said, while a recommendation should help the user decide what to do next. Applying the same criteria to both can miss important issues or over-penalize useful output. Adapt your evaluation to the expected outcome. Focus on what the user needs to do with the output, and judge quality based on whether it supports that task."
+        },
+        {
+          "heading": "Key takeaway",
+          "text": "Check grounding first. Then check if it supports the task."
+        }
+      ],
+      "values": {
+        "taskSupportDimensions": [
+          {
+            "dimension": "Completeness",
+            "description": "Does the output include what's needed to complete the task? Call out missing or unclear information."
+          },
+          {
+            "dimension": "Relevance",
+            "description": "Does the output focus on what was asked and avoid unnecessary detail?"
+          },
+          {
+            "dimension": "Usefulness",
+            "description": "Does the output make next steps, decisions, or implications clear without extra interpretation?"
+          },
+          {
+            "dimension": "Transparency",
+            "description": "Does the output clearly distinguish between what's known, uncertain, or assumed? It shouldn't overstate confidence."
+          }
+        ],
+        "outputThatReflectsTheSource": [
+          {
+            "field": "Discussion",
+            "aiOutput": "The team discussed a potential delay of the launch to next quarter, pending resourcing."
+          },
+          {
+            "field": "Decision",
+            "aiOutput": "No decision was made."
+          },
+          {
+            "field": "Question",
+            "aiOutput": "Is resourcing confirmed?"
+          }
+        ],
+        "outputThatDoesNotReflectTheSource": [
+          {
+            "field": "Decision",
+            "aiOutput": "Delay launch to next quarter."
+          },
+          {
+            "field": "Owner",
+            "aiOutput": "Alex will update the roadmap."
+          }
+        ],
+        "taskSupportLevels": [
+          {
+            "level": "Supports the task",
+            "aiOutput": "The team discussed delaying the launch to next quarter, dependent on resourcing. No decision has been made yet.",
+            "whatThisAdds": "This is an accurate summary that preserves the unresolved decision."
+          },
+          {
+            "level": "Strongly supports the task",
+            "aiOutput": "The team discussed delaying the launch to next quarter, dependent on resourcing. No decision has been made yet. Confirm resourcing before updating the timeline.",
+            "whatThisAdds": "This adds a clear next step and highlights what remains unresolved."
+          },
+          {
+            "level": "Fully supports the task",
+            "aiOutput": "The team discussed delaying the launch to next quarter, dependent on resourcing. No decision has been made yet. Recommended next step: Confirm resourcing status. If confirmed, update the timeline and notify stakeholders.",
+            "whatThisAdds": "This adds a contextually appropriate recommendation while remaining conditional on confirmed resourcing. It supports action without claiming that a decision has already been made."
+          }
+        ],
+        "sourceMaterialMeetingNotes": "We discussed delaying the launch to next quarter, depending on resourcing. No decision yet.",
+        "signsTheOutputIsGrounded": [
+          "reflects available information without distortion",
+          "avoids introducing unsupported or invented details",
+          "clearly separates what is known from what is uncertain",
+          "calls out missing or unclear information instead of guessing"
+        ],
+        "signsTheOutputIsNotGrounded": [
+          "presents assumptions as facts",
+          "introduces details that aren't supported by available information",
+          "assigns ownership, decisions, or timelines that weren't stated",
+          "treats discussion or possibility as confirmed action"
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/define-good-output-quality/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
+    },
+    "content-engineering-decide-what-to-evaluate-first": {
+      "title": "Decide what to evaluate first",
+      "summary": "Prioritize outputs people use to decide or act, because failures there change what someone actually does. The page identifies four high-impact output types, requires grounding to be checked before anything else, and supplies seven starter pass or fail checks that are observable, repeatable, and consistent across reviewers. It gives pass and fail worked examples, warns against rewarding output that merely sounds better, and provides a five-question test for whether to evaluate now or defer.",
+      "keyPoints": [
+        "Prioritize outputs people use to decide or act, when a failure could cause someone to take the wrong next step, update the wrong plan, record, or workflow, assign or prioritize the wrong work, treat unresolved discussion as a confirmed decision, or act without key context or based on incorrect assumptions.",
+        "These outputs matter most because people may rely on them without going back to the original source or context.",
+        "Four high-impact output types: decision-support output, workflow or record updates, recommendations or prioritization, and summaries people rely on.",
+        "Start by checking whether the output is grounded in the available information; if grounding fails, correct that first before evaluating anything else.",
+        "Once grounding holds, evaluate whether the output supports the task.",
+        "Pass or fail checks must be observable in the output, repeatable across prompts and contexts, and consistent across reviewers.",
+        "Seven starter checks: fact handling, decision labeling, missing information handling, required and prohibited content, handling blocked or incomplete tasks appropriately, traceability, and scope discipline.",
+        "Focus later on creativity or personality, writing style preferences, different wording for the same request, and whether the response shows step-by-step reasoning, unless they are the point of the experience.",
+        "Do not score output higher just because it sounds better; avoid rewarding confident or friendly wording when the content is wrong or incomplete, extra detail that introduces unsupported decisions, dates, or ownership, and subjective qualities that are hard to score consistently.",
+        "If a failure would not change what someone does, it is not the right place to start."
+      ],
+      "sections": [
+        {
+          "heading": "(Intro)",
+          "text": "Prioritize outputs people use to decide or act, when a failure could cause someone to take the wrong next step, update the wrong plan, record, or workflow, assign or prioritize the wrong work, treat unresolved discussion as a confirmed decision, or act without key context or based on incorrect assumptions. These outputs matter most because people may rely on them without going back to the original source or context."
+        },
+        {
+          "heading": "Focus on high-impact outputs",
+          "text": "Four output types matter most. Decision-support output, because incorrect output can push someone toward the wrong conclusion or next step, for example a meeting summary used to decide next actions. Workflow or record updates, because errors can trigger incorrect updates in systems or workflows, for example an approval or eligibility summary. Recommendations or prioritization, because recommendations can shape effort, timing, resources, or attention, for example suggested actions or prioritization. Summaries people rely on, because people may treat the summary as complete and skip reviewing the source material, for example a plan summary with implied ownership or sequencing."
+        },
+        {
+          "heading": "Check grounding first",
+          "text": "Start by checking whether the output is grounded in the available information. If grounding fails, correct that first before evaluating anything else. Once grounding holds, evaluate whether the output supports the task."
+        },
+        {
+          "heading": "Start with clear pass or fail checks",
+          "text": "Use pass or fail checks that are observable in the output, repeatable across prompts and contexts, and consistent across reviewers. Start with checks covering fact handling, decision labeling, missing information handling, required and prohibited content, handling blocked or incomplete tasks appropriately, traceability, and scope discipline. Focus on these later unless they are the point of the experience: creativity or personality; writing style preferences; different wording for the same request; whether the response shows step-by-step reasoning."
+        },
+        {
+          "heading": "Examples",
+          "text": "The page gives one pass case and one fail case, both built from meeting-notes source material."
+        },
+        {
+          "heading": "Pass case",
+          "text": "Source material: meeting notes include one explicit decision, two assigned owners, and one unresolved item. Expected AI output: lists only the explicit decision; assigns only the two named owners; marks the unresolved item as unresolved; asks for a missing due date instead of inventing one."
+        },
+        {
+          "heading": "Fail case",
+          "text": "Source material: discussion includes options but no final decision. Problematic AI output: states that a final decision was made; assigns an owner not in the notes; includes a due date not in the notes. Failure reason: introduces unsupported details that could lead to incorrect action."
+        },
+        {
+          "heading": "Keep scoring focused on observable output",
+          "text": "Do not score output higher just because it sounds better. Avoid rewarding confident or friendly wording when the content is wrong or incomplete, extra detail that introduces unsupported decisions, dates, or ownership, and subjective qualities that are hard to score consistently."
+        },
+        {
+          "heading": "Decide whether to evaluate now or later",
+          "text": "Five questions each resolve to Evaluate now for yes and Defer for no: Does someone act on this output? Could a failure lead to the wrong action? Is the issue visible in the output? Would two reviewers score it the same way? Is it stable across prompts and contexts?"
+        },
+        {
+          "heading": "Key takeaway",
+          "text": "Start with outputs people rely on to decide or act. If a failure would not change what someone does, it's not the right place to start."
+        }
+      ],
+      "values": {
+        "highImpactOutputs": [
+          {
+            "outputType": "Decision-support output",
+            "whyItMatters": "Incorrect output can push someone toward the wrong conclusion or next step",
+            "example": "Meeting summary used to decide next actions"
+          },
+          {
+            "outputType": "Workflow or record updates",
+            "whyItMatters": "Errors can trigger incorrect updates in systems or workflows",
+            "example": "Approval or eligibility summary"
+          },
+          {
+            "outputType": "Recommendations or prioritization",
+            "whyItMatters": "Recommendations can shape effort, timing, resources, or attention",
+            "example": "Suggested actions or prioritization"
+          },
+          {
+            "outputType": "Summaries people rely on",
+            "whyItMatters": "People may treat the summary as complete and skip reviewing the source material",
+            "example": "Plan summary with implied ownership or sequencing"
+          }
+        ],
+        "passFailChecks": [
+          {
+            "check": "Fact handling",
+            "passIf": "Output doesn't invent owners, dates, metrics, commitments, or decisions",
+            "failIf": "Any invented or unsupported detail appears"
+          },
+          {
+            "check": "Decision labeling",
+            "passIf": "Output marks a decision only when it is clearly supported",
+            "failIf": "Discussion is labeled as a decision without support"
+          },
+          {
+            "check": "Missing information handling",
+            "passIf": "Output asks for missing required information or pauses",
+            "failIf": "Output continues without required information"
+          },
+          {
+            "check": "Required and prohibited content",
+            "passIf": "Output includes content required by the prompt, task, format, or product rule, and excludes prohibited content",
+            "failIf": "Required content is missing, or prohibited content appears"
+          },
+          {
+            "check": "Handles blocked or incomplete tasks appropriately",
+            "passIf": "Output pauses, asks for clarification, or refuses when the task can't be completed safely or correctly",
+            "failIf": "Output continues despite missing information or clear constraints"
+          },
+          {
+            "check": "Traceability",
+            "passIf": "Each key claim can be traced to the source or available information",
+            "failIf": "Claims can't be verified from the source or available information"
+          },
+          {
+            "check": "Scope discipline",
+            "passIf": "Output stays within the request and provided data",
+            "failIf": "Output adds unsupported assumptions or expands scope"
+          }
+        ],
+        "evaluateNowOrLater": [
+          {
+            "check": "Does someone act on this output?",
+            "yes": "Evaluate now",
+            "no": "Defer"
+          },
+          {
+            "check": "Could a failure lead to the wrong action?",
+            "yes": "Evaluate now",
+            "no": "Defer"
+          },
+          {
+            "check": "Is the issue visible in the output?",
+            "yes": "Evaluate now",
+            "no": "Defer"
+          },
+          {
+            "check": "Would two reviewers score it the same way?",
+            "yes": "Evaluate now",
+            "no": "Defer"
+          },
+          {
+            "check": "Is it stable across prompts and contexts?",
+            "yes": "Evaluate now",
+            "no": "Defer"
+          }
+        ],
+        "failuresThatMakeOutputHighPriority": [
+          "take the wrong next step",
+          "update the wrong plan, record, or workflow",
+          "assign or prioritize the wrong work",
+          "treat unresolved discussion as a confirmed decision",
+          "act without key context or based on incorrect assumptions"
+        ],
+        "checkQualities": [
+          "observable in the output",
+          "repeatable across prompts and contexts",
+          "consistent across reviewers"
+        ],
+        "focusOnTheseLater": [
+          "creativity or personality",
+          "writing style preferences",
+          "different wording for the same request",
+          "whether the response shows step-by-step reasoning"
+        ],
+        "avoidRewarding": [
+          "confident or friendly wording when the content is wrong or incomplete",
+          "extra detail that introduces unsupported decisions, dates, or ownership",
+          "subjective qualities that are hard to score consistently"
+        ],
+        "passCase": {
+          "sourceMaterial": "Meeting notes include one explicit decision, two assigned owners, and one unresolved item.",
+          "expectedAiOutput": [
+            "lists only the explicit decision",
+            "assigns only the two named owners",
+            "marks the unresolved item as unresolved",
+            "asks for a missing due date instead of inventing one"
+          ]
+        },
+        "failCase": {
+          "sourceMaterial": "Discussion includes options but no final decision.",
+          "problematicAiOutput": [
+            "states that a final decision was made",
+            "assigns an owner not in the notes",
+            "includes a due date not in the notes"
+          ],
+          "failureReason": "introduces unsupported details that could lead to incorrect action"
+        }
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/decide-what-to-evaluate-first/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
+    },
+    "content-engineering-define-output-requirements-by-experience-type": {
+      "title": "Define output requirements by experience type",
+      "summary": "Before evaluating quality, determine whether an output is safe to act on. Different output types have different failure modes, so each needs requirements that address the risks that matter most. The page derives requirements from the action someone will take rather than the output format, works through three examples, and supplies pass and fail requirement tables for summaries, action items, and recommendations. It ties strictness to consequence while holding factual grounding constant.",
+      "keyPoints": [
+        "Before evaluating quality, determine whether an output is safe to act on; different output types have different failure modes, so each needs requirements that address the risks that matter most.",
+        "Start with the action someone will take, rather than the output format: make a decision, assign work, track commitments, share information.",
+        "Then ask what could go wrong if the output is wrong, what would make it unsafe or misleading, and what must be true before someone can rely on it.",
+        "Build each requirement from the action the output supports, the failure that could occur, and the condition that must be true for safe use.",
+        "Every requirement should answer two questions: what must the output get right for correct use, and what must the output never do.",
+        "Avoid requirements such as Be accurate, Be helpful, or Be high quality, because they are too broad to evaluate consistently.",
+        "Requirements should be observable, tied to a real failure mode, verifiable by a reviewer, and checked against an explicit source of truth such as the prompt, task, product rule, or source material.",
+        "Summaries need four requirements: reflect source content, identify decisions correctly, show what is unknown, and acknowledge incomplete information.",
+        "Action items need four requirements: include only real commitments, assign ownership correctly, include timing only when stated, and stop when required information is missing.",
+        "Recommendations need four requirements: stay within known constraints, require necessary inputs, avoid unsupported claims, and state uncertainty when needed.",
+        "Increase strictness when the output creates or assigns real work, drives a decision or workflow, is unlikely to be checked against the original source, or has a high cost of error; factual grounding and correctness should never be relaxed."
+      ],
+      "sections": [
+        {
+          "heading": "(Intro)",
+          "text": "Before evaluating quality, determine whether an output is safe to act on. Different output types have different failure modes, so each needs requirements that address the risks that matter most. Start with the action someone will take, rather than the output format: make a decision; assign work; track commitments; share information. Then ask: What could go wrong if the output is wrong? What would make it unsafe or misleading? What must be true before someone can rely on it? Build each requirement from the action the output supports, the failure that could occur, and the condition that must be true for safe use."
+        },
+        {
+          "heading": "Three examples",
+          "text": "Three worked derivations follow: a summary used to track decisions, an action list used to assign work, and a recommendation used to guide a decision."
+        },
+        {
+          "heading": "Summary used to track decisions",
+          "text": "Action the output supports: team members use the summary to understand agreements and decisions. What could go wrong: the summary states a decision that never happened. What must be true: only explicitly stated decisions are identified as decisions. Resulting requirement: Label something as a decision only when the source clearly states it as a decision."
+        },
+        {
+          "heading": "Action list used to assign work",
+          "text": "Action the output supports: tasks are assigned and tracked. What could go wrong: informal discussion becomes assigned work. What must be true: listed tasks represent actual commitments. Resulting requirements: Include only tasks that were expressed as commitments. Do not turn suggestions, brainstorming, or open discussion into tasks."
+        },
+        {
+          "heading": "Recommendation used to guide a decision",
+          "text": "Action the output supports: a person chooses a direction based on the recommendation. What could go wrong: the recommendation fills gaps with assumptions and leads to a bad choice. What must be true: the recommendation remains grounded in provided information. Resulting requirements: Request missing inputs before recommending a course of action. Do not assume goals, constraints, priorities, or intentions that were not provided."
+        },
+        {
+          "heading": "Write requirements that define safe use",
+          "text": "Every requirement should answer two questions: What must the output get right for correct use? What must the output never do? Avoid requirements such as Be accurate, Be helpful, or Be high quality. They are too broad to evaluate consistently. Requirements should be observable, tied to a real failure mode, verifiable by a reviewer, and checked against an explicit source of truth such as the prompt, task, product rule, or source material."
+        },
+        {
+          "heading": "Requirements by output type",
+          "text": "Pass and fail requirement tables follow for summaries, action items, and recommendations."
+        },
+        {
+          "heading": "Summaries",
+          "text": "Reflect source content: passes if it contains only information stated in the source, fails if it adds information, alters meaning, or exaggerates source claims. Identify decisions correctly: passes if it marks decisions only when explicitly stated, fails if it treats discussion, speculation, or implied agreement as decisions. Show what is unknown: passes if it calls out unresolved, unclear, or missing information, fails if it invents details or hides ambiguity. Acknowledge incomplete information: passes if it clearly signals uncertainty or incompleteness, fails if it presents unsupported certainty."
+        },
+        {
+          "heading": "Action items",
+          "text": "Include only real commitments: passes if tasks appear only when someone clearly committed, fails if tasks are created from suggestions, discussion, or implied next steps. Assign ownership correctly: passes if owners are named only when explicitly specified, fails if ownership is assigned without source evidence. Include timing only when stated: passes if dates and deadlines come directly from the source, fails if timelines are invented, guessed, or implied. Stop when required information is missing: passes if clarification is requested before proceeding, fails if output proceeds despite missing task details."
+        },
+        {
+          "heading": "Recommendations",
+          "text": "Stay within known constraints: passes if it uses only provided goals, constraints, and conditions, fails if it assumes missing intentions, requirements, or priorities. Require necessary inputs: passes if it requests missing information before recommending action, fails if it makes recommendations without needed inputs. Avoid unsupported claims: passes if it grounds suggestions in available information, fails if it presents assumptions, guesses, or inferred facts as known facts. State uncertainty when needed: passes if it explicitly communicates uncertainty or incomplete information, fails if it uses stronger confidence than the evidence justifies."
+        },
+        {
+          "heading": "Adjust strictness based on consequence",
+          "text": "Increase evaluation strictness when the output creates or assigns real work, drives a decision or workflow, is unlikely to be checked against the original source, or has a high cost of error. Lower-consequence scenarios may allow more flexibility in wording, phrasing, and structure. Factual grounding and correctness should never be relaxed."
+        },
+        {
+          "heading": "Key takeaway",
+          "text": "Requirements determine whether an output is safe to act on. Define the conditions for safe use first, then convert those conditions into measurable evaluation criteria."
+        }
+      ],
+      "values": {
+        "summaryUsedToTrackDecisions": {
+          "rows": [
+            {
+              "useCaseComponent": "Action the output supports",
+              "example": "Team members use the summary to understand agreements and decisions."
+            },
+            {
+              "useCaseComponent": "What could go wrong",
+              "example": "The summary states a decision that never happened."
+            },
+            {
+              "useCaseComponent": "What must be true",
+              "example": "Only explicitly stated decisions are identified as decisions."
+            }
+          ],
+          "resultingRequirements": [
+            "Label something as a decision only when the source clearly states it as a decision."
+          ]
+        },
+        "actionListUsedToAssignWork": {
+          "rows": [
+            {
+              "useCaseComponent": "Action the output supports",
+              "example": "Tasks are assigned and tracked."
+            },
+            {
+              "useCaseComponent": "What could go wrong",
+              "example": "Informal discussion becomes assigned work."
+            },
+            {
+              "useCaseComponent": "What must be true",
+              "example": "Listed tasks represent actual commitments."
+            }
+          ],
+          "resultingRequirements": [
+            "Include only tasks that were expressed as commitments.",
+            "Do not turn suggestions, brainstorming, or open discussion into tasks."
+          ]
+        },
+        "recommendationUsedToGuideADecision": {
+          "rows": [
+            {
+              "useCaseComponent": "Action the output supports",
+              "example": "A person chooses a direction based on the recommendation."
+            },
+            {
+              "useCaseComponent": "What could go wrong",
+              "example": "The recommendation fills gaps with assumptions and leads to a bad choice."
+            },
+            {
+              "useCaseComponent": "What must be true",
+              "example": "The recommendation remains grounded in provided information."
+            }
+          ],
+          "resultingRequirements": [
+            "Request missing inputs before recommending a course of action.",
+            "Do not assume goals, constraints, priorities, or intentions that were not provided."
+          ]
+        },
+        "summariesRequirements": [
+          {
+            "requirement": "Reflect source content",
+            "passIf": "Contains only information stated in the source.",
+            "failIf": "Adds information, alters meaning, or exaggerates source claims."
+          },
+          {
+            "requirement": "Identify decisions correctly",
+            "passIf": "Marks decisions only when explicitly stated.",
+            "failIf": "Treats discussion, speculation, or implied agreement as decisions."
+          },
+          {
+            "requirement": "Show what is unknown",
+            "passIf": "Calls out unresolved, unclear, or missing information.",
+            "failIf": "Invents details or hides ambiguity."
+          },
+          {
+            "requirement": "Acknowledge incomplete information",
+            "passIf": "Clearly signals uncertainty or incompleteness.",
+            "failIf": "Presents unsupported certainty."
+          }
+        ],
+        "actionItemsRequirements": [
+          {
+            "requirement": "Include only real commitments",
+            "passIf": "Tasks appear only when someone clearly committed.",
+            "failIf": "Tasks are created from suggestions, discussion, or implied next steps."
+          },
+          {
+            "requirement": "Assign ownership correctly",
+            "passIf": "Owners are named only when explicitly specified.",
+            "failIf": "Ownership is assigned without source evidence."
+          },
+          {
+            "requirement": "Include timing only when stated",
+            "passIf": "Dates and deadlines come directly from the source.",
+            "failIf": "Timelines are invented, guessed, or implied."
+          },
+          {
+            "requirement": "Stop when required information is missing",
+            "passIf": "Clarification is requested before proceeding.",
+            "failIf": "Output proceeds despite missing task details."
+          }
+        ],
+        "recommendationsRequirements": [
+          {
+            "requirement": "Stay within known constraints",
+            "passIf": "Uses only provided goals, constraints, and conditions.",
+            "failIf": "Assumes missing intentions, requirements, or priorities."
+          },
+          {
+            "requirement": "Require necessary inputs",
+            "passIf": "Requests missing information before recommending action.",
+            "failIf": "Makes recommendations without needed inputs."
+          },
+          {
+            "requirement": "Avoid unsupported claims",
+            "passIf": "Grounds suggestions in available information.",
+            "failIf": "Presents assumptions, guesses, or inferred facts as known facts."
+          },
+          {
+            "requirement": "State uncertainty when needed",
+            "passIf": "Explicitly communicates uncertainty or incomplete information.",
+            "failIf": "Uses stronger confidence than the evidence justifies."
+          }
+        ],
+        "startWithTheAction": [
+          "Make a decision",
+          "Assign work",
+          "Track commitments",
+          "Share information"
+        ],
+        "thenAsk": [
+          "What could go wrong if the output is wrong?",
+          "What would make it unsafe or misleading?",
+          "What must be true before someone can rely on it?"
+        ],
+        "requirementQualities": [
+          "observable",
+          "tied to a real failure mode",
+          "verifiable by a reviewer",
+          "checked against an explicit source of truth such as the prompt, task, product rule, or source material"
+        ],
+        "increaseStrictnessWhen": [
+          "the output creates or assigns real work",
+          "the output drives a decision or workflow",
+          "the output is unlikely to be checked against the original source",
+          "the output has a high cost of error"
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/define-output-requirements-by-experience-type/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
+    },
+    "content-engineering-build-a-prompt-set-and-assertions-for-an-eval": {
+      "title": "Build a prompt set and assertions for an eval",
+      "summary": "An eval is only as honest as the prompts you feed it and the assertions you score against. Clean prompts that look nothing like real usage hide failures, and vague assertions make two reviewers reach different scores on the same output. The page covers sourcing prompts from real usage, covering regression and capability behavior, varying by context rather than phrasing, writing reviewer-consistent assertions, matching assertions to automated versus human judges, and running three validation checks before scaling an assertion.",
+      "keyPoints": [
+        "Clean prompts that look nothing like real usage hide failures, and vague assertions make two reviewers reach different scores on the same output.",
+        "Start with prompts people actually type, not the ones you would ideally see, pulling from research sessions and contextual interviews, product feedback and support tickets, usage logs and intent data, and known scenarios where output has caused incorrect action.",
+        "Avoid internally written prompts that sound clean, prompts that only describe the happy path, and prompts polished to remove the messiness of real input.",
+        "If your prompt set never breaks the system, it is not testing the system.",
+        "Cover both regression prompts, which test behavior the system must always get right, and capability prompts, which test harder tasks the system cannot yet reliably handle.",
+        "Without regression prompts you cannot catch what slipped; without capability prompts you can only detect failure, not progress.",
+        "Three rewordings of the same request are not three prompts, they are one; for each scenario write three to five prompts that vary the wording, and for each new context start a new scenario.",
+        "Each assertion should be observable in the output rather than in the system or its reasoning, repeatable across prompts in the same scenario, and consistent across reviewers.",
+        "Match each assertion to the right judge: automated judges for must-pass behavior, safety, refusal, and factual grounding; human judges for felt quality, tone fit, and usefulness in context. Most eval sets need both.",
+        "Run three checks before scaling an assertion: consistent, discriminating, and transferable. An assertion that fails one of these checks will not get more reliable when applied to more output.",
+        "Name what assertions cannot yet capture, such as tone shifts, recovery after a failed turn, or follow-up usefulness, and share them with engineering and applied science partners."
+      ],
+      "sections": [
+        {
+          "heading": "Build a prompt set that looks like real usage",
+          "text": "Start with prompts people actually type, not the ones you would ideally see. Sources to pull from: research sessions and contextual interviews; product feedback and support tickets; usage logs and intent data; known scenarios where output has caused incorrect action. Avoid: internally written prompts that sound clean; prompts that only describe the happy path; prompts polished to remove the messiness of real input. If your prompt set never breaks the system, it is not testing the system."
+        },
+        {
+          "heading": "Cover both stable and stretch behavior",
+          "text": "Regression prompts test behavior the system must always get right, and a drop means something broke. Capability prompts test harder tasks the system cannot yet reliably handle, and progress over time means the system is improving. Without regression prompts, you cannot catch what slipped. Without capability prompts, you can only detect failure, not progress."
+        },
+        {
+          "heading": "Vary by context, not by phrasing",
+          "text": "Three rewordings of the same request are not three prompts. They are one. Same context with different wording counts as one prompt type. Different context, such as audience, stakes, missing inputs, or conflicting sources, counts as a new scenario. For each scenario, write three to five prompts that vary the wording. For each new context, start a new scenario. If every prompt in your set tests the same context, your eval coverage is narrower than it looks."
+        },
+        {
+          "heading": "Write assertions a second reviewer would apply the same way",
+          "text": "An assertion turns a quality requirement into a check you can verify directly from the output. Each assertion should be observable in the output, not in the system or its reasoning; repeatable across prompts in the same scenario; and consistent across reviewers. Do: 'Doesn't assign an owner unless the source names one.' Don't: 'Sounds professional and accurate.' If two reviewers would score the same output differently, the assertion is too vague."
+        },
+        {
+          "heading": "Match each assertion to the right kind of judge",
+          "text": "Automated judges, such as an LLM or rule, are used for must-pass behavior, safety, refusal, and factual grounding, and their assertions must be answerable from the output text alone. Human judges are used for felt quality, tone fit, and usefulness in context, and their assertions must be tied to clear examples of good and weak responses. Most eval sets need both. A judge that cannot read the signal an assertion is written for will not score it reliably."
+        },
+        {
+          "heading": "Run three checks before you scale an assertion",
+          "text": "Consistent: passes if two reviewers reach the same result, fails if reviewers disagree on the same output. Discriminating: passes if the assertion separates good output from weak output, fails if strong and weak responses both pass. Transferable: passes if the assertion holds on outputs it was not written from, fails if it only works on the examples used to draft it. If any check fails, fix the assertion before scaling. An assertion that fails one of these checks will not get more reliable when applied to more output."
+        },
+        {
+          "heading": "Name what assertions cannot yet capture",
+          "text": "Some behaviors matter to people but do not fit a current assertion, such as tone shifts, recovery after a failed turn, or follow-up usefulness. Write them down specifically. Note why the current assertion misses them. Share them with engineering and applied science partners. A gap named precisely is a gap someone can solve."
+        },
+        {
+          "heading": "Key takeaway",
+          "text": "Prompts decide what your eval can see. Assertions decide what your eval can score. If either is off, the rest of the eval cannot recover."
+        }
+      ],
+      "values": {
+        "promptTypes": [
+          {
+            "promptType": "Regression",
+            "whatItTests": "Behavior the system must always get right",
+            "signalItGives": "A drop means something broke."
+          },
+          {
+            "promptType": "Capability",
+            "whatItTests": "Harder tasks the system cannot yet reliably handle",
+            "signalItGives": "Progress over time means the system is improving."
+          }
+        ],
+        "varyByContext": [
+          {
+            "whatChanged": "Same context, different wording",
+            "countsAs": "One prompt type"
+          },
+          {
+            "whatChanged": "Different context, such as audience, stakes, missing inputs, or conflicting sources",
+            "countsAs": "A new scenario"
+          }
+        ],
+        "judgeTypes": [
+          {
+            "judgeType": "Automated, such as an LLM or rule",
+            "useFor": "Must-pass behavior, safety, refusal, factual grounding",
+            "assertionMustBe": "Answerable from the output text alone"
+          },
+          {
+            "judgeType": "Human",
+            "useFor": "Felt quality, tone fit, usefulness in context",
+            "assertionMustBe": "Tied to clear examples of good and weak responses"
+          }
+        ],
+        "threeChecksBeforeScaling": [
+          {
+            "check": "Consistent",
+            "passIf": "Two reviewers reach the same result.",
+            "failIf": "Reviewers disagree on the same output."
+          },
+          {
+            "check": "Discriminating",
+            "passIf": "The assertion separates good output from weak output.",
+            "failIf": "Strong and weak responses both pass."
+          },
+          {
+            "check": "Transferable",
+            "passIf": "The assertion holds on outputs it was not written from.",
+            "failIf": "It only works on the examples used to draft it."
+          }
+        ],
+        "promptSources": [
+          "research sessions and contextual interviews",
+          "product feedback and support tickets",
+          "usage logs and intent data",
+          "known scenarios where output has caused incorrect action"
+        ],
+        "promptSourcesToAvoid": [
+          "internally written prompts that sound clean",
+          "prompts that only describe the happy path",
+          "prompts polished to remove the messiness of real input"
+        ],
+        "assertionQualities": [
+          "observable in the output, not in the system or its reasoning",
+          "repeatable across prompts in the same scenario",
+          "consistent across reviewers"
+        ],
+        "assertionDoDont": [
+          {
+            "do": "'Doesn't assign an owner unless the source names one.'",
+            "dont": "'Sounds professional and accurate.'"
+          }
+        ],
+        "nameWhatAssertionsCannotCapture": [
+          "Write them down specifically.",
+          "Note why the current assertion misses them.",
+          "Share them with engineering and applied science partners."
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/build-a-prompt-set-and-assertions-for-an-eval/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
+    },
+    "content-engineering-understand-eval-results": {
+      "title": "Understand eval results",
+      "summary": "Two outputs can both fail, but one may be unsafe to act on while the other is simply less helpful. Read eval results in terms of what could go wrong if someone acts on the output, not only whether each check passed or failed. The page separates reliability failures from quality issues, catalogs four failure patterns, distinguishes product, prompt, data, and eval gaps, sets a fix-first priority, constrains what evidence reviewers may use, and supplies a reviewer checklist.",
+      "keyPoints": [
+        "Two outputs can both fail, but one may be unsafe to act on while the other is simply less helpful.",
+        "A reliability failure introduces details not grounded in the prompt, task, or source, such as a decision date that never appeared in the source, and must be fixed before doing anything else.",
+        "A quality issue is correct but less clear or useful, such as listing risks without explaining why they matter or what action to take, and is improved after reliability passes.",
+        "Do not just record that a result failed; record the failure pattern. The four patterns are invented details, incorrect decision labeling, missing information ignored, and scope drift.",
+        "One failure does not tell you much; repeated failure points to a gap in the product, prompt, data, or eval.",
+        "Check whether the same mistake shows up in multiple outputs, whether failures happen in specific situations, and whether similar prompts produce different results.",
+        "Do not assume every failure means the model needs to change; the cause can be unclear requirements, weak prompts, missing data, or inconsistent assertions.",
+        "Four issue types map to different checks: product gap, prompt gap, data gap, and eval gap. Do not change model behavior when the eval itself is unclear.",
+        "Prioritize reliability failures that could trigger incorrect action, failures that repeat across prompts, and failures in high-impact scenarios; defer isolated edge cases and low-impact quality issues.",
+        "Reviewers should use this eval's outputs and scores, reviewer notes, the prompts used, and source data and constraints, and should not use assumptions about what output probably meant, knowledge from past evals not shown, or untraceable information.",
+        "If results do not change what you do next, the eval did not help you decide anything."
+      ],
+      "sections": [
+        {
+          "heading": "Separate unsafe output from lower-quality output",
+          "text": "A reliability failure means output introduces details not grounded in the prompt, task, or source, such as a decision date that never appeared in the source; fix it before doing anything else. A quality issue means output is correct but less clear or useful, such as listing risks without explaining why they matter or what action to take; improve it after reliability passes."
+        },
+        {
+          "heading": "Identify what failed and why",
+          "text": "Do not just record that a result failed. Record the failure pattern. Invented details: adds owners, dates, or decisions not in source data, which leads to incorrect actions based on information the source does not support. Incorrect decision labeling: treats discussion as a decision, which creates false certainty. Missing information ignored: continues instead of asking, which hides gaps that must be resolved before someone can act. Scope drift: adds information outside the request or data boundary, which changes the requested task or conclusion."
+        },
+        {
+          "heading": "Look for patterns across prompts",
+          "text": "One failure does not tell you much. Repeated failure points to a gap in the product, prompt, data, or eval. Check whether the same mistake shows up in multiple outputs, such as invented dates in five of ten prompts; whether failures happen in specific situations, such as missing key information or conflicting data; and whether similar prompts produce different results, such as one response refusing missing data while another guesses. When the same pattern fails across several prompts, treat it as a gap to fix at the source, not a one-off mistake."
+        },
+        {
+          "heading": "Separate product issues from evaluation issues",
+          "text": "Do not assume every failure means the model needs to change. The cause can be unclear requirements, weak prompts, missing data, or inconsistent assertions. A product gap shows output lacking required behavior across prompts, so check whether the requirement is clear and complete. A prompt gap shows failures only in certain wording or edge cases, so check whether the prompt set reflects real usage. A data gap shows output that sounds confident but is wrong, so check whether required data is available and in scope. An eval gap shows reviewers disagreeing on results, so check whether assertions are observable and enforceable. Fix the right problem. Do not change model behavior when the eval itself is unclear."
+        },
+        {
+          "heading": "Decide what to fix first",
+          "text": "Fix failures that could lead to incorrect actions before improving usefulness or presentation quality. Prioritize reliability failures that could trigger incorrect action, failures that repeat across prompts, and failures in high-impact scenarios. Defer isolated edge cases and low-impact quality issues."
+        },
+        {
+          "heading": "Use results to guide next steps",
+          "text": "Repeated reliability failure means make the requirement explicit so the system cannot guess. Failures tied to missing information mean improve stop-and-ask behavior. Inconsistent results across similar prompts mean expand or refine the prompt set. Reviewer disagreement means rewrite assertions to be more precise. If results do not change what you do next, the eval did not help you decide anything."
+        },
+        {
+          "heading": "Evidence to use when reviewing results",
+          "text": "Use the outputs from this eval and their scores, reviewer notes explaining why each output passed or failed, the prompts used to generate the outputs, and source data and constraints given to the system. Do not use assumptions about what the output probably meant, knowledge from past evals or incidents not shown here, or information that cannot be traced back to the inputs, outputs, or review notes."
+        },
+        {
+          "heading": "Reviewer checklist",
+          "text": "Classify each failure as a reliability failure or quality issue and cite evidence. Prioritize reliability failures before quality issues. Record at least one failure pattern tied to the prompt, task, or source it broke against. Treat repeated failures across prompts as a pattern to fix. Trace root cause to product, prompt, data, or eval. Tie next steps to the observed failure type."
+        },
+        {
+          "heading": "Key takeaway",
+          "text": "Fix failures that could lead to incorrect actions before improving clarity, tone, or polish."
+        }
+      ],
+      "values": {
+        "resultTypes": [
+          {
+            "typeOfResult": "Reliability failure",
+            "whatItMeans": "Output introduces details not grounded in the prompt, task, or source, such as a decision date that never appeared in the source.",
+            "whatToDo": "Fix before doing anything else."
+          },
+          {
+            "typeOfResult": "Quality issue",
+            "whatItMeans": "Output is correct but less clear or useful, such as listing risks without explaining why they matter or what action to take.",
+            "whatToDo": "Improve after reliability passes."
+          }
+        ],
+        "failurePatterns": [
+          {
+            "failurePattern": "Invented details",
+            "whatItLooksLike": "Adds owners, dates, or decisions not in source data.",
+            "whyItMatters": "Leads to incorrect actions based on information the source does not support."
+          },
+          {
+            "failurePattern": "Incorrect decision labeling",
+            "whatItLooksLike": "Treats discussion as a decision.",
+            "whyItMatters": "Creates false certainty."
+          },
+          {
+            "failurePattern": "Missing information ignored",
+            "whatItLooksLike": "Continues instead of asking.",
+            "whyItMatters": "Hides gaps that must be resolved before someone can act."
+          },
+          {
+            "failurePattern": "Scope drift",
+            "whatItLooksLike": "Adds information outside the request or data boundary.",
+            "whyItMatters": "Changes the requested task or conclusion."
+          }
+        ],
+        "issueTypes": [
+          {
+            "issueType": "Product gap",
+            "whatItLooksLike": "Output lacks required behavior across prompts.",
+            "whatToCheck": "Is the requirement clear and complete?"
+          },
+          {
+            "issueType": "Prompt gap",
+            "whatItLooksLike": "Failures appear only in certain wording or edge cases.",
+            "whatToCheck": "Does the prompt set reflect real usage?"
+          },
+          {
+            "issueType": "Data gap",
+            "whatItLooksLike": "Output sounds confident but is wrong.",
+            "whatToCheck": "Is required data available and in scope?"
+          },
+          {
+            "issueType": "Eval gap",
+            "whatItLooksLike": "Reviewers disagree on results.",
+            "whatToCheck": "Are assertions observable and enforceable?"
+          }
+        ],
+        "useResultsToGuideNextSteps": [
+          {
+            "ifYouSeeThis": "Repeated reliability failure",
+            "doThis": "Make the requirement explicit so the system cannot guess."
+          },
+          {
+            "ifYouSeeThis": "Failures tied to missing information",
+            "doThis": "Improve stop-and-ask behavior."
+          },
+          {
+            "ifYouSeeThis": "Inconsistent results across similar prompts",
+            "doThis": "Expand or refine the prompt set."
+          },
+          {
+            "ifYouSeeThis": "Reviewer disagreement",
+            "doThis": "Rewrite assertions to be more precise."
+          }
+        ],
+        "lookForPatternsAcrossPrompts": [
+          "the same mistake shows up in multiple outputs, such as invented dates in five of ten prompts",
+          "failures happen in specific situations, such as missing key information or conflicting data",
+          "similar prompts produce different results, such as one response refusing missing data while another guesses"
+        ],
+        "prioritize": [
+          "reliability failures that could trigger incorrect action",
+          "failures that repeat across prompts",
+          "failures in high-impact scenarios"
+        ],
+        "evidenceToUse": [
+          "the outputs from this eval and their scores",
+          "reviewer notes explaining why each output passed or failed",
+          "the prompts used to generate the outputs",
+          "source data and constraints given to the system"
+        ],
+        "evidenceNotToUse": [
+          "assumptions about what the output probably meant",
+          "knowledge from past evals or incidents not shown here",
+          "information that cannot be traced back to the inputs, outputs, or review notes"
+        ],
+        "reviewerChecklist": [
+          "Classify each failure as a reliability failure or quality issue and cite evidence.",
+          "Prioritize reliability failures before quality issues.",
+          "Record at least one failure pattern tied to the prompt, task, or source it broke against.",
+          "Treat repeated failures across prompts as a pattern to fix.",
+          "Trace root cause to product, prompt, data, or eval.",
+          "Tie next steps to the observed failure type."
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/understand-eval-results/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
+    },
+    "content-engineering-turn-eval-results-into-the-right-fixes": {
+      "title": "Turn eval results into the right fixes",
+      "summary": "Evaluation only helps when it changes the right part of the system. Each gap, whether product, prompt, data, or eval, points to a different fix, so match the failure to the fix and each eval cycle changes what the output actually does, not just how it scores. The page details four fix areas with their actions and triggering signals, requires changing one area at a time and rerunning the same evals, and warns against cosmetic fixes.",
+      "keyPoints": [
+        "Evaluation only helps when it changes the right part of the system; match the failure to the fix so each eval cycle changes what the output actually does, not just how it scores.",
+        "Four failure-to-fix mappings: output introduces unsupported details means fix requirement clarity; output behaves inconsistently across prompts means fix the prompt set; output continues without required information means fix data and context; reviewers disagree on results means fix evaluation checks.",
+        "Change one area, rerun the same evals, then move to the next; that is the only way to know which change fixed the failure.",
+        "Fix requirement clarity by clarifying what is allowed and not allowed, making failure conditions explicit, and specifying the exact evidence needed for decision, commitment, and required-input checks.",
+        "Fix the prompt set by adding prompts that reflect real usage, including edge cases that expose failures, and removing prompts that do not represent real scenarios.",
+        "Fix data and context by ensuring required inputs are available, clarifying which sources are in scope, defining what the output should do when required information is missing, and resolving conflicting, stale, or missing data.",
+        "Fix evaluation checks by making checks observable and repeatable, removing subjective criteria, and aligning scoring rules and thresholds.",
+        "Apply the priority order from the previous step: reliability failures and repeated patterns first, isolated edge cases later.",
+        "Confirm the fix by rerunning the same prompts, checking whether the failure still appears, and verifying that behavior holds across similar inputs; if results do not change, the fix did not address the real problem.",
+        "Avoid cosmetic fixes such as rewriting for tone without fixing errors, adding detail that is not grounded in the source, and making output longer without improving accuracy."
+      ],
+      "sections": [
+        {
+          "heading": "(Intro)",
+          "text": "Evaluation only helps when it changes the right part of the system. Each gap from the previous step, whether product, prompt, data, or eval, points to a different fix. Match the failure to the fix so each eval cycle changes what the output actually does, not just how it scores."
+        },
+        {
+          "heading": "Match each failure to the right fix",
+          "text": "Output introduces unsupported details means fix requirement clarity. Output behaves inconsistently across prompts means fix the prompt set. Output continues without required information means fix data and context. Reviewers disagree on results means fix evaluation checks. Focus on the root cause so each eval cycle improves real behavior."
+        },
+        {
+          "heading": "Fixes by area",
+          "text": "Change one area, rerun the same evals, then move to the next. That is the only way to know which change fixed the failure."
+        },
+        {
+          "heading": "Fix requirement clarity",
+          "text": "Tighten what the output must do. Clarify what is allowed and not allowed. Make failure conditions explicit. Specify the exact evidence needed for decision, commitment, and required-input checks. Focus on requirements when failures show unclear rules, reviewers interpret the same output differently, or outputs pass in one scenario and fail in another because the requirement is vague."
+        },
+        {
+          "heading": "Fix the prompt set",
+          "text": "Change how behavior is tested. Add prompts that reflect real usage. Include edge cases that expose failures. Remove prompts that do not represent real scenarios. Focus on prompts when failures appear only in specific phrasing, behavior breaks under ambiguity, or the prompt set is too narrow to reveal recurring patterns."
+        },
+        {
+          "heading": "Fix data and context",
+          "text": "Change what the output can access. Ensure required inputs are available. Clarify which sources are in scope. Define what the output should do when required information is missing. Resolve conflicting, stale, or missing data. Focus on data and context when output appears confident but is wrong, failures come from missing or inconsistent information, or correct behavior is impossible with current inputs."
+        },
+        {
+          "heading": "Fix evaluation checks",
+          "text": "Change how results are measured. Make checks observable and repeatable. Remove subjective criteria. Align scoring rules and thresholds. Focus on evaluation checks when reviewers disagree, results are inconsistent across reviewers or runs, or checks are hard to apply the same way every time."
+        },
+        {
+          "heading": "Confirm the fix worked",
+          "text": "Apply the priority order from the previous step: reliability failures and repeated patterns first, isolated edge cases later. Then verify that the fix changed behavior. Rerun the same prompts. Check whether the failure still appears. Verify that behavior holds across similar inputs. If results do not change, the fix did not address the real problem."
+        },
+        {
+          "heading": "Avoid cosmetic fixes",
+          "text": "Changes that improve how the output sounds do not fix behavior. Avoid treating these as improvements: rewriting for tone without fixing errors; adding detail that is not grounded in the source; making output longer without improving accuracy. If the behavior did not change, the problem is not solved."
+        },
+        {
+          "heading": "Key takeaway",
+          "text": "Fix the cause, not the symptom. If the same failure shows up again, the change did not fix behavior."
+        }
+      ],
+      "values": {
+        "failureToFix": [
+          {
+            "ifYouSeeThis": "Output introduces unsupported details",
+            "doThis": "Fix requirement clarity."
+          },
+          {
+            "ifYouSeeThis": "Output behaves inconsistently across prompts",
+            "doThis": "Fix the prompt set."
+          },
+          {
+            "ifYouSeeThis": "Output continues without required information",
+            "doThis": "Fix data and context."
+          },
+          {
+            "ifYouSeeThis": "Reviewers disagree on results",
+            "doThis": "Fix evaluation checks."
+          }
+        ],
+        "fixesByArea": [
+          {
+            "area": "Fix requirement clarity",
+            "changes": "Tighten what the output must do.",
+            "actions": [
+              "Clarify what is allowed and not allowed.",
+              "Make failure conditions explicit.",
+              "Specify the exact evidence needed for decision, commitment, and required-input checks."
+            ],
+            "focusWhen": "Failures show unclear rules, reviewers interpret the same output differently, or outputs pass in one scenario and fail in another because the requirement is vague."
+          },
+          {
+            "area": "Fix the prompt set",
+            "changes": "Change how behavior is tested.",
+            "actions": [
+              "Add prompts that reflect real usage.",
+              "Include edge cases that expose failures.",
+              "Remove prompts that do not represent real scenarios."
+            ],
+            "focusWhen": "Failures appear only in specific phrasing, behavior breaks under ambiguity, or the prompt set is too narrow to reveal recurring patterns."
+          },
+          {
+            "area": "Fix data and context",
+            "changes": "Change what the output can access.",
+            "actions": [
+              "Ensure required inputs are available.",
+              "Clarify which sources are in scope.",
+              "Define what the output should do when required information is missing.",
+              "Resolve conflicting, stale, or missing data."
+            ],
+            "focusWhen": "Output appears confident but is wrong, failures come from missing or inconsistent information, or correct behavior is impossible with current inputs."
+          },
+          {
+            "area": "Fix evaluation checks",
+            "changes": "Change how results are measured.",
+            "actions": [
+              "Make checks observable and repeatable.",
+              "Remove subjective criteria.",
+              "Align scoring rules and thresholds."
+            ],
+            "focusWhen": "Reviewers disagree, results are inconsistent across reviewers or runs, or checks are hard to apply the same way every time."
+          }
+        ],
+        "confirmTheFixWorked": [
+          "Rerun the same prompts.",
+          "Check whether the failure still appears.",
+          "Verify that behavior holds across similar inputs."
+        ],
+        "cosmeticFixesToAvoid": [
+          "rewriting for tone without fixing errors",
+          "adding detail that is not grounded in the source",
+          "making output longer without improving accuracy"
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/turn-eval-results-into-the-right-fixes/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
+    },
+    "content-engineering-track-quality-over-time": {
+      "title": "Track quality over time",
+      "summary": "Quality does not stay fixed. A release that passes today can fail tomorrow, because new prompts, changing data, and model updates all shift how the system behaves. The page directs teams to track behavior rather than score movement, watch four named drift signals, and re-run a stable prompt set so results are directly comparable. It gives criteria for separating signal from noise, conditions for refreshing a stale eval, and a mapping from observed changes to next actions.",
+      "keyPoints": [
+        "Quality does not stay fixed; a release that passes today can fail tomorrow because new prompts, changing data, and model updates all shift how the system behaves.",
+        "If you do not track behavior over time, you will not know when it breaks.",
+        "A score tells you that something changed but does not tell you what changed, so the key signal is behavior change, not score movement.",
+        "Track whether output still avoids unsupported details, handles missing information correctly, and stays consistent across similar prompts.",
+        "Four drift signals: new failure patterns, increasing frequency, scenario-specific drops, and unexpected score jumps.",
+        "Unexpected score jumps, where scores improve without a known product change, may mean the eval is measuring the wrong thing.",
+        "Use a stable prompt set across runs so you can compare results directly; if prompts change every run, trend tracking breaks.",
+        "Re-running the same prompts shows whether identical input now produces different output, whether known failures are actually fixed, and whether new failures emerge.",
+        "Treat results as meaningful when the same failure repeats across prompts, failures appear in high-impact scenarios, or behavior changes in a consistent direction; treat them as noise when a failure appears once and never repeats, prompts are unclear or low quality, or reviewers cannot apply checks consistently.",
+        "An eval that always passes is no longer testing meaningful risk; add harder, realistic cases to keep pressure on the system.",
+        "Tracking only pays off when a change you see turns into a change you make."
+      ],
+      "sections": [
+        {
+          "heading": "(Intro)",
+          "text": "Quality does not stay fixed. A release that passes today can fail tomorrow. New prompts, changing data, and model updates all shift how the system behaves. If you do not track behavior over time, you will not know when it breaks."
+        },
+        {
+          "heading": "Track behavior, not just scores",
+          "text": "A score tells you that something changed. It does not tell you what changed. Track whether output still avoids unsupported details, handles missing information correctly, and stays consistent across similar prompts. The key signal is behavior change, not score movement."
+        },
+        {
+          "heading": "Watch for drift signals",
+          "text": "New failure patterns: a failure type appears that you have not seen before, which indicates a behavior shift, not random noise. Increasing frequency: the same failure appears more often across runs, which means reliability is weakening. Scenario-specific drops: failures cluster in one prompt type or context, which signals a coverage or requirement gap. Unexpected score jumps: scores improve without a known product change, which means the eval may be measuring the wrong thing. When behavior shifts, assume something changed and investigate."
+        },
+        {
+          "heading": "Re-run the same prompts",
+          "text": "Use a stable prompt set across runs so you can compare results directly. You need to see whether identical input now produces different output, whether known failures are actually fixed, and whether new failures emerge. If prompts change every run, trend tracking breaks."
+        },
+        {
+          "heading": "Separate signal from noise",
+          "text": "Treat results as meaningful when the same failure repeats across prompts, failures appear in high-impact scenarios, or behavior changes in a consistent direction. Treat results as noise when a failure appears once and never repeats, prompts are unclear or low quality, or reviewers cannot apply checks consistently. Prioritize patterns you can act on."
+        },
+        {
+          "heading": "Refresh the eval when it goes stale",
+          "text": "An eval that always passes is no longer testing meaningful risk. Update the eval when the same prompts pass repeatedly with no stress, old failure patterns disappear, new real-world scenarios appear, or production issues are not represented in the prompt set. Add harder, realistic cases to keep pressure on the system."
+        },
+        {
+          "heading": "Turn changes into actions",
+          "text": "Reliability failures increasing means tighten requirements or constraints. Failures moving to new scenarios means expand prompt coverage in that scenario. Reviewer disagreement increasing means rewrite checks to be more observable. No failures over time means add more difficult and edge-case prompts. Tracking only pays off when a change you see turns into a change you make."
+        },
+        {
+          "heading": "Key takeaway",
+          "text": "Evals tell you where the system stands. Tracking tells you how that has changed."
+        }
+      ],
+      "values": {
+        "driftSignals": [
+          {
+            "signal": "New failure patterns",
+            "whatItLooksLike": "A failure type appears that you have not seen before.",
+            "whyItMatters": "Indicates a behavior shift, not random noise."
+          },
+          {
+            "signal": "Increasing frequency",
+            "whatItLooksLike": "The same failure appears more often across runs.",
+            "whyItMatters": "Reliability is weakening."
+          },
+          {
+            "signal": "Scenario-specific drops",
+            "whatItLooksLike": "Failures cluster in one prompt type or context.",
+            "whyItMatters": "Signals a coverage or requirement gap."
+          },
+          {
+            "signal": "Unexpected score jumps",
+            "whatItLooksLike": "Scores improve without a known product change.",
+            "whyItMatters": "The eval may be measuring the wrong thing."
+          }
+        ],
+        "turnChangesIntoActions": [
+          {
+            "whatChanged": "Reliability failures increase",
+            "whatToDoNext": "Tighten requirements or constraints."
+          },
+          {
+            "whatChanged": "Failures move to new scenarios",
+            "whatToDoNext": "Expand prompt coverage in that scenario."
+          },
+          {
+            "whatChanged": "Reviewer disagreement increases",
+            "whatToDoNext": "Rewrite checks to be more observable."
+          },
+          {
+            "whatChanged": "No failures over time",
+            "whatToDoNext": "Add more difficult and edge-case prompts."
+          }
+        ],
+        "behaviorsToTrack": [
+          "avoids unsupported details",
+          "handles missing information correctly",
+          "stays consistent across similar prompts"
+        ],
+        "whatRerunningReveals": [
+          "whether identical input now produces different output",
+          "whether known failures are actually fixed",
+          "whether new failures emerge"
+        ],
+        "treatAsMeaningfulWhen": [
+          "the same failure repeats across prompts",
+          "failures appear in high-impact scenarios",
+          "behavior changes in a consistent direction"
+        ],
+        "treatAsNoiseWhen": [
+          "a failure appears once and never repeats",
+          "prompts are unclear or low quality",
+          "reviewers cannot apply checks consistently"
+        ],
+        "refreshTheEvalWhen": [
+          "the same prompts pass repeatedly with no stress",
+          "old failure patterns disappear",
+          "new real-world scenarios appear",
+          "production issues are not represented in the prompt set"
+        ]
+      },
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/track-quality-over-time/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     }
   }
 }
