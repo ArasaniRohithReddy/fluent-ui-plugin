@@ -26,6 +26,7 @@ At the **start** of a task, call `fluent_get_config` (`projectDir` = the user's 
 ## Tools & skills
 1. Load `fluent-powerbi-theme` (theme JSON structure + Fluent mapping), `fluent-pbip-report` (PBIP/PBIR project format), and `fluent-powerbi-adopt` (apply Fluent 2 to an existing report + repair distortion).
 2. Use MCP tools: `fluent_generate_powerbi_theme` (brand color → valid Fluent theme JSON), `fluent_scaffold_pbip` (Fluent-themed PBIP/PBIR project), `fluent_get_token` for exact Fluent color/type values, `fluent_powerbi_visuals` (how Fluent 2 styles each visual type), and `fluent_migration_guidance` with `scenario: "powerbi-report"` for the machine-readable adopt-and-repair playbook (effect map, detection rules, safety rules, never-rename list).
+3. For an **existing PBIR report**, drive the deterministic tools instead of hand-editing: `fluent_pbir_audit` (baseline), then `fluent_pbir_apply_theme`, then `fluent_pbir_normalize_inline` (delete the inline overrides the theme owns), then `fluent_pbir_verify` (assertions V1-V9 including the theme-effectiveness ratio). The same engine runs standalone: `node scripts/pbir/audit.mjs <reportDir>`.
 
 ## Rules
 - Emit **schema-valid** theme JSON (`$schema` set to the current Power BI report theme schema). Validate it parses and conforms.

@@ -14,6 +14,10 @@ This project is the **fluent-ui** plugin: **agents + skills + an MCP server** th
 | `fluent_generate_theme` | Turn a brand color into a Fluent light+dark brand theme (brand ramp + CSS vars) |
 | `fluent_generate_powerbi_theme` | Produce a valid, Fluent-aligned Power BI report theme JSON |
 | `fluent_scaffold_pbip` | Scaffold a Fluent-themed Power BI **PBIP/PBIR** project |
+| `fluent_pbir_audit` | Read-only census of an existing **PBIR** report: pages + each page's real canvas, visual/type/schema histograms, theme wiring, per-key **inline-override counts**, inline fonts, hardcoded colors, bookmarks that captured formatting, geometry, and the theme-effectiveness matrix |
+| `fluent_pbir_apply_theme` | Register a theme in an existing PBIR report: write it to `RegisteredResources`, **append** the `CustomTheme` item to the existing package, and set `themeCollection.customTheme` with a **computed** `reportVersionAtImport` |
+| `fluent_pbir_normalize_inline` | The core fix: **delete** the inline `visualContainerObjects` overrides the theme owns so the theme actually applies, with a full change ledger (dry run by default) |
+| `fluent_pbir_verify` | Prove the adoption landed: assertions V1-V9 including the **theme-effectiveness ratio** (target >= 0.90) |
 | `fluent_powerbi_visuals` | Catalog of every Power BI visual + its Learn doc URL and how the Fluent 2 base theme styles it (mapped to the 21-page Fluent 2 showcase) |
 | `fluent_powerplatform_guidance` | Power Apps / Power Pages / PCF Fluent guidance + snippets |
 | `fluent_generate_code` | Scaffold a Fluent web component/layout (React v9 or Web Components) |
@@ -43,6 +47,7 @@ Users may declare presets in **`fluent.config.json`** (brand, theme, typography,
 - **Web Components v3:** `@fluentui/web-components`, `setTheme(...)`, `<fluent-*>` elements.
 - **Copilot / AI chat UI:** `@fluentui-copilot/react-copilot` (Storybook: https://ai.fluentui.dev) — ChatInput, Copilot message, Suggestions, Prompt starters, Citations.
 - **Power BI:** `fluent_generate_powerbi_theme` → import in Desktop (View ▸ Themes ▸ Browse); `fluent_scaffold_pbip` for a themed PBIP/PBIR project.
+- **Existing Power BI report (PBIR):** a theme only styles what no visual overrode inline, so run `fluent_pbir_audit` then `fluent_pbir_apply_theme` then `fluent_pbir_normalize_inline` then `fluent_pbir_verify`. The same engine runs standalone: `node scripts/pbir/audit.mjs <reportDir>`.
 - **Power Apps:** modern controls + `App.Theme` (seed `#0f6cbd`). **Power Pages:** Fluent design-token CSS over Bootstrap. **PCF:** Fluent React v9 + `FluentProvider` with `context.fluentDesignLanguage.tokenTheme`.
 
 ## Skills (load for depth)

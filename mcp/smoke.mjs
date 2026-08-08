@@ -29,7 +29,7 @@ await client.connect(transport);
 
 const tools = await client.listTools();
 console.log('TOOLS(' + tools.tools.length + '):', tools.tools.map((t) => t.name).join(', '));
-console.log('tool_count: ok=' + (tools.tools.length === 19));
+console.log('tool_count: ok=' + (tools.tools.length === 23));
 
 const pbi = await client.callTool({ name: 'fluent_generate_powerbi_theme', arguments: { brandColor: '#D13438', name: 'Fluent Red' } });
 const pbiText = pbi.content[0].text;
@@ -55,6 +55,42 @@ console.log('scaffold_pbip:', scaf.content[0].text.split('\n')[0]);
 const hasPbip = existsSync('./.smoke-out/SmokeReport.pbip');
 const fileCount = existsSync('./.smoke-out') ? readdirSync('./.smoke-out', { recursive: true }).length : 0;
 console.log('scaffold: SmokeReport.pbip=' + hasPbip + ' entries=' + fileCount + ' ok=' + (hasPbip && fileCount > 0));
+
+// PBIR tooling: scaffold a report, audit it, register a theme (dry run then
+// real), clear the inline overrides, and verify the effectiveness ratio moves.
+const PBIR_REPORT = './.smoke-out/SmokeReport.Report';
+const aud = await client.callTool({ name: 'fluent_pbir_audit', arguments: { reportDir: PBIR_REPORT, format: 'json' } });
+let audJ = null;
+try { audJ = JSON.parse(aud.content[0].text); } catch {}
+console.log('pbir_audit: pages=' + (audJ && audJ.counts.pages) + ' visuals=' + (audJ && audJ.counts.visualFiles) + ' ok=' + (!!audJ && audJ.counts.pages > 0 && !!audJ.computedReportVersionAtImport.visual));
+
+const themeJson = (await client.callTool({ name: 'fluent_generate_powerbi_theme', arguments: { brandColor: '#0F6CBD', name: 'Fluent Smoke' } })).content[0].text;
+const applyDry = await client.callTool({ name: 'fluent_pbir_apply_theme', arguments: { reportDir: PBIR_REPORT, themeJson, themeName: 'FluentSmoke' } });
+console.log('pbir_apply_theme(dry run default): ok=' + (applyDry.content[0].text.startsWith('DRY RUN') && !existsSync(PBIR_REPORT + '/StaticResources/RegisteredResources/FluentSmoke.json')));
+
+const applyReal = await client.callTool({ name: 'fluent_pbir_apply_theme', arguments: { reportDir: PBIR_REPORT, themeJson, themeName: 'FluentSmoke', dryRun: false, format: 'json' } });
+let applyJ = null;
+try { applyJ = JSON.parse(applyReal.content[0].text); } catch {}
+const themeOnDisk = existsSync(PBIR_REPORT + '/StaticResources/RegisteredResources/FluentSmoke.json');
+const rvi = applyJ && applyJ.reportVersionAtImport;
+console.log('pbir_apply_theme(applied): file=' + themeOnDisk + ' rvi=' + JSON.stringify(rvi) + ' ok=' + (themeOnDisk && !!rvi && !!rvi.visual && !!rvi.page && !!rvi.report));
+
+const norm = await client.callTool({ name: 'fluent_pbir_normalize_inline', arguments: { reportDir: PBIR_REPORT, policy: 'theme-wins', format: 'json' } });
+let normJ = null;
+try { normJ = JSON.parse(norm.content[0].text); } catch {}
+console.log('pbir_normalize_inline(dry run default): dryRun=' + (normJ && normJ.dryRun) + ' identityUnchanged=' + (normJ && normJ.identity.unchanged) + ' ok=' + (!!normJ && normJ.dryRun === true && normJ.identity.unchanged === true));
+
+const ver = await client.callTool({ name: 'fluent_pbir_verify', arguments: { reportDir: PBIR_REPORT, format: 'json' } });
+let verJ = null;
+try { verJ = JSON.parse(ver.content[0].text); } catch {}
+const ids = verJ ? verJ.checks.map((c) => c.id).join(',') : '';
+console.log('pbir_verify: checks=' + ids + ' ok=' + (ids === 'V1,V2,V3,V4,V5,V6,V7,V8,V9' && verJ.checks.find((c) => c.id === 'V1').pass && verJ.checks.find((c) => c.id === 'V3').pass));
+
+const guard = await client.callTool({ name: 'fluent_pbir_audit', arguments: { reportDir: './.smoke-out', format: 'text' } });
+console.log('pbir_audit(PBIP root resolves to the .Report folder): ok=' + guard.content[0].text.startsWith('PBIR audit:'));
+const bad = await client.callTool({ name: 'fluent_pbir_audit', arguments: { reportDir: './.smoke-out/SmokeReport.SemanticModel' } });
+console.log('pbir_audit(non-PBIR rejected): ok=' + bad.content[0].text.includes('not a PBIR report directory'));
+
 rmSync('./.smoke-out', { recursive: true, force: true });
 
 const tk = await client.callTool({ name: 'fluent_list_tokens', arguments: { category: 'borderRadius' } });

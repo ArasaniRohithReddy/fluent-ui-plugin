@@ -155,7 +155,7 @@ With no config or memory present, everything still works using sensible built-in
 
 **Skills** (`skills/**/SKILL.md`): web UI, theming, design tokens, design language, accessibility, AI/Copilot UI, Power BI theme, PBIP report, Power Apps, Power Pages, PCF, migration, design review, and config.
 
-**MCP tools** (19): `fluent_search_components`, `fluent_get_component`, `fluent_list_tokens`, `fluent_get_token`, `fluent_generate_theme`, `fluent_generate_code`, `fluent_design_guidance`, `fluent_migration_guidance`, `fluent_get_images`, `fluent_accessibility_checklist`, `fluent_generate_powerbi_theme`, `fluent_scaffold_pbip`, `fluent_powerbi_visuals`, `fluent_powerplatform_guidance`, `fluent_get_config`, `fluent_init_config`, `fluent_set_config`, `fluent_remember`, `fluent_recall`.
+**MCP tools** (23): `fluent_search_components`, `fluent_get_component`, `fluent_list_tokens`, `fluent_get_token`, `fluent_generate_theme`, `fluent_generate_code`, `fluent_design_guidance`, `fluent_migration_guidance`, `fluent_get_images`, `fluent_accessibility_checklist`, `fluent_generate_powerbi_theme`, `fluent_scaffold_pbip`, `fluent_pbir_audit`, `fluent_pbir_apply_theme`, `fluent_pbir_normalize_inline`, `fluent_pbir_verify`, `fluent_powerbi_visuals`, `fluent_powerplatform_guidance`, `fluent_get_config`, `fluent_init_config`, `fluent_set_config`, `fluent_remember`, `fluent_recall`.
 
 ## 6. Verify it is working
 
