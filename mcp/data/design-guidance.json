@@ -4082,6 +4082,8 @@
         "evaluationCriteria": [
           {
             "criterion": "Criterion 1",
+            "label": "Before interaction",
+            "principle": "Be transparent",
             "scale": [
               {
                 "score": "0 — Lacking critical components",
@@ -4103,6 +4105,8 @@
           },
           {
             "criterion": "Criterion 2",
+            "label": "During interaction",
+            "principle": "Be transparent",
             "scale": [
               {
                 "score": "0 — Lacking critical components",
@@ -4124,6 +4128,8 @@
           },
           {
             "criterion": "Criterion 3",
+            "label": "Voice and tone",
+            "principle": "Be transparent",
             "scale": [
               {
                 "score": "0 — Lacking critical components",
@@ -4145,6 +4151,8 @@
           },
           {
             "criterion": "Criterion 4",
+            "label": "AI comprehension and verification",
+            "principle": "Be transparent",
             "scale": [
               {
                 "score": "0 — Lacking critical components",
@@ -4166,6 +4174,8 @@
           },
           {
             "criterion": "Criterion 5",
+            "label": "Before interaction",
+            "principle": "Set appropriate expectations",
             "scale": [
               {
                 "score": "0 — Lacking critical components",
@@ -4187,6 +4197,8 @@
           },
           {
             "criterion": "Criterion 6",
+            "label": "After interaction",
+            "principle": "Set appropriate expectations",
             "scale": [
               {
                 "score": "0 — Lacking critical components",
@@ -4208,6 +4220,8 @@
           },
           {
             "criterion": "Criterion 7",
+            "label": "Overreliance safeguards",
+            "principle": "Prevent overreliance on AI",
             "scale": [
               {
                 "score": "0 — Lacking critical components",
@@ -4229,6 +4243,8 @@
           },
           {
             "criterion": "Criterion 8",
+            "label": "User control and correction",
+            "principle": "Keep users in control",
             "scale": [
               {
                 "score": "0 — Lacking critical components",
@@ -4250,6 +4266,8 @@
           },
           {
             "criterion": "Criterion 9",
+            "label": "Feedback mechanism",
+            "principle": "Collect feedback on output",
             "scale": [
               {
                 "score": "0 — Lacking critical components",
@@ -4889,19 +4907,60 @@
         }
       ],
       "doDont": {
+        "$comment": "Verified pair-by-pair against the live responsible-AI page (2026-08). Each entry keeps the DO and its matching DON'T together so the guidance can never be read inverted.",
+        "pairs": [
+          { "section": "Labeling and attribution", "do": "Make AI presence and reasoning visible", "dont": "Without indicators, users can't tell they're looking at AI output" },
+          { "section": "System and data scope", "do": "Be specific about what data is and isn't used", "dont": "Vague data descriptions prevent users from giving meaningful consent" },
+          { "section": "Voice and tone", "do": "Avoid false familiarity", "dont": "Sycophantic language creates false familiarity and inflates trust" },
+          { "section": "Voice and tone", "do": "Report AI actions factually", "dont": "Suggesting AI has opinions or desires misleads users about how it works" },
+          { "section": "Scope communication", "do": "Represent capabilities and limitations accurately", "dont": "Overpromising scope sets false expectations that erode trust" },
+          { "section": "Latency messaging", "do": "Use meaningful latency messaging", "dont": "Vague latency messaging obscures what the AI is actually doing" },
+          { "section": "Output framing and accuracy cues", "do": "Frame output as potentially incomplete", "dont": "Presenting output as fully reliable encourages overreliance" },
+          { "section": "Action labels and controls", "do": "Label actions clearly and consistently", "dont": "Vague action labels make it unclear what will happen" },
+          { "section": "AI activation", "do": "Explicitly communicate when AI is activated", "dont": "Silent AI activation removes user awareness and the ability to opt out" },
+          { "section": "Consent and privacy language", "do": "Be specific about what data you're requesting permission to use", "dont": "Vague consent language prevents users from making informed decisions" },
+          { "section": "Settings access", "do": "Tell users exactly how to change a setting later", "dont": "Leaving settings vaguely accessible makes them hard to find later" },
+          { "section": "Feedback transparency", "do": "Be explicit about why feedback is collected", "dont": "Vague data-use language prevents informed consent" },
+          { "section": "Feedback categorization and controls", "do": "Give users meaningful feedback categories", "dont": "Sacrificing clarity for brevity makes feedback categories meaningless" },
+          { "section": "Agent interactions", "do": "Be transparent about agent capabilities and limitations", "dont": "Vague confidence about agent scope miscalibrates user expectations" },
+          { "section": "Agent interactions", "do": "Tell users how to correct, refine, or reverse agent actions", "dont": "Presenting agent actions as final removes user oversight" },
+          { "section": "Error messaging", "do": "Provide actionable error messages", "dont": "Error messages with no follow-up actions leave users with nowhere to go" }
+        ],
         "do": [
-          "Set appropriate expectations",
-          "Keep users in control",
           "Make AI presence and reasoning visible",
+          "Be specific about what data is and isn't used",
+          "Avoid false familiarity",
+          "Report AI actions factually",
+          "Represent capabilities and limitations accurately",
           "Use meaningful latency messaging",
-          "Presenting output as fully reliable encourages overreliance",
+          "Frame output as potentially incomplete",
           "Label actions clearly and consistently",
+          "Explicitly communicate when AI is activated",
+          "Be specific about what data you're requesting permission to use",
+          "Tell users exactly how to change a setting later",
+          "Be explicit about why feedback is collected",
           "Give users meaningful feedback categories",
-          "Presenting agent actions as final removes user oversight",
+          "Be transparent about agent capabilities and limitations",
+          "Tell users how to correct, refine, or reverse agent actions",
           "Provide actionable error messages"
         ],
         "dont": [
-          "Avoid false familiarity"
+          "Without indicators, users can't tell they're looking at AI output",
+          "Vague data descriptions prevent users from giving meaningful consent",
+          "Sycophantic language creates false familiarity and inflates trust",
+          "Suggesting AI has opinions or desires misleads users about how it works",
+          "Overpromising scope sets false expectations that erode trust",
+          "Vague latency messaging obscures what the AI is actually doing",
+          "Presenting output as fully reliable encourages overreliance",
+          "Vague action labels make it unclear what will happen",
+          "Silent AI activation removes user awareness and the ability to opt out",
+          "Vague consent language prevents users from making informed decisions",
+          "Leaving settings vaguely accessible makes them hard to find later",
+          "Vague data-use language prevents informed consent",
+          "Sacrificing clarity for brevity makes feedback categories meaningless",
+          "Vague confidence about agent scope miscalibrates user expectations",
+          "Presenting agent actions as final removes user oversight",
+          "Error messages with no follow-up actions leave users with nowhere to go"
         ]
       },
       "principles": [
