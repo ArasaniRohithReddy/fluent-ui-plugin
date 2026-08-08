@@ -16,7 +16,7 @@
 | **Component roadmap** | 1 | ⚪ out of scope | lifecycle/roadmap meta |
 | **Native components** — iOS (12), Android (5), Windows/RN (index) | 21 | ⚪ out of scope | separate native SDKs (Fluent Apple / Fluent Android / WinUI). Cross-platform **design language IS covered**; native code-gen is a future extension. |
 
-**Totals covered on-mission:** 61 web components · 23 design/UX/AI topics · full web token system · dev setup — **100% of the plugin's Web + Power BI + Power Platform mission surface.**
+**Totals covered on-mission:** 61 web components · 36 design/UX/AI/content-engineering topics · full web token system · dev setup — **100% of the plugin's Web + Power BI + Power Platform mission surface.**
 
 ## Deep content + image coverage (this pass)
 

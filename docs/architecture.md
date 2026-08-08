@@ -15,7 +15,7 @@
                          └───────────────┬─────────────────────────────┘
                                          │ call for facts / generation
                          ┌───────────────▼─────────────────────────────┐
-                         │  MCP server (mcp/, stdio) — 19 tools         │
+                         │  MCP server (mcp/, stdio) — 23 tools         │
                          │   components · tokens · theme · powerbi …    │
                          └───────────────┬─────────────────────────────┘
                                          │ reads

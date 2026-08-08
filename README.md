@@ -93,7 +93,7 @@ plugin.json            # plugin manifest (+ mirrors in .claude-plugin/.codex-plu
 AGENTS.md · CLAUDE.md  # portable instructions (fan out to most hosts)
 agents/                # 6 agents (*.agent.md)
 skills/                # 15 skills (SKILL.md)
-mcp/                   # MCP server: 19 tools (src/, dist/, data/)
+mcp/                   # MCP server: 23 tools (src/, dist/, data/)
 templates/pbip/        # PBIP/PBIR project template
 hosts/                 # per-IDE MCP config templates + install guide
 docs/                  # architecture + presentation

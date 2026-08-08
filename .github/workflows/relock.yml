@@ -1,0 +1,82 @@
+name: Regenerate lockfiles
+
+# Rebuilds mcp/ and site/ package-lock.json against the public npm registry and
+# uploads them as an artifact.
+#
+# Why this exists: a lockfile written behind a corporate npm proxy records that
+# proxy's rewritten `resolved` URLs and its weaker sha1 `integrity` hashes. In a
+# public repository that is wrong on both counts, so maintainers who cannot reach
+# registry.npmjs.org directly can run this job and commit the artifact instead.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**/package.json'
+      - '.github/workflows/relock.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  relock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Regenerate lockfiles from the public registry
+        run: |
+          set -euo pipefail
+          for dir in mcp site; do
+            echo "::group::$dir"
+            rm -f "$dir/package-lock.json"
+            npm install --package-lock-only \
+              --registry=https://registry.npmjs.org/ \
+              --prefix "$dir"
+            echo "::endgroup::"
+          done
+
+      - name: Verify no proxy URLs or weak hashes remain
+        run: |
+          node -e '
+            let bad = 0;
+            for (const f of ["mcp/package-lock.json", "site/package-lock.json"]) {
+              const lock = JSON.parse(require("fs").readFileSync(f, "utf8"));
+              for (const [name, entry] of Object.entries(lock.packages || {})) {
+                if (!entry.resolved) continue;
+                const host = new URL(entry.resolved).host;
+                if (host !== "registry.npmjs.org") {
+                  console.error(`${f}: ${name} resolves to ${host}`); bad++;
+                }
+                if (entry.integrity && !entry.integrity.startsWith("sha512-")) {
+                  console.error(`${f}: ${name} has ${entry.integrity.split("-")[0]} integrity`); bad++;
+                }
+              }
+            }
+            if (bad) { console.error(`${bad} problem(s) found`); process.exit(1); }
+            console.log("Both lockfiles resolve to registry.npmjs.org with sha512 integrity.");
+          '
+
+      - name: Confirm the install tree is clean
+        run: |
+          set -euo pipefail
+          npm ci --prefix mcp
+          npm --prefix mcp run build
+          npm --prefix mcp test
+
+      - name: Report remaining advisories
+        continue-on-error: true
+        run: npm audit --prefix mcp --audit-level=moderate
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lockfiles
+          path: |
+            mcp/package-lock.json
+            site/package-lock.json
+          if-no-files-found: error
