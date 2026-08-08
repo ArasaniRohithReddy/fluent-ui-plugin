@@ -8,6 +8,8 @@ node_modules/
 .smoke-out/
 .cfg-smoke/
 .playwright-mcp/
+.pbir-work/
+scripts/pbir/.selftest-work/
 *.log
 *.tmp
 

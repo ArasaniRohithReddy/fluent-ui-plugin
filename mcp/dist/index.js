@@ -3,6 +3,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { registerPowerbiTheme } from './tools/powerbiTheme.js';
 import { registerPbip } from './tools/pbip.js';
+import { registerPbir } from './tools/pbir.js';
 import { registerPowerbiVisuals } from './tools/powerbiVisuals.js';
 import { registerPowerplatform } from './tools/powerplatform.js';
 import { registerAccessibility } from './tools/accessibility.js';
@@ -21,6 +22,10 @@ const server = new McpServer({
 // Power BI + Power Platform + a11y tools (data ready).
 registerPowerbiTheme(server);
 registerPbip(server);
+// Deterministic PBIR report tooling: audit, apply theme, clear the inline
+// overrides that make a theme inert, and verify the result (engine in
+// scripts/pbir, which also runs standalone as a CLI).
+registerPbir(server);
 registerPowerbiVisuals(server);
 registerPowerplatform(server);
 registerAccessibility(server);

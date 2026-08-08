@@ -16,7 +16,9 @@
     "build": "tsc -p tsconfig.json",
     "watch": "tsc -w -p tsconfig.json",
     "start": "node dist/index.js",
-    "test": "node smoke.mjs"
+    "test": "node smoke.mjs && npm run test:pbir",
+    "test:smoke": "node smoke.mjs",
+    "test:pbir": "node ../scripts/pbir/selftest.mjs"
   },
   "engines": {
     "node": ">=18"
@@ -24,6 +26,9 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
     "zod": "^3.23.8"
+  },
+  "overrides": {
+    "@hono/node-server": "^2.0.5"
   },
   "devDependencies": {
     "@types/node": "^22.7.0",

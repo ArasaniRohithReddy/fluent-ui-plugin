@@ -10,6 +10,7 @@ import {
   Brain24Regular, WeatherMoon20Regular, WeatherSunny20Regular, Copy20Regular,
   Checkmark20Regular, ArrowRight20Regular, Star20Regular, Open16Regular, Sparkle20Filled,
   Bug24Regular, Lightbulb24Regular, Chat24Regular, BranchFork24Regular, ShieldCheckmark24Regular, PeopleCommunity24Regular,
+  Eye20Regular,
 } from '@fluentui/react-icons';
 
 const REPO = 'https://github.com/ArasaniRohithReddy/fluent-ui-plugin';
@@ -99,6 +100,13 @@ const useStyles = makeStyles({
 
   footer: { borderTop: `1px solid var(--glass-brd)`, ...shorthands.padding('34px', 0), marginTop: '28px', backgroundColor: 'var(--glass-bg)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' },
   footRow: { display: 'flex', flexWrap: 'wrap', gap: '18px', alignItems: 'center', justifyContent: 'space-between' },
+  visitors: {
+    display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '14px',
+    ...shorthands.padding('6px', '12px'), borderRadius: tokens.borderRadiusMedium,
+    backgroundColor: 'var(--glass-bg)', ...shorthands.border('1px', 'solid', 'var(--glass-brd)'),
+    color: tokens.colorNeutralForeground3,
+  },
+  visitorsImg: { display: 'block', height: '20px' },
 });
 
 type Feat = { c: string; Icon: React.FC<any>; t: string; d: string };
@@ -106,7 +114,7 @@ const FEATURES: Feat[] = [
   { c: '#0f6cbd', Icon: Code24Regular, t: 'Web: React v9 and Web Components', d: 'All 61 components with real props, imports, usage, anatomy, states and do/don\'t guidance, plus accessible code generation.' },
   { c: '#986f0b', Icon: DataBarVertical24Regular, t: 'Power BI', d: 'Every visual with its Learn doc, a Fluent 2 theme JSON, and PBIP/PBIR scaffolding. Also applies Fluent 2 to an existing report and repairs the layout distortion the theme introduces.' },
   { c: '#5c2e91', Icon: Flash24Regular, t: 'Power Platform', d: 'Fluent 2 guidance for Power Apps canvas, model-driven apps (the New Look), Power Pages, and PCF components.' },
-  { c: '#038387', Icon: Color24Regular, t: 'Design language', d: '23 topics covering color, typography, layout, motion, elevation, iconography, content, AI evaluation, and responsible AI.' },
+  { c: '#038387', Icon: Color24Regular, t: 'Design language', d: '36 topics covering color, typography, layout, motion, elevation, iconography, content engineering, AI evaluation, and responsible AI.' },
   { c: '#107c10', Icon: PaintBrush24Regular, t: 'Tokens and theming', d: '366 design tokens across light, dark and high-contrast. Turn any brand color into a full Fluent theme.' },
   { c: '#ca5010', Icon: ArrowSwap24Regular, t: 'Migration', d: 'Adopt Fluent 2 in existing apps: Fluent UI v8 to v9, other design systems, or hardcoded values to tokens.' },
   { c: '#a4262c', Icon: Accessibility24Regular, t: 'Accessibility built in', d: 'A WCAG-aligned Fluent 2 checklist is enforced by default: names, roles, focus order, 4.5:1 contrast, and target sizes.' },
@@ -130,12 +138,16 @@ const TOOLS: [string, string][] = [
   ['fluent_get_token', 'Exact token value (color, type, spacing, radius)'],
   ['fluent_generate_theme', 'Turn a brand color into a Fluent light and dark theme'],
   ['fluent_generate_code', 'Accessible Fluent 2 React and Web-Components code'],
-  ['fluent_design_guidance', 'Design-language guidance across 23 topics'],
+  ['fluent_design_guidance', 'Design-language guidance across 36 topics'],
   ['fluent_migration_guidance', 'Adopt or migrate to Fluent 2 (v8 to v9)'],
   ['fluent_get_images', 'Direct URLs to diagrams, do/don\'t and Motion videos'],
   ['fluent_accessibility_checklist', 'Fluent 2 accessibility checklist'],
   ['fluent_generate_powerbi_theme', 'Fluent-aligned Power BI theme JSON'],
   ['fluent_scaffold_pbip', 'Fluent-themed Power BI PBIP/PBIR project'],
+  ['fluent_pbir_audit', 'Census an existing PBIR report: overrides, theme wiring, geometry'],
+  ['fluent_pbir_apply_theme', 'Register a Fluent theme in an existing PBIR report'],
+  ['fluent_pbir_normalize_inline', 'Delete the inline overrides that make a theme inert'],
+  ['fluent_pbir_verify', 'Assertions V1-V9 including the theme-effectiveness ratio'],
   ['fluent_powerbi_visuals', 'Every Power BI visual, its doc and Fluent 2 styling'],
   ['fluent_powerplatform_guidance', 'Power Apps, Power Pages and PCF guidance'],
   ['fluent_get_config', 'Load the user\'s resolved presets'],
@@ -208,6 +220,28 @@ function CodeBlock({ code }: { code: string }) {
   );
 }
 
+/**
+ * Visitor counter. GitHub Pages is static, so the count comes from a hosted
+ * badge service; loading the image is what records the visit. The label and
+ * chrome are native Fluent so the footer stays on-brand, and the whole chip
+ * hides itself if the service is unavailable.
+ */
+function VisitorCount() {
+  const s = useStyles();
+  const [failed, setFailed] = React.useState(false);
+  if (failed) return null;
+  const src =
+    'https://hits.sh/arasanirohithreddy.github.io/fluent-ui-plugin.svg' +
+    '?style=flat-square&label=&color=0f6cbd&labelColor=0f6cbd';
+  return (
+    <div className={s.visitors}>
+      <Eye20Regular aria-hidden="true" />
+      <Caption1>Visitors</Caption1>
+      <img className={s.visitorsImg} src={src} alt="Total visitors to this site" loading="lazy" onError={() => setFailed(true)} />
+    </div>
+  );
+}
+
 export function App() {
   const [dark, setDark] = React.useState<boolean>(() => {
     try { const t = localStorage.getItem('fui-theme'); if (t) return t === 'dark'; } catch {}
@@ -258,7 +292,7 @@ export function App() {
                 <Button appearance="secondary" size="large" icon={<Star20Regular />} as="a" href={REPO}>View on GitHub</Button>
               </div>
               <div className={s.stats}>
-                {[['61', 'Components (47 core, 14 AI)'], ['23', 'Design-language topics'], ['705', 'Source visuals indexed'], ['19', 'MCP tools'], ['366', 'Design tokens, 3 themes']].map(([b, l]) => (
+                {[['61', 'Components (47 core, 14 AI)'], ['36', 'Design-language topics'], ['705', 'Source visuals indexed'], ['23', 'MCP tools'], ['366', 'Design tokens, 3 themes']].map(([b, l]) => (
                   <div key={l} className={`${glass} ${s.stat}`}><span className={s.statB}>{b}</span><Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{l}</Caption1></div>
                 ))}
               </div>
@@ -326,7 +360,7 @@ export function App() {
             <div className={s.wrap}>
               <div className={s.sectionHead}>
                 <Caption1 className={s.eyebrow}>Under the hood</Caption1>
-                <Title3 as="h2" block>19 deterministic MCP tools</Title3>
+                <Title3 as="h2" block>23 deterministic MCP tools</Title3>
                 <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>Portable, standard MCP over stdio, so the same server runs in every host below.</Body1>
               </div>
               <div className={s.grid2}>
@@ -373,10 +407,10 @@ export function App() {
                 <div className={s.bandSheen} />
                 <div className={s.sectionHead} style={{ marginBottom: 22, position: 'relative' }}>
                   <Title3 as="h2" block style={{ color: '#fff' }}>Verified against the source of truth</Title3>
-                  <Body1 block style={{ color: 'rgba(255,255,255,.9)' }}>Every route in the official Fluent 2 site's own sitemap (114 routes) was cross-checked, so this is measured coverage, not an estimate.</Body1>
+                  <Body1 block style={{ color: 'rgba(255,255,255,.9)' }}>Every route in the official Fluent 2 site's own sitemap (132 routes) was cross-checked, so this is measured coverage, not an estimate.</Body1>
                 </div>
                 <div className={s.grid3}>
-                  {[['61 / 61', 'Web components (100%)'], ['23 / 23', 'Design and UX topics'], ['705', 'Source visuals with URLs'], ['35+', 'Power BI visuals catalogued'], ['12+', 'AI IDEs supported'], ['MIT', 'Open source license']].map(([b, l]) => (
+                  {[['61 / 61', 'Web components (100%)'], ['36 / 36', 'Design and UX topics'], ['705', 'Source visuals with URLs'], ['35+', 'Power BI visuals catalogued'], ['12+', 'AI IDEs supported'], ['MIT', 'Open source license']].map(([b, l]) => (
                     <div key={l} className={s.bandStat}><span className={s.statB} style={{ color: '#fff' }}>{b}</span><Caption1 style={{ color: 'rgba(255,255,255,.82)' }}>{l}</Caption1></div>
                   ))}
                 </div>
@@ -410,6 +444,7 @@ export function App() {
               <div>
                 <span className={s.brand} style={{ marginBottom: 8 }}><span className={s.logo}><Sparkle20Filled /></span> Fluent UI 2.0 Plugin</span>
                 <Caption1 block style={{ color: tokens.colorNeutralForeground3, marginTop: 8, maxWidth: '54ch' }}>Built with the Microsoft Fluent 2 design system (Fluent UI React v9). This site is a demo of the plugin's own output. It is not an official Microsoft product.</Caption1>
+                <VisitorCount />
               </div>
               <div style={{ display: 'flex', gap: 12 }}>
                 <Button appearance="secondary" as="a" href={REPO} icon={<Star20Regular />}>GitHub</Button>

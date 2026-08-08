@@ -8,7 +8,7 @@ export function registerDesignGuidance(server: McpServer): void {
     {
       title: 'Fluent 2 design-language guidance',
       description:
-        'Return grounded, source-cited Fluent 2 (Fluent UI 2.0) design-language guidance for a foundation or guideline guide from https://fluent2.microsoft.design: design-principles, color, typography, layout, elevation, iconography, motion, shapes, material, accessibility, content-design, design-tokens, handoffs, onboarding, wait-ux, responsible-ai, ai-harm, content-engineering, content-engineering-evals, entry-points, personality-principles, copilot-errors, or data-usage-sharing (or "all"). Use this for the reasoning layer (why/when to apply a style); use fluent_list_tokens / fluent_get_token for exact token values.',
+        'Return grounded, source-cited Fluent 2 (Fluent UI 2.0) design-language guidance from https://fluent2.microsoft.design. Covers 36 topics: the design foundations (design-principles, color, typography, layout, elevation, iconography, motion, shapes, material), UX frameworks (accessibility, content-design, design-tokens, handoffs, onboarding, wait-ux), AI/Copilot guidance (responsible-ai, ai-harm, entry-points, personality-principles, copilot-errors, data-usage-sharing), and the full content-engineering practice: system prompt engineering and the evaluating-output-quality track, under content-engineering-* keys. Pass "all" to list every topic. Use this for the reasoning layer (why/when to apply a style); use fluent_list_tokens / fluent_get_token for exact token values.',
       inputSchema: {
         topic: z
           .enum([
@@ -31,6 +31,19 @@ export function registerDesignGuidance(server: McpServer): void {
             'ai-harm',
             'content-engineering',
             'content-engineering-evals',
+            'content-engineering-system-prompt-engineering',
+            'content-engineering-define-system-level-behavior',
+            'content-engineering-define-task-behavior-patterns',
+            'content-engineering-define-prompts-for-complex-tasks',
+            'content-engineering-design-interaction-behavior',
+            'content-engineering-define-tone-and-context-behavior',
+            'content-engineering-define-good-output-quality',
+            'content-engineering-decide-what-to-evaluate-first',
+            'content-engineering-define-output-requirements-by-experience-type',
+            'content-engineering-build-a-prompt-set-and-assertions-for-an-eval',
+            'content-engineering-understand-eval-results',
+            'content-engineering-turn-eval-results-into-the-right-fixes',
+            'content-engineering-track-quality-over-time',
             'entry-points',
             'personality-principles',
             'copilot-errors',

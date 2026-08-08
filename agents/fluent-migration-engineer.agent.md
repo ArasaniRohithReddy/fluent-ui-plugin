@@ -4,6 +4,7 @@ description: "Adopts/migrates an EXISTING app or report to Fluent 2 — Fluent U
 user-invocable: true
 skills:
   - fluent-migration
+  - fluent-powerbi-adopt
   - fluent-design-review
   - fluent-web-ui
   - fluent-theming
@@ -25,7 +26,8 @@ At the **start** of a task, call `fluent_get_config` (`projectDir` = the user's 
    - Fluent v8 → v9 → `scenario=v8-to-v9` (shims `@fluentui/react-migration-v8-v9`, `@fluentui/react-portal-compat`, `createV8Theme`, component mapping, side-by-side).
    - Another design system → `scenario=from-design-system` (boundary + `FluentProvider`, screen-by-screen).
    - Hardcoded → tokens → `scenario=hardcoded-to-tokens`.
-   - Power BI / Power Apps / Power Pages / PCF → `scenario=per-surface`.
+   - **Power BI report → `scenario=powerbi-report`** and load `fluent-powerbi-adopt`. This is a different job from the others: a theme only styles what a visual has **not** overridden inline, and in real reports 68 to 95 percent of visuals carry theme-defeating inline overrides. Run `fluent_pbir_audit` → `fluent_pbir_apply_theme` → `fluent_pbir_normalize_inline` → `fluent_pbir_verify`, and report the theme-effectiveness ratio. Hand off to `fluent-powerbi-designer` when the work is primarily Power BI.
+   - Power Apps / Power Pages / PCF → `scenario=per-surface`.
 3. **Migrate** (do the work): replace components using `fluent_get_component`/`fluent_search_components`; swap magic values for `tokens.*` via `fluent_get_token`; bridge the theme (`createV8Theme` or `fluent_generate_theme`); wrap the app/subtree in `FluentProvider` (+ `PortalCompatProvider` for hybrid v8/v9).
 4. **Verify** each increment (build + `fluent-design-review` + `fluent_accessibility_checklist`); remove shims as areas finish.
 

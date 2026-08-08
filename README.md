@@ -43,6 +43,10 @@ Beyond greenfield, it also:
 | `fluent_generate_theme` | Brand hex to Fluent `BrandVariants` ramp + `createLightTheme`/`createDarkTheme` |
 | `fluent_generate_powerbi_theme` | Valid, Fluent-aligned Power BI report theme JSON |
 | `fluent_scaffold_pbip` | Fluent-themed **PBIP/PBIR** Power BI project |
+| `fluent_pbir_audit` | Read-only census of an existing PBIR report: pages + per-page canvas, visual/type/schema histograms, theme wiring, inline-override counts, inline fonts, hardcoded colors, bookmarks that captured formatting, geometry, effectiveness matrix |
+| `fluent_pbir_apply_theme` | Register a theme in an existing PBIR report (append the `CustomTheme` item, computed `reportVersionAtImport`) |
+| `fluent_pbir_normalize_inline` | Delete the inline overrides that make a theme inert, with a full ledger (dry run by default) |
+| `fluent_pbir_verify` | Assertions V1-V9 including the theme-effectiveness ratio (target >= 0.90) |
 | `fluent_powerbi_visuals` | Every Power BI visual + its Learn doc URL + Fluent 2 base-theme styling (mapped to the 21-page showcase) |
 | `fluent_powerplatform_guidance` | Power Apps / Power Pages / PCF Fluent guidance |
 | `fluent_generate_code` | Fluent web scaffolds (React v9 / Web Components) |
@@ -89,7 +93,7 @@ plugin.json            # plugin manifest (+ mirrors in .claude-plugin/.codex-plu
 AGENTS.md · CLAUDE.md  # portable instructions (fan out to most hosts)
 agents/                # 6 agents (*.agent.md)
 skills/                # 15 skills (SKILL.md)
-mcp/                   # MCP server: 19 tools (src/, dist/, data/)
+mcp/                   # MCP server: 23 tools (src/, dist/, data/)
 templates/pbip/        # PBIP/PBIR project template
 hosts/                 # per-IDE MCP config templates + install guide
 docs/                  # architecture + presentation

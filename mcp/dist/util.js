@@ -6,6 +6,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 export const DATA_DIR = join(here, '..', 'data');
 /** plugin templates/ (relative to compiled dist/) */
 export const TEMPLATES_DIR = join(here, '..', '..', 'templates');
+/** plugin scripts/ (relative to compiled dist/) - the standalone PBIR engine */
+export const SCRIPTS_DIR = join(here, '..', '..', 'scripts');
 export function loadJson(file) {
     const p = join(DATA_DIR, file);
     if (!existsSync(p))
