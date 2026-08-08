@@ -1,8 +1,12 @@
 # Fluent 2 coverage report (sitemap-verified)
 
-**Method:** every route in the official **https://fluent2.microsoft.design** site was enumerated from the site's own **`sitemap-0.xml` (114 routes)** and cross-checked against this plugin's data (`mcp/data/*.json`), skills, and MCP tools. Gated pages (AI components + the "Working with AI" guidance) were captured via an **authenticated** employee sign-in pass. Every page's **images** were inventoried and, where the page shipped diagrams with empty `alt` text, read with **vision OCR**. This is a verification of *actual* coverage, not an estimate. Last run: **2026-07-21**.
+**Method:** every route in the official **https://fluent2.microsoft.design** site was enumerated from the site's own **`sitemap-0.xml`** and cross-checked against this plugin's data (`mcp/data/*.json`), skills, and MCP tools. Every page's **images** were inventoried and, where the page shipped diagrams with empty `alt` text, read with **vision OCR**. This is a verification of *actual* coverage, not an estimate.
 
-## Site total: 114 routes = 83 component + 31 content
+**Re-audited at content level on 2026-08-08.** Route counts alone are not enough: a page can gain content without the sitemap changing. This pass diffed the *body* of all 132 routes, not just their URLs. No route was added, removed or renamed since the first pass, and no upstream prose or table had drifted — but the re-audit found four defects **in our own extraction** (mis-sorted responsible-AI do/don't pairs, silently dropped markdown tables, garbled `card.accessibility` prose, and 13 missing content-engineering pages). All are fixed. Note that the earlier figure of 114 routes undercounted the sitemap; the true total is **132**.
+
+**Access note:** 25-26 routes now sit behind Microsoft's employee sign-in, including all 14 AI component pages. Topics captured before they were gated are flagged `accessStatus: employee-gated` with a `capturedAt` date, so stale content is visible rather than silently trusted.
+
+## Site total: 132 routes
 
 | Route group | On the site | Status | How it's covered |
 |---|---|:---:|---|
@@ -10,6 +14,7 @@
 | **Design language** topics | 9 | **✅ 9/9** | `design-guidance.json` + `fluent_design_guidance` + `fluent-design-language` skill |
 | **UX frameworks & guidelines** | 6 | **✅ 6/6** | accessibility · content design · **design tokens** · handoffs · onboarding · wait UX |
 | **Working with AI** | 7 | **✅ 7/7** | content engineering · responsible AI · AI harms · **entry points** · **personality principles** · **copilot errors** · **data usage & sharing** |
+| **Content engineering** | 13 | **✅ 13/13** | added by the 2026-08-08 content-level re-audit → `design-guidance.json` + `fluent_design_guidance` |
 | **Web tokens reference** | 2 (`color-tokens`, `color-tokens2`) | **✅** | `fluent-tokens.json` (366 color tokens × light/dark/HC + type/spacing/radius/stroke/shadow/motion) → `fluent_list_tokens`, `fluent_get_token` |
 | **Get started → develop** | 1 | **✅** | install `@fluentui/react-components`, `FluentProvider`, Web Components — `fluent-web-ui` skill + README/`hosts/` |
 | **Get started → design / whatisnew / contribute / gethelp** | 4 | ⚪ out of scope | Figma UI-kit + design-system meta (not code-generation) |
@@ -37,16 +42,18 @@ Chat input (+ Attachment, + Suggestions) · Chat output (+ Citations and referen
 
 *(Guidance captured from the gated design pages; APIs linked to the public `@fluentui-copilot/*` packages — noted as internal-preview.)*
 
-## Design language, UX & AI topics — 23/23 ✅
+## Design language, UX & AI topics — 36/36 ✅
 **Design language (9):** Design principles · Color · Elevation · Iconography · Layout · Material · Motion · Shapes · Typography
 **UX frameworks & guidelines (6):** Accessibility · Content design · Design tokens · Handoffs · Onboarding · Wait UX
 **Working with AI (8):** Content engineering · Evaluating output quality · Responsible AI · Types of AI harm · Entry points · Personality principles · Copilot errors · Data usage & sharing
+**Content engineering (13):** the dedicated content-engineering set added by the 2026-08-08 content-level re-audit, which the original route-count pass had missed entirely.
 
 ## Scope note — native platforms & meta pages
 The site offers a platform switcher for **Web / iOS / Android / Windows**. This plugin targets **Web** (Fluent UI React v9 + Web Components) with **Power BI** and **Power Platform** — where Fluent 2 web/product development happens. The **iOS / Android / Windows** catalogs are separate *native* SDKs (Fluent UI Apple, Fluent UI Android, WinUI) and are intentionally out of scope; the cross-platform **design language** (color, type, motion, tokens, principles, responsible-AI) **is** covered and applies to them. Design-system meta pages (Figma UI-kit onboarding, what's-new, contribution guide, component roadmap) are likewise out of scope for a code-generation plugin.
 
 ## How to reproduce this verification
-1. Fetch `https://fluent2.microsoft.design/sitemap-0.xml` → 114 routes (authenticate for `/components/web/react/ai/*` and the "Working with AI" guidance pages).
+1. Fetch `https://fluent2.microsoft.design/sitemap-index.xml`, then `sitemap-0.xml` → 132 routes. Plain `/sitemap.xml` 404s. Around 25 routes, including every `/components/web/react/ai/*` page, now require an employee sign-in.
 2. Compare the live component/topic/token inventory to `mcp/data/fluent-components-usage.json`, `mcp/data/fluent-components.json`, `mcp/data/design-guidance.json`, and `mcp/data/fluent-tokens.json`.
 3. Confirm every on-mission route resolves via `fluent_get_component` / `fluent_design_guidance` / `fluent_get_token`.
 4. Confirm every documented image carries descriptive `alt` (no empty `alt` remains in the data).
+5. Diff page **bodies**, not just URLs. Counting routes cannot detect content added to an existing page, which is how the 13 content-engineering pages were missed the first time.
