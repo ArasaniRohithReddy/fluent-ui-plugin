@@ -771,7 +771,7 @@
     ],
     "accessibility": [
       "Aria labels: Make sure to provide meaningful aria-label, aria-describedby and aria-labelledby whenever needed, especially for selectable cards.",
-      "Focus order in cards: Cards can treat focus in different ways to ensure they meet the needs of each experience. By using the focusMode prop, you can specify the focus behavior of a card as well as the actions it contains. The actions in the card will be focusable but the card container won’t receive or manage focus The card will be focusable and trap focus inside it. Tab cycles through the card actions. ESC exits the card"
+      "Focus order in cards: Cards can treat focus in different ways to ensure they meet the needs of each experience. Use the focusMode prop to specify the focus behavior of the card and the actions it contains. The four values are off, no-tab, tab-exit and tab-only; see tables (Accessibility / focusMode) for what each one does."
     ],
     "content": [
       "No matter the type of content in a card, they should offer bite-sized pieces of information that people need to know first. This information should encourage them to take an action directly from the card or click through for more info.",
@@ -855,7 +855,79 @@
       "Content"
     ],
     "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-card-card--docs",
-    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/card/usage"
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/card/usage",
+    "tables": [
+      {
+        "section": "Layout / Size",
+        "headers": [
+          "Property",
+          "Height",
+          "Width"
+        ],
+        "rows": [
+          [
+            "Fixed (height & width)",
+            "User defined",
+            "User defined"
+          ],
+          [
+            "Fixed height, auto width",
+            "User defined",
+            "fit-content"
+          ],
+          [
+            "Fixed width, auto height",
+            "fit-content",
+            "User defined"
+          ],
+          [
+            "Auto (height & width)",
+            "fit-content",
+            "fit-content"
+          ],
+          [
+            "Block (height & width)",
+            "100%",
+            "100%"
+          ],
+          [
+            "Fixed height, block width",
+            "User defined",
+            "100%"
+          ],
+          [
+            "Fixed width, block height",
+            "100%",
+            "User defined"
+          ]
+        ]
+      },
+      {
+        "section": "Accessibility / focusMode",
+        "headers": [
+          "focusMode",
+          "Behavior"
+        ],
+        "rows": [
+          [
+            "off",
+            "The actions in the card will be focusable but the card container will not receive or manage focus."
+          ],
+          [
+            "no-tab",
+            "The card will be focusable and trap focus inside it. Tab cycles through the card actions. ESC exits the card."
+          ],
+          [
+            "tab-exit",
+            "The card will be focusable and trap focus inside it. Tab and ESC exit the card."
+          ],
+          [
+            "tab-only",
+            "The card will be focusable but will not trap focus."
+          ]
+        ]
+      }
+    ]
   },
   {
     "name": "Carousel",
@@ -1826,7 +1898,9 @@
     "images": [],
     "sections": [],
     "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-fluentprovider--docs",
-    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/fluentprovider/usage"
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/fluentprovider/usage",
+    "contentSource": "authored",
+    "contentSourceNote": "The live FluentProvider page ships only a Resources section. The guidance here is authored by this plugin, not scraped, so it is intentionally richer than the source page and cannot be diffed against it."
   },
   {
     "name": "Icon",
@@ -4718,7 +4792,58 @@
       "Accessibility"
     ],
     "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-text--docs",
-    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/text/usage"
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/text/usage",
+    "tables": [
+      {
+        "section": "Presets",
+        "headers": [
+          "Name",
+          "Preset"
+        ],
+        "rows": [
+          [
+            "Caption 2",
+            "<Caption2>"
+          ],
+          [
+            "Caption 1",
+            "<Caption1>"
+          ],
+          [
+            "Body 1",
+            "<Body1>"
+          ],
+          [
+            "Subtitle 2",
+            "<Subtitle2>"
+          ],
+          [
+            "Subtitle 1",
+            "<Subtitle1>"
+          ],
+          [
+            "Title 3",
+            "<Title3>"
+          ],
+          [
+            "Title 2",
+            "<Title2>"
+          ],
+          [
+            "Title 1",
+            "<Title1>"
+          ],
+          [
+            "Large Title",
+            "<LargeTitle>"
+          ],
+          [
+            "Display",
+            "<Display>"
+          ]
+        ]
+      }
+    ]
   },
   {
     "name": "Textarea",
