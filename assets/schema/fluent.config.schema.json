@@ -34,6 +34,9 @@
     "targets": { "$ref": "#/$defs/targets" },
     "migration": { "$ref": "#/$defs/migration" },
     "content": { "$ref": "#/$defs/content" },
+    "surfaces": { "$ref": "#/$defs/surfaces" },
+    "execution": { "$ref": "#/$defs/execution" },
+    "guidelines": { "$ref": "#/$defs/guidelines" },
     "preferences": {
       "type": "object",
       "title": "Freeform preferences",
@@ -47,6 +50,135 @@
     }
   },
   "$defs": {
+    "surfaces": {
+      "type": "object",
+      "title": "Per-surface presets",
+      "description": "Knobs that only make sense for one surface, so that \"apply Fluent 2\" means something concrete on each.",
+      "additionalProperties": false,
+      "properties": {
+        "powerbi": {
+          "type": "object",
+          "title": "Power BI",
+          "additionalProperties": false,
+          "properties": {
+            "themeName": { "type": "string", "default": "Fluent 2" },
+            "normalizeInline": {
+              "enum": ["ask", "always", "never"],
+              "default": "ask",
+              "description": "A Power BI theme only styles what no visual overrode inline, so clearing those overrides is what actually makes a report look like Fluent 2."
+            },
+            "normalizeKeys": { "type": "array", "items": { "type": "string" } },
+            "normalizeFonts": { "type": "boolean", "default": true },
+            "preserveBookmarked": {
+              "type": "boolean",
+              "default": true,
+              "description": "Leave formatting that a bookmark captured, since deleting it changes what the bookmark restores."
+            },
+            "effectivenessTarget": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.9,
+              "description": "Minimum share of theme-owned properties the theme must actually control for adoption to count as successful."
+            },
+            "canvas": { "enum": ["keep", "normalize"], "default": "keep" }
+          }
+        },
+        "web": {
+          "type": "object",
+          "title": "Web",
+          "additionalProperties": false,
+          "properties": {
+            "framework": { "enum": ["react-v9", "web-components"], "default": "react-v9" },
+            "styling": { "enum": ["griffel", "css-vars"], "default": "griffel" },
+            "ssr": { "type": "boolean", "default": false },
+            "portalCompat": { "type": "boolean", "default": false }
+          }
+        },
+        "powerapps": {
+          "type": "object",
+          "title": "Power Apps",
+          "additionalProperties": false,
+          "properties": {
+            "controls": { "enum": ["modern", "classic"], "default": "modern" },
+            "themeSource": { "enum": ["app-theme", "manual"], "default": "app-theme" }
+          }
+        },
+        "powerpages": {
+          "type": "object",
+          "title": "Power Pages",
+          "additionalProperties": false,
+          "properties": {
+            "bootstrap": { "enum": ["v3", "v5"], "default": "v5" },
+            "tokenCss": { "type": "boolean", "default": true }
+          }
+        },
+        "pcf": {
+          "type": "object",
+          "title": "PCF",
+          "additionalProperties": false,
+          "properties": {
+            "controlType": { "enum": ["virtual", "standard"], "default": "virtual" },
+            "platformLibraries": { "type": "boolean", "default": true }
+          }
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "title": "Execution preferences",
+      "description": "How heavy work should be run, and whether agents may fan out to parallel sub-agents.",
+      "additionalProperties": false,
+      "properties": {
+        "profile": {
+          "enum": ["fast", "balanced", "thorough"],
+          "default": "balanced",
+          "description": "Sets reasoningEffort, contextTier and maxParallel together so nobody has to hand-pick model internals."
+        },
+        "model": { "type": "string", "default": "inherit" },
+        "reasoningEffort": {
+          "enum": ["inherit", "low", "medium", "high", "max"],
+          "default": "inherit"
+        },
+        "contextTier": { "enum": ["inherit", "default", "long_context"], "default": "inherit" },
+        "fanOut": {
+          "enum": ["ask", "always", "never"],
+          "default": "ask",
+          "description": "Whether agents may launch parallel sub-agents for large jobs. \"ask\" confirms once and remembers the answer."
+        },
+        "maxParallel": { "type": "integer", "minimum": 1, "maximum": 16, "default": 4 },
+        "escalateOnFailure": { "type": "boolean", "default": true },
+        "enforcement": { "enum": ["advise", "enforce"], "default": "advise" }
+      }
+    },
+    "guidelines": {
+      "type": "object",
+      "title": "House rules",
+      "description": "The team's own rules, in their words. Enums cannot express \"data grids are compact, everything else comfortable\", so these are captured verbatim and read back before every build.",
+      "additionalProperties": false,
+      "properties": {
+        "rules": {
+          "type": "array",
+          "title": "Rules to follow",
+          "items": { "type": "string", "minLength": 1 },
+          "default": []
+        },
+        "constraints": {
+          "type": "array",
+          "title": "Hard prohibitions",
+          "description": "These outrank presets and inferred defaults. A request that conflicts with one should be raised, not silently overridden.",
+          "items": { "type": "string", "minLength": 1 },
+          "default": []
+        },
+        "references": {
+          "type": "array",
+          "title": "Reference links",
+          "description": "Internal design docs, Figma files or brand portals.",
+          "items": { "type": "string", "minLength": 1 },
+          "default": []
+        }
+      }
+    },
     "hexColor": {
       "type": "string",
       "description": "A 6-digit hex color, with or without a leading '#'.",

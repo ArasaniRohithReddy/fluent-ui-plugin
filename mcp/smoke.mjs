@@ -1,6 +1,6 @@
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
-import { rmSync, existsSync, readdirSync } from 'node:fs';
+import { rmSync, existsSync, readdirSync, readFileSync } from 'node:fs';
 
 const _realLog = console.log.bind(console);
 const _lines = [];
@@ -113,6 +113,21 @@ const dgAll = await client.callTool({ name: 'fluent_design_guidance', arguments:
 const dgAllText = dgAll.content[0].text;
 let dgTopics = 0; try { const j = JSON.parse(dgAllText); dgTopics = Object.keys(j.topics || {}).length; } catch {}
 console.log('design_guidance(all): topics=' + dgTopics + ' ok=' + (dgTopics === 36 && dgAllText.includes('design-principles') && dgAllText.includes('design-tokens')));
+// Every topic must declare where it came from and when. Without this a topic
+// captured before Microsoft put the page behind a sign-in is indistinguishable
+// from one verified today, and callers silently trust stale guidance.
+let dgProvenance = { total: 0, stamped: 0, gated: 0 };
+try {
+  const topics = Object.values(JSON.parse(dgAllText).topics || {});
+  dgProvenance = {
+    total: topics.length,
+    stamped: topics.filter((t) => t.accessStatus && t.capturedAt).length,
+    gated: topics.filter((t) => t.accessStatus === 'employee-gated').length,
+  };
+} catch {}
+console.log('design_guidance provenance: ' + dgProvenance.stamped + '/' + dgProvenance.total
+  + ' stamped, ' + dgProvenance.gated + ' gated ok='
+  + (dgProvenance.total > 0 && dgProvenance.stamped === dgProvenance.total));
 const dgEvals = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'content-engineering-evals' } });
 const dgEvalsText = dgEvals.content[0].text;
 console.log('design_guidance(content-engineering-evals): ok=' + (dgEvalsText.includes('golden set') && dgEvalsText.includes('prompt set') && dgEvalsText.includes('rubric')));
@@ -161,7 +176,17 @@ console.log(
 );
 
 // 2) init_config -> writes fluent.config.json (presets over defaults) + memory skeleton
-const c2 = await client.callTool({ name: 'fluent_init_config', arguments: { projectDir: CFG_DIR, brandColor: '#742774', targets: ['web-react'] } });
+const c2 = await client.callTool({
+  name: 'fluent_init_config',
+  arguments: {
+    projectDir: CFG_DIR,
+    brandColor: '#742774',
+    targets: ['web-react'],
+    guidelines: ['Data grids are compact, everything else is comfortable.'],
+    constraints: ['Never use red except for destructive actions.'],
+    references: ['https://internal.example/design'],
+  },
+});
 const c2j = JSON.parse(c2.content[0].text);
 const cfgFile = existsSync(CFG_DIR + '/fluent.config.json');
 const memFile = existsSync(CFG_DIR + '/.fluent/memory.json');
@@ -172,6 +197,37 @@ console.log(
       c2j.config.brand.color === '#742774')
 );
 
+// The team's own house rules must survive intake verbatim. Paraphrasing them
+// into a preset is what makes the plugin build generic Fluent 2 instead of
+// this team's Fluent 2, so assert the exact strings round-trip.
+const g2 = c2j.config.guidelines || {};
+console.log(
+  'init_config(guidelines): rules=' + (g2.rules || []).length +
+    ' constraints=' + (g2.constraints || []).length +
+    ' refs=' + (g2.references || []).length +
+    ' ok=' + (
+      (g2.rules || [])[0] === 'Data grids are compact, everything else is comfortable.' &&
+      (g2.constraints || [])[0] === 'Never use red except for destructive actions.' &&
+      (g2.references || [])[0] === 'https://internal.example/design'
+    )
+);
+
+// The config we generate must satisfy the schema we ship, or every user gets
+// red squiggles in their editor on a file we wrote ourselves. The schema sets
+// additionalProperties:false, so a new top-level block is invalid until the
+// schema learns about it.
+let schemaTopLevelOk = false;
+let schemaUnknown = [];
+try {
+  const schema = JSON.parse(readFileSync(new URL('../assets/schema/fluent.config.schema.json', import.meta.url), 'utf8'));
+  const allowed = new Set(Object.keys(schema.properties || {}));
+  schemaUnknown = Object.keys(c2j.config || {}).filter((k) => !allowed.has(k));
+  schemaTopLevelOk = schema.additionalProperties === false && schemaUnknown.length === 0;
+} catch {}
+console.log(
+  'init_config vs shipped schema: unknownKeys=[' + schemaUnknown.join(',') + '] ok=' + schemaTopLevelOk
+);
+
 // 3) get_config again -> config now present, brand resolved from config
 const c3 = await client.callTool({ name: 'fluent_get_config', arguments: { projectDir: CFG_DIR } });
 const c3j = JSON.parse(c3.content[0].text);
@@ -179,6 +235,16 @@ console.log(
   'get_config(after init): configExists=' + c3j.configExists + ' brand=' + c3j.config.brand.color +
     ' brandSource=' + c3j.sources['brand.color'] +
     ' ok=' + (c3j.configExists === true && c3j.config.brand.color === '#742774' && c3j.sources['brand.color'] === 'config')
+);
+
+// Guidelines are only useful if a later task reads them back, so the resolver
+// must return them and attribute them to the config rather than a default.
+console.log(
+  'get_config(guidelines): constraints=' + ((c3j.config.guidelines || {}).constraints || []).length +
+    ' ok=' + (
+      ((c3j.config.guidelines || {}).constraints || [])[0] === 'Never use red except for destructive actions.' &&
+      ((c3j.config.guidelines || {}).rules || []).length === 1
+    )
 );
 
 // 4) set_config -> update a dot-path

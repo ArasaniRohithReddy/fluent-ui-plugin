@@ -108,7 +108,7 @@ Every field is optional; an empty `{}` is valid. `preferences` is the only objec
 At the **start** of a task, call `fluent_get_config` to load presets. It returns every field with a per-field `source` (`config`/`memory`/`default`) plus `configExists` / `memoryExists` — a complete, buildable object even on a zero-config project.
 
 1. **First-run offer (once).** When `configExists:false` **and** memory has **no `presets-optout` decision**, offer *before* building: *"Set up design presets (brand, accessibility, shapes, sizes, typography, targets) now, or use Fluent 2 defaults?"*
-   - **Yes** → run `fluent_init_config` to gather answers + write `fluent.config.json`; it records the answers to memory. Continue with the resolved presets.
+   - **Yes** → run the **intake** below, then `fluent_init_config` to write `fluent.config.json`; it records the answers to memory. Continue with the resolved presets.
    - **No / silent** → proceed on §defaults **and** `fluent_remember` a `presets-optout` decision so you never re-ask:
      ```jsonc
      { "id": "presets-optout", "question": "Set up design presets now?",
@@ -119,6 +119,31 @@ At the **start** of a task, call `fluent_get_config` to load presets. It returns
 3. **Non-critical presets** (`shape`, `density`, `iconStyle`, `typography.scale`, `content.*`, `theme.base`) — proceed on the documented default, recording it as an `agent`-sourced decision so the choice is visible.
 
 **Never assume silently — ask once, remember the answer either way, and never block the build.**
+
+## The intake (run on opt-in, one message, everything optional)
+
+Ask these as a **single batch**, not one at a time, and let the user skip any of them. Every unanswered question falls back to the documented default, so a one-word reply is still a valid setup. Then write the answers with `fluent_init_config`.
+
+| # | Ask | Maps to |
+|---|---|---|
+| 1 | Brand color (hex)? | `brandColor` → `brand.color` |
+| 2 | What are you building for — web, Power BI, Power Apps, Power Pages, PCF? | `targets`, and the matching `surfaces.*` block |
+| 3 | Light, dark or follow the system? | `themeMode` → `theme.mode` |
+| 4 | Accessibility bar — AA (default) or AAA? | `accessibilityLevel` |
+| 5 | Corner personality and control size? | `shape`, `controlSize` |
+| 6 | Adopting from an existing system (Fluent v8, MUI, Bootstrap, hardcoded CSS)? | `migrationFrom` |
+| 7 | **Any house rules we should follow?** | `guidelines` → `guidelines.rules` |
+| 8 | **Anything we must never do?** | `constraints` → `guidelines.constraints` |
+| 9 | Links to your design docs, Figma or brand portal? | `references` → `guidelines.references` |
+| 10 | How should heavy jobs run — fast, balanced or thorough? May I run parallel sub-agents? | `executionProfile`, `fanOut` |
+
+**Questions 7-9 matter most.** Enums cannot express *"data grids are compact, everything else comfortable"* or *"never use red except for destructive actions"*, so capture those sentences **verbatim** — do not paraphrase them into a preset. They are what makes the plugin follow *this* team's design language instead of generic Fluent 2.
+
+### Honouring guidelines on every later task
+`fluent_get_config` returns `guidelines` in the resolved config. Before building:
+- Apply `guidelines.rules` as if the user had just restated them.
+- Treat `guidelines.constraints` as **outranking presets and defaults**. If a request conflicts with one, say so and ask — never silently override a constraint.
+- Add newly-learned rules with `fluent_set_config` (path `guidelines.rules`) so they persist rather than living only in this conversation.
 
 ## Which tool to use
 | Tool | Use it to |

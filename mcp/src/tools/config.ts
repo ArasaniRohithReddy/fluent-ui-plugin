@@ -89,6 +89,19 @@ const DEFAULTS: Record<string, any> = {
     escalateOnFailure: true,
     enforcement: 'advise',
   },
+  // The team's own house rules, in their words. Enums cannot express things like
+  // "never use red for anything but destructive actions" or "data grids are
+  // compact, everything else is comfortable", so intake captures them verbatim
+  // and every agent reads them back before building.
+  guidelines: {
+    // Things the team wants done. Free text, one rule per entry.
+    rules: [],
+    // Hard prohibitions. These outrank presets and inferred defaults; when a
+    // request conflicts with one, say so instead of quietly overriding it.
+    constraints: [],
+    // Links to internal design docs, Figma files or brand portals.
+    references: [],
+  },
 };
 
 /** Look up the built-in default value at a dot-path (or undefined). */
@@ -315,7 +328,7 @@ export function registerConfig(server: McpServer): void {
     {
       title: 'Get resolved Fluent 2 presets (config + memory + defaults)',
       description:
-        'Read-only resolver for the effective Fluent 2 design presets. Merges fluent.config.json (user intent) over .fluent/memory.json (agent memory) over built-in Fluent 2 defaults, per field. Returns { configExists, memoryExists, config: <resolved effective settings>, sources: { <dot-path>: "config"|"memory"|"default" } }. Zero-config safe: with no files present it returns all-defaults (brand #0f6cbd, webLightTheme look) and never throws. Call this at the START of a build task to load context.',
+        'Read-only resolver for the effective Fluent 2 design presets. Merges fluent.config.json (user intent) over .fluent/memory.json (agent memory) over built-in Fluent 2 defaults, per field. Returns { configExists, memoryExists, config: <resolved effective settings>, sources: { <dot-path>: "config"|"memory"|"default" } }. The resolved config includes guidelines.rules / guidelines.constraints: the team\'s own house rules in their words. Honour them, and treat guidelines.constraints as outranking every preset and inferred default. Zero-config safe: with no files present it returns all-defaults (brand #0f6cbd, webLightTheme look) and never throws. Call this at the START of a build task to load context.',
       inputSchema: {
         projectDir: projectDirArg,
       },
@@ -347,7 +360,7 @@ export function registerConfig(server: McpServer): void {
     {
       title: 'Initialize a fluent.config.json presets file',
       description:
-        'Scaffold projectDir/fluent.config.json by merging the provided presets over the built-in Fluent 2 defaults (with a "$schema" reference for editor IntelliSense). Also creates an empty .fluent/memory.json skeleton if one does not exist. Does NOT overwrite an existing fluent.config.json unless force:true. Use for the first-run onboarding offer when fluent_get_config reports configExists:false.',
+        'Scaffold projectDir/fluent.config.json by merging the provided presets over the built-in Fluent 2 defaults (with a "$schema" reference for editor IntelliSense). Also creates an empty .fluent/memory.json skeleton if one does not exist. Alongside the structured presets it captures the team\'s own house rules verbatim via guidelines / constraints / references, since enums cannot express rules like "never use red except for destructive actions". Does NOT overwrite an existing fluent.config.json unless force:true. Use for the first-run onboarding offer when fluent_get_config reports configExists:false.',
       inputSchema: {
         projectDir: projectDirArg,
         brandColor: z
@@ -405,6 +418,22 @@ export function registerConfig(server: McpServer): void {
           .enum(['react-v9', 'web-components'])
           .optional()
           .describe('Web: which Fluent 2 implementation to build with. Sets surfaces.web.framework.'),
+        guidelines: z
+          .array(z.string().min(1))
+          .optional()
+          .describe(
+            "The team's own house rules, in their words, one per entry (e.g. \"data grids are compact, everything else comfortable\"). Captured verbatim because enums cannot express them. Sets guidelines.rules."
+          ),
+        constraints: z
+          .array(z.string().min(1))
+          .optional()
+          .describe(
+            'Hard prohibitions, one per entry (e.g. "never use red except for destructive actions"). These outrank presets and inferred defaults. Sets guidelines.constraints.'
+          ),
+        references: z
+          .array(z.string().min(1))
+          .optional()
+          .describe('Links to internal design docs, Figma files or brand portals. Sets guidelines.references.'),
         force: z
           .boolean()
           .default(false)
@@ -425,6 +454,9 @@ export function registerConfig(server: McpServer): void {
       fanOut,
       powerbiNormalizeInline,
       webFramework,
+      guidelines,
+      constraints,
+      references,
       force,
     }) => {
       const root = projectRoot(projectDir);
@@ -481,6 +513,9 @@ export function registerConfig(server: McpServer): void {
         merged.surfaces.web.framework = webFramework;
         if (webFramework === 'web-components') merged.surfaces.web.styling = 'css-vars';
       }
+      if (guidelines && guidelines.length) merged.guidelines.rules = guidelines;
+      if (constraints && constraints.length) merged.guidelines.constraints = constraints;
+      if (references && references.length) merged.guidelines.references = references;
 
       const content = { $schema: SCHEMA_URL, version: '1.0', ...merged };
       const werr = tryWriteJson(cfgPath, content);
