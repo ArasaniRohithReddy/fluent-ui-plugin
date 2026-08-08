@@ -101,10 +101,10 @@ const useStyles = makeStyles({
   footer: { borderTop: `1px solid var(--glass-brd)`, ...shorthands.padding('34px', 0), marginTop: '28px', backgroundColor: 'var(--glass-bg)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' },
   footRow: { display: 'flex', flexWrap: 'wrap', gap: '18px', alignItems: 'center', justifyContent: 'space-between' },
   visitors: {
-    display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '14px',
-    ...shorthands.padding('6px', '12px'), borderRadius: tokens.borderRadiusMedium,
+    display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '18px',
+    ...shorthands.padding('8px', '14px'), borderRadius: tokens.borderRadiusCircular,
     backgroundColor: 'var(--glass-bg)', ...shorthands.border('1px', 'solid', 'var(--glass-brd)'),
-    color: tokens.colorNeutralForeground3,
+    color: tokens.colorNeutralForeground2, backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)',
   },
   visitorsImg: { display: 'block', height: '20px' },
 });
@@ -222,9 +222,14 @@ function CodeBlock({ code }: { code: string }) {
 
 /**
  * Visitor counter. GitHub Pages is static, so the count comes from a hosted
- * badge service; loading the image is what records the visit. The label and
- * chrome are native Fluent so the footer stays on-brand, and the whole chip
- * hides itself if the service is unavailable.
+ * badge service; requesting the image is what records the visit. That is why
+ * it is not lazy-loaded and why it sits in the hero: in the footer it only
+ * counted people who scrolled to the bottom, which undercounted badly.
+ *
+ * The service exposes no CORS headers, so the count cannot be fetched and
+ * rendered as text. The label and chrome around it are native Fluent, and the
+ * whole chip removes itself if the service is unreachable rather than leaving
+ * a broken image behind.
  */
 function VisitorCount() {
   const s = useStyles();
@@ -237,7 +242,7 @@ function VisitorCount() {
     <div className={s.visitors}>
       <Eye20Regular aria-hidden="true" />
       <Caption1>Visitors</Caption1>
-      <img className={s.visitorsImg} src={src} alt="Total visitors to this site" loading="lazy" onError={() => setFailed(true)} />
+      <img className={s.visitorsImg} src={src} alt="Total visitors to this site" onError={() => setFailed(true)} />
     </div>
   );
 }
@@ -296,6 +301,7 @@ export function App() {
                   <div key={l} className={`${glass} ${s.stat}`}><span className={s.statB}>{b}</span><Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{l}</Caption1></div>
                 ))}
               </div>
+              <VisitorCount />
 
               {/* DOGFOOD PROOF */}
               <div className={`${glass} ${s.dogfood}`}>
@@ -444,7 +450,6 @@ export function App() {
               <div>
                 <span className={s.brand} style={{ marginBottom: 8 }}><span className={s.logo}><Sparkle20Filled /></span> Fluent UI 2.0 Plugin</span>
                 <Caption1 block style={{ color: tokens.colorNeutralForeground3, marginTop: 8, maxWidth: '54ch' }}>Built with the Microsoft Fluent 2 design system (Fluent UI React v9). This site is a demo of the plugin's own output. It is not an official Microsoft product.</Caption1>
-                <VisitorCount />
               </div>
               <div style={{ display: 'flex', gap: 12 }}>
                 <Button appearance="secondary" as="a" href={REPO} icon={<Star20Regular />}>GitHub</Button>
