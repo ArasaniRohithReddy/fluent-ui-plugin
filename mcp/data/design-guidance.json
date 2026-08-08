@@ -143,7 +143,9 @@
           "url": "https://fluent2websitecdn.azureedge.net/cdn/designlanguage-designprinciples-microsoft-01.CZuc4F90.webp"
         }
       ],
-      "docUrl": "https://fluent2.microsoft.design/design-principles"
+      "docUrl": "https://fluent2.microsoft.design/design-principles",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "color": {
       "title": "Color",
@@ -320,7 +322,9 @@
         "semanticStatus": "A subset of shared colors that communicate feedback, status, or urgency, building on real-world associations: red = danger, yellow = caution, green = positive. Always pair them with text/graphics/other indicators — don't rely on color alone.",
         "brand": "Key to immediate product recognition; M365 products are distinguishable by dedicated brand colors. Apply brand color to create visual prominence and anchor people (buttons/CTAs, selected states). Avoid overusing brand colors or using them on large surfaces — it dilutes hierarchy and makes navigation difficult."
       },
-      "docUrl": "https://fluent2.microsoft.design/color"
+      "docUrl": "https://fluent2.microsoft.design/color",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "typography": {
       "title": "Typography",
@@ -967,7 +971,9 @@
         "color": "A primary color gives text more prominence; a lighter neutral subdues it.",
         "contrast": "Standard text needs >= 4.5:1 contrast; large text (above 18.5px Bold or 24px Regular) needs >= 3:1."
       },
-      "docUrl": "https://fluent2.microsoft.design/typography"
+      "docUrl": "https://fluent2.microsoft.design/typography",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "layout": {
       "title": "Layout",
@@ -1453,7 +1459,9 @@
         "Show/Hide — optimize content for the window.",
         "Re-architect — fork or collapse elements (progressive disclosure for different window sizes)."
       ],
-      "docUrl": "https://fluent2.microsoft.design/layout"
+      "docUrl": "https://fluent2.microsoft.design/layout",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "elevation": {
       "title": "Elevation",
@@ -1724,7 +1732,9 @@
         "shadow1Opacity": "Round(42 - 0.116 * luminosity)",
         "shadow2Opacity": "Round(34 - 0.09 * luminosity)"
       },
-      "docUrl": "https://fluent2.microsoft.design/elevation"
+      "docUrl": "https://fluent2.microsoft.design/elevation",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "shapes": {
       "title": "Shapes",
@@ -2008,7 +2018,9 @@
           "mobile": "6 pixels"
         }
       ],
-      "docUrl": "https://fluent2.microsoft.design/shapes"
+      "docUrl": "https://fluent2.microsoft.design/shapes",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "iconography": {
       "title": "Iconography",
@@ -2140,7 +2152,9 @@
         "color": "Adding color can disrupt visual balance; if used, use one color and mind contrast. Only use solid colors on system icons; never change the color of product launch icons.",
         "localization": "Understand cultural connotations; validate icon choices in the context where they'll be used."
       },
-      "docUrl": "https://fluent2.microsoft.design/iconography"
+      "docUrl": "https://fluent2.microsoft.design/iconography",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "motion": {
       "title": "Motion",
@@ -2459,7 +2473,9 @@
         "Consider other ways to convey information carried by animation (e.g., ARIA live regions).",
         "Groups affected by motion include people with vestibular disorders, low vision, screen-reader users, and those sensitive to visual stimuli."
       ],
-      "docUrl": "https://fluent2.microsoft.design/motion"
+      "docUrl": "https://fluent2.microsoft.design/motion",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "material": {
       "title": "Material",
@@ -2570,7 +2586,9 @@
         "mica": "An opaque material subtly tinted with the desktop background color on an active window (neutral when inactive) — a built-in Windows indication of window focus. Mode-aware.",
         "smoke": "Emphasizes an important surface by dimming the interface beneath it; signals blocking interactions below a modal (e.g., a dialog). Not mode-aware — always translucent black."
       },
-      "docUrl": "https://fluent2.microsoft.design/material"
+      "docUrl": "https://fluent2.microsoft.design/material",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "accessibility": {
       "title": "Accessibility",
@@ -2766,7 +2784,9 @@
         "codeStandards": "Write logical, semantic code; follow WAI-ARIA authoring practices.",
         "designSpecs": "Document focus order, screen-reader annotations, and semantic structure alongside padding and colors."
       },
-      "docUrl": "https://fluent2.microsoft.design/accessibility"
+      "docUrl": "https://fluent2.microsoft.design/accessibility",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "content-design": {
       "title": "Content design",
@@ -3041,7 +3061,9 @@
         "Don't use directional terms like 'above,' 'below,' 'left,' or 'right.'",
         "Don't use vague link text like 'Click here.'"
       ],
-      "docUrl": "https://fluent2.microsoft.design/content-design"
+      "docUrl": "https://fluent2.microsoft.design/content-design",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "design-tokens": {
       "title": "Design tokens",
@@ -3150,7 +3172,9 @@
           "Don't bypass the token layers"
         ]
       },
-      "docUrl": "https://fluent2.microsoft.design/design-tokens"
+      "docUrl": "https://fluent2.microsoft.design/design-tokens",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "handoffs": {
       "title": "Handoffs",
@@ -3383,7 +3407,9 @@
         ],
         "bookends": "When handing off from chat to other apps, use system-message pairs (bookends) shown in the initiating and destination apps to announce what Copilot did and where. Pattern: 'Copilot [past-tense verb] [an object] [in/from] [AppName].'"
       },
-      "docUrl": "https://fluent2.microsoft.design/handoffs"
+      "docUrl": "https://fluent2.microsoft.design/handoffs",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "onboarding": {
       "title": "Onboarding",
@@ -3628,7 +3654,9 @@
         "Make help easy to find — embed just-in-time help (tooltips, 'Learn more' links, teaching popovers); use inclusive, nonjudgmental language ('Need help?' beats 'Stuck?').",
         "Set reasonable expectations — be clear about what's involved and how long it takes (e.g., 'This takes 2-3 minutes,' 'We'll guide you through 3 quick steps'); avoid surprises unless they're delightful."
       ],
-      "docUrl": "https://fluent2.microsoft.design/onboarding"
+      "docUrl": "https://fluent2.microsoft.design/onboarding",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "wait-ux": {
       "title": "Wait UX",
@@ -3880,7 +3908,9 @@
         "conciseness": "Keep messages short and direct — ideally one phrase or sentence fragment.",
         "settingExpectations": "In non-AI scenarios include estimated times when possible ('About 30 seconds remaining'); in conversational AI it may matter more to indicate the process is still active than to estimate time."
       },
-      "docUrl": "https://fluent2.microsoft.design/wait-ux"
+      "docUrl": "https://fluent2.microsoft.design/wait-ux",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "responsible-ai": {
       "title": "Working with AI (Responsible AI)",
@@ -5085,7 +5115,9 @@
           }
         ]
       },
-      "docUrl": "https://fluent2.microsoft.design/responsible-AI/"
+      "docUrl": "https://fluent2.microsoft.design/responsible-AI/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "ai-harm": {
       "title": "Types of AI harm",
@@ -5211,7 +5243,9 @@
         }
       ],
       "feedbackAndReporting": "Use specific harm categories (e.g., 'Output wasn't factual / Incomplete output / No sources provided / Unsafe or problematic content / Questionable sources / Other'), not vague prompts ('Give us your feedback'). Be explicit about what data is collected when feedback is submitted.",
-      "docUrl": "https://fluent2.microsoft.design/ai-harm/"
+      "docUrl": "https://fluent2.microsoft.design/ai-harm/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "content-engineering": {
       "title": "Content engineering (Working with AI)",
@@ -5434,7 +5468,9 @@
         }
       },
       "template": "The page ships a fill-in-the-blank system prompt template covering every component (Role, Task, and Rules — with Safety and responsible AI, Scope and task boundaries, Output quality and accuracy, and Failure modes — plus Example output). Required components are Role, Task, Rules, and Example output; fill in the placeholders, adapt the pre-populated rules to your product, and delete the comment blocks before sharing with engineering.",
-      "docUrl": "https://fluent2.microsoft.design/content-engineering"
+      "docUrl": "https://fluent2.microsoft.design/content-engineering",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "content-engineering-evals": {
       "title": "Evaluating output quality (Working with AI)",
@@ -5520,7 +5556,9 @@
           "Refresh over time"
         ]
       },
-      "docUrl": "https://fluent2.microsoft.design/content-engineering/evaluating-output-quality"
+      "docUrl": "https://fluent2.microsoft.design/content-engineering/evaluating-output-quality",
+      "accessStatus": "public",
+      "capturedAt": "2026-08"
     },
     "entry-points": {
       "title": "Entry points (Working with AI)",
