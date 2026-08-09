@@ -64,7 +64,7 @@ Users may declare presets in **`fluent.config.json`** (brand, theme, typography,
 `fluent-web-ui` · `fluent-theming` · `fluent-design-tokens` · `fluent-design-language` · `fluent-accessibility` · `fluent-ai-copilot-ui` · `fluent-powerbi-theme` · `fluent-pbip-report` · `fluent-powerbi-adopt` · `fluent-powerapps` · `fluent-powerpages` · `fluent-pcf-component` · `fluent-migration` · `fluent-design-review` · `fluent-config` · `fluent-v8` · `fluent-native` · `fluent-figma`
 
 ## Agents
-`fluent-ui-builder` (primary/router) · `fluent-web-engineer` · `fluent-powerbi-designer` · `fluent-power-platform-engineer` · `fluent-migration-engineer` · `fluent-design-reviewer`
+`fluent-ui-builder` (primary/router) · `fluent-web-engineer` · `fluent-powerbi-designer` · `fluent-power-platform-engineer` · `fluent-native-engineer` · `fluent-migration-engineer` · `fluent-design-reviewer`
 
 ## MCP server
 `node mcp/dist/index.js` (build: `cd mcp && npm install && npm run build`). Per-IDE config templates live in `hosts/` — see `hosts/README.md`.

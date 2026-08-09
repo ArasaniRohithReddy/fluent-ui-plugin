@@ -135,6 +135,64 @@ console.log('tool_count: ok=' + (tools.tools.length === EXPECTED_TOOL_COUNT && m
   console.log('agent skill references resolve (' + agentsNote + '): ok=' + agentsOk);
 }
 
+// Every agent on disk must be listed in the docs that enumerate the roster, and
+// those docs must not name an agent that doesn't exist. Same drift the tool list
+// and skills list already had - three hand-maintained lists, no link to disk.
+{
+  const root = new URL('../', import.meta.url);
+  let rosterOk = false, rosterNote = 'roster not readable';
+  try {
+    const onDisk = readdirSync(new URL('agents/', root))
+      .filter((f) => f.endsWith('.agent.md')).map((f) => f.replace(/\.agent\.md$/, '')).sort();
+    const docs = { 'AGENTS.md': /##[^\n]*Agents[^\n]*\r?\n+([^\n]+)/g, 'GUIDE.md': /\*\*Agents\*\*[^\n]*/g, 'README.md': /\|\s*`(fluent-[a-z0-9-]+)`\s*\|[^\n]*\|/g };
+    const problems = [];
+    for (const [file, re] of Object.entries(docs)) {
+      const text = readFileSync(new URL(file, root), 'utf8');
+      // A doc may mention "Agents" more than once (prose vs the actual roster);
+      // keep only matches that actually name agents, else we lint the wrong line.
+      const hits = [...text.matchAll(re)].map((m) => m[0]).filter((s) => /`fluent-[a-z0-9-]+`/.test(s));
+      const scope = hits.join('\n');
+      const named = [...new Set([...scope.matchAll(/`(fluent-[a-z0-9-]+)`/g)].map((m) => m[1]))];
+      const listed = named.filter((n) => onDisk.includes(n));
+      const missing = onDisk.filter((n) => !named.includes(n));
+      const ghosts = named.filter((n) => n.endsWith('-engineer') || n.endsWith('-designer') || n.endsWith('-builder') || n.endsWith('-reviewer')).filter((n) => !onDisk.includes(n));
+      if (missing.length) problems.push(`${file} omits ${missing.join('/')}`);
+      if (ghosts.length) problems.push(`${file} names unknown ${ghosts.join('/')}`);
+      if (!listed.length) problems.push(`${file} lists no agents`);
+    }
+    rosterOk = problems.length === 0;
+    rosterNote = rosterOk ? `${onDisk.length} agents, listed everywhere` : problems.join('; ');
+  } catch (e) {
+    rosterNote = String(e && e.message ? e.message : e);
+  }
+  console.log('agent roster consistent across docs (' + rosterNote + '): ok=' + rosterOk);
+}
+
+// The site had NO media queries at all and overflowed every phone viewport.
+// These classes are the ones that caused it, so require each to keep a
+// responsive rule rather than trusting a future edit not to drop them.
+{
+  const root = new URL('../', import.meta.url);
+  let respOk = false, respNote = 'App.tsx not readable';
+  try {
+    const src = readFileSync(new URL('site/src/App.tsx', root), 'utf8');
+    const need = ['wrap', 'nav', 'navlinks', 'grid3', 'grid2', 'bandGrid', 'section', 'band', 'card'];
+    const missing = need.filter((cls) => {
+      // Take the class body up to the next top-level class declaration.
+      const m = src.match(new RegExp('\\n  ' + cls + ': \\{([\\s\\S]*?)\\n  \\},'));
+      return !m || !/@media/.test(m[1]);
+    });
+    const viewport = /name="viewport"[^>]*width=device-width/.test(readFileSync(new URL('site/index.html', root), 'utf8'));
+    respOk = missing.length === 0 && viewport;
+    respNote = respOk
+      ? `${need.length} layout classes responsive, viewport meta present`
+      : [missing.length ? 'no @media in: ' + missing.join(', ') : '', viewport ? '' : 'viewport meta missing'].filter(Boolean).join('; ');
+  } catch (e) {
+    respNote = String(e && e.message ? e.message : e);
+  }
+  console.log('site layout classes are responsive (' + respNote + '): ok=' + respOk);
+}
+
 const pbi = await client.callTool({ name: 'fluent_generate_powerbi_theme', arguments: { brandColor: '#D13438', name: 'Fluent Red' } });
 const pbiText = pbi.content[0].text;
 let pbiValid = false, hasVS = false;

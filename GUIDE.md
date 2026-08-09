@@ -13,7 +13,7 @@ A complete guide to installing and using the **fluent-ui** plugin, which helps y
 `fluent-ui` is an AI-assistant plugin made of three layers:
 
 1. **MCP tools** (19): a portable, standard MCP server (stdio) that runs everywhere. It returns grounded Fluent 2 data and generates code, themes, and projects.
-2. **Agents** (6): a router plus specialists for web, Power BI, Power Platform, migration, and design review.
+2. **Agents** (7): a router plus specialists for web, native (iOS/Android/Windows), Power BI, Power Platform, migration, and design review.
 3. **Skills** (15) and **instructions** (`AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`): loaded natively by hosts that support them.
 
 Everything is grounded in the official `fluent2.microsoft.design` site and the real `@fluentui` packages, so results are verified, not guessed.
@@ -159,7 +159,7 @@ With no config or memory present, everything still works using sensible built-in
 
 ## 5. What is inside
 
-**Agents** (`agents/*.agent.md`): `fluent-ui-builder` (router), `fluent-web-engineer`, `fluent-powerbi-designer`, `fluent-power-platform-engineer`, `fluent-migration-engineer`, `fluent-design-reviewer`.
+**Agents** (`agents/*.agent.md`): `fluent-ui-builder` (router), `fluent-web-engineer`, `fluent-powerbi-designer`, `fluent-power-platform-engineer`, `fluent-native-engineer`, `fluent-migration-engineer`, `fluent-design-reviewer`.
 
 **Skills** (`skills/**/SKILL.md`): web UI, theming, design tokens, design language, accessibility, AI/Copilot UI, Power BI theme, PBIP report, Power Apps, Power Pages, PCF, migration, design review, and config.
 
