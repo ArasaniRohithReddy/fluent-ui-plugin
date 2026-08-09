@@ -32,6 +32,7 @@ Beyond greenfield, it also:
 | `fluent-web-engineer` | Fluent 2 web apps (React v9 / Web Components) |
 | `fluent-powerbi-designer` | Fluent themes + PBIP/PBIR reports |
 | `fluent-power-platform-engineer` | Power Apps, Power Pages, PCF |
+| `fluent-native-engineer` | Fluent on iOS, Android and Windows (SwiftUI/UIKit, Compose, WinUI 3, WPF) |
 | `fluent-migration-engineer` | Adopts/migrates existing UI to Fluent 2 (Fluent UI v8 to v9, other design systems, hardcoded to tokens) |
 | `fluent-design-reviewer` | Audits UI against Fluent 2 + a11y |
 

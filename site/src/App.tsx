@@ -10,7 +10,7 @@ import {
   Brain24Regular, WeatherMoon20Regular, WeatherSunny20Regular, Copy20Regular,
   Checkmark20Regular, ArrowRight20Regular, Star20Regular, Open16Regular, Sparkle20Filled,
   Bug24Regular, Lightbulb24Regular, Chat24Regular, BranchFork24Regular, ShieldCheckmark24Regular, PeopleCommunity24Regular,
-  Eye20Regular,
+  Eye20Regular, Phone24Regular, History24Regular, DesignIdeas24Regular,
 } from '@fluentui/react-icons';
 
 const REPO = 'https://github.com/ArasaniRohithReddy/fluent-ui-plugin';
@@ -28,21 +28,52 @@ const useStyles = makeStyles({
     background: 'radial-gradient(42% 46% at 12% -2%, rgba(40,134,222,.22), transparent 60%), radial-gradient(38% 42% at 92% 4%, rgba(3,131,135,.16), transparent 60%), radial-gradient(46% 42% at 72% 108%, rgba(92,46,145,.14), transparent 60%)',
   },
   layer: { position: 'relative', zIndex: 1 },
-  wrap: { maxWidth: '1140px', marginLeft: 'auto', marginRight: 'auto', paddingLeft: '24px', paddingRight: '24px' },
+  wrap: {
+    maxWidth: '1140px', marginLeft: 'auto', marginRight: 'auto', paddingLeft: '24px', paddingRight: '24px',
+    '@media (max-width: 640px)': { paddingLeft: '16px', paddingRight: '16px' },
+  },
   header: {
     position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'saturate(180%) blur(16px)', WebkitBackdropFilter: 'saturate(180%) blur(16px)',
     backgroundColor: 'var(--glass-bg)', borderBottom: `1px solid var(--glass-brd)`,
   },
-  nav: { display: 'flex', alignItems: 'center', gap: '16px', height: '62px' },
-  brand: { display: 'flex', alignItems: 'center', gap: '11px', fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase400 },
+  nav: {
+    display: 'flex', alignItems: 'center', gap: '16px', height: '62px',
+    // Seven links plus the brand cannot fit a phone. Wrap the links onto their
+    // own scrollable row instead of letting the header overflow the viewport.
+    '@media (max-width: 860px)': {
+      flexWrap: 'wrap', height: 'auto', justifyContent: 'space-between',
+      columnGap: '12px', rowGap: '0', paddingTop: '10px', paddingBottom: '6px',
+    },
+  },
+  brand: {
+    display: 'flex', alignItems: 'center', gap: '11px', fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase400,
+    minWidth: 0,
+  },
   logo: {
     width: '34px', height: '34px', borderRadius: '11px', display: 'grid', placeItems: 'center', color: '#fff',
     background: 'linear-gradient(140deg,#2886de,#0f6cbd 52%,#0a7c86)',
     boxShadow: 'inset 0 1px 0 rgba(255,255,255,.45), inset 0 -6px 12px rgba(0,0,0,.18), 0 6px 14px rgba(15,108,189,.42)',
   },
-  navlinks: { display: 'flex', gap: '2px', marginLeft: 'auto' },
-  navlink: { ...shorthands.padding('7px', '13px'), borderRadius: tokens.borderRadiusMedium, color: tokens.colorNeutralForeground2, textDecorationLine: 'none', fontWeight: tokens.fontWeightMedium, ':hover': { backgroundColor: 'var(--glass-bg)', color: tokens.colorNeutralForeground1 } },
-  section: { ...shorthands.padding('44px', 0) },
+  navlinks: {
+    display: 'flex', gap: '2px', marginLeft: 'auto',
+    '@media (max-width: 860px)': {
+      order: 3, width: '100%', marginLeft: 0, overflowX: 'auto', scrollbarWidth: 'none',
+      paddingBottom: '6px',
+      '::-webkit-scrollbar': { display: 'none' },
+    },
+  },
+  navlink: {
+    ...shorthands.padding('7px', '13px'), borderRadius: tokens.borderRadiusMedium, color: tokens.colorNeutralForeground2, textDecorationLine: 'none', fontWeight: tokens.fontWeightMedium,
+    whiteSpace: 'nowrap',
+    ':hover': { backgroundColor: 'var(--glass-bg)', color: tokens.colorNeutralForeground1 },
+    // Without this the links shrink inside the scrollable row and their labels
+    // get clipped mid-word instead of the row scrolling.
+    '@media (max-width: 860px)': { flexShrink: 0 },
+  },
+  section: {
+    ...shorthands.padding('44px', 0),
+    '@media (max-width: 640px)': { ...shorthands.padding('30px', 0) },
+  },
   sectionHead: { maxWidth: '740px', marginLeft: 'auto', marginRight: 'auto', marginBottom: '28px', textAlign: 'center' },
   eyebrow: { color: tokens.colorBrandForeground1, fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase200, letterSpacing: '.08em', textTransform: 'uppercase', display: 'block', marginBottom: '10px' },
 
@@ -58,8 +89,14 @@ const useStyles = makeStyles({
     ':hover': { transform: 'translateY(-5px)', boxShadow: `${tokens.shadow28}, inset 0 1px 0 var(--glass-hi)`, borderTopColor: 'rgba(15,108,189,.5)', borderRightColor: 'rgba(15,108,189,.5)', borderBottomColor: 'rgba(15,108,189,.5)', borderLeftColor: 'rgba(15,108,189,.5)' },
   },
 
-  hero: { position: 'relative', paddingTop: '40px', paddingBottom: '16px' },
-  h1: { fontSize: 'clamp(36px,6.4vw,66px)', lineHeight: 1.04, fontWeight: tokens.fontWeightBold, letterSpacing: '-.025em', margin: '18px 0 14px', maxWidth: '18ch' },
+  hero: {
+    position: 'relative', paddingTop: '40px', paddingBottom: '16px',
+    '@media (max-width: 640px)': { paddingTop: '24px' },
+  },
+  h1: {
+    fontSize: 'clamp(30px,6.4vw,66px)', lineHeight: 1.06, fontWeight: tokens.fontWeightBold, letterSpacing: '-.025em', margin: '18px 0 14px', maxWidth: '18ch',
+    overflowWrap: 'break-word',
+  },
   brandText: { color: tokens.colorBrandForeground1 },
   lead: { fontSize: 'clamp(16px,2.2vw,21px)', color: tokens.colorNeutralForeground2, maxWidth: '64ch', display: 'block', lineHeight: 1.5 },
   cta: { display: 'flex', flexWrap: 'wrap', gap: '12px', margin: '24px 0 28px' },
@@ -68,9 +105,25 @@ const useStyles = makeStyles({
   stat: { ...shorthands.padding('12px', '18px'), minWidth: '112px', borderRadius: '14px' },
   statB: { display: 'block', fontSize: tokens.fontSizeBase600, fontWeight: tokens.fontWeightBold, lineHeight: 1.1 },
 
-  grid3: { display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '18px' },
-  grid2: { display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '12px' },
-  card: { ...shorthands.padding('22px'), borderRadius: '18px' },
+  grid3: {
+    display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '18px',
+    '@media (max-width: 1024px)': { gridTemplateColumns: 'repeat(2,1fr)' },
+    '@media (max-width: 640px)': { gridTemplateColumns: '1fr', gap: '14px' },
+  },
+  grid2: {
+    display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '12px',
+    '@media (max-width: 640px)': { gridTemplateColumns: '1fr' },
+  },
+  // Band stats are short (a number and a caption), so they stay two-up on a
+  // phone rather than becoming six tall rows.
+  bandGrid: {
+    display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '18px',
+    '@media (max-width: 640px)': { gridTemplateColumns: 'repeat(2,1fr)', gap: '10px' },
+  },
+  card: {
+    ...shorthands.padding('22px'), borderRadius: '18px',
+    '@media (max-width: 640px)': { ...shorthands.padding('18px') },
+  },
   ic: { width: '46px', height: '46px', borderRadius: '13px', display: 'grid', placeItems: 'center', marginBottom: '15px', boxShadow: 'inset 0 1px 0 rgba(255,255,255,.25)' },
   tool: { display: 'flex', flexDirection: 'column', ...shorthands.padding('13px', '17px'), ...shorthands.gap('3px'), borderRadius: '14px' },
   toolCode: { color: tokens.colorBrandForeground1, fontFamily: tokens.fontFamilyMonospace, fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase300 },
@@ -84,16 +137,22 @@ const useStyles = makeStyles({
     backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
     boxShadow: `${tokens.shadow8}, inset 0 1px 0 rgba(255,255,255,.08)`, overflow: 'hidden', margin: '12px 0',
   },
-  pre: { margin: 0, ...shorthands.padding('16px'), paddingRight: '52px', overflowX: 'auto', fontFamily: tokens.fontFamilyMonospace, fontSize: tokens.fontSizeBase200, lineHeight: 1.65, whiteSpace: 'pre' },
-  copyBtn: { position: 'absolute', top: '9px', right: '9px' },
+  // marginRight (not paddingRight) so the scrollable box itself ends before the
+  // copy button. With padding, long lines still scroll underneath the icon.
+  pre: { margin: 0, marginRight: '46px', ...shorthands.padding('16px'), overflowX: 'auto', fontFamily: tokens.fontFamilyMonospace, fontSize: tokens.fontSizeBase200, lineHeight: 1.65, whiteSpace: 'pre' },
+  copyBtn: { position: 'absolute', top: '9px', right: '9px', zIndex: 2 },
   note: { borderLeftWidth: '3px', borderLeftStyle: 'solid', borderLeftColor: tokens.colorBrandForeground1, ...shorthands.padding('13px', '17px'), borderTopRightRadius: '12px', borderBottomRightRadius: '12px', margin: '14px 0' },
-  dogfood: { ...shorthands.padding('22px', '24px'), borderRadius: '20px', marginTop: '20px', borderLeftWidth: '4px', borderLeftStyle: 'solid', borderLeftColor: tokens.colorBrandForeground1, display: 'flex', gap: '16px', alignItems: 'flex-start', flexWrap: 'wrap' },
+  dogfood: {
+    ...shorthands.padding('22px', '24px'), borderRadius: '20px', marginTop: '20px', borderLeftWidth: '4px', borderLeftStyle: 'solid', borderLeftColor: tokens.colorBrandForeground1, display: 'flex', gap: '16px', alignItems: 'flex-start', flexWrap: 'wrap',
+    '@media (max-width: 640px)': { ...shorthands.padding('18px', '16px') },
+  },
 
   band: {
     position: 'relative', overflow: 'hidden', borderRadius: '26px', ...shorthands.padding('52px', '36px'), color: '#fff',
     background: 'linear-gradient(135deg, rgba(24,134,222,.96), rgba(14,71,117,.96))',
     ...shorthands.border('1px', 'solid', 'rgba(255,255,255,.18)'),
     boxShadow: `${tokens.shadow28}, inset 0 1px 0 rgba(255,255,255,.28)`,
+    '@media (max-width: 640px)': { ...shorthands.padding('30px', '18px'), borderRadius: '20px' },
   },
   bandSheen: { position: 'absolute', inset: '0', pointerEvents: 'none', background: 'radial-gradient(60% 80% at 82% -10%, rgba(255,255,255,.30), transparent 55%)' },
   bandStat: { position: 'relative', ...shorthands.padding('14px', '18px'), backgroundColor: 'rgba(255,255,255,.13)', borderRadius: '16px', ...shorthands.border('1px', 'solid', 'rgba(255,255,255,.26)'), backdropFilter: 'blur(6px)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,.3)' },
@@ -114,6 +173,9 @@ const FEATURES: Feat[] = [
   { c: '#0f6cbd', Icon: Code24Regular, t: 'Web: React v9 and Web Components', d: 'All 61 components with real props, imports, usage, anatomy, states and do/don\'t guidance, plus accessible code generation.' },
   { c: '#986f0b', Icon: DataBarVertical24Regular, t: 'Power BI', d: 'Every visual with its Learn doc, a Fluent 2 theme JSON, and PBIP/PBIR scaffolding. Also applies Fluent 2 to an existing report and repairs the layout distortion the theme introduces.' },
   { c: '#5c2e91', Icon: Flash24Regular, t: 'Power Platform', d: 'Fluent 2 guidance for Power Apps canvas, model-driven apps (the New Look), Power Pages, and PCF components.' },
+  { c: '#004e8c', Icon: Phone24Regular, t: 'Native: iOS, Android and Windows', d: '155 real types across SwiftUI/UIKit, Jetpack Compose and WinUI 3/WPF, with the per-platform theming entry point. The name is shared; the type is not.' },
+  { c: '#7719aa', Icon: History24Regular, t: 'Fluent 1 (Fluent UI React v8)', d: '106 components, a per-component v8 to v9 map, and the 23 places where both versions export the same name for different components.' },
+  { c: '#8378de', Icon: DesignIdeas24Regular, t: 'Figma to Fluent code', d: 'Design handoff through the Figma MCP server, mapped to real Fluent components and tokens. Host-owned auth, with the plan limits stated up front.' },
   { c: '#038387', Icon: Color24Regular, t: 'Design language', d: '36 topics covering color, typography, layout, motion, elevation, iconography, content engineering, AI evaluation, and responsible AI.' },
   { c: '#107c10', Icon: PaintBrush24Regular, t: 'Tokens and theming', d: '366 design tokens across light, dark and high-contrast. Turn any brand color into a full Fluent theme.' },
   { c: '#ca5010', Icon: ArrowSwap24Regular, t: 'Migration', d: 'Adopt Fluent 2 in existing apps: Fluent UI v8 to v9, other design systems, or hardcoded values to tokens.' },
@@ -296,7 +358,7 @@ export function App() {
             <div className={s.wrap}>
               <Badge appearance="tint" color="success" size="large">Open source, MIT licensed, works in 12+ AI IDEs</Badge>
               <Title1 as="h1" className={s.h1} block>Build and adopt <span className={s.brandText}>Microsoft Fluent 2</span>, everywhere.</Title1>
-              <Subtitle2 className={s.lead} block>An AI-assistant plugin (Agents, Skills and MCP tools) that turns the official Fluent 2 design system into grounded, on-demand guidance and accessible code, inside the tools your teams already use. For Web, Power BI and Power Platform.</Subtitle2>
+              <Subtitle2 className={s.lead} block>An AI-assistant plugin (Agents, Skills and MCP tools) that turns the official Fluent 2 design system into grounded, on-demand guidance and accessible code, inside the tools your teams already use. For Web, native iOS, Android and Windows, Power BI and Power Platform — in Fluent 2 and Fluent 1.</Subtitle2>
               <div className={s.cta}>
                 <Button appearance="primary" size="large" className={s.ctaGlow} icon={<ArrowRight20Regular />} iconPosition="after" as="a" href="#install">Get started</Button>
                 <Button appearance="secondary" size="large" icon={<Star20Regular />} as="a" href={REPO}>View on GitHub</Button>
@@ -420,7 +482,7 @@ export function App() {
                   <Title3 as="h2" block style={{ color: '#fff' }}>Verified against the source of truth</Title3>
                   <Body1 block style={{ color: 'rgba(255,255,255,.9)' }}>Every route in the official Fluent 2 site's own sitemap (132 routes) was cross-checked, so this is measured coverage, not an estimate.</Body1>
                 </div>
-                <div className={s.grid3}>
+                <div className={s.bandGrid}>
                   {[['61 / 61', 'Web components (100%)'], ['36 / 36', 'Design and UX topics'], ['705', 'Source visuals with URLs'], ['35+', 'Power BI visuals catalogued'], ['12+', 'AI IDEs supported'], ['MIT', 'Open source license']].map(([b, l]) => (
                     <div key={l} className={s.bandStat}><span className={s.statB} style={{ color: '#fff' }}>{b}</span><Caption1 style={{ color: 'rgba(255,255,255,.82)' }}>{l}</Caption1></div>
                   ))}
@@ -456,7 +518,7 @@ export function App() {
                 <span className={s.brand} style={{ marginBottom: 8 }}><span className={s.logo}><Sparkle20Filled /></span> Fluent UI 2.0 Plugin</span>
                 <Caption1 block style={{ color: tokens.colorNeutralForeground3, marginTop: 8, maxWidth: '54ch' }}>Built with the Microsoft Fluent 2 design system (Fluent UI React v9). This site is a demo of the plugin's own output. It is not an official Microsoft product.</Caption1>
               </div>
-              <div style={{ display: 'flex', gap: 12 }}>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <Button appearance="secondary" as="a" href={REPO} icon={<Star20Regular />}>GitHub</Button>
                 <Button appearance="subtle" as="a" href="https://fluent2.microsoft.design" icon={<Open16Regular />} iconPosition="after">fluent2.microsoft.design</Button>
               </div>

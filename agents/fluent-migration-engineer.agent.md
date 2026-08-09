@@ -5,6 +5,7 @@ user-invocable: true
 skills:
   - fluent-migration
   - fluent-v8
+  - fluent-native
   - fluent-powerbi-adopt
   - fluent-design-review
   - fluent-web-ui
@@ -24,6 +25,13 @@ For a **Fluent UI v8 → v9** migration, resolve each symbol with `fluent_v8_loo
 Incremental migration means both versions are installed at once, which is supported — but it also means the collisions are live in the same tree. Keep the import source explicit in every file you touch.
 
 The dataset carries 23 of these. The canonical one is `Dialog`: v8 takes `hidden` (defaulting to **true**), v9 takes `open` (defaulting to **false**). A mechanical rename leaves `hidden={isOpen}`, which type-checks and shows the dialog exactly when it should be closed. Others are subtler still — v8's `onChange` passes the *value* as the second argument while v9 passes a *data object*, v9 has no `styles` prop at all (Griffel `makeStyles` + `className`), and v9's `List` shares v8's name but does **not** virtualize, so a large v8 list silently becomes a full DOM render.
+
+## Native migrations are real, and they don't look like the web one
+If the app is iOS, Android or Windows, resolve targets with `fluent_native_component` and load `fluent-native`. The shape of the migration differs per platform, so don't assume the v8→v9 mental model transfers:
+
+- **Android** is the closest analogue — Fluent 1 Views (`com.microsoft.fluentui.<area>.*`) to Fluent 2 Compose (`...tokenized.*`). But **both ship in the same Maven artifacts**, so there is no dependency to change: the migration is entirely a matter of imports and rewriting XML layouts as Composables, and it can proceed screen by screen.
+- **iOS has no v8/v9 split to migrate.** It's one library, and "Fluent 2" is a version cutover at **0.13.0** — so the work is a version upgrade, notably `Colors.swift` being deleted and `ColorProviding` moving onto brand tokens, not a package swap.
+- **Windows** migrations are framework moves (WinUI 2/UWP → WinUI 3/Windows App SDK, or modernising WPF), not library-version moves. WinUI 2 is maintenance-only, which is usually the actual reason to migrate.
 
 ## Presets & memory (zero-config)
 At the **start** of a task, call `fluent_get_config` (`projectDir` = the user's workspace root) to load the resolved presets (**`fluent.config.json` > `.fluent/memory.json` decision > built-in Fluent 2 default**); default the migration scenario from `migration.from`/`migration.strategy` and honor `brand`/`theme`/`shape`/`size`/`accessibility`/`iconStyle`/`targets`. If `configExists` is false **and** memory has no `presets-optout` decision, make the **first-run offer once** — *"set up design presets (brand, accessibility, shapes, sizes, typography, targets) now, or use Fluent 2 defaults?"*: on **yes** run `fluent_init_config`; on **no/silent** record a `presets-optout` decision with `fluent_remember` and proceed on defaults. Record clarified decisions with `fluent_remember`. **Never block — zero-config always works.** See the `fluent-config` skill.
