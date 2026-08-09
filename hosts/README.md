@@ -22,9 +22,31 @@ Instead of editing each host's config by hand, run the bundled helper once. It f
 ```bash
 node hosts/register-mcp.mjs            # register into all installed hosts
 node hosts/register-mcp.mjs --dry-run  # preview changes, write nothing
+node hosts/register-mcp.mjs --figma    # also register Figma's remote MCP server
 node hosts/register-mcp.mjs --path "C:\\path\\to\\fluent.ui\\mcp\\dist\\index.js"   # custom server path
 ```
-It covers the GitHub Copilot CLI (`~/.copilot/mcp-config.json`), VS Code and VS Code Insiders (user `mcp.json`), VSCodium, Cursor, Windsurf, and Claude Desktop, using the correct dialect for each. Build the server first (above). **After it runs, restart each host** (or reload its MCP servers) so the `fluent_*` tools appear.
+It covers the GitHub Copilot CLI (`~/.copilot/mcp-config.json`), VS Code and VS Code Insiders (user `mcp.json`), VSCodium, Cursor, Windsurf, Claude Code, Gemini CLI, and Claude Desktop, using the correct dialect for each. Build the server first (above). **After it runs, restart each host** (or reload its MCP servers) so the `fluent_*` tools appear.
+
+### `--figma`: design-to-code from a real frame
+`--figma` additionally registers **Figma's hosted MCP server** (`https://mcp.figma.com/mcp`) next to `fluent-ui`, so an agent can read an actual frame and this plugin can turn it into Fluent 2 code with real tokens and components.
+
+**No token is ever requested, stored or forwarded.** Figma's server uses OAuth, which the *host* runs: the first time it connects you sign in and click Allow Access in the browser. This installer only writes the server address.
+
+Each host spells a remote server differently, and getting it wrong usually fails **silently**, so the entry for each is taken verbatim from the verified per-host snippet in `mcp/data/figma.json`:
+
+| Host | Key written |
+|---|---|
+| VS Code / Insiders / VSCodium | `{ "type": "http", "url": ... }` |
+| GitHub Copilot CLI | `{ "type": "http", "url": ..., "tools": ["*"] }` |
+| Claude Code | `{ "type": "http", "url": ... }` — `type` is **mandatory**; without it the entry is read as stdio and hard-fails |
+| Cursor | `{ "url": ... }` — Cursor infers HTTP |
+| Windsurf | `{ "serverUrl": ... }` — **not** `url`; the wrong key is ignored with no error |
+| Gemini CLI | `{ "httpUrl": ..., "oauth": { "enabled": true } }` — **not** `url` |
+| Claude Desktop | *(deliberately skipped)* its `mcpServers` block is **stdio-only**, so a remote URL entry there would never connect |
+
+Hosts with no verified shape (Antigravity, Visual Studio) are skipped rather than guessed. A smoke check locks these key names in place so a future edit can't silently break them.
+
+Note Figma's own limits: the remote server needs a **node-specific link** (`?node-id=...`) — a file-only URL fails — and a Starter plan or View/Collab seat is capped at 6 tool calls per month.
 
 > Why this is needed: installing the plugin loads the **agents, skills, and instructions** automatically (they are Markdown the host reads natively), but the **MCP server is a separate process** each host must be told to launch. The repo's bundled `.mcp.json` uses a **relative** path that only resolves when your working directory is this repo, so from any other workspace the server can't be found. Registering the absolute path (what the helper does) fixes that everywhere. Prefer the manual per-host steps below if you want full control.
 

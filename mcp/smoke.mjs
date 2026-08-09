@@ -193,6 +193,38 @@ console.log('tool_count: ok=' + (tools.tools.length === EXPECTED_TOOL_COUNT && m
   console.log('site layout classes are responsive (' + respNote + '): ok=' + respOk);
 }
 
+// register-mcp.mjs --figma writes each host's Figma entry from figma.json.
+// These key names are host-specific and fail SILENTLY when wrong (Windsurf
+// ignores `url`, Gemini ignores anything but `httpUrl`), and Claude Desktop's
+// mcpServers is stdio-only so it must stay unregistered rather than get a
+// broken remote entry. Lock all three in.
+{
+  const root = new URL('../', import.meta.url);
+  let figOk = false, figNote = '';
+  try {
+    const fig = JSON.parse(readFileSync(new URL('mcp/data/figma.json', root), 'utf8'));
+    const byId = Object.fromEntries((fig.hosts || []).map((h) => [h.id, h]));
+    const urlKeyOf = (id) => {
+      const h = byId[id];
+      const inner = h && h.snippet && h.configKey ? h.snippet[h.configKey]?.figma : null;
+      return inner ? Object.keys(inner).find((k) => /url$/i.test(k)) : null;
+    };
+    const expect = { windsurf: 'serverUrl', 'gemini-cli': 'httpUrl', vscode: 'url', 'claude-code': 'url' };
+    const wrong = Object.entries(expect).filter(([id, key]) => urlKeyOf(id) !== key);
+    const claudeDesktopSafe = !byId['claude-desktop']?.snippet;
+    const claudeCodeTyped = !!byId['claude-code']?.snippet?.mcpServers?.figma?.type;
+    const installerReads = /figma\.json/.test(readFileSync(new URL('hosts/register-mcp.mjs', root), 'utf8'));
+    figOk = wrong.length === 0 && claudeDesktopSafe && claudeCodeTyped && installerReads;
+    figNote = figOk
+      ? 'per-host url keys correct, Claude Desktop excluded, Claude Code typed'
+      : [wrong.length ? 'wrong url key: ' + wrong.map(([i, k]) => `${i} wants ${k}`).join(', ') : '',
+         claudeDesktopSafe ? '' : 'Claude Desktop must not get a remote entry',
+         claudeCodeTyped ? '' : 'Claude Code entry needs type',
+         installerReads ? '' : 'installer does not read figma.json'].filter(Boolean).join('; ');
+  } catch (e) { figNote = String(e && e.message ? e.message : e); }
+  console.log('figma host dialects intact (' + figNote + '): ok=' + figOk);
+}
+
 const pbi = await client.callTool({ name: 'fluent_generate_powerbi_theme', arguments: { brandColor: '#D13438', name: 'Fluent Red' } });
 const pbiText = pbi.content[0].text;
 let pbiValid = false, hasVS = false;
@@ -315,6 +347,20 @@ console.log('get_images(responsible-ai dont): ok=' + (imgDontText.includes('DONT
 const imgBtn = await client.callTool({ name: 'fluent_get_images', arguments: { owner: 'button', kind: 'dodont', verdict: 'dont' } });
 const imgBtnText = imgBtn.content[0].text;
 console.log('get_images(button dodont dont): ok=' + (imgBtnText.includes('fluent2websitecdn') && (imgBtnText.includes('DONT') || imgBtnText.toLowerCase().includes("don't"))));
+
+// ocrText is the copy rendered INSIDE an image. It is the only way an agent can
+// quote Microsoft's actual recommended wording (consent strings, type ramps)
+// instead of paraphrasing a description, so both the search path and the
+// rendered output must keep working.
+const imgOcr = await client.callTool({ name: 'fluent_get_images', arguments: { query: 'send optional data' } });
+const imgOcrText = imgOcr.content[0].text;
+console.log('get_images(searches on-screen text): ok=' + (imgOcrText.includes('On-screen text:') && /optional data/i.test(imgOcrText)));
+{
+  const media = JSON.parse(readFileSync(new URL('data/fluent-images.json', import.meta.url), 'utf8'));
+  const withOcr = media.media.filter((m) => m.ocrText && m.ocrText.trim()).length;
+  const declared = media.$meta?.counts?.withOcrText;
+  console.log('images dataset ocrText count matches $meta (' + withOcr + ' vs ' + declared + '): ok=' + (withOcr > 0 && withOcr === declared));
+}
 
 const mig = await client.callTool({ name: 'fluent_migration_guidance', arguments: { scenario: 'v8-to-v9' } });
 const migText = mig.content[0].text;

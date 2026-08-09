@@ -16,6 +16,10 @@ interface MediaItem {
   alt?: string;
   url: string;
   labels?: string[];
+  /** Literal copy rendered INSIDE the image, recovered by vision OCR. Distinct
+   *  from alt, which describes the image. On Responsible AI and content pages
+   *  the exact wording is the guidance, so agents need the strings themselves. */
+  ocrText?: string;
   verdict?: string;
 }
 
@@ -35,7 +39,7 @@ function matchesOwner(m: MediaItem, owner: string): boolean {
 }
 
 function matchesQuery(m: MediaItem, query: string): boolean {
-  const hay = norm([m.owner, m.slug, m.kind, m.section, m.alt, (m.labels || []).join(' ')].join(' '));
+  const hay = norm([m.owner, m.slug, m.kind, m.section, m.alt, m.ocrText, (m.labels || []).join(' ')].join(' '));
   return norm(query)
     .split(/\s+/)
     .filter(Boolean)
@@ -51,6 +55,9 @@ function render(items: MediaItem[], limit: number, header: string): string {
     lines.push(`${i + 1}. **${bits}** (${tag}${m.verdict ? ' · ' + m.verdict.toUpperCase() : ''})`);
     if (m.alt) lines.push(`   ${m.alt}`);
     if (m.labels && m.labels.length) lines.push(`   Parts: ${m.labels.join(' · ')}`);
+    // The copy inside the image, when we recovered it. On content/RAI pages this
+    // is the actual recommended wording, so surface it rather than just the URL.
+    if (m.ocrText) lines.push(`   On-screen text: ${m.ocrText}`);
     // Markdown embed (hosts that render markdown show it inline) + raw URL for copy/paste.
     lines.push(`   ![${(m.alt || m.owner).replace(/[[\]]/g, '')}](${m.url})`);
     lines.push(`   URL: ${m.url}`);
@@ -69,7 +76,7 @@ export function registerImages(server: McpServer): void {
     {
       title: 'Fluent 2 images & videos (with source URLs)',
       description:
-        'Return direct URLs to the official Microsoft Fluent 2 visuals from https://fluent2.microsoft.design — anatomy diagrams, do/don\'t examples, state/type illustrations, layout specs, and Motion demo videos — for a given component or design topic. Use this whenever a user asks to SEE or GET a link to a Fluent 2 diagram/example/anatomy/motion video (e.g. "show me the Card anatomy", "do and don\'t images for buttons", "responsible AI examples", "motion easing videos"). Every result includes the real CDN url plus a markdown image embed and the source doc page. Filter by owner (component/topic name or slug), kind (anatomy, dodont, state, type, layout, behavior, content, example, hero, principle, accessibility, workflow, video), type (image|video), or a free-text query.',
+        'Return direct URLs to the official Microsoft Fluent 2 visuals from https://fluent2.microsoft.design — anatomy diagrams, do/don\'t examples, state/type illustrations, layout specs, and Motion demo videos — for a given component or design topic. Use this whenever a user asks to SEE or GET a link to a Fluent 2 diagram/example/anatomy/motion video (e.g. "show me the Card anatomy", "do and don\'t images for buttons", "responsible AI examples", "motion easing videos"). Every result includes the real CDN url plus a markdown image embed and the source doc page, and where the image contains readable UI copy the literal on-screen text too — so you can quote Microsoft\'s actual recommended wording (e.g. consent strings) instead of inventing it. Filter by owner (component/topic name or slug), kind (anatomy, dodont, state, type, layout, behavior, content, example, hero, principle, accessibility, workflow, video), type (image|video), or a free-text query.',
       inputSchema: {
         owner: z
           .string()

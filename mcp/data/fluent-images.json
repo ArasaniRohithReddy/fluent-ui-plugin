@@ -1,7 +1,7 @@
 {
   "$meta": {
     "title": "Microsoft Fluent 2 media index (images + videos)",
-    "description": "Every diagram, anatomy illustration, do/don't example, state illustration, and motion video captured from https://fluent2.microsoft.design, with its real CDN URL, alt text (vision-OCR-recovered where the site alt was empty), owning component/topic, kind, and source doc URL. Powers the fluent_get_images tool so agents/skills can hand users direct links to the source visuals.",
+    "description": "Every diagram, anatomy illustration, do/don't example, state illustration, and motion video captured from https://fluent2.microsoft.design, with its real CDN URL, alt text (vision-OCR-recovered where the site alt was empty), owning component/topic, kind, and source doc URL. Items whose image contains readable UI copy also carry ocrText: the literal on-screen strings recovered by vision OCR (alt describes the image; ocrText is the copy inside it, which on Responsible AI and content-design pages is itself the guidance). Powers the fluent_get_images tool so agents/skills can hand users direct links to the source visuals.",
     "source": "https://fluent2.microsoft.design",
     "generatedAt": "2026-07-21",
     "counts": {
@@ -24,12 +24,18 @@
         "video": 17,
         "pattern": 7,
         "workflow": 2
-      }
+      },
+      "withOcrText": 65
     },
     "gatedCapture": {
       "capturedAt": "2026-08",
       "method": "authenticated browser capture (Microsoft employee sign-in)",
       "note": "Visuals on the 14 AI component usage pages and the 4 \"Working with AI\" topic pages come from a signed-in capture; those pages 302 to login.microsoftonline.com for anyone outside Microsoft. Images whose source alt text is empty carry an \"altNote\" and keep the empty alt rather than an invented description."
+    },
+    "ocrText": {
+      "items": 65,
+      "method": "vision OCR of the rendered image, reviewed per item",
+      "regenerate": "node scripts/merge-ocr-text.mjs <ocr.json>"
     }
   },
   "media": [
@@ -4823,7 +4829,8 @@
       "kind": "example",
       "section": "Selecting from a dropdown",
       "alt": "An open tag picker with placeholder 'Select attendees' showing a 'Your top collaborators' suggestion list: Mona Kane (Senior Analyst), Ray Tanaka (Principal Product Manager), Tim Deboer (Lead Engineer).",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/8955c94468d735f35312194b5c5604556d98157a.DUovlT07.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/8955c94468d735f35312194b5c5604556d98157a.DUovlT07.png",
+      "ocrText": "Select attendees; Your top collaborators; Mona Kane; Senior Analyst; Ray Tanaka; Principal Product Manager; Tim Deboer; Lead Engineer"
     },
     {
       "id": "component/tagpicker/43c0fd8ebbe1abdf22a381e5694bc2d8fd073e5c",
@@ -4837,7 +4844,8 @@
       "kind": "behavior",
       "section": "Type to filter and select",
       "alt": "Two states of a tag picker: open with suggested collaborators (Mona Kane, Ray Tanaka, Tim Deboer), and after typing 'Ray Ta' the list filters to just Ray Tanaka.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/43c0fd8ebbe1abdf22a381e5694bc2d8fd073e5c.DwEmaWsp.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/43c0fd8ebbe1abdf22a381e5694bc2d8fd073e5c.DwEmaWsp.png",
+      "ocrText": "Select attendees; Your top collaborators; Mona Kane; Senior Analyst; Ray Tanaka; Principal Product Manager; Tim Deboer; Lead Engineer; Ray Ta"
     },
     {
       "id": "component/tagpicker/ab2a2b31f50a8abb2cdac6c6c22333be7a2168d2",
@@ -4851,7 +4859,8 @@
       "kind": "behavior",
       "section": "Secondary action",
       "alt": "A tag picker with selected tags Mona Kane and Ray Tanaka (each with a remove X) plus a 'Clear all attendees' action with a chevron, with the cursor hovering the clear action.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/ab2a2b31f50a8abb2cdac6c6c22333be7a2168d2.D5ffr1pr.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/ab2a2b31f50a8abb2cdac6c6c22333be7a2168d2.D5ffr1pr.png",
+      "ocrText": "Mona Kane; Ray Tanaka; Clear all attendees"
     },
     {
       "id": "component/tagpicker/74c324d375e9f5fa24162cceee235d4d792b6250",
@@ -4865,7 +4874,8 @@
       "kind": "behavior",
       "section": "Wrapping tags",
       "alt": "A tag picker filled with multiple people tags (Mona Kane, Ray Tanaka, MJ Price, Miguel Silva, Joshua Vanburen) wrapping to two rows, with Joshua Vanburen's tag focused/highlighted in blue.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/74c324d375e9f5fa24162cceee235d4d792b6250.Drylv_gE.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/74c324d375e9f5fa24162cceee235d4d792b6250.Drylv_gE.png",
+      "ocrText": "Mona Kane; Ray Tanaka; MJ Price; Miguel Silva; Joshua Vanburen"
     },
     {
       "id": "component/tagpicker/f4c3f607927ae6b7bb9caceec4d6b232fbf1c2a3",
@@ -4879,7 +4889,8 @@
       "kind": "behavior",
       "section": "Truncating text in tags",
       "alt": "A tag picker with people tags where the focused blue tag truncates its label to 'Joshua Va…' with an ellipsis.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/f4c3f607927ae6b7bb9caceec4d6b232fbf1c2a3.BJrHdqKg.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/f4c3f607927ae6b7bb9caceec4d6b232fbf1c2a3.BJrHdqKg.png",
+      "ocrText": "Mona Kane; Ray Tanaka; MJ Price; Miguel Silva; Joshua Va…"
     },
     {
       "id": "component/tagpicker/e2b44cfbc5aa0f4002b96da10247797a6509ca8a",
@@ -4896,7 +4907,8 @@
       "url": "https://fluent2websitecdn.azureedge.net/cdn/e2b44cfbc5aa0f4002b96da10247797a6509ca8a.BxkV7rlO.png",
       "labels": [
         "Del"
-      ]
+      ],
+      "ocrText": "Mona Kane; Ray Tanaka; MJ Price; Joshua Vanburen; Miguel Silva; Del"
     },
     {
       "id": "component/text/text1",
@@ -4938,7 +4950,8 @@
       "kind": "behavior",
       "section": "Behavior",
       "alt": "A textarea labeled 'Describe the problem' with placeholder 'Write a detailed description' and a resize handle in the bottom-right corner.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/React-textarea-behavior1.D7fFDXdd.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/React-textarea-behavior1.D7fFDXdd.webp",
+      "ocrText": "Describe the problem; Write a detailed description"
     },
     {
       "id": "component/textarea/textarea1",
@@ -4953,7 +4966,8 @@
       "section": "Accessibility",
       "alt": "A do example (green check): a textarea labeled 'Comments' with the concise placeholder 'Tell us your thoughts'.",
       "url": "https://fluent2websitecdn.azureedge.net/cdn/textarea1.CB4mxYgx.webp",
-      "verdict": "do"
+      "verdict": "do",
+      "ocrText": "Comments; Tell us your thoughts"
     },
     {
       "id": "component/textarea/textarea2",
@@ -4968,7 +4982,8 @@
       "section": "Accessibility",
       "alt": "A don't example (red X): a textarea with no visible label and a long placeholder 'Leave any comments or feedback here'.",
       "url": "https://fluent2websitecdn.azureedge.net/cdn/textarea2.BD_pY6ij.webp",
-      "verdict": "dont"
+      "verdict": "dont",
+      "ocrText": "Leave any comments or feedback here"
     },
     {
       "id": "component/textarea/textarea3",
@@ -4982,7 +4997,8 @@
       "kind": "example",
       "section": "Placeholder text",
       "alt": "A textarea labeled 'Bio' with placeholder 'Introduce yourself' and a resize handle in the bottom-right corner.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/textarea3.B8gpA_-f.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/textarea3.B8gpA_-f.webp",
+      "ocrText": "Bio; Introduce yourself"
     },
     {
       "id": "component/textarea/React-textarea-content2",
@@ -4996,7 +5012,8 @@
       "kind": "content",
       "section": "Placeholder text",
       "alt": "A textarea labeled 'What can we do to make things better?' with placeholder 'Don't include personal info, such as your name, phone number, or email address' and a '0/500 maximum characters' counter.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/React-textarea-content2.C6EcOK64.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/React-textarea-content2.C6EcOK64.webp",
+      "ocrText": "What can we do to make things better?; Don't include personal info, such as your name, phone number, or email address; 0/500 maximum characters"
     },
     {
       "id": "component/toast/5412ff2d77aef92a712a83615fc8eb85abcf9554",
@@ -5010,7 +5027,8 @@
       "kind": "example",
       "section": "Types",
       "alt": "An informational toast titled 'Your dashboard changed' with body 'Saundra Ortega made an update to Destiny PVP.', a 'View dashboard' link, and a dismiss button.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/5412ff2d77aef92a712a83615fc8eb85abcf9554.B1hA2pfp.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/5412ff2d77aef92a712a83615fc8eb85abcf9554.B1hA2pfp.png",
+      "ocrText": "Your dashboard changed; Saundra Ortega made an update to Destiny PVP.; View dashboard"
     },
     {
       "id": "component/toast/6e69133ac0cd54021a0d1853b6313fb1c3e1d34a",
@@ -5024,7 +5042,8 @@
       "kind": "example",
       "section": "Types",
       "alt": "A toast with a person's avatar titled 'Mona reacted to your message' showing 'Hey, Mona! Let me know if you have t…' with 'Mark as read' and 'Reply' actions and a dismiss button.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/6e69133ac0cd54021a0d1853b6313fb1c3e1d34a.CIun1GcJ.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/6e69133ac0cd54021a0d1853b6313fb1c3e1d34a.CIun1GcJ.png",
+      "ocrText": "Mona reacted to your message; Hey, Mona! Let me know if you have t…; Mark as read; Reply"
     },
     {
       "id": "component/toast/554cfb0559a3e53eac022e7375a73bcfd1e6e42c",
@@ -5038,7 +5057,8 @@
       "kind": "example",
       "section": "Types",
       "alt": "A toast titled 'Downloading file …' at 12:39 PM from Microsoft OneDrive with body 'This may take a while. You'll be notified when it's ready.' and a progress bar showing 50% complete.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/554cfb0559a3e53eac022e7375a73bcfd1e6e42c.CuKXk7H3.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/554cfb0559a3e53eac022e7375a73bcfd1e6e42c.CuKXk7H3.png",
+      "ocrText": "Downloading file …; 12:39 PM; Microsoft OneDrive; This may take a while. You'll be notified when it's ready.; 50% complete"
     },
     {
       "id": "component/toast/1f70e75c603ff235c55d55793e3e8a54e4f068c6",
@@ -5052,7 +5072,8 @@
       "kind": "behavior",
       "section": "Express dismissal",
       "alt": "An error toast (red icon) titled 'Your dashboard changed' with body 'Saundra Ortega made an update to Destiny PVP.' and a 'View dashboard' link, with the cursor dismissing it via the close X.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/1f70e75c603ff235c55d55793e3e8a54e4f068c6.CdRG5QpW.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/1f70e75c603ff235c55d55793e3e8a54e4f068c6.CdRG5QpW.png",
+      "ocrText": "Your dashboard changed; Saundra Ortega made an update to Destiny PVP.; View dashboard"
     },
     {
       "id": "component/toast/ee8ad35c2708a36dfc919d2b33d90ae7726abb87",
@@ -5066,7 +5087,8 @@
       "kind": "example",
       "section": "Determinate and indeterminate progress",
       "alt": "A toast with a loading spinner titled 'System updating …' with a dismiss button, a progress bar, and '60% complete' status.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/ee8ad35c2708a36dfc919d2b33d90ae7726abb87.CEwqRanx.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/ee8ad35c2708a36dfc919d2b33d90ae7726abb87.CEwqRanx.png",
+      "ocrText": "System updating …; 60% complete"
     },
     {
       "id": "component/toast/c783d4a36db57e07333a74bf25f69ce8cbf54714",
@@ -5080,7 +5102,8 @@
       "kind": "example",
       "section": "Keep location predictable",
       "alt": "A compact success toast with a green check reading 'Email sent' and an 'Undo' action, shown over page content.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/c783d4a36db57e07333a74bf25f69ce8cbf54714.DXOvUm_a.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/c783d4a36db57e07333a74bf25f69ce8cbf54714.DXOvUm_a.png",
+      "ocrText": "Email sent; Undo"
     },
     {
       "id": "component/toast/b28e4c4b937023ed3992a068c42dec6df683ed08",
@@ -5094,7 +5117,8 @@
       "kind": "example",
       "section": "Keep location predictable",
       "alt": "A toast titled 'File uploading' with a 'Cancel' action, body 'This might take a while. You'll be informed when it's done.', and a progress bar at 60% complete, shown over an app with a side nav.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/b28e4c4b937023ed3992a068c42dec6df683ed08.DHd96UDr.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/b28e4c4b937023ed3992a068c42dec6df683ed08.DHd96UDr.png",
+      "ocrText": "File uploading; Cancel; This might take a while. You'll be informed when it's done.; 60% complete; Teams and groups; Billing"
     },
     {
       "id": "component/toast/d35acb67212d75fb9ad5e55f4e21fe5212ee2cff",
@@ -5117,7 +5141,8 @@
         "Open",
         "Permissions restricted",
         "View"
-      ]
+      ],
+      "ocrText": "Zoomed to 110%; File deleted; Undo; Report downloaded; Open; Permissions restricted; View"
     },
     {
       "id": "component/toast/9d04dc314edf4ce91e311b15afef39fc0dbc4ba7",
@@ -5131,7 +5156,8 @@
       "kind": "example",
       "section": "Communicate the main message in the title",
       "alt": "A success toast with a green check titled 'File downloaded' at 11:34 AM from Microsoft OneDrive.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/9d04dc314edf4ce91e311b15afef39fc0dbc4ba7.BWX98QHX.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/9d04dc314edf4ce91e311b15afef39fc0dbc4ba7.BWX98QHX.png",
+      "ocrText": "File downloaded; 11:34 AM; Microsoft OneDrive"
     },
     {
       "id": "component/toast/5414b5b99ab061c98cd7fce403be1114c8f287dd",
@@ -5145,7 +5171,8 @@
       "kind": "example",
       "section": "Communicate the main message in the title",
       "alt": "A toast with a calendar icon titled 'Monthly review has started' at 11:34 AM from Microsoft Teams Meeting with a 'Join' action.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/5414b5b99ab061c98cd7fce403be1114c8f287dd.1Yb9PW2G.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/5414b5b99ab061c98cd7fce403be1114c8f287dd.1Yb9PW2G.png",
+      "ocrText": "Monthly review has started; 11:34 AM; Microsoft Teams Meeting; Join"
     },
     {
       "id": "component/toast/29b946e687119c62279bd5e802b65a02190dc6b0",
@@ -5159,7 +5186,8 @@
       "kind": "example",
       "section": "Communicate the main message in the title",
       "alt": "A toast with an upload icon titled 'Uploading 6 files …' at 11:34 AM from Microsoft OneDrive with a progress bar at 50% complete.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/29b946e687119c62279bd5e802b65a02190dc6b0.BE_5i8iI.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/29b946e687119c62279bd5e802b65a02190dc6b0.BE_5i8iI.png",
+      "ocrText": "Uploading 6 files …; 11:34 AM; Microsoft OneDrive; 50% complete"
     },
     {
       "id": "component/toast/16349d529e60ed2adb48f0f94e5b963b30fddcb4",
@@ -5173,7 +5201,8 @@
       "kind": "example",
       "section": "Give additional context in the body",
       "alt": "A toast with a person's avatar titled 'Mona reacted to your message' with message 'Hey, Mona! Let me know if you have t…', 'Mark as read' and 'Reply' actions, and a dismiss button.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/16349d529e60ed2adb48f0f94e5b963b30fddcb4.BTAI56JI.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/16349d529e60ed2adb48f0f94e5b963b30fddcb4.BTAI56JI.png",
+      "ocrText": "Mona reacted to your message; Hey, Mona! Let me know if you have t…; Mark as read; Reply"
     },
     {
       "id": "component/toast/8640244e09b5da988ee0eeb9b7d71effa9c39592",
@@ -5187,7 +5216,8 @@
       "kind": "example",
       "section": "Use status text to describe progress",
       "alt": "A toast with an upload icon titled 'Uploading video to Stream' with filename 'TeamAllHands-Q2.mp4', a dismiss button, and a progress bar showing '3.2 of 5.4 GB uploaded'.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/8640244e09b5da988ee0eeb9b7d71effa9c39592.C5HOTqkP.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/8640244e09b5da988ee0eeb9b7d71effa9c39592.C5HOTqkP.png",
+      "ocrText": "Uploading video to Stream; TeamAllHands-Q2.mp4; 3.2 of 5.4 GB uploaded"
     },
     {
       "id": "component/toast/ed48766c8b71206535df625758e294ebeab5d270",
@@ -5201,7 +5231,8 @@
       "kind": "example",
       "section": "Buttons should respond to title text",
       "alt": "A toast with a green check titled 'Mona shared a file in OneDrive' with subtitle 'Contoso Project Report.pptx', an 'Open app' action, and a dismiss button.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/ed48766c8b71206535df625758e294ebeab5d270.D_nUxaqP.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/ed48766c8b71206535df625758e294ebeab5d270.D_nUxaqP.png",
+      "ocrText": "Mona shared a file in OneDrive; Contoso Project Report.pptx; Open app"
     },
     {
       "id": "component/toolbar/9211ab5a5e6780edf3b8c1279b4492cefee2cb5a",
@@ -5229,7 +5260,8 @@
       "kind": "example",
       "section": "Create logical groupings",
       "alt": "A rich-text formatting toolbar with grouped controls: bold, italic, underline; highlight, font color, font size; bulleted and numbered lists; and link, date, mention (99), and table icons.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/7d47dbed8b27516f19c45f8c30fe8260288f5463.a_CAuj0t.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/7d47dbed8b27516f19c45f8c30fe8260288f5463.a_CAuj0t.webp",
+      "ocrText": "B; I; U; 99"
     },
     {
       "id": "component/toolbar/8b7ba3e33b7bf610d141c12fe9654e4daf5ae4da",
@@ -5243,7 +5275,8 @@
       "kind": "example",
       "section": "Create logical groupings",
       "alt": "A rich-text formatting toolbar (bold, italic, underline; highlight, font color, size; bullet and numbered lists; link, date, mention 99, table) with a trash/delete icon at the far right end.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/8b7ba3e33b7bf610d141c12fe9654e4daf5ae4da.lb_R3NwI.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/8b7ba3e33b7bf610d141c12fe9654e4daf5ae4da.lb_R3NwI.webp",
+      "ocrText": "B; I; U; 99"
     },
     {
       "id": "component/toolbar/2307315032a4c1f14da8bdaed79173faf42c0232",
@@ -5257,7 +5290,8 @@
       "kind": "example",
       "section": "Toolbars support the main task",
       "alt": "A full Teams-style compose toolbar above a 'Type a new message' box with formatting controls (bold, italic, underline, highlight, font color, size, Paragraph style, clear formatting, indents, lists, more, delete) and a bottom action row (format, important, attach, emoji, GIF, sticker, apps, praise, schedule, approvals, more) plus meeting and send buttons.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/2307315032a4c1f14da8bdaed79173faf42c0232.BUWMxLaj.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/2307315032a4c1f14da8bdaed79173faf42c0232.BUWMxLaj.webp",
+      "ocrText": "Paragraph; Type a new message"
     },
     {
       "id": "component/toolbar/ea8184ae42e765bcdae79c9b1a38f4ce2a3544d9",
@@ -5271,7 +5305,8 @@
       "kind": "behavior",
       "section": "Toolbars support the main task",
       "alt": "Two states of a message compose area: one with the full formatting toolbar expanded above the message box, and one collapsed to just the message box and action row, with the cursor on the format toggle.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/ea8184ae42e765bcdae79c9b1a38f4ce2a3544d9.Ck0N_EUL.webp"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/ea8184ae42e765bcdae79c9b1a38f4ce2a3544d9.Ck0N_EUL.webp",
+      "ocrText": "Type a new message"
     },
     {
       "id": "component/toolbar/c5d4b106a64a6191534565a84ff46339af74817b",
@@ -5289,7 +5324,8 @@
       "labels": [
         "Hyperlink",
         "Insert table"
-      ]
+      ],
+      "ocrText": "Hyperlink; Insert table; 99"
     },
     {
       "id": "component/tooltip/tooltip1",
@@ -5973,7 +6009,8 @@
       "labels": [
         "JY",
         "SD"
-      ]
+      ],
+      "ocrText": "Avatar token initials: JY; SD"
     },
     {
       "id": "topic/design-principles/designlanguage-designprinciples-natural-01",
@@ -6023,7 +6060,8 @@
         "JY",
         "JG",
         "GE"
-      ]
+      ],
+      "ocrText": "Avatar token initials: KB; BW; SD; JY; JG; GE"
     },
     {
       "id": "topic/design-principles/designlanguage-designprinciples-microsoft-01",
@@ -6210,7 +6248,8 @@
         "Display Regular 60",
         "Large Title Regular 34/40",
         "Regular 24/32"
-      ]
+      ],
+      "ocrText": "Android; Display Regular 60; Large Title Regular 34/40; ...ar 24/32"
     },
     {
       "id": "topic/typography/typography-segoe",
@@ -7277,7 +7316,8 @@
       "url": "https://fluent2websitecdn.azureedge.net/cdn/designlanguage-iconography-01.DO9WDrPd.webp",
       "labels": [
         "PDF"
-      ]
+      ],
+      "ocrText": "Icon tiles including a PDF file glyph; camera, emoji, rocket, fingerprint, phone, cloud upload, cake, envelope, checkmark-lock icons"
     },
     {
       "id": "topic/motion/motion-main",
@@ -7819,7 +7859,8 @@
         "B",
         "I",
         "U"
-      ]
+      ],
+      "ocrText": "Bring your ideas to life.|; B; I; U (bold, italic, underline keys)"
     },
     {
       "id": "topic/content-design/content-design1",
@@ -8211,7 +8252,8 @@
       "kind": "example",
       "section": "Visual patterns for handoffs",
       "alt": "Abstract wireframe of a card with placeholder text bars and an avatar plus a blue primary button and two secondary buttons, used as a schematic UI example in Handoffs guidance.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/542061ebcc0c7c3d180a1ffcfabd8512b532fd87.CraccqRe.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/542061ebcc0c7c3d180a1ffcfabd8512b532fd87.CraccqRe.png",
+      "ocrText": "Schematic placeholder UI (no literal text); blue primary button with two secondary buttons"
     },
     {
       "id": "topic/handoffs/7f4739e6f6c0cf31eaa77d726d3f033a7fc10701",
@@ -8225,7 +8267,8 @@
       "kind": "example",
       "section": "Visual patterns for handoffs",
       "alt": "Abstract wireframe of a card with placeholder bars and a highlighted nested blue region representing a selected or nested component, used as a schematic Handoffs example.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/7f4739e6f6c0cf31eaa77d726d3f033a7fc10701.Cd6Yp_Fq.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/7f4739e6f6c0cf31eaa77d726d3f033a7fc10701.Cd6Yp_Fq.png",
+      "ocrText": "Schematic placeholder UI (no literal text); highlighted nested component region"
     },
     {
       "id": "topic/handoffs/93f9f92d44f062819c32ec82d67bb7aa44e70cad",
@@ -8239,7 +8282,8 @@
       "kind": "example",
       "section": "Visual patterns for handoffs",
       "alt": "Abstract wireframe of a card with placeholder bars and a highlighted input field containing a small blue button, used as a schematic Handoffs example.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/93f9f92d44f062819c32ec82d67bb7aa44e70cad.C6uiM8Vs.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/93f9f92d44f062819c32ec82d67bb7aa44e70cad.C6uiM8Vs.png",
+      "ocrText": "Schematic placeholder UI (no literal text); highlighted input field with blue button"
     },
     {
       "id": "topic/handoffs/fc377e33dbf095f59aeb4c79eb99328e7e2e96d6",
@@ -8253,7 +8297,8 @@
       "kind": "example",
       "section": "Visual patterns for handoffs",
       "alt": "Abstract wireframe of a two-pane layout with a highlighted input field on the left and a large highlighted detail pane on the right, used as a schematic Handoffs example.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/fc377e33dbf095f59aeb4c79eb99328e7e2e96d6.BNaXJbl5.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/fc377e33dbf095f59aeb4c79eb99328e7e2e96d6.BNaXJbl5.png",
+      "ocrText": "Schematic placeholder UI (no literal text); left list pane with highlighted input, right detail pane highlighted"
     },
     {
       "id": "topic/handoffs/e7b11d35afe3e0106d38ca6ff59d9fe6abe5eb56",
@@ -8267,7 +8312,8 @@
       "kind": "example",
       "section": "Visual patterns for handoffs",
       "alt": "Abstract wireframe of a page with a row of pill tabs above a grid of white cards, one card holding a blue button, used as a schematic Handoffs example.",
-      "url": "https://fluent2websitecdn.azureedge.net/cdn/e7b11d35afe3e0106d38ca6ff59d9fe6abe5eb56.hTZ8tWBf.png"
+      "url": "https://fluent2websitecdn.azureedge.net/cdn/e7b11d35afe3e0106d38ca6ff59d9fe6abe5eb56.hTZ8tWBf.png",
+      "ocrText": "Schematic placeholder UI (no literal text); row of pill tabs above a grid of cards, first card has a blue button"
     },
     {
       "id": "topic/handoffs/cda28dc98c951e4469a39cf0033eadbfc394b350",
@@ -8291,8 +8337,11 @@
         "Contoso Cafe Marketing Proposal",
         "Campaign Objectives",
         "Marketing Strategy",
-        "Timeline"
-      ]
+        "Timeline",
+        "Executive Summary",
+        "Key Messages"
+      ],
+      "ocrText": "https://m365.com/chat; Marketing Launch > Contoso Cafe Mark...; Prompt: Create a Contoso Cafe Marketing Proposal; Copilot: Happy to help. Here's valuable information and different features which can help your organization.; Copilot: Here's your new page: Contoso Cafe Marketing Pro... (Marketing Launch); Message Copilot; AI-generated content may be incorrect; Create presentation; Title: Contoso Cafe Marketing Proposal; Executive Summary: Contoso Café is a new coffee shop opening in San Francisco, focused on providing high-quality, sustainably sourced coffee in a welcoming and community-centered space; Campaign Objectives: Generate awareness of Contoso Café's opening within the local community; Establish a strong brand presence through social media, PR, and influencer partnerships; Engage local coffee enthusiasts with exclusive offers and events to drive foot traffic; Highlight key brand values such as sustainability and craftsmanship; Marketing Strategy: Brand Positioning: Contoso Café will be positioned as a place where connection, creativity, and sustainability come together; Key Messages: \"Brew Connections, One Cup at a Time\" tagline; Sustainability — eco-friendly practices; Craftsmanship — commitment to the art of coffee; Timeline table headers: Date, Task, Team, Notes; row: 4-6 Weeks Before, Teaser content, Social Media Team, Focus on creating"
     },
     {
       "id": "topic/onboarding/4c4f08d6b0b12bbd0ef8eee1e6177651b1fbdd8e",
@@ -8381,7 +8430,8 @@
         "Welcome to the new Contoso portal!",
         "Go back to classic portal",
         "Get started"
-      ]
+      ],
+      "ocrText": "Welcome to the new Contoso portal!; The new Contoso portal brings together data governance, data security, and compliance solutions to help you quickly discover and protect data stored across platforms and apps.; Go back to classic portal; Get started"
     },
     {
       "id": "topic/onboarding/1c95eda788b09403f976d0290099f2f32c574ed5",
@@ -8399,7 +8449,8 @@
       "labels": [
         "Secure access for a connected world",
         "Learn more about the latest improvements"
-      ]
+      ],
+      "ocrText": "Secure access for a connected world; Protect any identity and secure access to any resource with a family of multicloud identity and ndetwork access solutions. Welcome to the Contoso admin center's new home page.; Learn more about the latest improvements"
     },
     {
       "id": "topic/onboarding/59807397e0397ca0d4a3dceb9f73b94c2c0991a6",
@@ -8416,7 +8467,8 @@
       "url": "https://fluent2websitecdn.azureedge.net/cdn/59807397e0397ca0d4a3dceb9f73b94c2c0991a6.BawugiBR.png",
       "labels": [
         "Follow meetings"
-      ]
+      ],
+      "ocrText": "Follow meetings; Interested but can't attend a meeting? Respond with Follow. You can access the meeting recap later from the calendar event."
     },
     {
       "id": "topic/onboarding/323102c62d99216ecdb3dde2ba76cedf940355b5",
@@ -8453,7 +8505,8 @@
         "Opened",
         "Owner",
         "Activity"
-      ]
+      ],
+      "ocrText": "OneDrive; Search; All files; All your work in one place. Now you can easily find and share all your work from Microsoft Lists, Loop, Power BI, or Whiteboard.; For you; Program Evaluation Report; This may relate to a current meeting; 27m ago; Summarize; PROGRAM EVALUATION REPORT PEER REVIEW SHEET; Fundraising Plan; Cameron Williamson created a task for you; Friday; Go to task; Sales Analysis 2021; Budget Breakdown FY23Q2; David Power shared this in a Team; Thursday; Open; Recent; All; Word; Excel; PowerPoint; PDF; Name; Opened; Owner; Activity; Department Write up; Director's Files; 24m ago; Carlos Slattery; Carlos Slattery edited this; Jam Session Recap; Design Department; 1h ago; Daisy Phillips; You edited this 43m ago"
     },
     {
       "id": "topic/onboarding/04eee3be4d3df61973026570aabac1a8a27b7d77",
@@ -8471,7 +8524,8 @@
       "labels": [
         "Let's get the conversation started",
         "Start a conversation"
-      ]
+      ],
+      "ocrText": "Let's get the conversation started; Try @mentioning people you want to collaborate with or exploring Teams and channels.; Start a conversation"
     },
     {
       "id": "topic/onboarding/e7e95f23acc6ed6ef9784750c9e80767c636b9c2",
@@ -8490,7 +8544,8 @@
         "Set up your new way of working",
         "Previous",
         "Next"
-      ]
+      ],
+      "ocrText": "Set up your new way of working; Make a few quick selections to set your preferences and get your environment up and running. Once you're done, you can enjoy the benefits of the new and improved experience.; Previous; Next"
     },
     {
       "id": "topic/wait-ux/communicate-clearly-good",
@@ -9990,7 +10045,8 @@
         "POST CONSENT",
         "Receipt",
         "Management"
-      ]
+      ],
+      "ocrText": "PRE CONSENT; Discovery; Prompt; CONSENT; Request; POST CONSENT; Receipt; Management"
     },
     {
       "id": "topic/data-usage-sharing/b00364d5df1aea5d6494040e0fecc19123913bc7",
@@ -10011,7 +10067,8 @@
         "3 Write UX copy",
         "FACT SHEET Worksheet #1",
         "CONSENT SCRIPT Worksheet #2"
-      ]
+      ],
+      "ocrText": "1 Gather information; 2 Map communication points to user journey; 3 Write UX copy; FACT SHEET; Worksheet #1; CONSENT SCRIPT; Worksheet #2"
     },
     {
       "id": "topic/data-usage-sharing/4455f51bcc1f3446384a8fb0a5f9578b45d8e0bc",
@@ -10041,7 +10098,8 @@
         "Consent management",
         "Brief overview",
         "Explain in detail"
-      ]
+      ],
+      "ocrText": "Key information; Discovery; Prompt; Request; Receipt; Mgmt.; Product value exchange: Discovery (brief overview); Technical features and limitations: Prompt (brief), Request (explain in detail), Receipt (brief), Mgmt. (brief); What data and for what purpose: Prompt (brief), Request (explain in detail); People's perceptions and concerns: Request (explain in detail); Data journey and privacy protections: Request (explain in detail), Receipt (brief), Mgmt. (brief); Consent management: Request (brief), Receipt (explain in detail), Mgmt. (brief); Legend: Brief overview, Explain in detail"
     },
     {
       "id": "topic/data-usage-sharing/9e397c28431b08f229338c5a775bca97fdf3aa5c",
@@ -10094,7 +10152,8 @@
         "Contoso FAQ",
         "Reply to All",
         "Help Eliva Atkins recognize you with Contoso facial recognition"
-      ]
+      ],
+      "ocrText": "Help Eliva Atkins recognize you; Contoso — To You — 11:50 AM; Eliva Atkins (eliva.atkins@recloud.com) invited you to enroll in Contoso; Hey Sam, I have a visual impairment, so I use a mobile app called Contoso that helps me recognize who's in the room during meetings without having to ask.; Would you be willing to take some photos of your face to build a face map this app can use to help me recognize you? None of the photos you take will be stored, and you'll be in full control of who and what has access to your face map.; Thanks, Eliva; Help Eliva Atkins recognize you with Contoso facial recognition; If you agree to enroll, Contoso will create a face map based on photos of you. A face map is a unique set of numbers that represent your distinct facial features that Contoso's facial recognition software can use to identify you for Eliva.; We won't save your photos in this process.; Get started; Have any questions? Visit Contoso FAQ to learn more.; Reply to All"
     },
     {
       "id": "topic/data-usage-sharing/b2a046e658949727ac94860f842f2762317de533",
@@ -10112,7 +10171,8 @@
       "labels": [
         "Meeting transcript",
         "Get started"
-      ]
+      ],
+      "ocrText": "Meeting transcript; Babak Shammas 11:25 AM; Guest 11:26 AM; Charlotte de Crum 11:26 AM; Aadi Kapoor 11:26 AM; Guest 11:27 AM; Let Contoso learn the sound of your voice so what you say can be attributed to you in future meeting transcripts.; Get started"
     },
     {
       "id": "topic/data-usage-sharing/ba1727a09601bae5f016a3e1002a9decdd0eaee6",
@@ -10283,7 +10343,8 @@
         "2. Access is limited to Microsoft",
         "3. Never sold to third parties",
         "Privacy Statement"
-      ]
+      ],
+      "ocrText": "We protect your privacy at every step; 1. Voice clips are de-identified; Before anyone reviews your voice clips, Microsoft protects your privacy by taking steps to remove personal information and changing the sound of your voice.; 2. Access is limited to Microsoft; Employees and vendors who work on speech recognition review only short snippets of the clips (less than 10 seconds).; 3. Never sold to third parties; Your voice clips are only used to improve speech recognition and will never be sold to third parties.; Read our Privacy Statement"
     },
     {
       "id": "topic/data-usage-sharing/bd52495ea3403c0a19478264bb9b242fe490178e",
@@ -10304,7 +10365,8 @@
         "Who has access",
         "How long it's stored",
         "Manage your profile"
-      ]
+      ],
+      "ocrText": "Summary of data being stored; Face map of you; Used to unlock doors that use Contoso; Who has access; No one; How long it's stored; For the duration of your employment or until you delete your data; Manage your profile: Visit this kiosk at any time to delete your face map or photos."
     },
     {
       "id": "topic/data-usage-sharing/4e0f0e7ecb55f1266e652da5dbc535c99a2c2515",
@@ -10323,7 +10385,8 @@
         "Your consent receipt from Contoso",
         "Thanks for signing up for Contoso",
         "Summary of data being stored"
-      ]
+      ],
+      "ocrText": "Your consent receipt from Contoso; Global Security Notifications <gssnotif@contoso.com>; 4/23/2020 12:29PM; Thanks for signing up for Contoso; Hi, [recipient name], Thanks for signing up for Contoso. This email is your confirmation; please save it for your records..; Summary of data being stored"
     },
     {
       "id": "topic/data-usage-sharing/57fb64323806196974392f3ab809b29b20b389b4",
@@ -10382,8 +10445,10 @@
         "We need real talk. Will you help?",
         "Your language",
         "American English",
-        "Trend"
-      ]
+        "Trend",
+        "Help voice typing learn from real talk"
+      ],
+      "ocrText": "Settings; ACCOUNT; Sign in with your Microsoft Account; PRIVACY; Contribute voice clips; Contributed clips teach Microsoft's speech tech more about your language.; SUPPORT; Help; Send feedback; Contribute voice clips; You're not contributing any voice clips.; Help voice typing learn from real talk; Your everyday use of voice typing could improve the accuracy of Microsoft's speech tech for everyone who speaks your language. When you give Microsoft permission to store your voice clips, some of these voice clips will be reviewed by Microsoft employees and vendors.; Start contributing my voice clips; Read our Privacy Statement; Your language American English; Trend; We need real talk. Will you help?; We can learn from the everyday ways you use voice typing. There's no need to change the way you use your app.; If you decide to contribute your voice clips, some of these clips will be reviewed by Microsoft employees and vendors to improve the accuracy of our speech tech for everyone who speaks your language.; Real-world talk teaches speech recognition:"
     },
     {
       "id": "topic/data-usage-sharing/f2e375aa1826aa054693f746c9b61102f0036333",
@@ -10403,7 +10468,8 @@
         "Contribute voice clips",
         "Help",
         "Send feedback"
-      ]
+      ],
+      "ocrText": "Settings; ACCOUNT; Sign in with your Microsoft Account; PRIVACY; Contribute voice clips; Contributed clips teach Microsoft's speech tech more about your language.; SUPPORT; Help; Send feedback"
     },
     {
       "id": "topic/data-usage-sharing/9cdecc28df7412055ae093de7dc82ca6a0fc0b87",
@@ -10451,7 +10517,8 @@
       "labels": [
         "Yes, send optional data",
         "No, don't send optional data"
-      ]
+      ],
+      "ocrText": "Yes, send optional data; No, don't send optional data"
     },
     {
       "id": "topic/data-usage-sharing/49884b8ffde33d6fe06bf408d4d0fd38836afdec",
@@ -10499,7 +10566,8 @@
       "labels": [
         "Yes, send optional data",
         "No, don't send optional data"
-      ]
+      ],
+      "ocrText": "Yes, send optional data; No, don't send optional data"
     },
     {
       "id": "topic/data-usage-sharing/dbbc0a322bbbf97e7d48e848b566e8d279e69e7d",
@@ -10517,7 +10585,8 @@
       "labels": [
         "Personalize offers",
         "Don't personalize offers"
-      ]
+      ],
+      "ocrText": "Personalize offers; Don't personalize offers"
     },
     {
       "id": "topic/data-usage-sharing/816cda5b59ca8858f75ccf17a7057167a903ded1",
@@ -10536,7 +10605,8 @@
         "Yes, send optional data",
         "No, don't send optional data",
         "Accept"
-      ]
+      ],
+      "ocrText": "Do you want optional data about your Office experience sent to Microsoft?; Yes, send optional data; No, don't send optional data; Accept"
     },
     {
       "id": "topic/data-usage-sharing/2743e830ada9f5f2ae6fcab1faf54fe46d6812f9",
@@ -10554,7 +10624,8 @@
       "labels": [
         "Experiences that analyze your content",
         "On"
-      ]
+      ],
+      "ocrText": "Experiences that analyze your content; Allow experiences that provide you with helpful resources, info, and ideas by analyzing your Office content; On; If you turn this off, some experiences will not be available to you."
     },
     {
       "id": "topic/data-usage-sharing/4d4e628fa03fe289a63ac2e3a18e549bd2bb95e9",
@@ -10572,7 +10643,8 @@
       "labels": [
         "Experiences that analyze your content",
         "Let Office analyze my content to provide me with improvements."
-      ]
+      ],
+      "ocrText": "Experiences that analyze your content; Allow experiences that provide you with helpful resources, info, and ideas by analyzing your Office content; Let Office analyze my content to provide me with improvements.; If you turn this off, some experiences will not be available to you."
     },
     {
       "id": "topic/data-usage-sharing/ca4a5eb7097ffe65252f315546d06dca0586ecac",
@@ -10589,7 +10661,8 @@
       "url": "https://fluent2websitecdn.azureedge.net/cdn/ca4a5eb7097ffe65252f315546d06dca0586ecac.DiH76Yk9.png",
       "labels": [
         "Improve accuracy for everyone who speaks your language"
-      ]
+      ],
+      "ocrText": "Improve accuracy for everyone who speaks your language"
     },
     {
       "id": "topic/data-usage-sharing/5b3aeec5bd8249d1ee095dbb968e7f5d258e7c29",
@@ -10606,7 +10679,8 @@
       "url": "https://fluent2websitecdn.azureedge.net/cdn/5b3aeec5bd8249d1ee095dbb968e7f5d258e7c29.C-1HvlKU.png",
       "labels": [
         "Contribute voice clips to improve accuracy"
-      ]
+      ],
+      "ocrText": "Contribute voice clips to improve accuracy"
     },
     {
       "id": "component/chatinput/Sidecar-anat",
