@@ -1,6 +1,7 @@
 # fluent-ui: build flawless Fluent 2 UIs, automatically
 
 [![CI](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/ArasaniRohithReddy/fluent-ui-plugin?color=0f6cbd&label=release)](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-informational.svg)](LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![GitHub Discussions](https://img.shields.io/badge/GitHub-Discussions-5c2e91.svg)](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/discussions)
@@ -9,7 +10,7 @@
 
 **🌐 Live site (itself a Fluent UI React v9 app, built with this plugin): [arasanirohithreddy.github.io/fluent-ui-plugin](https://arasanirohithreddy.github.io/fluent-ui-plugin/)** · **[Install & usage guide](GUIDE.md)** · **[Per-host matrix](hosts/README.md)**
 
-**Version:** 1.0.0 · **License:** MIT · **Fluent 2 is the core** of everything here: every surface applies the *same* design language (tokens, Segoe UI type ramp, spacing, corner radius, elevation, motion, accessibility).
+**Version:** [1.0.0](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/releases/latest) · **License:** MIT · **Fluent 2 is the core** of everything here: every surface applies the *same* design language (tokens, Segoe UI type ramp, spacing, corner radius, elevation, motion, accessibility).
 
 ---
 
