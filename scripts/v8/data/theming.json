@@ -1,0 +1,1660 @@
+{
+  "meta": {
+    "verifiedVersions": {
+      "@fluentui/react": "8.125.7",
+      "@fluentui/theme": "2.7.2"
+    },
+    "verifiedOn": "2026-08-09",
+    "sources": [
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/colors/DefaultPalette.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/types/IPalette.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/types/ISemanticColors.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/types/ISemanticTextColors.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/utilities/makeSemanticColors.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/createTheme.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/mergeThemes.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/__snapshots__/createTheme.test.ts.snap",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/types/Theme.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/types/IScheme.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/types/IEffects.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/types/IFontStyles.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/types/ISpacing.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/effects/DefaultEffects.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/effects/FluentDepths.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/spacing/DefaultSpacing.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/fonts/FluentFonts.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/fonts/createFontStyles.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/fonts/DefaultFontStyles.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme/src/colors/FluentColors.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/style-utilities/src/styles/theme.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/style-utilities/src/styles/CommonStyles.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/style-utilities/src/styles/getFocusStyle.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/ThemeProvider/ThemeProvider.tsx",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/ThemeProvider/ThemeProvider.types.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/ThemeProvider/useTheme.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/ThemeProvider/useThemeProviderState.tsx",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/ThemeProvider/useThemeProviderClasses.tsx",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/ThemeProvider/README.md",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/utilities/src/customizations/Customizer.tsx",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/components/ThemeGenerator/ThemeGenerator.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/components/ThemeGenerator/ThemeRulesStandard.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/components/ThemeGenerator/IThemeSlotRule.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/color/shades.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/color/getColorFromString.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/color/getColorFromRGBA.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/color/rgb2hsv.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/color/hsv2rgb.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/color/hsv2hsl.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/src/utilities/color/consts.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/apps/theming-designer/src/components/ThemingDesigner.tsx",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme-samples/src/DarkCustomizations/DarkCustomizations.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/theme-samples/src/TeamsCustomizations.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/tokens/src/alias/lightColor.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/tokens/src/alias/lightColorPalette.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/tokens/src/global/brandColors.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/tokens/src/themes/web/lightTheme.ts",
+      "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/tokens/src/utils/createLightTheme.ts",
+      "https://unpkg.com/@fluentui/react/package.json",
+      "https://unpkg.com/@fluentui/theme/package.json"
+    ]
+  },
+  "unverified": [
+    "palette.dark.blackTranslucent40",
+    "palette.dark.whiteTranslucent40",
+    "palette.dark.accent",
+    "palette.dark.yellowDark",
+    "palette.dark.yellow",
+    "palette.dark.yellowLight",
+    "palette.dark.orange",
+    "palette.dark.orangeLight",
+    "palette.dark.orangeLighter",
+    "palette.dark.red",
+    "palette.dark.magentaDark",
+    "palette.dark.magenta",
+    "palette.dark.magentaLight",
+    "palette.dark.purpleDark",
+    "palette.dark.purple",
+    "palette.dark.purpleLight",
+    "palette.dark.blueDark",
+    "palette.dark.blueMid",
+    "palette.dark.blue",
+    "palette.dark.blueLight",
+    "palette.dark.tealDark",
+    "palette.dark.teal",
+    "palette.dark.tealLight",
+    "palette.dark.greenDark",
+    "palette.dark.green",
+    "palette.dark.greenLight",
+    "docsite.developer.microsoft.com/styles/web/colors (client-rendered SPA, not scrapable)",
+    "apps/public-docsite ColorsPage source path (404 on all guesses, Contents API rate-limited)",
+    "packages/scheme-utilities/src/addVariants.ts (404; used by DarkCustomizations to fill theme.schemes)",
+    "@microsoft/load-themed-styles token-replacement internals",
+    "v9 brand ramp positional mapping (inferred from stale generator comments, not shipped brandWeb values)"
+  ],
+  "palette": {
+    "themeDarker": {
+      "light": "#004578",
+      "dark": "#82c7ff"
+    },
+    "themeDark": {
+      "light": "#005a9e",
+      "dark": "#6cb8f6"
+    },
+    "themeDarkAlt": {
+      "light": "#106ebe",
+      "dark": "#3aa0f3"
+    },
+    "themePrimary": {
+      "light": "#0078d4",
+      "dark": "#2899f5"
+    },
+    "themeSecondary": {
+      "light": "#2b88d8",
+      "dark": "#0078d4"
+    },
+    "themeTertiary": {
+      "light": "#71afe5",
+      "dark": "#235a85"
+    },
+    "themeLight": {
+      "light": "#c7e0f4",
+      "dark": "#004c87"
+    },
+    "themeLighter": {
+      "light": "#deecf9",
+      "dark": "#043862"
+    },
+    "themeLighterAlt": {
+      "light": "#eff6fc",
+      "dark": "#092c47"
+    },
+    "black": {
+      "light": "#000000",
+      "dark": "#ffffff"
+    },
+    "blackTranslucent40": {
+      "light": "rgba(0,0,0,.4)",
+      "dark": null
+    },
+    "neutralDark": {
+      "light": "#201f1e",
+      "dark": "#faf9f8"
+    },
+    "neutralPrimary": {
+      "light": "#323130",
+      "dark": "#f3f2f1"
+    },
+    "neutralPrimaryAlt": {
+      "light": "#3b3a39",
+      "dark": "#c8c6c4"
+    },
+    "neutralSecondary": {
+      "light": "#605e5c",
+      "dark": "#a19f9d"
+    },
+    "neutralSecondaryAlt": {
+      "light": "#8a8886",
+      "dark": "#979693"
+    },
+    "neutralTertiary": {
+      "light": "#a19f9d",
+      "dark": "#797775"
+    },
+    "neutralTertiaryAlt": {
+      "light": "#c8c6c4",
+      "dark": "#484644"
+    },
+    "neutralQuaternary": {
+      "light": "#d2d0ce",
+      "dark": "#3b3a39"
+    },
+    "neutralQuaternaryAlt": {
+      "light": "#e1dfdd",
+      "dark": "#323130"
+    },
+    "neutralLight": {
+      "light": "#edebe9",
+      "dark": "#292827"
+    },
+    "neutralLighter": {
+      "light": "#f3f2f1",
+      "dark": "#252423"
+    },
+    "neutralLighterAlt": {
+      "light": "#faf9f8",
+      "dark": "#201f1e"
+    },
+    "accent": {
+      "light": "#0078d4",
+      "dark": null
+    },
+    "white": {
+      "light": "#ffffff",
+      "dark": "#1b1a19"
+    },
+    "whiteTranslucent40": {
+      "light": "rgba(255,255,255,.4)",
+      "dark": null
+    },
+    "yellowDark": {
+      "light": "#d29200",
+      "dark": null
+    },
+    "yellow": {
+      "light": "#ffb900",
+      "dark": null
+    },
+    "yellowLight": {
+      "light": "#fff100",
+      "dark": null
+    },
+    "orange": {
+      "light": "#d83b01",
+      "dark": null
+    },
+    "orangeLight": {
+      "light": "#ea4300",
+      "dark": null
+    },
+    "orangeLighter": {
+      "light": "#ff8c00",
+      "dark": null
+    },
+    "redDark": {
+      "light": "#a4262c",
+      "dark": "#F1707B"
+    },
+    "red": {
+      "light": "#e81123",
+      "dark": null
+    },
+    "magentaDark": {
+      "light": "#5c005c",
+      "dark": null
+    },
+    "magenta": {
+      "light": "#b4009e",
+      "dark": null
+    },
+    "magentaLight": {
+      "light": "#e3008c",
+      "dark": null
+    },
+    "purpleDark": {
+      "light": "#32145a",
+      "dark": null
+    },
+    "purple": {
+      "light": "#5c2d91",
+      "dark": null
+    },
+    "purpleLight": {
+      "light": "#b4a0ff",
+      "dark": null
+    },
+    "blueDark": {
+      "light": "#002050",
+      "dark": null
+    },
+    "blueMid": {
+      "light": "#00188f",
+      "dark": null
+    },
+    "blue": {
+      "light": "#0078d4",
+      "dark": null
+    },
+    "blueLight": {
+      "light": "#00bcf2",
+      "dark": null
+    },
+    "tealDark": {
+      "light": "#004b50",
+      "dark": null
+    },
+    "teal": {
+      "light": "#008272",
+      "dark": null
+    },
+    "tealLight": {
+      "light": "#00b294",
+      "dark": null
+    },
+    "greenDark": {
+      "light": "#004b1c",
+      "dark": null
+    },
+    "green": {
+      "light": "#107c10",
+      "dark": null
+    },
+    "greenLight": {
+      "light": "#bad80a",
+      "dark": null
+    }
+  },
+  "semanticColors": {
+    "bodyBackground": {
+      "light": "#ffffff",
+      "derivesFrom": "white"
+    },
+    "bodyBackgroundHovered": {
+      "light": "#f3f2f1",
+      "derivesFrom": "neutralLighter"
+    },
+    "bodyBackgroundChecked": {
+      "light": "#edebe9",
+      "derivesFrom": "neutralLight"
+    },
+    "bodyStandoutBackground": {
+      "light": "#faf9f8",
+      "derivesFrom": "neutralLighterAlt"
+    },
+    "bodyFrameBackground": {
+      "light": "#ffffff",
+      "derivesFrom": "white"
+    },
+    "bodyFrameDivider": {
+      "light": "#edebe9",
+      "derivesFrom": "neutralLight"
+    },
+    "bodyDivider": {
+      "light": "#edebe9",
+      "derivesFrom": "neutralLight"
+    },
+    "bodyText": {
+      "light": "#323130",
+      "derivesFrom": "neutralPrimary"
+    },
+    "bodyTextChecked": {
+      "light": "#000000",
+      "derivesFrom": "black"
+    },
+    "bodySubtext": {
+      "light": "#605e5c",
+      "derivesFrom": "neutralSecondary"
+    },
+    "actionLink": {
+      "light": "#323130",
+      "derivesFrom": "neutralPrimary"
+    },
+    "actionLinkHovered": {
+      "light": "#201f1e",
+      "derivesFrom": "neutralDark"
+    },
+    "link": {
+      "light": "#0078d4",
+      "derivesFrom": "themePrimary"
+    },
+    "linkHovered": {
+      "light": "#004578",
+      "derivesFrom": "themeDarker"
+    },
+    "disabledBackground": {
+      "light": "#f3f2f1",
+      "derivesFrom": "neutralLighter"
+    },
+    "disabledBorder": {
+      "light": "#c8c6c4",
+      "derivesFrom": "neutralTertiaryAlt"
+    },
+    "disabledText": {
+      "light": "#a19f9d",
+      "derivesFrom": "neutralTertiary"
+    },
+    "disabledBodyText": {
+      "light": "#a19f9d",
+      "derivesFrom": "neutralTertiary"
+    },
+    "disabledSubtext": {
+      "light": "#d2d0ce",
+      "derivesFrom": "neutralQuaternary"
+    },
+    "disabledBodySubtext": {
+      "light": "#c8c6c4",
+      "derivesFrom": "neutralTertiaryAlt"
+    },
+    "focusBorder": {
+      "light": "#605e5c",
+      "derivesFrom": "neutralSecondary"
+    },
+    "variantBorder": {
+      "light": "#edebe9",
+      "derivesFrom": "neutralLight"
+    },
+    "variantBorderHovered": {
+      "light": "#a19f9d",
+      "derivesFrom": "neutralTertiary",
+      "note": "User override wins even during derivation pass"
+    },
+    "defaultStateBackground": {
+      "light": "#faf9f8",
+      "derivesFrom": "neutralLighterAlt"
+    },
+    "cardStandoutBackground": {
+      "light": "#ffffff",
+      "derivesFrom": "white"
+    },
+    "cardShadow": {
+      "light": "0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108)",
+      "derivesFrom": null,
+      "note": "From effects.elevation4, not a palette slot"
+    },
+    "cardShadowHovered": {
+      "light": "0 3.2px 7.2px 0 rgba(0, 0, 0, 0.132), 0 0.6px 1.8px 0 rgba(0, 0, 0, 0.108)",
+      "derivesFrom": null,
+      "note": "effects.elevation8; if isInverted becomes '0 0 1px '+variantBorderHovered"
+    },
+    "errorText": {
+      "light": "#a4262c",
+      "derivesFrom": null,
+      "note": "Invariant; dark theme value is #F1707B"
+    },
+    "messageText": {
+      "light": "#323130",
+      "derivesFrom": null,
+      "note": "Invariant; dark #F3F2F1"
+    },
+    "messageLink": {
+      "light": "#005A9E",
+      "derivesFrom": null,
+      "note": "Invariant; dark #6CB8F6"
+    },
+    "messageLinkHovered": {
+      "light": "#004578",
+      "derivesFrom": null,
+      "note": "Invariant; dark #82C7FF"
+    },
+    "infoBackground": {
+      "light": "#f3f2f1",
+      "derivesFrom": null,
+      "note": "Invariant; dark #323130"
+    },
+    "infoIcon": {
+      "light": "#605e5c",
+      "derivesFrom": null,
+      "note": "Invariant; dark #C8C6C4"
+    },
+    "errorBackground": {
+      "light": "#FDE7E9",
+      "derivesFrom": null,
+      "note": "Invariant; dark #442726"
+    },
+    "errorIcon": {
+      "light": "#A80000",
+      "derivesFrom": null,
+      "note": "Invariant; dark #F1707B"
+    },
+    "blockingBackground": {
+      "light": "#FDE7E9",
+      "derivesFrom": null,
+      "note": "Invariant; dark #442726"
+    },
+    "blockingIcon": {
+      "light": "#FDE7E9",
+      "derivesFrom": null,
+      "note": "BUG: equals blockingBackground (invisible icon). Shipped value; dark #442726"
+    },
+    "warningBackground": {
+      "light": "#FFF4CE",
+      "derivesFrom": null,
+      "note": "Invariant; dark #433519"
+    },
+    "warningIcon": {
+      "light": "#797775",
+      "derivesFrom": null,
+      "note": "UNUSUAL: gray, not yellow/amber. Dark #C8C6C4"
+    },
+    "severeWarningBackground": {
+      "light": "#FED9CC",
+      "derivesFrom": null,
+      "note": "Invariant; dark #4F2A0F"
+    },
+    "severeWarningIcon": {
+      "light": "#D83B01",
+      "derivesFrom": null,
+      "note": "Invariant; dark #FCE100"
+    },
+    "successBackground": {
+      "light": "#DFF6DD",
+      "derivesFrom": null,
+      "note": "Invariant; dark #393D1B"
+    },
+    "successIcon": {
+      "light": "#107C10",
+      "derivesFrom": null,
+      "note": "Invariant; dark #92C353"
+    },
+    "inputBorder": {
+      "light": "#605e5c",
+      "derivesFrom": "neutralSecondary"
+    },
+    "smallInputBorder": {
+      "light": "#605e5c",
+      "derivesFrom": "neutralSecondary"
+    },
+    "inputBorderHovered": {
+      "light": "#323130",
+      "derivesFrom": "neutralPrimary"
+    },
+    "inputBackground": {
+      "light": "#ffffff",
+      "derivesFrom": "white"
+    },
+    "inputBackgroundChecked": {
+      "light": "#0078d4",
+      "derivesFrom": "themePrimary"
+    },
+    "inputBackgroundCheckedHovered": {
+      "light": "#005a9e",
+      "derivesFrom": "themeDark"
+    },
+    "inputPlaceholderBackgroundChecked": {
+      "light": "#deecf9",
+      "derivesFrom": "themeLighter"
+    },
+    "inputForegroundChecked": {
+      "light": "#ffffff",
+      "derivesFrom": "white"
+    },
+    "inputFocusBorderAlt": {
+      "light": "#0078d4",
+      "derivesFrom": "themePrimary"
+    },
+    "inputIcon": {
+      "light": "#0078d4",
+      "derivesFrom": "themePrimary"
+    },
+    "inputIconHovered": {
+      "light": "#005a9e",
+      "derivesFrom": "themeDark"
+    },
+    "inputIconDisabled": {
+      "light": "#a19f9d",
+      "derivesFrom": "neutralTertiary"
+    },
+    "inputText": {
+      "light": "#323130",
+      "derivesFrom": "neutralPrimary"
+    },
+    "inputTextHovered": {
+      "light": "#201f1e",
+      "derivesFrom": "neutralDark"
+    },
+    "inputPlaceholderText": {
+      "light": "#605e5c",
+      "derivesFrom": "neutralSecondary"
+    },
+    "buttonBackground": {
+      "light": "#ffffff",
+      "derivesFrom": "white"
+    },
+    "buttonBackgroundChecked": {
+      "light": "#c8c6c4",
+      "derivesFrom": "neutralTertiaryAlt"
+    },
+    "buttonBackgroundHovered": {
+      "light": "#f3f2f1",
+      "derivesFrom": "neutralLighter"
+    },
+    "buttonBackgroundCheckedHovered": {
+      "light": "#edebe9",
+      "derivesFrom": "neutralLight"
+    },
+    "buttonBackgroundDisabled": {
+      "light": "#f3f2f1",
+      "derivesFrom": "neutralLighter"
+    },
+    "buttonBackgroundPressed": {
+      "light": "#edebe9",
+      "derivesFrom": "neutralLight"
+    },
+    "buttonBorder": {
+      "light": "#8a8886",
+      "derivesFrom": "neutralSecondaryAlt"
+    },
+    "buttonBorderDisabled": {
+      "light": "#f3f2f1",
+      "derivesFrom": "neutralLighter"
+    },
+    "buttonText": {
+      "light": "#323130",
+      "derivesFrom": "neutralPrimary"
+    },
+    "buttonTextHovered": {
+      "light": "#201f1e",
+      "derivesFrom": "neutralDark"
+    },
+    "buttonTextChecked": {
+      "light": "#201f1e",
+      "derivesFrom": "neutralDark"
+    },
+    "buttonTextCheckedHovered": {
+      "light": "#000000",
+      "derivesFrom": "black"
+    },
+    "buttonTextPressed": {
+      "light": "#201f1e",
+      "derivesFrom": "neutralDark"
+    },
+    "buttonTextDisabled": {
+      "light": "#a19f9d",
+      "derivesFrom": "neutralTertiary"
+    },
+    "primaryButtonBackground": {
+      "light": "#0078d4",
+      "derivesFrom": "themePrimary"
+    },
+    "primaryButtonBackgroundHovered": {
+      "light": "#106ebe",
+      "derivesFrom": "themeDarkAlt"
+    },
+    "primaryButtonBackgroundPressed": {
+      "light": "#005a9e",
+      "derivesFrom": "themeDark"
+    },
+    "primaryButtonBackgroundDisabled": {
+      "light": "#f3f2f1",
+      "derivesFrom": "neutralLighter"
+    },
+    "primaryButtonBorder": {
+      "light": "transparent",
+      "derivesFrom": null,
+      "note": "Hard-coded literal 'transparent' in both light and dark"
+    },
+    "primaryButtonText": {
+      "light": "#ffffff",
+      "derivesFrom": "white"
+    },
+    "primaryButtonTextHovered": {
+      "light": "#ffffff",
+      "derivesFrom": "white"
+    },
+    "primaryButtonTextPressed": {
+      "light": "#ffffff",
+      "derivesFrom": "white"
+    },
+    "primaryButtonTextDisabled": {
+      "light": "#d2d0ce",
+      "derivesFrom": "neutralQuaternary"
+    },
+    "accentButtonBackground": {
+      "light": "#0078d4",
+      "derivesFrom": "accent",
+      "note": "Set from themePrimary then overwritten by accent if present"
+    },
+    "accentButtonText": {
+      "light": "#ffffff",
+      "derivesFrom": "white"
+    },
+    "menuBackground": {
+      "light": "#ffffff",
+      "derivesFrom": "white"
+    },
+    "menuDivider": {
+      "light": "#c8c6c4",
+      "derivesFrom": "neutralTertiaryAlt"
+    },
+    "menuIcon": {
+      "light": "#0078d4",
+      "derivesFrom": "themePrimary"
+    },
+    "menuHeader": {
+      "light": "#0078d4",
+      "derivesFrom": "themePrimary"
+    },
+    "menuItemBackgroundHovered": {
+      "light": "#f3f2f1",
+      "derivesFrom": "neutralLighter"
+    },
+    "menuItemBackgroundPressed": {
+      "light": "#edebe9",
+      "derivesFrom": "neutralLight"
+    },
+    "menuItemText": {
+      "light": "#323130",
+      "derivesFrom": "neutralPrimary"
+    },
+    "menuItemTextHovered": {
+      "light": "#201f1e",
+      "derivesFrom": "neutralDark"
+    },
+    "listBackground": {
+      "light": "#ffffff",
+      "derivesFrom": "white"
+    },
+    "listText": {
+      "light": "#323130",
+      "derivesFrom": "neutralPrimary"
+    },
+    "listItemBackgroundHovered": {
+      "light": "#f3f2f1",
+      "derivesFrom": "neutralLighter"
+    },
+    "listItemBackgroundChecked": {
+      "light": "#edebe9",
+      "derivesFrom": "neutralLight"
+    },
+    "listItemBackgroundCheckedHovered": {
+      "light": "#e1dfdd",
+      "derivesFrom": "neutralQuaternaryAlt"
+    },
+    "listHeaderBackgroundHovered": {
+      "light": "#f3f2f1",
+      "derivesFrom": "neutralLighter"
+    },
+    "listHeaderBackgroundPressed": {
+      "light": "#edebe9",
+      "derivesFrom": "neutralLight"
+    },
+    "listTextColor": {
+      "light": "#323130",
+      "derivesFrom": "neutralPrimary",
+      "note": "DEPRECATED alias of listText; misnamed. Use listText"
+    },
+    "menuItemBackgroundChecked": {
+      "light": "#edebe9",
+      "derivesFrom": "neutralLight",
+      "note": "DEPRECATED; checked menu items no longer get a background"
+    },
+    "warningHighlight": {
+      "light": "#ffb900",
+      "derivesFrom": null,
+      "note": "DEPRECATED, no longer used. Invariant; dark #fff100"
+    },
+    "warningText": {
+      "light": "#323130",
+      "derivesFrom": null,
+      "note": "DEPRECATED alias of messageText; use messageText/warningIcon"
+    },
+    "successText": {
+      "light": "#107C10",
+      "derivesFrom": null,
+      "note": "DEPRECATED; use messageText/successIcon. Dark #92c353"
+    }
+  },
+  "fonts": {
+    "tiny": {
+      "fontSize": "10px",
+      "fontWeight": 400
+    },
+    "xSmall": {
+      "fontSize": "10px",
+      "fontWeight": 400
+    },
+    "small": {
+      "fontSize": "12px",
+      "fontWeight": 400
+    },
+    "smallPlus": {
+      "fontSize": "12px",
+      "fontWeight": 400
+    },
+    "medium": {
+      "fontSize": "14px",
+      "fontWeight": 400
+    },
+    "mediumPlus": {
+      "fontSize": "16px",
+      "fontWeight": 400
+    },
+    "large": {
+      "fontSize": "18px",
+      "fontWeight": 400
+    },
+    "xLarge": {
+      "fontSize": "20px",
+      "fontWeight": 600
+    },
+    "xLargePlus": {
+      "fontSize": "24px",
+      "fontWeight": 600
+    },
+    "xxLarge": {
+      "fontSize": "28px",
+      "fontWeight": 600
+    },
+    "xxLargePlus": {
+      "fontSize": "32px",
+      "fontWeight": 600
+    },
+    "superLarge": {
+      "fontSize": "42px",
+      "fontWeight": 600
+    },
+    "mega": {
+      "fontSize": "68px",
+      "fontWeight": 600
+    }
+  },
+  "fontWeights": {
+    "light": 100,
+    "semilight": 300,
+    "regular": 400,
+    "semibold": 600,
+    "bold": 700
+  },
+  "effects": {
+    "elevation4": "0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108)",
+    "elevation8": "0 3.2px 7.2px 0 rgba(0, 0, 0, 0.132), 0 0.6px 1.8px 0 rgba(0, 0, 0, 0.108)",
+    "elevation16": "0 6.4px 14.4px 0 rgba(0, 0, 0, 0.132), 0 1.2px 3.6px 0 rgba(0, 0, 0, 0.108)",
+    "elevation64": "0 25.6px 57.6px 0 rgba(0, 0, 0, 0.22), 0 4.8px 14.4px 0 rgba(0, 0, 0, 0.18)",
+    "roundedCorner2": "2px",
+    "roundedCorner4": "4px",
+    "roundedCorner6": "6px"
+  },
+  "spacing": {
+    "s2": "4px",
+    "s1": "8px",
+    "m": "16px",
+    "l1": "20px",
+    "l2": "32px"
+  },
+  "apis": [
+    {
+      "name": "createTheme",
+      "import": "@fluentui/react/lib/Styling",
+      "signature": "createTheme(theme?: IPartialTheme, depComments?: boolean): ITheme",
+      "use": "Pure, side-effect-free theme builder. Fills every slot from DefaultPalette/DefaultEffects/DefaultFontStyles/DefaultSpacing, then mergeThemes(base, partial). Emit this from generators and pass the result to ThemeProvider.",
+      "pitfall": "mergeThemes recomputes semanticColors from partialTheme.palette ONLY, so a partial palette yields a mixed theme where unmapped semantics keep default-blue values. Always supply all 50 palette slots. Also: if palette.themePrimary is set without palette.accent, accent is auto-set to themePrimary. depComments=true appends the literal string ' /* @deprecated */' to deprecated color VALUES - never enable programmatically."
+    },
+    {
+      "name": "loadTheme",
+      "import": "@fluentui/react/lib/Styling",
+      "signature": "loadTheme(theme: IPartialTheme, depComments?: boolean): ITheme",
+      "use": "Global, app-wide theme application. Sets the module singleton, runs legacy @microsoft/load-themed-styles token replacement over registered SCSS, applies Customizations settings, and fires all onThemeChange callbacks. Required only if the app has styles relying on @microsoft/load-themed-styles.",
+      "pitfall": "Module-level singleton - last call wins app-wide, cannot be scoped or nested. Must run before first render to avoid FOUC. The legacy SCSS token pass is a perf cost and is hard to undo. Officially superseded by ThemeProvider."
+    },
+    {
+      "name": "getTheme",
+      "import": "@fluentui/react/lib/Styling",
+      "signature": "getTheme(depComments?: boolean): ITheme",
+      "use": "Reads the loadTheme singleton. Use for non-React code that needs the current theme.",
+      "pitfall": "Passing depComments=true REPLACES the singleton with a fresh default theme, silently discarding whatever was loaded. Also does not see themes provided only via <ThemeProvider> - use useTheme() inside components."
+    },
+    {
+      "name": "ThemeProvider",
+      "import": "@fluentui/react",
+      "signature": "<ThemeProvider theme?: PartialTheme | Theme, applyTo?: 'element' | 'body' | 'none', as?: React.ElementType, ref?: React.Ref<HTMLElement>>",
+      "use": "The recommended, non-deprecated way to theme v8. Merges with the parent theme via mergeThemes(parentTheme, userTheme), provides ThemeContext + CustomizerContext + FocusRectsProvider, and is the ONLY mechanism that applies theme.components (component-level styles). Nestable for sectional theming.",
+      "pitfall": "Does NOT emit CSS custom properties - it applies a merge-styles class with literal values for bodyText/bodyBackground/fonts.medium (CSS variables are a v9/Griffel feature). Renders a real <div> by default (use as={React.Fragment} to avoid layout impact). The merge is memoized on theme object identity, so an inline object literal re-merges every render. Does not fire registerOnThemeChangeCallback."
+    },
+    {
+      "name": "Customizer",
+      "import": "@fluentui/react",
+      "signature": "<Customizer settings={{ theme }} scopedSettings={{ ComponentName: { styles } }} contextTransform?>",
+      "use": "Legacy pre-v8 theming. Only for maintaining existing code; migrate settings={{theme}} -> ThemeProvider theme={}, and scopedSettings={{X:{styles}}} -> theme={{components:{X:{styles}}}}.",
+      "pitfall": "Explicitly @deprecated as of @fluentui/react v8 for theming purposes; will be removed in v9. Merges customizations rather than deep-merging themes, so a partial theme replaces rather than layers onto the ambient theme. Only reaches components wrapped by customizable()/styled(), and forceUpdates on every global Customizations change."
+    },
+    {
+      "name": "useTheme",
+      "import": "@fluentui/react",
+      "signature": "useTheme(): Theme",
+      "use": "React hook to read the active theme inside function components. Resolution order: ThemeContext -> Customizer/Customizations (incl. loadTheme) -> createTheme({}). Never returns undefined. Class components use <ThemeContext.Consumer>.",
+      "pitfall": "The final fallback allocates a brand-new default theme on every call when no provider exists, so an unwrapped component silently renders with default Fluent blue instead of erroring."
+    },
+    {
+      "name": "registerOnThemeChangeCallback",
+      "import": "@fluentui/react/lib/Styling",
+      "signature": "registerOnThemeChangeCallback(callback: (theme: ITheme) => void): void",
+      "use": "Subscribe to global theme changes for code that cannot react through React state. Paired with removeOnThemeChangeCallback(callback). De-duplicates by function identity.",
+      "pitfall": "Fires ONLY from loadTheme - a <ThemeProvider theme={}> change never triggers it. Callbacks are wrapped in try/catch so a throwing callback fails silently. Must be manually removed or it leaks."
+    }
+  ],
+  "themeGeneration": {
+    "algorithm": "Three base slots drive everything: primaryColor (brand), backgroundColor, foregroundColor (text). themeRulesStandardCreator() builds an IThemeRules graph where each of 23 FabricSlots inherits from one base slot at a given Shade (1-8, or Unshaded), plus an isBackgroundShade flag for background-derived slots. Defaults: primaryColor #0078d4, backgroundColor #ffffff, foregroundColor #323130. Slot->(base,Shade,isBackgroundShade) from the ACTUAL _makeFabricSlotRule calls (the enum comments disagree and are wrong): themePrimary(primary,Unshaded), themeLighterAlt(primary,1), themeLighter(primary,2), themeLight(primary,3), themeTertiary(primary,4), themeSecondary(primary,5), themeDarkAlt(primary,6), themeDark(primary,7), themeDarker(primary,8), neutralLighterAlt(bg,1,BG), neutralLighter(bg,2,BG), neutralLight(bg,3,BG), neutralQuaternaryAlt(bg,4,BG), neutralQuaternary(bg,5,BG), neutralTertiaryAlt(bg,6,BG), neutralTertiary(fg,3), neutralSecondary(fg,4), neutralSecondaryAlt(fg,4), neutralPrimaryAlt(fg,5), neutralPrimary(fg,Unshaded), neutralDark(fg,7), black(fg,8), white(bg,Unshaded,BG). getShade(color,shade,isInverted): convert to HSV via rgb2hsv (h integer degrees, s/v integer percent - this rounding is lossy and must be replicated); compute hsl=hsv2hsl(h,s,v); tableIndex=shade-1; soften=lighten, strongen=darken (swapped when isInverted). Branch: pure white -> darken(WhiteShadeTable[i]); pure black -> lighten(BlackTintTable[i]); hsl.l/100>0.8 -> strongen(LumShadeTable[i]); hsl.l/100<0.2 -> soften(LumTintTable[i]); else default -> i<5 ? soften(ColorTintTable[i]) : strongen(ColorShadeTable[i-5]). Tables: WhiteShadeTableBG=[0.027,0.043,0.082,0.145,0.184,0.216,0.349,0.537]; BlackTintTableBG=[0.537,0.45,0.349,0.216,0.184,0.145,0.082,0.043]; WhiteShadeTable=[0.537,0.349,0.216,0.184,0.145,0.082,0.043,0.027]; BlackTintTable=[0.537,0.45,0.349,0.216,0.184,0.145,0.082,0.043]; LumTintTable=[0.88,0.77,0.66,0.55,0.44,0.33,0.22,0.11]; LumShadeTable=[0.11,0.22,0.33,0.44,0.55,0.66,0.77,0.88]; ColorTintTable=[0.96,0.84,0.7,0.4,0.12]; ColorShadeTable=[0.1,0.24,0.44]. darken(hsv,f)={h,s,v:clamp(v-v*f,100,0)} (does NOT change s); lighten(hsv,f)={h,s:clamp(s-s*f,100,0),v:clamp(v+(100-v)*f,100,0)}. Then hsv2rgb with Math.round(255*(x+m)). getBackgroundShade(color,shade,isInverted): !isInverted -> darken(WhiteShadeTableBG[shade-1]); isInverted -> lighten(BlackTintTableBG[8-shade]). isDark(color) = hsv2hsl(h,s,v).l < 50. RECIPE from one brand hex: const rules=themeRulesStandardCreator(); ThemeGenerator.insureSlots(rules,false); ThemeGenerator.setSlot(rules['primaryColor'], getColorFromString(brandHex), false, /*isCustomization*/true, /*overwriteCustomColor*/true); const palette=ThemeGenerator.getThemeAsJson(rules); const theme=createTheme({palette, isInverted:isDark(bgColor)}). Leaving foreground/background untouched keeps the hand-tuned Fluent neutrals because themeRulesStandardCreator pre-seeds 22 slots with isCustomized=true, which insureSlots (overwriteCustomColor=false) preserves but a base-color change (overwriteCustomColor=true) overwrites. CRITICAL: the generated ramp differs from DefaultPalette - #0078d4 generates themeLighterAlt #f3f9fd and themeLighter #d0e7f8, not #eff6fc/#deecf9, because DefaultPalette is hand-tuned. Also getThemeAsJson returns MORE than 23 keys (it also emits primaryColor, primaryColorShade1..8, backgroundColor/Shade1..8, foregroundColor/Shade1..8) - filter to FabricSlots. getThemeAsJson uses rule.color.str (preserves the user's original input string, e.g. 'red'); use rule.color.hex for deterministic '#rrggbb' output. getColorFromString requires a DOM Document (pass one or pre-parse in Node/SSR) and hex must be '#'-prefixed. The designer never generates accent, blackTranslucent40, whiteTranslucent40, or any of the 24 status colors - those fall back to DefaultPalette via createTheme.",
+    "baseSlots": [
+      "primaryColor",
+      "backgroundColor",
+      "foregroundColor"
+    ],
+    "exports": [
+      {
+        "name": "ThemeGenerator",
+        "import": "@fluentui/react/lib/ThemeGenerator"
+      },
+      {
+        "name": "themeRulesStandardCreator",
+        "import": "@fluentui/react/lib/ThemeGenerator"
+      },
+      {
+        "name": "BaseSlots",
+        "import": "@fluentui/react/lib/ThemeGenerator"
+      },
+      {
+        "name": "FabricSlots",
+        "import": "@fluentui/react/lib/ThemeGenerator"
+      },
+      {
+        "name": "SemanticColorSlots",
+        "import": "@fluentui/react/lib/ThemeGenerator"
+      },
+      {
+        "name": "IThemeRules",
+        "import": "@fluentui/react/lib/ThemeGenerator"
+      },
+      {
+        "name": "IThemeSlotRule",
+        "import": "@fluentui/react/lib/ThemeGenerator"
+      },
+      {
+        "name": "getColorFromString",
+        "import": "@fluentui/react/lib/Color"
+      },
+      {
+        "name": "isDark",
+        "import": "@fluentui/react/lib/Color"
+      },
+      {
+        "name": "getShade",
+        "import": "@fluentui/react/lib/Color"
+      },
+      {
+        "name": "getBackgroundShade",
+        "import": "@fluentui/react/lib/Color"
+      },
+      {
+        "name": "Shade",
+        "import": "@fluentui/react/lib/Color"
+      },
+      {
+        "name": "IColor",
+        "import": "@fluentui/react/lib/Color"
+      }
+    ]
+  },
+  "paletteToV9": {
+    "themePrimary": {
+      "v9Token": "colorBrandBackground",
+      "confidence": "high"
+    },
+    "themeDarkAlt": {
+      "v9Token": "colorBrandBackgroundHover",
+      "confidence": "high"
+    },
+    "themeDark": {
+      "v9Token": "colorBrandBackgroundSelected",
+      "confidence": "high"
+    },
+    "themeDarker": {
+      "v9Token": "colorBrandBackgroundPressed",
+      "confidence": "high"
+    },
+    "themeSecondary": {
+      "v9Token": null,
+      "confidence": "low"
+    },
+    "themeTertiary": {
+      "v9Token": null,
+      "confidence": "low"
+    },
+    "themeLight": {
+      "v9Token": "colorBrandStroke2",
+      "confidence": "medium"
+    },
+    "themeLighter": {
+      "v9Token": "colorBrandBackground2Hover",
+      "confidence": "medium"
+    },
+    "themeLighterAlt": {
+      "v9Token": "colorBrandBackground2",
+      "confidence": "medium"
+    },
+    "white": {
+      "v9Token": "colorNeutralBackground1",
+      "confidence": "high"
+    },
+    "neutralLighterAlt": {
+      "v9Token": "colorNeutralBackground2",
+      "confidence": "high"
+    },
+    "neutralLighter": {
+      "v9Token": "colorNeutralBackground3",
+      "confidence": "high"
+    },
+    "neutralLight": {
+      "v9Token": "colorNeutralBackground4",
+      "confidence": "medium"
+    },
+    "neutralQuaternaryAlt": {
+      "v9Token": "colorNeutralBackground5",
+      "confidence": "medium"
+    },
+    "neutralQuaternary": {
+      "v9Token": "colorNeutralBackground6",
+      "confidence": "medium"
+    },
+    "neutralTertiaryAlt": {
+      "v9Token": "colorNeutralStroke1",
+      "confidence": "medium"
+    },
+    "neutralTertiary": {
+      "v9Token": "colorNeutralForegroundDisabled",
+      "confidence": "medium"
+    },
+    "neutralSecondaryAlt": {
+      "v9Token": "colorNeutralForeground4",
+      "confidence": "medium"
+    },
+    "neutralSecondary": {
+      "v9Token": "colorNeutralForeground3",
+      "confidence": "high"
+    },
+    "neutralPrimaryAlt": {
+      "v9Token": "colorNeutralForeground2",
+      "confidence": "medium"
+    },
+    "neutralPrimary": {
+      "v9Token": "colorNeutralForeground1",
+      "confidence": "high"
+    },
+    "neutralDark": {
+      "v9Token": "colorNeutralForeground1",
+      "confidence": "low"
+    },
+    "black": {
+      "v9Token": "colorNeutralForeground1",
+      "confidence": "low"
+    },
+    "accent": {
+      "v9Token": "colorBrandBackground",
+      "confidence": "high"
+    },
+    "blackTranslucent40": {
+      "v9Token": "colorBackgroundOverlay",
+      "confidence": "high"
+    },
+    "whiteTranslucent40": {
+      "v9Token": "colorNeutralForegroundInvertedDisabled",
+      "confidence": "low"
+    },
+    "red": {
+      "v9Token": "colorPaletteRedForeground3",
+      "confidence": "medium"
+    },
+    "redDark": {
+      "v9Token": "colorPaletteRedForeground1",
+      "confidence": "medium"
+    },
+    "green": {
+      "v9Token": "colorPaletteGreenForeground3",
+      "confidence": "medium"
+    },
+    "greenDark": {
+      "v9Token": "colorPaletteGreenForeground2",
+      "confidence": "medium"
+    },
+    "greenLight": {
+      "v9Token": null,
+      "confidence": "low"
+    },
+    "yellow": {
+      "v9Token": "colorPaletteYellowForeground3",
+      "confidence": "medium"
+    },
+    "yellowDark": {
+      "v9Token": "colorPaletteYellowForeground1",
+      "confidence": "medium"
+    },
+    "yellowLight": {
+      "v9Token": null,
+      "confidence": "low"
+    },
+    "orange": {
+      "v9Token": "colorPaletteDarkOrangeForeground3",
+      "confidence": "low"
+    },
+    "orangeLight": {
+      "v9Token": "colorPaletteDarkOrangeBorderActive",
+      "confidence": "low"
+    },
+    "orangeLighter": {
+      "v9Token": "colorPaletteOrangeForeground3",
+      "confidence": "low"
+    },
+    "magenta": {
+      "v9Token": "colorPaletteMagentaBorderActive",
+      "confidence": "low"
+    },
+    "magentaDark": {
+      "v9Token": "colorPaletteMagentaForeground2",
+      "confidence": "low"
+    },
+    "magentaLight": {
+      "v9Token": "colorPaletteMagentaPinkBorderActive",
+      "confidence": "low"
+    },
+    "purple": {
+      "v9Token": "colorPalettePurpleBorderActive",
+      "confidence": "low"
+    },
+    "purpleDark": {
+      "v9Token": "colorPalettePurpleForeground2",
+      "confidence": "low"
+    },
+    "purpleLight": {
+      "v9Token": "colorPaletteLavenderBorderActive",
+      "confidence": "low"
+    },
+    "blue": {
+      "v9Token": "colorBrandBackground",
+      "confidence": "medium"
+    },
+    "blueDark": {
+      "v9Token": "colorPaletteNavyForeground2",
+      "confidence": "low"
+    },
+    "blueMid": {
+      "v9Token": null,
+      "confidence": "low"
+    },
+    "blueLight": {
+      "v9Token": "colorPaletteLightTealBorderActive",
+      "confidence": "low"
+    },
+    "teal": {
+      "v9Token": "colorPaletteTealBorderActive",
+      "confidence": "low"
+    },
+    "tealDark": {
+      "v9Token": "colorPaletteTealForeground2",
+      "confidence": "low"
+    },
+    "tealLight": {
+      "v9Token": "colorPaletteSeafoamBorderActive",
+      "confidence": "low"
+    }
+  },
+  "semanticToV9": {
+    "bodyBackground": {
+      "v9Token": "colorNeutralBackground1",
+      "confidence": "high"
+    },
+    "bodyBackgroundHovered": {
+      "v9Token": "colorNeutralBackground1Hover",
+      "confidence": "high"
+    },
+    "bodyBackgroundChecked": {
+      "v9Token": "colorNeutralBackground1Selected",
+      "confidence": "high"
+    },
+    "bodyStandoutBackground": {
+      "v9Token": "colorNeutralBackground2",
+      "confidence": "high"
+    },
+    "bodyFrameBackground": {
+      "v9Token": "colorNeutralBackground1",
+      "confidence": "medium"
+    },
+    "bodyFrameDivider": {
+      "v9Token": "colorNeutralStroke2",
+      "confidence": "low"
+    },
+    "bodyDivider": {
+      "v9Token": "colorNeutralStroke2",
+      "confidence": "high"
+    },
+    "bodyText": {
+      "v9Token": "colorNeutralForeground1",
+      "confidence": "high"
+    },
+    "bodyTextChecked": {
+      "v9Token": "colorNeutralForeground1Selected",
+      "confidence": "medium"
+    },
+    "bodySubtext": {
+      "v9Token": "colorNeutralForeground2",
+      "confidence": "high"
+    },
+    "actionLink": {
+      "v9Token": "colorNeutralForeground2Link",
+      "confidence": "high"
+    },
+    "actionLinkHovered": {
+      "v9Token": "colorNeutralForeground2LinkHover",
+      "confidence": "high"
+    },
+    "link": {
+      "v9Token": "colorBrandForegroundLink",
+      "confidence": "high"
+    },
+    "linkHovered": {
+      "v9Token": "colorBrandForegroundLinkHover",
+      "confidence": "high"
+    },
+    "disabledBackground": {
+      "v9Token": "colorNeutralBackgroundDisabled",
+      "confidence": "high"
+    },
+    "disabledBorder": {
+      "v9Token": "colorNeutralStrokeDisabled",
+      "confidence": "high"
+    },
+    "disabledText": {
+      "v9Token": "colorNeutralForegroundDisabled",
+      "confidence": "high"
+    },
+    "disabledBodyText": {
+      "v9Token": "colorNeutralForegroundDisabled",
+      "confidence": "high"
+    },
+    "disabledSubtext": {
+      "v9Token": "colorNeutralForegroundDisabled",
+      "confidence": "low"
+    },
+    "disabledBodySubtext": {
+      "v9Token": "colorNeutralForegroundDisabled",
+      "confidence": "low"
+    },
+    "focusBorder": {
+      "v9Token": "colorStrokeFocus2",
+      "confidence": "medium"
+    },
+    "variantBorder": {
+      "v9Token": "colorNeutralStroke2",
+      "confidence": "medium"
+    },
+    "variantBorderHovered": {
+      "v9Token": "colorNeutralStroke1Hover",
+      "confidence": "medium"
+    },
+    "defaultStateBackground": {
+      "v9Token": "colorNeutralBackground3",
+      "confidence": "low"
+    },
+    "cardStandoutBackground": {
+      "v9Token": "colorNeutralCardBackground",
+      "confidence": "high"
+    },
+    "cardShadow": {
+      "v9Token": "shadow4",
+      "confidence": "medium"
+    },
+    "cardShadowHovered": {
+      "v9Token": "shadow8",
+      "confidence": "medium"
+    },
+    "errorText": {
+      "v9Token": "colorPaletteRedForeground1",
+      "confidence": "high"
+    },
+    "errorBackground": {
+      "v9Token": "colorPaletteRedBackground1",
+      "confidence": "high"
+    },
+    "errorIcon": {
+      "v9Token": "colorPaletteRedForeground1",
+      "confidence": "high"
+    },
+    "blockingBackground": {
+      "v9Token": "colorPaletteRedBackground1",
+      "confidence": "medium"
+    },
+    "blockingIcon": {
+      "v9Token": null,
+      "confidence": "low"
+    },
+    "warningBackground": {
+      "v9Token": "colorPaletteYellowBackground1",
+      "confidence": "high"
+    },
+    "warningIcon": {
+      "v9Token": "colorNeutralForeground3",
+      "confidence": "low"
+    },
+    "severeWarningBackground": {
+      "v9Token": "colorPaletteDarkOrangeBackground1",
+      "confidence": "medium"
+    },
+    "severeWarningIcon": {
+      "v9Token": "colorPaletteDarkOrangeForeground1",
+      "confidence": "medium"
+    },
+    "successBackground": {
+      "v9Token": "colorPaletteGreenBackground1",
+      "confidence": "high"
+    },
+    "successIcon": {
+      "v9Token": "colorPaletteGreenForeground1",
+      "confidence": "high"
+    },
+    "infoBackground": {
+      "v9Token": "colorNeutralBackground3",
+      "confidence": "medium"
+    },
+    "infoIcon": {
+      "v9Token": "colorNeutralForeground3",
+      "confidence": "medium"
+    },
+    "messageText": {
+      "v9Token": "colorNeutralForeground1",
+      "confidence": "high"
+    },
+    "messageLink": {
+      "v9Token": "colorBrandForegroundLink",
+      "confidence": "high"
+    },
+    "messageLinkHovered": {
+      "v9Token": "colorBrandForegroundLinkHover",
+      "confidence": "high"
+    },
+    "inputBorder": {
+      "v9Token": "colorNeutralStrokeAccessible",
+      "confidence": "high"
+    },
+    "smallInputBorder": {
+      "v9Token": "colorNeutralStrokeAccessible",
+      "confidence": "high"
+    },
+    "inputBorderHovered": {
+      "v9Token": "colorNeutralStrokeAccessibleHover",
+      "confidence": "high"
+    },
+    "inputBackground": {
+      "v9Token": "colorNeutralBackground1",
+      "confidence": "high"
+    },
+    "inputBackgroundChecked": {
+      "v9Token": "colorCompoundBrandBackground",
+      "confidence": "high"
+    },
+    "inputBackgroundCheckedHovered": {
+      "v9Token": "colorCompoundBrandBackgroundHover",
+      "confidence": "high"
+    },
+    "inputPlaceholderBackgroundChecked": {
+      "v9Token": "colorBrandBackground2",
+      "confidence": "low"
+    },
+    "inputForegroundChecked": {
+      "v9Token": "colorNeutralForegroundOnBrand",
+      "confidence": "high"
+    },
+    "inputFocusBorderAlt": {
+      "v9Token": "colorCompoundBrandStroke",
+      "confidence": "high"
+    },
+    "inputIcon": {
+      "v9Token": "colorCompoundBrandForeground1",
+      "confidence": "medium"
+    },
+    "inputIconHovered": {
+      "v9Token": "colorCompoundBrandForeground1Hover",
+      "confidence": "medium"
+    },
+    "inputIconDisabled": {
+      "v9Token": "colorNeutralForegroundDisabled",
+      "confidence": "high"
+    },
+    "inputText": {
+      "v9Token": "colorNeutralForeground1",
+      "confidence": "high"
+    },
+    "inputTextHovered": {
+      "v9Token": "colorNeutralForeground1Hover",
+      "confidence": "high"
+    },
+    "inputPlaceholderText": {
+      "v9Token": "colorNeutralForeground4",
+      "confidence": "medium"
+    },
+    "buttonBackground": {
+      "v9Token": "colorNeutralBackground1",
+      "confidence": "high"
+    },
+    "buttonBackgroundChecked": {
+      "v9Token": "colorNeutralBackground1Selected",
+      "confidence": "medium"
+    },
+    "buttonBackgroundHovered": {
+      "v9Token": "colorNeutralBackground1Hover",
+      "confidence": "high"
+    },
+    "buttonBackgroundCheckedHovered": {
+      "v9Token": "colorNeutralBackground1Hover",
+      "confidence": "low"
+    },
+    "buttonBackgroundDisabled": {
+      "v9Token": "colorNeutralBackgroundDisabled",
+      "confidence": "high"
+    },
+    "buttonBackgroundPressed": {
+      "v9Token": "colorNeutralBackground1Pressed",
+      "confidence": "high"
+    },
+    "buttonBorder": {
+      "v9Token": "colorNeutralStroke1",
+      "confidence": "high"
+    },
+    "buttonBorderDisabled": {
+      "v9Token": "colorNeutralStrokeDisabled",
+      "confidence": "high"
+    },
+    "buttonText": {
+      "v9Token": "colorNeutralForeground1",
+      "confidence": "high"
+    },
+    "buttonTextHovered": {
+      "v9Token": "colorNeutralForeground1Hover",
+      "confidence": "high"
+    },
+    "buttonTextChecked": {
+      "v9Token": "colorNeutralForeground1Selected",
+      "confidence": "medium"
+    },
+    "buttonTextCheckedHovered": {
+      "v9Token": "colorNeutralForeground1Hover",
+      "confidence": "low"
+    },
+    "buttonTextPressed": {
+      "v9Token": "colorNeutralForeground1Pressed",
+      "confidence": "high"
+    },
+    "buttonTextDisabled": {
+      "v9Token": "colorNeutralForegroundDisabled",
+      "confidence": "high"
+    },
+    "primaryButtonBackground": {
+      "v9Token": "colorBrandBackground",
+      "confidence": "high"
+    },
+    "primaryButtonBackgroundHovered": {
+      "v9Token": "colorBrandBackgroundHover",
+      "confidence": "high"
+    },
+    "primaryButtonBackgroundPressed": {
+      "v9Token": "colorBrandBackgroundPressed",
+      "confidence": "high"
+    },
+    "primaryButtonBackgroundDisabled": {
+      "v9Token": "colorNeutralBackgroundDisabled",
+      "confidence": "high"
+    },
+    "primaryButtonBorder": {
+      "v9Token": "colorTransparentStroke",
+      "confidence": "high"
+    },
+    "primaryButtonText": {
+      "v9Token": "colorNeutralForegroundOnBrand",
+      "confidence": "high"
+    },
+    "primaryButtonTextHovered": {
+      "v9Token": "colorNeutralForegroundOnBrand",
+      "confidence": "high"
+    },
+    "primaryButtonTextPressed": {
+      "v9Token": "colorNeutralForegroundOnBrand",
+      "confidence": "high"
+    },
+    "primaryButtonTextDisabled": {
+      "v9Token": "colorNeutralForegroundDisabled",
+      "confidence": "high"
+    },
+    "accentButtonBackground": {
+      "v9Token": "colorBrandBackground",
+      "confidence": "high"
+    },
+    "accentButtonText": {
+      "v9Token": "colorNeutralForegroundOnBrand",
+      "confidence": "high"
+    },
+    "menuBackground": {
+      "v9Token": "colorNeutralBackground1",
+      "confidence": "high"
+    },
+    "menuDivider": {
+      "v9Token": "colorNeutralStroke2",
+      "confidence": "medium"
+    },
+    "menuIcon": {
+      "v9Token": "colorBrandForeground1",
+      "confidence": "low"
+    },
+    "menuHeader": {
+      "v9Token": "colorBrandForeground1",
+      "confidence": "low"
+    },
+    "menuItemBackgroundHovered": {
+      "v9Token": "colorSubtleBackgroundHover",
+      "confidence": "high"
+    },
+    "menuItemBackgroundPressed": {
+      "v9Token": "colorSubtleBackgroundPressed",
+      "confidence": "high"
+    },
+    "menuItemText": {
+      "v9Token": "colorNeutralForeground2",
+      "confidence": "medium"
+    },
+    "menuItemTextHovered": {
+      "v9Token": "colorNeutralForeground2Hover",
+      "confidence": "medium"
+    },
+    "listBackground": {
+      "v9Token": "colorNeutralBackground1",
+      "confidence": "high"
+    },
+    "listText": {
+      "v9Token": "colorNeutralForeground1",
+      "confidence": "high"
+    },
+    "listItemBackgroundHovered": {
+      "v9Token": "colorSubtleBackgroundHover",
+      "confidence": "high"
+    },
+    "listItemBackgroundChecked": {
+      "v9Token": "colorSubtleBackgroundSelected",
+      "confidence": "high"
+    },
+    "listItemBackgroundCheckedHovered": {
+      "v9Token": "colorSubtleBackgroundHover",
+      "confidence": "low"
+    },
+    "listHeaderBackgroundHovered": {
+      "v9Token": "colorSubtleBackgroundHover",
+      "confidence": "medium"
+    },
+    "listHeaderBackgroundPressed": {
+      "v9Token": "colorSubtleBackgroundPressed",
+      "confidence": "medium"
+    },
+    "listTextColor": {
+      "v9Token": "colorNeutralForeground1",
+      "confidence": "low"
+    },
+    "menuItemBackgroundChecked": {
+      "v9Token": "colorSubtleBackgroundSelected",
+      "confidence": "low"
+    },
+    "warningHighlight": {
+      "v9Token": null,
+      "confidence": "low"
+    },
+    "warningText": {
+      "v9Token": "colorNeutralForeground1",
+      "confidence": "low"
+    },
+    "successText": {
+      "v9Token": "colorPaletteGreenForeground1",
+      "confidence": "low"
+    }
+  },
+  "unmappable": {
+    "v8ToV9": [
+      "themeSecondary",
+      "themeTertiary",
+      "neutralDark",
+      "black",
+      "blueMid",
+      "greenLight",
+      "yellowLight",
+      "purpleLight",
+      "disabledSubtext",
+      "disabledBodySubtext",
+      "blockingBackground",
+      "blockingIcon",
+      "warningIcon",
+      "inputPlaceholderBackgroundChecked",
+      "menuHeader",
+      "menuIcon",
+      "bodyFrameBackground",
+      "bodyFrameDivider",
+      "variantBorder",
+      "variantBorderHovered",
+      "defaultStateBackground",
+      "listTextColor",
+      "menuItemBackgroundChecked",
+      "warningHighlight",
+      "warningText",
+      "successText",
+      "components",
+      "disableGlobalClassNames",
+      "schemes",
+      "spacing",
+      "defaultFontStyle",
+      "fontWeights.light",
+      "fontWeights.semilight"
+    ],
+    "v9ToV8": [
+      "colorNeutralBackground7",
+      "colorNeutralBackground8",
+      "colorNeutralBackgroundAlpha",
+      "colorNeutralBackgroundAlpha2",
+      "colorNeutralStrokeAlpha",
+      "colorNeutralStrokeAlpha2",
+      "colorSubtleBackground",
+      "colorSubtleBackgroundLightAlphaHover",
+      "colorSubtleBackgroundLightAlphaPressed",
+      "colorSubtleBackgroundLightAlphaSelected",
+      "colorSubtleBackgroundInverted",
+      "colorSubtleBackgroundInvertedHover",
+      "colorSubtleBackgroundInvertedPressed",
+      "colorSubtleBackgroundInvertedSelected",
+      "colorNeutralStencil1",
+      "colorNeutralStencil2",
+      "colorNeutralStencil1Alpha",
+      "colorNeutralStencil2Alpha",
+      "colorScrollbarOverlay",
+      "colorNeutralStrokeOnBrand",
+      "colorNeutralStrokeOnBrand2",
+      "colorNeutralStrokeOnBrand2Hover",
+      "colorNeutralStrokeOnBrand2Pressed",
+      "colorNeutralStrokeOnBrand2Selected",
+      "colorBrandStroke2Contrast",
+      "colorNeutralCardBackgroundHover",
+      "colorNeutralCardBackgroundPressed",
+      "colorNeutralCardBackgroundSelected",
+      "colorNeutralCardBackgroundDisabled",
+      "colorStrokeFocus1",
+      "colorStrokeFocus2",
+      "colorNeutralForeground1Static",
+      "colorNeutralForegroundStaticInverted",
+      "colorNeutralBackgroundStatic",
+      "colorBrandBackgroundStatic",
+      "colorBrandBackground3Static",
+      "colorBrandBackground4Static",
+      "colorNeutralBackgroundInverted",
+      "colorNeutralBackgroundInvertedHover",
+      "colorNeutralBackgroundInvertedPressed",
+      "colorNeutralBackgroundInvertedSelected",
+      "colorNeutralForegroundInverted2",
+      "colorNeutralForegroundInvertedLink",
+      "colorNeutralForegroundInvertedLinkHover",
+      "colorNeutralForegroundInvertedLinkPressed",
+      "colorNeutralForegroundInvertedLinkSelected",
+      "colorBrandForegroundInverted",
+      "colorBrandForegroundInvertedHover",
+      "colorBrandForegroundInvertedPressed",
+      "colorBrandForegroundOnLight",
+      "colorBrandForegroundOnLightHover",
+      "colorBrandForegroundOnLightPressed",
+      "colorBrandForegroundOnLightSelected",
+      "colorNeutralShadowAmbient",
+      "colorNeutralShadowKey",
+      "colorNeutralShadowAmbientLighter",
+      "colorNeutralShadowKeyLighter",
+      "colorNeutralShadowAmbientDarker",
+      "colorNeutralShadowKeyDarker",
+      "colorBrandShadowAmbient",
+      "colorBrandShadowKey",
+      "lineHeightBase100..600",
+      "strokeWidthThin..Thickest",
+      "curveAccelerateMax..DecelerateMin",
+      "durationUltraFast..UltraSlow",
+      "spacingHorizontalXXS..XXXL",
+      "spacingVerticalXXS..XXXL",
+      "borderRadiusNone",
+      "borderRadiusXLarge",
+      "borderRadiusCircular",
+      "fontFamilyBase",
+      "fontFamilyMonospace",
+      "fontFamilyNumeric",
+      "personaSharedColors (28-color colorPalette* family)"
+    ]
+  },
+  "darkTheme": {
+    "available": true,
+    "howProduced": "createTheme({ palette: DarkDefaultPalette, semanticColors: {...13 overrides}, isInverted: true }) as shipped in @fluentui/theme-samples DarkCustomizations",
+    "note": "isInverted:true alone does NOT invert the palette - createTheme({isInverted:true}) returns the identical light palette; only ~19 hard-coded invariant semantic slots and cardShadowHovered change. You must supply an explicit inverted palette (ramp is reversed: themeDarker is the lightest blue, black is #ffffff, white is #1b1a19). Microsoft's own sample additionally overrides 13 semanticColors (buttonText, menuBackground, menuItemBackgroundHovered/Pressed, menuDivider, menuIcon, menuHeader, menuItemText/Hovered, disabledBackground, inputBackgroundChecked, buttonTextPressed/Hovered) and 15 component styles, which is evidence that palette + isInverted alone is not sufficient for a usable dark theme. Only 24 of 50 palette slots are defined in the official dark sample; the status/accent colors (yellow, orange, magenta, purple, blue, teal, green families) and accent/translucent slots are left at their light-theme defaults - those are null in the palette map above. High contrast is separate and theme-independent: v8 handles it via HighContrastSelector ('@media screen and (-ms-high-contrast: active), screen and (forced-colors: active)'), HighContrastSelectorWhite/Black, and getHighContrastNoAdjustStyle(), using CSS system keywords (WindowText, Window, Highlight, HighlightText, GrayText, ButtonText, ButtonFace) rather than theme slots - so a v8 theme JSON has no HC fields."
+  }
+}

@@ -28,8 +28,27 @@ const client = new Client({ name: 'smoke', version: '1.0.0' });
 await client.connect(transport);
 
 const tools = await client.listTools();
-console.log('TOOLS(' + tools.tools.length + '):', tools.tools.map((t) => t.name).join(', '));
-console.log('tool_count: ok=' + (tools.tools.length === 23));
+const toolNames = tools.tools.map((t) => t.name);
+console.log('TOOLS(' + tools.tools.length + '):', toolNames.join(', '));
+
+// A bare count tells you something moved but not what, so also assert the tools
+// we depend on are actually present - a rename would otherwise keep the count
+// correct while silently breaking every caller.
+const EXPECTED_TOOL_COUNT = 25;
+const REQUIRED_TOOLS = [
+  'fluent_search_components', 'fluent_get_component', 'fluent_list_tokens', 'fluent_get_token',
+  'fluent_generate_theme', 'fluent_generate_powerbi_theme', 'fluent_scaffold_pbip', 'fluent_powerbi_visuals',
+  'fluent_powerplatform_guidance', 'fluent_generate_code', 'fluent_accessibility_checklist',
+  'fluent_design_guidance', 'fluent_migration_guidance', 'fluent_get_images',
+  'fluent_get_config', 'fluent_init_config', 'fluent_set_config', 'fluent_remember', 'fluent_recall',
+  'fluent_v8_lookup', 'fluent_v8_guidance',
+];
+const missingTools = REQUIRED_TOOLS.filter((t) => !toolNames.includes(t));
+if (missingTools.length) console.log('  missing tools:', missingTools.join(', '));
+if (tools.tools.length !== EXPECTED_TOOL_COUNT) {
+  console.log('  count changed: expected ' + EXPECTED_TOOL_COUNT + ', got ' + tools.tools.length + ' — update EXPECTED_TOOL_COUNT if intentional');
+}
+console.log('tool_count: ok=' + (tools.tools.length === EXPECTED_TOOL_COUNT && missingTools.length === 0));
 
 const pbi = await client.callTool({ name: 'fluent_generate_powerbi_theme', arguments: { brandColor: '#D13438', name: 'Fluent Red' } });
 const pbiText = pbi.content[0].text;
@@ -275,6 +294,32 @@ console.log('set_config(coerce number): ok=' + (c8j.config.accessibility.minTarg
 console.log('theme.mode default=light: ok=' + (c1j.config.theme.mode === 'light'));
 
 rmSync(CFG_DIR, { recursive: true, force: true });
+
+// --- Fluent 1 (v8) -----------------------------------------------------------
+// These assert behaviour that silently misleads users if it regresses: v8-only
+// components must say WHY they block, colliding names must warn that the swap
+// compiles before it misbehaves, and an unknown name must be admitted rather
+// than answered confidently.
+const v8dl = (await client.callTool({ name: 'fluent_v8_lookup', arguments: { name: 'DetailsList' } })).content[0].text;
+console.log('v8_lookup(DetailsList): v8Only=' + v8dl.includes('v8Only') + ' explains=' + /whyBlocking/.test(v8dl) + ' ok=' + (v8dl.includes('v8Only') && /whyBlocking/.test(v8dl)));
+
+const v8nav = (await client.callTool({ name: 'fluent_v8_lookup', arguments: { name: 'Nav' } })).content[0].text;
+console.log('v8_lookup(Nav): collision=' + v8nav.includes('collisions') + ' warns=' + /compiles|misbehav|hazard/i.test(v8nav) + ' ok=' + (v8nav.includes('collisions') && /compiles|misbehav|hazard/i.test(v8nav)));
+
+const v8ci = (await client.callTool({ name: 'fluent_v8_lookup', arguments: { name: 'detailslist' } })).content[0].text;
+console.log('v8_lookup case-insensitive: ok=' + v8ci.includes('DetailsList'));
+
+const v8miss = (await client.callTool({ name: 'fluent_v8_lookup', arguments: { name: 'NotARealV8Component' } })).content[0].text;
+console.log('v8_lookup(unknown): admits=' + /not found/i.test(v8miss) + ' noFalseCertainty=' + /does not prove/i.test(v8miss) + ' ok=' + (/not found/i.test(v8miss) && /does not prove/i.test(v8miss)));
+
+const v8all = (await client.callTool({ name: 'fluent_v8_guidance', arguments: { section: 'all' } })).content[0].text;
+console.log('v8_guidance(all) refuses to dump: ok=' + /too large/i.test(v8all));
+
+// Every v8-only entry must explain itself; a bare name is not actionable.
+const v8data = JSON.parse(readFileSync(new URL('./data/fluent-v8.json', import.meta.url), 'utf8'));
+const t1 = v8data.v8Only?.tier1 ?? [];
+const noWhy = t1.filter((e) => !e.whyBlocking).length;
+console.log('v8 tier1 all explained: entries=' + t1.length + ' missing=' + noWhy + ' ok=' + (t1.length > 50 && noWhy === 0));
 
 await client.close();
 

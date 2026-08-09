@@ -15,6 +15,7 @@ import { registerMigration } from './tools/migration.js';
 import { registerDesignGuidance } from './tools/designGuidance.js';
 import { registerImages } from './tools/images.js';
 import { registerConfig } from './tools/config.js';
+import { registerV8 } from './tools/v8.js';
 const server = new McpServer({
     name: 'fluent-ui',
     version: '1.0.0',
@@ -45,6 +46,10 @@ registerImages(server);
 // User-defined presets config (fluent.config.json) + persistent agent memory
 // (.fluent/memory.json). Zero-config safe: sensible Fluent 2 defaults, never throws.
 registerConfig(server);
+// Fluent 1 (Fluent UI React v8 / Office UI Fabric): symbol lookup and reference.
+// Ships the collision and trap data that matters most — cases where v8 and v9
+// share an export name, so the code compiles and then misbehaves at runtime.
+registerV8(server);
 async function main() {
     const transport = new StdioServerTransport();
     await server.connect(transport);
