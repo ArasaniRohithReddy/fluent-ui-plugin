@@ -21,6 +21,7 @@ interface V8Data {
   accessibility?: unknown;
   platforms?: unknown;
   fluent2ThemeForV8?: unknown;
+  nonReact?: unknown;
   migration?: unknown;
   docsErrata?: unknown;
   unverified?: unknown;
@@ -127,6 +128,7 @@ export function registerV8(server: McpServer): void {
             'design-language',
             'accessibility',
             'platforms',
+            'non-react',
             'migration',
             'v8-only',
             'collisions',
@@ -154,6 +156,7 @@ export function registerV8(server: McpServer): void {
         'design-language': data.designLanguage,
         accessibility: data.accessibility,
         platforms: data.platforms,
+        'non-react': data.nonReact,
         migration: data.migration,
         'v8-only': data.v8Only,
         collisions: data.collisions,

@@ -15332,6 +15332,884 @@
     {
       "source": "components.md",
       "note": "Tier-1 count mismatch: the summary prose says 42 Tier-1 entries but the Tier-1 table has 40 rows. v8Only.tier1 reflects the table (the itemised source); re-verify before quoting a total."
+    },
+    "34 of 42 v3 tags inferred from 'fluent-' + directory name; only button, text-input, dropdown, message-bar, avatar, text, option, listbox read from source tagName exports",
+    "Full v3 attribute matrix not enumerated — only 6 components sampled; generate from custom-elements.json for completeness",
+    "No first-party v2-to-v3 migration guide located; packages/web-components/docs/MIGRATION.md returns 404 and the docs/ directory could not be listed",
+    "@fluentui/web-components v2 end-of-life status is inferred from npm dist-tags, not stated by Microsoft",
+    "Version skew: repo master package.json and CHANGELOG say 3.0.2 while npm latest is 3.0.3 — install strings use 3.0.3",
+    "office-ui-fabric-core README says 'Latest version: 11.0.1' while npm latest is 11.1.0; no root CHANGELOG.md exists",
+    "office-ui-fabric-core prerelease dist-tag 'fluent' -> 9.6.1-fluent2 and versions 9.6.0-fluent2..fluent16 are undocumented; purpose and support unknown",
+    "Fabric Core CDN build stamps differ: 20230815.002 for the CSS bundle vs 20221201.001 in _CDN.Variables.scss for font/icon assets; not verified whether 11.1.0 is on the CDN (docs pin 11.0.0)",
+    "Fabric Core ms-depth-* class names not enumerated — files exist (_Depth.scss, depths.json) but emitted class names unverified",
+    "Fabric Core localization class names beyond the ms-Fabric language font-family overrides not enumerated",
+    "developer.microsoft.com/fluentui#/styles/web/* class browser (canonical Fabric Core reference) not scraped — client-rendered SPA",
+    "microsoft/fluentui-blazor dependency on web components v2/v3 surfaced only via web search, not verified from source",
+    "registry.npmjs.org unreachable from this environment; exact npm publish timestamps not obtained — dates come from in-repo CHANGELOGs and jsDelivr",
+    "Fluent 2 CSS custom property names such as --fontSizeBase400 and --colorNeutralForeground1 are illustrative of the token naming convention and were not individually verified against @fluentui/tokens output",
+    "Sample markup for elements other than button and dropdown (slot names, e.g. slot=\"label\" on fluent-text-input) is illustrative and not verified against component templates"
+  ],
+  "nonReact": {
+    "note": "Fluent without React. Covers the CSS-only line (office-ui-fabric-core) and the web-components line, including which generation each belongs to.",
+    "verifiedOn": "2026-08-09",
+    "lineage": [
+      {
+        "line": "Office UI Fabric Core (CSS)",
+        "package": "office-ui-fabric-core",
+        "version": "11.1.0",
+        "generation": "Fluent 1",
+        "status": "archived-but-recommended",
+        "note": "GitHub repo archived:true; still 'the recommended library to design non-React add-ins' per Office Add-ins docs 2026-07-15."
+      },
+      {
+        "line": "Fabric Core for SPFx",
+        "package": "@microsoft/sp-office-ui-fabric-core",
+        "version": "1.23.2",
+        "generation": "Fluent 1",
+        "status": "maintained",
+        "note": "Ships with SPFx, versioned alongside it. Mixins/variables only. Uninstall if using Fluent UI React."
+      },
+      {
+        "line": "Office UI Fabric JS (non-React components)",
+        "package": "office-ui-fabric-js",
+        "version": "1.5.0",
+        "generation": "Fluent 1",
+        "status": "archived",
+        "note": "Repo archived:true. Still linked from current Office Add-ins docs as the non-React component option."
+      },
+      {
+        "line": "Fluent UI Web Components v1 (FAST)",
+        "package": "@fluentui/web-components",
+        "version": "1.6.3",
+        "generation": "Fluent 1",
+        "status": "superseded",
+        "note": "GA 2021-07-02, superseded 2021-10-22 by v2. fast-foundation@2 based."
+      },
+      {
+        "line": "Fluent UI Web Components v2 (FAST)",
+        "package": "@fluentui/web-components",
+        "version": "2.6.1",
+        "generation": "Fluent 1",
+        "status": "superseded",
+        "note": "Sun Valley / Win11 refresh, between Fluent 1 and Fluent 2. No formal EOL notice; Learn docs still live."
+      },
+      {
+        "line": "Fluent UI Web Components v3",
+        "package": "@fluentui/web-components",
+        "version": "3.0.3",
+        "generation": "Fluent 2",
+        "status": "maintained",
+        "note": "Stable 2026-06-29. Current non-React Fluent 2 line. Used by Microsoft Edge. SSR via declarative shadow DOM."
+      },
+      {
+        "line": "Fluent 2 CSS-only framework",
+        "package": null,
+        "generation": "Fluent 2",
+        "status": "does-not-exist",
+        "note": "No CSS-only Fluent 2 library exists. Consume design tokens as CSS custom properties instead."
+      }
+    ],
+    "officeUiFabricCore": {
+      "package": "office-ui-fabric-core",
+      "version": "11.1.0",
+      "status": "deprecated",
+      "statusDetail": "GitHub repo archived:true (last push 2025-01-13). No Microsoft text says 'Fabric Core is deprecated'; Office Add-ins docs still recommend it. Repo README lags at 11.0.1.",
+      "officialQuote": "While Fabric Core is the recommended library to design non-React add-ins, the team is working on Fluent UI Web Components to provide a newer solution. Built on FAST, the Fluent UI Web Components library allows you to use, customize, and build Web Components to create a more modern and standards-based UI.",
+      "officialQuoteSource": "https://learn.microsoft.com/en-us/office/dev/add-ins/design/fabric-core (updated 2026-07-15)",
+      "inSourceDeprecationQuote": "These classes are deprecated and will be removed in a future release.",
+      "inSourceDeprecationFiles": [
+        "src/sass/_Font.MDL2.scss",
+        "src/sass/_Color.MDL2.scss",
+        "src/sass/_Animation.MDL2.scss"
+      ],
+      "repo": "https://github.com/OfficeDev/office-ui-fabric-core",
+      "generation": "Fluent 1",
+      "install": {
+        "npm": "npm install office-ui-fabric-core",
+        "bower": "bower install office-ui-fabric-core",
+        "nuget": "Install-Package OfficeUIFabricCore",
+        "cdn": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.0.0/css/fabric.min.css",
+        "spfx": "@import '~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss';"
+      },
+      "spfxPackage": {
+        "package": "@microsoft/sp-office-ui-fabric-core",
+        "version": "1.23.2",
+        "next": "1.24.0-beta.2",
+        "emits": "mixins and variables only — no CSS output; use @include ms-Grid-row, not class=\"ms-Grid-row\"",
+        "supported": [
+          "Typography",
+          "Layouts",
+          "Colors",
+          "Themes",
+          "Localization"
+        ],
+        "notSupported": [
+          "Animations",
+          "Icons"
+        ],
+        "fileOnDisk": "dist/sass/_SPFabricCore.scss",
+        "sample": ".row {\n  @include ms-Grid-row;\n  @include ms-fontColor-white;\n  background-color: $ms-color-themeDark;\n  padding: 20px;\n}",
+        "whenToUse": "Only when the SPFx solution does NOT use Fluent UI React. If using @fluentui/react, uninstall it and import ~@fluentui/react/dist/sass/_References.scss."
+      },
+      "fluent2Successor": "None. There is no CSS-only Fluent 2 library. The real answer is: consume design tokens as CSS custom properties — call setTheme(webLightTheme) (web components) or render under FluentProvider (React v9), then use var(--fontSizeBase400), var(--colorNeutralForeground1) etc. @fluentui/tokens ships JS/TS only, no .css artefact.",
+      "whenToUse": "Non-React Office Add-ins, classic/legacy SharePoint, server-rendered pages needing Fluent 1 grid, type, colours and ms-Icon font icons without a JS framework.",
+      "breakpoints": [
+        {
+          "prefix": "sm",
+          "minWidth": "320px"
+        },
+        {
+          "prefix": "md",
+          "minWidth": "480px"
+        },
+        {
+          "prefix": "lg",
+          "minWidth": "640px"
+        },
+        {
+          "prefix": "xl",
+          "minWidth": "1024px"
+        },
+        {
+          "prefix": "xxl",
+          "minWidth": "1366px"
+        },
+        {
+          "prefix": "xxxl",
+          "minWidth": "1920px"
+        }
+      ],
+      "classFamilies": [
+        {
+          "family": "ms-Grid",
+          "purpose": "Fluid mobile-first 12-column grid; columns must total 12 per breakpoint and ms-sm* is required",
+          "examples": [
+            "ms-Grid",
+            "ms-Grid-row",
+            "ms-Grid-col",
+            "ms-sm6",
+            "ms-md4",
+            "ms-lg2"
+          ],
+          "sample": "<div class=\"ms-Grid\">\n  <div class=\"ms-Grid-row\">\n    <div class=\"ms-Grid-col ms-sm6 ms-md4 ms-lg2\">First</div>\n    <div class=\"ms-Grid-col ms-sm6 ms-md8 ms-lg10\">Second</div>\n  </div>\n</div>"
+        },
+        {
+          "family": "ms-{bp}Push / ms-{bp}Pull / ms-{bp}Offset",
+          "purpose": "Reorder or offset columns per breakpoint; Push moves right, Pull moves left",
+          "examples": [
+            "ms-smPush8",
+            "ms-smPull4",
+            "ms-mdOffset2",
+            "ms-lgPush0"
+          ],
+          "sample": "<div class=\"ms-Grid-col ms-sm4 ms-smPush8\">first in code</div>\n<div class=\"ms-Grid-col ms-sm8 ms-smPull4\">second in code</div>",
+          "ranges": "Push/Pull 0-12, Offset 0-11, for sm md lg xl xxl xxxl"
+        },
+        {
+          "family": "ms-hidden*",
+          "purpose": "Responsive visibility toggles (display:none !important)",
+          "examples": [
+            "ms-hiddenSm",
+            "ms-hiddenMdDown",
+            "ms-hiddenLgUp",
+            "ms-hiddenXlDown",
+            "ms-hiddenXxxl"
+          ],
+          "sample": "<div class=\"ms-hiddenMdDown\">Desktop only</div>"
+        },
+        {
+          "family": "ms-fontSize-* / ms-fontWeight-*",
+          "purpose": "Current numeric type scale and weights",
+          "examples": [
+            "ms-fontSize-68",
+            "ms-fontSize-42",
+            "ms-fontSize-16",
+            "ms-fontSize-10",
+            "ms-fontWeight-regular",
+            "ms-fontWeight-semibold",
+            "ms-fontWeight-bold"
+          ],
+          "sample": "<p class=\"ms-fontSize-16 ms-fontWeight-semibold\">Body strong</p>",
+          "allSizes": [
+            "68",
+            "42",
+            "32",
+            "28",
+            "24",
+            "20",
+            "18",
+            "16",
+            "14",
+            "12",
+            "10"
+          ]
+        },
+        {
+          "family": "ms-font-* (MDL2, deprecated but shipped)",
+          "purpose": "Legacy named type ramp still used by all Microsoft docs and samples",
+          "examples": [
+            "ms-font-su",
+            "ms-font-xxl",
+            "ms-font-xl-plus",
+            "ms-font-xl",
+            "ms-font-l",
+            "ms-font-m-plus",
+            "ms-font-m",
+            "ms-font-s-plus",
+            "ms-font-s",
+            "ms-font-xs",
+            "ms-font-mi"
+          ],
+          "sample": "<h2 class=\"ms-font-l ms-fontColor-themePrimary\">Sales by region</h2>\n<p class=\"ms-font-m ms-fontColor-neutralSecondary\">Updated quarterly.</p>",
+          "extraWeights": [
+            "ms-fontWeight-light",
+            "ms-fontWeight-semilight"
+          ],
+          "aliasSizes": [
+            "ms-fontSize-su",
+            "ms-fontSize-xxl",
+            "ms-fontSize-xlPlus",
+            "ms-fontSize-xl",
+            "ms-fontSize-l",
+            "ms-fontSize-mPlus",
+            "ms-fontSize-m",
+            "ms-fontSize-sPlus",
+            "ms-fontSize-s",
+            "ms-fontSize-xs",
+            "ms-fontSize-mi"
+          ],
+          "deprecated": true
+        }
+      ],
+      "classFamilies2": [
+        {
+          "family": "ms-fontColor-* / ms-bgColor-* / ms-borderColor-*",
+          "purpose": "Colour utilities; every class has a --hover twin applied on :hover",
+          "examples": [
+            "ms-fontColor-themePrimary",
+            "ms-bgColor-neutralLighter",
+            "ms-borderColor-neutralTertiary",
+            "ms-fontColor-white--hover"
+          ],
+          "sample": "<div class=\"ms-bgColor-themePrimary ms-fontColor-white\">Banner</div>",
+          "themeSlots": [
+            "themeDarker",
+            "themeDark",
+            "themeDarkAlt",
+            "themePrimary",
+            "themeSecondary",
+            "themeTertiary",
+            "themeLight",
+            "themeLighter",
+            "themeLighterAlt"
+          ],
+          "neutralSlots": [
+            "black",
+            "neutralDark",
+            "neutralPrimary",
+            "neutralPrimaryAlt",
+            "neutralSecondary",
+            "neutralSecondaryAlt",
+            "neutralTertiary",
+            "neutralTertiaryAlt",
+            "neutralQuaternary",
+            "neutralQuaternaryAlt",
+            "neutralLight",
+            "neutralLighter",
+            "neutralLighterAlt",
+            "white"
+          ],
+          "paletteNames": [
+            "communicationPrimary",
+            "communicationShade10",
+            "communicationShade20",
+            "communicationShade30",
+            "communicationTint10",
+            "communicationTint20",
+            "communicationTint30",
+            "communicationTint40",
+            "gray10",
+            "gray20",
+            "gray30",
+            "gray40",
+            "gray50",
+            "gray60",
+            "gray70",
+            "gray80",
+            "gray90",
+            "gray100",
+            "gray110",
+            "gray120",
+            "gray130",
+            "gray140",
+            "gray150",
+            "gray160",
+            "gray170",
+            "gray180",
+            "gray190",
+            "gray200",
+            "gray210",
+            "gray220"
+          ],
+          "note": "themeSlots and neutralSlots live in _Color.MDL2.scss which is marked deprecated but still ships in 11.1.0."
+        },
+        {
+          "family": "ms-Icon",
+          "purpose": "Fluent 1 font icons; pattern is ms-Icon--<IconName>",
+          "examples": [
+            "ms-Icon",
+            "ms-Icon--Table",
+            "ms-Icon--circle",
+            "ms-Icon--xs",
+            "ms-Icon--s",
+            "ms-Icon--m",
+            "ms-Icon--l"
+          ],
+          "sample": "<i class=\"ms-Icon ms-font-xl ms-Icon--Table ms-fontColor-themePrimary\"></i>",
+          "note": "Glyph names are in src/data/icons.json; sizes are ms-Icon--xs|s|m|l."
+        },
+        {
+          "family": "ms-motion-*",
+          "purpose": "Current animation classes in Fabric Core 11",
+          "examples": [
+            "ms-motion-fadeIn",
+            "ms-motion-fadeOut",
+            "ms-motion-scaleDownIn",
+            "ms-motion-scaleDownOut",
+            "ms-motion-slideUpIn",
+            "ms-motion-slideDownOut",
+            "ms-motion-slideLeftIn",
+            "ms-motion-slideRightOut"
+          ],
+          "sample": "<div class=\"ms-motion-slideUpIn\">Panel content</div>"
+        },
+        {
+          "family": "ms-slideUpIn20 (MDL2, deprecated but shipped)",
+          "purpose": "Legacy motion classes with explicit distances and durations",
+          "examples": [
+            "ms-slideUpIn10",
+            "ms-slideUpIn20",
+            "ms-slideDownIn20",
+            "ms-slideRightIn40",
+            "ms-fadeIn100",
+            "ms-fadeOut400",
+            "ms-scaleUpIn100",
+            "ms-expandCollapse200",
+            "ms-delay100",
+            "ms-rotate90deg"
+          ],
+          "sample": "<div class=\"ms-slideUpIn20\">Panel content</div>",
+          "deprecated": true,
+          "note": "ms-u-slideUpIn20 does NOT exist in Fabric Core 11 — the ms-u- prefix is Fabric 2.x/3.x only and will silently no-op."
+        },
+        {
+          "family": "ms-Fabric / utilities",
+          "purpose": "Root wrapper setting base typography, plus layout and a11y helpers",
+          "examples": [
+            "ms-Fabric",
+            "ms-Fabric--selawik",
+            "ms-borderBox",
+            "ms-clearfix",
+            "ms-normalize",
+            "ms-textAlignLeft",
+            "ms-textAlignCenter",
+            "ms-textAlignRight",
+            "ms-screenReaderOnly",
+            "ms-textTruncate",
+            "ms-noWrap"
+          ],
+          "sample": "<body class=\"ms-Fabric\">\n  <span class=\"ms-screenReaderOnly\">Loading</span>\n  <p class=\"ms-textTruncate\">Long text...</p>\n</body>"
+        }
+      ]
+    },
+    "webComponents": {
+      "generations": [
+        {
+          "version": "1.x",
+          "package": "@fluentui/web-components",
+          "basis": "FAST",
+          "generation": "Fluent 1",
+          "status": "superseded",
+          "period": "1.0.0 GA 2021-07-02; last 1.6.3 2021-10-22",
+          "note": "Only genuinely Fluent 1 web components line. fast-foundation@2, fast-element@1, fast-colors@5."
+        },
+        {
+          "version": "2.x",
+          "package": "@fluentui/web-components",
+          "basis": "FAST",
+          "generation": "Fluent 1",
+          "status": "superseded",
+          "period": "2.0.0 GA 2021-10-22; last 2.6.1",
+          "note": "2.0.0 changelog says 'Update to Sun Valley visual styling' — Win11 refresh, NOT Fluent 2 tokens."
+        },
+        {
+          "version": "3.x",
+          "package": "@fluentui/web-components",
+          "basis": "Fluent 2 rewrite",
+          "generation": "Fluent 2",
+          "status": "maintained",
+          "period": "3.0.0 stable 2026-06-29; latest 3.0.3",
+          "note": "Rewrite on fast-element@^3 peer dep + @fluentui/tokens. Used by Microsoft Edge. Node ^22||^24."
+        }
+      ],
+      "v2SupportStatus": "No formal EOL notice found from Microsoft; 3.0.3 holds npm 'latest', v2 stops at 2.6.1, v2 Learn docs still published (learn.microsoft.com/fluent-ui/web-components). Superseded, not officially deprecated.",
+      "v3": {
+        "install": "npm i @fluentui/web-components",
+        "registration": "// side-effect module calls define()\nimport '@fluentui/web-components/button.js';\n// or all: import '@fluentui/web-components/web-components.js';\n// SSR/DSD: import '@fluentui/web-components/button/define-async.js';\n// CDN: <script type=\"module\" src=\"https://unpkg.com/@fluentui/web-components\"></script>",
+        "theming": "import { setTheme } from '@fluentui/web-components';\nimport { webLightTheme } from '@fluentui/tokens';\nsetTheme(webLightTheme);\n// scoped: setTheme(webDarkTheme, document.querySelector('#panel'));\n// clear: setTheme(null, node);",
+        "themingNote": "setTheme(theme, node=document) writes --<token>:<value> into an adopted CSSStyleSheet; no provideFluentDesignSystem in v3.",
+        "themes": [
+          "webLightTheme",
+          "webDarkTheme",
+          "teamsLightTheme",
+          "teamsDarkTheme",
+          "teamsHighContrastTheme",
+          "teamsLightV21Theme",
+          "teamsDarkV21Theme"
+        ],
+        "tagPrefix": "fluent",
+        "customElementsManifest": "https://unpkg.com/@fluentui/web-components@3.0.3/custom-elements.json",
+        "manifestNote": "Authoritative attribute/slot/CSS-part source; ship generated JSON from CEM rather than hand-transcribing.",
+        "elements": [
+          {
+            "tag": "fluent-button",
+            "verified": true,
+            "attributes": [
+              {
+                "name": "appearance",
+                "values": [
+                  "primary",
+                  "outline",
+                  "subtle",
+                  "transparent"
+                ]
+              },
+              {
+                "name": "shape",
+                "values": [
+                  "circular",
+                  "rounded",
+                  "square"
+                ]
+              },
+              {
+                "name": "size",
+                "values": [
+                  "small",
+                  "medium",
+                  "large"
+                ]
+              },
+              {
+                "name": "type",
+                "values": [
+                  "submit",
+                  "reset",
+                  "button"
+                ]
+              },
+              {
+                "name": "formtarget",
+                "values": [
+                  "_blank",
+                  "_self",
+                  "_parent",
+                  "_top"
+                ]
+              }
+            ],
+            "sample": "<fluent-button appearance=\"primary\" size=\"medium\">Save</fluent-button>"
+          },
+          {
+            "tag": "fluent-text-input",
+            "verified": true,
+            "attributes": [
+              {
+                "name": "appearance",
+                "values": [
+                  "outline",
+                  "underline",
+                  "filled-lighter",
+                  "filled-darker"
+                ]
+              },
+              {
+                "name": "control-size",
+                "values": [
+                  "small",
+                  "medium",
+                  "large"
+                ]
+              },
+              {
+                "name": "type",
+                "values": [
+                  "email",
+                  "password",
+                  "tel",
+                  "text",
+                  "url"
+                ]
+              }
+            ],
+            "sample": "<fluent-text-input appearance=\"outline\" control-size=\"medium\" type=\"email\">\n  <label slot=\"label\">Email</label>\n</fluent-text-input>"
+          },
+          {
+            "tag": "fluent-dropdown",
+            "verified": true,
+            "attributes": [
+              {
+                "name": "appearance",
+                "values": [
+                  "filled-darker",
+                  "filled-lighter",
+                  "outline",
+                  "transparent"
+                ]
+              },
+              {
+                "name": "size",
+                "values": [
+                  "small",
+                  "medium",
+                  "large"
+                ]
+              },
+              {
+                "name": "type",
+                "values": [
+                  "combobox",
+                  "dropdown",
+                  "select"
+                ]
+              }
+            ],
+            "sample": "<fluent-dropdown type=\"dropdown\" size=\"medium\">\n  <fluent-listbox>\n    <fluent-option value=\"a\">Option A</fluent-option>\n  </fluent-listbox>\n</fluent-dropdown>"
+          },
+          {
+            "tag": "fluent-message-bar",
+            "verified": true,
+            "attributes": [
+              {
+                "name": "intent",
+                "values": [
+                  "success",
+                  "warning",
+                  "error",
+                  "info"
+                ]
+              },
+              {
+                "name": "layout",
+                "values": [
+                  "multiline",
+                  "singleline"
+                ]
+              },
+              {
+                "name": "shape",
+                "values": [
+                  "rounded",
+                  "square"
+                ]
+              }
+            ],
+            "sample": "<fluent-message-bar intent=\"warning\" layout=\"singleline\">Disk almost full.</fluent-message-bar>"
+          },
+          {
+            "tag": "fluent-avatar",
+            "verified": true,
+            "attributes": [
+              {
+                "name": "shape",
+                "values": [
+                  "circular",
+                  "square"
+                ]
+              },
+              {
+                "name": "appearance",
+                "values": [
+                  "ring",
+                  "shadow",
+                  "ring-shadow"
+                ]
+              },
+              {
+                "name": "active",
+                "values": [
+                  "active",
+                  "inactive"
+                ]
+              },
+              {
+                "name": "color",
+                "values": [
+                  "neutral",
+                  "brand",
+                  "colorful",
+                  "dark-red",
+                  "cranberry",
+                  "red",
+                  "pumpkin",
+                  "peach",
+                  "marigold",
+                  "gold",
+                  "brass",
+                  "brown",
+                  "forest",
+                  "seafoam",
+                  "dark-green",
+                  "light-teal",
+                  "teal",
+                  "steel",
+                  "blue",
+                  "royal-blue",
+                  "cornflower",
+                  "navy",
+                  "lavender",
+                  "purple",
+                  "grape",
+                  "lilac",
+                  "pink",
+                  "magenta",
+                  "plum",
+                  "beige",
+                  "mink",
+                  "platinum",
+                  "anchor"
+                ]
+              },
+              {
+                "name": "size",
+                "values": [
+                  "16",
+                  "20",
+                  "24",
+                  "28",
+                  "32",
+                  "36",
+                  "40",
+                  "48",
+                  "56",
+                  "64",
+                  "72",
+                  "96",
+                  "120",
+                  "128"
+                ]
+              }
+            ],
+            "sample": "<fluent-avatar name=\"Ada Lovelace\" color=\"colorful\" size=\"48\"></fluent-avatar>"
+          },
+          {
+            "tag": "fluent-text",
+            "verified": true,
+            "attributes": [
+              {
+                "name": "size",
+                "values": [
+                  "100",
+                  "200",
+                  "300",
+                  "400",
+                  "500",
+                  "600",
+                  "700",
+                  "800",
+                  "900",
+                  "1000"
+                ]
+              },
+              {
+                "name": "font",
+                "values": [
+                  "base",
+                  "numeric",
+                  "monospace"
+                ]
+              },
+              {
+                "name": "weight",
+                "values": [
+                  "medium",
+                  "regular",
+                  "semibold",
+                  "bold"
+                ]
+              },
+              {
+                "name": "align",
+                "values": [
+                  "start",
+                  "end",
+                  "center",
+                  "justify"
+                ]
+              }
+            ],
+            "sample": "<fluent-text size=\"500\" weight=\"semibold\">Section heading</fluent-text>"
+          },
+          {
+            "tag": "fluent-option",
+            "verified": true,
+            "attributes": [],
+            "sample": "<fluent-option value=\"a\">Option A</fluent-option>"
+          },
+          {
+            "tag": "fluent-listbox",
+            "verified": true,
+            "attributes": [],
+            "sample": "<fluent-listbox>\n  <fluent-option value=\"a\">Option A</fluent-option>\n</fluent-listbox>"
+          }
+        ],
+        "elementCatalogInferred": {
+          "note": "Tag = 'fluent-' + component directory name; directories verified in @fluentui/web-components@3.0.3, tag string NOT read from source for these.",
+          "tags": [
+            "fluent-accordion",
+            "fluent-accordion-item",
+            "fluent-anchor-button",
+            "fluent-badge",
+            "fluent-checkbox",
+            "fluent-compound-button",
+            "fluent-counter-badge",
+            "fluent-dialog",
+            "fluent-dialog-body",
+            "fluent-divider",
+            "fluent-drawer",
+            "fluent-drawer-body",
+            "fluent-field",
+            "fluent-image",
+            "fluent-label",
+            "fluent-link",
+            "fluent-menu",
+            "fluent-menu-button",
+            "fluent-menu-item",
+            "fluent-menu-list",
+            "fluent-progress-bar",
+            "fluent-radio",
+            "fluent-radio-group",
+            "fluent-rating-display",
+            "fluent-slider",
+            "fluent-spinner",
+            "fluent-switch",
+            "fluent-tab",
+            "fluent-tablist",
+            "fluent-textarea",
+            "fluent-toggle-button",
+            "fluent-tooltip",
+            "fluent-tree",
+            "fluent-tree-item"
+          ]
+        },
+        "removedInV3": [
+          "fluent-tabs",
+          "fluent-tab-panel"
+        ],
+        "removedInV3Note": "Removed in 3.0.0-rc.10 (2026-04-01, PR #35936). Use fluent-tablist + fluent-tab.",
+        "v2OnlyNoV3Equivalent": [
+          "card",
+          "data-grid",
+          "breadcrumb",
+          "anchored-region",
+          "flipper",
+          "horizontal-scroll",
+          "skeleton",
+          "number-field",
+          "search",
+          "progress-ring",
+          "combobox",
+          "select"
+        ],
+        "v2OnlyNote": "combobox/select folded into fluent-dropdown (type=combobox|select). Others have no v3 counterpart."
+      },
+      "v2Fast": {
+        "install": "npm install --save @fluentui/web-components@2",
+        "designSystem": "import { fluentButton, provideFluentDesignSystem } from '@fluentui/web-components';\nprovideFluentDesignSystem().register(fluentButton());\n// all: import { allComponents } from '@fluentui/web-components';\n// provideFluentDesignSystem().register(allComponents);",
+        "designTokenApi": "import { DesignToken } from '@microsoft/fast-foundation';\nconst c = DesignToken.create<string>('special-color');\nc.setValueFor(el, '#FFFFFF');\nc.getValueFor(el);\nc.withDefault('#FFFFFF');\nc.deleteValueFor(el);",
+        "designTokens": [
+          {
+            "name": "baseLayerLuminance",
+            "purpose": "Light/dark mode; StandardLuminance.LightMode|DarkMode, or any decimal 0 (black) to 1 (white)"
+          },
+          {
+            "name": "fillColor",
+            "purpose": "Container context colour, default neutralLayer1; set neutralLayer2 for a 'lower' container"
+          },
+          {
+            "name": "accentBaseColor",
+            "purpose": "Custom swatch driving accent recipes (buttons, checkboxes)"
+          },
+          {
+            "name": "neutralBaseColor",
+            "purpose": "Custom swatch driving neutral and layer recipes"
+          },
+          {
+            "name": "bodyFont",
+            "purpose": "Font string applied to components; does not import the font"
+          },
+          {
+            "name": "controlCornerRadius",
+            "purpose": "Corner radius of controls with backplates (buttons, text fields)"
+          },
+          {
+            "name": "layerCornerRadius",
+            "purpose": "Corner radius of layers: cards, flyouts, dialogs"
+          },
+          {
+            "name": "density",
+            "purpose": "Modifier for baseHeightMultiplier / baseHorizontalSpacingMultiplier; 1 larger, -1 smaller"
+          },
+          {
+            "name": "designUnit",
+            "purpose": "Unit size of the design grid used to compute control height and spacing"
+          },
+          {
+            "name": "baseHeightMultiplier",
+            "purpose": "Multiplied by designUnit to set base height of most controls"
+          },
+          {
+            "name": "direction",
+            "purpose": "Primary document direction, LTR or RTL"
+          },
+          {
+            "name": "strokeWidth",
+            "purpose": "Stroke width of components that have a stroke"
+          },
+          {
+            "name": "focusStrokeWidth",
+            "purpose": "Stroke width when a component has document focus"
+          },
+          {
+            "name": "disabledOpacity",
+            "purpose": "Opacity of disabled controls"
+          },
+          {
+            "name": "typeRampBaseFontSize",
+            "purpose": "Body font size; ramp spans typeRampMinus2 to typeRampPlus6 with matching LineHeight tokens"
+          }
+        ],
+        "adaptiveColor": "JS recipe engine emitting CSS custom properties. Accent: accentFill, accentForeground, foregroundOnAccent. Neutral: neutralFill, neutralFillContrast, neutralFillInput, neutralFillStealth, neutralForeground, neutralForegroundHint, neutralStroke, neutralDivider. Layers: neutralFillLayer, neutralLayer1-4, neutralLayerCardContainer, neutralLayerFloating.",
+        "note": "Never redeclare colour-token CSS custom properties in CSS — recipes cannot see it and components render with wrong, possibly inaccessible colours. Use DesignToken.setValueFor()."
+      },
+      "migrationV2ToV3": {
+        "summary": "No first-party v2-to-v3 migration guide found; v3 is a rewrite, not a drop-in. Registration, theming and module format all change.",
+        "breaking": [
+          "provideFluentDesignSystem().register(fluentX()) removed — use side-effect import '@fluentui/web-components/x.js'",
+          "DesignToken/adaptive colour recipes replaced by setTheme(theme, node) writing flat CSS custom properties",
+          "fast-foundation@2 dependency dropped; fast-element@^3 + @microsoft/focusgroup-polyfill are peerDependencies you must install",
+          "ESM-only package ('type':'module'); Node engines ^22.0.0 || ^24.0.0",
+          "Components removed with no v3 equivalent: card, data-grid, breadcrumb, anchored-region, flipper, horizontal-scroll, skeleton, number-field, search, progress-ring",
+          "combobox and select merged into fluent-dropdown via type attribute; tabs/tab-panel replaced by tablist/tab",
+          "Design tokens come from @fluentui/tokens (Fluent 2), so visual output differs from v2 Sun Valley styling"
+        ]
+      }
+    },
+    "noCssOnlyFluent2": {
+      "exists": false,
+      "whatPeopleExpect": "A Fluent 2 successor to office-ui-fabric-core — a CSS-only Fluent 2 framework.",
+      "reality": "None. There is no CSS-only Fluent 2 library. The real answer is: consume design tokens as CSS custom properties — call setTheme(webLightTheme) (web components) or render under FluentProvider (React v9), then use var(--fontSizeBase400), var(--colorNeutralForeground1) etc. @fluentui/tokens ships JS/TS only, no .css artefact.",
+      "doNotSubstitute": "Do not name a different package as the Fluent 2 equivalent of Fabric Core. None of them is one."
     }
-  ]
+  }
 }

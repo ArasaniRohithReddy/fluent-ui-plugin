@@ -362,6 +362,18 @@ const t1 = v8data.v8Only?.tier1 ?? [];
 const noWhy = t1.filter((e) => !e.whyBlocking).length;
 console.log('v8 tier1 all explained: entries=' + t1.length + ' missing=' + noWhy + ' ok=' + (t1.length > 50 && noWhy === 0));
 
+// "What is the Fluent 2 equivalent of Fabric Core?" has no good answer - there
+// is no CSS-only Fluent 2 library - and the tempting failure is to name the
+// nearest plausible package. The dataset records the absence explicitly so the
+// tool can say so.
+const v8nr = (await client.callTool({ name: 'fluent_v8_guidance', arguments: { section: 'non-react' } })).content[0].text;
+let nrOk = false;
+try {
+  const j = JSON.parse(v8nr);
+  nrOk = j.noCssOnlyFluent2?.exists === false && (j.lineage?.length ?? 0) >= 5 && !!j.officeUiFabricCore?.status;
+} catch {}
+console.log('v8 non-react lineage: ok=' + nrOk);
+
 await client.close();
 
 const failures = _lines.filter((l) => /ok\s*=\s*false/i.test(l));
