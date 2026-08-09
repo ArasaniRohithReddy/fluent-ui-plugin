@@ -247,6 +247,36 @@ console.log(
   'init_config vs shipped schema: unknownKeys=[' + schemaUnknown.join(',') + '] ok=' + schemaTopLevelOk
 );
 
+// A project migrating FROM Fluent 1 is, mid-migration, still ON Fluent 1. If we
+// defaulted it to v9 we would answer v8 code with v9 imports, so the version is
+// inferred from migrationFrom unless stated outright.
+const V8DIR = CFG_DIR + '-v8';
+rmSync(V8DIR, { recursive: true, force: true });
+const iv8 = await client.callTool({
+  name: 'fluent_init_config',
+  arguments: { projectDir: V8DIR, migrationFrom: 'fluent-v8' },
+});
+const iv8j = JSON.parse(iv8.content[0].text);
+console.log('init_config(migrationFrom=fluent-v8) infers v8: got=' + iv8j.config?.fluentVersion + ' ok=' + (iv8j.config?.fluentVersion === 'v8'));
+
+const V9DIR = CFG_DIR + '-v9';
+rmSync(V9DIR, { recursive: true, force: true });
+const iv9 = await client.callTool({ name: 'fluent_init_config', arguments: { projectDir: V9DIR } });
+const iv9j = JSON.parse(iv9.content[0].text);
+console.log('init_config default fluentVersion=v9: got=' + iv9j.config?.fluentVersion + ' ok=' + (iv9j.config?.fluentVersion === 'v9'));
+
+// An explicit choice must win over the inference above.
+const VXDIR = CFG_DIR + '-vx';
+rmSync(VXDIR, { recursive: true, force: true });
+const ivx = await client.callTool({
+  name: 'fluent_init_config',
+  arguments: { projectDir: VXDIR, migrationFrom: 'fluent-v8', fluentVersion: 'v9' },
+});
+const ivxj = JSON.parse(ivx.content[0].text);
+console.log('explicit fluentVersion beats inference: got=' + ivxj.config?.fluentVersion + ' ok=' + (ivxj.config?.fluentVersion === 'v9'));
+
+for (const d of [V8DIR, V9DIR, VXDIR]) rmSync(d, { recursive: true, force: true });
+
 // 3) get_config again -> config now present, brand resolved from config
 const c3 = await client.callTool({ name: 'fluent_get_config', arguments: { projectDir: CFG_DIR } });
 const c3j = JSON.parse(c3.content[0].text);

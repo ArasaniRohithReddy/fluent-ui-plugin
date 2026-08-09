@@ -14,9 +14,18 @@
       "title": "Fluent UI React v8 (@fluentui/react) -> v9 (@fluentui/react-components)",
       "summary": "v9 is the code implementation of Fluent 2. Migrate incrementally, running v8 and v9 side-by-side; prefer full v9 for new code and use shims only to avoid big-bang rewrites.",
       "packages": [
-        { "name": "@fluentui/react-components", "purpose": "v9 (Fluent 2) components + tokens + theming." },
-        { "name": "@fluentui/react-migration-v8-v9", "purpose": "Shim components: expose a v8 props interface but render v9 underneath, for hybrid apps." },
-        { "name": "@fluentui/react-portal-compat", "purpose": "Makes v9 portaled surfaces (Dialog/Popover/Tooltip) themable when mounted inside a v8 tree (wrap with PortalCompatProvider)." }
+        {
+          "name": "@fluentui/react-components",
+          "purpose": "v9 (Fluent 2) components + tokens + theming."
+        },
+        {
+          "name": "@fluentui/react-migration-v8-v9",
+          "purpose": "Shim components: expose a v8 props interface but render v9 underneath, for hybrid apps."
+        },
+        {
+          "name": "@fluentui/react-portal-compat",
+          "purpose": "Makes v9 portaled surfaces (Dialog/Popover/Tooltip) themable when mounted inside a v8 tree (wrap with PortalCompatProvider)."
+        }
       ],
       "strategy": [
         "Add a FluentProvider (v9) at the app root (or a subtree boundary) alongside the existing v8 ThemeProvider.",
@@ -26,26 +35,1178 @@
         "Prefer full v9 components for new code; treat shims as temporary. Watch bundle size (shims pull in both v8 and v9)."
       ],
       "componentMapping": [
-        { "v8": "DefaultButton / PrimaryButton / IconButton / ActionButton", "v9": "Button (appearance='primary' for PrimaryButton; icon slot for IconButton)", "notes": "CompoundButton, ToggleButton, MenuButton, SplitButton also exist." },
-        { "v8": "TextField", "v9": "Input / Textarea wrapped in Field", "notes": "Field provides label + validation + aria wiring." },
-        { "v8": "Dropdown", "v9": "Dropdown or Combobox", "notes": "Combobox for free-text/filtering." },
-        { "v8": "Toggle", "v9": "Switch", "notes": "renamed." },
-        { "v8": "Checkbox / ChoiceGroup", "v9": "Checkbox / RadioGroup + Radio", "notes": "" },
-        { "v8": "Slider / SpinButton / Rating", "v9": "Slider / SpinButton / Rating", "notes": "" },
-        { "v8": "Dialog", "v9": "Dialog", "notes": "new composition (DialogSurface/DialogBody/DialogTitle/DialogActions)." },
-        { "v8": "Panel", "v9": "Drawer", "notes": "OverlayDrawer / InlineDrawer." },
-        { "v8": "Callout / Coachmark / TeachingBubble", "v9": "Popover / TeachingPopover", "notes": "" },
-        { "v8": "TooltipHost", "v9": "Tooltip", "notes": "relationship + positioning props." },
-        { "v8": "ContextualMenu", "v9": "Menu (Menu/MenuTrigger/MenuPopover/MenuList/MenuItem)", "notes": "" },
-        { "v8": "Persona / Facepile", "v9": "Persona / Avatar / AvatarGroup", "notes": "" },
-        { "v8": "DetailsList", "v9": "DataGrid or Table", "notes": "DataGrid for interactive; Table for static." },
-        { "v8": "Nav", "v9": "Nav", "notes": "" },
-        { "v8": "Pivot", "v9": "TabList + Tab", "notes": "" },
-        { "v8": "Breadcrumb", "v9": "Breadcrumb", "notes": "" },
-        { "v8": "MessageBar", "v9": "MessageBar", "notes": "new intent + composition." },
-        { "v8": "Spinner / ProgressIndicator / Shimmer", "v9": "Spinner / ProgressBar / Skeleton", "notes": "" },
-        { "v8": "Stack", "v9": "makeStyles flex (no Stack in v9)", "notes": "use display:flex + gap: tokens.spacing*; or a div with griffel styles." },
-        { "v8": "Text / Label / Link / Icon / Image", "v9": "Text/Title* / Label / Link / Icon (@fluentui/react-icons) / Image", "notes": "" }
+        {
+          "v8": "ActionButton",
+          "v9": "<Button appearance=\"transparent\">",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "as above",
+          "gotchas": "v8 ActionButton is icon+text transparent; v9 needs explicit icon",
+          "notes": "CompoundButton, ToggleButton, MenuButton, SplitButton also exist."
+        },
+        {
+          "v8": "ActivityItem",
+          "v9": "no equivalent",
+          "difficulty": "blocked",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Under Deprecated; \"custom implementation needed\""
+        },
+        {
+          "v8": "Announced",
+          "v9": "AriaLiveAnnouncer + useAnnounce / AnnounceProvider",
+          "difficulty": "moderate",
+          "imports": "@fluentui/react → @fluentui/react-components",
+          "keyPropMapping": "message→announce(message, {polite})",
+          "gotchas": "Mapping table says \"Not available\" — this is WRONG. AriaLiveAnnouncer (from @fluentui/react-aria) and AnnounceProvider/useAnnounce (from @fluentui/react-shared-contexts) are both exported from @fluentui/react-components",
+          "v9Exports": [
+            "AriaLiveAnnouncer",
+            "useAnnounce",
+            "AnnounceProvider"
+          ]
+        },
+        {
+          "v8": "Autofill",
+          "v9": "no equivalent",
+          "difficulty": "blocked",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Internal-ish v8 primitive; not mapped"
+        },
+        {
+          "v8": "Breadcrumb",
+          "v9": "Breadcrumb + BreadcrumbItem + BreadcrumbButton + BreadcrumbDivider",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "items: IBreadcrumbItem[]→children; overflow via partitionBreadcrumbItems",
+          "gotchas": "Data-array→JSX",
+          "v9Exports": [
+            "Breadcrumb",
+            "BreadcrumbItem",
+            "BreadcrumbButton",
+            "BreadcrumbDivider"
+          ]
+        },
+        {
+          "v8": "Button",
+          "v9": "SplitButton + Menu",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "splitButtonMenuProps→Menu+MenuTrigger",
+          "gotchas": "Full restructure into JSX",
+          "variant": "split",
+          "v9Exports": [
+            "SplitButton",
+            "Menu"
+          ]
+        },
+        {
+          "v8": "Button",
+          "v9": "ToggleButton",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "checked→checked on ToggleButton",
+          "gotchas": null,
+          "variant": "toggle",
+          "v9Exports": [
+            "ToggleButton"
+          ]
+        },
+        {
+          "v8": "Button",
+          "v9": "MenuButton inside Menu",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "menuProps→<Menu><MenuTrigger><MenuButton/></MenuTrigger><MenuPopover><MenuList>…",
+          "gotchas": null,
+          "variant": "menuProps",
+          "v9Exports": [
+            "MenuButton",
+            "Menu"
+          ]
+        },
+        {
+          "v8": "ButtonGrid",
+          "v9": "no equivalent",
+          "difficulty": "blocked",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Not in mapping table at all"
+        },
+        {
+          "v8": "ButtonGridCell",
+          "v9": "no equivalent",
+          "difficulty": "blocked",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Not in mapping table at all"
+        },
+        {
+          "v8": "Calendar",
+          "v9": "Calendar (compat)",
+          "difficulty": "trivial",
+          "imports": "@fluentui/react → @fluentui/react-calendar-compat",
+          "keyPropMapping": "Largely identical (compat = v8 code on v9 toolset)",
+          "gotchas": "Compat package, 0.x versioned, not in the react-components suite",
+          "v9Exports": [
+            "Calendar"
+          ]
+        },
+        {
+          "v8": "Callout",
+          "v9": "Popover + PopoverTrigger + PopoverSurface",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "target→PopoverTrigger child, directionalHint→positioning, isBeakVisible→withArrow",
+          "gotchas": "Callout is imperative/target-based; Popover is trigger-based. Anchoring to a virtual element needs positioning={{target: virtualEl}}",
+          "v9Exports": [
+            "Popover",
+            "PopoverTrigger",
+            "PopoverSurface"
+          ]
+        },
+        {
+          "v8": "Charts",
+          "v9": "still v8-based",
+          "difficulty": "moderate",
+          "imports": "keep @fluentui/react-charting",
+          "keyPropMapping": "Wrap in v8 ThemeProvider fed by createV8Theme(brandInvariant, v9Theme, isDark)",
+          "gotchas": "Charts are not migrated; official pattern is bridging the theme. Brand-invariant today"
+        },
+        {
+          "v8": "Checkbox",
+          "v9": "Checkbox",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "boxSide→labelPosition, checkmarkIconProps→indicator slot",
+          "gotchas": "indeterminate is gone → checked=\"mixed\". Passing indeterminate to v9 silently does nothing. defaultIndeterminate→defaultChecked=\"mixed\"",
+          "v9Exports": [
+            "Checkbox"
+          ]
+        },
+        {
+          "v8": "ChoiceGroup",
+          "v9": "RadioGroup + Radio",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "options→children, selectedKey→value, defaultSelectedKey→defaultValue, text→label",
+          "gotchas": "onRenderField, imageSrc/selectedImageSrc/imageSize, iconProps all removed — image-choice cards must be hand-built",
+          "v9Exports": [
+            "RadioGroup",
+            "Radio"
+          ]
+        },
+        {
+          "v8": "Coachmark",
+          "v9": "TeachingPopover",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Listed under Deprecated. Coachmark's pulsing-beacon / progressive-reveal behaviour does not exist in v9",
+          "v9Exports": [
+            "TeachingPopover"
+          ]
+        },
+        {
+          "v8": "ColorPicker",
+          "v9": "ColorPicker + ColorArea + ColorSlider + AlphaSlider",
+          "difficulty": "hard",
+          "imports": "same (now stable in @fluentui/react-components)",
+          "keyPropMapping": "color: IColor|string→color: HSV, onChange→onColorChange, ColorRectangle→ColorArea, type→channel",
+          "gotchas": "Color model changes from IColor to HSV. showPreview, strings, hexLabel/redLabel/…, alphaType, tooltipProps all unsupported. Migration doc still says import from @fluentui/react-color-picker-preview — stale",
+          "v9Exports": [
+            "ColorPicker",
+            "ColorArea",
+            "ColorSlider",
+            "AlphaSlider"
+          ]
+        },
+        {
+          "v8": "ColorRectangle",
+          "v9": "ColorPicker + ColorArea + ColorSlider + AlphaSlider",
+          "difficulty": "hard",
+          "imports": "same (now stable in @fluentui/react-components)",
+          "keyPropMapping": "color: IColor|string→color: HSV, onChange→onColorChange, ColorRectangle→ColorArea, type→channel",
+          "gotchas": "Color model changes from IColor to HSV. showPreview, strings, hexLabel/redLabel/…, alphaType, tooltipProps all unsupported. Migration doc still says import from @fluentui/react-color-picker-preview — stale",
+          "v9Exports": [
+            "ColorPicker",
+            "ColorArea",
+            "ColorSlider",
+            "AlphaSlider"
+          ]
+        },
+        {
+          "v8": "ColorSlider",
+          "v9": "ColorPicker + ColorArea + ColorSlider + AlphaSlider",
+          "difficulty": "hard",
+          "imports": "same (now stable in @fluentui/react-components)",
+          "keyPropMapping": "color: IColor|string→color: HSV, onChange→onColorChange, ColorRectangle→ColorArea, type→channel",
+          "gotchas": "Color model changes from IColor to HSV. showPreview, strings, hexLabel/redLabel/…, alphaType, tooltipProps all unsupported. Migration doc still says import from @fluentui/react-color-picker-preview — stale",
+          "v9Exports": [
+            "ColorPicker",
+            "ColorArea",
+            "ColorSlider",
+            "AlphaSlider"
+          ]
+        },
+        {
+          "v8": "ComboBox",
+          "v9": "Combobox",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "+ freeform, clearable; same Option model as Dropdown",
+          "gotchas": "Same controlled-value trap. VirtualizedComboBox has no equivalent",
+          "v9Exports": [
+            "Combobox"
+          ]
+        },
+        {
+          "v8": "CommandBar",
+          "v9": "Toolbar + ToolbarButton/ToolbarDivider/ToolbarGroup (+ Overflow)",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": "items/farItems/overflowItems→children; overflow via @fluentui/react-overflow",
+          "gotchas": "No built-in automatic overflow — you wire Overflow/OverflowItem/useOverflowMenu yourself. This is the highest-effort common migration",
+          "v9Exports": [
+            "Toolbar",
+            "ToolbarButton",
+            "ToolbarDivider",
+            "ToolbarGroup",
+            "Overflow"
+          ]
+        },
+        {
+          "v8": "CommandBarButton",
+          "v9": "Button (inside Toolbar)",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": null,
+          "v9Exports": [
+            "Button",
+            "Toolbar"
+          ]
+        },
+        {
+          "v8": "CommandButton",
+          "v9": "Button",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": null,
+          "v9Exports": [
+            "Button"
+          ]
+        },
+        {
+          "v8": "CompactPeoplePicker",
+          "v9": "TagPicker (+ Avatar in options)",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Mapping table lists PeoplePicker→TagPicker but also lists Pickers→\"Not available\" and puts Pickers under Deprecated. No people-specific affordances (persona rendering, SelectedPeopleList, member-list editing)",
+          "v9Exports": [
+            "TagPicker",
+            "Avatar"
+          ]
+        },
+        {
+          "v8": "CompoundButton",
+          "v9": "CompoundButton",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "secondaryText→secondaryContent slot, onRenderDescription→secondaryContent",
+          "gotchas": null,
+          "v9Exports": [
+            "CompoundButton"
+          ]
+        },
+        {
+          "v8": "ContextualMenu",
+          "v9": "Menu + MenuTrigger + MenuPopover + MenuList + MenuItem",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": "items: IContextualMenuItem[]→JSX children; itemType=Divider→MenuDivider; =Header→MenuGroupHeader; =Section→MenuGroup; canCheck/checked→MenuItemCheckbox/MenuItemRadio; subMenuProps→nested <Menu>; secondaryText→secondaryContent",
+          "gotchas": "Data-array→JSX is the single biggest mechanical cost in most v8 apps. Nearly every IContextualMenuProps prop maps to blank in Microsoft's own table",
+          "v9Exports": [
+            "Menu",
+            "MenuTrigger",
+            "MenuPopover",
+            "MenuList",
+            "MenuItem"
+          ]
+        },
+        {
+          "v8": "Customizer",
+          "v9": "removed",
+          "difficulty": "moderate",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Use FluentProvider / CustomStyleHooksProvider_unstable"
+        },
+        {
+          "v8": "DatePicker",
+          "v9": "DatePicker (compat)",
+          "difficulty": "trivial",
+          "imports": "@fluentui/react → @fluentui/react-datepicker-compat",
+          "keyPropMapping": "Largely identical API",
+          "gotchas": "Same compat caveats",
+          "v9Exports": [
+            "DatePicker"
+          ]
+        },
+        {
+          "v8": "DefaultButton",
+          "v9": "Button",
+          "difficulty": "trivial",
+          "imports": "@fluentui/react → @fluentui/react-components",
+          "keyPropMapping": "text→children, iconProps→icon slot, allowDisabledFocus→disabledFocusable, styles→className",
+          "gotchas": "href has no direct map — official guidance is \"(use Link)\"",
+          "v9Exports": [
+            "Button"
+          ],
+          "notes": "CompoundButton, ToggleButton, MenuButton, SplitButton also exist."
+        },
+        {
+          "v8": "DetailsList",
+          "v9": "DataGrid (or Table + useTableFeatures)",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": "columns: IColumn[]→createTableColumn(), items→items, selectionMode→selectionMode, onRenderItemColumn→renderCell",
+          "gotchas": "Listed under \"Deprecated Components\" in Microsoft's own mapping. No built-in virtualization (v8 had it) → add @fluentui-contrib/react-data-grid-react-window. No column reorder/drag-drop, no ConstrainMode, no DetailsListLayoutMode.fixedColumns parity",
+          "v9Exports": [
+            "DataGrid",
+            "Table",
+            "useTableFeatures"
+          ],
+          "notes": "DataGrid for interactive; Table for static."
+        },
+        {
+          "v8": "Dialog",
+          "v9": "Dialog + DialogSurface/DialogBody/DialogTitle/DialogContent/DialogActions/DialogTrigger",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "hidden→open (inverted!), onDismiss→onOpenChange, dialogContentProps.title→DialogTitle, DialogFooter→DialogActions, modalProps.isBlocking→modalType=\"alert\"",
+          "gotchas": "hidden inverts to open — a mechanical rename produces an always-open dialog",
+          "v9Exports": [
+            "Dialog",
+            "DialogSurface",
+            "DialogBody",
+            "DialogTitle",
+            "DialogContent",
+            "DialogActions",
+            "DialogTrigger"
+          ],
+          "notes": "new composition (DialogSurface/DialogBody/DialogTitle/DialogActions)."
+        },
+        {
+          "v8": "DocumentCard",
+          "v9": "Card + CardHeader + CardPreview + CardFooter",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "type={DocumentCardType.compact}→orientation=\"horizontal\", onClickHref/onClickTarget→hand-rolled onClick",
+          "gotchas": "DocumentCardActivity, DocumentCardLogo, DocumentCardStatus, DocumentCardLocation have no v9 equivalents — rebuild with Avatar/Caption1/Text",
+          "v9Exports": [
+            "Card",
+            "CardHeader",
+            "CardPreview",
+            "CardFooter"
+          ]
+        },
+        {
+          "v8": "Dropdown",
+          "v9": "Dropdown + Option",
+          "difficulty": "moderate",
+          "imports": "@fluentui/react → @fluentui/react-components",
+          "keyPropMapping": "options→<Option> children, selectedKey→selectedOptions: string[], defaultSelectedKey→defaultSelectedOptions, multiSelect→multiselect, onChange(ev,option,index)→onOptionSelect(ev, data) w/ data.optionValue/data.selectedOptions",
+          "gotchas": "Controlled-mode trap: if you set selectedOptions you MUST also control value; if you set defaultSelectedOptions you MUST also set defaultValue — otherwise the button text goes blank. DropdownMenuItemType.Header/Divider → OptionGroup",
+          "v9Exports": [
+            "Dropdown",
+            "Option"
+          ],
+          "notes": "Combobox for free-text/filtering."
+        },
+        {
+          "v8": "ExpandingCard",
+          "v9": "no direct equivalent",
+          "difficulty": "hard",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Listed under Deprecated. Official guidance: \"could use Popover with custom behavior\" — you implement hover-intent/delay yourself"
+        },
+        {
+          "v8": "ExtendedPeoplePicker",
+          "v9": "TagPicker (+ Avatar in options)",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Mapping table lists PeoplePicker→TagPicker but also lists Pickers→\"Not available\" and puts Pickers under Deprecated. No people-specific affordances (persona rendering, SelectedPeopleList, member-list editing)",
+          "v9Exports": [
+            "TagPicker",
+            "Avatar"
+          ]
+        },
+        {
+          "v8": "Fabric",
+          "v9": "FluentProvider",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "theme→theme",
+          "gotchas": null,
+          "v9Exports": [
+            "FluentProvider"
+          ]
+        },
+        {
+          "v8": "Facepile",
+          "v9": "AvatarGroup + AvatarGroupItem + AvatarGroupPopover",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "personas→children, maxDisplayablePersonas→maxAvatars opt of partitionAvatarGroupItems, overflowPersonas→AvatarGroupPopover children, personaSize→size",
+          "gotchas": "showAddButton/addButtonProps, showTooltip, onRenderPersonaWrapper have no equivalent",
+          "v9Exports": [
+            "AvatarGroup",
+            "AvatarGroupItem",
+            "AvatarGroupPopover"
+          ]
+        },
+        {
+          "v8": "FloatingPeoplePicker",
+          "v9": "TagPicker (+ Avatar in options)",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Mapping table lists PeoplePicker→TagPicker but also lists Pickers→\"Not available\" and puts Pickers under Deprecated. No people-specific affordances (persona rendering, SelectedPeopleList, member-list editing)",
+          "v9Exports": [
+            "TagPicker",
+            "Avatar"
+          ]
+        },
+        {
+          "v8": "FocusTrapZone",
+          "v9": "Tabster: useModalAttributes({trapFocus:true})",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Same attribute-spread pattern"
+        },
+        {
+          "v8": "FocusZone",
+          "v9": "Tabster hooks: useArrowNavigationGroup, useFocusableGroup",
+          "difficulty": "moderate",
+          "imports": "@fluentui/react → @fluentui/react-components",
+          "keyPropMapping": "direction→axis, isCircularNavigation→circular",
+          "gotchas": "Returns DOM attributes to spread, not a wrapper component",
+          "v9Exports": [
+            "useArrowNavigationGroup",
+            "useFocusableGroup"
+          ]
+        },
+        {
+          "v8": "GroupedList",
+          "v9": "depends: Tree | List | Table/DataGrid",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Microsoft explicitly refuses a 1:1 mapping and branches by use case",
+          "v9Exports": [
+            "Tree",
+            "List",
+            "Table",
+            "DataGrid"
+          ]
+        },
+        {
+          "v8": "HoverCard",
+          "v9": "no direct equivalent",
+          "difficulty": "hard",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Listed under Deprecated. Official guidance: \"could use Popover with custom behavior\" — you implement hover-intent/delay yourself"
+        },
+        {
+          "v8": "Icon",
+          "v9": "@fluentui/react-icons SVG",
+          "difficulty": "moderate",
+          "imports": "@fluentui/react → @fluentui/react-icons",
+          "keyPropMapping": "iconName string → named component <AddRegular />",
+          "gotchas": "Font-icon registry gone; see @fluentui/react-icons-compat"
+        },
+        {
+          "v8": "IconButton",
+          "v9": "<Button icon={...} appearance=\"subtle\" />",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "iconProps→icon",
+          "gotchas": "Must supply aria-label; no auto icon-only sizing beyond icon-only detection",
+          "notes": "CompoundButton, ToggleButton, MenuButton, SplitButton also exist."
+        },
+        {
+          "v8": "Image",
+          "v9": "Image",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "imageFit→fit, maximizeFrame→block",
+          "gotchas": null,
+          "v9Exports": [
+            "Image"
+          ]
+        },
+        {
+          "v8": "initializeIcons",
+          "v9": "@fluentui/react-icons-compat (registerIcons) or drop entirely",
+          "difficulty": "moderate",
+          "imports": "@fluentui/react → @fluentui/react-icons-compat",
+          "keyPropMapping": null,
+          "gotchas": "Recommended only \"if you still need … registerIcons from v8 icons\"",
+          "v9Exports": [
+            "registerIcons"
+          ]
+        },
+        {
+          "v8": "KeytipLayer",
+          "v9": "Keytips (contrib)",
+          "difficulty": "moderate",
+          "imports": "@fluentui/react → @fluentui-contrib/react-keytips",
+          "keyPropMapping": "keytipStartSequence→startSequence (type IKeytipTransitionKey[]→string), onEnterKeytipMode→onEnterKeytipsMode, hasDynamicChildren→dynamic, calloutProps→positioning",
+          "gotchas": "v9 components have no keytipProps — attach via useKeytipRef and pass as ref. KeytipData, useKeytipData, disabled, hasOverflowSubMenu have no equivalent. Lives in fluentui-contrib, not core",
+          "v9Exports": [
+            "Keytips"
+          ]
+        },
+        {
+          "v8": "Keytips",
+          "v9": "Keytips (contrib)",
+          "difficulty": "moderate",
+          "imports": "@fluentui/react → @fluentui-contrib/react-keytips",
+          "keyPropMapping": "keytipStartSequence→startSequence (type IKeytipTransitionKey[]→string), onEnterKeytipMode→onEnterKeytipsMode, hasDynamicChildren→dynamic, calloutProps→positioning",
+          "gotchas": "v9 components have no keytipProps — attach via useKeytipRef and pass as ref. KeytipData, useKeytipData, disabled, hasOverflowSubMenu have no equivalent. Lives in fluentui-contrib, not core",
+          "v9Exports": [
+            "Keytips"
+          ]
+        },
+        {
+          "v8": "Label",
+          "v9": "Label",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "required, disabled same; styles→className",
+          "gotchas": "v9 adds custom indicator slot",
+          "v9Exports": [
+            "Label"
+          ]
+        },
+        {
+          "v8": "Layer",
+          "v9": "Portal",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "hostId→mountNode",
+          "gotchas": "See z-index section below",
+          "v9Exports": [
+            "Portal"
+          ]
+        },
+        {
+          "v8": "LayerHost",
+          "v9": "Portal",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "hostId→mountNode",
+          "gotchas": "See z-index section below",
+          "v9Exports": [
+            "Portal"
+          ]
+        },
+        {
+          "v8": "Link",
+          "v9": "Link",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": null,
+          "v9Exports": [
+            "Link"
+          ]
+        },
+        {
+          "v8": "List",
+          "v9": "List + ListItem",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "items→children, onRenderCell→children",
+          "gotchas": "v9 List is not virtualized. For virtualization use @fluentui-contrib/react-virtualizer (the react-components/unstable Virtualizer is deprecated and points there)",
+          "v9Exports": [
+            "List",
+            "ListItem"
+          ]
+        },
+        {
+          "v8": "ListPeoplePicker",
+          "v9": "TagPicker (+ Avatar in options)",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Mapping table lists PeoplePicker→TagPicker but also lists Pickers→\"Not available\" and puts Pickers under Deprecated. No people-specific affordances (persona rendering, SelectedPeopleList, member-list editing)",
+          "v9Exports": [
+            "TagPicker",
+            "Avatar"
+          ]
+        },
+        {
+          "v8": "MarqueeSelection",
+          "v9": "no equivalent",
+          "difficulty": "blocked",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Under Deprecated"
+        },
+        {
+          "v8": "MaskedTextField",
+          "v9": "no direct equivalent",
+          "difficulty": "hard",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Not covered anywhere in v9 docs"
+        },
+        {
+          "v8": "MessageBar",
+          "v9": "MessageBar + MessageBarBody + MessageBarTitle + MessageBarActions",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "messageBarType→intent, actions→MessageBarActions",
+          "gotchas": "Full recomposition; onDismiss moves to actions",
+          "v9Exports": [
+            "MessageBar",
+            "MessageBarBody",
+            "MessageBarTitle",
+            "MessageBarActions"
+          ],
+          "notes": "new intent + composition."
+        },
+        {
+          "v8": "Modal",
+          "v9": "Dialog (modalType=\"modal\"/\"non-modal\"/\"alert\")",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "isOpen→open, isBlocking→modalType",
+          "gotchas": "Drag (dragOptions) has no equivalent (see fluentui-contrib/react-draggable-dialog)",
+          "v9Exports": [
+            "Dialog"
+          ]
+        },
+        {
+          "v8": "Nav",
+          "v9": "Nav / NavDrawer (+ NavItem, NavCategory, NavSubItem, AppItem, Hamburger, SplitNavItem)",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "groups: INavLinkGroup[]→JSX children, selectedKey→selectedValue, onLinkClick→onNavItemSelect",
+          "gotchas": "Now stable & shipped in @fluentui/react-components (@fluentui/react-nav@^9.4.3). Complete restructure from data-driven to composition",
+          "v9Exports": [
+            "Nav",
+            "NavDrawer",
+            "NavItem",
+            "NavCategory",
+            "NavSubItem",
+            "AppItem",
+            "Hamburger",
+            "SplitNavItem"
+          ]
+        },
+        {
+          "v8": "NormalPeoplePicker",
+          "v9": "TagPicker (+ Avatar in options)",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Mapping table lists PeoplePicker→TagPicker but also lists Pickers→\"Not available\" and puts Pickers under Deprecated. No people-specific affordances (persona rendering, SelectedPeopleList, member-list editing)",
+          "v9Exports": [
+            "TagPicker",
+            "Avatar"
+          ]
+        },
+        {
+          "v8": "OverflowSet",
+          "v9": "Overflow + OverflowItem",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "items/overflowItems→children, onRenderOverflowButton→useOverflowMenu",
+          "gotchas": "Mapping table's link text says \"Dialog\" but the URL points at components-overflow — a doc bug; the real answer is Overflow",
+          "v9Exports": [
+            "Overflow",
+            "OverflowItem"
+          ]
+        },
+        {
+          "v8": "Overlay",
+          "v9": "Portal (or Dialog backdrop)",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Mapping table says Portal, notes text says \"Replaced with Dialog\" — internally inconsistent",
+          "v9Exports": [
+            "Portal",
+            "Dialog"
+          ]
+        },
+        {
+          "v8": "Panel",
+          "v9": "Drawer / OverlayDrawer / InlineDrawer",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "isOpen→open, onDismiss→onOpenChange, type→position+size, headerText→DrawerHeaderTitle",
+          "gotchas": "PanelType enum → position/size combos; footer→DrawerFooter",
+          "v9Exports": [
+            "Drawer",
+            "OverlayDrawer",
+            "InlineDrawer"
+          ],
+          "notes": "OverlayDrawer / InlineDrawer."
+        },
+        {
+          "v8": "Persona",
+          "v9": "Persona / Avatar",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "imageUrl→avatar={{image:{src}}}, size enum→string",
+          "gotchas": "v9 splits Avatar (coin) from Persona (coin+text)",
+          "v9Exports": [
+            "Persona",
+            "Avatar"
+          ]
+        },
+        {
+          "v8": "Pivot",
+          "v9": "TabList / Tab",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "selectedKey→selectedValue, defaultSelectedKey→defaultSelectedValue, onLinkClick→onTabSelect, linkSize→size, itemKey→value, headerText→children, itemIcon→icon slot",
+          "gotchas": "Tab does NOT own its content. You must hoist panel content into a sibling and render conditionally on selected value. headersOnly, overflowBehavior, getTabId, itemCount, alwaysRender removed",
+          "v9Exports": [
+            "TabList",
+            "Tab"
+          ]
+        },
+        {
+          "v8": "PivotItem",
+          "v9": "TabList / Tab",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "selectedKey→selectedValue, defaultSelectedKey→defaultSelectedValue, onLinkClick→onTabSelect, linkSize→size, itemKey→value, headerText→children, itemIcon→icon slot",
+          "gotchas": "Tab does NOT own its content. You must hoist panel content into a sibling and render conditionally on selected value. headersOnly, overflowBehavior, getTabId, itemCount, alwaysRender removed",
+          "v9Exports": [
+            "TabList",
+            "Tab"
+          ]
+        },
+        {
+          "v8": "PlainCard",
+          "v9": "no direct equivalent",
+          "difficulty": "hard",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Listed under Deprecated. Official guidance: \"could use Popover with custom behavior\" — you implement hover-intent/delay yourself"
+        },
+        {
+          "v8": "Popup",
+          "v9": "Dialog",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Under Deprecated",
+          "v9Exports": [
+            "Dialog"
+          ]
+        },
+        {
+          "v8": "PositioningContainer",
+          "v9": "@fluentui/react-positioning (usePositioning)",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Low-level, different API",
+          "v9Exports": [
+            "usePositioning"
+          ]
+        },
+        {
+          "v8": "PrimaryButton",
+          "v9": "<Button appearance=\"primary\">",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "primary→appearance=\"primary\"",
+          "gotchas": null,
+          "notes": "CompoundButton, ToggleButton, MenuButton, SplitButton also exist."
+        },
+        {
+          "v8": "ProgressIndicator",
+          "v9": "ProgressBar",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "percentComplete (0–1)→value + max, label→Field label, description→Field hint",
+          "gotchas": "v8 uses 0–1 fraction; v9 uses value/max. Silent visual break if copied",
+          "v9Exports": [
+            "ProgressBar"
+          ]
+        },
+        {
+          "v8": "Rating",
+          "v9": "Rating / RatingDisplay",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "rating→value, max→max, onChange(ev, rating)→onChange(ev, data)",
+          "gotchas": "v9 splits interactive Rating from read-only RatingDisplay",
+          "v9Exports": [
+            "Rating",
+            "RatingDisplay"
+          ]
+        },
+        {
+          "v8": "registerIcons",
+          "v9": "@fluentui/react-icons-compat (registerIcons) or drop entirely",
+          "difficulty": "moderate",
+          "imports": "@fluentui/react → @fluentui/react-icons-compat",
+          "keyPropMapping": null,
+          "gotchas": "Recommended only \"if you still need … registerIcons from v8 icons\"",
+          "v9Exports": [
+            "registerIcons"
+          ]
+        },
+        {
+          "v8": "ResizeGroup",
+          "v9": "no equivalent",
+          "difficulty": "blocked",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Under Deprecated. Closest analogue is Overflow + @fluentui-contrib/react-resize-handle"
+        },
+        {
+          "v8": "ScrollablePane",
+          "v9": "no equivalent",
+          "difficulty": "blocked",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "ScrollablePane explicitly under Deprecated; Sticky isn't even in the mapping table"
+        },
+        {
+          "v8": "SearchBox",
+          "v9": "SearchBox",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "v9 SearchBox is Input-based; onSearch/onEscape differ",
+          "v9Exports": [
+            "SearchBox"
+          ]
+        },
+        {
+          "v8": "Selection",
+          "v9": "useSelection (from @fluentui/react-utilities) / useTableSelection",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Only meaningful inside Table/DataGrid; standalone SelectionZone gone",
+          "v9Exports": [
+            "useSelection",
+            "useTableSelection"
+          ]
+        },
+        {
+          "v8": "SelectionMode",
+          "v9": "useSelection (from @fluentui/react-utilities) / useTableSelection",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Only meaningful inside Table/DataGrid; standalone SelectionZone gone",
+          "v9Exports": [
+            "useSelection",
+            "useTableSelection"
+          ]
+        },
+        {
+          "v8": "SelectionZone",
+          "v9": "useSelection (from @fluentui/react-utilities) / useTableSelection",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": null,
+          "gotchas": "Only meaningful inside Table/DataGrid; standalone SelectionZone gone",
+          "v9Exports": [
+            "useSelection",
+            "useTableSelection"
+          ]
+        },
+        {
+          "v8": "Separator",
+          "v9": "Divider",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "alignContent, vertical identical",
+          "gotchas": "Adds appearance, inset",
+          "v9Exports": [
+            "Divider"
+          ]
+        },
+        {
+          "v8": "Shimmer",
+          "v9": "Skeleton + SkeletonItem",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "shimmerElements→SkeletonItem children with shape/size",
+          "gotchas": "ShimmerElementsDefaultHeights, custom shimmerColors, isDataLoaded swap behaviour all removed",
+          "v9Exports": [
+            "Skeleton",
+            "SkeletonItem"
+          ]
+        },
+        {
+          "v8": "ShimmeredDetailsList",
+          "v9": "DataGrid (or Table + useTableFeatures)",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": "columns: IColumn[]→createTableColumn(), items→items, selectionMode→selectionMode, onRenderItemColumn→renderCell",
+          "gotchas": "Listed under \"Deprecated Components\" in Microsoft's own mapping. No built-in virtualization (v8 had it) → add @fluentui-contrib/react-data-grid-react-window. No column reorder/drag-drop, no ConstrainMode, no DetailsListLayoutMode.fixedColumns parity",
+          "v9Exports": [
+            "DataGrid",
+            "Table",
+            "useTableFeatures"
+          ]
+        },
+        {
+          "v8": "Slider",
+          "v9": "Slider",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "snapToStep→step, label→Label+htmlFor",
+          "gotchas": "onChange(value: number) (1 arg) → onChange(ev, data) w/ data.value. ranged/lowerValue, origin, originFromZero, showValue, valueFormat all removed",
+          "v9Exports": [
+            "Slider"
+          ]
+        },
+        {
+          "v8": "SpinButton",
+          "v9": "SpinButton",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "onIncrement/onDecrement/onValidate → single onChange; suffix via new displayValue",
+          "gotchas": "value/defaultValue change from string to number — silent type/logic break",
+          "v9Exports": [
+            "SpinButton"
+          ]
+        },
+        {
+          "v8": "Stack",
+          "v9": "no component — CSS flex via makeStyles (or StackShim)",
+          "difficulty": "moderate",
+          "imports": "@fluentui/react → hand-written flex, or @fluentui/react-migration-v8-v9",
+          "keyPropMapping": "horizontal→flexDirection:'row', tokens.childrenGap→gap, horizontalAlign/verticalAlign→justify-content/align-items (swap meaning by direction), wrap→adds an extra inner wrapper div, verticalFill→height:100%",
+          "gotchas": "v8 Stack defaults to column. horizontalAlign maps to align-items in column mode but justify-content in row mode — the #1 silent layout break",
+          "v9Exports": [
+            "makeStyles",
+            "StackShim"
+          ],
+          "notes": "use display:flex + gap: tokens.spacing*; or a div with griffel styles."
+        },
+        {
+          "v8": "StackItem",
+          "v9": "no component — CSS flex via makeStyles (or StackShim)",
+          "difficulty": "moderate",
+          "imports": "@fluentui/react → hand-written flex, or @fluentui/react-migration-v8-v9",
+          "keyPropMapping": "horizontal→flexDirection:'row', tokens.childrenGap→gap, horizontalAlign/verticalAlign→justify-content/align-items (swap meaning by direction), wrap→adds an extra inner wrapper div, verticalFill→height:100%",
+          "gotchas": "v8 Stack defaults to column. horizontalAlign maps to align-items in column mode but justify-content in row mode — the #1 silent layout break",
+          "v9Exports": [
+            "makeStyles",
+            "StackShim"
+          ]
+        },
+        {
+          "v8": "Sticky",
+          "v9": "no equivalent",
+          "difficulty": "blocked",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "ScrollablePane explicitly under Deprecated; Sticky isn't even in the mapping table"
+        },
+        {
+          "v8": "SwatchColorPicker",
+          "v9": "SwatchPicker + ColorSwatch / ImageSwatch / EmptySwatch / SwatchPickerRow",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "colorCells→children, columnCount→SwatchPickerRow/renderSwatchPickerGrid, selectedId→selectedValue, onColorChanged→onSelectionChange",
+          "gotchas": null,
+          "v9Exports": [
+            "SwatchPicker",
+            "ColorSwatch",
+            "ImageSwatch",
+            "EmptySwatch",
+            "SwatchPickerRow"
+          ]
+        },
+        {
+          "v8": "TagPicker",
+          "v9": "TagPicker (+ TagPickerControl/Input/Group/List/Option/Button)",
+          "difficulty": "hard",
+          "imports": "same",
+          "keyPropMapping": "onResolveSuggestions→you filter + render TagPickerOption (useTagPickerFilter), selectedItems→selectedOptions, onChange→onOptionSelect",
+          "gotchas": "Stable (@fluentui/react-tag-picker@^9.10.1). Completely different async-suggestion model — you own the async pipeline",
+          "v9Exports": [
+            "TagPicker",
+            "TagPickerControl",
+            "Input",
+            "Group",
+            "List",
+            "Option",
+            "Button"
+          ]
+        },
+        {
+          "v8": "TeachingBubble",
+          "v9": "TeachingPopover (+ Trigger/Surface/Header/Body/Title/Footer/Carousel)",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "target→TeachingPopoverTrigger, headline→TeachingPopoverTitle, primaryButtonProps/secondaryButtonProps→TeachingPopoverFooter",
+          "gotchas": "Multi-step (footerContent paging) → TeachingPopoverCarousel",
+          "v9Exports": [
+            "TeachingPopover",
+            "Trigger",
+            "Surface",
+            "Header",
+            "Body",
+            "Title",
+            "Footer",
+            "Carousel"
+          ]
+        },
+        {
+          "v8": "Text",
+          "v9": "Text (+ Body1, Title1, Caption1, …)",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "variant→typography preset components or Text props",
+          "gotchas": null,
+          "v9Exports": [
+            "Text",
+            "Body1",
+            "Title1",
+            "Caption1"
+          ]
+        },
+        {
+          "v8": "TextField",
+          "v9": "Input",
+          "difficulty": "moderate",
+          "imports": "@fluentui/react/lib/TextField → @fluentui/react-components",
+          "keyPropMapping": "prefix→contentBefore (slot), suffix→contentAfter (slot), underlined/borderless→appearance, label→separate Label, inputClassName→input slot",
+          "gotchas": "onChange(ev, newValue: string) → onChange(ev, data: InputOnChangeData); use data.value. All validation props (errorMessage, onGetErrorMessage, validateOnFocusIn/Out/Load, deferredValidationTime, invalid) removed — use Field. No canRevealPassword",
+          "v9Exports": [
+            "Input"
+          ],
+          "notes": "Field provides label + validation + aria wiring."
+        },
+        {
+          "v8": "TextField",
+          "v9": "Textarea",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "resizable→resize, rows native",
+          "gotchas": "autoAdjustHeight has no v9 equivalent",
+          "variant": "multiline",
+          "v9Exports": [
+            "Textarea"
+          ],
+          "notes": "Field provides label + validation + aria wiring."
+        },
+        {
+          "v8": "ThemeGenerator",
+          "v9": "Theme Designer (packages/react-components/theme-designer) + createLightTheme/createDarkTheme",
+          "difficulty": "moderate",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Different algorithm entirely",
+          "v9Exports": [
+            "createLightTheme",
+            "createDarkTheme"
+          ]
+        },
+        {
+          "v8": "ThemeProvider",
+          "v9": "FluentProvider",
+          "difficulty": "moderate",
+          "imports": "same",
+          "keyPropMapping": "theme: ITheme→theme: Theme (v9)",
+          "gotchas": "CSS-in-JS context → CSS custom properties",
+          "v9Exports": [
+            "FluentProvider"
+          ]
+        },
+        {
+          "v8": "themeRulesStandardCreator",
+          "v9": "Theme Designer (packages/react-components/theme-designer) + createLightTheme/createDarkTheme",
+          "difficulty": "moderate",
+          "imports": null,
+          "keyPropMapping": null,
+          "gotchas": "Different algorithm entirely",
+          "v9Exports": [
+            "createLightTheme",
+            "createDarkTheme"
+          ]
+        },
+        {
+          "v8": "TimePicker",
+          "v9": "TimePicker (compat)",
+          "difficulty": "trivial",
+          "imports": "@fluentui/react → @fluentui/react-timepicker-compat",
+          "keyPropMapping": "Combobox-based",
+          "gotchas": "Same compat caveats",
+          "v9Exports": [
+            "TimePicker"
+          ]
+        },
+        {
+          "v8": "Toggle",
+          "v9": "Switch",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "onText/offText removed, label→label",
+          "gotchas": null,
+          "v9Exports": [
+            "Switch"
+          ],
+          "notes": "renamed."
+        },
+        {
+          "v8": "Tooltip",
+          "v9": "Tooltip",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "content→content, directionalHint→positioning, host wraps child",
+          "gotchas": "Tooltip requires exactly one focusable child + relationship prop",
+          "v9Exports": [
+            "Tooltip"
+          ]
+        },
+        {
+          "v8": "TooltipHost",
+          "v9": "Tooltip",
+          "difficulty": "trivial",
+          "imports": "same",
+          "keyPropMapping": "content→content, directionalHint→positioning, host wraps child",
+          "gotchas": "Tooltip requires exactly one focusable child + relationship prop",
+          "v9Exports": [
+            "Tooltip"
+          ],
+          "notes": "relationship + positioning props."
+        },
+        {
+          "v8": "useKeytipRef",
+          "v9": "Keytips (contrib)",
+          "difficulty": "moderate",
+          "imports": "@fluentui/react → @fluentui-contrib/react-keytips",
+          "keyPropMapping": "keytipStartSequence→startSequence (type IKeytipTransitionKey[]→string), onEnterKeytipMode→onEnterKeytipsMode, hasDynamicChildren→dynamic, calloutProps→positioning",
+          "gotchas": "v9 components have no keytipProps — attach via useKeytipRef and pass as ref. KeytipData, useKeytipData, disabled, hasOverflowSubMenu have no equivalent. Lives in fluentui-contrib, not core",
+          "v9Exports": [
+            "Keytips"
+          ]
+        }
       ],
       "theming": "Two bridges: (1) createV8Theme(brandVariants, v9Theme) from @fluentui/react-migration-v8-v9 renders v8 under a v9-derived theme; (2) generate a v9 brand theme from your existing brand color with the fluent_generate_theme MCP tool and wrap new v9 UI in FluentProvider.",
       "steps": [
@@ -66,7 +1227,8 @@
         "https://react.fluentui.dev (Concepts > Migration from v8; v8 component mapping)",
         "https://www.npmjs.com/package/@fluentui/react-migration-v8-v9",
         "https://github.com/microsoft/fluentui/wiki/Fluent-UI-React-v9-Release"
-      ]
+      ],
+      "componentMappingNote": "101 per-component rows sourced from mcp/data/fluent-v8.json. Each row is keyed on a single v8 export so it can be looked up directly; the previous 20 rows used slash-joined labels such as \"DefaultButton / PrimaryButton / IconButton\" that no lookup could match. For collisions, v8-only components and runtime traps, call fluent_v8_lookup."
     },
     "fromOtherDesignSystem": {
       "title": "Adopt Fluent 2 in an app using another design system (MUI, Chakra, Ant Design, Bootstrap, plain CSS)",
@@ -79,7 +1241,10 @@
         "Swap hardcoded colors/spacing/radius for tokens.*; verify a11y.",
         "Repeat screen-by-screen; keep the two systems isolated per subtree until done."
       ],
-      "docs": ["https://react.fluentui.dev", "https://fluent2.microsoft.design"]
+      "docs": [
+        "https://react.fluentui.dev",
+        "https://fluent2.microsoft.design"
+      ]
     },
     "hardcodedToTokens": {
       "title": "Replace hardcoded colors/spacing/radius/shadows with Fluent 2 tokens",
@@ -91,12 +1256,26 @@
         "Re-check contrast + high contrast; run fluent-design-review."
       ],
       "examples": [
-        { "from": "color:#242424", "to": "tokens.colorNeutralForeground1" },
-        { "from": "padding:12px", "to": "tokens.spacingHorizontalM" },
-        { "from": "border-radius:4px", "to": "tokens.borderRadiusMedium" },
-        { "from": "box-shadow: 0 4px 8px rgba(0,0,0,.14)", "to": "tokens.shadow8" }
+        {
+          "from": "color:#242424",
+          "to": "tokens.colorNeutralForeground1"
+        },
+        {
+          "from": "padding:12px",
+          "to": "tokens.spacingHorizontalM"
+        },
+        {
+          "from": "border-radius:4px",
+          "to": "tokens.borderRadiusMedium"
+        },
+        {
+          "from": "box-shadow: 0 4px 8px rgba(0,0,0,.14)",
+          "to": "tokens.shadow8"
+        }
       ],
-      "docs": ["https://fluent2.microsoft.design/design-tokens"]
+      "docs": [
+        "https://fluent2.microsoft.design/design-tokens"
+      ]
     },
     "powerbiReport": {
       "title": "Apply Fluent 2 to an EXISTING Power BI PBIP/PBIR report and repair the layout distortion it causes",
@@ -128,14 +1307,38 @@
       ],
       "effectMapNote": "The effects below belong to the Fluent 2 BASE theme, which can only be switched on in Power BI Desktop (Options > Preview features > 'Modern visual defaults and customize theme improvements', then View > Themes > Customize current theme > Base theme). They do NOT occur when a custom theme is applied as files. Treat this as a checklist for users who also switch the base theme, not as the expected outcome. Because the base theme cannot be set from files, the custom theme must carry the entire Fluent 2 structural look itself.",
       "effectMap": [
-        { "change": "Increased padding and rounded corners on all visuals", "risk": "Content area shrinks, so content clips and tight neighbors collide on render." },
-        { "change": "Titles and subtitles on by default (axis titles off)", "risk": "Added header height pushes content down, so it overflows or clips." },
-        { "change": "Slicers change mode (list to dropdown or tile)", "risk": "Footprint height or width changes, so slicers overlap neighbors." },
-        { "change": "Small multiples reflow (2x2 to 1x4 or 4x1)", "risk": "Space requirement changes, so the visual overflows or leaves gaps." },
-        { "change": "Buttons and navigators restyled; button fill uses the first data color", "risk": "Nav bars misalign and button size or spacing shifts." },
-        { "change": "Cards use less padding and no reference-label background", "risk": "Card content re-anchors and alignment with neighbors drifts." },
-        { "change": "New pages default to 1920x1080 (existing pages keep their size)", "risk": "Out-of-bounds checks must use each page's actual width and height, not the new default." },
-        { "change": "Uniform fonts and sizes across visuals", "risk": "Text reflows, wraps, or clips where labels were tightly fit." }
+        {
+          "change": "Increased padding and rounded corners on all visuals",
+          "risk": "Content area shrinks, so content clips and tight neighbors collide on render."
+        },
+        {
+          "change": "Titles and subtitles on by default (axis titles off)",
+          "risk": "Added header height pushes content down, so it overflows or clips."
+        },
+        {
+          "change": "Slicers change mode (list to dropdown or tile)",
+          "risk": "Footprint height or width changes, so slicers overlap neighbors."
+        },
+        {
+          "change": "Small multiples reflow (2x2 to 1x4 or 4x1)",
+          "risk": "Space requirement changes, so the visual overflows or leaves gaps."
+        },
+        {
+          "change": "Buttons and navigators restyled; button fill uses the first data color",
+          "risk": "Nav bars misalign and button size or spacing shifts."
+        },
+        {
+          "change": "Cards use less padding and no reference-label background",
+          "risk": "Card content re-anchors and alignment with neighbors drifts."
+        },
+        {
+          "change": "New pages default to 1920x1080 (existing pages keep their size)",
+          "risk": "Out-of-bounds checks must use each page's actual width and height, not the new default."
+        },
+        {
+          "change": "Uniform fonts and sizes across visuals",
+          "risk": "Text reflows, wraps, or clips where labels were tightly fit."
+        }
       ],
       "detectionRules": {
         "outOfBounds": "x < 0 || y < 0 || (x + width) > page.width || (y + height) > page.height, using each page's own page.json width/height (1280x720 initial page, 1920x1080 new Fluent 2 pages). Tolerance about 1px for float rounding. This is the only test grounded directly in the schema (VisualContainerPosition semantics: x+width should be less than the page width, y+height less than the height).",
