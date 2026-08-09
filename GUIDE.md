@@ -51,6 +51,7 @@ The fastest path is the bundled helper, which registers `fluent-ui` into every A
 ```bash
 node hosts/register-mcp.mjs            # register into all installed hosts
 node hosts/register-mcp.mjs --dry-run  # preview first, write nothing
+node hosts/register-mcp.mjs --figma    # also register Figma's remote MCP server (OAuth is host-owned)
 ```
 
 Then restart each host so it loads the tools. To register by hand instead, pick your host below. There are three MCP config dialects; templates live in [`hosts/`](hosts/).
