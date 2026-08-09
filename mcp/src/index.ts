@@ -16,6 +16,9 @@ import { registerMigration } from './tools/migration.js';
 import { registerDesignGuidance } from './tools/designGuidance.js';
 import { registerImages } from './tools/images.js';
 import { registerConfig } from './tools/config.js';
+import { registerV8 } from './tools/v8.js';
+import { registerFigma } from './tools/figma.js';
+import { registerNative } from './tools/native.js';
 
 const server = new McpServer({
   name: 'fluent-ui',
@@ -52,6 +55,23 @@ registerImages(server);
 // User-defined presets config (fluent.config.json) + persistent agent memory
 // (.fluent/memory.json). Zero-config safe: sensible Fluent 2 defaults, never throws.
 registerConfig(server);
+
+// Fluent 1 (Fluent UI React v8 / Office UI Fabric): symbol lookup and reference.
+// Ships the collision and trap data that matters most — cases where v8 and v9
+// share an export name, so the code compiles and then misbehaves at runtime.
+registerV8(server);
+
+// Figma MCP server for design-to-code. Read-only reference: this plugin never
+// asks for, stores or forwards a Figma token — auth is the host's OAuth flow.
+// Leads with entitlements because a View/Collab seat gets 6 calls per MONTH,
+// which is enough to start a workflow and not enough to finish one.
+registerFigma(server);
+
+// Native platforms: iOS, Android, Windows. The same component name resolves to
+// a different type on each (and often to two types on one platform — Android
+// splits Fluent 2 Compose from Fluent 1 Views by Kotlin package, not artifact),
+// so guessing from the web API is how native Fluent code fails to compile.
+registerNative(server);
 
 async function main(): Promise<void> {
   const transport = new StdioServerTransport();

@@ -34,7 +34,9 @@ Copy the matching template from this folder:
 |---|---|---|---|---|
 | **Copilot** (CLI, desktop app) | `mcpServers` | `local` | `"tools": ["*"]` | `hosts/mcp.copilot.json` |
 | **VS Code / Visual Studio** | `servers` | `stdio` | — | `hosts/mcp.vscode.json` |
-| **Claude-style** (Cursor, Claude, Gemini, Antigravity, Windsurf, Cline) | `mcpServers` | *(omit)* | — | `hosts/mcp.claude-style.json` |
+| **Claude-style** (Cursor, Claude, Gemini, Antigravity, Windsurf, Cline) | `mcpServers` | *(omit — see below)* | — | `hosts/mcp.claude-style.json` |
+
+> **`type` is only omittable for stdio.** The *(omit)* above is correct for `fluent-ui` itself, which is a local stdio server. It does **not** generalise: a Claude-style entry that points at a **remote HTTP URL** must carry `"type": "http"` explicitly, or Claude Code fails to connect. If you add a hosted server (for example Figma's `https://mcp.figma.com/mcp`) alongside `fluent-ui`, set the type on that entry. Never write `"sse"` — it is deprecated.
 
 > **Bundled configs:** this repo ships `.vscode/mcp.json` — VS Code, VS Code Insiders, and **Visual Studio** auto-discover it (`servers`/`stdio`, `${workspaceFolder}` path). The root `.mcp.json` is the **Copilot CLI / Claude Code** registration (`mcpServers`/`local` dialect); Visual Studio does **not** read that shape, so rely on `.vscode/mcp.json` there.
 

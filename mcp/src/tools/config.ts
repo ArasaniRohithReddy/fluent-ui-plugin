@@ -43,6 +43,11 @@ const DEFAULTS: Record<string, any> = {
   },
   iconStyle: 'regular',
   targets: ['web-react'],
+  // Which Fluent generation the project is on. Fluent 2 (v9) is the default, but
+  // a Fluent 1 (v8) codebase needs different components, theming and imports —
+  // and answering a v8 question with v9 guidance produces code that does not
+  // compile, so this has to be declarable rather than assumed.
+  fluentVersion: 'v9',
   migration: { from: 'none', strategy: 'incremental' },
   content: { capitalization: 'sentence' },
   // Per-surface presets. Every surface gets its own knobs so "apply Fluent 2"
@@ -369,9 +374,13 @@ export function registerConfig(server: McpServer): void {
           .optional()
           .describe('Primary brand color (hex). Seeds brand.color (BrandVariants slot 80).'),
         targets: z
-          .array(z.enum(['web-react', 'web-components', 'powerbi', 'powerapps', 'powerpages', 'pcf']))
+          .array(z.enum(['web-react', 'web-components', 'powerbi', 'powerapps', 'powerpages', 'pcf', 'ios', 'android', 'windows']))
           .optional()
           .describe('Build / adoption targets. Sets the targets array.'),
+        fluentVersion: z
+          .enum(['v8', 'v9'])
+          .optional()
+          .describe('Fluent generation this project uses: v8 (Fluent 1 / Office UI Fabric) or v9 (Fluent 2). Sets fluentVersion.'),
         accessibilityLevel: z
           .enum(['AA', 'AAA'])
           .optional()
@@ -450,6 +459,7 @@ export function registerConfig(server: McpServer): void {
       controlSize,
       iconStyle,
       migrationFrom,
+      fluentVersion,
       executionProfile,
       fanOut,
       powerbiNormalizeInline,
@@ -495,7 +505,12 @@ export function registerConfig(server: McpServer): void {
       if (accessibilityLevel) merged.accessibility.targetLevel = accessibilityLevel;
       if (iconStyle) merged.iconStyle = iconStyle;
       if (targets && targets.length) merged.targets = targets;
+      if (fluentVersion) merged.fluentVersion = fluentVersion;
       if (migrationFrom) merged.migration.from = migrationFrom;
+      // Declaring a migration FROM Fluent 1 says nothing about which generation
+      // the code is on today, and the answer is almost always still v8 mid-move.
+      // Inferring it here stops us answering a v8 codebase with v9 imports.
+      if (!fluentVersion && migrationFrom === 'fluent-v8') merged.fluentVersion = 'v8';
       if (executionProfile) {
         merged.execution.profile = executionProfile;
         // Derive the concrete knobs from the profile so users never hand-pick

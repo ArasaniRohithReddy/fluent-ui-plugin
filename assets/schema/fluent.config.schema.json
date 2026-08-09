@@ -32,6 +32,7 @@
       "default": "regular"
     },
     "targets": { "$ref": "#/$defs/targets" },
+    "fluentVersion": { "$ref": "#/$defs/fluentVersion" },
     "migration": { "$ref": "#/$defs/migration" },
     "content": { "$ref": "#/$defs/content" },
     "surfaces": { "$ref": "#/$defs/surfaces" },
@@ -411,14 +412,21 @@
     "targets": {
       "type": "array",
       "title": "Build / adoption targets",
-      "description": "Which Fluent 2 surfaces to build or adopt for. Routes to MCP tools: web-react -> fluent_generate_code (react); web-components -> fluent_generate_code (webcomponents); powerbi -> fluent_generate_powerbi_theme / fluent_scaffold_pbip; powerapps/powerpages/pcf -> fluent_powerplatform_guidance.",
+      "description": "Which Fluent surfaces to build or adopt for. Routes to MCP tools: web-react -> fluent_generate_code (react); web-components -> fluent_generate_code (webcomponents); powerbi -> fluent_generate_powerbi_theme / fluent_scaffold_pbip; powerapps/powerpages/pcf -> fluent_powerplatform_guidance; ios/android/windows -> fluent_native_component / fluent_native_guidance.",
       "items": {
         "type": "string",
-        "enum": ["web-react", "web-components", "powerbi", "powerapps", "powerpages", "pcf"]
+        "enum": ["web-react", "web-components", "powerbi", "powerapps", "powerpages", "pcf", "ios", "android", "windows"]
       },
       "uniqueItems": true,
       "minItems": 1,
       "default": ["web-react"]
+    },
+    "fluentVersion": {
+      "type": "string",
+      "title": "Fluent generation",
+      "description": "Which Fluent generation this project is on. v9 is Fluent 2 (@fluentui/react-components); v8 is Fluent 1 / Office UI Fabric (@fluentui/react). This is not cosmetic: the two have different components, imports, theming and prop shapes, and 23 exports share a name while behaving differently, so answering a v8 codebase with v9 guidance yields code that does not compile or silently misbehaves. Routes to fluent_v8_lookup / fluent_v8_guidance when set to v8.",
+      "enum": ["v8", "v9"],
+      "default": "v9"
     },
     "migration": {
       "type": "object",

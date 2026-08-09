@@ -1,0 +1,148 @@
+import { z } from 'zod';
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { loadJson, textResult } from '../util.js';
+
+interface FigmaHost {
+  id: string;
+  name?: string;
+  catalogConfirmed?: boolean | null;
+  figmaDocumentsThisHost?: boolean;
+  configKey?: string;
+  urlField?: string;
+  type?: string | null;
+  configPath?: string;
+  snippet?: unknown;
+  authStep?: string;
+  note?: string;
+}
+
+interface FigmaData {
+  $meta?: Record<string, unknown>;
+  meta?: Record<string, unknown>;
+  servers?: unknown;
+  rateLimits?: unknown;
+  rateLimitExemptTools?: string[];
+  entitlementSummary?: string;
+  catalogGate?: Record<string, unknown>;
+  hosts?: FigmaHost[];
+  hostConfigNotes?: unknown;
+  codeConnect?: Record<string, unknown>;
+  fluentFigmaResources?: unknown;
+  fluentKitTiers?: unknown;
+  fluentKitTiersImplication?: string;
+  workflow?: unknown;
+  prerequisiteMatrix?: unknown;
+  unverified?: unknown;
+}
+
+const load = (): FigmaData | null => loadJson<FigmaData>('figma.json');
+
+/**
+ * Two states that must never collapse into each other: `false` means Figma
+ * documents the host as unsupported; `null`/absent means we could not read the
+ * catalog (it is JS-rendered) and are declining to guess either way.
+ */
+function catalogLabel(v: boolean | null | undefined): string {
+  if (v === true) return 'confirmed in the Figma MCP Catalog';
+  if (v === false) return 'NOT in the Figma MCP Catalog — connection will fail';
+  return 'UNCONFIRMED — Figma publishes no install guide for this host, and the catalog page could not be read. Try it; if authorization fails, that is the catalog gate, not a config error.';
+}
+
+export function registerFigma(server: McpServer): void {
+  server.registerTool(
+    'fluent_figma_guidance',
+    {
+      title: 'Figma MCP server for Fluent — access limits, host setup, design-to-code',
+      description:
+        'Everything needed to drive a Fluent 2 design-to-code workflow from Figma: what actually gates access (seat/plan rate limits and the client catalog allowlist), per-host config, Microsoft\'s official Fluent Figma kits, Code Connect status, and how a Figma frame becomes @fluentui/react-components v9 + Griffel. Call the "access" section BEFORE starting a Figma workflow — a View or Collab seat gets 6 tool calls per month and will run out mid-task. This plugin never handles Figma credentials; auth is the host\'s own OAuth flow.',
+      inputSchema: {
+        section: z
+          .enum(['access', 'hosts', 'servers', 'kits', 'code-connect', 'workflow', 'prerequisites', 'unverified', 'all'])
+          .default('access')
+          .describe('Which section to return. "access" is the one that most often explains a failing workflow.'),
+        host: z
+          .string()
+          .optional()
+          .describe('Optional host id to get setup for just that client, e.g. "vscode", "cursor", "claude-code", "copilot-cli".'),
+      },
+    },
+    async ({ section, host }) => {
+      const data = load();
+      if (!data) return textResult('Figma dataset not found at mcp/data/figma.json.');
+
+      if (host) {
+        const hit = (data.hosts ?? []).find((h) => h.id?.toLowerCase() === host.toLowerCase());
+        if (!hit) {
+          const ids = (data.hosts ?? []).map((h) => h.id).join(', ');
+          return textResult(`No Figma setup recorded for host "${host}".\n\nKnown hosts: ${ids}`);
+        }
+        return textResult(
+          JSON.stringify(
+            {
+              host: hit,
+              catalogStatus: catalogLabel(hit.catalogConfirmed),
+              readThisFirst: data.entitlementSummary,
+              configNotes: data.hostConfigNotes,
+            },
+            null,
+            2,
+          ),
+        );
+      }
+
+      switch (section) {
+        case 'access':
+          return textResult(
+            JSON.stringify(
+              {
+                summary: data.entitlementSummary,
+                rateLimits: data.rateLimits,
+                exemptFromRateLimits: data.rateLimitExemptTools,
+                catalogGate: data.catalogGate,
+                diagnose:
+                  'Run the whoami tool first — it is rate-limit exempt and reports the authenticated email, every plan the user belongs to, and the seat type in each. That distinguishes "wrong account" from "out of quota".',
+              },
+              null,
+              2,
+            ),
+          );
+        case 'hosts':
+          return textResult(
+            JSON.stringify(
+              {
+                hosts: (data.hosts ?? []).map((h) => ({ ...h, catalogStatus: catalogLabel(h.catalogConfirmed) })),
+                configNotes: data.hostConfigNotes,
+              },
+              null,
+              2,
+            ),
+          );
+        case 'servers':
+          return textResult(JSON.stringify({ servers: data.servers, notes: data.meta }, null, 2));
+        case 'kits':
+          return textResult(
+            JSON.stringify(
+              {
+                resources: data.fluentFigmaResources,
+                tiers: data.fluentKitTiers,
+                implication: data.fluentKitTiersImplication,
+              },
+              null,
+              2,
+            ),
+          );
+        case 'code-connect':
+          return textResult(JSON.stringify(data.codeConnect, null, 2));
+        case 'workflow':
+          return textResult(JSON.stringify(data.workflow, null, 2));
+        case 'prerequisites':
+          return textResult(JSON.stringify(data.prerequisiteMatrix, null, 2));
+        case 'unverified':
+          return textResult(JSON.stringify(data.unverified, null, 2));
+        case 'all':
+        default:
+          return textResult(JSON.stringify(data, null, 2));
+      }
+    },
+  );
+}

@@ -155,6 +155,11 @@ const TOOLS: [string, string][] = [
   ['fluent_set_config', 'Update presets'],
   ['fluent_remember', 'Persist a design decision'],
   ['fluent_recall', 'Read back recorded decisions'],
+  ['fluent_v8_lookup', 'Fluent 1 (v8) symbols, and the v8/v9 name collisions'],
+  ['fluent_v8_guidance', 'Fluent 1 reference and the per-component v8 to v9 map'],
+  ['fluent_native_component', 'Real iOS, Android and Windows types, imports and API'],
+  ['fluent_native_guidance', 'Native generations, install, tokens, theming and a11y'],
+  ['fluent_figma_guidance', 'Figma MCP entitlements, catalog gate and design-to-code'],
 ];
 
 const COMMUNITY: { c: string; Icon: React.FC<any>; t: string; d: string; href: string; cta: string }[] = [
@@ -297,7 +302,7 @@ export function App() {
                 <Button appearance="secondary" size="large" icon={<Star20Regular />} as="a" href={REPO}>View on GitHub</Button>
               </div>
               <div className={s.stats}>
-                {[['61', 'Components (47 core, 14 AI)'], ['36', 'Design-language topics'], ['705', 'Source visuals indexed'], ['23', 'MCP tools'], ['366', 'Design tokens, 3 themes']].map(([b, l]) => (
+                {[['61', 'Components (47 core, 14 AI)'], ['36', 'Design-language topics'], ['705', 'Source visuals indexed'], [String(TOOLS.length), 'MCP tools'], ['366', 'Design tokens, 3 themes'], ['155', 'Native types (iOS/Android/Windows)']].map(([b, l]) => (
                   <div key={l} className={`${glass} ${s.stat}`}><span className={s.statB}>{b}</span><Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{l}</Caption1></div>
                 ))}
               </div>
@@ -366,7 +371,7 @@ export function App() {
             <div className={s.wrap}>
               <div className={s.sectionHead}>
                 <Caption1 className={s.eyebrow}>Under the hood</Caption1>
-                <Title3 as="h2" block>23 deterministic MCP tools</Title3>
+                <Title3 as="h2" block>{TOOLS.length} deterministic MCP tools</Title3>
                 <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>Portable, standard MCP over stdio, so the same server runs in every host below.</Body1>
               </div>
               <div className={s.grid2}>

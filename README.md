@@ -6,7 +6,7 @@
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![GitHub Discussions](https://img.shields.io/badge/GitHub-Discussions-5c2e91.svg)](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/discussions)
 
-> Agents · Skills · MCP tools that help developers, designers, and UI engineers implement **Microsoft Fluent 2 (Fluent UI 2.0)** correctly and fast, across **Web**, **Power BI**, and **Power Platform**, from any AI IDE.
+> Agents · Skills · MCP tools that help developers, designers, and UI engineers implement **Microsoft Fluent 2 (Fluent UI 2.0)** correctly and fast, across **Web**, **Power BI**, **Power Platform**, and **native iOS / Android / Windows**, from any AI IDE.
 
 **🌐 Live site (itself a Fluent UI React v9 app, built with this plugin): [arasanirohithreddy.github.io/fluent-ui-plugin](https://arasanirohithreddy.github.io/fluent-ui-plugin/)** · **[Install & usage guide](GUIDE.md)** · **[Per-host matrix](hosts/README.md)**
 
@@ -19,6 +19,8 @@ Fluent 2 is large and precise: the right component, the right token, the right t
 
 Beyond greenfield, it also:
 - **Adopt/migrate existing UIs to Fluent 2**: Fluent UI v8 to v9 (keeps Fluent 1 alongside Fluent 2), from other design systems, and hardcoded values to tokens.
+- **Support Fluent 1 (v8) as a first-class target**, not just a migration source — including the collision traps where v8 and v9 export the *same name* for different components, so a wrong import compiles cleanly and misbehaves at runtime.
+- **Cover the native platforms**: real iOS, Android and Windows types, imports and API. The same component *name* maps to a different *type* on every platform — and on Android both Fluent generations ship in the **same Maven artifacts**, separated only by Kotlin package — so native code can't safely be inferred from the web API.
 - **Optional user presets (`fluent.config.json`) + persistent memory**: agents honor your brand/accessibility/shape/size presets and remember your decisions; fully zero-config by default (no setup required).
 
 ## What's inside
@@ -34,7 +36,7 @@ Beyond greenfield, it also:
 | `fluent-design-reviewer` | Audits UI against Fluent 2 + a11y |
 
 ### 📚 Skills (`skills/`)
-`fluent-web-ui` · `fluent-theming` · `fluent-design-tokens` · `fluent-design-language` · `fluent-accessibility` · `fluent-ai-copilot-ui` · `fluent-powerbi-theme` · `fluent-pbip-report` · `fluent-powerbi-adopt` · `fluent-powerapps` · `fluent-powerpages` · `fluent-pcf-component` · `fluent-migration` · `fluent-design-review` · `fluent-config`
+`fluent-web-ui` · `fluent-theming` · `fluent-design-tokens` · `fluent-design-language` · `fluent-accessibility` · `fluent-ai-copilot-ui` · `fluent-powerbi-theme` · `fluent-pbip-report` · `fluent-powerbi-adopt` · `fluent-powerapps` · `fluent-powerpages` · `fluent-pcf-component` · `fluent-migration` · `fluent-design-review` · `fluent-config` · `fluent-v8` · `fluent-native` · `fluent-figma`
 
 ### 🛠️ MCP tools (`mcp/`, Node + TypeScript)
 | Tool | Does |
@@ -58,6 +60,9 @@ Beyond greenfield, it also:
 | `fluent_get_config` / `fluent_recall` | Load the user's resolved presets (config > memory > default) + the recorded decision log |
 | `fluent_init_config` / `fluent_set_config` | Scaffold (first-run) or update the user's `fluent.config.json` presets |
 | `fluent_remember` | Record a design decision to `.fluent/memory.json` (append-only) |
+| `fluent_v8_lookup` / `fluent_v8_guidance` | **Fluent 1 (Fluent UI React v8 / Office UI Fabric)**: real v8 symbols, the per-component v8 to v9 map, and the collision traps where v8 and v9 export the *same name* |
+| `fluent_native_component` / `fluent_native_guidance` | **Native iOS / Android / Windows**: real type names, imports and namespaces, key API and samples, plus which generation is current vs frozen |
+| `fluent_figma_guidance` | Figma MCP design-to-code: entitlements (rate limits per seat and plan), the client-catalog gate, remote vs desktop server, and Figma-variable to Fluent-token mapping. Credential-free |
 
 ## Works in every major host
 The MCP server is a standard stdio server; agents/skills/instructions fan out via `AGENTS.md`, `CLAUDE.md`, and `.github/`. Priority hosts: **GitHub Copilot CLI, VS Code, VS Code Insiders, Visual Studio, GitHub Copilot desktop app**; also Cursor, Claude, Gemini, Antigravity, Windsurf, Cline. See **[`hosts/README.md`](hosts/README.md)** for copy-paste configs (3 MCP dialects).
@@ -93,8 +98,8 @@ plugin.json            # plugin manifest (+ mirrors in .claude-plugin/.codex-plu
 .mcp.json              # bundled MCP server registration (Copilot dialect)
 AGENTS.md · CLAUDE.md  # portable instructions (fan out to most hosts)
 agents/                # 6 agents (*.agent.md)
-skills/                # 15 skills (SKILL.md)
-mcp/                   # MCP server: 23 tools (src/, dist/, data/)
+skills/                # 18 skills (SKILL.md)
+mcp/                   # MCP server: 28 tools (src/, dist/, data/)
 templates/pbip/        # PBIP/PBIR project template
 hosts/                 # per-IDE MCP config templates + install guide
 docs/                  # architecture + presentation

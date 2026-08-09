@@ -1,0 +1,366 @@
+{
+  "$meta": {
+    "title": "Figma MCP server + Microsoft Fluent design kits",
+    "description": "Grounded reference for connecting the Figma MCP server to a Fluent 2 workflow: which servers exist, what gates access (rate limits + the client catalog allowlist), which tools exist, Microsoft's official Fluent Figma kits, and how a Figma design becomes @fluentui/react-components v9 + Griffel code.",
+    "scope": "Read-only reference data. This plugin never registers an OAuth client, never opens a Figma consent screen, and never asks for, stores, proxies, or forwards a Figma token. Auth belongs to the host's own OAuth flow or the signed-in Figma desktop session."
+  },
+  "meta": {
+    "verifiedOn": "2026-08",
+    "productNameNote": "The product is the 'Figma MCP server'. The older name 'Dev Mode MCP server' is retired (the old help URL 302-redirects to the new title). Most published third-party guides are stale and still use the old name and the old tool names (get_code, get_image).",
+    "serverVersionSeen": "2.2.91 (figma/mcp-server-guide:server.json)",
+    "status": "Beta. Announced 2025-06-04 in open beta; still labelled beta as of this research (2026-08). Skills/write features carry the note: 'This will eventually be a usage-based paid feature, but is currently available for free during the beta period.'",
+    "sources": [
+      "https://developers.figma.com/docs/figma-mcp-server/",
+      "https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/",
+      "https://developers.figma.com/docs/figma-mcp-server/local-server-installation/",
+      "https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/",
+      "https://developers.figma.com/docs/figma-mcp-server/tools-and-prompts/",
+      "https://developers.figma.com/docs/figma-mcp-server/add-custom-rules/",
+      "https://developers.figma.com/docs/figma-mcp-server/create-skills/",
+      "https://developers.figma.com/docs/figma-mcp-server/server-returning-web-code/",
+      "https://developers.figma.com/docs/rest-api/authentication/",
+      "https://developers.figma.com/docs/rest-api/scopes/",
+      "https://help.figma.com/hc/en-us/articles/39216419318551-Get-started-with-the-Figma-MCP-server",
+      "https://help.figma.com/hc/en-us/articles/39252411778583-Figma-MCP-server-FAQs",
+      "https://help.figma.com/hc/en-us/articles/39166810751895",
+      "https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server",
+      "https://help.figma.com/hc/en-us/articles/15145852043927-Create-and-manage-variables-and-collections",
+      "https://www.figma.com/blog/introducing-figma-mcp-server/",
+      "https://www.figma.com/mcp-catalog/",
+      "https://github.com/figma/mcp-server-guide",
+      "https://fluent2.microsoft.design/get-started/design",
+      "https://fluent2.microsoft.design/design-tokens",
+      "https://learn.microsoft.com/en-us/windows/apps/design/downloads/",
+      "https://code.claude.com/docs/en/mcp",
+      "https://code.visualstudio.com/docs/agent-customization/mcp-servers"
+    ]
+  },
+
+  "servers": [
+    {
+      "id": "figma-remote",
+      "name": "Figma MCP Server (remote / hosted)",
+      "vendor": "Figma",
+      "official": true,
+      "recommended": true,
+      "status": "beta",
+      "transport": "streamable-http",
+      "endpoint": "https://mcp.figma.com/mcp",
+      "canonicalDescriptor": {
+        "name": "com.figma.mcp/mcp",
+        "title": "Figma MCP Server",
+        "version": "2.2.91",
+        "remotes": [{ "type": "streamable-http", "url": "https://mcp.figma.com/mcp" }],
+        "source": "figma/mcp-server-guide:server.json"
+      },
+      "quote": "We recommend using the Remote MCP server, which connects directly to Figma's hosted endpoint without requiring the Figma desktop app. The remote MCP server also provides the broadest set of features.",
+      "requires": {
+        "figmaAccount": true,
+        "figmaPlan": "Starter works but is capped at 6 tool calls per month regardless of seat. Professional, Organization, or Enterprise is the realistic floor.",
+        "seatType": "Dev or Full seat. View and Collab seats get 6 tool calls per month — enough to fail, not enough to work.",
+        "desktopApp": false,
+        "devMode": false,
+        "hostInFigmaMcpCatalog": true,
+        "oauthSignInInHost": true,
+        "nodeSpecificLink": true,
+        "note": "Remote has no selection-based prompting — every request needs a node-specific link (?node-id=...). A file-only URL fails."
+      },
+      "auth": {
+        "method": "oauth",
+        "spec": "OAuth 2.1 shape: authorization_code + PKCE S256, state required, refresh tokens. Verified from Figma's live public discovery documents.",
+        "issuer": "https://api.figma.com",
+        "authorizationEndpoint": "https://www.figma.com/oauth/mcp",
+        "tokenEndpoint": "https://api.figma.com/v1/oauth/token",
+        "registrationEndpoint": "https://api.figma.com/v1/oauth/mcp/register",
+        "scopes": ["mcp:connect"],
+        "bearerMethodsSupported": ["header"],
+        "codeChallengeMethods": ["S256"],
+        "grantTypesSupported": ["authorization_code", "refresh_token", "urn:ietf:params:oauth:grant-type:jwt-bearer"],
+        "handledBy": "host",
+        "userSteps": [
+          "Register the server in your host's MCP config (URL + type only — no secrets).",
+          "Start / connect the server in the host, then complete the browser consent (Allow Access).",
+          "Re-run the host's auth step if the connection later reports unauthorized."
+        ],
+        "weStoreCredentials": false,
+        "personalAccessTokens": {
+          "supportedForMcp": false,
+          "note": "Personal access tokens and the X-Figma-Token header belong to the Figma REST API, not the MCP server. The MCP server's protected-resource metadata declares only Authorization: Bearer with scope mcp:connect. No Figma doc describes putting a PAT in an MCP config."
+        },
+        "enterpriseManaged": "Enterprise-managed authorization is currently supported only for Claude via Okta Cross App Access (XAA)."
+      },
+      "prohibitedForThisPlugin": [
+        "Registering fluent-ui as an OAuth client at https://api.figma.com/v1/oauth/mcp/register — only catalog-listed clients may connect, and it would arguably breach the Figma Developer Terms.",
+        "Driving or scraping the browser consent screen at https://www.figma.com/oauth/mcp.",
+        "Collecting, storing, caching, proxying, or forwarding a Figma PAT or OAuth token.",
+        "Injecting Authorization or X-Figma-Token headers into a host config file.",
+        "Prompting the user for a Figma token — there is no legitimate MCP use for it."
+      ],
+      "tools": [
+        { "name": "get_design_context", "purpose": "Primary design-to-code call for a node. Accepts nodeId / fileKey / branchKey (remote: link required), plus clientFrameworks and clientLanguages hints, format and query.", "returns": "React + Tailwind reference code, a screenshot, and hints. Reference only — not production code.", "availability": "both" },
+        { "name": "get_variable_defs", "purpose": "Read the Figma variables and styles used by a selection or node (color, spacing, typography).", "returns": "Variable/style names and/or values as authored in the file; includes code syntax when the library populates it.", "availability": "both" },
+        { "name": "get_metadata", "purpose": "Cheap structural probe. Call first for large frames, then re-fetch narrower nodes.", "returns": "Sparse XML outline of layer IDs, names, types, positions, sizes. With no nodeId it returns the list of top-level pages.", "availability": "both" },
+        { "name": "get_screenshot", "purpose": "Visual ground truth for a single node; use it to verify generated code.", "returns": "PNG, inline base64 or URL (enableBase64Response).", "availability": "both" },
+        { "name": "get_code_connect_map", "purpose": "Resolve selected instance nodes to real codebase components, when the library owner published Code Connect.", "returns": "{nodeId: {componentName, source, snippet, snippetImports, snippetNestedFunctions, version, label}}", "availability": "both" },
+        { "name": "download_assets", "purpose": "Export images/vectors for up to 20 nodes per call (defaultFormat, defaultScale 0.01–4x).", "returns": "Temporary URLs for PNG/JPG/SVG/PDF plus raw source images.", "availability": "remote" },
+        { "name": "search_design_system", "purpose": "Text search across connected libraries.", "returns": "Matching components, variables, and styles.", "availability": "remote" },
+        { "name": "get_libraries", "purpose": "Inspect which libraries a file subscribes to and which are available.", "returns": "Subscribed + available libraries (community UI kits and org libraries).", "availability": "remote" },
+        { "name": "get_motion_context", "purpose": "Read motion/animation for the same nodeId as get_design_context (recursive option).", "returns": "Keyframe tracks, easing, CSS @keyframes, motion.dev snippets.", "availability": "both" },
+        { "name": "get_figjam", "purpose": "Read a FigJam node.", "returns": "XML plus screenshots.", "availability": "both" },
+        { "name": "whoami", "purpose": "Diagnose entitlement before a big job. Rate-limit exempt.", "returns": "Email, all plans, and seat type per plan.", "availability": "remote" },
+        { "name": "add_code_connect_map", "purpose": "Code Connect authoring. Rate-limit exempt.", "returns": "Mapping result.", "availability": "remote" },
+        { "name": "get_code_connect_suggestions", "purpose": "Code Connect authoring — suggested mappings.", "returns": "Suggested node-to-component mappings.", "availability": "remote" },
+        { "name": "send_code_connect_mappings", "purpose": "Code Connect authoring — publish mappings.", "returns": "Publish result.", "availability": "remote" },
+        { "name": "get_context_for_code_connect", "purpose": "Code Connect authoring — component context.", "returns": "Property definitions with types and variant options, plus the descendant tree.", "availability": "remote" },
+        { "name": "use_figma", "purpose": "General-purpose write-to-canvas via the Plugin API.", "returns": "Write result (20 KB output response limit per call).", "availability": "remote" },
+        { "name": "create_new_file", "purpose": "Write — create a Figma file.", "returns": "New file reference.", "availability": "remote" },
+        { "name": "upload_assets", "purpose": "Write — upload assets into Figma.", "returns": "Upload result.", "availability": "remote" },
+        { "name": "generate_diagram", "purpose": "Write — generate a diagram.", "returns": "Generated diagram.", "availability": "remote" },
+        { "name": "generate_figma_design", "purpose": "Write — generate a design. Select clients only. Rate-limit exempt.", "returns": "Generated design.", "availability": "remote" },
+        { "name": "get_shader_effect", "purpose": "Read a shader effect.", "returns": "Shader effect definition.", "availability": null },
+        { "name": "get_shader_fill", "purpose": "Read a shader fill.", "returns": "Shader fill definition.", "availability": null },
+        { "name": "list_shader_effects", "purpose": "List shader effects.", "returns": "Shader effect list.", "availability": null },
+        { "name": "list_shader_fills", "purpose": "List shader fills.", "returns": "Shader fill list.", "availability": null }
+      ],
+      "prompts": [
+        {
+          "name": "create_design_system_rules",
+          "kind": "prompt",
+          "note": "This is an MCP prompt, not a tool — an agent cannot call it like a tool, and 'Not all agents and clients support MCP prompts.' Its output must be saved to the host's rules/ or instructions/ path. Do not depend on it; the fluent-figma skill ships the equivalent Fluent ruleset up front.",
+          "hostInvocation": "VS Code invokes MCP prompts as /<server>.<prompt>."
+        }
+      ],
+      "limits": [
+        "Rate limited per seat and plan — see rateLimits. whoami, add_code_connect_map, and generate_figma_design are exempt.",
+        "Remote is link-based only: no selection-based prompting. A node-specific link (?node-id=...) is required.",
+        "Asset URLs returned by get_design_context expire in about 7 days.",
+        "download_assets caps at 20 nodes per call; scale range 0.01–4x.",
+        "Large selections truncate — call get_metadata first, then re-fetch narrower nodes.",
+        "use_figma has a 20 KB output response limit per call, no image support in write yet, and fonts must be uploaded to the Figma account.",
+        "Write-to-canvas is limited to Full and Dev seats on paid plans; Dev seats are read-only outside drafts.",
+        "The server is explicitly not designed to return production-ready code."
+      ]
+    },
+    {
+      "id": "figma-desktop",
+      "name": "Figma MCP Server (local / desktop)",
+      "vendor": "Figma",
+      "official": true,
+      "recommended": false,
+      "status": "beta",
+      "transport": "http",
+      "endpoint": "http://127.0.0.1:3845/mcp",
+      "quote": "Figma provides the local desktop version of the Figma MCP server for some specific organization and enterprise use cases, but we strongly recommend using the remote version.",
+      "positioning": "Niche. Choose it only for the specific org/enterprise cases Figma calls out, or when you need selection-based prompting.",
+      "requires": {
+        "figmaAccount": true,
+        "figmaPlan": "Same rate limits as remote — Starter is 6 calls/month regardless of seat.",
+        "seatType": "Dev or Full seat strongly recommended; View/Collab = 6 calls/month.",
+        "desktopApp": true,
+        "devMode": true,
+        "hostInFigmaMcpCatalog": true,
+        "oauthSignInInHost": false,
+        "nodeSpecificLink": false,
+        "note": "Enable it in the Figma desktop app: open a Design file, toggle Dev Mode (Shift+D), then inspect panel > MCP server > Enable desktop MCP server. The server only exists while the desktop app runs."
+      },
+      "auth": {
+        "method": "desktop-session",
+        "handledBy": "figma desktop app",
+        "userSteps": [
+          "Sign in to the Figma desktop app.",
+          "Open a Design file and toggle Dev Mode (Shift+D).",
+          "Enable the desktop MCP server from the inspect panel."
+        ],
+        "weStoreCredentials": false,
+        "note": "No auth parameter appears anywhere in the local install docs — the config is a bare loopback URL with no headers. It is implicitly authenticated by the signed-in desktop session. (Figma never states this explicitly; it is inference from the absence of any documented credential mechanism.)"
+      },
+      "toolsAvailable": [
+        "get_design_context",
+        "get_variable_defs",
+        "get_metadata",
+        "get_screenshot",
+        "get_code_connect_map",
+        "get_motion_context",
+        "get_figjam"
+      ],
+      "toolsNotAvailable": [
+        "download_assets",
+        "search_design_system",
+        "get_libraries",
+        "whoami",
+        "all write-to-canvas and Code Connect authoring tools"
+      ],
+      "advantages": ["Selection-based prompting works (the remote server is link-only)."],
+      "limits": [
+        "Requires the Figma desktop app to be installed, running, and in Dev Mode.",
+        "Fewer tools than remote — no asset download, no design-system search, no whoami.",
+        "The legacy /sse endpoint from the June 2025 beta is not in current docs. Use /mcp.",
+        "Same seat/plan rate limits as remote."
+      ]
+    }
+  ],
+
+  "rateLimits": [
+    { "seat": "View, Collab", "plan": "Starter", "perDay": null, "perMinute": null, "perMonth": 6, "note": "6 tool calls per month. Enough to fail, not enough to work." },
+    { "seat": "View, Collab", "plan": "Professional", "perDay": null, "perMinute": null, "perMonth": 6, "note": "6 tool calls per month — the seat type caps you, not the plan." },
+    { "seat": "View, Collab", "plan": "Organization", "perDay": null, "perMinute": null, "perMonth": 6, "note": "6 tool calls per month." },
+    { "seat": "View, Collab", "plan": "Enterprise", "perDay": null, "perMinute": null, "perMonth": 6, "note": "6 tool calls per month." },
+    { "seat": "Dev, Full", "plan": "Starter", "perDay": null, "perMinute": null, "perMonth": 6, "note": "Starter has no Dev/Full tier in Figma's table; a Starter user is capped at 6 calls/month regardless of seat." },
+    { "seat": "Dev, Full", "plan": "Professional", "perDay": 200, "perMinute": 10, "perMonth": null, "note": "The realistic floor for actual work." },
+    { "seat": "Dev, Full", "plan": "Organization", "perDay": 200, "perMinute": 15, "perMonth": null, "note": "Also the minimum plan for Code Connect." },
+    { "seat": "Dev, Full", "plan": "Enterprise", "perDay": 600, "perMinute": 20, "perMonth": null, "note": "Highest documented allowance." }
+  ],
+  "rateLimitExemptTools": ["whoami", "add_code_connect_map", "generate_figma_design"],
+  "entitlementSummary": "Access is a rate limit, not an on/off switch. Anyone can connect; a Starter/View/Collab user simply runs out after ~6 calls in a month — often mid-task. Tell users this before they start. Diagnose with whoami (rate-limit exempt, reports email, plans, and seat type per plan).",
+
+  "catalogGate": {
+    "what": "Figma MCP Catalog — an allowlist of MCP clients permitted to connect to the Figma MCP server.",
+    "whoCanConnect": "Only clients listed in the Figma MCP Catalog. A developer wanting to add a new client must join Figma's waitlist.",
+    "quote": "Only clients listed in the Figma MCP Catalog can connect to the Figma MCP Server. If you're a developer interested in connecting a new MCP client, you can join the waitlist.",
+    "implication": "This is a hard gate on which of our hosts can use Figma MCP at all, and it is not something this plugin can work around. fluent-ui cannot register itself as an OAuth client via the DCR endpoint, and writing a correct config entry into a non-catalog host will still fail at authorization. Confirmation comes from Figma publishing first-party install instructions for a host; hosts Figma never documents are unconfirmed, not supported-by-default.",
+    "appliesTo": "both the remote and the local/desktop server",
+    "source": "https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/",
+    "waitlist": "https://form.asana.com/?k=kBG-ejRQTdY8x_H6a4vM3Q&d=10497086658021",
+    "catalogUrl": "https://www.figma.com/mcp-catalog/",
+    "catalogListReadable": false,
+    "catalogListNote": "The catalog page is JS-rendered and the client table in help article 32132100833559 did not render, so the full client list could not be read directly. Host confirmation below is therefore based on Figma publishing first-party install instructions for that host."
+  },
+
+  "hosts": [
+    { "id": "vscode", "name": "VS Code", "figmaDocumentsThisHost": true, "catalogConfirmed": true, "configKey": "servers", "urlField": "url", "type": "http", "configPath": "user mcp.json (MCP: Open User Configuration) or .vscode/mcp.json", "snippet": { "servers": { "figma": { "type": "http", "url": "https://mcp.figma.com/mcp" } } }, "authStep": "Start the figma server in the MCP view, then Allow Access in the browser.", "note": "VS Code requires GitHub Copilot enabled on your account to use MCP. Figma's VS Code doc also shows an optional \"inputs\": [] sibling key." },
+    { "id": "vscode-insiders", "name": "VS Code Insiders", "figmaDocumentsThisHost": false, "catalogConfirmed": null, "configKey": "servers", "urlField": "url", "type": "http", "configPath": "user mcp.json or .vscode/mcp.json", "snippet": { "servers": { "figma": { "type": "http", "url": "https://mcp.figma.com/mcp" } } }, "authStep": "Same as VS Code.", "note": "Same dialect as VS Code, but Figma names only 'VS Code'. Whether Insiders is a distinct catalog client is unconfirmed." },
+    { "id": "vscodium", "name": "VSCodium", "figmaDocumentsThisHost": false, "catalogConfirmed": null, "configKey": "servers", "urlField": "url", "type": "http", "configPath": "user mcp.json or .vscode/mcp.json", "snippet": { "servers": { "figma": { "type": "http", "url": "https://mcp.figma.com/mcp" } } }, "authStep": "Same as VS Code.", "note": "Same dialect as VS Code; catalog listing unconfirmed. VSCodium also lacks the GitHub Copilot prerequisite path." },
+    { "id": "cursor", "name": "Cursor", "figmaDocumentsThisHost": true, "catalogConfirmed": true, "configKey": "mcpServers", "urlField": "url", "type": null, "configPath": "~/.cursor/mcp.json (global) or .cursor/mcp.json (project)", "snippet": { "mcpServers": { "figma": { "url": "https://mcp.figma.com/mcp" } } }, "authStep": "Settings > MCP > Connect > Open > Allow access.", "note": "Cursor infers HTTP from url; Figma's official snippet omits type. Figma's preferred path is the Cursor plugin: type /add-plugin figma in agent chat (bundles MCP config + skills + asset rules)." },
+    { "id": "claude-code", "name": "Claude Code", "figmaDocumentsThisHost": true, "catalogConfirmed": true, "configKey": "mcpServers", "urlField": "url", "type": "http", "configPath": ".mcp.json or ~/.claude.json", "cli": "claude mcp add --scope user --transport http figma https://mcp.figma.com/mcp", "snippet": { "mcpServers": { "figma": { "type": "http", "url": "https://mcp.figma.com/mcp" } } }, "authStep": "/mcp > figma > Authenticate > Allow Access.", "note": "type is MANDATORY here: an entry with a url and no type is read as stdio and hard-fails ('MCP server \"<name>\" has a \"url\" but no \"type\"; add \"type\": \"http\"'). streamable-http is accepted as an alias for http. Figma also ships a plugin: claude plugin install figma@claude-plugins-official." },
+    { "id": "codex", "name": "Codex", "figmaDocumentsThisHost": true, "catalogConfirmed": true, "configKey": null, "urlField": null, "type": null, "configPath": null, "cli": "codex mcp add figma --url https://mcp.figma.com/mcp", "snippet": null, "authStep": "Authenticate when prompted after adding the server.", "note": "Figma documents the CLI command only; no on-disk config shape was verified." },
+    { "id": "gemini-cli", "name": "Gemini CLI", "figmaDocumentsThisHost": true, "catalogConfirmed": true, "configKey": "mcpServers", "urlField": "httpUrl", "type": null, "configPath": "~/.gemini/settings.json or project .gemini/settings.json", "cli": "gemini extensions install https://github.com/figma/mcp-server-guide", "snippet": { "mcpServers": { "figma": { "httpUrl": "https://mcp.figma.com/mcp", "oauth": { "enabled": true } } } }, "authStep": "/mcp auth figma", "note": "Gemini's dialect uses httpUrl (NOT url) plus an explicit oauth block — verified from figma/mcp-server-guide:gemini-extension.json." },
+    { "id": "claude-desktop", "name": "Claude Desktop", "figmaDocumentsThisHost": false, "catalogConfirmed": null, "configKey": "mcpServers", "urlField": null, "type": null, "configPath": "claude_desktop_config.json", "snippet": null, "authStep": "Settings > Connectors > Add custom connector (handles OAuth).", "note": "Different from Claude Code. claude_desktop_config.json mcpServers is stdio-only, so a raw url entry there will NOT work — do not write one. Figma documents Claude Code only. A community npx mcp-remote stdio bridge exists but is unverified for Figma." },
+    { "id": "copilot-cli", "name": "GitHub Copilot CLI", "figmaDocumentsThisHost": false, "catalogConfirmed": null, "configKey": "mcpServers", "urlField": "url", "type": "http", "configPath": "~/.copilot/mcp-config.json", "snippet": { "mcpServers": { "figma": { "type": "http", "url": "https://mcp.figma.com/mcp", "tools": ["*"] } } }, "authStep": "Unconfirmed — whether Copilot CLI performs the Figma OAuth dance was not verified.", "note": "The http entry shape is verified from github/github-mcp-server's own remote-server example (Copilot CLI's type vocabulary is local/http, not VS Code's stdio). But Figma does not list Copilot CLI in any install doc, so catalog eligibility is unconfirmed." },
+    { "id": "windsurf", "name": "Windsurf", "figmaDocumentsThisHost": false, "catalogConfirmed": null, "configKey": "mcpServers", "urlField": "serverUrl", "type": null, "configPath": "~/.codeium/windsurf/mcp_config.json", "snippet": { "mcpServers": { "figma": { "serverUrl": "https://mcp.figma.com/mcp" } } }, "authStep": "Unconfirmed — Windsurf's native OAuth handling for remote MCP was not verified.", "note": "Windsurf uses serverUrl, NOT url — the wrong key fails silently. Secondary sources only; not in Figma's docs." },
+    { "id": "cline", "name": "Cline", "figmaDocumentsThisHost": false, "catalogConfirmed": null, "configKey": "mcpServers", "urlField": "url", "type": "streamableHttp", "configPath": "cline_mcp_settings.json (path varies by VS Code profile — detect, don't guess)", "snippet": { "mcpServers": { "figma": { "type": "streamableHttp", "url": "https://mcp.figma.com/mcp", "disabled": false, "autoApprove": [] } } }, "authStep": "Unconfirmed.", "note": "Cline uses streamableHttp (camelCase) — different from Claude Code's streamable-http. Secondary sources only; not in Figma's docs." },
+    { "id": "antigravity", "name": "Google Antigravity", "figmaDocumentsThisHost": false, "catalogConfirmed": null, "configKey": null, "urlField": null, "type": null, "configPath": null, "snippet": null, "authStep": null, "note": "Not mentioned anywhere in the research. No config shape and no catalog status — do not guess." },
+    { "id": "visual-studio", "name": "Visual Studio 2022/2026", "figmaDocumentsThisHost": false, "catalogConfirmed": null, "configKey": null, "urlField": null, "type": null, "configPath": null, "snippet": null, "authStep": null, "note": "Not mentioned anywhere in the research. No config shape and no catalog status — do not guess." },
+    { "id": "xcode", "name": "Xcode 27 beta", "figmaDocumentsThisHost": true, "catalogConfirmed": true, "configKey": null, "urlField": null, "type": null, "configPath": null, "snippet": null, "authStep": "Install the plug-in from https://github.com/figma/mcp-server-guide, then authorize.", "note": "Documented by Figma but not a host this plugin targets. Listed for completeness." }
+  ],
+  "hostConfigNotes": [
+    "Never write 'sse' for Figma — Claude Code marks SSE deprecated and Figma publishes only /mcp endpoints.",
+    "Figma's generic fallback for undocumented editors is { \"mcpServers\": { \"figma\": { \"url\": \"https://mcp.figma.com/mcp\" } } }. It is a shape, not a claim of catalog support.",
+    "The fluent-ui Claude-style template documents type as omitted (hosts/README.md). That is correct for stdio but breaks for an HTTP url entry in Claude Code — always emit \"type\": \"http\" for HTTP entries.",
+    "A Figma entry should always be opt-in (e.g. a --with-figma flag). Silently adding a third-party network endpoint to a user's config is surprising.",
+    "Never write an Authorization or X-Figma-Token header into a host config file — these files are plaintext and often synced."
+  ],
+
+  "codeConnect": {
+    "exists": true,
+    "purpose": "Maps a Figma component to the real component in your codebase, so get_design_context returns your component instead of generic markup.",
+    "requiresPlan": "Organization or Enterprise",
+    "fluentSupport": "none",
+    "fluentSupportDetail": "No official Microsoft-published Code Connect mappings for Fluent were found. Code searches for figma.connect, @figma/code-connect in org:microsoft, and Fluent-specific .figma.tsx files all returned zero results. No community Fluent Code Connect project was found either. Absence of evidence in code search is not absolute proof — a mapping could exist inside Microsoft's own Figma library without a public repo — but do not claim Microsoft ships Code Connect for Fluent.",
+    "repo": null,
+    "publishingConstraint": "Code Connect must be published to a Figma library by the file owner, so Microsoft would have to publish it into the community kits — and Code Connect requires Org/Enterprise.",
+    "howItHelps": "Without Code Connect, get_design_context cannot know that a Figma 'Button' is @fluentui/react-components' <Button appearance=\"primary\">. It emits generic React + Tailwind instead. The fluent-figma skill closes that gap by name mapping; Code Connect closes it deterministically.",
+    "diyPath": "A team on Org/Enterprise can duplicate the Fluent kit into their own library and author Code Connect against @fluentui/react-components themselves. That is the only route to deterministic component identity today.",
+    "fileFormatNote": "Figma's current Code Connect skill emits .figma.ts parserless templates using figma.code`...`, NOT .figma.tsx + figma.connect(). Its own skill states output written as .figma.tsx is rejected outright.",
+    "toolsForAuthoring": ["add_code_connect_map", "get_code_connect_suggestions", "send_code_connect_mappings", "get_context_for_code_connect"]
+  },
+
+  "fluentFigmaResources": [
+    { "name": "Microsoft Fluent 2 Web", "url": "https://www.figma.com/community/file/836828295772957889/microsoft-fluent-2-web", "publisher": "Microsoft", "official": true, "covers": ["web"], "note": "Verified from microsoft/fluentui's own ResourcesDesignResources.md. Code-aligned building blocks; component props map to code." },
+    { "name": "Microsoft Fluent 2 iOS", "url": "https://www.figma.com/community/file/836833645402438850/microsoft-fluent-2-ios", "publisher": "Microsoft", "official": true, "covers": ["ios"], "note": "Verified from microsoft/fluentui. Route generated code to fluentui-apple (SwiftUI/UIKit), not React." },
+    { "name": "Microsoft Fluent Android", "url": "https://www.figma.com/community/file/836835062056249539/microsoft-fluent-android", "publisher": "Microsoft", "official": true, "covers": ["android"], "note": "Verified from microsoft/fluentui. Route generated code to fluentui-android Compose, not React." },
+    { "name": "Windows UI Kit for Figma", "url": "https://www.figma.com/community/file/1440832812269040007", "publisher": "Microsoft", "official": true, "covers": ["windows"], "note": "Reached via https://aka.ms/WinUI/3.0-figma-toolkit from Microsoft Learn (redirect target confirmed). Contains UI components, design patterns, and styles/tokens. Route to WinUI 3." },
+    { "name": "Microsoft Store Asset Guidance Kit", "url": "https://www.figma.com/community/file/1568793421368412416", "publisher": "Microsoft", "official": true, "covers": ["windows"], "note": "Listed on the same Microsoft Learn downloads page." },
+    { "name": "SharePoint Toolkit (Figma)", "url": "https://aka.ms/SharePointToolkits/Web/Figma", "publisher": "Microsoft", "official": true, "covers": ["web"], "note": "aka.ms alias; final community file ID not resolved." },
+    { "name": "Microsoft publisher hub on Figma Community", "url": "https://www.figma.com/@microsoft", "publisher": "Microsoft", "official": true, "covers": ["web", "ios", "android", "windows"], "note": "Fluent 2's own get-started/design page points here for all other kits. Send users here rather than hardcoding uncertain file IDs." },
+    { "name": "Fluent 1 / Fluent UI React v8 Figma kit", "url": null, "publisher": "Microsoft", "official": null, "covers": ["web"], "note": "COULD NOT VERIFY. Microsoft's current resources page lists only Fluent 2 kits; web search returned four mutually inconsistent community file IDs (a hallucination signature), and https://aka.ms/FluentToolkits/Web/Figma redirects to a dead 2020 Sketch zip. Do not hardcode a URL — point v8 users at https://www.figma.com/@microsoft and let them search." }
+  ],
+  "fluentKitTiers": [
+    { "tier": "Fluent 2 design language", "role": "The source of truth for Fluent and Copilot design styling decisions inclusive of color, stroke width, corner radius, spacing, and size tokens. Houses the global and alias Figma variables and drives light/dark toggling." },
+    { "tier": "Fluent 2 Core UI Kits", "role": "Code-aligned building blocks for web, iOS, and Android." },
+    { "tier": "Copilot UI Kits", "role": "AI components across Web/iOS/Android." },
+    { "tier": "Labs UI Kits", "role": "Partner-led / experimental." }
+  ],
+  "fluentKitTiersImplication": "Tokens live in a SEPARATE library file from the component kits. The designer's file must have BOTH the Fluent 2 Core UI Kit and the Fluent 2 design language library enabled, or get_variable_defs returns unresolved or partial names.",
+
+  "workflow": {
+    "designToFluentCode": [
+      "Preflight: confirm the Figma MCP tools (get_design_context et al.) are actually present in this host. If they are not, tell the user to register and authenticate the Figma MCP server — never fabricate design data.",
+      "Check entitlement early: call whoami (rate-limit exempt) to read seat type and plan. On a View/Collab seat or Starter plan, warn the user they have ~6 calls for the whole month before spending any.",
+      "Require a node-specific link. The designer right-clicks the frame > Copy link to selection, producing a ?node-id=... URL. Reject file-only URLs — remote has no selection-based prompting.",
+      "Confirm the file has BOTH the Fluent 2 Core UI Kit and the Fluent 2 design language library enabled, or variables will not resolve.",
+      "For a large frame, call get_metadata first and pick narrower node IDs — large selections truncate.",
+      "Call get_code_connect_map first. If the user has their own Code Connect, its snippet wins over everything else.",
+      "Call get_design_context with clientFrameworks: \"React\" and clientLanguages set, so the right mappings and hints come back.",
+      "Call get_variable_defs to get the design tokens actually used.",
+      "Call get_screenshot for visual ground truth.",
+      "Call download_assets (remote only) for images/vectors — do not hand-draw SVG. Asset URLs expire in about 7 days, so save them into the repo immediately.",
+      "TRANSLATE, never paste. Emit @fluentui/react-components v9 + Griffel makeStyles + tokens.*. Never emit Tailwind classes into a Fluent project.",
+      "Wrap the surface in FluentProvider with webLightTheme/webDarkTheme; take icons from @fluentui/react-icons; convert Auto Layout to flex with spacing tokens.",
+      "Verify: diff the rendered result against get_screenshot, then run the fluent_accessibility_checklist."
+    ],
+    "figmaOutputPriorityOrder": [
+      "Code Connect snippets — use the mapped codebase component directly.",
+      "Component documentation links — follow them.",
+      "Design annotations — follow the designer's notes.",
+      "Design tokens (CSS variables) — map them to the project's token system.",
+      "Raw hex / absolute positioning — lean on the screenshot."
+    ],
+    "tokenMapping": "get_variable_defs returns the Figma variable name and value as authored in the file — Fluent 2 kits use a global/alias model, so expect path-style names (for example Brand/Background/Default or Spacing/Horizontal/M) rather than colorBrandBackground or spacingHorizontalM. The real bridge is Figma's 'code syntax' feature: each variable can carry one name per platform (Web, Android, iOS), and Figma states that if code syntax is provided, the MCP server can give that exact code to the LLM. So: (1) prefer any code syntax value returned by get_variable_defs; (2) otherwise map the variable path to the Fluent token by name — Brand/Background/Default -> tokens.colorBrandBackground, Spacing/Horizontal/M -> tokens.spacingHorizontalM, corner radius -> tokens.borderRadius*, elevation -> tokens.shadow*; (3) confirm the exact token with the fluent_get_token / fluent_list_tokens MCP tools; (4) never emit a raw hex or px value that duplicates a token. Whether Microsoft actually populates code syntax in the published kits is UNVERIFIED — plan for name mapping.",
+    "codeSideTokenNamesConfirmed": ["colorBrandBackground", "colorBrandBackgroundHover", "spacingHorizontalS", "spacingHorizontalMNudge", "spacingHorizontalM"],
+    "codeSideTokenSource": "microsoft/fluentui:packages/tokens/src/tokens.ts (mirrored in packages/web-components/src/theme/design-tokens.ts)",
+    "qualityTiers": [
+      { "tier": "Bronze", "setup": "Figma MCP only", "result": "Generic React + Tailwind with hardcoded hex values." },
+      { "tier": "Silver", "setup": "Figma MCP + the fluent-figma skill/ruleset", "result": "Real @fluentui/react-components + tokens.* via name mapping, with occasional misses. This is where most users live — optimize for it." },
+      { "tier": "Gold", "setup": "Silver + the user's own Code Connect on a duplicated Fluent library", "result": "Near-deterministic component selection. Requires Org/Enterprise plus publishing rights." }
+    ],
+    "gotchas": [
+      { "symptom": "<div className=\"bg-[#0f6cbd] px-3\"> instead of <Button appearance=\"primary\">", "cause": "No Code Connect, so the agent has no component identity.", "fix": "Apply the fluent-figma component-identity mapping: match the Figma component name + variant props to the Fluent v9 component + props." },
+      { "symptom": "Hardcoded hex instead of tokens.colorBrandBackground", "cause": "Figma variable names differ from Fluent token names, and code syntax may be absent.", "fix": "Map by name and confirm with fluent_get_token. Never ship the hex." },
+      { "symptom": "Inline styles or Tailwind classes instead of Griffel makeStyles", "cause": "The agent defaults to the Tailwind idiom of the reference output.", "fix": "Rewrite into makeStyles; Tailwind must never land in a Fluent project." },
+      { "symptom": "Missing FluentProvider / theme", "cause": "Not expressible in a Figma frame.", "fix": "Add FluentProvider with webLightTheme/webDarkTheme at the app root." },
+      { "symptom": "Absolute positioning everywhere", "cause": "The source frame lacked Auto Layout.", "fix": "Rebuild as flex/grid with spacing tokens; ask the designer to add Auto Layout." },
+      { "symptom": "Inline <svg> instead of @fluentui/react-icons", "cause": "The agent hand-draws icons.", "fix": "Import from @fluentui/react-icons; use download_assets only for genuine imagery." },
+      { "symptom": "Variables come back unresolved or partially named", "cause": "The file does not have the Fluent 2 design language library enabled alongside the Core UI Kit.", "fix": "Ask the designer to enable both libraries." },
+      { "symptom": "Broken images a week later", "cause": "Asset URLs from get_design_context expire in about 7 days.", "fix": "Download and commit assets immediately." },
+      { "symptom": "Truncated or empty design context on a big frame", "cause": "Large selections truncate.", "fix": "get_metadata first, then re-fetch narrower node IDs." },
+      { "symptom": "Rate limit hit mid-task", "cause": "View/Collab seat or Starter plan — 6 calls per month.", "fix": "There is no fix in-tool. Warn up front and check whoami first." },
+      { "symptom": "Server connects but every call is unauthorized", "cause": "The host is not in the Figma MCP Catalog, or OAuth was never completed.", "fix": "Complete the host's own auth step; if the host is not catalog-listed, it cannot connect at all." },
+      { "symptom": "iOS/Android/Windows kit output rendered as React", "cause": "Platform not routed.", "fix": "Fluent 2 iOS kit -> fluentui-apple (SwiftUI/UIKit); Fluent Android kit -> fluentui-android Compose; Windows UI Kit -> WinUI 3. Figma also ships a figma-swiftui skill for iOS." }
+    ],
+    "designedNotToShipCode": "Figma is explicit that this is by design: 'The MCP server is designed to provide Figma context and is language and framework agnostic... the server isn't designed to return production-ready code... This format resembles react-like code because AI agents are commonly trained on large amounts of web-based data.' Figma's own skill repeats it: 'The returned code is React + Tailwind enriched with hints. You MUST treat it as a REFERENCE, not as final code to paste verbatim.'"
+  },
+
+  "prerequisiteMatrix": [
+    { "n": 1, "prerequisite": "Figma account", "remote": "required", "local": "required", "note": null },
+    { "n": 2, "prerequisite": "Dev or Full seat", "remote": "strongly recommended", "local": "strongly recommended", "note": "View/Collab/Starter = 6 calls per month." },
+    { "n": 3, "prerequisite": "Professional / Organization / Enterprise plan", "remote": "strongly recommended", "local": "strongly recommended", "note": "Starter is 6/month regardless of seat." },
+    { "n": 4, "prerequisite": "Figma desktop app installed and running", "remote": "not needed", "local": "required", "note": "The Dev Mode toggle enables the local server." },
+    { "n": 5, "prerequisite": "Dev Mode enabled in the file (Shift+D)", "remote": "not needed", "local": "required", "note": null },
+    { "n": 6, "prerequisite": "Host listed in the Figma MCP Catalog", "remote": "required", "local": "required", "note": "Non-allowlisted clients are rejected." },
+    { "n": 7, "prerequisite": "OAuth sign-in inside the host", "remote": "required", "local": "not needed", "note": "Scope mcp:connect." },
+    { "n": 8, "prerequisite": "GitHub Copilot enabled (VS Code only)", "remote": "required", "local": "required", "note": "VS Code MCP prerequisite." },
+    { "n": 9, "prerequisite": "View/edit permission on the file", "remote": "required", "local": "required", "note": "Verify with whoami." },
+    { "n": 10, "prerequisite": "Fluent 2 Core UI Kit + Fluent 2 design language libraries enabled in the file", "remote": "required", "local": "required", "note": "Otherwise variables will not resolve." },
+    { "n": 11, "prerequisite": "Node-specific link (?node-id=)", "remote": "required", "local": "optional", "note": "Local supports selection; a file-only URL fails on remote." },
+    { "n": 12, "prerequisite": "Organization or Enterprise plan", "remote": "for Code Connect", "local": "for Code Connect", "note": "Gold tier only." },
+    { "n": 13, "prerequisite": "Full seat", "remote": "for write-to-canvas outside drafts", "local": "n/a", "note": "Dev seats are read-only outside drafts." },
+    { "n": 14, "prerequisite": "@fluentui/react-components v9 in the project", "remote": "required", "local": "required", "note": "This plugin's domain." }
+  ],
+
+  "unverified": [
+    "The Fluent 1 / Fluent UI React v8 Figma kit URL. No first-party source; web search returned four conflicting community file IDs, and aka.ms/FluentToolkits/Web/Figma redirects to a dead 2020 Sketch zip. Do not hardcode a URL.",
+    "Figma Community page contents. All figma.com/community/* fetches returned HTTP 403, so kit titles and on-page publisher could not be confirmed. The Web/iOS/Android URLs come from microsoft/fluentui and the Windows one from an aka.ms redirect on Microsoft Learn.",
+    "Whether the Fluent 2 kits populate Figma 'code syntax' with Fluent token names such as var(--colorBrandBackground). This is the highest-value unknown — it decides whether token mapping is a lookup or an inference. Plan for name mapping.",
+    "The actual get_variable_defs output for a Fluent file. No authentication was performed; the variable naming and grouping shown here is inferred from Fluent's documented global/alias model.",
+    "The /sse deprecation date. Current docs show only /mcp; the June 4 2025 beta date is from secondary sources.",
+    "Whether dynamic client registration at https://api.figma.com/v1/oauth/mcp/register rejects non-allowlisted clients. Inferred from Figma's allowlist statement plus community reports; not tested (testing would require an auth attempt).",
+    "The full Figma MCP Catalog client list. figma.com/mcp-catalog/ is JS-rendered and the client table in help article 32132100833559 did not render. Copilot CLI, Windsurf, and Cline are not named in any Figma install doc found — their support is unconfirmed. Antigravity, Visual Studio, Zed, and JetBrains are not mentioned at all.",
+    "Claude Desktop + Figma. Figma documents Claude Code only. The npx mcp-remote stdio bridge is a general community pattern, not Figma-sanctioned; Anthropic's connectors article body was JS-rendered and unreadable.",
+    "Windsurf's serverUrl key and Cline's streamableHttp type. Secondary sources only; no first-party doc was fetched.",
+    "Whether GitHub Copilot CLI performs the Figma OAuth flow for a third-party remote MCP server. The type: \"http\" entry shape is verified from github/github-mcp-server, but the OAuth behaviour is not.",
+    "The exact JSON schema of get_design_context parameters. Documented narratively ('parameter mechanics live on the tool description itself'); live tool descriptions could not be read without connecting.",
+    "Local-vs-remote availability of the four shader tools (get_shader_effect, get_shader_fill, list_shader_effects, list_shader_fills). They are enumerated in Figma's tool list but not marked local or remote, so availability is left null.",
+    "Whether Microsoft ships Code Connect for Fluent privately. GitHub API directory listings of microsoft/fluentui were blocked by SAML SSO enforcement, so a Code Connect folder could exist unindexed. Public code search found nothing.",
+    "Community (non-Microsoft) Code Connect projects for Fluent. None were found, but the search was not exhaustive."
+  ]
+}
