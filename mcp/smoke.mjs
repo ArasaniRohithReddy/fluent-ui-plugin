@@ -51,6 +51,61 @@ if (tools.tools.length !== EXPECTED_TOOL_COUNT) {
 }
 console.log('tool_count: ok=' + (tools.tools.length === EXPECTED_TOOL_COUNT && missingTools.length === 0));
 
+// The public site advertises the tool list. It is a separate hand-maintained
+// array, so it drifts silently and the drift is user-facing - the site claimed
+// 23 tools while the server shipped 28. Compare the two directly.
+{
+  const sitePath = new URL('../site/src/App.tsx', import.meta.url);
+  let siteOk = false, siteNote = 'site/src/App.tsx not readable';
+  try {
+    const src = readFileSync(sitePath, 'utf8');
+    const block = src.match(/const TOOLS[^=]*=\s*\[([\s\S]*?)\n\];/);
+    if (block) {
+      const listed = [...block[1].matchAll(/\[\s*'(fluent_[a-z0-9_]+)'/g)].map((m) => m[1]);
+      const missingOnSite = toolNames.filter((t) => !listed.includes(t));
+      const staleOnSite = listed.filter((t) => !toolNames.includes(t));
+      siteOk = listed.length > 0 && missingOnSite.length === 0 && staleOnSite.length === 0;
+      siteNote = siteOk
+        ? `${listed.length} tools listed, matches server`
+        : `missing on site: [${missingOnSite.join(', ')}] stale on site: [${staleOnSite.join(', ')}]`;
+    } else siteNote = 'could not parse the TOOLS array';
+  } catch {}
+  console.log('site tool list matches server (' + siteNote + '): ok=' + siteOk);
+}
+
+// Skills are advertised in several docs by name. A listed-but-missing skill is
+// a broken promise the user only discovers mid-task, and a shipped-but-unlisted
+// skill is dead weight nobody loads. Check both directions against the folder.
+{
+  const root = new URL('../', import.meta.url);
+  let skillsOk = false, skillsNote = 'skills/ not readable';
+  try {
+    const onDisk = readdirSync(new URL('skills/', root), { withFileTypes: true })
+      .filter((e) => e.isDirectory())
+      .map((e) => e.name)
+      .sort();
+    const problems = [];
+    for (const doc of ['AGENTS.md', 'README.md']) {
+      const text = readFileSync(new URL(doc, root), 'utf8');
+      // Parse only the skills list itself - the first non-empty line after a
+      // "Skills" heading. Scanning the whole document instead picks up agent
+      // names, which are backticked the same way and are not skills.
+      const sec = text.match(/^#{2,3}[^\n]*Skills[^\n]*\n+([^\n]+)/m);
+      if (!sec) { problems.push(`${doc} has no parsable Skills list`); continue; }
+      const uniq = [...new Set([...sec[1].matchAll(/`(fluent-[a-z0-9-]+)`/g)].map((m) => m[1]))];
+      const ghosts = uniq.filter((n) => !onDisk.includes(n));
+      const unlisted = onDisk.filter((n) => !uniq.includes(n));
+      if (ghosts.length) problems.push(`${doc} lists missing skill(s): ${ghosts.join(', ')}`);
+      if (unlisted.length) problems.push(`${doc} omits shipped skill(s): ${unlisted.join(', ')}`);
+    }
+    skillsOk = problems.length === 0;
+    skillsNote = skillsOk ? `${onDisk.length} skills, listed everywhere` : problems.join(' | ');
+  } catch (e) {
+    skillsNote = String(e && e.message ? e.message : e);
+  }
+  console.log('skills advertised match skills shipped (' + skillsNote + '): ok=' + skillsOk);
+}
+
 const pbi = await client.callTool({ name: 'fluent_generate_powerbi_theme', arguments: { brandColor: '#D13438', name: 'Fluent Red' } });
 const pbiText = pbi.content[0].text;
 let pbiValid = false, hasVS = false;
