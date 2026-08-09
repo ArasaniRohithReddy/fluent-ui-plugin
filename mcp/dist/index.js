@@ -17,6 +17,7 @@ import { registerImages } from './tools/images.js';
 import { registerConfig } from './tools/config.js';
 import { registerV8 } from './tools/v8.js';
 import { registerFigma } from './tools/figma.js';
+import { registerNative } from './tools/native.js';
 const server = new McpServer({
     name: 'fluent-ui',
     version: '1.0.0',
@@ -56,6 +57,11 @@ registerV8(server);
 // Leads with entitlements because a View/Collab seat gets 6 calls per MONTH,
 // which is enough to start a workflow and not enough to finish one.
 registerFigma(server);
+// Native platforms: iOS, Android, Windows. The same component name resolves to
+// a different type on each (and often to two types on one platform — Android
+// splits Fluent 2 Compose from Fluent 1 Views by Kotlin package, not artifact),
+// so guessing from the web API is how native Fluent code fails to compile.
+registerNative(server);
 async function main() {
     const transport = new StdioServerTransport();
     await server.connect(transport);

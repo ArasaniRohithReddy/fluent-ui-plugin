@@ -34,7 +34,7 @@ console.log('TOOLS(' + tools.tools.length + '):', toolNames.join(', '));
 // A bare count tells you something moved but not what, so also assert the tools
 // we depend on are actually present - a rename would otherwise keep the count
 // correct while silently breaking every caller.
-const EXPECTED_TOOL_COUNT = 26;
+const EXPECTED_TOOL_COUNT = 28;
 const REQUIRED_TOOLS = [
   'fluent_search_components', 'fluent_get_component', 'fluent_list_tokens', 'fluent_get_token',
   'fluent_generate_theme', 'fluent_generate_powerbi_theme', 'fluent_scaffold_pbip', 'fluent_powerbi_visuals',
@@ -42,6 +42,7 @@ const REQUIRED_TOOLS = [
   'fluent_design_guidance', 'fluent_migration_guidance', 'fluent_get_images',
   'fluent_get_config', 'fluent_init_config', 'fluent_set_config', 'fluent_remember', 'fluent_recall',
   'fluent_v8_lookup', 'fluent_v8_guidance', 'fluent_figma_guidance',
+  'fluent_native_component', 'fluent_native_guidance',
 ];
 const missingTools = REQUIRED_TOOLS.filter((t) => !toolNames.includes(t));
 if (missingTools.length) console.log('  missing tools:', missingTools.join(', '));
@@ -425,7 +426,7 @@ try {
   hostsOk = !anyFalse && confirmed.includes('vscode') && confirmed.includes('claude-code') &&
     hs.every((h) => typeof h.catalogStatus === 'string' && h.catalogStatus.length > 0);
 } catch {}
-console.log('figma hosts: no-false-claims=' + hostsOk);
+console.log('figma hosts no false claims: ok=' + hostsOk);
 
 // Code Connect has no Microsoft-published Fluent mappings. If this ever flips
 // to a claim of support without a source, that is a fabrication.
@@ -437,13 +438,63 @@ try {
 } catch {}
 console.log('figma code-connect: fluentSupport=none ok=' + ccOk);
 
+// Native platforms. The single highest-value fact here is that a component name
+// does NOT resolve the same way across platforms, so pin real lookups rather
+// than a bare "tool responds" check.
+const nIos = (await client.callTool({ name: 'fluent_native_component', arguments: { platform: 'ios', name: 'Avatar' } })).content[0].text;
+const nAnd = (await client.callTool({ name: 'fluent_native_component', arguments: { platform: 'android', name: 'Button' } })).content[0].text;
+const nWin = (await client.callTool({ name: 'fluent_native_component', arguments: { platform: 'windows', name: 'Button' } })).content[0].text;
+const iosOk = /FluentUI/.test(nIos) && /MSFAvatar/.test(nIos);
+const andOk = /com\.microsoft\.fluentui\.tokenized/.test(nAnd);
+const winOk = /Microsoft\.UI\.Xaml\.Controls/.test(nWin);
+console.log('native lookup ios: ok=' + iosOk);
+console.log('native lookup android (tokenized = Fluent 2 Compose): ok=' + andOk);
+console.log('native lookup windows: ok=' + winOk);
+
+// An unknown name must be reported as unknown, never answered from the web API.
+const nMiss = (await client.callTool({ name: 'fluent_native_component', arguments: { platform: 'ios', name: 'ZzNotAControl' } })).content[0].text;
+console.log('native unknown name reported not invented: ok=' + (/not/i.test(nMiss) && !/import FluentUI\n/.test(nMiss)));
+
+// WinUI 2 is maintenance-only - last FEATURE release 2.8 (July 2022); 2.8.7 is a
+// servicing patch. If this ever reads as "2.8.7 is the current release" we would
+// be pointing new Windows work at a frozen framework. Verified against Learn.
+const nWinG = (await client.callTool({ name: 'fluent_native_guidance', arguments: { platform: 'windows' } })).content[0].text;
+const winuiOk = /maintenance/i.test(nWinG) && /2\.8/.test(nWinG) && /2\.3\.1/.test(nWinG);
+console.log('native winui2 maintenance + wasdk current: ok=' + winuiOk);
+
+// WPF-UI (lepoco) is a community project. Presenting it as Microsoft would send
+// users to ship an unofficial dependency believing it is first-party.
+console.log('native wpf community disclaimer surfaced: ok=' + /not Microsoft|community/i.test(nWinG));
+
 await client.close();
 
 const failures = _lines.filter((l) => /ok\s*=\s*false/i.test(l));
+
+// A check only counts if its label ends in "ok=". Twice now a real failure has
+// been printed under a different label (e.g. "disclaimer: false") and sailed
+// through as a pass. Any line that reports a false-y result without the ok=
+// marker is a malformed check, not a passing one - fail loudly on it.
+const malformed = _lines.filter(
+  (l) => /[:=]\s*false\b/i.test(l) && !/ok\s*=\s*false/i.test(l) && !/ok\s*=\s*true/i.test(l),
+);
+if (malformed.length) {
+  _realLog('\nSMOKE FAILED: ' + malformed.length + ' malformed check(s) - a false result was printed without an "ok=" marker, so it would not have been counted:');
+  for (const m of malformed) _realLog('  - ' + m);
+  process.exit(1);
+}
+
+// Guard against the whole suite silently shrinking (renamed labels, an early
+// return, a swallowed throw). A vacuous pass is worse than a failure.
+const MIN_CHECKS = 60;
+const passed = _lines.filter((l) => /ok\s*=\s*true/i.test(l)).length;
 if (failures.length) {
   _realLog('\nSMOKE FAILED: ' + failures.length + ' check(s) did not pass:');
   for (const f of failures) _realLog('  - ' + f);
   process.exit(1);
 }
-_realLog('\nSMOKE PASSED: ' + _lines.filter((l) => /ok\s*=\s*true/i.test(l)).length + ' checks ok');
+if (passed < MIN_CHECKS) {
+  _realLog('\nSMOKE FAILED: only ' + passed + ' checks ran, expected at least ' + MIN_CHECKS + ' — checks were dropped, not fixed.');
+  process.exit(1);
+}
+_realLog('\nSMOKE PASSED: ' + passed + ' checks ok');
 process.exit(0);
