@@ -16,6 +16,7 @@ import { registerDesignGuidance } from './tools/designGuidance.js';
 import { registerImages } from './tools/images.js';
 import { registerConfig } from './tools/config.js';
 import { registerV8 } from './tools/v8.js';
+import { registerFigma } from './tools/figma.js';
 const server = new McpServer({
     name: 'fluent-ui',
     version: '1.0.0',
@@ -50,6 +51,11 @@ registerConfig(server);
 // Ships the collision and trap data that matters most — cases where v8 and v9
 // share an export name, so the code compiles and then misbehaves at runtime.
 registerV8(server);
+// Figma MCP server for design-to-code. Read-only reference: this plugin never
+// asks for, stores or forwards a Figma token — auth is the host's OAuth flow.
+// Leads with entitlements because a View/Collab seat gets 6 calls per MONTH,
+// which is enough to start a workflow and not enough to finish one.
+registerFigma(server);
 async function main() {
     const transport = new StdioServerTransport();
     await server.connect(transport);

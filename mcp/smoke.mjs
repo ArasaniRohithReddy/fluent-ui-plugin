@@ -34,14 +34,14 @@ console.log('TOOLS(' + tools.tools.length + '):', toolNames.join(', '));
 // A bare count tells you something moved but not what, so also assert the tools
 // we depend on are actually present - a rename would otherwise keep the count
 // correct while silently breaking every caller.
-const EXPECTED_TOOL_COUNT = 25;
+const EXPECTED_TOOL_COUNT = 26;
 const REQUIRED_TOOLS = [
   'fluent_search_components', 'fluent_get_component', 'fluent_list_tokens', 'fluent_get_token',
   'fluent_generate_theme', 'fluent_generate_powerbi_theme', 'fluent_scaffold_pbip', 'fluent_powerbi_visuals',
   'fluent_powerplatform_guidance', 'fluent_generate_code', 'fluent_accessibility_checklist',
   'fluent_design_guidance', 'fluent_migration_guidance', 'fluent_get_images',
   'fluent_get_config', 'fluent_init_config', 'fluent_set_config', 'fluent_remember', 'fluent_recall',
-  'fluent_v8_lookup', 'fluent_v8_guidance',
+  'fluent_v8_lookup', 'fluent_v8_guidance', 'fluent_figma_guidance',
 ];
 const missingTools = REQUIRED_TOOLS.filter((t) => !toolNames.includes(t));
 if (missingTools.length) console.log('  missing tools:', missingTools.join(', '));
@@ -394,6 +394,48 @@ try {
   aiOk = j.accessStatus === 'employee-gated-captured' && (j.doDont?.dont?.length ?? 0) > 0 && (j.doDont?.do?.length ?? 0) > 0;
 } catch {}
 console.log('gated AI topic enriched: ok=' + aiOk);
+
+// Figma. The rate-limit table on Figma's page renders with the Dev/Full row
+// shifted: the value under "Starter" actually belongs to Professional. Figma's
+// own prose disambiguates it - "If you're on a Starter plan (6 tool calls per
+// month), upgrade to a Pro, Organization, or Enterprise plan." A naive
+// re-transcription of the table would claim Starter Dev/Full gets 200/day and
+// send users into a workflow that dies after 6 calls. Pin the corrected read.
+const fig = (await client.callTool({ name: 'fluent_figma_guidance', arguments: { section: 'access' } })).content[0].text;
+let figOk = false, starterOk = false;
+try {
+  const j = JSON.parse(fig);
+  const rows = j.rateLimits ?? [];
+  const starterDev = rows.find((r) => /Dev/.test(r.seat) && r.plan === 'Starter');
+  const entDev = rows.find((r) => /Dev/.test(r.seat) && r.plan === 'Enterprise');
+  starterOk = starterDev?.perMonth === 6 && starterDev?.perDay === null;
+  figOk = starterOk && entDev?.perDay === 600 && (j.exemptFromRateLimits ?? []).includes('whoami');
+} catch {}
+console.log('figma access: starter-dev-capped=' + starterOk + ' ok=' + figOk);
+
+// Unconfirmed hosts must stay null, never false. `false` would assert Figma
+// documents them as unsupported; we only know we could not read the catalog.
+const figHosts = (await client.callTool({ name: 'fluent_figma_guidance', arguments: { section: 'hosts' } })).content[0].text;
+let hostsOk = false;
+try {
+  const j = JSON.parse(figHosts);
+  const hs = j.hosts ?? [];
+  const anyFalse = hs.some((h) => h.catalogConfirmed === false);
+  const confirmed = hs.filter((h) => h.catalogConfirmed === true).map((h) => h.id);
+  hostsOk = !anyFalse && confirmed.includes('vscode') && confirmed.includes('claude-code') &&
+    hs.every((h) => typeof h.catalogStatus === 'string' && h.catalogStatus.length > 0);
+} catch {}
+console.log('figma hosts: no-false-claims=' + hostsOk);
+
+// Code Connect has no Microsoft-published Fluent mappings. If this ever flips
+// to a claim of support without a source, that is a fabrication.
+const figCC = (await client.callTool({ name: 'fluent_figma_guidance', arguments: { section: 'code-connect' } })).content[0].text;
+let ccOk = false;
+try {
+  const j = JSON.parse(figCC);
+  ccOk = j.fluentSupport === 'none' && /Organization or Enterprise/i.test(j.requiresPlan ?? '');
+} catch {}
+console.log('figma code-connect: fluentSupport=none ok=' + ccOk);
 
 await client.close();
 
