@@ -11,6 +11,10 @@ name: Regenerate lockfiles
 on:
   workflow_dispatch:
   push:
+    # Branches only. A `paths` filter is not applied to tag pushes, so without
+    # this every release tag would trigger a pointless relock run.
+    branches:
+      - '**'
     paths:
       - '**/package.json'
       - '.github/workflows/relock.yml'
