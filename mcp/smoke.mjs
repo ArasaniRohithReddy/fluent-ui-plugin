@@ -277,6 +277,17 @@ console.log('explicit fluentVersion beats inference: got=' + ivxj.config?.fluent
 
 for (const d of [V8DIR, V9DIR, VXDIR]) rmSync(d, { recursive: true, force: true });
 
+// A Power Pages user must be told Bootstrap is the stack and that Microsoft
+// warns against swapping it; recommending a Fluent CSS library there breaks
+// scenarios that depend on Bootstrap 3.3.x.
+const ppMyths = (await client.callTool({ name: 'fluent_powerplatform_guidance', arguments: { surface: 'myths' } })).content[0].text;
+let mythCount = 0, mythsSourced = 0;
+try { const j = JSON.parse(ppMyths); mythCount = j.items?.length ?? 0; mythsSourced = (j.items ?? []).filter((m) => m.source).length; } catch {}
+console.log('powerplatform myths: count=' + mythCount + ' sourced=' + mythsSourced + ' ok=' + (mythCount >= 10 && mythsSourced === mythCount));
+
+const ppApplies = (await client.callTool({ name: 'fluent_powerplatform_guidance', arguments: { surface: 'applies' } })).content[0].text;
+console.log('powerplatform applies matrix: ok=' + (ppApplies.length > 200 && !/not found|No per-surface/i.test(ppApplies)));
+
 // 3) get_config again -> config now present, brand resolved from config
 const c3 = await client.callTool({ name: 'fluent_get_config', arguments: { projectDir: CFG_DIR } });
 const c3j = JSON.parse(c3.content[0].text);
