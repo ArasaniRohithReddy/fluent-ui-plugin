@@ -34,6 +34,14 @@ npm install
 npm run build          # produces mcp/dist/index.js
 ```
 
+`main` is always green (every push is gated by CI), so cloning it is safe. If you would rather pin to a fixed, tested point instead of tracking `main`, clone a release tag:
+
+```bash
+git clone --branch v1.0.0 --depth 1 https://github.com/ArasaniRohithReddy/fluent-ui-plugin.git
+```
+
+Releases are listed at [/releases](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/releases). To move to a newer one later, `git fetch --tags && git checkout v<x.y.z>`, then re-run `npm install && npm run build` and restart your host.
+
 Every host launches the same command: `node <PATH>/fluent-ui-plugin/mcp/dist/index.js`. Replace `<PATH>` with where you cloned the repository.
 
 ### Step 2: register it in your host
