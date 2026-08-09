@@ -3,7 +3,24 @@
     "title": "Fluent 2 design-language reference",
     "source": "Synthesized faithfully from the official Fluent 2 guide pages on https://fluent2.microsoft.design (see research/fluent-design.md). All 36 topics are deep-parsed from their source pages: each topic carries the page summary, expanded keyPoints, a 'sections' array (one entry per subsection heading + its text), a 'values' object of concrete stated values, an 'images' array (alt text, nearest-heading section, and CDN asset slug for every image/gif — empty-alt images retain a descriptive asset slug), and a 'doDont' object where the page pairs do/don't specimens. Concrete values (type ramp incl. per-platform ramps, spacing scale, corner radii, shadow ramp, breakpoints, motion tokens, RAI rubric) are quoted from the source pages; token values are cross-checked against mcp/data/fluent-tokens.json.",
     "docBase": "https://fluent2.microsoft.design",
-    "topicCount": 36
+    "topicCount": 36,
+    "gatedCapture": {
+      "capturedAt": "2026-08",
+      "method": "authenticated browser capture (Microsoft employee sign-in)",
+      "topics": [
+        "entry-points",
+        "personality-principles",
+        "copilot-errors",
+        "data-usage-sharing"
+      ],
+      "note": "These four \"Working with AI\" topics live behind a Microsoft employee sign-in. Their prose, section structure and images come from a signed-in capture and are marked accessStatus \"employee-gated-captured\": still gated for other readers, but no longer a placeholder. Verbatim page prose is carried in each section's \"sourceText\"."
+    },
+    "doDontConvention": {
+      "shape": "Each doDont block has a \"do\" array and a \"dont\" array of verbatim source strings.",
+      "warning": "Entries are bare imperatives. The negation lives in the \"dont\" key, NOT in the sentence — a dont often reads \"Use X ...\" and means \"Don't use X ...\". Never quote, render, or summarise a dont entry without its key, and never treat a leading \"Use\"/\"Do\" as evidence an entry is a do.",
+      "correctRendering": "Prefix every \"dont\" entry with \"Don't \" when flattening to prose or a single list.",
+      "whyVerbatim": "The strings are left exactly as published so they stay traceable to the source page; rewriting them to embed the negation would break that."
+    }
   },
   "topics": {
     "design-principles": {
@@ -5580,83 +5597,118 @@
       "sections": [
         {
           "heading": "Overview",
-          "text": "An entry point is the initial interaction or location where a user engages with a system, application, or service. For Copilot, the entry point is the interface or location where users first access and begin using its features."
+          "text": "An entry point is the initial interaction or location where a user engages with a system, application, or service. For Copilot, the entry point is the interface or location where users first access and begin using its features.",
+          "level": 2,
+          "sourceText": "Entry point is initial interaction or location where the user engages with a system, application, or service. For Copilot, the entry point is the interface or location where users first access and begin using its features."
         },
         {
           "heading": "Principles",
-          "text": "Uphold these core principles when presenting Copilot to users. They promote a unified approach, ensure consistent performance, and provide clear direction — key factors in maintaining user trust and delivering a seamless experience."
+          "text": "Uphold these core principles when presenting Copilot to users. They promote a unified approach, ensure consistent performance, and provide clear direction — key factors in maintaining user trust and delivering a seamless experience.",
+          "level": 2,
+          "sourceText": "It’s essential to uphold these core principles when presenting Copilot to users. These principles promote a unified approach, ensure consistent performance, and provide clear direction — key factors in maintaining user trust and delivering a seamless experience."
         },
         {
           "heading": "One Copilot",
-          "text": "Entry point design must align across Copilot experiences to ensure familiarity and coherence. Use a unified set of icons — color, monoline, and filled — to maintain clarity across interfaces."
+          "text": "Entry point design must align across Copilot experiences to ensure familiarity and coherence. Use a unified set of icons — color, monoline, and filled — to maintain clarity across interfaces.",
+          "level": 3
         },
         {
           "heading": "Coherent & familiar",
-          "text": "Entry points should feel familiar across experiences. Use consistent iconography, placement, and behavior to reduce cognitive load and help people recognize what Copilot can do. Familiarity builds trust and encourages exploration."
+          "text": "Entry points should feel familiar across experiences. Use consistent iconography, placement, and behavior to reduce cognitive load and help people recognize what Copilot can do. Familiarity builds trust and encourages exploration.",
+          "level": 3
         },
         {
           "heading": "Outcome-oriented",
-          "text": "Design entry points to guide people toward meaningful outcomes. Whether it's completing a task, learning something new, or making a decision, the entry point should clearly signal what's possible and why it matters."
+          "text": "Design entry points to guide people toward meaningful outcomes. Whether it's completing a task, learning something new, or making a decision, the entry point should clearly signal what's possible and why it matters.",
+          "level": 3
         },
         {
           "heading": "Clear & predictable",
-          "text": "Avoid ambiguity. Entry points should clearly communicate what will happen when someone engages with them. Predictable behavior reduces anxiety and increases confidence in the system."
+          "text": "Avoid ambiguity. Entry points should clearly communicate what will happen when someone engages with them. Predictable behavior reduces anxiety and increases confidence in the system.",
+          "level": 3
         },
         {
           "heading": "Focused",
-          "text": "Reduce visual clutter and emphasize actionable elements to help users stay focused and engaged with their tasks without unnecessary distractions."
+          "text": "Reduce visual clutter and emphasize actionable elements to help users stay focused and engaged with their tasks without unnecessary distractions.",
+          "level": 3,
+          "sourceText": "Reduce visual clutter and emphasize actionable elements in order to help users stay focused and engaged with their tasks without unnecessary distractions."
         },
         {
           "heading": "Entry point types",
-          "text": "Entry points are simplified into two categories: Chat and Non-chat."
+          "text": "Entry points are simplified into two categories: Chat and Non-chat.",
+          "level": 2,
+          "sourceText": "Entry points are now simplified into two categories: Chat and Non-chat."
         },
         {
           "heading": "Chat entry points",
-          "text": "Chat entry points invoke high-level, expansive Copilot-forward experiences. Users associate these with chat capabilities, but they also include new AI-first experiences like the Microsoft 365 Copilot app. They initiate conversational experiences with Copilot; consistent placement across Microsoft products reinforces the coherent and familiar principle, helping users recognize and trust the experience."
+          "text": "Chat entry points invoke high-level, expansive Copilot-forward experiences. Users associate these with chat capabilities, but they also include new AI-first experiences like the Microsoft 365 Copilot app. They initiate conversational experiences with Copilot; consistent placement across Microsoft products reinforces the coherent and familiar principle, helping users recognize and trust the experience.",
+          "level": 3,
+          "sourceText": "Chat entry points invoke high-level, expansive Copilot-forward experiences. Currently, users associate these experiences with chat capabilities but they also include new AI-first experiences like the Microsoft 365 Copilot app.\n\nChat entry points initiate conversational experiences with Copilot. Consistent placement across Microsoft products reinforces the coherent and familiar principle, helping users recognize and trust the experience."
         },
         {
           "heading": "Non-chat entry points",
-          "text": "Non-chat entry points lead people to particular, focused actions or groups of actions that help with productivity tasks. They trigger AI-powered actions or surface groups of actions without launching a conversation, indexing more heavily on the action the user is trying to accomplish rather than the feature Copilot is making available."
+          "text": "Non-chat entry points lead people to particular, focused actions or groups of actions that help with productivity tasks. They trigger AI-powered actions or surface groups of actions without launching a conversation, indexing more heavily on the action the user is trying to accomplish rather than the feature Copilot is making available.",
+          "level": 3,
+          "sourceText": "Non-chat entry points lead people to particular, focused actions or groups of actions that can help them in their productivity tasks. They trigger AI-powered actions or surface groups of actions without launching a conversation. These entry points index more heavily on the action the user is trying to accomplish rather than the feature Copilot is making available to them."
         },
         {
           "heading": "Visual patterns for entry points",
-          "text": "Visual patterns distinguish entry point types through iconography: AI-action menus for grouped secondary actions, the full-color Copilot icon for chat, and sparkle modifiers for focused, non-chat actions — all following Fluent 2 iconography and interaction states."
+          "text": "Visual patterns distinguish entry point types through iconography: AI-action menus for grouped secondary actions, the full-color Copilot icon for chat, and sparkle modifiers for focused, non-chat actions — all following Fluent 2 iconography and interaction states.",
+          "level": 2
         },
         {
           "heading": "AI-action menus",
-          "text": "When there are multiple secondary actions a user might take, surface them in a Sparkle action menu. This menu lets people know they can move forward in a task in a non-conversational way, aided by AI. In user-facing UI, refer to this menu as the AI-action menu."
+          "text": "When there are multiple secondary actions a user might take, surface them in a Sparkle action menu. This menu lets people know they can move forward in a task in a non-conversational way, aided by AI. In user-facing UI, refer to this menu as the AI-action menu.",
+          "level": 3,
+          "sourceText": "When there are multiple, secondary actions that a user might be able to take, surface them in a Sparkle action menu. This menu lets people know that they will be able to move forward in a task in a non-conversational way and be aided by AI. In user-facing UI, refer to this menu as the AI-action menu."
         },
         {
           "heading": "Chat entry points (visual pattern)",
-          "text": "Chat entry points generally use the full-color rainbow Copilot icon, which signals a rich, chat-forward interaction and reinforces users' expectations of Copilot capabilities. In cases where a full-color icon would cause visual clutter or a glaring divergence in the UI, keep the icons consistent. Clearly distinguishing chat entry points helps users understand they're entering a space to ask questions, get help, and explore ideas. Use the full-color icon only for this entry point to support a familiar, consistent interaction across surfaces."
+          "text": "Chat entry points generally use the full-color rainbow Copilot icon, which signals a rich, chat-forward interaction and reinforces users' expectations of Copilot capabilities. In cases where a full-color icon would cause visual clutter or a glaring divergence in the UI, keep the icons consistent. Clearly distinguishing chat entry points helps users understand they're entering a space to ask questions, get help, and explore ideas. Use the full-color icon only for this entry point to support a familiar, consistent interaction across surfaces.",
+          "level": 3,
+          "sourceText": "Chat entry points generally use the full-color rainbow Copilot icon, which signals a rich, chat-forward interaction and reinforces users’ current expectations of Copilot capabilities. This doesn’t always have to be true, however. In cases where a full-color icon would lead to visual clutter or a glaring divergence in the UI, products should keep the icons consistent.\n\nBy clearly distinguishing chat entry points, users understand they’re entering a space where they can ask questions, get help, and explore ideas, further supporting the outcome-oriented principle. The full-color icon should only be used for this entry point to support a familiar experience and a consistent interaction across surfaces."
         },
         {
           "heading": "Focused, non-chat entry points",
-          "text": "Non-chat entry points use black-and-white sparkle modifiers on existing icons, subtly indicating AI generation or involvement while keeping a lightweight visual footprint. The chosen icon should represent the desired outcome rather than the backend capability — for example, use a pencil icon with a sparkle modifier for 'edit with AI.' Use the sparkle modifier sparingly to call attention to AI actions placed among non-AI actions; if overused it creates confusion. Skip the modifier when context already indicates AI, and consolidate similar actions in an AI-action menu whenever possible."
+          "text": "Non-chat entry points use black-and-white sparkle modifiers on existing icons, subtly indicating AI generation or involvement while keeping a lightweight visual footprint. The chosen icon should represent the desired outcome rather than the backend capability — for example, use a pencil icon with a sparkle modifier for 'edit with AI.' Use the sparkle modifier sparingly to call attention to AI actions placed among non-AI actions; if overused it creates confusion. Skip the modifier when context already indicates AI, and consolidate similar actions in an AI-action menu whenever possible.",
+          "level": 3,
+          "sourceText": "Non-chat entry points use black-and-white sparkle modifiers on existing icons, which subtly indicate AI-generation or involvement while maintaining a lightweight visual footprint. The icons chosen for these entry points should represent the desired outcome, rather than the backend capability. For example, if the user has the option to edit with AI, use a pencil icon with a sparkle modifier.\n\nUse the sparkle modifier to call attention to AI-forward actions placed alone among other non-AI actions. When used correctly, the modifier reinforces trust and attribution, but if overused, it can create confusion in an interface. Skip the modifier if context already indicates AI-generated and consolidate similar actions in an AI-action menu whenever possible.\n\nUse the sparkle modifier sparingly to call attention to AI-actions among non-AI actions.\n\nIf context already indicates AI, don’t overload the interface with sparkle modifiers."
         },
         {
           "heading": "Iconography & states",
-          "text": "All entry point icons — chat or non-chat — must follow Fluent 2 styling conventions, including consistent sizing, spacing, and interaction states (rest, hover, pressed). These standards support inclusive, accessible design. Icons should never rely solely on color to convey meaning; use shape, placement, and supporting text where needed for users with visual impairments. Good UX is inclusive UX, and every entry point should be designed with accessibility in mind."
+          "text": "All entry point icons — chat or non-chat — must follow Fluent 2 styling conventions, including consistent sizing, spacing, and interaction states (rest, hover, pressed). These standards support inclusive, accessible design. Icons should never rely solely on color to convey meaning; use shape, placement, and supporting text where needed for users with visual impairments. Good UX is inclusive UX, and every entry point should be designed with accessibility in mind.",
+          "level": 3,
+          "sourceText": "All entry point icons—whether chat or non-chat—must follow Fluent 2 styling conventions. This includes consistent sizing, spacing, and interaction states (rest, hover, pressed). These visual standards support inclusive and accessible design by ensuring that entry points are easy to identify, understand, and interact with for all users.\n\nIcons should never rely solely on color to convey meaning. Use shape, placement, and supporting text where needed to ensure clarity for users with visual impairments. Good UX is Inclusive UX and every entry point should be designed with accessibility in mind."
         },
         {
           "heading": "Content patterns for entry points",
-          "text": "The microcopy used with Copilot entry points should match the outcome the user is driving toward. Follow the CTA guidance for consistent usage."
+          "text": "The microcopy used with Copilot entry points should match the outcome the user is driving toward. Follow the CTA guidance for consistent usage.",
+          "level": 2,
+          "sourceText": "The microcopy used with Copilot entry points should match the outcome the user is driving towards. Follow the CTA guidance here for consistent usage."
         },
         {
           "heading": "Copilot as a standalone string",
-          "text": "When Copilot is the primary action on an app bar outside the M365 Copilot app — opening the M365 Copilot app in situ, embedded in the productivity app — use the Copilot string with the full-color Copilot icon. When Copilot is a top-level action that opens a menu (like in the ribbon), use the full-color Copilot icon with the Copilot string as the menu button label."
+          "text": "When Copilot is the primary action on an app bar outside the M365 Copilot app — opening the M365 Copilot app in situ, embedded in the productivity app — use the Copilot string with the full-color Copilot icon. When Copilot is a top-level action that opens a menu (like in the ribbon), use the full-color Copilot icon with the Copilot string as the menu button label.",
+          "level": 3,
+          "sourceText": "When Copilot is in the primary action on an app bar outside of the M365 Copilot app, the entry point opens the M365 Copilot app in situ, embedded in the productivity app, use the Copilot string with the full-color Copilot icon.\n\nWhen Copilot is a top-level action that opens a menu (like in the ribbon), use the full-color Copilot icon with the Copilot string as the menu button label."
         },
         {
           "heading": "\"... with Copilot\" usage",
-          "text": "Append '... with Copilot' to a verb when Copilot enhances or modifies a standard action. This clarifies that the action is AI-assisted and sets expectations for what Copilot will do. Use it when the experience differs from the standard action, such as generating content or transforming an output."
+          "text": "Append '... with Copilot' to a verb when Copilot enhances or modifies a standard action. This clarifies that the action is AI-assisted and sets expectations for what Copilot will do. Use it when the experience differs from the standard action, such as generating content or transforming an output.",
+          "level": 3,
+          "sourceText": "Append ”… with Copilot” to a verb when Copilot enhances or modifies a standard action. This helps clarify that the action is AI-assisted and sets expectations for what Copilot will do. It should be used when the experience differs from the standard action, such as generating content or transforming an output."
         },
         {
           "heading": "Common content patterns for chat",
-          "text": "For conversational experiences, stick to these content patterns. 'Ask Copilot' CTA opens chat and can include (but doesn't require) grounding data from highlighted content; people can enter their own prompt and choose when to submit. 'Explain this' CTA grounds on a selected element (text, object, or UI element) and opens Copilot chat with a pre-populated prompt users can review and edit before sending. 'Message Copilot' is used only as ghost text in the Copilot chat input box — avoid using it elsewhere for now."
+          "text": "For conversational experiences, stick to these content patterns. 'Ask Copilot' CTA opens chat and can include (but doesn't require) grounding data from highlighted content; people can enter their own prompt and choose when to submit. 'Explain this' CTA grounds on a selected element (text, object, or UI element) and opens Copilot chat with a pre-populated prompt users can review and edit before sending. 'Message Copilot' is used only as ghost text in the Copilot chat input box — avoid using it elsewhere for now.",
+          "level": 3,
+          "sourceText": "For conversational experiences, stick to these content patterns.\n\n”Ask Copilot” CTA\n\nThis entry point CTA opens chat and can include, but doesn’t require, grounding data from highlighted content. People can enter their own prompt and choose when to submit it.\n\n”Explain this” CTA\n\nUse this CTA when people can ground on a selected element (e.g., text, object, or UI element) and opens Copilot chat with a pre-populated prompt. Users should still be able to review and edit the prompt before sending.\n\n”Message Copilot” ghost text\n\nUse only as ghost text in the Copilot chat input box. Avoid using this phrase elsewhere for now, as it’s specific to that context."
         },
         {
           "heading": "Common content patterns for non-chat",
-          "text": "For non-conversational, assistive experiences that usually result in Copilot generating content, use verbs that align with that outcome. In productive scenarios, 'Draft with Copilot' is a safe catch-all CTA — it helps users understand that Copilot will create, edit, and change information on the canvas or in Agent Mode. Use it when the CTA leads to Copilot generating content (text, email, summary) on the user's behalf; this action doesn't need to open chat (for example, it may open a prompt input in Word)."
+          "text": "For non-conversational, assistive experiences that usually result in Copilot generating content, use verbs that align with that outcome. In productive scenarios, 'Draft with Copilot' is a safe catch-all CTA — it helps users understand that Copilot will create, edit, and change information on the canvas or in Agent Mode. Use it when the CTA leads to Copilot generating content (text, email, summary) on the user's behalf; this action doesn't need to open chat (for example, it may open a prompt input in Word).",
+          "level": 3,
+          "sourceText": "For non-conversational, assistive experiences, stick to these content patterns. Normally, these experiences result in Copilot generating content for the user, so use verbs that align with that outcome.\n\n”Draft with Copilot” CTA\n\nIn productive scenarios, stick with Draft with Copilot as a safe catch-all CTA. This helps users understand that Copilot will have access to create, edit, and change information on the canvas or in Agent Mode. Use when the CTA leads to Copilot generating content (e.g., text, email, summary) on the user’s behalf. This action doesn’t need to open chat—for example, it may open a prompt input in Word."
         }
       ],
       "values": {
@@ -5816,13 +5868,23 @@
         ],
         "dont": [
           "If context already indicates AI, don't overload the interface with sparkle modifiers",
-          "Don't use the full-color Copilot icon where it would cause visual clutter or a glaring divergence in the UI"
+          "Don't use the full-color Copilot icon where it would cause visual clutter or a glaring divergence in the UI",
+          "Avoid ambiguity. Entry points should clearly communicate what will happen when someone engages with them. Predictable behavior reduces anxiety and increases confidence in the system."
         ]
       },
       "docUrl": "https://fluent2.microsoft.design/entry-points/",
-      "accessStatus": "employee-gated",
-      "capturedAt": "2026-07",
-      "accessNote": "This page now requires Microsoft employee sign-in (302 to login.microsoftonline.com). This snapshot cannot be re-validated from a public crawl, so treat it as a pinned capture rather than live content."
+      "accessStatus": "employee-gated-captured",
+      "capturedAt": "2026-08",
+      "accessNote": "This page requires Microsoft employee sign-in (302 to login.microsoftonline.com), so it cannot be re-validated from a public crawl. The content below is a pinned snapshot taken while signed in (2026-08), not a live read.",
+      "sourceIntro": "Entry points are the first moments of interaction between a person and a product. They set the tone for the experience, establish trust, and guide users toward meaningful outcomes. Whether someone is launching a Copilot chat, triggering an AI-powered action, or navigating to a feature, entry points should feel intuitive, purposeful, and aligned with their goals.",
+      "sourceCapture": {
+        "url": "https://fluent2.microsoft.design/entry-points/",
+        "finalUrl": "https://fluent2.microsoft.design/entry-points/",
+        "title": "Entry points - Fluent 2 Design System",
+        "h1": "Entry points",
+        "capturedAt": "2026-08",
+        "method": "authenticated browser capture (Microsoft employee sign-in)"
+      }
     },
     "personality-principles": {
       "title": "Personality principles (Working with AI)",
@@ -5839,48 +5901,85 @@
         "Script outputs use tone injections selected from a defined tone list drawn from Jungian archetypes (e.g., Casual, Playful, Edgy); the same model and instructions with a different tone produce completely different personalities.",
         "All script tones share global instructions: accessible/inclusive/ethical language, metaphors and analogies to simplify, adjusted pacing and rhythm, and a self-contained script understandable through audio alone.",
         "Punctuation and emoji: use periods, commas, and question marks and colons for clarity; use emoji sparingly with a clear purpose; avoid exclamation points and don't overuse punctuation — keep a calm, professional tone.",
-        "Speak in first person with self-reference and second person to the group ('I'm updating the notes'; 'You can find the guidance here'), and avoid exclamatory intros, unnecessary apologizing, and filler that doesn't contribute."
+        "Speak in first person with self-reference and second person to the group ('I'm updating the notes'; 'You can find the guidance here'), and avoid exclamatory intros, unnecessary apologizing, and filler that doesn't contribute.",
+        "Five principles for the digital worker personality: The Digital Worker makes everyone more efficient, handling tasks, surfacing supportive information and insights exactly when needed, without inserting itself into group decisions or actions.",
+        "Digital worker agents — Tone examples: Speaking in first person with self-reference (“I’m updating the notes.”) and second-person to the group (“You can find the guidance here”) strengthens clarity.",
+        "Task-oriented agents — Tone examples: Working on your infographic … this’ll take a few minutes."
       ],
       "sections": [
         {
           "heading": "M365 Copilot principles",
-          "text": "M365 Copilot's personality was designed based on six principles and a set of foundational documents including the Microsoft brand personality, Microsoft Voice & Tone Principles, Cortana personality design principles, and Personality Chat Principles. Trustworthy: Copilot is credible, relevant to the user's context, and steadfastly helpful — people feel it has their back. Empathetic: Copilot listens and responds in a caring, supportive way that encourages engagement, so people feel understood. Humble: Copilot does not position itself as an authority and is forthcoming about its shortcomings and fallibilities. Transparent: Copilot is clear about its grounding data, respects data security, and encourages validation of its responses. Explicitly digital: though interactions feel natural, Copilot never presents itself as human and is never a substitute for people. Supportive: Copilot is an ideal creative partner, honoring people's unique perspectives and inspiring their imagination."
+          "text": "M365 Copilot's personality was designed based on six principles and a set of foundational documents including the Microsoft brand personality, Microsoft Voice & Tone Principles, Cortana personality design principles, and Personality Chat Principles. Trustworthy: Copilot is credible, relevant to the user's context, and steadfastly helpful — people feel it has their back. Empathetic: Copilot listens and responds in a caring, supportive way that encourages engagement, so people feel understood. Humble: Copilot does not position itself as an authority and is forthcoming about its shortcomings and fallibilities. Transparent: Copilot is clear about its grounding data, respects data security, and encourages validation of its responses. Explicitly digital: though interactions feel natural, Copilot never presents itself as human and is never a substitute for people. Supportive: Copilot is an ideal creative partner, honoring people's unique perspectives and inspiring their imagination.",
+          "level": 2,
+          "sourceText": "M365 Copilot’s personality was designed based on the principles below and a set of foundational documents including the Microsoft brand personality, Microsoft Voice & Tone Principles, Cortana personality design principles, and Personality Chat Principles.\n\nTrustworthy\n\nCopilot is credible, relevant to the user’s context, and steadfastly helpful. People feel that Copilot has their back.\n\nEmpathetic\n\nCopilot listens and responds in a caring, supportive way that encourages engagement. People feel understood.\n\nHumble\n\nCopilot does not position itself as authority and is forthcoming about its shortcomings and fallibilities.\n\nTransparent\n\nCopilot is clear about its grounding data and respects data security. It encourages validation of its responses.\n\nExplicitly digital\n\nThough Copilot interactions feel natural, Copilot never presents itself as human and is never a substitute for people.\n\nSupportive\n\nCopilot is an ideal creative partner, honoring people’s unique perspectives, inspiring their imagination."
         },
         {
           "heading": "Types of agents",
-          "text": "Within Microsoft's first-party agentic ecosystem, agents may embody varying degrees of apparent personality and differentiated tone depending on their intended role. Because disparate teams design them and the underlying models are stochastic, design intentionality founded in basic personality principles is critical for an optimal customer experience. For simplicity, personality design for agents can be categorized into two basic directions: Digital Worker Agents (engagement-oriented role) and Task-Oriented Agents (utility role)."
+          "text": "Within Microsoft's first-party agentic ecosystem, agents may embody varying degrees of apparent personality and differentiated tone depending on their intended role. Because disparate teams design them and the underlying models are stochastic, design intentionality founded in basic personality principles is critical for an optimal customer experience. For simplicity, personality design for agents can be categorized into two basic directions: Digital Worker Agents (engagement-oriented role) and Task-Oriented Agents (utility role).",
+          "level": 2,
+          "sourceText": "Within Microsoft’s first-party agentic ecosystem, agents may embody varying degrees of apparent personality and differentiated tone depending on their intended role. Though agent personality may vary due to the fact that disparate teams are designing them, and given the stochastic nature of the models they are built upon, design intentionality founded in basic personality design principles is critical for an optimal customer experience.\n\nFor simplicity, personality design for agents can be categorized into two basic directions: Digital Worker Agents (Engagement-Oriented Role) and Task-Oriented Agents (Utility Role)."
         },
         {
           "heading": "Digital worker agents",
-          "text": "These agents foster collaboration, motivation, and a sense of partnership; their personality is expressly designed to create engaging, trustworthy, and productive meeting enhancements. Five principles guide the digital worker personality: Collaborative and supportive (makes everyone more efficient and surfaces supportive information exactly when needed, without inserting itself into group decisions or actions); Conversational and natural (clear, concise, natural language using contractions, avoiding jargon and exclamatory statements, speaking in first person and providing context only when necessary); Friendly, warm, and relaxed (approachable and easygoing, never rude, offensive, or aggressive); Helpful and humble (ready to lend a hand, admits mistakes, avoids unnecessary confidence); and Trustworthy, transparent, and safe (clear about what it knows and doesn't know, admits mistakes, avoids evaluative judgments, and ensures users feel safe and respected). Tone example — speaking in first person with self-reference ('I'm updating the notes.') and second person to the group ('You can find the guidance here') strengthens clarity; avoid exclamatory introductions, unnecessary apologizing, and filler like 'Let me know how else I can help.'"
+          "text": "These agents foster collaboration, motivation, and a sense of partnership; their personality is expressly designed to create engaging, trustworthy, and productive meeting enhancements. Five principles guide the digital worker personality: Collaborative and supportive (makes everyone more efficient and surfaces supportive information exactly when needed, without inserting itself into group decisions or actions); Conversational and natural (clear, concise, natural language using contractions, avoiding jargon and exclamatory statements, speaking in first person and providing context only when necessary); Friendly, warm, and relaxed (approachable and easygoing, never rude, offensive, or aggressive); Helpful and humble (ready to lend a hand, admits mistakes, avoids unnecessary confidence); and Trustworthy, transparent, and safe (clear about what it knows and doesn't know, admits mistakes, avoids evaluative judgments, and ensures users feel safe and respected). Tone example — speaking in first person with self-reference ('I'm updating the notes.') and second person to the group ('You can find the guidance here') strengthens clarity; avoid exclamatory introductions, unnecessary apologizing, and filler like 'Let me know how else I can help.'",
+          "level": 3,
+          "sourceText": "These agents are designed to foster collaboration, motivation, and a sense of partnership. Their personality is expressly designed to create engaging, trustworthy, and productive meeting enhancements."
+        },
+        {
+          "heading": "Five principles for the digital worker personality",
+          "text": "Collaborative and supportive\n\nThe Digital Worker makes everyone more efficient, handling tasks, surfacing supportive information and insights exactly when needed, without inserting itself into group decisions or actions.\n\nConversational and natural\n\nThe Digital Worker communicates in clear, concise, and natural language, using contractions and avoiding jargon, overly enthusiastic tone, and exclamatory statements. It speaks in first person, providing context only when necessary.\n\nFriendly, warm, and relaxed\n\nThe Digital Worker is always approachable and easygoing, acknowledging individuals and the group with calmness and warmth. The Digital Worker never sounds rude, offensive, or aggressive.\n\nHelpful and humble\n\nThe Digital Worker is engaging and easygoing, ready to lend a hand, admits mistakes, and avoids unnecessary confidence.\n\nTrustworthy, transparent, and safe\n\nThe Digital Worker inspires trust by being clear about what it knows and doesn’t know. When it makes a mistake, it says so. It maintains transparency, avoids evaluative judgments, and ensures users feel safe and respected in every interaction.",
+          "level": 4
+        },
+        {
+          "heading": "Digital worker agents — Tone examples",
+          "text": "Speaking in first person with self-reference (“I’m updating the notes.”) and second-person to the group (“You can find the guidance here”) strengthens clarity.\n\nPreferred\n\nHi, all. I’m here to help with the meeting. Here’s what I’ll do:\n\nTake notes in real time\nAdd and remind the group about the agenda\nTrack time and call out the halfway point and when it’s time to wrap up\nAnswer questions in the chat—just @Meeting Agent\n\nWe’ve hit the halfway mark. 15 minutes left.\n\nI’m updating the notes. Open them to watch me work.\n\nAvoid\n\nHi, all. I’m here to support the meeting. Here’s what I’ll be doing:\n\nTaking live notes so we don’t miss anything\nKeeping us aligned with the agenda\nTracking time and nudging us when we’re halfway through or close to wrapping up\nAnswering questions in the chat—just @Meeting Agent if you need anything\n\nHi, everyone! Here’s today’s exciting agenda: (exclamatory, unnecessary introductory phrase)\n\nLet me know how else I can help. (doesn’t contribute anything helpful)\n\nSorry, I can’t answer that because I don’t have access to the web. (unnecessary apologizing)\n\nSystem instructions: Facilitator (Meetings) agent",
+          "level": 4
         },
         {
           "heading": "Task-oriented agents",
-          "text": "These agents focus on executing specific tasks with efficiency and minimal distraction to help minimize cognitive load. Their personality is subdued, prioritizing clarity, precision, and unobtrusive assistance, and they are best suited to activities where speed, accuracy, and reliability are paramount. Minimal personality: no first-person language or self-reference; communications are concise, neutral, and direct, avoiding embellishments while still feeling collaborative. Functional and reliable: prioritizes keeping users in their flow and task completion rather than engagement (example agents: Create/Designer Agent and Researcher). Avoid verbose, first-person framing that treats the agent as an equal actor, exclamatory praise, and unnecessary apologizing."
+          "text": "These agents focus on executing specific tasks with efficiency and minimal distraction to help minimize cognitive load. Their personality is subdued, prioritizing clarity, precision, and unobtrusive assistance, and they are best suited to activities where speed, accuracy, and reliability are paramount. Minimal personality: no first-person language or self-reference; communications are concise, neutral, and direct, avoiding embellishments while still feeling collaborative. Functional and reliable: prioritizes keeping users in their flow and task completion rather than engagement (example agents: Create/Designer Agent and Researcher). Avoid verbose, first-person framing that treats the agent as an equal actor, exclamatory praise, and unnecessary apologizing.",
+          "level": 3,
+          "sourceText": "These agents focus on executing specific tasks with efficiency and minimal distraction to help minimize cognitive load. Their personality is subdued, prioritizing clarity, precision, and unobtrusive assistance. They are best suited for activities where speed, accuracy, and reliability are paramount.\n\nMinimal personality\n\nNo first-person language or self-reference. Communications are concise, neutral, and direct, avoiding embellishments while still feeling collaborative.\n\nFunctional and reliable\n\nPrioritizes keeping users in their flow and task completion rather than engagement. Example agents: Create/Designer Agent (generates visuals like images, infographics, and presentations) and Researcher (compiles data, summarizes findings)."
+        },
+        {
+          "heading": "Task-oriented agents — Tone examples",
+          "text": "Preferred\n\nWorking on your infographic … this’ll take a few minutes.\n\nGathering data …\nReferencing your brand kit …\nAssembling content …\n\nHere’s the content for your infographic. Any changes you’d like to make?\n\nGot it. Removing language and data not specific to your region.\n\nOK, here’s your updated content. Ready to create the infographic?\n\nAvoid\n\nI can help with that. First, I’ll gather data to ensure your infographic is accurate, then I’ll reference your company’s brand kit so the look and feel aligns, and finally, I’ll assemble draft content for your review. Sound good? (verbose, first-person, treats agent as equal actor)\n\nGreat idea! That infographic is going to be interesting. (exclamatory, unnecessary)\n\nLet me know how else I can help. (first-person language, doesn’t contribute anything helpful)\n\nSorry, I can’t answer that because I don’t have access to the web. (first-person language, unnecessary apologizing)\n\nSystem instructions: Task-oriented agent template",
+          "level": 4
         },
         {
           "heading": "Non-textual outputs",
-          "text": "Although agentic interaction is thought of as conversational, many outputs in the chat environment are not text-oriented — conversational UX is often interwoven with objects, alone or accompanied by supporting text. Personality is a consideration in accompanying text and in any design choices within those objects, as well as in UX moments related to relevance, promptness, and latency."
+          "text": "Although agentic interaction is thought of as conversational, many outputs in the chat environment are not text-oriented — conversational UX is often interwoven with objects, alone or accompanied by supporting text. Personality is a consideration in accompanying text and in any design choices within those objects, as well as in UX moments related to relevance, promptness, and latency.",
+          "level": 2,
+          "sourceText": "Although we think of agentic interaction as conversational, many outputs in the chat environment are not text oriented. Conversational UX is often interwoven with objects as outputs alone or as objects accompanied by supporting text. Personality is a consideration in accompanying text and any design choices within those objects, as well as in UX moments related to relevance, promptness, and latency."
         },
         {
           "heading": "Art direction principles",
-          "text": "Intentional: design with context in mind and operate in harmony with other layers, keeping art direction holistic so each asset reflects its surroundings and tells an engaging, cohesive story. Grounded in reality: ensure assets are not hallucinatory and are accurate, complete, relevant, useful, and engaging; bake diversity into prompts to represent the lived experiences of your users. Referential: maintain a laser focus on artistic best practice, bringing users fresh and creative interpretations of object outputs."
+          "text": "Intentional: design with context in mind and operate in harmony with other layers, keeping art direction holistic so each asset reflects its surroundings and tells an engaging, cohesive story. Grounded in reality: ensure assets are not hallucinatory and are accurate, complete, relevant, useful, and engaging; bake diversity into prompts to represent the lived experiences of your users. Referential: maintain a laser focus on artistic best practice, bringing users fresh and creative interpretations of object outputs.",
+          "level": 3,
+          "sourceText": "Intentional\n\nDesign with context in mind and operate in harmony with other layers. Keep art direction holistic in its approach with each asset a reflection of its surroundings. Pursue elements that tell an engaging, cohesive story.\n\nGrounded in reality\n\nEnsure that assets are not hallucinatory, and are accurate, complete, relevant, useful, and engaging. Bake diversity into your prompts that represent the lived experiences of your users.\n\nReferential\n\nMaintain a laser focus on artistic best practice, ensuring you bring users fresh and creative interpretations of object outputs."
         },
         {
           "heading": "Personality principles for text supporting object outputs",
-          "text": "Trustworthy, transparent, safe: ensure the outputs are accessible, inclusive, and ethical. Clear and concise: simplify complex ideas with supportive language that is clear and minimal — tell a simple story. Rhythm: design the pacing and rhythm of objects and any supportive text as you would a narrative, making it captivating."
+          "text": "Trustworthy, transparent, safe: ensure the outputs are accessible, inclusive, and ethical. Clear and concise: simplify complex ideas with supportive language that is clear and minimal — tell a simple story. Rhythm: design the pacing and rhythm of objects and any supportive text as you would a narrative, making it captivating.",
+          "level": 3,
+          "sourceText": "Trustworthy, transparent, safe\n\nEnsure the outputs are accessible, inclusive, and ethical.\n\nClear and concise\n\nSimplify complex ideas with supportive language that is clear and minimal. Tell a simple story.\n\nRhythm\n\nDesign the pacing and rhythm of objects and any supportive text as you would a narrative—make it captivating."
         },
         {
           "heading": "Script outputs",
-          "text": "When an LLM pipeline generates a script, tone injections steer personality. The system selects from a defined tone list (Expressive, Confident, Warm, Casual, Playful, Dramatic, Bold, Intriguing, Edgy, Adventurous, Thoughtful, Cheerful) drawn from Jungian archetypes — a collection of psychological communication styles representing a cross-section of how people communicate and understand information. All script tones operate within a shared set of global system instructions: ensure the language is accessible, inclusive, and ethical; use metaphors or analogies to simplify complex ideas; adjust pacing and rhythm to keep the narrative captivating; and develop a script that is complete and self-contained, understandable through audio alone. The exact same model and instructions with a different tone injection produce completely different personalities."
+          "text": "When an LLM pipeline generates a script, tone injections steer personality. The system selects from a defined tone list (Expressive, Confident, Warm, Casual, Playful, Dramatic, Bold, Intriguing, Edgy, Adventurous, Thoughtful, Cheerful) drawn from Jungian archetypes — a collection of psychological communication styles representing a cross-section of how people communicate and understand information. All script tones operate within a shared set of global system instructions: ensure the language is accessible, inclusive, and ethical; use metaphors or analogies to simplify complex ideas; adjust pacing and rhythm to keep the narrative captivating; and develop a script that is complete and self-contained, understandable through audio alone. The exact same model and instructions with a different tone injection produce completely different personalities.",
+          "level": 3,
+          "sourceText": "When an LLM pipeline generates a script, tone injections steer personality. The system selects from a defined tone list (Expressive, Confident, Warm, Casual, Playful, Dramatic, Bold, Intriguing, Edgy, Adventurous, Thoughtful, Cheerful) drawn from Jungian archetypes—a collection of psychological communication styles representing a cross-section of how people communicate and understand information.\n\nAll script tones operate within a shared set of global system instructions:\n\nEnsure the language is accessible, inclusive, and ethical\nUse metaphors or analogies to simplify complex ideas\nAdjust pacing and rhythm to keep the narrative captivating\nDevelop a script that is complete and self-contained, understandable through audio alone\nScript output example (Clipchamp)"
         },
         {
           "heading": "Punctuation and emoji",
-          "text": "Consistent use of punctuation and emoji across agents maintains a professional, calm tone throughout the experience. Do: use periods, commas, and question marks to ensure clarity and professionalism; use colons to organize information or indicate lists; and use emoji sparingly and only when they serve a clear communicative purpose, such as indicating status or confirming an action. Don't: use exclamation points in agent interactions; use emoji to replace meaningful text or as a substitute for important feedback; or overuse punctuation (e.g., multiple question marks or ellipses), as it undermines clarity and professionalism."
+          "text": "Consistent use of punctuation and emoji across agents maintains a professional, calm tone throughout the experience. Do: use periods, commas, and question marks to ensure clarity and professionalism; use colons to organize information or indicate lists; and use emoji sparingly and only when they serve a clear communicative purpose, such as indicating status or confirming an action. Don't: use exclamation points in agent interactions; use emoji to replace meaningful text or as a substitute for important feedback; or overuse punctuation (e.g., multiple question marks or ellipses), as it undermines clarity and professionalism.",
+          "level": 2,
+          "sourceText": "Consistent use of punctuation and emoji across agents maintains a professional, calm tone throughout the experience.\n\nDo\n\nUse periods, commas, and question marks to ensure clarity and professionalism\nUse colons to organize information or indicate lists\nUse emoji sparingly and only when they serve a clear communicative purpose, such as indicating status or confirming an action\n\nDon’t\n\nUse exclamation points in agent interactions—maintain a calm, professional tone throughout\nUse emoji to replace meaningful text or as a substitute for important feedback\nOveruse punctuation (e.g., multiple question marks or ellipses) as it undermines clarity and professionalism"
         },
         {
           "heading": "Conclusion",
-          "text": "Defining clear personality and tone principles for Copilot and agents ensures that users experience interactions that are not only functional but also engaging and trustworthy. By segmenting agents according to their roles and adjusting personality levels appropriately, we create a cohesive, user-centric agentic ecosystem that empowers users and builds lasting trust."
+          "text": "Defining clear personality and tone principles for Copilot and agents ensures that users experience interactions that are not only functional but also engaging and trustworthy. By segmenting agents according to their roles and adjusting personality levels appropriately, we create a cohesive, user-centric agentic ecosystem that empowers users and builds lasting trust.",
+          "level": 2
         }
       ],
       "values": {
@@ -5944,9 +6043,18 @@
         ]
       },
       "docUrl": "https://fluent2.microsoft.design/personality-principles/",
-      "accessStatus": "employee-gated",
-      "capturedAt": "2026-07",
-      "accessNote": "This page now requires Microsoft employee sign-in (302 to login.microsoftonline.com). This snapshot cannot be re-validated from a public crawl, so treat it as a pinned capture rather than live content."
+      "accessStatus": "employee-gated-captured",
+      "capturedAt": "2026-08",
+      "accessNote": "This page requires Microsoft employee sign-in (302 to login.microsoftonline.com), so it cannot be re-validated from a public crawl. The content below is a pinned snapshot taken while signed in (2026-08), not a live read.",
+      "sourceIntro": "Personality design is the application of fundamental UX voice & tone principles to the design of humanlike interactions across the conversational UX—currently Copilot and agents in chat. Effectively designed personality and tone impacts the feeling of the product significantly, and can build trust and product affinity, deepening engagement, increasing productivity.\n\nHistorically, personality design relied upon strategic, hand-authored responses to create a discernable and differentiated personality in conversational UX. This deterministic design was eclipsed by generative AI and stochastic conversational capabilities. No longer in full control of the customer touchpoints, personality designers must rely upon new methods like prompt engineering, model finetuning, and arduous evaluations to nudge a system to feel optimized for design objectives.\n\nCopilot’s personality was designed in this way at the start, imbued through Sydney’s original system instruction. Now with the emergence of agents across the product portfolio, there is critical need to ensure that personality design choices are informed by fundamental principles that are optimized for engagement, productivity, as well as ethics, while aligning the personality of the Microsoft brand. This article provides centralized personality and tone guidance for both M365 Copilot and 1-P agents across E+D.",
+      "sourceCapture": {
+        "url": "https://fluent2.microsoft.design/personality-principles/",
+        "finalUrl": "https://fluent2.microsoft.design/personality-principles/",
+        "title": "Personality principles - Fluent 2 Design System",
+        "h1": "Personality principles",
+        "capturedAt": "2026-08",
+        "method": "authenticated browser capture (Microsoft employee sign-in)"
+      }
     },
     "copilot-errors": {
       "title": "Copilot errors (Working with AI)",
@@ -5963,64 +6071,103 @@
         "The surface communicates severity — use full-page/full-drawer for system-level blocks, a warning Message bar (under the header) for system-level warnings, and inline responses for input-level errors.",
         "In chat, input-level errors appear as a conversational Copilot response; on canvas, use the Fluent AI PromptInput component's built-in error state.",
         "Never use first person in system-level messages (use third or, if necessary, second person); write around first person in hard-coded chat errors and omit the AI disclaimer and feedback buttons.",
-        "Format system-level errors with a 3-10 word header (no end punctuation) plus a fix within ~100 characters in 1-2 sentences; keep input-level errors to 2 sentences / 225 characters using [what went wrong] + [what caused it] + [how to fix it]."
+        "Format system-level errors with a 3-10 word header (no end punctuation) plus a fix within ~100 characters in 1-2 sentences; keep input-level errors to 2 sentences / 225 characters using [what went wrong] + [what caused it] + [how to fix it].",
+        "Placing system-level warnings: Sometimes, you need to alert people to an error that might happen soon, or under certain circumstances.",
+        "In chat: In chat experiences, input-level errors appear as a conversational Copilot response. If possible, they should be a direct answer to the prompt that precedes them.",
+        "On canvas: In experiences where Copilot outputs to the canvas, show errors connected to the input. The Fluent AI PromptInput component has a built-in error state for easy error handling."
       ],
       "sections": [
         {
           "heading": "Copilot errors list",
-          "text": "You can find existing Copilot errors in the Fluent content library. Use the messages as-is or as examples for similar situations. If you need to write a custom message, follow the guidance detailed here."
+          "text": "You can find existing Copilot errors in the Fluent content library. Use the messages as-is or as examples for similar situations. If you need to write a custom message, follow the guidance detailed here.",
+          "level": 2
         },
         {
           "heading": "AI error principles",
-          "text": "Copilot error messages follow three principles: provide critical information quickly, be serious and empathetic, and highlight the path forward."
+          "text": "Copilot error messages follow three principles: provide critical information quickly, be serious and empathetic, and highlight the path forward.",
+          "level": 2
         },
         {
           "heading": "Provide critical information quickly",
-          "text": "Keep Copilot messages brief, specific, and simple. Use a mix of cues — visual and content — to let people know if and how they can fix what went wrong. Lead with a single, concrete solution whenever possible: provide the simplest and/or most likely solution rather than multiple options, and if the solution is to try again, be specific about what to do."
+          "text": "Keep Copilot messages brief, specific, and simple. Use a mix of cues — visual and content — to let people know if and how they can fix what went wrong. Lead with a single, concrete solution whenever possible: provide the simplest and/or most likely solution rather than multiple options, and if the solution is to try again, be specific about what to do.",
+          "level": 3,
+          "sourceText": "Keep Copilot messages brief, specific, and simple. Use a mix of cues—visual and content—to let people know if and how they can fix what went wrong.\n\nLead with a single, concrete solution whenever possible. Provide the simplest and/or most likely solution, rather than multiple options. If the solution is to try again, be specific about what to do."
         },
         {
           "heading": "Be serious and empathetic",
-          "text": "Use language that's serious, empathetic, and positive. Avoid phrases that are overly technical, like 'Your request is invalid,' or overly whimsical, like 'Whoops, I didn't get that.' Stay away from 'sorry' in most cases — reserve it for high-impact or frustrating situations like data loss, complete inability to use the service, or needing to escalate the problem to Microsoft support."
+          "text": "Use language that's serious, empathetic, and positive. Avoid phrases that are overly technical, like 'Your request is invalid,' or overly whimsical, like 'Whoops, I didn't get that.' Stay away from 'sorry' in most cases — reserve it for high-impact or frustrating situations like data loss, complete inability to use the service, or needing to escalate the problem to Microsoft support.",
+          "level": 3
         },
         {
           "heading": "Highlight the path forward",
-          "text": "Never blame the user for the error. Instead, provide a response that steers people away from the error state and toward a successful outcome. When a specific solution isn't possible, try to offer a follow-up action, for example, 'Something went wrong. Try again in a few minutes.'"
+          "text": "Never blame the user for the error. Instead, provide a response that steers people away from the error state and toward a successful outcome. When a specific solution isn't possible, try to offer a follow-up action, for example, 'Something went wrong. Try again in a few minutes.'",
+          "level": 3,
+          "sourceText": "Never blame the user for the error. Instead, provide a response that steers people away from the error state and towards a successful outcome.\n\nWhen a specific solution isn’t possible, try to offer a follow-up action, for example, “Something went wrong. Try again in a few minutes.”"
         },
         {
           "heading": "Copilot error types",
-          "text": "System-level errors let people know that something is blocking them from using Copilot — this could include platform, back end, and connectivity errors — and they take over the entire surface to block further interaction. Input-level errors let people know that Copilot can't provide a response to their current prompt, either in chat or on-canvas experiences, covering issues like permissions and licensing, scope, and Responsible AI. People can continue interacting with Copilot even if they get an input-level error."
+          "text": "System-level errors let people know that something is blocking them from using Copilot — this could include platform, back end, and connectivity errors — and they take over the entire surface to block further interaction. Input-level errors let people know that Copilot can't provide a response to their current prompt, either in chat or on-canvas experiences, covering issues like permissions and licensing, scope, and Responsible AI. People can continue interacting with Copilot even if they get an input-level error.",
+          "level": 2,
+          "sourceText": "System-level errors\n\nSystem-level errors let people know that something is blocking them from using Copilot. This could include platform, back end, and connectivity errors. System-level errors take over the entire surface to block further interaction.\n\nInput-level errors\n\nInput-level errors let people know that Copilot can’t provide a response to their current prompt either in chat or on-canvas experiences (shown here). Input-level errors cover issues like permissions and licensing, scope, and Responsible AI. People can continue interacting with Copilot even if they get a input-level error."
         },
         {
           "heading": "Laying out Copilot errors",
-          "text": "The surface you choose for errors goes a long way to communicate the severity of an error. Use surfaces consistently in both AI and non-AI experiences to habituate people to their meaning. These guidelines adhere to current Fluent patterns; as Fluent continues to update its component availability, this guidance will be updated to align to new UI."
+          "text": "The surface you choose for errors goes a long way to communicate the severity of an error. Use surfaces consistently in both AI and non-AI experiences to habituate people to their meaning. These guidelines adhere to current Fluent patterns; as Fluent continues to update its component availability, this guidance will be updated to align to new UI.",
+          "level": 2,
+          "sourceText": "The surface you choose for errors goes a long way to communicate the severity of an error. Use surfaces consistently in both AI and non-AI experiences to habituate people to their meaning.\n\nThese guidelines adhere to current Fluent patterns. As Fluent continues to update its component availability, we’ll update this guidance to align to new UI."
         },
         {
           "heading": "Placing system-level errors",
-          "text": "If someone is blocked from using Copilot entirely, use a full-page or full-drawer surface that communicates that Copilot is unavailable. Whenever possible, provide actions as buttons or links that will help unblock people. To alert people to an error that might happen soon or under certain circumstances, use a warning Message bar to let people know that something might go wrong and how to avoid it — place the message bar at the top of a layout, under a header, to signal that it is at the system level and does not apply to their current task."
+          "text": "If someone is blocked from using Copilot entirely, use a full-page or full-drawer surface that communicates that Copilot is unavailable. Whenever possible, provide actions as buttons or links that will help unblock people. To alert people to an error that might happen soon or under certain circumstances, use a warning Message bar to let people know that something might go wrong and how to avoid it — place the message bar at the top of a layout, under a header, to signal that it is at the system level and does not apply to their current task.",
+          "level": 3
+        },
+        {
+          "heading": "Placing system-level warnings",
+          "text": "Sometimes, you need to alert people to an error that might happen soon, or under certain circumstances. In this case, use a warning Message bar to let people know that something might go wrong and how to avoid it, if possible. Place the message bar at the top of a layout, under a header, to let people know that it’s at the system level and doesn’t apply to their current task.",
+          "level": 3
         },
         {
           "heading": "Placing input-level errors",
-          "text": "In chat experiences, input-level errors appear as a conversational Copilot response and, if possible, should be a direct answer to the prompt that precedes them; as always, give people an easy way to move forward. In experiences where Copilot outputs to the canvas, show errors connected to the input — the Fluent AI PromptInput component has a built-in error state for easy error handling."
+          "text": "In chat experiences, input-level errors appear as a conversational Copilot response and, if possible, should be a direct answer to the prompt that precedes them; as always, give people an easy way to move forward. In experiences where Copilot outputs to the canvas, show errors connected to the input — the Fluent AI PromptInput component has a built-in error state for easy error handling.",
+          "level": 3
+        },
+        {
+          "heading": "In chat",
+          "text": "In chat experiences, input-level errors appear as a conversational Copilot response. If possible, they should be a direct answer to the prompt that precedes them.\n\nAs always, give people an easy way to move forward.",
+          "level": 4
+        },
+        {
+          "heading": "On canvas",
+          "text": "In experiences where Copilot outputs to the canvas, show errors connected to the input. The Fluent AI PromptInput component has a built-in error state for easy error handling.",
+          "level": 4
         },
         {
           "heading": "Writing Copilot errors",
-          "text": "Follow specific writing conventions for when to use first person, how to make next actions obvious, and how to structure system-level and input-level messages."
+          "text": "Follow specific writing conventions for when to use first person, how to make next actions obvious, and how to structure system-level and input-level messages.",
+          "level": 2
         },
         {
           "heading": "When to use first person",
-          "text": "Never use first person (I, me) in system-level messages. Stick to third person — or second person (you) if necessary — to describe what's gone wrong and what someone should do next. For hard-coded error messages in chat, write around the first person as much as possible; often it's not necessary to use first person and more helpful to describe the error and next steps. Don't include the AI disclaimer or the feedback buttons in hard-coded errors."
+          "text": "Never use first person (I, me) in system-level messages. Stick to third person — or second person (you) if necessary — to describe what's gone wrong and what someone should do next. For hard-coded error messages in chat, write around the first person as much as possible; often it's not necessary to use first person and more helpful to describe the error and next steps. Don't include the AI disclaimer or the feedback buttons in hard-coded errors.",
+          "level": 3,
+          "sourceText": "Never use first person (I, me) in system-level messages. Stick to third person (or second person, you, if necessary) to describe what’s gone wrong and what someone should do next.\n\nFor hard-coded error messages in chat, write around the first person as much as possible. Often, it’s not necessary to use first person and more helpful to describe the error and next steps.\n\nDon’t include the AI disclaimer or the feedback buttons in hard-coded errors.\n\nTrim or write around first-person pronouns\n\nAvoid first person in hard-coded chat errors"
         },
         {
           "heading": "Make next actions obvious",
-          "text": "Consider other ways you can highlight next steps, in addition to writing them in the error message. For example, take advantage of prompt suggestions to show a path forward, provide a link to 'More prompts' in Copilot Lab, or include a 'Try again' button to resubmit the prompt, if applicable."
+          "text": "Consider other ways you can highlight next steps, in addition to writing them in the error message. For example, take advantage of prompt suggestions to show a path forward, provide a link to 'More prompts' in Copilot Lab, or include a 'Try again' button to resubmit the prompt, if applicable.",
+          "level": 3,
+          "sourceText": "Consider other ways you can highlight next steps, in addition to writing them in the error message. For example, take advantage of the prompt suggestions to show a path forward, provide a link to “More prompts” in Copilot Lab, or include a “Try again” button to resubmit the prompt, if applicable."
         },
         {
           "heading": "Writing system-level errors",
-          "text": "For full-page or full-drawer system blocking errors, include a header that tells people what went wrong. Use a 3-10 word phrase with no end punctuation. Use a second line to explain what people can do to fix the error, trying to stay within 100 characters, in 1 to 2 complete sentences that end in a period."
+          "text": "For full-page or full-drawer system blocking errors, include a header that tells people what went wrong. Use a 3-10 word phrase with no end punctuation. Use a second line to explain what people can do to fix the error, trying to stay within 100 characters, in 1 to 2 complete sentences that end in a period.",
+          "level": 3,
+          "sourceText": "For full-page or full-drawer system blocking errors, include a header that tells people what went wrong. Use a 3-10 word phrase with no end punctuation.\n\nUse a second line to explain what people can do to fix the error. Try to stay within 100 characters, in 1 to 2 complete sentences that end in a period."
         },
         {
           "heading": "Writing input-level errors",
-          "text": "Input-level errors often have a smaller layout to work with, so these messages must be succinct. Follow this format: [What went wrong, if needed] + [What caused it, if relevant] + [How to fix it]. Try to limit input-level errors to 2 sentences and 225 characters."
+          "text": "Input-level errors often have a smaller layout to work with, so these messages must be succinct. Follow this format: [What went wrong, if needed] + [What caused it, if relevant] + [How to fix it]. Try to limit input-level errors to 2 sentences and 225 characters.",
+          "level": 3
         }
       ],
       "values": {
@@ -6154,14 +6301,26 @@
         "dont": [
           "Use 'sorry' casually — reserve it for high-impact situations like data loss or escalating to Microsoft support",
           "Use overly technical language like 'Your request is invalid' or overly whimsical language like 'Whoops, I didn't get that.'",
-          "Never blame the user for the error",
-          "Use first person (I, me) in system-level messages, or include the AI disclaimer or feedback buttons in hard-coded errors"
+          "Use first person (I, me) in system-level messages, or include the AI disclaimer or feedback buttons in hard-coded errors",
+          "Never blame the user for the error. Instead, provide a response that steers people away from the error state and towards a successful outcome.",
+          "Never use first person (I, me) in system-level messages. Stick to third person (or second person, you, if necessary) to describe what’s gone wrong and what someone should do next.",
+          "Don’t include the AI disclaimer or the feedback buttons in hard-coded errors.",
+          "Avoid first person in hard-coded chat errors"
         ]
       },
       "docUrl": "https://fluent2.microsoft.design/copilot-errors/",
-      "accessStatus": "employee-gated",
-      "capturedAt": "2026-07",
-      "accessNote": "This page now requires Microsoft employee sign-in (302 to login.microsoftonline.com). This snapshot cannot be re-validated from a public crawl, so treat it as a pinned capture rather than live content."
+      "accessStatus": "employee-gated-captured",
+      "capturedAt": "2026-08",
+      "accessNote": "This page requires Microsoft employee sign-in (302 to login.microsoftonline.com), so it cannot be re-validated from a public crawl. The content below is a pinned snapshot taken while signed in (2026-08), not a live read.",
+      "sourceIntro": "Error messages are alerts that inform users of a problem that occurred. The form factor and specific text will vary based on what went wrong and where the user is, but all messages should be simple, clear, consistent, and helpful to unblock people.",
+      "sourceCapture": {
+        "url": "https://fluent2.microsoft.design/copilot-errors/",
+        "finalUrl": "https://fluent2.microsoft.design/copilot-errors/",
+        "title": "Copilot errors - Fluent 2 Design System",
+        "h1": "Copilot errors",
+        "capturedAt": "2026-08",
+        "method": "authenticated browser capture (Microsoft employee sign-in)"
+      }
     },
     "data-usage-sharing": {
       "title": "Data usage and sharing (Working with AI)",
@@ -6178,88 +6337,304 @@
         "Use neutral language and give opt-in and opt-out choices equal visual prominence — never pre-select or visually emphasize opting in; avoid radio buttons in privacy dialogs.",
         "Break multiple data-type requests into separate requests (required for some GDPR cases) and restate key consent details in an itemized receipt users can save or receive by email.",
         "Switches are for managing consent after the initial request (never the initial ask); the label must indicate the 'on' state and never turn a feature off when 'on.'",
-        "Follow best practices: don't bundle multiple privacy concepts into one control, make settings easy to discover and update, and use the same controls and language across products and surfaces."
+        "Follow best practices: don't bundle multiple privacy concepts into one control, make settings easy to discover and update, and use the same controls and language across products and surfaces.",
+        "Awareness: Users should have no doubt about when they’re being asked for consent.",
+        "Understanding: Users should be able to accurately describe in their own words what they were being asked for, by whom, to what end, and with what assurances.",
+        "Freedom of choice: Users should not feel coerced or manipulated when choosing whether or not to consent.",
+        "Control: Users should be able to revoke their consent and delete their data at any time without losing access to minimum viable functionality.",
+        "Let people try out the feature without having to provide personal data: A request for consent should only come after people are able to get a sense of the value your feature is offering. If people don’t understand why they should provide consent based on the value to them, then we’re not meeting our goal of meaningful consent.",
+        "Discovery should occur before any request for consent (the prompt): If a prompt or call to action is combined with discovery, always design for the discovery information to appear before the prompt. In this example email, the discovery info is presented first, so people can learn about the feature, and the action (Get started) is at the end:",
+        "If you plan to show the prompt again, include a clear “Don’t ask me again” option: For a prompt that’s repeated more than once, if the person selects “Don’t ask me again,” consider including a link or instructions to the location where they can manage their consent.",
+        "Make sure data sharing is turned off by default: Providing personal data should be an “opt-in” experience that lets people change their mind at any time.",
+        "Use neutral language in UI elements that communicates there’s an additional step or more information, while avoiding the phrase “Learn more”: Remember that in the prompt stage, we’re letting people know we’re going to request access—we’re not requesting the access yet.",
+        "Be clear about the data you’re requesting permission to use, and why: Use clear, straight forward language and use page headers and call-to-action (CTA) buttons to highlight the data being requested. Make sure the headings and buttons work together to describe the request. If someone chooses to not read the body copy, the headings and buttons should give people the basic idea.",
+        "If requests for multiple data types appear on the same screen, explore breaking the requests into individual requests for clarity: There may be legal requirements for using separate consent requests (for example, a feature that requires GDPR requests).",
+        "Use neutral language in UI elements to reinforce freedom of choice: Buttons with clear and actionable text work best for clarity and confidence.",
+        "Give opt-in and opt-out choices equal visual prominence and avoid pre-selecting buttons or options that imply that opting in is the primary, preferred action: Don’t use visual styling to suggest that opting in is the primary or default choice.",
+        "Use sections and bullet points for easy skimming: Bullet points tend to be less daunting to read than long paragraphs.",
+        "Apply progressive disclosure to complex concepts: Where appropriate, intentionally hide and reveal content as someone moves through the experience, to make it easier for them to build understanding at each step.",
+        "Use relatable and tangible examples to explain complex concepts: Examples can help people understand the results of providing permission to use their data.",
+        "Receipt: In the receipt stage, if someone has granted consent, you’ll provide them with a summary of what they have agreed to.",
+        "Make it easy for people to manage their consent and data, including opting out at any time.: When applicable, let people access consent management in familiar ways, such as in app settings. Avoid making people log in to another website or send email to revoke consent or delete data.",
+        "Remind people what data they’ve agreed to let the feature collect, and how that data is used: Consider designing the settings page be both a control center and an information hub.  Language should be clear and empower people to manage their consent settings with confidence.",
+        "Make sure people get the full consent experience when managing their consent: No matter where people encounter consent, it should be meaningful.",
+        "Increase users’ control over their data privacy: Don’t combine multiple privacy concepts or lump multiple privacy settings into a single control. When multiple topics are being communicated, each concept requires its own control with relevant actions. Each consent request should be presented independently of other requests.",
+        "Increase users’ understanding of how they benefit from enabling privacy controls: Be clear about how the user’s choice impacts their product experience.",
+        "Use the same controls and language across all products and services for additional user confidence and ease-of-use: Whether the consent or privacy control lives on different product surfaces, platforms, device types, on accounts.microsoft.com (AMC), or elsewhere, the language, options, and scope for any given control should be presented consistently across surfaces.",
+        "Buttons — Aim for: Use descriptive and specific language for the consent action.",
+        "Buttons — Avoid: Avoid using On/Off, Yes/No, Agree, Skip, etc. especially without additional wording for context and balance, as these words have negative and positive connotations.",
+        "Switches & checkboxes — Aim for: Switches are optimal for consent management (turning controls on/off) after the user has already gone through the initial consent request. Avoid the use of switches for the initial consent request.",
+        "Switches & checkboxes — Avoid: Don’t use checkboxes for simpler consent asks that are presented in an easily understood structure.",
+        "Images & illustrations — Aim for: Use illustrations to attract people’s attention, reinforce understanding of core messages, and help communicate abstract ideas.",
+        "Images & illustrations — Avoid: Don’t create any concepts that imply or can be construed as more or less secure or more or less compliant. Avoid illustrations that are “decorative” or which look like marketing content. Do not use illustrations of people."
       ],
       "sections": [
         {
           "heading": "Align with the consent principles",
-          "text": "For meaningful consent, privacy UX language, interface, and interactions need to reflect four principles. Awareness: users should have no doubt about when they are being asked for consent. Understanding: users should be able to accurately describe in their own words what they were being asked for, by whom, to what end, and with what assurances. Freedom of choice: users should not feel coerced or manipulated when choosing whether or not to consent. Control: users should be able to revoke their consent and delete their data at any time without losing access to minimum viable functionality."
+          "text": "For meaningful consent, privacy UX language, interface, and interactions need to reflect four principles. Awareness: users should have no doubt about when they are being asked for consent. Understanding: users should be able to accurately describe in their own words what they were being asked for, by whom, to what end, and with what assurances. Freedom of choice: users should not feel coerced or manipulated when choosing whether or not to consent. Control: users should be able to revoke their consent and delete their data at any time without losing access to minimum viable functionality.",
+          "level": 3,
+          "sourceText": "For meaningful consent, privacy UX language, interface, and interactions need to reflect these principles:"
+        },
+        {
+          "heading": "Awareness",
+          "text": "Users should have no doubt about when they’re being asked for consent.",
+          "level": 4
+        },
+        {
+          "heading": "Understanding",
+          "text": "Users should be able to accurately describe in their own words what they were being asked for, by whom, to what end, and with what assurances.",
+          "level": 4
+        },
+        {
+          "heading": "Freedom of choice",
+          "text": "Users should not feel coerced or manipulated when choosing whether or not to consent.",
+          "level": 4
+        },
+        {
+          "heading": "Control",
+          "text": "Users should be able to revoke their consent and delete their data at any time without losing access to minimum viable functionality.",
+          "level": 4
         },
         {
           "heading": "Progressively disclose the information",
-          "text": "As outlined by the General Data Protection Regulation (GDPR) and similar data laws, we must communicate the following so customers are empowered to provide informed and meaningful consent: what specific data is collected and where it's stored; for what purpose the data is needed; who's responsible for the data and who has access to it; any potential risks and consequences for consenting or not consenting; how they can revoke consent; and how they can request deletion of their data. By progressively disclosing this information in a series of steps, we can meet these requirements, not overwhelm customers, and build trust and transparency."
+          "text": "As outlined by the General Data Protection Regulation (GDPR) and similar data laws, we must communicate the following so customers are empowered to provide informed and meaningful consent: what specific data is collected and where it's stored; for what purpose the data is needed; who's responsible for the data and who has access to it; any potential risks and consequences for consenting or not consenting; how they can revoke consent; and how they can request deletion of their data. By progressively disclosing this information in a series of steps, we can meet these requirements, not overwhelm customers, and build trust and transparency.",
+          "level": 2,
+          "sourceText": "As outlined by the General Data Protection Regulation (GDPR) and similar data laws, we must communicate the following information so our customers are empowered to provide informed and meaningful consent.\n\nWhat specific data is collected and where it’s stored\nFor what purpose the data is needed\nWho’s responsible for the data, and who has access to it\nAny potential risks and consequences for consenting or not consenting\nHow they can revoke consent\nHow they can request deletion of their data\n\nBy progressively disclosing this information to customers in a series of steps, we can meet these requirements, not overwhelm them, and build trust and transparency."
         },
         {
           "heading": "Progressive disclosure steps",
-          "text": "The consent experience unfolds across five stages. Discovery: customers are becoming aware of your feature — welcome them and help them understand what data you're asking for and why. Prompt: let customers know you'd like to request personal data and invite them to learn more. Request: make the full consent request, giving people all the information they need in a format that's easy to understand. Receipt: if someone has granted consent, provide a summary of what they've agreed to. Management: an ongoing stage where people can change their consent or sharing settings — it can occur at the end of the journey, or be the first place someone encounters the full consent experience if they previously dismissed or opted out of a prompt."
+          "text": "The consent experience unfolds across five stages. Discovery: customers are becoming aware of your feature — welcome them and help them understand what data you're asking for and why. Prompt: let customers know you'd like to request personal data and invite them to learn more. Request: make the full consent request, giving people all the information they need in a format that's easy to understand. Receipt: if someone has granted consent, provide a summary of what they've agreed to. Management: an ongoing stage where people can change their consent or sharing settings — it can occur at the end of the journey, or be the first place someone encounters the full consent experience if they previously dismissed or opted out of a prompt.",
+          "level": 3,
+          "sourceText": "Customers are becoming aware of your feature. Here, your goal is to welcome customers into your feature and help them understand what data you’re asking for and why.\n\nNow, you’ll let customers know that you’d like to request personal data from them, and you’ll invite them to learn more.\n\nThis is where you make the full consent request. The goal here is to give people all the information they need and in a format that’s easy to understand, so they can make the right decision for themselves.\n\nIf someone has granted consent, this is when you’ll provide them with a summary of what they’ve agreed to.\n\nThis stage can occur at the end of someone’s journey, if they have previously gone through the other four stages. Or, it might be the first place someone encounters the full consent experience, if they have previously dismissed or opted out of a consent prompt. Management will also be an ongoing stage where people can change their consent or sharing settings."
         },
         {
           "heading": "Always start with the content",
-          "text": "It may be tempting to jump right into visual design, but because comprehension is so important in consent, the content design should drive the visual design. First write out the information that should be included, and then determine how to present it in a way that's easy for people to understand. To determine what content is needed, follow these content strategy steps: gather information, map communication points to the user journey, and write the UX copy."
+          "text": "It may be tempting to jump right into visual design, but because comprehension is so important in consent, the content design should drive the visual design. First write out the information that should be included, and then determine how to present it in a way that's easy for people to understand. To determine what content is needed, follow these content strategy steps: gather information, map communication points to the user journey, and write the UX copy.",
+          "level": 2,
+          "sourceText": "It may be tempting to jump right into visual design, but because comprehension is so important in consent, the content design in consent experiences should drive the visual design. It’s critical to first write out the information that should be included, and then determine how to present that information in a way that’s easy for people to understand.\n\nTo determine what content is needed, follow these content strategy steps:\n\nGather information\nMap communication points to the user journey\nWrite the UX copy"
         },
         {
           "heading": "Step 1: Gather information",
-          "text": "Connect with key stakeholders and determine what information is most critical for people to know about sharing their data in this context. Download the Fact Sheet and, in a group with your stakeholders (writers, designers, researchers, PMs, and developers), fill in the information — remove questions that don't apply and add new questions that might matter to users. Be thorough and specific no matter how technical the answers might sound, avoid generic descriptions and marketing jargon, and aim for specificity and clarity. Consider a whiteboard session to map how data is collected, stored, processed, accessed, used, shared, and deleted. If it's difficult to explain what benefits people get in return for sharing their data, reconsider what data collection is necessary. Use the Fact Sheet for step 1 and the Consent Script for steps 2 and 3."
+          "text": "Connect with key stakeholders and determine what information is most critical for people to know about sharing their data in this context. Download the Fact Sheet and, in a group with your stakeholders (writers, designers, researchers, PMs, and developers), fill in the information — remove questions that don't apply and add new questions that might matter to users. Be thorough and specific no matter how technical the answers might sound, avoid generic descriptions and marketing jargon, and aim for specificity and clarity. Consider a whiteboard session to map how data is collected, stored, processed, accessed, used, shared, and deleted. If it's difficult to explain what benefits people get in return for sharing their data, reconsider what data collection is necessary. Use the Fact Sheet for step 1 and the Consent Script for steps 2 and 3.",
+          "level": 3,
+          "sourceText": "Connect with key stakeholders and determine what information is most critical for people to know about sharing their data in this context.\n\nDownload the Fact Sheet and in a group with your stakeholders (writers, designers, researchers, PMs, and developers), fill in the information. You can remove questions from the first column labeled Topic/Questions that don’t apply to your features, and add new questions that might matter to users. Work together to answer the questions in the column labeled Answers—don’t worry about getting the wording right yet. Just get the information down.\n\nTips\n\nBe thorough and specific, no matter how technical or scary the answers might sound. Avoid generic descriptions and marketing jargon and aim for specificity and clarity.\nConsider scheduling a whiteboard session to go through the system architecture and map out how data is being collected, stored, processed, accessed, used, shared, and deleted.\nIf it’s difficult to explain what benefits people will get in return for sharing their data, you may want to reconsider what data collection is necessary.\n\nWorksheets:\n\nUse the Fact Sheet for step 1\nUse the Consent Script for steps 2 and 3\nFact sheet\nOpen in Word\nConsenst Script\nOpen in Word"
         },
         {
           "heading": "Step 2: Map the content to the user journey",
-          "text": "If the answers from Step 1 are long and complex, most people won't be able to process all the information at once — this is where progressive disclosure is essential. Download the Consent Script worksheet and determine which touchpoints (discovery, prompt, request, receipt, management) are appropriate and applicable to your feature. Take the answers from your Fact Sheet, decide which information is most important to meet both legal requirements and full comprehension, and create a prioritized list. Then decide which points should be included at each touchpoint."
+          "text": "If the answers from Step 1 are long and complex, most people won't be able to process all the information at once — this is where progressive disclosure is essential. Download the Consent Script worksheet and determine which touchpoints (discovery, prompt, request, receipt, management) are appropriate and applicable to your feature. Take the answers from your Fact Sheet, decide which information is most important to meet both legal requirements and full comprehension, and create a prioritized list. Then decide which points should be included at each touchpoint.",
+          "level": 3,
+          "sourceText": "If the answers from Step 1 are long and complex, most likely people using your feature won’t be able to process all the information all at once. This is where progressive disclosure is essential.\n\nDownload the Consent Script worksheet and determine which touchpoints (discovery, prompt, request, receipt, management) are appropriate and applicable to your feature.\nTake the answers from your Fact Sheet from Step 1, and decide which information is most important to communicate to users to meet both legal requirements and for full comprehension. Create a prioritized list of the information you need.\nTake a look at the prioritized list and decide which points should be included at each touchpoint.\n\nThis table can help with figuring out how to distribute your points across the customer journey:"
         },
         {
           "heading": "Step 3: Write the UX copy",
-          "text": "Draft the actual words for the UI, working with content designers, visual designers, and other stakeholders as the UX is designed and built. For each touchpoint, review the key communication points and write the text that best helps people understand the information. Remember that typically people don't read, they skim — break your content into sections and bullet points, and make your headings work hard by summarizing the main point while the details live in the body copy. Use clear, simple words and write with Microsoft's voice and tone guidelines in mind. If you're struggling to write the content, try saying it out loud like how you'd explain it to a friend, write that down, and refine from there with your content designer."
+          "text": "Draft the actual words for the UI, working with content designers, visual designers, and other stakeholders as the UX is designed and built. For each touchpoint, review the key communication points and write the text that best helps people understand the information. Remember that typically people don't read, they skim — break your content into sections and bullet points, and make your headings work hard by summarizing the main point while the details live in the body copy. Use clear, simple words and write with Microsoft's voice and tone guidelines in mind. If you're struggling to write the content, try saying it out loud like how you'd explain it to a friend, write that down, and refine from there with your content designer.",
+          "level": 3,
+          "sourceText": "Draft the actual words for the UI, working with content designers, visual designers, and other stakeholders as the UX is designed and built.\n\nFor each touchpoint, review the key communication points and write the text that best helps people understand the information.\n\nTips\n\nRemember that typically people don’t read, they skim. Break your content into sections and bullet points to optimize scanning. Make your headings work hard by summarizing the main point without getting too lengthy, and provide the details in the body copy.\nUse clear, simple words, and write with Microsoft’s voice and tone guidelines in mind. \nIf you’re struggling to write the content, try saying it out loud like how you’d explain it to a friend, without worrying about sounding “proper.” Write that down and refine from there. Work with your content designer and other relevant stakeholders to refine the wording.\nMicrosoft Writing Style Guide (Internal)\nMicrosoft Learn\nSecurity, safety, and privacy content\nMicrosoft Learn\nSecurity terms\nMicrosoft Learn\nSecurity and privacy messaging\nCELAWeb"
         },
         {
           "heading": "Step 4: Begin the visual design",
-          "text": "Now that the words are refined and assigned to touchpoints, it's time to design the experience based on the design patterns and checklist."
+          "text": "Now that the words are refined and assigned to touchpoints, it's time to design the experience based on the design patterns and checklist.",
+          "level": 3
         },
         {
           "heading": "Design patterns",
-          "text": "Every discipline involved in creating your product should follow these design patterns, which are organized by the progressive disclosure stages (discovery, prompt, request, receipt, and management). Every discipline brings a unique perspective and should be involved from the beginning."
+          "text": "Every discipline involved in creating your product should follow these design patterns, which are organized by the progressive disclosure stages (discovery, prompt, request, receipt, and management). Every discipline brings a unique perspective and should be involved from the beginning.",
+          "level": 2
         },
         {
           "heading": "Before you begin",
-          "text": "Have your Fact Sheet at the ready — this foundation is critical to building a meaningful consent experience. Refer to the other sections of the Fluent design system and Microsoft's inclusive design wiki as needed. Visual and content designers should collaborate closely to create the user experience."
+          "text": "Have your Fact Sheet at the ready — this foundation is critical to building a meaningful consent experience. Refer to the other sections of the Fluent design system and Microsoft's inclusive design wiki as needed. Visual and content designers should collaborate closely to create the user experience.",
+          "level": 3
         },
         {
           "heading": "Discovery",
-          "text": "In the discovery stage, customers are becoming aware of your feature — welcome them and help them understand what data you're asking for and why. Let people try out the feature without having to provide personal data; a request for consent should only come after people are able to get a sense of the value your feature is offering. During discovery, people should be able to understand your feature at a few levels: the overall product, the feature you need their data for, and why you need their data. Explain clearly what the data is used for and how the customer will benefit, rather than how sharing data makes things better for your company. Discovery should occur before any request for consent (the prompt); if a prompt or call to action is combined with discovery, always design for the discovery information to appear before the prompt."
+          "text": "In the discovery stage, customers are becoming aware of your feature — welcome them and help them understand what data you're asking for and why. Let people try out the feature without having to provide personal data; a request for consent should only come after people are able to get a sense of the value your feature is offering. During discovery, people should be able to understand your feature at a few levels: the overall product, the feature you need their data for, and why you need their data. Explain clearly what the data is used for and how the customer will benefit, rather than how sharing data makes things better for your company. Discovery should occur before any request for consent (the prompt); if a prompt or call to action is combined with discovery, always design for the discovery information to appear before the prompt.",
+          "level": 3,
+          "sourceText": "In the discovery stage, customers are becoming aware of your feature. Here, your goal is to welcome customers into your feature and help them understand what data you’re asking for and why."
+        },
+        {
+          "heading": "Let people try out the feature without having to provide personal data",
+          "text": "A request for consent should only come after people are able to get a sense of the value your feature is offering. If people don’t understand why they should provide consent based on the value to them, then we’re not meeting our goal of meaningful consent.\n\nDuring the discovery stage, people should be able to get an understanding of your feature at a few levels: the overall product, the feature you need their data for, and why you need their data. Notice how the Aim for example explains clearly what the data is used for and how the customer will benefit, while the Avoid example is all about how the sharing of data makes things better for Contoso.\n\nDo\n\nDon’t",
+          "level": 4
+        },
+        {
+          "heading": "Discovery should occur before any request for consent (the prompt)",
+          "text": "If a prompt or call to action is combined with discovery, always design for the discovery information to appear before the prompt. In this example email, the discovery info is presented first, so people can learn about the feature, and the action (Get started) is at the end:",
+          "level": 4
         },
         {
           "heading": "Prompt",
-          "text": "The prompt stage is where you let people know you'd like to request personal data from them and invite them to learn more. The prompt can be included in the discovery stage, and combining discovery and prompt can help people better understand the feature or the type of data needed (different prompts may be needed for new versus returning users). Show the prompt in a context that's relevant to the request and doesn't get in the way of people's primary task, and explain why you want to request their data — if the prompt isn't clear about the purpose, people might misinterpret or assume worst-case scenarios. If you plan to show the prompt again, include a clear 'Don't ask me again' option and consider linking to where they can manage their consent. Providing personal data should be an opt-in experience with data sharing turned off by default, letting people change their mind at any time. Use neutral language that communicates there's an additional step or more information while avoiding the phrase 'Learn more' — 'Get started' tested better than 'Enroll now' (which people may wrongly read as granting consent) or 'Learn more' (which people assumed would lead to a long, dense page)."
+          "text": "The prompt stage is where you let people know you'd like to request personal data from them and invite them to learn more. The prompt can be included in the discovery stage, and combining discovery and prompt can help people better understand the feature or the type of data needed (different prompts may be needed for new versus returning users). Show the prompt in a context that's relevant to the request and doesn't get in the way of people's primary task, and explain why you want to request their data — if the prompt isn't clear about the purpose, people might misinterpret or assume worst-case scenarios. If you plan to show the prompt again, include a clear 'Don't ask me again' option and consider linking to where they can manage their consent. Providing personal data should be an opt-in experience with data sharing turned off by default, letting people change their mind at any time. Use neutral language that communicates there's an additional step or more information while avoiding the phrase 'Learn more' — 'Get started' tested better than 'Enroll now' (which people may wrongly read as granting consent) or 'Learn more' (which people assumed would lead to a long, dense page).",
+          "level": 3,
+          "sourceText": "The prompt stage is where you’ll let people know you’d like to request personal data from them, and invite them to learn more. The prompt can be included in the discovery stage (as mentioned previously) and combining the discovery and prompt can help people better understand the feature or the type of data needed. Note: Different prompts may be needed for new versus returning users.\n\nShow the prompt in a context that’s relevant to the consent request and doesn’t get in the way of people’s primary task\n\nIn this example, the prompt is in context of a meeting transcript, which adds clarity to the reason and benefit for the request for personal data (in this case, the sound of the person’s voice).\n\nExplain why you want to request their data.\n\nDo\n\nDon’t\n\nPeople won’t automatically understand how the technology works or how their data will be used. If the prompt isn’t clear about the purpose of data collection, people might misinterpret or assume worst-case scenarios."
+        },
+        {
+          "heading": "If you plan to show the prompt again, include a clear “Don’t ask me again” option",
+          "text": "For a prompt that’s repeated more than once, if the person selects “Don’t ask me again,” consider including a link or instructions to the location where they can manage their consent.",
+          "level": 4
+        },
+        {
+          "heading": "Make sure data sharing is turned off by default",
+          "text": "Providing personal data should be an “opt-in” experience that lets people change their mind at any time.",
+          "level": 4
+        },
+        {
+          "heading": "Use neutral language in UI elements that communicates there’s an additional step or more information, while avoiding the phrase “Learn more”",
+          "text": "Remember that in the prompt stage, we’re letting people know we’re going to request access—we’re not requesting the access yet. So avoid language in this stage that implies they’re approving the request. For example, people might perceive “Enroll now” to (wrongly) mean that selecting that option means they’re automatically granting consent, when which could discourage them. Instead, “Get started” helps them understand that they’ll get additional information before they have to make a choice. “Learn more,” while neutral, wasn’t as successful in our studies in encouraging people to take the next step, as people tended to assume it would take them to a long page with a lot of dense content.",
+          "level": 4
         },
         {
           "heading": "Request",
-          "text": "The request stage is where you make the full consent request, giving people all the information they need in a format that's easy to understand so they can make the decision that's right for them. Be clear about the data you're requesting permission to use and why; use page headers and call-to-action (CTA) buttons so that even if someone skips the body copy, the headings and buttons convey the basic idea. If requests for multiple data types appear on the same screen, explore breaking them into individual requests — unless your CELA/privacy representative approves bundling, display each request separately (there may be legal requirements for separate GDPR requests, and people have different comfort levels with different data types). Use neutral language and parallel CTA wording to reinforce freedom of choice, give opt-in and opt-out choices equal visual prominence, and avoid pre-selecting options that imply opting in is the primary or preferred action. Use sections and bullet points for easy skimming, apply progressive disclosure to complex concepts, work with content design and CELA to use consistent approved language (avoiding jargon), and use relatable, tangible examples — for example, 'voice clips' instead of 'speech data.'"
+          "text": "The request stage is where you make the full consent request, giving people all the information they need in a format that's easy to understand so they can make the decision that's right for them. Be clear about the data you're requesting permission to use and why; use page headers and call-to-action (CTA) buttons so that even if someone skips the body copy, the headings and buttons convey the basic idea. If requests for multiple data types appear on the same screen, explore breaking them into individual requests — unless your CELA/privacy representative approves bundling, display each request separately (there may be legal requirements for separate GDPR requests, and people have different comfort levels with different data types). Use neutral language and parallel CTA wording to reinforce freedom of choice, give opt-in and opt-out choices equal visual prominence, and avoid pre-selecting options that imply opting in is the primary or preferred action. Use sections and bullet points for easy skimming, apply progressive disclosure to complex concepts, work with content design and CELA to use consistent approved language (avoiding jargon), and use relatable, tangible examples — for example, 'voice clips' instead of 'speech data.'",
+          "level": 3,
+          "sourceText": "The request stage is where you make the full consent request. The goal here is to give people all the information they need, and in a format that is easy to understand, so they can make the decision that they feel is right for them."
+        },
+        {
+          "heading": "Be clear about the data you’re requesting permission to use, and why",
+          "text": "Do\n\nDon’t\n\nUse clear, straight forward language and use page headers and call-to-action (CTA) buttons to highlight the data being requested. Make sure the headings and buttons work together to describe the request. If someone chooses to not read the body copy, the headings and buttons should give people the basic idea.",
+          "level": 4
+        },
+        {
+          "heading": "If requests for multiple data types appear on the same screen, explore breaking the requests into individual requests for clarity",
+          "text": "There may be legal requirements for using separate consent requests (for example, a feature that requires GDPR requests). Unless your CELA/privacy representative gives approval for bundling consent requests, display each request separately. Additionally, people sometimes have different comfort levels with different data types, even if they’re related. For example, even though “transcriptions” and “voice clips” both fall under the broader category of “speech data,” people might feel comfortable sharing one but not the other.",
+          "level": 4
+        },
+        {
+          "heading": "Use neutral language in UI elements to reinforce freedom of choice",
+          "text": "Buttons with clear and actionable text work best for clarity and confidence. Avoid any impression in our use of language that we’re attempting to influence the user’s choice by emphasizing one option over the other.  Use parallel language choices in the CTAs to reinforce this neutrality and to reduce cognitive load for the user (as seen in the Do” example).\n\nDo\n\nDon’t",
+          "level": 4
+        },
+        {
+          "heading": "Give opt-in and opt-out choices equal visual prominence and avoid pre-selecting buttons or options that imply that opting in is the primary, preferred action",
+          "text": "Don’t use visual styling to suggest that opting in is the primary or default choice.\n\nDo\n\nDon’t",
+          "level": 4
+        },
+        {
+          "heading": "Use sections and bullet points for easy skimming",
+          "text": "Bullet points tend to be less daunting to read than long paragraphs.\n\nDo\n\nDon’t",
+          "level": 4
+        },
+        {
+          "heading": "Apply progressive disclosure to complex concepts",
+          "text": "Where appropriate, intentionally hide and reveal content as someone moves through the experience, to make it easier for them to build understanding at each step. \n\nWork with your content designer, CELA, and privacy partners to use consistent, approved language throughout the experience, and avoid generic terms and technical jargon\n\nNote that there may be specific language requirements for UI labels such as links to the Microsoft Privacy Statement and Terms & Conditions. Always check with your privacy contact for the correct language.\n\nAim for precise descriptions in understandable, plain language. Examples: “voice clips” instead of “speech data” (avoid technical jargon), “Improve the accuracy of our speech technology for other people who speak your language” instead of “Contribute to product improvement” (be more specific and use plain language).",
+          "level": 4
+        },
+        {
+          "heading": "Use relatable and tangible examples to explain complex concepts",
+          "text": "Examples can help people understand the results of providing permission to use their data.",
+          "level": 4
+        },
+        {
+          "heading": "Receipt",
+          "text": "In the receipt stage, if someone has granted consent, you’ll provide them with a summary of what they have agreed to.",
+          "level": 4
         },
         {
           "heading": "Restate key consent information in an itemized format (Receipt)",
-          "text": "In the receipt stage, if someone has granted consent, provide them with a summary of what they have agreed to. Restate the key consent information in an itemized format, including: what data is collected and for what purpose; who is responsible for data; who has access; how long data is stored; and information on where people can go to manage their content, including a link to that location if technically possible. Let people save a copy of the receipt, and also consider emailing people a receipt summarizing the consent they've given."
+          "text": "In the receipt stage, if someone has granted consent, provide them with a summary of what they have agreed to. Restate the key consent information in an itemized format, including: what data is collected and for what purpose; who is responsible for data; who has access; how long data is stored; and information on where people can go to manage their content, including a link to that location if technically possible. Let people save a copy of the receipt, and also consider emailing people a receipt summarizing the consent they've given.",
+          "level": 3,
+          "sourceText": "Include the following:\n\nWhat data is collected and for what purpose\nWho is responsible for data\nWho has access\nHow long data is stored\nInformation on where people can go to manage their content, including a link to that location if technically possible\n\nLet people save a copy of the receipt.\n\nAlso consider emailing people a receipt summarizing the consent they’ve given."
         },
         {
           "heading": "Management",
-          "text": "The management stage can occur at the end of someone's journey, or — if they dismissed or opted out of a consent prompt — it might be the first place someone encounters the full consent experience; it's an ongoing stage where people can change their consent or sharing settings. Make it easy for people to manage their consent and data, including opting out at any time, in familiar ways such as app settings — avoid making people log in to another website or send email to revoke consent or delete data. Remind people what data they've agreed to let the feature collect and how that data is used, and consider designing the settings page to be both a control center and an information hub. Use precise language to describe the impact, if any, of revoking consent or deleting data. Make sure people get the full consent experience whenever they manage consent — avoid using checkboxes or toggle switches to 'turn on' or 'turn off' consent, as they don't create space for full comprehension or a meaningful decision."
+          "text": "The management stage can occur at the end of someone's journey, or — if they dismissed or opted out of a consent prompt — it might be the first place someone encounters the full consent experience; it's an ongoing stage where people can change their consent or sharing settings. Make it easy for people to manage their consent and data, including opting out at any time, in familiar ways such as app settings — avoid making people log in to another website or send email to revoke consent or delete data. Remind people what data they've agreed to let the feature collect and how that data is used, and consider designing the settings page to be both a control center and an information hub. Use precise language to describe the impact, if any, of revoking consent or deleting data. Make sure people get the full consent experience whenever they manage consent — avoid using checkboxes or toggle switches to 'turn on' or 'turn off' consent, as they don't create space for full comprehension or a meaningful decision.",
+          "level": 3,
+          "sourceText": "The management stage can occur at the end of someone’s journey, if they’ve already gone through the other four stages. Or, if they dismissed or opted out of a consent prompt, it might be the first place someone encounters the full consent experience. Management is an ongoing stage where people can change their consent or sharing settings."
+        },
+        {
+          "heading": "Make it easy for people to manage their consent and data, including opting out at any time.",
+          "text": "When applicable, let people access consent management in familiar ways, such as in app settings. Avoid making people log in to another website or send email to revoke consent or delete data.",
+          "level": 4
+        },
+        {
+          "heading": "Remind people what data they’ve agreed to let the feature collect, and how that data is used",
+          "text": "Consider designing the settings page be both a control center and an information hub.  Language should be clear and empower people to manage their consent settings with confidence.",
+          "level": 4
+        },
+        {
+          "heading": "Use precise language to describe the impact (if any) if someone chooses to revoke consent or delete their data",
+          "text": "Do\n\nDon’t",
+          "level": 4
+        },
+        {
+          "heading": "Make sure people get the full consent experience when managing their consent",
+          "text": "No matter where people encounter consent, it should be meaningful. The fidelity of consent experiences should be consistent, whether it’s a first run experience, an interstitial, or a settings screen. Avoid using checkboxes or toggle switches to “turn on” or “turn off” consent, as they don’t create space for full comprehension or a meaningful decision-making process.",
+          "level": 4
         },
         {
           "heading": "Follow best practices",
-          "text": "Increase users' control over their data privacy: don't combine multiple privacy concepts or lump multiple settings into a single control — each concept requires its own control with relevant actions, and each consent request should be presented independently; a user should be able to change their privacy settings through a control that's easy to discover, understand, and update. Increase users' understanding of how they benefit: be clear about how the user's choice impacts their product experience. Provide clear information so users can make confident decisions about which devices, platforms, and apps the consent applies to and whether it roams. Use the same controls and language across all products and services — wherever a control lives, the language, options, and scope should be presented consistently across surfaces."
+          "text": "Increase users' control over their data privacy: don't combine multiple privacy concepts or lump multiple settings into a single control — each concept requires its own control with relevant actions, and each consent request should be presented independently; a user should be able to change their privacy settings through a control that's easy to discover, understand, and update. Increase users' understanding of how they benefit: be clear about how the user's choice impacts their product experience. Provide clear information so users can make confident decisions about which devices, platforms, and apps the consent applies to and whether it roams. Use the same controls and language across all products and services — wherever a control lives, the language, options, and scope should be presented consistently across surfaces.",
+          "level": 2
+        },
+        {
+          "heading": "Increase users’ control over their data privacy",
+          "text": "Don’t combine multiple privacy concepts or lump multiple privacy settings into a single control. When multiple topics are being communicated, each concept requires its own control with relevant actions. Each consent request should be presented independently of other requests.\nA user should be able to change their privacy settings. The privacy control should be easy to discover, understand, and update.",
+          "level": 4
+        },
+        {
+          "heading": "Increase users’ understanding of how they benefit from enabling privacy controls",
+          "text": "Be clear about how the user’s choice impacts their product experience.",
+          "level": 4
+        },
+        {
+          "heading": "Provide clear information so users can make confident decisions regarding the device(s), platform(s) and app(s) the consent applies to",
+          "text": "Which platforms or devices? Does it roam?\nWhich app(s) is the consent applied to?",
+          "level": 4
+        },
+        {
+          "heading": "Use the same controls and language across all products and services for additional user confidence and ease-of-use",
+          "text": "Whether the consent or privacy control lives on different product surfaces, platforms, device types, on accounts.microsoft.com (AMC), or elsewhere, the language, options, and scope for any given control should be presented consistently across surfaces.",
+          "level": 4
         },
         {
           "heading": "Buttons",
-          "text": "Aim for descriptive and specific language for the consent action. Some people don't read the fine print, so if you're using Yes/No, Agree/Decline, or similar language, provide additional context on the button itself whenever space allows; if space is an issue, prioritize describing the result of selecting each option. Consent request options must be designed for equal visual prominence. Avoid using On/Off, Yes/No, Agree, Skip, etc., especially without additional wording for context and balance, as these words carry negative and positive connotations. Don't use unbalanced visual design — for example, a filled 'Yes' button biased against 'No,' or a longer 'Don't personalize offers' button that becomes more visually prominent — as this may influence a user's choice."
+          "text": "Aim for descriptive and specific language for the consent action. Some people don't read the fine print, so if you're using Yes/No, Agree/Decline, or similar language, provide additional context on the button itself whenever space allows; if space is an issue, prioritize describing the result of selecting each option. Consent request options must be designed for equal visual prominence. Avoid using On/Off, Yes/No, Agree, Skip, etc., especially without additional wording for context and balance, as these words carry negative and positive connotations. Don't use unbalanced visual design — for example, a filled 'Yes' button biased against 'No,' or a longer 'Don't personalize offers' button that becomes more visually prominent — as this may influence a user's choice.",
+          "level": 3
+        },
+        {
+          "heading": "Buttons — Aim for",
+          "text": "Use descriptive and specific language for the consent action. Some people don’t read the fine print, so if you’re using Yes/No, Agree/Decline, or similar language, provide additional context on the button itself whenever space allows. If space is an issue, prioritize providing the description of the result of selecting each option over including Yes/No, Agree/Decline, etc.\n\nDo\n\nDon’t\n\nConsent request options must be designed for equal visual prominence.",
+          "level": 4
+        },
+        {
+          "heading": "Buttons — Avoid",
+          "text": "Avoid using On/Off, Yes/No, Agree, Skip, etc. especially without additional wording for context and balance, as these words have negative and positive connotations.\n\nDo\n\nDon’t\n\nDon’t use unbalanced visual design - this may influence a user’s choice. For example, the “Yes” button here is more prominent due to the fill color and is biased against the “No” button.\n\nSimilarly, the “Don’t personalize offers” button is longer than the “Personalize offers” button and is therefore more visually prominent.",
+          "level": 4
         },
         {
           "heading": "Avoid radio buttons",
-          "text": "Radio buttons are not recommended in privacy dialogs. They complicate the UX by forcing the user to perform multiple actions to complete the consent."
+          "text": "Radio buttons are not recommended in privacy dialogs. They complicate the UX by forcing the user to perform multiple actions to complete the consent.",
+          "level": 3
         },
         {
           "heading": "Switches & checkboxes",
-          "text": "Switches are optimal for consent management (turning controls on/off) after the user has already gone through the initial consent request — avoid the use of switches for the initial consent request. The label for the switch should clearly indicate the 'on' state, and you should never use a switch that turns off a feature when the switch is 'on.' Provide a description of the feature underneath the switch label that provides more details, without repeating the same information in the label. Don't use checkboxes for simpler consent asks that are presented in an easily understood structure."
+          "text": "Switches are optimal for consent management (turning controls on/off) after the user has already gone through the initial consent request — avoid the use of switches for the initial consent request. The label for the switch should clearly indicate the 'on' state, and you should never use a switch that turns off a feature when the switch is 'on.' Provide a description of the feature underneath the switch label that provides more details, without repeating the same information in the label. Don't use checkboxes for simpler consent asks that are presented in an easily understood structure.",
+          "level": 3
+        },
+        {
+          "heading": "Switches & checkboxes — Aim for",
+          "text": "Switches are optimal for consent management (turning controls on/off) after the user has already gone through the initial consent request. Avoid the use of switches for the initial consent request.\n\nThe label for the switch should clearly indicate the “on” state. Never use a switch that turns off a feature when the switch is “on.”\n\nProvide a description of the feature underneath the switch label that provides more details. Don’t repeat the same information in the switch label in the description. For more info, see the Switch component.",
+          "level": 4
+        },
+        {
+          "heading": "Switches & checkboxes — Avoid",
+          "text": "Don’t use checkboxes for simpler consent asks that are presented in an easily understood structure.",
+          "level": 4
         },
         {
           "heading": "Images & illustrations",
-          "text": "Aim to use illustrations to attract people's attention, reinforce understanding of core messages, and help communicate abstract ideas; when using images to convey value, the image should describe what is being spoken or written about and let you abbreviate or omit some text without losing meaning. Follow Microsoft's illustration guidelines and check with your Global Readiness contact so illustrations are globally appropriate. Avoid illustrations of people, and don't create any concepts that imply or can be construed as more or less secure or more or less compliant. Avoid illustrations that are decorative or that look like marketing content."
+          "text": "Aim to use illustrations to attract people's attention, reinforce understanding of core messages, and help communicate abstract ideas; when using images to convey value, the image should describe what is being spoken or written about and let you abbreviate or omit some text without losing meaning. Follow Microsoft's illustration guidelines and check with your Global Readiness contact so illustrations are globally appropriate. Avoid illustrations of people, and don't create any concepts that imply or can be construed as more or less secure or more or less compliant. Avoid illustrations that are decorative or that look like marketing content.",
+          "level": 3
+        },
+        {
+          "heading": "Images & illustrations — Aim for",
+          "text": "Use illustrations to attract people’s attention, reinforce understanding of core messages, and help communicate abstract ideas. When using images to convey value, the image should describe what is being spoken/written about. Select visuals that allow you to abbreviate or omit some of the text without losing the meaning. Follow Microsoft’s illustration guidelines when creating illustrations, and get in touch with your Global Readiness contact to help make sure your illustrations are globally appropriate.\n\nUse illustrations to reinforce the concept",
+          "level": 4
+        },
+        {
+          "heading": "Images & illustrations — Avoid",
+          "text": "Don’t use illustrations of people\n\nDon’t create any concepts that imply or can be construed as more or less secure or more or less compliant. Avoid illustrations that are “decorative” or which look like marketing content. Do not use illustrations of people. \n\nIllustration guidelines\nBrand Central\nGlobal Readiness contacts\nMicrosoft Global Readiness",
+          "level": 4
         }
       ],
       "values": {
@@ -6760,13 +7135,28 @@
           "Don't use radio buttons in privacy dialogs, or checkboxes/toggles to 'turn on/off' consent for the initial ask",
           "Don't use 'Learn more' or imply approval (e.g., 'Enroll now') in the prompt stage",
           "Don't use illustrations of people or imply that something is more or less secure or compliant",
-          "Don't combine multiple privacy concepts into a single control"
+          "Don't combine multiple privacy concepts into a single control",
+          "Don’t use visual styling to suggest that opting in is the primary or default choice.",
+          "Don’t combine multiple privacy concepts or lump multiple privacy settings into a single control. When multiple topics are being communicated, each concept requires its own control with relevant actions. Each consent request should be presented independently of other requests.",
+          "Avoid using On/Off, Yes/No, Agree, Skip, etc. especially without additional wording for context and balance, as these words have negative and positive connotations.",
+          "Don’t use unbalanced visual design - this may influence a user’s choice. For example, the “Yes” button here is more prominent due to the fill color and is biased against the “No” button.",
+          "Don’t use checkboxes for simpler consent asks that are presented in an easily understood structure.",
+          "Don’t create any concepts that imply or can be construed as more or less secure or more or less compliant. Avoid illustrations that are “decorative” or which look like marketing content. Do not use illustrations of people."
         ]
       },
       "docUrl": "https://fluent2.microsoft.design/data-usage-sharing/",
-      "accessStatus": "employee-gated",
-      "capturedAt": "2026-07",
-      "accessNote": "This page now requires Microsoft employee sign-in (302 to login.microsoftonline.com). This snapshot cannot be re-validated from a public crawl, so treat it as a pinned capture rather than live content."
+      "accessStatus": "employee-gated-captured",
+      "capturedAt": "2026-08",
+      "accessNote": "This page requires Microsoft employee sign-in (302 to login.microsoftonline.com), so it cannot be re-validated from a public crawl. The content below is a pinned snapshot taken while signed in (2026-08), not a live read.",
+      "sourceIntro": "We ask people for their consent any time a product or feature needs permission to store or use their data. Offering users a chance to give informed and meaningful consent aligns with our corporate values of respect, integrity, and accountability, and it shows why we’re worthy of their trust.\n\nPrivacy UX receives a high degree of regulatory scrutiny, so aligning with this guidance helps ensure that Microsoft complies with emerging international privacy laws and regulatory requirements to avoid potential penalties and costly lawsuits.",
+      "sourceCapture": {
+        "url": "https://fluent2.microsoft.design/data-usage-sharing/",
+        "finalUrl": "https://fluent2.microsoft.design/data-usage-sharing/",
+        "title": "Data usage & sharing - Fluent 2 Design System",
+        "h1": "Data usage and sharing",
+        "capturedAt": "2026-08",
+        "method": "authenticated browser capture (Microsoft employee sign-in)"
+      }
     },
     "content-engineering-system-prompt-engineering": {
       "title": "System prompt engineering",

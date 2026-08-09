@@ -374,6 +374,27 @@ try {
 } catch {}
 console.log('v8 non-react lineage: ok=' + nrOk);
 
+// 39 of 70 don't entries are bare imperatives like "Use emoji to replace
+// meaningful text" - they mean the opposite of what they say unless the "dont"
+// key travels with them. The convention must stay documented or a future
+// flattening silently inverts the advice.
+const dgConv = (await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'all' } })).content[0].text;
+let dgOk = false;
+try {
+  const j = JSON.parse(dgConv);
+  const c = j.$meta?.doDontConvention;
+  dgOk = !!c && /negation lives in the "dont" key/i.test(c.warning ?? '');
+} catch {}
+console.log('doDont convention documented: ok=' + dgOk);
+
+const aiTopic = (await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'personality-principles' } })).content[0].text;
+let aiOk = false;
+try {
+  const j = JSON.parse(aiTopic);
+  aiOk = j.accessStatus === 'employee-gated-captured' && (j.doDont?.dont?.length ?? 0) > 0 && (j.doDont?.do?.length ?? 0) > 0;
+} catch {}
+console.log('gated AI topic enriched: ok=' + aiOk);
+
 await client.close();
 
 const failures = _lines.filter((l) => /ok\s*=\s*false/i.test(l));
