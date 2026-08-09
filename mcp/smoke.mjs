@@ -106,6 +106,35 @@ console.log('tool_count: ok=' + (tools.tools.length === EXPECTED_TOOL_COUNT && m
   console.log('skills advertised match skills shipped (' + skillsNote + '): ok=' + skillsOk);
 }
 
+// Every skill named in an agent's frontmatter must exist on disk. A typo here
+// fails silently at load time - the agent just runs without the guidance it was
+// told to use, and nothing reports it.
+{
+  const root = new URL('../', import.meta.url);
+  let agentsOk = false, agentsNote = 'agents/ not readable';
+  try {
+    const onDisk = readdirSync(new URL('skills/', root), { withFileTypes: true })
+      .filter((e) => e.isDirectory()).map((e) => e.name);
+    const files = readdirSync(new URL('agents/', root)).filter((f) => f.endsWith('.agent.md'));
+    const bad = [];
+    for (const f of files) {
+      const text = readFileSync(new URL('agents/' + f, root), 'utf8');
+      const fm = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+      if (!fm) { bad.push(`${f}: no frontmatter`); continue; }
+      const block = fm[1].match(/skills:\r?\n((?:[ \t]*-[ \t]*[^\r\n]+\r?\n?)+)/);
+      if (!block) continue;
+      for (const name of [...block[1].matchAll(/-\s*([a-z0-9-]+)/g)].map((m) => m[1])) {
+        if (!onDisk.includes(name)) bad.push(`${f} -> ${name}`);
+      }
+    }
+    agentsOk = files.length > 0 && bad.length === 0;
+    agentsNote = agentsOk ? `${files.length} agents, all skill refs resolve` : `unresolved: ${bad.join(', ')}`;
+  } catch (e) {
+    agentsNote = String(e && e.message ? e.message : e);
+  }
+  console.log('agent skill references resolve (' + agentsNote + '): ok=' + agentsOk);
+}
+
 const pbi = await client.callTool({ name: 'fluent_generate_powerbi_theme', arguments: { brandColor: '#D13438', name: 'Fluent Red' } });
 const pbiText = pbi.content[0].text;
 let pbiValid = false, hasVS = false;
