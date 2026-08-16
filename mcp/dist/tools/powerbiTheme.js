@@ -31,7 +31,7 @@ export function registerPowerbiTheme(server) {
         inputSchema: {
             brandColor: z
                 .string()
-                .regex(/^#?[0-9a-fA-F]{6}$/)
+                .regex(/^#?[0-9a-fA-F]{6}$/, 'brandColor must be a 6-digit hex colour like #0F6CBD (the leading # is optional)')
                 .optional()
                 .describe('Brand hex, e.g. #0F6CBD. Defaults to the Fluent brand.'),
             name: z.string().optional().describe('Theme name (default "Fluent 2").'),

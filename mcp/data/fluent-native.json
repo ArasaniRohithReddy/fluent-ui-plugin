@@ -1,9 +1,9 @@
 {
   "meta": {
-    "verifiedOn": "2026-08",
+    "verifiedOn": "2026-08-16",
     "scope": "Fluent 2 on native platforms: iOS (fluentui-apple), Android (fluentui-android), Windows (WinUI 3 / WinUI 2 / WPF Fluent theme).",
     "readThisFirst": [
-      "Windows: WinUI 3 (Windows App SDK) is current. WinUI 2 (Microsoft.UI.Xaml 2.8.7) is maintenance-only - last feature release 2.8, July 2022.",
+      "Windows: WinUI 3 (Windows App SDK 2.4.0, released 2026-08-13) is current. WinUI 2 (Microsoft.UI.Xaml 2.8.7) is maintenance-only - last feature release 2.8, July 2022.",
       "iOS has NO v8/v9-style split: one package, one product, one 0.x line; Fluent 2 is a version cutover at 0.13.0.",
       "Android ships Fluent 1 (View/XML) and Fluent 2 (Jetpack Compose) inside the SAME artifacts, split by Kotlin package.",
       "Pick the framework kind before generating code: uikit vs swiftui, view vs compose, winui3 vs winui2 vs wpf. Mixing them produces code that cannot compile."
@@ -13,22 +13,61 @@
       "https://raw.githubusercontent.com/microsoft/fluentui-apple/0.37.0/Package.swift",
       "https://raw.githubusercontent.com/microsoft/fluentui-apple/0.37.0/MicrosoftFluentUI.podspec",
       "https://raw.githubusercontent.com/microsoft/fluentui-apple/0.37.0/Sources/FluentUI_common/Core/Theme/FluentTheme.swift",
+      "https://raw.githubusercontent.com/microsoft/fluentui-apple/0.37.0/Sources/FluentUI_iOS/Components/",
       "https://raw.githubusercontent.com/wiki/microsoft/fluentui-apple/Design-Tokens.md",
       "https://trunk.cocoapods.org/api/v1/pods/MicrosoftFluentUI",
       "https://github.com/microsoft/fluentui-android",
-      "https://raw.githubusercontent.com/microsoft/fluentui-android/master/README.md",
+      "https://raw.githubusercontent.com/microsoft/fluentui-android/v0.3.14/README.md",
+      "https://raw.githubusercontent.com/microsoft/fluentui-android/v0.3.14/fluentui_core/src/main/java/com/microsoft/fluentui/theme/token/controlTokens/",
+      "https://api.github.com/repos/microsoft/fluentui-android/git/trees/v0.3.14?recursive=1",
       "https://repo1.maven.org/maven2/com/microsoft/fluentui/FluentUIAndroid/maven-metadata.xml",
       "https://github.com/microsoft/microsoft-ui-xaml",
+      "https://api.github.com/repos/microsoft/microsoft-ui-xaml/git/trees/winui3%2Fmain?recursive=1",
+      "https://api.github.com/repos/microsoft/microsoft-ui-xaml/git/trees/winui2%2Fmain?recursive=1",
+      "https://raw.githubusercontent.com/microsoft/microsoft-ui-xaml/winui3/main/controls/dev/",
+      "https://api.github.com/repos/microsoft/WindowsAppSDK/releases",
       "https://github.com/microsoft/WinUI-Gallery",
-      "https://api.nuget.org/v3-flatcontainer/microsoft.windowsappsdk/index.json",
-      "https://api.nuget.org/v3-flatcontainer/microsoft.ui.xaml/index.json",
+      "https://github.com/microsoft/fluentui-react-native",
       "https://learn.microsoft.com/en-us/windows/apps/winui/winui3/",
       "https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/release-channels",
       "https://learn.microsoft.com/en-us/windows/apps/develop/platform/xaml/xaml-theme-resources",
       "https://learn.microsoft.com/en-us/windows/apps/design/signature-experiences/typography",
+      "https://learn.microsoft.com/en-us/windows/apps/develop/ui/controls/navigationview",
       "https://learn.microsoft.com/en-us/dotnet/desktop/wpf/whats-new/net90",
       "https://fluent2.microsoft.design/sitemap-0.xml"
-    ]
+    ],
+    "sourceRefs": {
+      "ios": "fluentui-apple tag 0.37.0 (latest, 2026-08-07)",
+      "android": "fluentui-android tag v0.3.14 (latest, 2026-04-16)",
+      "windows": "microsoft-ui-xaml branch winui3/main for WinUI 3 IDL and winui2/main for the WinUI 2 comparison; microsoft/WindowsAppSDK release v2.4.0 (2026-08-13) for the version. The winui3/release/2.4.0 tag publishes only docs/, specs/ and src/ - control sources are not in the release tag, so IDL citations are branch-tip on winui3/main by necessity.",
+      "reactNative": "fluentui-react-native branch main (probed 2026-08-16); out of scope - see outOfScope.reactNative",
+      "blockedRegistries": "api.nuget.org and registry.npmjs.org were unreachable from the verification environment. No claim in this dataset rests on a package-registry response; version claims are sourced from GitHub releases, Maven Central metadata or in-repo manifests and are labelled as such."
+    },
+    "unverifiedPolicy": "Every entry here is a fact the research could NOT confirm - treat it as unknown, never as false. Entries are retired only when the blocker is gone and the fact has been re-checked; retired entries are not kept as tombstones. Retired on 2026-08-16: the three notes claiming api.github.com / GitHub MCP returned 403 SAML for microsoft/* and that citations could not be SHA- or tag-pinned (gh api now succeeds against microsoft/* for contents, git/trees, releases, branches and tag-pinned refs); the note that PillBar's signature was unread; the note that WinUI-2-vs-WinUI-3 availability was partly inferred; and the note that /components/react-native/ might merely be empty rather than gated.",
+    "counts": {
+      "components": {
+        "ios": 45,
+        "android": 63,
+        "windows": 77,
+        "total": 185
+      },
+      "windowsByApiKind": {
+        "control": 67,
+        "command": 1,
+        "icon": 1,
+        "backdrop": 2,
+        "brush": 1,
+        "shadow": 1,
+        "panel": 1,
+        "property": 1,
+        "assembly": 1,
+        "resourceKey": 1
+      },
+      "windowsControlsOnly": 67,
+      "siteRoutes": 21,
+      "unverified": 56,
+      "note": "windows.components counts every documented Windows API, not only controls - use windowsControlsOnly for a \"how many components\" answer. See platforms.windows.apiKinds."
+    }
   },
   "platforms": {
     "ios": {
@@ -390,6 +429,36 @@
           "import": "import FluentUI",
           "keyApi": [
             {
+              "name": "placeholder",
+              "type": "String?",
+              "note": "Forwarded to the inner UITextField - this is what the sample sets."
+            },
+            {
+              "name": "titleText",
+              "type": "String?",
+              "note": "The label above the field. Drawn by a separate Label, NOT the text field."
+            },
+            {
+              "name": "inputText",
+              "type": "String?",
+              "note": "Read/write the current value."
+            },
+            {
+              "name": "assistiveText",
+              "type": "String?",
+              "note": "Helper line under the field; replaced by error.message when error is set."
+            },
+            {
+              "name": "leadingImage",
+              "type": "UIImage?",
+              "note": "Optional leading icon."
+            },
+            {
+              "name": "keyboardType",
+              "type": "UIKeyboardType",
+              "note": "Forwarded to the inner UITextField."
+            },
+            {
               "name": "onEditingChanged / onDidBeginEditing / onDidEndEditing",
               "type": "((FluentTextField) -> Void)?",
               "note": "closure-based events"
@@ -403,10 +472,16 @@
               "name": "error",
               "type": "FluentTextInputError?",
               "note": "replaces assistive text and recolors to error state"
+            },
+            {
+              "name": "tokenSet",
+              "type": "TextFieldTokenSet",
+              "note": "State-aware: built with .init(state:) so tokens can differ per input state."
             }
           ],
-          "sample": "let field = FluentTextField()\nfield.placeholder = \"Email\"\nfield.onReturn = { _ in true }\nview.addSubview(field)",
-          "a11y": null
+          "sample": "let field = FluentTextField()\nfield.titleText = \"Email\"\nfield.placeholder = \"name@contoso.com\"\nfield.assistiveText = \"We never share this.\"\nfield.onReturn = { _ in true }\nview.addSubview(field)",
+          "a11y": "FluentTextField.swift contains NO accessibility API (verified: zero accessibility* symbols in the file). You inherit only UITextField's default VoiceOver behaviour, which reads the placeholder - titleText and assistiveText are separate labels and are NOT promoted to the field's accessible name. Set accessibilityLabel yourself.",
+          "objcName": "MSFTextField"
         },
         "BottomSheetController": {
           "type": "BottomSheetController",
@@ -712,6 +787,503 @@
           ],
           "sample": null,
           "a11y": null
+        },
+        "Shimmer": {
+          "type": "ShimmerView",
+          "objcName": "MSFShimmerView",
+          "aliases": [
+            "Shimmer",
+            "ShimmerView",
+            "MSFShimmerView"
+          ],
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "init(containerView:excludedViews:animationSynchronizer:shimmerStyle:shimmersLeafViews:usesTextHeightForLabels:)",
+              "type": "init",
+              "note": "All parameters have defaults; shimmerStyle defaults to .revealing, shimmersLeafViews and usesTextHeightForLabels to false."
+            },
+            {
+              "name": "MSFShimmerStyle",
+              "type": "enum",
+              "note": "concealing, revealing. Only these two cases exist."
+            },
+            {
+              "name": "style",
+              "type": "MSFShimmerStyle",
+              "note": "let - fixed at init, not settable afterwards."
+            },
+            {
+              "name": "syncAnimation()",
+              "type": "func",
+              "note": "Re-syncs this view with the shared AnimationSynchronizerProtocol."
+            },
+            {
+              "name": "tokenSet",
+              "type": "ShimmerTokenSet",
+              "note": "ShimmerToken keys: shimmerAlpha, tintColor, darkGradient, shimmerWidth, shimmerAngle (radians; 0 = horizontal), shimmerSpeed (pt/s)."
+            }
+          ],
+          "sample": "let shimmer = ShimmerView(containerView: cardView,\n                          shimmerStyle: .revealing,\n                          shimmersLeafViews: true)\ncardView.addSubview(shimmer)",
+          "a11y": null,
+          "notes": "Documented on the Fluent 2 site at /components/ios/core/shimmer/usage/ (HTTP 200). UIKit only - the SwiftUI demo renders a \"NYI\" placeholder, so there is no SwiftUI surface."
+        },
+        "ShimmerLinesView": {
+          "type": "ShimmerLinesView",
+          "objcName": "MSFShimmerLinesView",
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "lineCount",
+              "type": "Int",
+              "note": "Default 3. Set 0 to fill the available height with lines."
+            },
+            {
+              "name": "firstLineFillPercent",
+              "type": "CGFloat",
+              "note": "Default 0.94."
+            },
+            {
+              "name": "lastLineFillPercent",
+              "type": "CGFloat",
+              "note": "Default 0.6."
+            }
+          ],
+          "sample": "let lines = ShimmerLinesView()\nlines.lineCount = 2\nplaceholder.addSubview(lines)",
+          "a11y": null,
+          "notes": "Subclass of ShimmerView - it inherits the full ShimmerView init and token set. Use it for text placeholders; use ShimmerView to shimmer real subviews."
+        },
+        "BadgeField": {
+          "type": "BadgeField",
+          "objcName": "MSFBadgeField",
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "setup(dataSources:)",
+              "type": "func",
+              "note": "Seeds the field from [BadgeViewDataSource]. badgeDataSources reads them back."
+            },
+            {
+              "name": "label / placeholder",
+              "type": "String",
+              "note": "Both default \"\". label is the leading prompt, placeholder the empty-state text."
+            },
+            {
+              "name": "softBadgingCharacters / hardBadgingCharacters",
+              "type": "String",
+              "note": "Characters that commit the typed text into a badge. Both default \"\"."
+            },
+            {
+              "name": "isEditable / isActive / allowsDragAndDrop",
+              "type": "Bool",
+              "note": "Default true / false / true."
+            },
+            {
+              "name": "numberOfLines",
+              "type": "Int",
+              "note": "Default 0 = unlimited. Pair with heightThatFits(badgeHeight:numberOfLines:)."
+            },
+            {
+              "name": "addBadge(withDataSource:fromUserAction:updateConstrainedBadges:) / deleteAllBadges()",
+              "type": "func",
+              "note": "Programmatic badge management."
+            },
+            {
+              "name": "delegate",
+              "type": "BadgeFieldDelegate",
+              "note": "ObjC name MSFBadgeFieldDelegate."
+            }
+          ],
+          "sample": "let field = BadgeField()\nfield.label = \"To:\"\nfield.hardBadgingCharacters = \",;\"\nfield.setup(dataSources: [BadgeViewDataSource(text: \"Kat Larsson\")])",
+          "a11y": "voiceOverFocusOnTextFieldAndAnnounce(_:) moves VoiceOver focus back to the input and announces a string - call it after programmatic badge changes so the user is told what happened."
+        },
+        "PeoplePicker": {
+          "type": "PeoplePicker",
+          "objcName": "MSFPeoplePicker",
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "availablePersonas / pickedPersonas",
+              "type": "[Persona]",
+              "note": "Suggestions source and current selection."
+            },
+            {
+              "name": "showsAvatar",
+              "type": "Bool",
+              "note": "Default false."
+            },
+            {
+              "name": "showsSearchDirectoryButton",
+              "type": "Bool",
+              "note": "Default false; adds the \"Search directory\" row."
+            },
+            {
+              "name": "allowsPickedPersonasToAppearAsSuggested",
+              "type": "Bool",
+              "note": "Default true."
+            },
+            {
+              "name": "hidePersonaListViewWhenNoSuggestedPersonas",
+              "type": "Bool",
+              "note": "Default false."
+            },
+            {
+              "name": "personaListView / personaSuggestionsView",
+              "type": "PersonaListView / UIView",
+              "note": "let - the suggestion surface is exposed, not hidden."
+            },
+            {
+              "name": "delegate",
+              "type": "PeoplePickerDelegate",
+              "note": "Refines BadgeFieldDelegate."
+            }
+          ],
+          "sample": "let picker = PeoplePicker()\npicker.label = \"To:\"\npicker.availablePersonas = directory\npicker.showsAvatar = true",
+          "a11y": "Inherits BadgeField accessibility, including voiceOverFocusOnTextFieldAndAnnounce(_:).",
+          "notes": "PeoplePicker is a SUBCLASS of BadgeField - every BadgeField property applies. Do not use both for the same field."
+        },
+        "PersonaListView": {
+          "type": "PersonaListView",
+          "objcName": "MSFPersonaListView",
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "personaList",
+              "type": "[Persona]",
+              "note": "The rows to display."
+            },
+            {
+              "name": "onPersonaSelected",
+              "type": "((Persona) -> Void)?",
+              "note": "Selection callback."
+            },
+            {
+              "name": "accessoryType",
+              "type": "TableViewCellAccessoryType",
+              "note": "Default .none."
+            },
+            {
+              "name": "selectPersona(direction:)",
+              "type": "func",
+              "note": "PersonaListViewSelectionDirection - drives keyboard/hardware selection."
+            },
+            {
+              "name": "searchDirectoryState",
+              "type": "SearchDirectoryState",
+              "note": "Default .idle; paired with PersonaListViewSearchDirectoryDelegate."
+            }
+          ],
+          "sample": "let list = PersonaListView()\nlist.personaList = people\nlist.onPersonaSelected = { persona in }",
+          "a11y": null,
+          "notes": "A UITableView subclass - add it directly, do not wrap it in another table."
+        },
+        "PersonaButton": {
+          "type": "PersonaButton",
+          "kind": "swiftui",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "init(size:)",
+              "type": "init",
+              "note": "MSFPersonaButtonSize = small | large. large -> avatar .size72 and a visible subtitle; small -> .size56 and no subtitle."
+            },
+            {
+              "name": "state",
+              "type": "MSFPersonaButtonState",
+              "note": "buttonSize, onTapAction, image, primaryText/secondaryText, avatarBackgroundColor/avatarForegroundColor, hasPointerInteraction, hasRingInnerGap, isTransparent, imageBasedRingColor."
+            }
+          ],
+          "sample": "PersonaButton(size: .large)\n    .personaButtonStyle { /* modifiers */ }",
+          "a11y": null,
+          "notes": "SwiftUI struct. Configure it through `state` (an MSFPersonaButtonState), not through init parameters - init takes only the size."
+        },
+        "MSFPersonaButton": {
+          "type": "MSFPersonaButton",
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "init(size:)",
+              "type": "init",
+              "note": "Default .large."
+            },
+            {
+              "name": "state",
+              "type": "MSFPersonaButtonState",
+              "note": "let - same state object as the SwiftUI PersonaButton."
+            }
+          ],
+          "sample": "let button = MSFPersonaButton(size: .large)\nbutton.state.primaryText = \"Kat Larsson\"\nbutton.state.onTapAction = { }",
+          "a11y": null,
+          "notes": "ControlHostingView wrapper around the SwiftUI PersonaButton - the standard MSF* bridging pattern."
+        },
+        "CardView": {
+          "type": "CardView",
+          "objcName": "MSFCardView",
+          "aliases": [
+            "Card"
+          ],
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "init(size:title:subtitle:icon:colorStyle:)",
+              "type": "init",
+              "note": "subtitle defaults to nil; every other argument is required."
+            },
+            {
+              "name": "CardSize",
+              "type": "enum",
+              "note": "small, large. Only two cases."
+            },
+            {
+              "name": "CardColorStyle",
+              "type": "enum",
+              "note": "appColor, neutral, custom. With .custom set customBackgroundColor/customTitleColor yourself."
+            },
+            {
+              "name": "twoLineTitle",
+              "type": "Bool",
+              "note": "Default false."
+            },
+            {
+              "name": "customWidth",
+              "type": "CGFloat",
+              "note": "Overrides the size-derived width."
+            },
+            {
+              "name": "delegate",
+              "type": "CardDelegate",
+              "note": "ObjC name MSFCardDelegate."
+            }
+          ],
+          "sample": "let card = CardView(size: .large,\n                    title: \"Weekly report\",\n                    subtitle: \"Updated 2h ago\",\n                    icon: UIImage(named: \"doc\")!,\n                    colorStyle: .neutral)",
+          "a11y": null,
+          "notes": "Conforms to Shadowable (ambientShadow/keyShadow). Distinct from CardNudge, which is the SwiftUI notification-style card."
+        },
+        "CommandBar": {
+          "type": "CommandBar",
+          "objcName": "MSFCommandBar",
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "init(itemGroups:leadingItemGroups:trailingItemGroups:style:)",
+              "type": "init",
+              "note": "itemGroups and style are required; the leading/trailing groups default to nil."
+            },
+            {
+              "name": "CommandBarStyle",
+              "type": "enum",
+              "note": "primary (solid background), glass (UIGlassEffect on iOS 26+, UIBlurEffect earlier)."
+            },
+            {
+              "name": "CommandBarItemGroup",
+              "type": "typealias",
+              "note": "= [CommandBarItem]. Groups render with separators between them."
+            },
+            {
+              "name": "isScrollable / shouldCalculateIntrinsicHeight",
+              "type": "Bool",
+              "note": "Both default true."
+            },
+            {
+              "name": "updateButtonsState() / resetScrollPosition(_:)",
+              "type": "func",
+              "note": "Call updateButtonsState() after mutating item isEnabled/isSelected."
+            }
+          ],
+          "sample": "let bold = CommandBarItem(title: \"Bold\", image: boldImage) { _, _ in }\nlet bar = CommandBar(itemGroups: [[bold]], style: .primary)",
+          "a11y": "CommandBarItem.accessibilityIdentifier is settable; the accessible name comes from title/iconImage, so an icon-only item needs a title.",
+          "notes": "Conforms to Shadowable. Mutating itemGroups replaces the whole strip."
+        },
+        "CommandBarItem": {
+          "type": "CommandBarItem",
+          "objcName": "MSFCommandBarItem",
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "init(title:image:itemTappedHandler:...)",
+              "type": "init",
+              "note": "Two @objc inits exist - one title/image based, one for custom content."
+            },
+            {
+              "name": "itemTappedHandler",
+              "type": "((UIView, CommandBarItem) -> Void)",
+              "note": "ItemTappedHandler typealias."
+            },
+            {
+              "name": "iconImage / accentImage / accentImageTintColor / title / titleFont",
+              "type": "appearance",
+              "note": "accentImage overlays the icon (e.g. a colour swatch)."
+            },
+            {
+              "name": "isEnabled / isSelected / isHidden",
+              "type": "Bool",
+              "note": "isHidden defaults to false."
+            },
+            {
+              "name": "customControlView",
+              "type": "(() -> UIView)?",
+              "note": "Escape hatch for a non-button command."
+            }
+          ],
+          "sample": "let item = CommandBarItem(title: \"Bold\", image: boldImage) { _, item in\n    item.isSelected.toggle()\n}",
+          "a11y": "Set accessibilityIdentifier for UI tests; the accessible name derives from title."
+        },
+        "BottomCommandingController": {
+          "type": "BottomCommandingController",
+          "objcName": "MSFBottomCommandingController",
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "init(with:style:)",
+              "type": "init",
+              "note": "style is BottomCommandingControllerStyle, a typealias for BottomSheetControllerStyle."
+            },
+            {
+              "name": "heroItems",
+              "type": "[CommandingItem]",
+              "note": "The always-visible row."
+            },
+            {
+              "name": "expandedListSections",
+              "type": "[CommandingSection]",
+              "note": "Revealed when the sheet expands."
+            },
+            {
+              "name": "contentViewController",
+              "type": "UIViewController?",
+              "note": "The content the commanding surface sits over."
+            },
+            {
+              "name": "setIsHidden(_:animated:completion:)",
+              "type": "func",
+              "note": "Animated counterpart of the isHidden property."
+            },
+            {
+              "name": "commandingLayoutGuide / collapsedHeightInSafeArea",
+              "type": "layout",
+              "note": "Use these to inset your content instead of hard-coding the sheet height."
+            },
+            {
+              "name": "prefersSheetMoreButtonVisible / sheetShouldAlwaysFillWidth",
+              "type": "Bool",
+              "note": "Both default true."
+            }
+          ],
+          "sample": "let controller = BottomCommandingController(with: contentVC, style: .primary)\ncontroller.heroItems = [CommandingItem(title: \"Share\", image: shareImage) { _ in }]",
+          "a11y": "handleExpandCustomAccessibilityLabel and handleCollapseCustomAccessibilityLabel override the sheet handle's VoiceOver label - set both or neither.",
+          "notes": "Adapts between a bottom sheet (compact) and a bottom bar (regular). Built on BottomSheetController."
+        },
+        "CommandingItem": {
+          "type": "CommandingItem",
+          "objcName": "MSFCommandingItem",
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "init(title:image:action:isToggleable:)",
+              "type": "init",
+              "note": "isToggleable defaults to false and is a `let` - it cannot change after init."
+            },
+            {
+              "name": "action",
+              "type": "((CommandingItem) -> Void)?",
+              "note": "Receives the item, so one closure can serve several commands."
+            },
+            {
+              "name": "isOn / isEnabled / isHidden",
+              "type": "Bool",
+              "note": "Default false / true / false. isOn only means anything when isToggleable is true."
+            },
+            {
+              "name": "image / selectedImage / largeImage",
+              "type": "UIImage?",
+              "note": "largeImage is used in the expanded list, image in the hero row."
+            },
+            {
+              "name": "trailingView",
+              "type": "UIView?",
+              "note": "Custom accessory in the expanded list row."
+            }
+          ],
+          "sample": "let item = CommandingItem(title: \"Mute\", image: muteImage, action: { $0.isOn.toggle() }, isToggleable: true)",
+          "a11y": "accessibilityIdentifier is settable; the name comes from title."
+        },
+        "DateTimePicker": {
+          "type": "DateTimePicker",
+          "objcName": "MSFDateTimePicker",
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "present(from:with:startDate:endDate:datePickerType:dateRangePresentation:titles:)",
+              "type": "func",
+              "note": "Several overloads; the widest also takes calendarConfiguration:, leftBarButtonItem: and rightBarButtonItem:."
+            },
+            {
+              "name": "DateTimePickerMode",
+              "type": "enum",
+              "note": "date, dateTime, dateRange, dateTimeRange. Helpers: includesTime, singleSelection."
+            },
+            {
+              "name": "DatePickerType",
+              "type": "enum",
+              "note": "calendar (default), components. ObjC name MSFDateTimePickerDatePickerType."
+            },
+            {
+              "name": "DateRangePresentation",
+              "type": "enum",
+              "note": "paged (default), tabbed."
+            },
+            {
+              "name": "delegate",
+              "type": "DateTimePickerDelegate",
+              "note": "dateTimePicker(_:didPickStartDate:endDate:); the optional shouldEndPickingStartDate can veto the dismissal."
+            }
+          ],
+          "sample": "let picker = DateTimePicker()\npicker.delegate = self\npicker.present(from: self, with: .dateTime, startDate: Date())",
+          "a11y": "present(...) documents that it \"handles accessibility replacement presentation\" - the calendar grid is swapped for an accessible alternative under VoiceOver.",
+          "notes": "DateTimePicker is an NSObject coordinator, not a view. The internal CalendarView type is not public - drive the calendar through this API."
+        },
+        "DotView": {
+          "type": "DotView",
+          "objcName": "MSFDotView",
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "color",
+              "type": "UIColor?",
+              "note": "The only public knob."
+            }
+          ],
+          "sample": "let dot = DotView()\ndot.color = .systemRed",
+          "a11y": null,
+          "notes": "A one-property UIView primitive used as an unread/presence dot. It is decorative - it carries no accessible meaning on its own."
+        },
+        "EasyTapButton": {
+          "type": "EasyTapButton",
+          "objcName": "MSFEasyTapButton",
+          "kind": "uikit",
+          "import": "import FluentUI",
+          "keyApi": [
+            {
+              "name": "(no public properties)",
+              "type": "class",
+              "note": "A UIButton subclass that overrides point(inside:with:). minTapTargetSize is INTERNAL - you get the 44x44 default and cannot change it from outside the package."
+            }
+          ],
+          "sample": "let button = EasyTapButton()\nbutton.setImage(icon, for: .normal) // hit area grows to 44x44 even if the icon is 16x16",
+          "a11y": "This is the library's answer to the \"no global minimum-target API on iOS\" gap: it grows the hit area to Apple's 44x44pt minimum without changing layout."
         }
       },
       "tokens": {
@@ -1069,7 +1641,7 @@
         "webEquivalentCaveat": "Slot names match web Fluent 2, numeric values do not. Web-side names were not re-verified this pass."
       },
       "accessibility": {
-        "screenReader": "Controls ship localized VoiceOver strings in Sources/FluentUI_iOS/Resources/Localization/<lang>.lproj/Localizable.strings (~40 locales), e.g. Accessibility.ActivityIndicator.Animating.label, Accessibility.AvatarView.LabelFormat, Presence.OOF. Most controls expose an overridable accessibilityLabel on their state object.",
+        "screenReader": "Controls ship localized VoiceOver strings in Sources/FluentUI_iOS/Resources/Localization/<lang>.lproj/Localizable.strings - VERIFIED 36 locales at tag 0.37.0 (36 *.lproj directories; the frequently repeated \"~40\" was never sourced). Examples: Accessibility.ActivityIndicator.Animating.label, Accessibility.AvatarView.LabelFormat, Presence.OOF. Most controls expose an overridable accessibilityLabel on their state object.",
         "dynamicType": "Label sets adjustsFontForContentSizeCategory = true and observes UIContentSizeCategory.didChangeNotification; Label.maxFontSize caps growth. theme.typography(_:adjustsForContentSizeCategory:) lets a token opt out (Avatar and SegmentedControl pass false).",
         "touchTargets": "No global minimum-target API found. Button sizing comes from ButtonTokenSet.minContainerHeight(style:size:); Fluent defers to Apple HIG otherwise.",
         "providedAutomatically": [
@@ -1103,7 +1675,7 @@
         }
       ],
       "criticalNotes": [
-        "Default branch is 'master', not 'main'; raw main URLs 404.",
+        "Default branch is 'master', not 'main'; raw main URLs 404. Tags are prefixed with v (v0.3.14) - pin to a tag, not to master.",
         "search.maven.org index is stale (reports 0.3.8); only maven-metadata.xml is authoritative.",
         "Fluent 1 (Views) and Fluent 2 (Compose) ship inside the SAME artifacts, split by Kotlin package."
       ],
@@ -1187,7 +1759,8 @@
           "fluentui_controls": "0.3.3",
           "fluentui_icons": "0.3.2"
         },
-        "versionGaps": "FluentUIAndroid has no published 0.3.4 or 0.3.5 (0.3.3 -> 0.3.6), despite git tag v0.3.5_1."
+        "versionGaps": "FluentUIAndroid has no published 0.3.4 or 0.3.5 (0.3.3 -> 0.3.6), despite git tag v0.3.5_1.",
+        "sourceTagVsPublishedModules": "IMPORTANT: the repo tag and the published module versions are NOT the same number. FluentUIAndroid:0.3.14's POM (verified on Maven Central) resolves fluentui_persona 0.3.5, fluentui_tablayout 0.3.5, fluentui_controls 0.3.3, fluentui_calendar 0.3.3, fluentui_ccb 0.3.3, fluentui_core 0.3.11, fluentui_drawer 0.3.10, fluentui_icons 0.3.2, fluentui_listitem 0.3.7, fluentui_menus 0.3.5, fluentui_notification 0.3.10, fluentui_others 0.3.8, fluentui_peoplepicker 0.3.6, fluentui_progress 0.3.7, fluentui_topappbars 0.3.9, fluentui_transients 0.3.4. Component APIs in this dataset were read from SOURCE at tag v0.3.14 - if a composable does not resolve at build time, check whether its module has actually been republished since."
       },
       "components": {
         "Button": {
@@ -2212,6 +2785,557 @@
           "keyApi": [],
           "sample": null,
           "a11y": "Fluent 1 ONLY artifact. Import package not verified."
+        },
+        "ActionBar": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "ActionBar",
+          "artifact": "com.microsoft.fluentui:fluentui_others",
+          "import": "import com.microsoft.fluentui.tokenized.actionbar.ActionBar",
+          "keyApi": [
+            {
+              "name": "pagerState",
+              "type": "PagerState",
+              "note": "Required; androidx.compose.foundation.pager.PagerState. pageCount drives the dot/step count."
+            },
+            {
+              "name": "startCallback",
+              "type": "() -> Unit",
+              "note": "Required; invoked by the final \"get started\" action."
+            },
+            {
+              "name": "type",
+              "type": "Int",
+              "note": "Default ACTIONBARTYPE.BASIC.ordinal. Enum ACTIONBARTYPE = BASIC, ICON, CAROUSEL - pass .ordinal, not the enum."
+            },
+            {
+              "name": "modifier / actionBarTokens",
+              "type": "Modifier / ActionBarTokens?",
+              "note": "actionBarTokens defaults to FluentTheme.controlTokens ActionBarControlType."
+            }
+          ],
+          "sample": "val pagerState = rememberPagerState(pageCount = { 3 })\nActionBar(\n    pagerState = pagerState,\n    type = ACTIONBARTYPE.CAROUSEL.ordinal,\n    startCallback = { /* leave onboarding */ }\n)",
+          "a11y": "No semantics modifiers in ActionBar.kt - the inner Fluent Button carries the accessible name. Label the start action yourself.",
+          "notes": "Onboarding carousel footer. Requires @OptIn(ExperimentalFoundationApi::class). Distinct from Fluent 1 ActionBarLayout (View/XML)."
+        },
+        "AnnouncementCard": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "AnnouncementCard",
+          "artifact": "com.microsoft.fluentui:fluentui_controls",
+          "import": "import com.microsoft.fluentui.tokenized.controls.AnnouncementCard",
+          "keyApi": [
+            {
+              "name": "title / description / buttonText",
+              "type": "String",
+              "note": "All three required."
+            },
+            {
+              "name": "buttonOnClick",
+              "type": "() -> Unit",
+              "note": "Required."
+            },
+            {
+              "name": "previewImageVector",
+              "type": "ImageVector?",
+              "note": "Default null; or @DrawableRes previewImageDrawable: Int?"
+            },
+            {
+              "name": "announcementCardTokens",
+              "type": "AnnouncementCardTokens?",
+              "note": "Default null -> theme tokens."
+            }
+          ],
+          "sample": "AnnouncementCard(\n    title = \"New in Fluent\",\n    description = \"Compose components are now tokenized.\",\n    buttonText = \"Learn more\",\n    buttonOnClick = { }\n)",
+          "a11y": "Uses Modifier.semantics(mergeDescendants = true) so the card is announced as one node. The preview image is passed contentDescription = \"\" (decorative)."
+        },
+        "FileCard": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "FileCard",
+          "artifact": "com.microsoft.fluentui:fluentui_controls",
+          "import": "import com.microsoft.fluentui.tokenized.controls.FileCard",
+          "keyApi": [
+            {
+              "name": "text / subText",
+              "type": "String",
+              "note": "Both required - file name and secondary line."
+            },
+            {
+              "name": "textIcon",
+              "type": "ImageVector",
+              "note": "Required, and it is NOT the last parameter - pass it by name."
+            },
+            {
+              "name": "onClick",
+              "type": "(() -> Unit)?",
+              "note": "Default null; when set the card takes Role.Button."
+            },
+            {
+              "name": "previewImageVector / previewImageDrawable",
+              "type": "ImageVector? / @DrawableRes Int?",
+              "note": "Optional preview thumbnail."
+            },
+            {
+              "name": "actionOverflowIcon",
+              "type": "FluentIcon?",
+              "note": "Default null; adds an overflow affordance with its own Role.Button."
+            }
+          ],
+          "sample": "FileCard(\n    text = \"Q3 report.docx\",\n    subText = \"Modified 2h ago\",\n    textIcon = FluentIcons.Document,\n    onClick = { }\n)",
+          "a11y": "Card and overflow affordance are both role = Role.Button. Preview images pass contentDescription = null (decorative) - the text/subText carry the name."
+        },
+        "SideRail": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "SideRail",
+          "artifact": "com.microsoft.fluentui:fluentui_tablayout",
+          "import": "import com.microsoft.fluentui.tokenized.navigation.SideRail",
+          "keyApi": [
+            {
+              "name": "topTabDataList",
+              "type": "List<TabData>",
+              "note": "Required; the primary rail items."
+            },
+            {
+              "name": "topTabSelectedIndex",
+              "type": "Int",
+              "note": "Default 0."
+            },
+            {
+              "name": "bottomTabDataList / bottomTabSelectedIndex",
+              "type": "List<TabData>? / Int",
+              "note": "Default null / -1 - optional second group pinned to the bottom."
+            },
+            {
+              "name": "header",
+              "type": "@Composable (() -> Unit)?",
+              "note": "Default null; slot above the tabs."
+            },
+            {
+              "name": "showIconText",
+              "type": "Boolean",
+              "note": "Default false - icon only."
+            },
+            {
+              "name": "tabItemTokens / sideRailTokens",
+              "type": "TabItemTokens? / SideRailTokens?",
+              "note": "Default null -> theme tokens."
+            }
+          ],
+          "sample": "SideRail(\n    topTabDataList = listOf(TabData(title = \"Home\", icon = FluentIcon(Icons.Home), onClick = { })),\n    showIconText = true\n)",
+          "a11y": "Both tab columns are wrapped in Modifier.selectableGroup(), so TalkBack announces \"n of m\" positions. TabData supplies each item's text/icon.",
+          "notes": "Vertical navigation rail for large screens / foldables. Shares TabData with TabBar."
+        },
+        "ViewPager": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "ViewPager",
+          "artifact": "com.microsoft.fluentui:fluentui_tablayout",
+          "import": "import com.microsoft.fluentui.tokenized.navigation.ViewPager",
+          "keyApi": [
+            {
+              "name": "pagerState",
+              "type": "PagerState",
+              "note": "Required."
+            },
+            {
+              "name": "pageContent",
+              "type": "@Composable () -> Unit",
+              "note": "Required; rendered per page."
+            },
+            {
+              "name": "pageSize",
+              "type": "PageSize",
+              "note": "Default PageSize.Fill."
+            },
+            {
+              "name": "userScrollEnabled",
+              "type": "Boolean",
+              "note": "Default FALSE - swipe is off unless you opt in."
+            },
+            {
+              "name": "verticalAlignment",
+              "type": "Alignment.Vertical",
+              "note": "Default Alignment.CenterVertically."
+            }
+          ],
+          "sample": "val pagerState = rememberPagerState(pageCount = { 3 })\nViewPager(\n    pagerState = pagerState,\n    pageContent = { Text(\"Page\") },\n    userScrollEnabled = true\n)",
+          "a11y": null,
+          "notes": "Thin Fluent-tokenized wrapper over the Compose HorizontalPager; pairs with ActionBar for onboarding."
+        },
+        "PeoplePicker": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "PeoplePicker",
+          "artifact": "com.microsoft.fluentui:fluentui_peoplepicker",
+          "import": "import com.microsoft.fluentui.tokenized.peoplepicker.PeoplePicker",
+          "keyApi": [
+            {
+              "name": "onValueChange",
+              "type": "(String, MutableList<PeoplePickerItemData>) -> Unit",
+              "note": "Required; fires on every query/selection change."
+            },
+            {
+              "name": "selectedPeopleList",
+              "type": "MutableList<PeoplePickerItemData>",
+              "note": "Default mutableStateListOf(); use rememberPeoplePickerItemDataList() to hoist it."
+            },
+            {
+              "name": "onChipClick / onChipCloseClick / onBackPress / onTextEntered",
+              "type": "callbacks",
+              "note": "All nullable, all default null."
+            },
+            {
+              "name": "chipValidation",
+              "type": "(Person) -> PersonaChipStyle",
+              "note": "Default { PersonaChipStyle.Neutral } - return Danger/Warning to mark an invalid recipient."
+            },
+            {
+              "name": "label / assistiveText / errorString / searchHint",
+              "type": "String?",
+              "note": "Text-field chrome; all default null."
+            },
+            {
+              "name": "peoplePickerContentDescription",
+              "type": "String?",
+              "note": "Accessible name for the whole picker."
+            },
+            {
+              "name": "peoplePickerTokens / personaChipTokens",
+              "type": "PeoplePickerTokens? / PersonaChipTokens?",
+              "note": "Default null -> theme tokens."
+            }
+          ],
+          "sample": "val people = rememberPeoplePickerItemDataList()\nPeoplePicker(\n    selectedPeopleList = people,\n    onValueChange = { query, selected -> /* search */ },\n    label = \"To\",\n    peoplePickerContentDescription = \"Recipients\"\n)",
+          "a11y": "Announces selection changes through Modifier.semantics { contentDescription = accessibilityAnnouncement }. Set peoplePickerContentDescription and leadingIconContentDescription - neither has a default.",
+          "notes": "Fluent 2 Compose picker. The Fluent 1 View equivalent is PeoplePickerView - do not mix them."
+        },
+        "AvatarCarousel": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "AvatarCarousel",
+          "artifact": "com.microsoft.fluentui:fluentui_persona",
+          "import": "import com.microsoft.fluentui.tokenized.persona.AvatarCarousel",
+          "keyApi": [
+            {
+              "name": "avatarList",
+              "type": "List<AvatarCarouselItem>",
+              "note": "Required."
+            },
+            {
+              "name": "size",
+              "type": "AvatarCarouselSize",
+              "note": "Default Small. Enum = Small, Large."
+            },
+            {
+              "name": "enablePresence",
+              "type": "Boolean",
+              "note": "Default false."
+            },
+            {
+              "name": "textMinMaxLines / subTextMinMaxLines",
+              "type": "Pair<Int, Int>",
+              "note": "Both default Pair(1, 1)."
+            },
+            {
+              "name": "avatarTokens / avatarCarouselTokens",
+              "type": "AvatarTokens? / AvatarCarouselTokens?",
+              "note": "Default null -> theme tokens."
+            }
+          ],
+          "sample": "AvatarCarousel(\n    avatarList = people.map { AvatarCarouselItem(person = it) },\n    size = AvatarCarouselSize.Large,\n    enablePresence = true\n)",
+          "a11y": "Each item is role = Role.Button with clearAndSetSemantics { contentDescription = ... }, so the avatar and its labels are announced as a single node."
+        },
+        "AvatarPie": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "AvatarPie",
+          "artifact": "com.microsoft.fluentui:fluentui_persona",
+          "import": "import com.microsoft.fluentui.tokenized.persona.AvatarPie",
+          "keyApi": [
+            {
+              "name": "group",
+              "type": "Group",
+              "note": "Required; the members to slice."
+            },
+            {
+              "name": "size",
+              "type": "AvatarSize",
+              "note": "Required."
+            },
+            {
+              "name": "noOfVisibleAvatars",
+              "type": "Int",
+              "note": "Default 2. Only 2 and 3 slices are rendered (RenderTwoSlices / RenderThreeSlices)."
+            },
+            {
+              "name": "avatarTokens",
+              "type": "AvatarTokens?",
+              "note": "Default null -> theme tokens."
+            }
+          ],
+          "sample": "AvatarPie(\n    group = Group(members = members),\n    size = AvatarSize.Size56,\n    noOfVisibleAvatars = 3\n)",
+          "a11y": "No semantics modifiers in AvatarPie.kt - supply a contentDescription on the parent if the pie conveys meaning.",
+          "notes": "Pie-sliced group avatar. Distinct from AvatarGroup, which lays avatars out in a stack/pile."
+        },
+        "PersonaChip": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "PersonaChip",
+          "artifact": "com.microsoft.fluentui:fluentui_persona",
+          "import": "import com.microsoft.fluentui.tokenized.persona.PersonaChip",
+          "keyApi": [
+            {
+              "name": "person",
+              "type": "Person",
+              "note": "Required."
+            },
+            {
+              "name": "style",
+              "type": "PersonaChipStyle",
+              "note": "Default Neutral. Enum = Neutral, Brand, Danger, SevereWarning, Warning, Success."
+            },
+            {
+              "name": "size",
+              "type": "PersonaChipSize",
+              "note": "Default Medium. Enum = Small, Medium."
+            },
+            {
+              "name": "selected / enabled",
+              "type": "Boolean",
+              "note": "Default false / true."
+            },
+            {
+              "name": "onClick / onCloseClick",
+              "type": "(() -> Unit)?",
+              "note": "Both default null. onCloseClick renders the dismiss affordance."
+            }
+          ],
+          "sample": "PersonaChip(\n    person = Person(\"Kat\", \"Larsson\"),\n    style = PersonaChipStyle.Brand,\n    selected = true,\n    onCloseClick = { }\n)",
+          "a11y": "clearAndSetSemantics builds \"<label> <selected> <enabled>\" so state is spoken. The close affordance is role = Role.Button with the localized fluentui_close string.",
+          "notes": "Fluent 2 Compose chip. The Fluent 1 View equivalent is PersonaChipView."
+        },
+        "SearchBarPersonaChip": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "SearchBarPersonaChip",
+          "artifact": "com.microsoft.fluentui:fluentui_persona",
+          "import": "import com.microsoft.fluentui.tokenized.persona.SearchBarPersonaChip",
+          "keyApi": [
+            {
+              "name": "person",
+              "type": "Person",
+              "note": "Required."
+            },
+            {
+              "name": "style",
+              "type": "FluentStyle",
+              "note": "Default FluentStyle.Neutral - note this is FluentStyle, NOT PersonaChipStyle as on PersonaChip."
+            },
+            {
+              "name": "size",
+              "type": "PersonaChipSize",
+              "note": "Default PersonaChipSize.Medium."
+            },
+            {
+              "name": "selected / enabled",
+              "type": "Boolean",
+              "note": "Default false / true."
+            },
+            {
+              "name": "onClick / onCloseClick",
+              "type": "(() -> Unit)?",
+              "note": "Both default null."
+            },
+            {
+              "name": "searchbarPersonaChipTokens",
+              "type": "SearchBarPersonaChipTokens?",
+              "note": "Its own token set - not PersonaChipTokens."
+            }
+          ],
+          "sample": "SearchBarPersonaChip(\n    person = Person(\"Kat\", \"Larsson\"),\n    style = FluentStyle.Brand,\n    onCloseClick = { }\n)",
+          "a11y": "Close affordance is role = Role.Button with the localized fluentui_close string.",
+          "notes": "The chip variant SearchBar renders inside its input. Same shape as PersonaChip but a different style enum and token set - they are not interchangeable."
+        },
+        "PersonaList": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "PersonaList",
+          "artifact": "com.microsoft.fluentui:fluentui_persona",
+          "import": "import com.microsoft.fluentui.tokenized.persona.PersonaList",
+          "keyApi": [
+            {
+              "name": "personas",
+              "type": "List<Persona>",
+              "note": "Required."
+            },
+            {
+              "name": "border / borderInset",
+              "type": "BorderType / BorderInset",
+              "note": "Default NoBorder / None."
+            },
+            {
+              "name": "enableAvatarActivityRings",
+              "type": "Boolean",
+              "note": "Default false."
+            },
+            {
+              "name": "enableAvatarPresence",
+              "type": "Boolean",
+              "note": "Default TRUE (unlike AvatarCarousel, which defaults false)."
+            },
+            {
+              "name": "textAccessibilityProperties",
+              "type": "(SemanticsPropertyReceiver.() -> Unit)?",
+              "note": "Default null; override the generated semantics per row."
+            },
+            {
+              "name": "personaListTokens",
+              "type": "ListItemTokens?",
+              "note": "Reuses ListItemTokens, not a PersonaList-specific set."
+            }
+          ],
+          "sample": "PersonaList(\n    personas = people,\n    enableAvatarPresence = true\n)",
+          "a11y": "Each row uses clearAndSetSemantics with contentDescription \"<name>, <subTitle>\", stateDescription \"<index> of <count>\" and role = Role.Button.",
+          "notes": "Fluent 2 Compose list. The Fluent 1 View equivalent is PersonaListView."
+        },
+        "ProgressText": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "ProgressText",
+          "artifact": "com.microsoft.fluentui:fluentui_progress",
+          "import": "import com.microsoft.fluentui.tokenized.progress.ProgressText",
+          "keyApi": [
+            {
+              "name": "text",
+              "type": "String",
+              "note": "Required; the label beside the bar."
+            },
+            {
+              "name": "progress",
+              "type": "Float",
+              "note": "Required; 0f..1f."
+            },
+            {
+              "name": "leadingIconAccessory",
+              "type": "FluentIcon?",
+              "note": "Default null."
+            },
+            {
+              "name": "progressTextTokens",
+              "type": "ProgressTextTokens?",
+              "note": "Default null -> theme tokens."
+            }
+          ],
+          "sample": "ProgressText(\n    text = \"Uploading\",\n    progress = 0.4f\n)",
+          "a11y": "Calls Modifier.progressSemantics(progress), so TalkBack reads the percentage - do not add a second progress announcement.",
+          "notes": "Determinate only. For indeterminate use LinearProgressIndicator or CircularProgressIndicator."
+        },
+        "PillBar": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "PillBar",
+          "artifact": "com.microsoft.fluentui:fluentui_tablayout",
+          "import": "import com.microsoft.fluentui.tokenized.segmentedcontrols.PillBar",
+          "keyApi": [
+            {
+              "name": "metadataList",
+              "type": "MutableList<PillMetaData>",
+              "note": "Required; MUTABLE list, not List."
+            },
+            {
+              "name": "style",
+              "type": "FluentStyle",
+              "note": "Default FluentStyle.Neutral."
+            },
+            {
+              "name": "showBackground",
+              "type": "Boolean",
+              "note": "Default false."
+            },
+            {
+              "name": "pillAlignment",
+              "type": "Alignment.Horizontal",
+              "note": "Default Alignment.CenterHorizontally."
+            },
+            {
+              "name": "pillButtonTokens / pillBarTokens",
+              "type": "PillButtonTokens? / PillBarTokens?",
+              "note": "Default null -> theme tokens."
+            }
+          ],
+          "sample": "PillBar(\n    metadataList = mutableListOf(\n        PillMetaData(text = \"All\", onClick = { }),\n        PillMetaData(text = \"Unread\", onClick = { })\n    )\n)",
+          "a11y": "Selection state is announced through PillMetaData.semanticContentName / .calloutSelectionState on each PillButton.",
+          "notes": "Declared in Pill.kt alongside PillButton - the file name is Pill.kt, the composables are PillButton and PillBar. A scrolling filter bar with no single-selection contract; use PillTabs for tabs and PillSwitch for a two-state switch."
+        },
+        "PillSwitch": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "PillSwitch",
+          "artifact": "com.microsoft.fluentui:fluentui_tablayout",
+          "import": "import com.microsoft.fluentui.tokenized.segmentedcontrols.PillSwitch",
+          "keyApi": [
+            {
+              "name": "metadataList",
+              "type": "MutableList<PillMetaData>",
+              "note": "Required."
+            },
+            {
+              "name": "selectedIndex",
+              "type": "Int",
+              "note": "Default 0."
+            },
+            {
+              "name": "style",
+              "type": "FluentStyle",
+              "note": "Default FluentStyle.Neutral."
+            },
+            {
+              "name": "pillButtonTokens / pillSwitchTokens",
+              "type": "PillButtonTokens? / PillSwitchTokens?",
+              "note": "Default null -> theme tokens."
+            }
+          ],
+          "sample": "PillSwitch(\n    metadataList = mutableListOf(\n        PillMetaData(text = \"Day\", onClick = { }),\n        PillMetaData(text = \"Week\", onClick = { })\n    ),\n    selectedIndex = 0\n)",
+          "a11y": "Inherits PillButton semantics (Role.Button + stateDescription) for each segment.",
+          "notes": "Not scrollable - it is the segmented two/three-way switch. PillTabs is the scrollable tab variant."
+        },
+        "PillTabs": {
+          "generation": "Fluent 2",
+          "kind": "compose",
+          "type": "PillTabs",
+          "artifact": "com.microsoft.fluentui:fluentui_tablayout",
+          "import": "import com.microsoft.fluentui.tokenized.segmentedcontrols.PillTabs",
+          "keyApi": [
+            {
+              "name": "metadataList",
+              "type": "MutableList<PillMetaData>",
+              "note": "Required."
+            },
+            {
+              "name": "selectedIndex",
+              "type": "Int",
+              "note": "Default 0."
+            },
+            {
+              "name": "scrollable",
+              "type": "Boolean",
+              "note": "Default false."
+            },
+            {
+              "name": "style",
+              "type": "FluentStyle",
+              "note": "Default FluentStyle.Neutral."
+            },
+            {
+              "name": "pillButtonTokens / tabsTokens",
+              "type": "PillButtonTokens? / PillTabsTokens?",
+              "note": "Note the parameter is named tabsTokens, not pillTabsTokens."
+            }
+          ],
+          "sample": "PillTabs(\n    metadataList = mutableListOf(\n        PillMetaData(text = \"Files\", onClick = { }),\n        PillMetaData(text = \"Chat\", onClick = { })\n    ),\n    scrollable = true\n)",
+          "a11y": "Inherits PillButton semantics (Role.Button + stateDescription) for each tab."
         }
       },
       "tokens": {
@@ -2501,7 +3625,7 @@
       "theming": {
         "brandColor": "Subclass AliasTokens and override brandColor (16 BrandColorTokens steps), falling back to super.brandColor[token]. BrandBackground/Foreground/Stroke derive from it automatically.",
         "darkMode": "enum ThemeMode { Light, Dark, Auto }. Auto (default) follows isSystemInDarkTheme(). Resolved in FluentColor.value()/FluentIcon.value(). Set via FluentTheme(themeMode=) or FluentTheme.updateThemeMode().",
-        "highContrast": "NOT SUPPORTED. Repo-wide search for highContrast / isHighTextContrastEnabled / HighContrast returned 0 results. No HC token set or detection exists.",
+        "highContrast": "NO SUPPORT FOUND. A repo-wide search for highContrast / isHighTextContrastEnabled / HighContrast returned 0 results; no HC token set or detection exists. Phrase this as \"none found\", not \"Microsoft does not support it\".",
         "fluentStyle": "FluentStyle { Neutral, Brand } is an orthogonal per-control surface style used by AppBar, SearchBar, PillButton, TabItem, progress indicators.",
         "sample": "class ContosoAliasTokens : AliasTokens() {\n    override val brandColor: TokenSet<FluentAliasTokens.BrandColorTokens, Color> by lazy {\n        TokenSet { token ->\n            when (token) {\n                FluentAliasTokens.BrandColorTokens.Color80 -> Color(0xFF7719AA)\n                else -> super.brandColor[token]\n            }\n        }\n    }\n}\n\nFluentTheme(aliasTokens = ContosoAliasTokens(), themeMode = ThemeMode.Auto) { App() }",
         "shippedExamples": "Demo app has OneNoteAliasTokens, WordAliasTokens, ExcelAliasTokens, PowerPointAliasTokens, TeamsAliasTokens, M365AliasTokens.",
@@ -2669,7 +3793,7 @@
         "screenReader": "TalkBack: controls set correct Compose Roles (Button/Checkbox/RadioButton/Switch); Avatar merges descendants into one description; Drawer and BottomSheet announce state changes via announceForAccessibility with overridable strings.",
         "touchTargets": "NOT handled automatically. Repo-wide search for minimumInteractiveComponentSize/minimumTouchTargetSize returned 0 results. CheckBox ripple is 48dp but the hit target is not expanded - callers must add padding/sizeIn to reach Material's 48x48dp minimum.",
         "fontScaling": "Honoured by default: all FontSizeTokens/LineHeightTokens are declared in sp, so user font-size settings scale text. No font-scale cap and no nonScaledSp helper exists.",
-        "highContrast": "Not supported - no high-contrast token set, theme, or detection anywhere in the codebase.",
+        "highContrast": "No high-contrast support was found. A repo-wide search for highContrast / isHighTextContrastEnabled / HighContrast returned 0 results, and no HC token set, theme or detection exists in the codebase. This is strong negative evidence from a search, not a Microsoft statement of non-support.",
         "providedAutomatically": [
           "Semantic roles: Role.Button, Role.Checkbox, Role.RadioButton, Role.Switch",
           "clearAndSetSemantics on inner text/icons so TalkBack reads one merged label",
@@ -2683,7 +3807,7 @@
         ],
         "notProvided": [
           "48dp minimum touch target enforcement",
-          "High contrast mode",
+          "High contrast mode (no support found - see accessibility.highContrast)",
           "Automatic focus-order management beyond Compose defaults"
         ],
         "designGuidance": "Fluent 2 Android pages defer to Material: 'Follow Material's guidelines for choosing and placing buttons' (https://m3.material.io/components/all-buttons)."
@@ -2692,7 +3816,7 @@
     "windows": {
       "label": "Windows - WinUI 3 (Windows App SDK), WinUI 2 (UWP), WPF Fluent theme",
       "repo": "https://github.com/microsoft/microsoft-ui-xaml",
-      "generationStory": "Windows has three live stacks. WinUI 3 ships inside the Windows App SDK (Microsoft.WindowsAppSDK 2.3.1) and is the recommended framework for new Windows desktop apps. WinUI 2 (Microsoft.UI.Xaml 2.8.7, UWP) is MAINTENANCE ONLY - its last feature release was WinUI 2.8 in July 2022; 2.8.7 is a servicing patch. WPF got an official Fluent theme in .NET 9 (assembly PresentationFramework.Fluent) that restyles existing WPF controls - it adds no new control set. WinUI 2.6 (June 2021) was the Fluent 2 inflection point on Windows (Mica, Windows 11 visual styles).",
+      "generationStory": "Windows has three live stacks. WinUI 3 ships inside the Windows App SDK (Microsoft.WindowsAppSDK 2.4.0) and is the recommended framework for new Windows desktop apps. WinUI 2 (Microsoft.UI.Xaml 2.8.7, UWP) is MAINTENANCE ONLY - its last feature release was WinUI 2.8 in July 2022; 2.8.7 is a servicing patch. WPF got an official Fluent theme in .NET 9 (assembly PresentationFramework.Fluent) that restyles existing WPF controls - it adds no new control set. WinUI 2.6 (June 2021) was the Fluent 2 inflection point on Windows (Mica, Windows 11 visual styles).",
       "maintenanceWarning": "Do NOT start a new app on WinUI 2. It has had no feature release since July 2022 and exists to serve UWP (Xbox, HoloLens, IoT), which the Windows App SDK does not support.",
       "sourceBranches": "microsoft/microsoft-ui-xaml default branch is 'main'; the active WinUI 3 branch is 'winui3/main' and WinUI 2 lives on 'winui2/main'. WinUI 3 theme resources are under controls/dev/CommonStyles/ (WinUI 2: dev/CommonStyles/).",
       "frameworkKinds": [
@@ -2727,9 +3851,9 @@
         {
           "generation": "Fluent 2",
           "artifact": "Microsoft.WindowsAppSDK (WinUI 3, desktop)",
-          "versionRange": "1.0 GA (16 Nov 2021) - 2.3.1 (16 Jul 2026)",
+          "versionRange": "1.0 GA (16 Nov 2021) - 2.4.0 (13 Aug 2026)",
           "status": "current",
-          "note": "WASDK 2.0 is the Current channel (end of servicing 04/29/2027); 1.8 is Maintenance until 09/09/2026."
+          "note": "WASDK 2.4.0 shipped 13 Aug 2026 (GitHub release v2.4.0, prerelease=false); 1.8.11, published the same day, is the current 1.8 servicing release. WASDK 2.0 is the Current channel (end of servicing 04/29/2027); 1.8 is Maintenance until 09/09/2026."
         },
         {
           "generation": "Fluent 2",
@@ -2740,15 +3864,16 @@
         }
       ],
       "install": {
-        "winui3": "<PackageReference Include=\"Microsoft.WindowsAppSDK\" Version=\"2.3.1\" />",
-        "winui3LatestStable": "2.3.1 (released 07/16/2026)",
+        "winui3": "<PackageReference Include=\"Microsoft.WindowsAppSDK\" Version=\"2.4.0\" />",
+        "winui3LatestStable": "2.4.0 - GitHub release v2.4.0 published 2026-08-13 (prerelease=false). CAVEAT: api.nuget.org was unreachable from the verification environment, so the NuGet publication of 2.4.0 itself was NOT independently confirmed; the GitHub release proves the ship event only.",
         "winui2": "<PackageReference Include=\"Microsoft.UI.Xaml\" Version=\"2.8.7\" />",
         "winui2LatestStable": "2.8.7 (servicing patch; last feature release 2.8, July 2022)",
         "wpf": "Set ThemeMode in App.xaml, or merge pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml. Requires .NET 9+.",
         "wpfCommunityWarning": "WPF-UI (lepoco) 4.3.0 is a mature COMMUNITY Fluent implementation for WPF. It is not Microsoft - do not present it as official.",
         "xamlNamespace": "In a WinUI 3 page the default XAML namespace http://schemas.microsoft.com/winfx/2006/xaml/presentation maps to Microsoft.UI.Xaml.Controls, so WinUI 3 controls need no prefix. This was verified for WinUI 3 only - the UWP/WinUI 2 namespace mapping was not verified this pass, so do not assume the same for WinUI 2.",
         "releaseChannels": "Stable / Preview / Experimental. Stable majors ship no more than every six months.",
-        "designerSupport": "The Visual Studio XAML Designer does NOT support WinUI 3 projects as of WASDK 2.0. WPF does have a designer."
+        "designerSupport": "The Visual Studio XAML Designer does NOT support WinUI 3 projects as of WASDK 2.0. WPF does have a designer.",
+        "winui3Servicing": "1.8.11 (GitHub release v1.8.11, published 2026-08-13) is the current 1.8 servicing line for apps that cannot move to 2.x."
       },
       "components": {
         "Button": {
@@ -2775,7 +3900,8 @@
             }
           ],
           "sample": "<Button Content=\"Save\" Click=\"OnSave\"/>\n<Button Content=\"Save\" Style=\"{StaticResource AccentButtonStyle}\"/>",
-          "a11y": "Handles Space/Enter automatically; accessible name is derived from Content."
+          "a11y": "Handles Space/Enter automatically; accessible name is derived from Content.",
+          "apiKind": "control"
         },
         "DropDownButton": {
           "type": "DropDownButton",
@@ -2791,7 +3917,8 @@
             }
           ],
           "sample": "<DropDownButton Content=\"Options\">\n  <DropDownButton.Flyout><MenuFlyout/></DropDownButton.Flyout>\n</DropDownButton>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "SplitButton": {
           "type": "SplitButton",
@@ -2807,7 +3934,9 @@
             }
           ],
           "sample": "<SplitButton Content=\"Paste\">\n  <SplitButton.Flyout><MenuFlyout/></SplitButton.Flyout>\n</SplitButton>",
-          "a11y": "Corner radius is 0 where the two halves meet, per Fluent 2 geometry guidance."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Corner radius is 0 where the two halves meet, per Fluent 2 geometry guidance."
         },
         "ToggleButton": {
           "type": "ToggleButton",
@@ -2823,7 +3952,8 @@
             }
           ],
           "sample": "<ToggleButton Content=\"Bold\" IsChecked=\"True\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "ToggleSplitButton": {
           "type": "ToggleSplitButton",
@@ -2833,7 +3963,8 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<ToggleSplitButton Content=\"List\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "RepeatButton": {
           "type": "RepeatButton",
@@ -2854,7 +3985,8 @@
             }
           ],
           "sample": "<RepeatButton Content=\"+\" Delay=\"500\" Interval=\"100\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "HyperlinkButton": {
           "type": "HyperlinkButton",
@@ -2870,7 +4002,8 @@
             }
           ],
           "sample": "<HyperlinkButton Content=\"Docs\" NavigateUri=\"https://learn.microsoft.com\"/>",
-          "a11y": "Avoid hyperlinks over acrylic - contrast is unreliable."
+          "a11y": "Avoid hyperlinks over acrylic - contrast is unreliable.",
+          "apiKind": "control"
         },
         "CheckBox": {
           "type": "CheckBox",
@@ -2886,7 +4019,9 @@
             }
           ],
           "sample": "<CheckBox Content=\"Enable\" IsThreeState=\"False\"/>",
-          "a11y": "Lightweight styling keys: CheckBoxForegroundUnchecked, CheckBoxCheckBackgroundFillChecked."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Lightweight styling keys: CheckBoxForegroundUnchecked, CheckBoxCheckBackgroundFillChecked."
         },
         "RadioButton": {
           "type": "RadioButton",
@@ -2902,7 +4037,8 @@
             }
           ],
           "sample": "<RadioButton Content=\"A\" GroupName=\"Set\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "RadioButtons": {
           "type": "RadioButtons",
@@ -2918,7 +4054,9 @@
             }
           ],
           "sample": "<RadioButtons Header=\"Options\">\n  <x:String>A</x:String>\n  <x:String>B</x:String>\n</RadioButtons>",
-          "a11y": "Introduced in WinUI 2.3. Provides correct group semantics and arrow-key navigation."
+          "a11y": "Provides correct group semantics and arrow-key navigation.",
+          "apiKind": "control",
+          "notes": "Introduced in WinUI 2.3."
         },
         "ComboBox": {
           "type": "ComboBox",
@@ -2939,7 +4077,8 @@
             }
           ],
           "sample": "<ComboBox Header=\"Font\" PlaceholderText=\"Pick one\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "Slider": {
           "type": "Slider",
@@ -2955,7 +4094,9 @@
             }
           ],
           "sample": "<Slider Minimum=\"0\" Maximum=\"100\" Value=\"50\"/>",
-          "a11y": "Bar element: 4px corner radius per Fluent 2 geometry guidance."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Bar element: 4px corner radius per Fluent 2 geometry guidance."
         },
         "ToggleSwitch": {
           "type": "ToggleSwitch",
@@ -2976,7 +4117,8 @@
             }
           ],
           "sample": "<ToggleSwitch Header=\"Wi-Fi\" OnContent=\"On\" OffContent=\"Off\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "RatingControl": {
           "type": "RatingControl",
@@ -2992,7 +4134,8 @@
             }
           ],
           "sample": "<RatingControl Value=\"3\" MaxRating=\"5\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "TextBlock": {
           "type": "TextBlock",
@@ -3013,7 +4156,8 @@
             }
           ],
           "sample": "<TextBlock Text=\"Page title\" Style=\"{StaticResource TitleTextBlockStyle}\"/>\n<TextBlock Text=\"Body copy\" Style=\"{StaticResource BodyTextBlockStyle}\"\n           Foreground=\"{ThemeResource TextFillColorSecondaryBrush}\"/>",
-          "a11y": "Text is promoted to the accessible name automatically. UIA truncates names at 2048 chars."
+          "a11y": "Text is promoted to the accessible name automatically. UIA truncates names at 2048 chars.",
+          "apiKind": "control"
         },
         "RichTextBlock": {
           "type": "RichTextBlock",
@@ -3023,7 +4167,8 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<RichTextBlock><Paragraph>Rich text.</Paragraph></RichTextBlock>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "TextBox": {
           "type": "TextBox",
@@ -3044,7 +4189,8 @@
             }
           ],
           "sample": "<TextBox Header=\"Name\" PlaceholderText=\"Enter name\"/>",
-          "a11y": "TextBoxAutomationPeer exposes IValueProvider. Prefer AutomationProperties.LabeledBy over duplicated strings."
+          "a11y": "TextBoxAutomationPeer exposes IValueProvider. Prefer AutomationProperties.LabeledBy over duplicated strings.",
+          "apiKind": "control"
         },
         "RichEditBox": {
           "type": "RichEditBox",
@@ -3054,7 +4200,8 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<RichEditBox PlaceholderText=\"Compose...\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "PasswordBox": {
           "type": "PasswordBox",
@@ -3070,7 +4217,8 @@
             }
           ],
           "sample": "<PasswordBox Header=\"Password\" PasswordRevealMode=\"Peek\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "AutoSuggestBox": {
           "type": "AutoSuggestBox",
@@ -3086,7 +4234,8 @@
             }
           ],
           "sample": "<AutoSuggestBox QueryIcon=\"Find\" PlaceholderText=\"Search\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "NumberBox": {
           "type": "NumberBox",
@@ -3107,7 +4256,9 @@
             }
           ],
           "sample": "<NumberBox Header=\"Qty\" SpinButtonPlacementMode=\"Inline\" AcceptsExpression=\"True\"/>",
-          "a11y": "Introduced in WinUI 2.3."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Introduced in WinUI 2.3."
         },
         "ListView": {
           "type": "ListView",
@@ -3123,7 +4274,8 @@
             }
           ],
           "sample": "<ListView ItemsSource=\"{x:Bind Items}\"/>",
-          "a11y": "Provides arrow-key navigation out of the box."
+          "a11y": "Provides arrow-key navigation out of the box.",
+          "apiKind": "control"
         },
         "GridView": {
           "type": "GridView",
@@ -3139,7 +4291,8 @@
             }
           ],
           "sample": "<GridView ItemsSource=\"{x:Bind Items}\"/>",
-          "a11y": "Provides arrow-key navigation out of the box."
+          "a11y": "Provides arrow-key navigation out of the box.",
+          "apiKind": "control"
         },
         "FlipView": {
           "type": "FlipView",
@@ -3149,7 +4302,8 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<FlipView ItemsSource=\"{x:Bind Photos}\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "TreeView": {
           "type": "TreeView",
@@ -3165,7 +4319,8 @@
             }
           ],
           "sample": "<TreeView>\n  <TreeView.RootNodes><TreeViewNode Content=\"Root\"/></TreeView.RootNodes>\n</TreeView>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "ItemsRepeater": {
           "type": "ItemsRepeater",
@@ -3175,7 +4330,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<ItemsRepeater ItemsSource=\"{x:Bind Items}\"/>",
-          "a11y": "Introduced in WinUI 2.1. No built-in selection or focus behaviour - you add it."
+          "a11y": "No built-in selection or focus behaviour - you add it, including keyboard navigation.",
+          "apiKind": "control",
+          "notes": "Introduced in WinUI 2.1."
         },
         "PipsPager": {
           "type": "PipsPager",
@@ -3191,7 +4348,9 @@
             }
           ],
           "sample": "<PipsPager NumberOfPages=\"5\"/>",
-          "a11y": "Introduced in WinUI 2.6."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Introduced in WinUI 2.6."
         },
         "SwipeControl": {
           "type": "SwipeControl",
@@ -3201,7 +4360,8 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<SwipeControl><TextBlock Text=\"Item\"/></SwipeControl>",
-          "a11y": "Swipe actions need a non-touch equivalent (context menu) to stay accessible."
+          "a11y": "Swipe actions need a non-touch equivalent (context menu) to stay accessible.",
+          "apiKind": "control"
         },
         "RefreshContainer": {
           "type": "RefreshContainer",
@@ -3211,7 +4371,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<RefreshContainer><ListView/></RefreshContainer>",
-          "a11y": "Pull-to-refresh; provide a keyboard/command alternative."
+          "a11y": "Pull-to-refresh is a touch gesture - provide a keyboard/command alternative.",
+          "apiKind": "control",
+          "notes": "Pull-to-refresh container."
         },
         "SemanticZoom": {
           "type": "SemanticZoom",
@@ -3221,7 +4383,8 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<SemanticZoom>\n  <SemanticZoom.ZoomedInView><GridView/></SemanticZoom.ZoomedInView>\n</SemanticZoom>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "ItemsView": {
           "type": "ItemsView",
@@ -3242,7 +4405,9 @@
             }
           ],
           "sample": "<ItemsView ItemsSource=\"{x:Bind Photos}\">\n  <ItemsView.Layout><LinedFlowLayout/></ItemsView.Layout>\n</ItemsView>",
-          "a11y": "WinUI 3 only. Built on ItemsRepeater + ScrollView + ItemContainer; preserves selection across layout swaps."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "WinUI 3 only. Built on ItemsRepeater + ScrollView + ItemContainer; preserves selection across layout swaps."
         },
         "ItemContainer": {
           "type": "ItemContainer",
@@ -3252,7 +4417,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<ItemContainer><Image Source=\"{x:Bind Url}\"/></ItemContainer>",
-          "a11y": "WinUI 3 only. Required root of an ItemsView DataTemplate."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "WinUI 3 only. Required root of an ItemsView DataTemplate."
         },
         "NavigationView": {
           "type": "NavigationView",
@@ -3262,13 +4429,80 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [
             {
+              "name": "MenuItems / MenuItemsSource",
+              "type": "IVector<Object> / Object",
+              "note": "MenuItems is READ-ONLY (get only) - add to the collection, or bind MenuItemsSource instead. Setting MenuItems is a compile error."
+            },
+            {
+              "name": "SelectedItem",
+              "type": "Object",
+              "note": "get/set. The selected item, or SettingsItem when the settings entry is active."
+            },
+            {
+              "name": "SelectionChanged / ItemInvoked",
+              "type": "event",
+              "note": "NavigationView performs NO navigation itself. ItemInvoked fires on every tap; SelectionChanged only when the selection actually changes. Handle one, not both."
+            },
+            {
               "name": "PaneDisplayMode",
-              "type": "enum",
-              "note": "Left / Top / LeftCompact / LeftMinimal / Auto"
+              "type": "NavigationViewPaneDisplayMode",
+              "note": "Auto (default), Left, Top, LeftCompact, LeftMinimal."
+            },
+            {
+              "name": "IsBackButtonVisible / IsBackEnabled / BackRequested",
+              "type": "NavigationViewBackButtonVisible / Boolean / event",
+              "note": "IsBackButtonVisible is an ENUM (Collapsed, Visible, Auto - default Auto), not a Boolean."
+            },
+            {
+              "name": "PaneTitle / Header / HeaderTemplate / AlwaysShowHeader",
+              "type": "String / Object / DataTemplate / Boolean",
+              "note": "AlwaysShowHeader defaults to true."
+            },
+            {
+              "name": "IsSettingsVisible / SettingsItem",
+              "type": "Boolean / Object",
+              "note": "IsSettingsVisible defaults to true - the Settings item is present unless you turn it off. SettingsItem is read-only."
+            },
+            {
+              "name": "FooterMenuItems / FooterMenuItemsSource / PaneFooter",
+              "type": "IVector<Object> / Object / UIElement",
+              "note": "The bottom group. FooterMenuItems is read-only like MenuItems."
+            },
+            {
+              "name": "DisplayMode / DisplayModeChanged",
+              "type": "NavigationViewDisplayMode / event",
+              "note": "READ-ONLY: Minimal, Compact, Expanded. Driven by CompactModeThresholdWidth (default 641) and ExpandedModeThresholdWidth (default 1008)."
+            },
+            {
+              "name": "IsPaneOpen / IsPaneToggleButtonVisible / PaneClosing / PaneClosed / PaneOpening / PaneOpened",
+              "type": "Boolean / events",
+              "note": "IsPaneOpen and IsPaneToggleButtonVisible both default to true."
+            },
+            {
+              "name": "CompactPaneLength / OpenPaneLength",
+              "type": "Double",
+              "note": "Default 48.0 / 320.0. Both are coerced to > 0."
+            },
+            {
+              "name": "MenuItemTemplate / MenuItemTemplateSelector / MenuItemContainerStyle / MenuItemContainerStyleSelector",
+              "type": "templating",
+              "note": "Plus MenuItemFromContainer(container) and ContainerFromMenuItem(item) for container lookup."
+            },
+            {
+              "name": "AutoSuggestBox",
+              "type": "AutoSuggestBox",
+              "note": "Hosts search in the pane header."
+            },
+            {
+              "name": "SelectionFollowsFocus",
+              "type": "NavigationViewSelectionFollowsFocus",
+              "note": "Disabled | Enabled - whether arrowing changes selection or only focus."
             }
           ],
-          "sample": "<NavigationView PaneDisplayMode=\"Left\">\n  <Frame x:Name=\"RootFrame\"/>\n</NavigationView>",
-          "a11y": "With Mica Alt, put nav on the commanding layer using LayerOnMicaBaseAltFillColorDefaultBrush."
+          "sample": "<NavigationView x:Name=\"Nav\"\n                PaneDisplayMode=\"Left\"\n                PaneTitle=\"Contoso\"\n                IsBackButtonVisible=\"Auto\"\n                SelectionChanged=\"Nav_SelectionChanged\">\n  <NavigationView.MenuItems>\n    <NavigationViewItem Content=\"Home\" Icon=\"Home\" Tag=\"home\"/>\n    <NavigationViewItem Content=\"Files\" Icon=\"Document\" Tag=\"files\"/>\n  </NavigationView.MenuItems>\n  <Frame x:Name=\"RootFrame\"/>\n</NavigationView>",
+          "a11y": "Learn documents built-in keyboard navigation: in Left mode Up/Down move focus, in Top mode Left/Right do; Space/Enter invokes and expands children. PaneTitle names the pane. Icon-only NavigationViewItems have no accessible name - set AutomationProperties.Name on them.",
+          "apiKind": "control",
+          "notes": "With Mica Alt, put nav on the commanding layer using LayerOnMicaBaseAltFillColorDefaultBrush."
         },
         "TabView": {
           "type": "TabView",
@@ -3278,13 +4512,50 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [
             {
-              "name": "TabViewItem",
-              "type": "element",
-              "note": "Header sets the tab label"
+              "name": "TabItems / TabItemsSource",
+              "type": "IVector<Object> / Object",
+              "note": "TabItems is READ-ONLY - add TabViewItems to it, or bind TabItemsSource."
+            },
+            {
+              "name": "SelectedItem / SelectedIndex / SelectionChanged",
+              "type": "Object / Int32 / event",
+              "note": "SelectionChanged uses the standard SelectionChangedEventHandler."
+            },
+            {
+              "name": "TabCloseRequested",
+              "type": "event",
+              "note": "You must remove the tab yourself - TabView does not close it for you."
+            },
+            {
+              "name": "TabWidthMode",
+              "type": "TabViewWidthMode",
+              "note": "Equal, SizeToContent, Compact."
+            },
+            {
+              "name": "CloseButtonOverlayMode",
+              "type": "TabViewCloseButtonOverlayMode",
+              "note": "Auto, OnPointerOver, Always."
+            },
+            {
+              "name": "IsAddTabButtonVisible / AddTabButtonClick / AddTabButtonCommand",
+              "type": "Boolean / event / ICommand",
+              "note": "The \"+\" affordance."
+            },
+            {
+              "name": "CanDragTabs / CanReorderTabs / AllowDropTabs / CanTearOutTabs",
+              "type": "Boolean",
+              "note": "CanTearOutTabs enables the tear-out window flow (TabTearOutWindowRequested, TabTearOutRequested, ExternalTornOutTabsDropping/Dropped)."
+            },
+            {
+              "name": "TabStripHeader / TabStripFooter (+Template)",
+              "type": "Object / DataTemplate",
+              "note": "Content pinned before/after the strip - this is where a custom title bar goes."
             }
           ],
           "sample": "<TabView><TabViewItem Header=\"Tab 1\"/></TabView>",
-          "a11y": "Introduced in WinUI 2.2. A tabbed title bar is the canonical Mica Alt scenario."
+          "a11y": "TabViewItem content supplies the accessible name; an icon-only tab needs AutomationProperties.Name. Tab close is exposed as a button on each item.",
+          "apiKind": "control",
+          "notes": "Introduced in WinUI 2.2. A tabbed title bar is the canonical Mica Alt scenario."
         },
         "Pivot": {
           "type": "Pivot",
@@ -3294,7 +4565,8 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<Pivot><PivotItem Header=\"One\"/></Pivot>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "BreadcrumbBar": {
           "type": "BreadcrumbBar",
@@ -3304,7 +4576,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<BreadcrumbBar ItemsSource=\"{x:Bind Crumbs}\"/>",
-          "a11y": "Introduced in WinUI 2.6."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Introduced in WinUI 2.6."
         },
         "Frame": {
           "type": "Frame",
@@ -3314,7 +4588,8 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<Frame x:Name=\"RootFrame\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "SplitView": {
           "type": "SplitView",
@@ -3330,7 +4605,8 @@
             }
           ],
           "sample": "<SplitView DisplayMode=\"CompactOverlay\">\n  <SplitView.Pane><StackPanel/></SplitView.Pane>\n</SplitView>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "TwoPaneView": {
           "type": "TwoPaneView",
@@ -3340,7 +4616,8 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<TwoPaneView>\n  <TwoPaneView.Pane1><Grid/></TwoPaneView.Pane1>\n</TwoPaneView>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "SelectorBar": {
           "type": "SelectorBar",
@@ -3356,7 +4633,9 @@
             }
           ],
           "sample": "<SelectorBar>\n  <SelectorBarItem Text=\"Recent\" Icon=\"Clock\"/>\n  <SelectorBarItem Text=\"Shared\" Icon=\"Share\"/>\n</SelectorBar>",
-          "a11y": "WinUI 3 only."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "WinUI 3 only."
         },
         "TitleBar": {
           "type": "TitleBar",
@@ -3366,28 +4645,40 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [
             {
-              "name": "Title / Subtitle / IconSource",
-              "type": "properties",
-              "note": "Title-bar content"
+              "name": "Title / Subtitle",
+              "type": "String",
+              "note": "The two text slots."
             },
             {
-              "name": "LeftHeader / RightHeader",
+              "name": "IconSource",
+              "type": "IconSource",
+              "note": "App icon in the bar."
+            },
+            {
+              "name": "LeftHeader / Content / RightHeader",
               "type": "UIElement",
-              "note": "Custom content slots"
+              "note": "Three content slots - Content is the centre region (search, tabs)."
             },
             {
-              "name": "IsBackButtonVisible / IsPaneToggleButtonVisible",
-              "type": "bool",
-              "note": "Built-in buttons"
+              "name": "IsBackButtonVisible / IsBackButtonEnabled / BackRequested",
+              "type": "Boolean / event",
+              "note": "Booleans here, unlike NavigationView where IsBackButtonVisible is an enum."
             },
             {
-              "name": "BackRequested / PaneToggleRequested",
-              "type": "events",
-              "note": "Button callbacks"
+              "name": "IsPaneToggleButtonVisible / PaneToggleRequested",
+              "type": "Boolean / event",
+              "note": "For pairing with a NavigationView pane."
+            },
+            {
+              "name": "AutoRefreshDragRegions",
+              "type": "Boolean",
+              "note": "Gated [MUX_PUBLIC_V11] - newer than the rest of the control, so guard for it on older SDKs."
             }
           ],
           "sample": "<TitleBar Title=\"My App\" IsBackButtonVisible=\"True\"/>",
-          "a11y": "WinUI 3 only. Mica prioritises visibility in the title bar - keep it transparent."
+          "a11y": "The back and pane-toggle buttons are real buttons with default names. Any custom element you put in LeftHeader/Content/RightHeader needs its own AutomationProperties.Name.",
+          "apiKind": "control",
+          "notes": "WinUI 3 only. Mica prioritises visibility in the title bar - keep it transparent."
         },
         "CommandBar": {
           "type": "CommandBar",
@@ -3397,7 +4688,8 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<CommandBar><AppBarButton Icon=\"Save\" Label=\"Save\"/></CommandBar>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "CommandBarFlyout": {
           "type": "CommandBarFlyout",
@@ -3407,7 +4699,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<CommandBarFlyout><AppBarButton Icon=\"Copy\" Label=\"Copy\"/></CommandBarFlyout>",
-          "a11y": "Transient surface - acrylic is appropriate here."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Transient surface - acrylic is appropriate here."
         },
         "AppBarButton": {
           "type": "AppBarButton",
@@ -3423,7 +4717,8 @@
             }
           ],
           "sample": "<AppBarToggleButton Icon=\"Bold\" Label=\"Bold\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "MenuBar": {
           "type": "MenuBar",
@@ -3433,7 +4728,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<MenuBar>\n  <MenuBarItem Title=\"File\"><MenuFlyoutItem Text=\"New\"/></MenuBarItem>\n</MenuBar>",
-          "a11y": "With Mica Alt, MenuBar belongs on the commanding layer."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "With Mica Alt, MenuBar belongs on the commanding layer."
         },
         "MenuFlyout": {
           "type": "MenuFlyout",
@@ -3449,7 +4746,8 @@
             }
           ],
           "sample": "<MenuFlyout><MenuFlyoutItem Text=\"Cut\"/></MenuFlyout>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "StandardUICommand": {
           "type": "StandardUICommand",
@@ -3465,7 +4763,8 @@
             }
           ],
           "sample": "<AppBarButton>\n  <AppBarButton.Command><StandardUICommand Kind=\"Save\"/></AppBarButton.Command>\n</AppBarButton>",
-          "a11y": "XamlUICommand/StandardUICommand give consistent labels and accelerators for free."
+          "a11y": "XamlUICommand/StandardUICommand give consistent labels and accelerators for free.",
+          "apiKind": "command"
         },
         "ContentDialog": {
           "type": "ContentDialog",
@@ -3481,7 +4780,9 @@
             }
           ],
           "sample": "<ContentDialog Title=\"Delete?\" PrimaryButtonText=\"Delete\" CloseButtonText=\"Cancel\"/>",
-          "a11y": "Dialogs cast ThemeShadow at 128px and dim content with SmokeFillColorDefaultBrush. Radius 8px."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Dialogs cast ThemeShadow at 128px and dim content with SmokeFillColorDefaultBrush. Radius 8px."
         },
         "Flyout": {
           "type": "Flyout",
@@ -3497,7 +4798,9 @@
             }
           ],
           "sample": "<Button Content=\"Info\">\n  <Button.Flyout><Flyout><TextBlock Text=\"Details\"/></Flyout></Button.Flyout>\n</Button>",
-          "a11y": "Disable the default shadow with FlyoutPresenter.IsDefaultShadowEnabled=\"False\"."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Disable the default shadow with FlyoutPresenter.IsDefaultShadowEnabled=\"False\"."
         },
         "TeachingTip": {
           "type": "TeachingTip",
@@ -3507,7 +4810,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<TeachingTip Title=\"New!\" Subtitle=\"Try this feature.\"/>",
-          "a11y": "Introduced in WinUI 2.1."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Introduced in WinUI 2.1."
         },
         "ToolTip": {
           "type": "ToolTip",
@@ -3523,7 +4828,9 @@
             }
           ],
           "sample": "<Button Content=\"Save\" ToolTipService.ToolTip=\"Save the document\"/>",
-          "a11y": "Casts ThemeShadow at 16px. Radius is 4px despite being transient."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Casts ThemeShadow at 16px. Radius is 4px despite being transient."
         },
         "InfoBar": {
           "type": "InfoBar",
@@ -3533,13 +4840,45 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [
             {
+              "name": "IsOpen",
+              "type": "Boolean",
+              "note": "InfoBar is INLINE and starts closed - nothing shows until IsOpen is true."
+            },
+            {
+              "name": "Title / Message",
+              "type": "String",
+              "note": "Title is the short bold lead; Message is the body."
+            },
+            {
               "name": "Severity",
-              "type": "enum",
-              "note": "Informational / Success / Warning / Error"
+              "type": "InfoBarSeverity",
+              "note": "Informational (default), Success, Warning, Error."
+            },
+            {
+              "name": "IsClosable / CloseButtonClick / Closing / Closed",
+              "type": "Boolean / events",
+              "note": "Closing carries an InfoBarCloseReason: CloseButton or Programmatic."
+            },
+            {
+              "name": "IconSource / IsIconVisible",
+              "type": "IconSource / Boolean",
+              "note": "Set IconSource to override the severity icon; IsIconVisible=false removes it."
+            },
+            {
+              "name": "ActionButton",
+              "type": "ButtonBase",
+              "note": "A single inline action. Content goes in Content/ContentTemplate for anything richer."
+            },
+            {
+              "name": "CloseButtonStyle / CloseButtonCommand / CloseButtonCommandParameter",
+              "type": "styling / ICommand",
+              "note": "For MVVM close handling."
             }
           ],
-          "sample": "<InfoBar IsOpen=\"True\" Severity=\"Warning\" Title=\"Heads up\" Message=\"Disk almost full.\"/>",
-          "a11y": "Introduced in WinUI 2.5. Severity colors come from SystemFillColor* tokens."
+          "sample": "<InfoBar IsOpen=\"True\"\n         Severity=\"Warning\"\n         Title=\"Offline\"\n         Message=\"Changes will sync when you reconnect.\">\n  <InfoBar.ActionButton>\n    <Button Content=\"Retry\"/>\n  </InfoBar.ActionButton>\n</InfoBar>",
+          "a11y": "Severity is conveyed by colour AND icon AND text - never let colour alone carry it. Title/Message are the accessible content; an icon-only override still needs meaningful text.",
+          "apiKind": "control",
+          "notes": "Introduced in WinUI 2.5. Severity colors come from SystemFillColor* tokens."
         },
         "InfoBadge": {
           "type": "InfoBadge",
@@ -3549,7 +4888,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<InfoBadge Value=\"12\"/>",
-          "a11y": "Introduced in WinUI 2.7."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Introduced in WinUI 2.7."
         },
         "ProgressBar": {
           "type": "ProgressBar",
@@ -3565,7 +4906,8 @@
             }
           ],
           "sample": "<ProgressBar IsIndeterminate=\"True\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "ProgressRing": {
           "type": "ProgressRing",
@@ -3581,7 +4923,9 @@
             }
           ],
           "sample": "<ProgressRing IsActive=\"True\" Value=\"60\" IsIndeterminate=\"False\"/>",
-          "a11y": "Determinate ProgressRing arrived in WinUI 2.4/2.5."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Determinate ProgressRing arrived in WinUI 2.4/2.5."
         },
         "DatePicker": {
           "type": "DatePicker",
@@ -3597,7 +4941,8 @@
             }
           ],
           "sample": "<DatePicker Header=\"Date\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "ColorPicker": {
           "type": "ColorPicker",
@@ -3613,7 +4958,8 @@
             }
           ],
           "sample": "<ColorPicker IsAlphaEnabled=\"True\"/>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "PersonPicture": {
           "type": "PersonPicture",
@@ -3629,7 +4975,9 @@
             }
           ],
           "sample": "<PersonPicture DisplayName=\"Ada Lovelace\"/>",
-          "a11y": "The Windows equivalent of Fluent Avatar on web/iOS/Android."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "The Windows equivalent of Fluent Avatar on web/iOS/Android."
         },
         "Image": {
           "type": "Image",
@@ -3645,7 +4993,8 @@
             }
           ],
           "sample": "<Image Source=\"Assets/hero.png\" Stretch=\"UniformToFill\"\n       AutomationProperties.Name=\"Customer using the product\"/>",
-          "a11y": "Images have no automatic name - you MUST set AutomationProperties.Name."
+          "a11y": "Images have no automatic name - you MUST set AutomationProperties.Name.",
+          "apiKind": "control"
         },
         "MediaPlayerElement": {
           "type": "MediaPlayerElement",
@@ -3661,7 +5010,9 @@
             }
           ],
           "sample": "<MediaPlayerElement Source=\"ms-appx:///Assets/v.mp4\" AreTransportControlsEnabled=\"True\"/>",
-          "a11y": "Provide play/pause/stop plus captions or an alternative audio track. In WinUI 3 since WASDK 1.2."
+          "a11y": "Provide play/pause/stop plus captions or an alternative audio track.",
+          "apiKind": "control",
+          "notes": "In WinUI 3 since WASDK 1.2."
         },
         "WebView2": {
           "type": "WebView2",
@@ -3671,7 +5022,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<WebView2 Source=\"https://learn.microsoft.com\"/>",
-          "a11y": "Added to WinUI 2 in 2.8. Replaces the legacy WebView, which does not exist in WinUI 3."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Added to WinUI 2 in 2.8. Replaces the legacy WebView, which does not exist in WinUI 3."
         },
         "MapControl": {
           "type": "MapControl",
@@ -3681,7 +5034,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<MapControl/>",
-          "a11y": "WinUI 3 only, WASDK 1.5+."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "WinUI 3 only, WASDK 1.5+."
         },
         "FontIcon": {
           "type": "FontIcon",
@@ -3702,7 +5057,9 @@
             }
           ],
           "sample": "<FontIcon FontFamily=\"{StaticResource SymbolThemeFontFamily}\" Glyph=\"&#xE700;\"/>\n<SymbolIcon Symbol=\"GlobalNavigationButton\"/>",
-          "a11y": "Optimal icon sizes 16, 20, 24, 32, 40, 48, 64. E0-E5 prefixed glyphs are deprecated legacy."
+          "a11y": null,
+          "apiKind": "icon",
+          "notes": "Optimal icon sizes 16, 20, 24, 32, 40, 48, 64. E0-E5 prefixed glyphs are deprecated legacy."
         },
         "AnimatedVisualPlayer": {
           "type": "AnimatedVisualPlayer",
@@ -3712,7 +5069,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<AnimatedVisualPlayer AutoPlay=\"True\"/>",
-          "a11y": "Introduced in WinUI 2.1."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Introduced in WinUI 2.1."
         },
         "Expander": {
           "type": "Expander",
@@ -3722,7 +5081,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<Expander Header=\"More\"><TextBlock Text=\"Body\"/></Expander>",
-          "a11y": "Introduced in WinUI 2.6."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "Introduced in WinUI 2.6."
         },
         "ScrollViewer": {
           "type": "ScrollViewer",
@@ -3732,7 +5093,8 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<ScrollViewer><StackPanel/></ScrollViewer>",
-          "a11y": null
+          "a11y": null,
+          "apiKind": "control"
         },
         "ScrollView": {
           "type": "ScrollView",
@@ -3742,7 +5104,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<ScrollView><StackPanel/></ScrollView>",
-          "a11y": "WinUI 3 only. InteractionTracker-based with animation-driven view changes; not a drop-in ScrollViewer rename."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "WinUI 3 only. InteractionTracker-based with animation-driven view changes; not a drop-in ScrollViewer rename."
         },
         "AnnotatedScrollBar": {
           "type": "AnnotatedScrollBar",
@@ -3752,7 +5116,9 @@
           "import": "using Microsoft.UI.Xaml.Controls;",
           "keyApi": [],
           "sample": "<AnnotatedScrollBar/>",
-          "a11y": "Inferred WinUI 3 only - absent from WinUI 2 release notes but not checked against winui2/main."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "WinUI 3 only - VERIFIED, not inferred: controls/dev/AnnotatedScrollBar exists on winui3/main and has no counterpart anywhere in the winui2/main tree."
         },
         "SystemBackdropElement": {
           "type": "SystemBackdropElement",
@@ -3768,7 +5134,9 @@
             }
           ],
           "sample": "<SystemBackdropElement CornerRadius=\"8\">\n  <SystemBackdropElement.SystemBackdrop>\n    <DesktopAcrylicBackdrop/>\n  </SystemBackdropElement.SystemBackdrop>\n</SystemBackdropElement>",
-          "a11y": "WinUI 3 only. Applies a backdrop to a bounded region rather than the whole window. Introducing version undocumented."
+          "a11y": null,
+          "apiKind": "control",
+          "notes": "WinUI 3 only. Applies a backdrop to a bounded region rather than the whole window. Its IDL is gated [MUX_PUBLIC_V10], so it entered the public surface with the V10 API contract; the Windows App SDK version that corresponds to V10 is still undocumented."
         },
         "MicaBackdrop": {
           "type": "MicaBackdrop",
@@ -3784,7 +5152,9 @@
             }
           ],
           "sample": "<Window.SystemBackdrop><MicaBackdrop/></Window.SystemBackdrop>\n<Window.SystemBackdrop><MicaBackdrop Kind=\"BaseAlt\"/></Window.SystemBackdrop>",
-          "a11y": "Solid fallback is SolidBackgroundFillColorBase (Mica Alt: ...BaseAlt). Apply backdrop material once per app."
+          "a11y": null,
+          "apiKind": "backdrop",
+          "notes": "Solid fallback is SolidBackgroundFillColorBase (Mica Alt: ...BaseAlt). Apply backdrop material once per app."
         },
         "DesktopAcrylicBackdrop": {
           "type": "DesktopAcrylicBackdrop",
@@ -3800,7 +5170,9 @@
             }
           ],
           "sample": "<Window.SystemBackdrop><DesktopAcrylicBackdrop/></Window.SystemBackdrop>",
-          "a11y": "Acrylic is for transient, light-dismiss surfaces only. Falls back when transparency is off or on battery saver."
+          "a11y": null,
+          "apiKind": "backdrop",
+          "notes": "Acrylic is for transient, light-dismiss surfaces only. Falls back when transparency is off or on battery saver."
         },
         "AcrylicBrush": {
           "type": "AcrylicBrush",
@@ -3816,7 +5188,9 @@
             }
           ],
           "sample": "<Grid Background=\"{ThemeResource AcrylicInAppFillColorDefaultBrush}\"/>",
-          "a11y": "In WinUI 3 AcrylicBrush is IN-APP ONLY. The UWP BackgroundSource=\"HostBackdrop\" property does not exist."
+          "a11y": null,
+          "apiKind": "brush",
+          "notes": "In WinUI 3 AcrylicBrush is IN-APP ONLY. The UWP BackgroundSource=\"HostBackdrop\" property does not exist."
         },
         "ThemeShadow": {
           "type": "ThemeShadow",
@@ -3832,7 +5206,9 @@
             }
           ],
           "sample": "<Rectangle x:Name=\"Rect\" Height=\"48\" Width=\"96\">\n  <Rectangle.Shadow><ThemeShadow/></Rectangle.Shadow>\n</Rectangle>\n<!-- C#: Rect.Translation += new Vector3(0, 0, 32); -->",
-          "a11y": "Since Windows 11 / SDK 22000+, ThemeShadow.Receivers is ignored and it behaves like a drop shadow."
+          "a11y": null,
+          "apiKind": "shadow",
+          "notes": "Since Windows 11 / SDK 22000+, ThemeShadow.Receivers is ignored and it behaves like a drop shadow."
         },
         "Grid": {
           "type": "Grid",
@@ -3848,7 +5224,8 @@
             }
           ],
           "sample": "<Grid ColumnDefinitions=\"Auto,*\" RowDefinitions=\"Auto,*\"/>",
-          "a11y": "Layout panels derive default tab order from layout order."
+          "a11y": "Layout panels derive default tab order from layout order.",
+          "apiKind": "panel"
         },
         "ThemeMode": {
           "type": "ThemeMode",
@@ -3874,7 +5251,9 @@
             }
           ],
           "sample": "<Application x:Class=\"MyWpfProject.App\" ThemeMode=\"System\"/>\n<Window ThemeMode=\"Light\"/>",
-          "a11y": "This is the preferred way to apply the official WPF Fluent theme."
+          "a11y": null,
+          "apiKind": "property",
+          "notes": "This is the preferred way to apply the official WPF Fluent theme."
         },
         "PresentationFramework.Fluent": {
           "type": "PresentationFramework.Fluent",
@@ -3890,10 +5269,12 @@
             }
           ],
           "sample": "<Application.Resources>\n  <ResourceDictionary>\n    <ResourceDictionary.MergedDictionaries>\n      <ResourceDictionary Source=\"pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml\"/>\n    </ResourceDictionary.MergedDictionaries>\n  </ResourceDictionary>\n</Application.Resources>",
-          "a11y": "Official Microsoft, shipped in .NET 9. Preview with the WPF Gallery app (Store productId 9NDLX60WX4KQ)."
+          "a11y": null,
+          "apiKind": "assembly",
+          "notes": "Official Microsoft, shipped in .NET 9. Preview with the WPF Gallery app (Store productId 9NDLX60WX4KQ)."
         },
         "SystemColors.AccentColorBrushKey": {
-          "type": "SystemColors accent keys",
+          "type": "SystemColors.AccentColorBrushKey",
           "kind": "wpf",
           "alsoInWinUI2": false,
           "namespace": "System.Windows.SystemColors",
@@ -3911,7 +5292,10 @@
             }
           ],
           "sample": "<TextBlock Text=\"First Name:\"\n           Foreground=\"{DynamicResource {x:Static SystemColors.AccentColorBrushKey}}\"/>",
-          "a11y": "Available with or without the Fluent theme."
+          "a11y": null,
+          "apiKind": "resourceKey",
+          "memberOf": "System.Windows.SystemColors (static class)",
+          "notes": "Available with or without the Fluent theme."
         }
       },
       "tokens": {
@@ -4188,7 +5572,8 @@
             }
           ],
           "designIntent": "8px top-level containers (windows, flyouts, dialogs); 4px in-page and bar elements (Button, CheckBox, ComboBox, TextBox, ListView, ProgressBar, ScrollBar, Slider); 0px where straight edges meet (SplitButton halves, flyout-to-anchor edge, snapped/maximized windows). ToolTip is an exception at 4px.",
-          "override": "<Application.Resources>\n  <ResourceDictionary>\n    <CornerRadius x:Key=\"ControlCornerRadius\">2</CornerRadius>\n    <CornerRadius x:Key=\"OverlayCornerRadius\">6</CornerRadius>\n  </ResourceDictionary>\n</Application.Resources>"
+          "override": "<Application.Resources>\n  <ResourceDictionary>\n    <CornerRadius x:Key=\"ControlCornerRadius\">2</CornerRadius>\n    <CornerRadius x:Key=\"OverlayCornerRadius\">6</CornerRadius>\n  </ResourceDictionary>\n</Application.Resources>",
+          "count": "EXACTLY TWO - VERIFIED at controls/dev/CommonStyles/CornerRadius_themeresources.xaml (winui3/main): ControlCornerRadius (4,4,4,4) and OverlayCornerRadius (8,8,8,8), repeated identically in the Default, Light and HighContrast theme dictionaries. Everything else in that file is a CornerRadiusFilterConverter/CornerRadiusToThicknessConverter, not a token. Windows has no per-size radius ramp the way the web tokens do."
         },
         "elevation": {
           "warning": "These elevation numbers are DESIGN tokens, not XAML resource keys. There is no ElevationCardShadow-style resource - use ThemeShadow or a Composition DropShadow.",
@@ -4483,7 +5868,7 @@
         }
       ],
       "frameworkChoice": {
-        "default": "Use WinUI 3 via the Windows App SDK (Microsoft.WindowsAppSDK 2.3.1) for new Windows desktop apps.",
+        "default": "Use WinUI 3 via the Windows App SDK (Microsoft.WindowsAppSDK 2.4.0) for new Windows desktop apps.",
         "learnDirective": "Learn carries an explicit 'For AI coding assistants' tip: default to WinUI 3 for new Windows-only apps with modern UI; recommend WPF for teams with existing WPF investment or when a XAML designer is required; recommend .NET MAUI when cross-platform reach is needed; only recommend UWP for Xbox, HoloLens or IoT.",
         "exceptions": [
           {
@@ -4562,6 +5947,81 @@
         "sample": "<Image Source=\"Assets/product.png\" AutomationProperties.Name=\"Customer using the product\"/>\n\n<StackPanel Orientation=\"Horizontal\" Spacing=\"8\">\n  <TextBlock x:Name=\"firstNameLabel\" Text=\"First name\"/>\n  <TextBox AutomationProperties.LabeledBy=\"{Binding ElementName=firstNameLabel}\"/>\n</StackPanel>",
         "contrastSignalsInTokens": "ControlStrongFillColorDefaultBrush and ControlStrongStrokeColorDefaultBrush must meet 3:1. ControlStrokeColorForStrongFillWhenOnImageBrush ensures 3:1 on any background. TextFillColorTertiaryBrush and TextFillColorDisabledBrush are flagged NOT accessible - pressed/disabled only.",
         "media": "MediaPlayerElement: provide play/pause/stop plus captions or an alternative audio track. XAML/DirectX interop (SwapChainPanel, SurfaceImageSource) is NOT automatically accessible - supply peers."
+      },
+      "apiKinds": [
+        {
+          "apiKind": "control",
+          "meaning": "A XAML UI element you place in the visual tree. This is what \"component\" means for a count."
+        },
+        {
+          "apiKind": "panel",
+          "meaning": "A layout container. Arranges children; renders no chrome of its own."
+        },
+        {
+          "apiKind": "brush",
+          "meaning": "A Brush you assign to a Fill/Background/Foreground - not an element."
+        },
+        {
+          "apiKind": "backdrop",
+          "meaning": "A SystemBackdrop applied to a window or element; has no visual tree presence itself."
+        },
+        {
+          "apiKind": "shadow",
+          "meaning": "A Shadow object assigned to UIElement.Shadow."
+        },
+        {
+          "apiKind": "icon",
+          "meaning": "An IconElement used as the content of another control."
+        },
+        {
+          "apiKind": "command",
+          "meaning": "An ICommand object supplying label, icon, accelerator and description."
+        },
+        {
+          "apiKind": "property",
+          "meaning": "A property on Application/Window, not a type you instantiate."
+        },
+        {
+          "apiKind": "assembly",
+          "meaning": "A shipped assembly / resource dictionary, not an API."
+        },
+        {
+          "apiKind": "resourceKey",
+          "meaning": "A ResourceKey to look up with DynamicResource - not a type."
+        }
+      ],
+      "winui2Comparison": {
+        "method": "Directory diff of controls/dev/ on branch winui3/main against dev/ on branch winui2/main (GitHub git/trees?recursive=1), plus the [MUX_*] gate on each IDL.",
+        "verifiedOn": "2026-08-16",
+        "winui3OnlyDirectories": [
+          "AnnotatedScrollBar",
+          "ItemContainer",
+          "ItemsView",
+          "MapControl",
+          "SelectorBar",
+          "SystemBackdropElement",
+          "InkCanvas",
+          "InkToolBar",
+          "SortIndicator",
+          "WrapPanel"
+        ],
+        "presentInBothButNotPublicInWinUI2": [
+          {
+            "type": "TitleBar",
+            "winui2Gate": "MUX_EXPERIMENTAL",
+            "winui3Gate": "MUX_PUBLIC_V8"
+          },
+          {
+            "type": "ScrollView",
+            "winui2Gate": "MUX_PREVIEW",
+            "winui3Gate": "MUX_PUBLIC_V5"
+          }
+        ],
+        "absentFromWinUI2Entirely": [
+          "LinedFlowLayout",
+          "ItemCollectionTransitionProvider"
+        ],
+        "caveat": "A directory existing on winui2/main does NOT mean the type shipped in a WinUI 2 package: WinUI 2.8 (July 2022) was the last feature release, and both TitleBar and ScrollView are gated MUX_EXPERIMENTAL / MUX_PREVIEW there. Trust the gate, not the directory."
       }
     }
   },
@@ -4666,7 +6126,7 @@
       "web": "Fluent 1 (v8, @fluentui/react) and Fluent 2 (v9, @fluentui/react-components) are separate packages that coexist. See the fluent_v8_lookup tool.",
       "ios": "ONE evolving line. Same pod and SPM product throughout; Fluent 2 is a version cutover at 0.13.0. No v8/v9-style split exists.",
       "android": "Two generations in the SAME artifacts: Fluent 1 = View/XML under com.microsoft.fluentui.<area>.*, Fluent 2 = Compose under com.microsoft.fluentui.tokenized.*.",
-      "windows": "WinUI 3 (Windows App SDK 2.3.1) is current; WinUI 2 (Microsoft.UI.Xaml 2.8.7) is maintenance-only since July 2022; WPF has an official Fluent theme from .NET 9."
+      "windows": "WinUI 3 (Windows App SDK 2.4.0) is current; WinUI 2 (Microsoft.UI.Xaml 2.8.7) is maintenance-only since July 2022; WPF has an official Fluent theme from .NET 9."
     },
     "designSiteDoctrine": [
       "'Natural on every platform' is design principle #1: reuse native platform components and patterns 80% of the time, focusing energy on signature experiences.",
@@ -4808,7 +6268,7 @@
     "brokenInPageLinks": "Cross-links authored inside native pages omit /core/ (e.g. /components/ios/avatargroup/usage) and return the site 404 page. One link even uses a capital 'OS' (/components/iOS/shimmer/usage). Rewrite short links to insert /core/.",
     "previewTags": "All 12 iOS component pages render a visible 'Preview' tag; all 5 Android pages suppress it. The site never states the policy in prose.",
     "sectionVocabulary": "Native pages use only Resources, Types, Behavior, Layout, Accessibility, Content. There are no Anatomy/States/Variants sections and zero tables on any native page.",
-    "windowsIsAStub": "The Windows route is a single page with two link tiles (WinUI 3 Figma toolkit https://aka.ms/WinUI/3.0-figma-toolkit, WinUI 3 docs https://aka.ms/windev) and no XAML type names. Windows token data must come from Learn + the WinUI repo, not fluent2.microsoft.design.",
+    "windowsIsAStub": "VERIFIED (2026-08-16): GET /components/windows/ returns 200. It is NOT missing - it is a stub: a single page with two link tiles (WinUI 3 Figma toolkit https://aka.ms/WinUI/3.0-figma-toolkit, WinUI 3 docs https://aka.ms/windev), no XAML type names and no per-control pages. Windows token data must come from Learn + the WinUI repo, not fluent2.microsoft.design.",
     "resources": {
       "iosUiKit": "https://aka.ms/Fluent2Toolkits/iOS/Figma",
       "iosLibrary": "https://github.com/microsoft/fluentui-apple",
@@ -4849,7 +6309,8 @@
         "page": "Heads-up display",
         "text": "Reflect the action word that triggered the HUD whenever possible"
       }
-    ]
+    ],
+    "reactNativeIsGated": "VERIFIED (2026-08-16), not inferred: GET https://fluent2.microsoft.design/components/react-native/ returns 302 to https://fluent2.microsoft.design/.auth/login/aad?post_login_redirect_uri=%2Fcomponents%2Freact-native%2F. It is Microsoft-employee-gated, not empty. Do not attempt to authenticate; treat its contents as unavailable."
   },
   "unverified": [
     {
@@ -4906,7 +6367,7 @@
     },
     {
       "platform": "ios",
-      "note": "Types not opened and therefore excluded: BottomCommandingController, CommandBar, MultilineCommandBar, SideTabBar, TableViewHeaderFooterView, PeoplePicker, BadgeField, PersonaButton, TwoLineTitleView, Separator, ResizingHandleView, DotView, CardView, DateTimePicker, PersonaListView, ShimmerView. All appear in Demos.swift and/or the podspec subspec list."
+      "note": "iOS types opened and added this pass: ShimmerView, ShimmerLinesView, BadgeField, PeoplePicker, PersonaListView, PersonaButton, MSFPersonaButton, CardView, CommandBar, CommandBarItem, BottomCommandingController, CommandingItem, DateTimePicker, DotView, EasyTapButton. STILL not opened: MultilineCommandBar, SideTabBar, TableViewHeaderFooterView, TwoLineTitleView, Separator, ResizingHandleView. Deliberately excluded, not missing: CalendarView (declared `class CalendarView: UIView` with no public/open modifier - internal to DateTimePickers) and BarButtonItems (only a public String constant; confirm(target:action:) is internal)."
     },
     {
       "platform": "ios",
@@ -4922,14 +6383,6 @@
     },
     {
       "platform": "ios",
-      "note": "fluent2.microsoft.design iOS pages are gated for some content ('Microsoft employee? Sign in'); Swift Package Index returns 403; api.github.com and GitHub MCP tools return 403 SAML for microsoft/*."
-    },
-    {
-      "platform": "ios",
-      "note": "Line numbers cannot be cited: raw.githubusercontent.com returns unnumbered text. Findings are path- and symbol-accurate, not line-accurate."
-    },
-    {
-      "platform": "ios",
       "note": "ObjC bridging headers (FluentUI-Swift.h) and Version.plist contents were not read."
     },
     {
@@ -4942,7 +6395,7 @@
     },
     {
       "platform": "android",
-      "note": "Full parameter lists not read for: FileCard, AnnouncementCard, PersonaChip, PersonaList, AvatarCarousel, SearchBarPersonaChip, SideRail, PillTabs, PillSwitch, PillBar, ViewPager, ActionBar (v2), ProgressText, PeoplePicker, ListContentBuilder, ToolTip, Banner, StackableSnackbar, TopDrawer/BottomDrawer/HorizontalDrawer. Names and artifacts confirmed via directory listing only."
+      "note": "Android parameter lists were READ from source at tag v0.3.14 for FileCard, AnnouncementCard, PersonaChip, PersonaList, AvatarCarousel, SearchBarPersonaChip, SideRail, PillTabs, PillSwitch, PillBar, ViewPager, ActionBar and ProgressText, and those entries are now first-class. Still confirmed by directory listing only: ListContentBuilder, ToolTip, Banner, StackableSnackbar and the TopDrawer/BottomDrawer/HorizontalDrawer trio."
     },
     {
       "platform": "android",
@@ -4962,15 +6415,7 @@
     },
     {
       "platform": "android",
-      "note": "Citations are branch-tip (master @ 2026-08-09), not pinned to commit SHAs - the GitHub contents API was blocked by microsoft org SAML SSO."
-    },
-    {
-      "platform": "android",
       "note": "The Fluent 2 design site has only 5 Android component pages (avatar, avatargroup, button, progressindicator, shimmer) with zero code; no per-component Android API docs exist there."
-    },
-    {
-      "platform": "android",
-      "note": "PillBar composable name was confirmed to live in Pill.kt but its signature was not read."
     },
     {
       "platform": "windows",
@@ -4998,7 +6443,7 @@
     },
     {
       "platform": "windows",
-      "note": "SystemBackdropElement's introducing WASDK version is undocumented on its Learn page; being new in the 2.x line is unconfirmed."
+      "note": "SystemBackdropElement's IDL is gated [MUX_PUBLIC_V10] (controls/dev/SystemBackdropElement/SystemBackdropElement.idl @ winui3/main), so it entered the public surface with the V10 API contract - it is genuinely new in the 2.x line. What is still unknown is which Windows App SDK version number corresponds to V10; its Learn page does not say."
     },
     {
       "platform": "windows",
@@ -5011,10 +6456,6 @@
     {
       "platform": "windows",
       "note": "The control catalog is not exhaustively enumerated - roughly 40 KB of WinUI-Gallery ControlInfoData.json was read; Layout, Text, Status, Media, Date & time, System, Dialogs, Navigation and Scrolling groups were not fully paginated."
-    },
-    {
-      "platform": "windows",
-      "note": "WinUI-2-vs-WinUI-3 availability is partly inferred. Verified WinUI-3-only: ItemsView, ItemContainer, ScrollView, SelectorBar, TitleBar, MapControl, SystemBackdropElement, MicaBackdrop, DesktopAcrylicBackdrop. Inferred only: AnnotatedScrollBar, LinedFlowLayout, ItemCollectionTransitionProvider."
     },
     {
       "platform": "windows",
@@ -5039,10 +6480,6 @@
     {
       "platform": "windows",
       "note": "WPF-UI 4.3.0's release date and TFM support come from web search, not the NuGet catalog entry; only the version number is verified against api.nuget.org."
-    },
-    {
-      "platform": "site",
-      "note": "/components/react-native/ is employee-gated (302 to AAD). No prose, images, tables or component list could be extracted - record as employee-gated, not empty."
     },
     {
       "platform": "site",
@@ -5071,6 +6508,78 @@
     {
       "platform": "site",
       "note": "Preview-tag semantics are inferred from markup (PreviewTag visible:true on iOS, false on Android); the site never states the policy in prose."
+    },
+    {
+      "platform": "windows",
+      "note": "Windows App SDK 2.4.0 is sourced from the GitHub release (microsoft/WindowsAppSDK tag v2.4.0, published 2026-08-13, prerelease=false). api.nuget.org was unreachable from the verification environment, so the NuGet publication of the 2.4.0 package itself is NOT independently confirmed - the GitHub release proves the ship event only."
+    },
+    {
+      "platform": "windows",
+      "note": "WinUI 3 control IDL is cited from branch winui3/main, not from a release tag: the winui3/release/2.4.0 tag (commit e8442d07ae57d2d3e653e616831f504937881bd3) publishes only docs/, specs/ and src/, so controls/dev/ does not exist there. Branch-tip IDL can drift ahead of the released package - check [MUX_PUBLIC_Vn] gating before relying on a newly added member."
+    },
+    {
+      "platform": "windows",
+      "note": "The \"exactly two corner-radius tokens\" fact was verified against controls/dev/CommonStyles/CornerRadius_themeresources.xaml only. Another theme-resource file elsewhere in the repo could define a further CornerRadius key; no repo-wide search for x:Key=\"*CornerRadius\" was run."
+    },
+    {
+      "platform": "android",
+      "note": "Enum member lists for AvatarCarouselSize (Small, Large), PersonaChipStyle (Neutral, Brand, Danger, SevereWarning, Warning, Success), PersonaChipSize (Small, Medium) and ACTIONBARTYPE (BASIC, ICON, CAROUSEL) were read from fluentui_core controlTokens at v0.3.14. TabData, PillMetaData, PeoplePickerItemData, AvatarCarouselItem and Group were NOT opened - their constructors are described from call sites, not declarations."
+    },
+    {
+      "platform": "android",
+      "note": "High contrast is recorded as \"no support was found\" rather than \"not supported\". The finding is a repo-wide search for highContrast / isHighTextContrastEnabled / HighContrast returning 0 results - strong negative evidence, but a negative search is not a Microsoft statement of non-support."
+    },
+    {
+      "platform": "site",
+      "note": "React Native is deliberately OUT OF SCOPE for this dataset (see outOfScope.reactNative), not merely missing. microsoft/fluentui-react-native is active (archived=false, pushed 2026-08-15) with 25 packages under packages/components, so the gap is a scope decision, not an availability finding. The published version of @fluentui/react-native could not be checked - registry.npmjs.org was unreachable; 0.44.0 is the in-repo manifest version on main."
+    },
+    {
+      "platform": "android",
+      "note": "Component APIs were read from SOURCE at repo tag v0.3.14, but the modules are published independently and lag it (FluentUIAndroid:0.3.14 resolves fluentui_persona 0.3.5, fluentui_tablayout 0.3.5, fluentui_controls 0.3.3 - all verified in the umbrella POM on Maven Central). It was NOT verified which of the newly added composables (ActionBar, AnnouncementCard, FileCard, SideRail, ViewPager, PeoplePicker, AvatarCarousel, AvatarPie, PersonaChip, PersonaList, ProgressText, PillBar, PillSwitch, PillTabs, SearchBarPersonaChip) are present in those published artifacts as opposed to source only."
     }
-  ]
+  ],
+  "outOfScope": {
+    "reactNative": {
+      "decision": "out-of-scope-but-answered",
+      "repo": "https://github.com/microsoft/fluentui-react-native",
+      "status": "ACTIVE, not archived (archived=false, pushed 2026-08-15). Out of scope is a scope decision by this dataset, not a statement that the library is dead.",
+      "umbrellaPackage": "@fluentui/react-native (packages/libraries/core; in-repo version 0.44.0 on main)",
+      "perComponentPackages": "@fluentui-react-native/<component>, e.g. @fluentui-react-native/button (0.40.7 on main)",
+      "componentPackages": [
+        "Avatar",
+        "Badge",
+        "Button",
+        "Callout",
+        "Checkbox",
+        "Chip",
+        "ContextualMenu",
+        "Divider",
+        "FocusTrapZone",
+        "FocusZone",
+        "Icon",
+        "Input",
+        "Link",
+        "Menu",
+        "MenuButton",
+        "Notification",
+        "Persona",
+        "PersonaCoin",
+        "Pressable",
+        "RadioGroup",
+        "Separator",
+        "Stack",
+        "Switch",
+        "TabList",
+        "Text"
+      ],
+      "whyOutOfScope": [
+        "This dataset covers the three platform-native libraries - Swift/UIKit+SwiftUI, Kotlin/Compose+Views, and XAML. React Native is a JavaScript framework whose API shape follows the WEB Fluent conventions (props, style objects, tokens), not the native ones.",
+        "fluent2.microsoft.design has no usable React Native documentation: /components/react-native/ 302s to AAD sign-in, and React Native is absent from the site platform switcher (React / iOS / Android / Windows).",
+        "Emitting 25 half-grounded entries would dilute a dataset whose whole value is that every entry was read from source. A grounded pointer beats a padded list."
+      ],
+      "whatToDoInstead": "Read the component source under packages/components/<Name>/src in microsoft/fluentui-react-native, or use the web Fluent 2 tools (fluent_get_component / fluent_list_tokens) for the design language, which is shared. Do not translate the web React v9 API into React Native - the packages differ.",
+      "versionCaveat": "registry.npmjs.org was unreachable from the verification environment. 0.44.0 / 0.40.7 are in-repo package.json versions on main, NOT confirmed published versions.",
+      "verifiedOn": "2026-08-16"
+    }
+  }
 }

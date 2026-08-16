@@ -19,6 +19,7 @@ import { registerConfig } from './tools/config.js';
 import { registerV8 } from './tools/v8.js';
 import { registerFigma } from './tools/figma.js';
 import { registerNative } from './tools/native.js';
+import { registerIcons } from './tools/icons.js';
 // Read the version from package.json rather than repeating it here: a
 // hardcoded copy silently goes stale, and hosts show this string to users.
 const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
@@ -42,6 +43,11 @@ registerTokens(server);
 registerComponents(server);
 registerTheme(server);
 registerCode(server);
+// Fluent system icons. Icons are named for the object, not the function
+// ("Shield, not security"), so an agent that infers an export name from a
+// feature name gets a compile error. Every name this tool returns was checked
+// against the upstream @fluentui/react-icons export manifest at build time.
+registerIcons(server);
 // Fluent 2 design-language reference + adoption/migration guidance
 // (grounded in research/fluent-design.md + migration.json).
 registerDesignGuidance(server);
@@ -58,8 +64,9 @@ registerConfig(server);
 registerV8(server);
 // Figma MCP server for design-to-code. Read-only reference: this plugin never
 // asks for, stores or forwards a Figma token — auth is the host's OAuth flow.
-// Leads with entitlements because a View/Collab seat gets 6 calls per MONTH,
-// which is enough to start a workflow and not enough to finish one.
+// Leads with entitlements because limits go by SEAT, not plan: a View/Collab
+// seat gets ~6 calls per MONTH (20 on Starter) — enough to start a workflow and
+// not enough to finish one. Dev/Full seats get 200/day.
 registerFigma(server);
 // Native platforms: iOS, Android, Windows. The same component name resolves to
 // a different type on each (and often to two types on one platform — Android

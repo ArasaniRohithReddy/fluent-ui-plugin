@@ -4,9 +4,62 @@
     "description": "Structured guidance for adopting Fluent 2 in an EXISTING app or report — Fluent UI v8 -> v9, from another design system, replacing hardcoded values with tokens, and per-surface adoption (Power BI, Power Apps, Power Pages).",
     "source": "Microsoft Learn + react.fluentui.dev migration docs + verified npm packages (retrieved 2026-07).",
     "packageVersionsSeen": {
-      "@fluentui/react-components": "9.74.3 (v9)",
-      "@fluentui/react": "8.125.7 (v8, legacy)",
-      "@fluentui/react-migration-v8-v9": "9.74.3-experimental.* (shims; experimental/preview channel — verify the latest tag on npm)"
+      "@fluentui/codemods": "8.4.29",
+      "@fluentui/fluent2-theme": "8.107.154",
+      "@fluentui/font-icons-mdl2": "8.5.74",
+      "@fluentui/react": "8.125.7",
+      "@fluentui/react-breadcrumb": "9.4.5",
+      "@fluentui/react-button": "9.11.0",
+      "@fluentui/react-calendar-compat": "0.4.5",
+      "@fluentui/react-checkbox": "9.6.4",
+      "@fluentui/react-color-picker": "9.3.0",
+      "@fluentui/react-colorpicker-compat": "0.0.0 (private — never published)",
+      "@fluentui/react-combobox": "9.17.5",
+      "@fluentui/react-components": "9.74.6",
+      "@fluentui/react-datepicker-compat": "0.6.36",
+      "@fluentui/react-dialog": "9.18.3",
+      "@fluentui/react-divider": "9.7.4",
+      "@fluentui/react-icons-compat": "0.2.22",
+      "@fluentui/react-icons-mdl2": "1.4.7",
+      "@fluentui/react-image": "9.4.4",
+      "@fluentui/react-label": "9.4.4",
+      "@fluentui/react-link": "9.8.4",
+      "@fluentui/react-list": "9.6.17",
+      "@fluentui/react-menu": "9.25.3",
+      "@fluentui/react-message-bar": "9.7.5",
+      "@fluentui/react-migration-v0-v9": "9.6.35",
+      "@fluentui/react-migration-v8-v9": "9.10.17",
+      "@fluentui/react-nav": "9.4.4",
+      "@fluentui/react-persona": "9.7.7",
+      "@fluentui/react-portal-compat": "9.2.45",
+      "@fluentui/react-portal-compat-context": "9.0.16",
+      "@fluentui/react-progress": "9.5.4",
+      "@fluentui/react-provider": "9.22.20",
+      "@fluentui/react-rating": "9.4.4",
+      "@fluentui/react-search": "9.4.6",
+      "@fluentui/react-skeleton": "9.7.5",
+      "@fluentui/react-slider": "9.6.5",
+      "@fluentui/react-spinbutton": "9.6.5",
+      "@fluentui/react-spinner": "9.8.5",
+      "@fluentui/react-swatch-picker": "9.6.0",
+      "@fluentui/react-switch": "9.7.5",
+      "@fluentui/react-tabs": "9.12.4",
+      "@fluentui/react-tag-picker": "9.10.2",
+      "@fluentui/react-text": "9.6.19",
+      "@fluentui/react-theme": "9.2.2",
+      "@fluentui/react-timepicker-compat": "0.4.38",
+      "@fluentui/react-tooltip": "9.10.5",
+      "@fluentui/react-utilities": "9.26.6",
+      "@fluentui/react-utilities-compat": "0.0.0 (private — never published)",
+      "@fluentui/theme": "2.7.2",
+      "@fluentui/tokens": "1.0.0-alpha.24",
+      "@fluentui/utilities": "8.17.2"
+    },
+    "packageVersionSource": {
+      "repo": "https://github.com/microsoft/fluentui",
+      "ref": "master",
+      "fetchedOn": "2026-08-16",
+      "method": "Read from each package.json in the monorepo at build time by scripts/build-v8-data.mjs --refresh-upstream."
     }
   },
   "scenarios": {
@@ -1228,7 +1281,8 @@
         "https://www.npmjs.com/package/@fluentui/react-migration-v8-v9",
         "https://github.com/microsoft/fluentui/wiki/Fluent-UI-React-v9-Release"
       ],
-      "componentMappingNote": "101 per-component rows sourced from mcp/data/fluent-v8.json. Each row is keyed on a single v8 export so it can be looked up directly; the previous 20 rows used slash-joined labels such as \"DefaultButton / PrimaryButton / IconButton\" that no lookup could match. For collisions, v8-only components and runtime traps, call fluent_v8_lookup."
+      "componentMappingNote": "101 per-component rows sourced from mcp/data/fluent-v8.json. Each row is keyed on a single v8 export so it can be looked up directly; the previous 20 rows used slash-joined labels such as \"DefaultButton / PrimaryButton / IconButton\" that no lookup could match. For collisions, v8-only components and runtime traps, call fluent_v8_lookup.",
+      "executableTooling": "Runnable commands, codemod rule list, shim exports, theme-bridge signatures and compat packages (with versions read from upstream) are in scenarios.tooling — request scenario=\"tooling\"."
     },
     "fromOtherDesignSystem": {
       "title": "Adopt Fluent 2 in an app using another design system (MUI, Chakra, Ant Design, Bootstrap, plain CSS)",
@@ -1372,6 +1426,397 @@
       "powerapps": "In an EXISTING canvas app: Settings > Updates > New > enable 'Modern controls and themes', set App.Theme from your brand, then replace classic controls with modern equivalents screen-by-screen (see fluent-powerapps).",
       "powerpages": "On an EXISTING site: add a custom CSS file that declares Fluent 2 tokens as :root variables and maps Bootstrap selectors onto them (see fluent-powerpages) - no rebuild required.",
       "pcf": "Rebuild a legacy virtual control with a current CLI to pick up Fluent v9 platform libraries + context.fluentDesignLanguage theming (see fluent-pcf-component)."
+    },
+    "tooling": {
+      "title": "Executable migration tooling — the real packages, commands and imports Microsoft ships",
+      "summary": "There is NO official v8 -> v9 codemod. What upstream does ship is: (1) @fluentui/codemods, which upgrades an Office-UI-Fabric / pre-v8 codebase UP TO v8; (2) @fluentui/react-migration-v8-v9 shims + theme bridge, so v8 call sites can render v9; (3) *-compat packages that give a v9 app the v8 features v9 never got. Use them in that order.",
+      "verifiedFrom": {
+        "repo": "https://github.com/microsoft/fluentui",
+        "ref": "master",
+        "fetchedOn": "2026-08-16",
+        "note": "Every version below is read from the upstream package.json at build time, never hand-written."
+      },
+      "decisionTable": [
+        {
+          "situation": "Codebase still imports from `office-ui-fabric-react` or `@uifabric/*`",
+          "use": "@fluentui/codemods",
+          "command": "npx @fluentui/codemods",
+          "why": "Re-paths the old package names to `@fluentui/*` v8. Do this BEFORE thinking about v9."
+        },
+        {
+          "situation": "Large v8 app, cannot rewrite every call site at once",
+          "use": "@fluentui/react-migration-v8-v9",
+          "command": "npm install @fluentui/react-migration-v8-v9",
+          "why": "Shims take v8 props and render v9 underneath, so a screen can move without touching its call sites."
+        },
+        {
+          "situation": "v8 and v9 running in the same tree",
+          "use": "@fluentui/react-portal-compat",
+          "command": "npm install @fluentui/react-portal-compat",
+          "why": "Without PortalCompatProvider, every v9 Dialog/Popover/Tooltip renders unthemed."
+        },
+        {
+          "situation": "v9 app needs Calendar / DatePicker / TimePicker (v9 has none)",
+          "use": "*-compat packages",
+          "command": "npm install @fluentui/react-datepicker-compat",
+          "why": "v8 components rebuilt on the v9 toolset. Versioned 0.x and allowed to break — pin them."
+        },
+        {
+          "situation": "Migrating from Fluent UI Northstar (v0)",
+          "use": "@fluentui/react-migration-v0-v9",
+          "command": "npm install @fluentui/react-migration-v0-v9",
+          "why": "Northstar -> v9 shims. Read the warning below before shipping it."
+        }
+      ],
+      "codemods": {
+        "package": "@fluentui/codemods",
+        "version": "8.4.29",
+        "private": false,
+        "scope": "Tool enabling easy upgrades to Fluent UI React v8 version",
+        "criticalCaveat": "This is NOT a v8 -> v9 converter. It upgrades a pre-v8 / office-ui-fabric-react codebase up to v8. Nothing in this package emits v9 code.",
+        "command": "npx @fluentui/codemods",
+        "listRulesCommand": "npx @fluentui/codemods -l",
+        "runOneRuleCommand": "npx @fluentui/codemods -n RepathOfficeImportsToFluent",
+        "configFile": {
+          "name": "modConfig.json",
+          "shape": {
+            "stringFilters": [],
+            "regexFilters": [],
+            "includeMods": true
+          },
+          "note": "Place in the repo root and pass -c instead of using command-line filters."
+        },
+        "flags": [
+          {
+            "flag": "-n",
+            "description": "Specify name(s) of codemod(s) to run. You can find these names in `codemods/src/codemods/mods`. Make sure that they are `enabled` before running them, or else they won't run!"
+          },
+          {
+            "flag": "-r",
+            "description": "Specify regex pattern(s) to identify mod(s) to run."
+          },
+          {
+            "flag": "-e",
+            "description": "Boolean flag that flips the inclusion of the specify mods. Use this flag with the selective flags `-n` or `-r` to opt to _exclude_ the selected mods rather than include them."
+          },
+          {
+            "flag": "-l",
+            "description": "List the names of all enabled codemods. Mods that exist but aren't enabled will not appear, as running them would do nothing."
+          },
+          {
+            "flag": "-c",
+            "description": "For developers who don't want to worry about the command line, they can create a `modConfig.json` file in their repo. The template for the file looks like this, where `stringFilters` and `regexFilters` would correspond to inputs following `-n` and `-c`, respectively:"
+          }
+        ],
+        "rules": [
+          {
+            "id": "componentToCompat",
+            "name": "ComponentToCompat",
+            "version": "1.0.0",
+            "enabled": false,
+            "enabledNote": "No longer needed; remains for demo purposes",
+            "path": "packages/codemods/src/codeMods/mods/componentToCompat/componentToCompat.mod.ts",
+            "runnable": false,
+            "source": "https://github.com/microsoft/fluentui/blob/master/packages/codemods/src/codeMods/mods/componentToCompat/componentToCompat.mod.ts"
+          },
+          {
+            "id": "configMod",
+            "name": "configMod",
+            "version": "1.0.0",
+            "enabled": true,
+            "enabledNote": null,
+            "path": "packages/codemods/src/codeMods/mods/configMod/configMod.mod.ts",
+            "runnable": true,
+            "source": "https://github.com/microsoft/fluentui/blob/master/packages/codemods/src/codeMods/mods/configMod/configMod.mod.ts"
+          },
+          {
+            "id": "officeToFluentImport",
+            "name": "RepathOfficeImportsToFluent",
+            "version": "1.0.0",
+            "enabled": true,
+            "enabledNote": null,
+            "path": "packages/codemods/src/codeMods/mods/officeToFluentImport/officeToFluentImport.mod.ts",
+            "runnable": true,
+            "source": "https://github.com/microsoft/fluentui/blob/master/packages/codemods/src/codeMods/mods/officeToFluentImport/officeToFluentImport.mod.ts"
+          },
+          {
+            "id": "oldToNewButton",
+            "name": "oldToNewButton",
+            "version": "100000",
+            "enabled": false,
+            "enabledNote": "No longer needed; remains for demo purposes",
+            "path": "packages/codemods/src/codeMods/mods/oldToNewButton/oldToNewButton.mod.ts",
+            "runnable": false,
+            "source": "https://github.com/microsoft/fluentui/blob/master/packages/codemods/src/codeMods/mods/oldToNewButton/oldToNewButton.mod.ts"
+          },
+          {
+            "id": "personaToAvatar",
+            "name": "PersonaToAvatar",
+            "version": "100000",
+            "enabled": false,
+            "enabledNote": null,
+            "path": "packages/codemods/src/codeMods/mods/personaToAvatar/personaToAvatar.mod.ts",
+            "runnable": false,
+            "source": "https://github.com/microsoft/fluentui/blob/master/packages/codemods/src/codeMods/mods/personaToAvatar/personaToAvatar.mod.ts"
+          }
+        ],
+        "enabledRules": [
+          "configMod",
+          "RepathOfficeImportsToFluent"
+        ],
+        "disabledRules": [
+          "ComponentToCompat",
+          "oldToNewButton",
+          "PersonaToAvatar"
+        ],
+        "upgradesJson": {
+          "path": "packages/codemods/src/codeMods/mods/upgrades.json",
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/codemods/src/codeMods/mods/upgrades.json",
+          "isEmptyTemplate": true,
+          "note": "Upstream ships this file as an EMPTY template — the `configMod` rule is enabled but has nothing to run until you fill it in with your own {name,type,version,options.from,options.to} rows."
+        },
+        "source": "https://github.com/microsoft/fluentui/blob/master/packages/codemods/README.md"
+      },
+      "shims": {
+        "package": "@fluentui/react-migration-v8-v9",
+        "version": "9.10.17",
+        "private": false,
+        "install": "npm install @fluentui/react-migration-v8-v9",
+        "whatItDoes": "Each shim exposes a v8 component's props interface and renders the v9 component underneath, so an existing v8 call site keeps compiling while the rendered output becomes Fluent 2.",
+        "componentAreas": [
+          "Button",
+          "Checkbox",
+          "Menu",
+          "Stack",
+          "Theme"
+        ],
+        "componentAreasSource": "https://github.com/microsoft/fluentui/tree/master/packages/react-components/react-migration-v8-v9/library/src/components",
+        "components": [
+          "ActionButtonShim",
+          "ButtonShim",
+          "CommandButtonShim",
+          "CompoundButtonShim",
+          "DefaultButtonShim",
+          "MenuButtonShim",
+          "PrimaryButtonShim",
+          "ToggleButtonShim",
+          "MenuItemShim",
+          "StackItemShim",
+          "StackShim",
+          "CheckboxShim"
+        ],
+        "propShims": [
+          "shimButtonProps",
+          "shimMenuProps"
+        ],
+        "themeExports": [
+          "black",
+          "blackAlpha",
+          "brandWeb",
+          "createBrandVariants",
+          "createV8Theme",
+          "createV9Theme",
+          "grey",
+          "grey14Alpha",
+          "hcButtonFace",
+          "hcButtonText",
+          "hcCanvas",
+          "hcCanvasText",
+          "hcDisabled",
+          "hcHighlight",
+          "hcHighlightText",
+          "hcHyperlink",
+          "sharedColors",
+          "white",
+          "whiteAlpha"
+        ],
+        "typeExports": [
+          "AlphaColors",
+          "ColorVariants",
+          "GlobalSharedColors",
+          "Greys",
+          "TextAlignment",
+          "TextAlignments"
+        ],
+        "themeBridge": [
+          {
+            "name": "createV8Theme",
+            "signature": "const createV8Theme: (brandColors: BrandVariants, themeV9: Theme, isDarkTheme?: boolean, themeV8?: Theme_2) => Theme_2",
+            "whatItDoes": "Builds a v8 Theme from v9 brand variants + a v9 theme, so v8 components inherit the Fluent 2 palette.",
+            "whenToUse": "v9 is the source of truth and you still render v8 components (charts, DetailsList, Panel).",
+            "import": "import { createV8Theme } from '@fluentui/react-migration-v8-v9';"
+          },
+          {
+            "name": "createV9Theme",
+            "signature": "const createV9Theme: (themeV8: Theme_2, baseThemeV9?: Theme) => Theme",
+            "whatItDoes": "The opposite direction — derives a v9 Theme from an existing v8 Theme.",
+            "whenToUse": "v8 owns the brand (an existing product theme) and you are adding v9 UI beside it.",
+            "import": "import { createV9Theme } from '@fluentui/react-migration-v8-v9';"
+          },
+          {
+            "name": "createBrandVariants",
+            "signature": "const createBrandVariants: (palette: IPalette, interpolation?: Interpolation) => BrandVariants",
+            "whatItDoes": "Turns a v8 IPalette into a v9 BrandVariants ramp (the 16-step brand scale v9 themes are built from).",
+            "whenToUse": "First step when the only brand definition you have is a v8 palette.",
+            "import": "import { createBrandVariants } from '@fluentui/react-migration-v8-v9';"
+          }
+        ],
+        "guidance": "Our recommendation is to avoid using shims and instead migrate from using v8 components to using v9 components in your codebase. Shims provide a convienient way to start migrating to v9 while defering the cost of updating a multitude of call points.",
+        "bundleWarning": "Shims depend on both v8 and v9, so carefully consider the impact using a shim may have on bundle size and render performance vs. migrating to v9 directly.",
+        "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-migration-v8-v9/library/src/index.ts"
+      },
+      "v0Shims": {
+        "package": "@fluentui/react-migration-v0-v9",
+        "version": "9.6.35",
+        "private": false,
+        "install": "npm install @fluentui/react-migration-v0-v9",
+        "whatItDoes": "Shims for migrating Fluent UI React Northstar (v0) to v9.",
+        "exports": [
+          "GridShim",
+          "grid",
+          "gridClassName",
+          "useGridStyles",
+          "FormFieldShim",
+          "Segment",
+          "slider",
+          "Video",
+          "videoClassName",
+          "input",
+          "v0Icon",
+          "v9CustomSizeIcon",
+          "v9DisabledCursor",
+          "v9HoverClasses",
+          "v9Icon",
+          "spinner",
+          "StyledText",
+          "styledTextClassName",
+          "Primitive",
+          "primitiveClassName",
+          "ItemLayout",
+          "itemLayoutClassName",
+          "useItemLayoutStyles",
+          "Flex",
+          "flexClassName",
+          "flexItem",
+          "useFlexStyles",
+          "List",
+          "ListItem",
+          "listClassNames",
+          "listItemClassNames",
+          "renderListItem_unstable",
+          "renderList_unstable",
+          "useListItemStyles_unstable",
+          "useListItem_unstable",
+          "useListSelection",
+          "useListStyles_unstable",
+          "useList_unstable",
+          "Attachment",
+          "AttachmentAction",
+          "AttachmentBody",
+          "AttachmentDescription",
+          "AttachmentHeader",
+          "AttachmentIcon",
+          "attachmentClassName",
+          "attachmentActionClassName",
+          "attachmentBodyClassName",
+          "attachmentDescriptionClassName",
+          "attachmentHeaderClassName",
+          "attachmentIconClassName",
+          "attachmentProgressBarClassName",
+          "attachmentProgressContainerClassName"
+        ],
+        "warning": "These are not production-ready components and **should never be used in product**. This space is useful for testing new components whose APIs might change before final release.",
+        "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-migration-v0-v9/library/src/index.ts"
+      },
+      "compatPackages": [
+        {
+          "package": "@fluentui/react-calendar-compat",
+          "version": "0.4.5",
+          "private": false,
+          "installable": true,
+          "provides": "The v8 Calendar (month/year/decade views) ported onto the v9 toolset with zero v8 dependencies.",
+          "whenToUse": "You need a calendar in a v9 app. v9 has no Calendar of its own.",
+          "install": "npm install @fluentui/react-calendar-compat",
+          "import": "import { Calendar } from '@fluentui/react-calendar-compat';",
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-calendar-compat/library/README.md"
+        },
+        {
+          "package": "@fluentui/react-datepicker-compat",
+          "version": "0.6.36",
+          "private": false,
+          "installable": true,
+          "provides": "The v8 DatePicker on v9, keeping most of the v8 API surface.",
+          "whenToUse": "Migrating a screen that uses v8 DatePicker — this is the only supported v9 target.",
+          "install": "npm install @fluentui/react-datepicker-compat",
+          "import": "import { DatePicker } from '@fluentui/react-datepicker-compat';",
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-datepicker-compat/library/README.md"
+        },
+        {
+          "package": "@fluentui/react-timepicker-compat",
+          "version": "0.4.38",
+          "private": false,
+          "installable": true,
+          "provides": "A v8-style TimePicker built on v9 Combobox + Field.",
+          "whenToUse": "You need time selection in a v9 app.",
+          "install": "npm install @fluentui/react-timepicker-compat",
+          "import": "import { TimePicker } from '@fluentui/react-timepicker-compat';",
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-timepicker-compat/library/README.md"
+        },
+        {
+          "package": "@fluentui/react-icons-compat",
+          "version": "0.2.22",
+          "private": false,
+          "installable": true,
+          "provides": "v8 icon utility functions (registerIcons and friends) usable from a v9 app.",
+          "whenToUse": "ONLY if you still depend on v8 icon registration. Otherwise use @fluentui/react-icons directly — that is the README's own recommendation.",
+          "install": "npm install @fluentui/react-icons-compat",
+          "import": "import { registerIcons } from '@fluentui/react-icons-compat';",
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-icons-compat/library/README.md"
+        },
+        {
+          "package": "@fluentui/react-portal-compat",
+          "version": "9.2.45",
+          "private": false,
+          "installable": true,
+          "provides": "PortalCompatProvider — makes v9 portalled surfaces (Dialog/Popover/Tooltip/Menu) inherit v9 CSS variables when they mount inside a portal created by v8 or Northstar.",
+          "whenToUse": "ALWAYS, in any app running v8 and v9 together. Without it, v9 overlays render unthemed. It must be an inner child of FluentProvider.",
+          "install": "npm install @fluentui/react-portal-compat",
+          "import": "import { FluentProvider } from '@fluentui/react-components';\nimport { PortalCompatProvider } from '@fluentui/react-portal-compat';\n\n<FluentProvider>\n  <PortalCompatProvider>{/* your components */}</PortalCompatProvider>\n</FluentProvider>",
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-portal-compat/README.md"
+        },
+        {
+          "package": "@fluentui/react-portal-compat-context",
+          "version": "9.0.16",
+          "private": false,
+          "installable": true,
+          "provides": "The context primitive behind PortalCompatProvider; @fluentui/react depends on it directly.",
+          "whenToUse": "Transitively. You do not normally install this yourself.",
+          "install": "npm install @fluentui/react-portal-compat-context",
+          "import": null,
+          "source": null
+        }
+      ],
+      "neverRecommend": [
+        {
+          "package": "@fluentui/react-colorpicker-compat",
+          "reason": "\"private\": true in packages/react-components/react-colorpicker-compat/package.json — it is never published to npm, so \"npm install @fluentui/react-colorpicker-compat\" cannot succeed.",
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-colorpicker-compat/package.json"
+        },
+        {
+          "package": "@fluentui/react-utilities-compat",
+          "reason": "\"private\": true in packages/react-components/react-utilities-compat/library/package.json — it is never published to npm, so \"npm install @fluentui/react-utilities-compat\" cannot succeed.",
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-utilities-compat/library/package.json"
+        }
+      ],
+      "eslint": {
+        "package": "@fluentui/eslint-plugin-react-components",
+        "rules": [
+          "prefer-fluentui-v9",
+          "enforce-use-client"
+        ],
+        "whatItDoes": "Flags v8 imports that already have a v9 equivalent, so the migration cannot regress.",
+        "note": "Version not derived here — this package is not in the version set above; treat the rule names as the verified part."
+      }
     }
   }
 }

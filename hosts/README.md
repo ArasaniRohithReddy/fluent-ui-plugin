@@ -46,7 +46,7 @@ Each host spells a remote server differently, and getting it wrong usually fails
 
 Hosts with no verified shape (Antigravity, Visual Studio) are skipped rather than guessed. A smoke check locks these key names in place so a future edit can't silently break them.
 
-Note Figma's own limits: the remote server needs a **node-specific link** (`?node-id=...`) — a file-only URL fails — and a Starter plan or View/Collab seat is capped at 6 tool calls per month.
+Note Figma's own limits: the remote server needs a **node-specific link** (`?node-id=...`) — a file-only URL fails — and a **View/Collab seat** is capped at ~6 tool calls per month (20 on Starter), while a **Dev/Full seat** gets 200/day.
 
 > Why this is needed: installing the plugin loads the **agents, skills, and instructions** automatically (they are Markdown the host reads natively), but the **MCP server is a separate process** each host must be told to launch. The repo's bundled `.mcp.json` uses a **relative** path that only resolves when your working directory is this repo, so from any other workspace the server can't be found. Registering the absolute path (what the helper does) fixes that everywhere. Prefer the manual per-host steps below if you want full control.
 

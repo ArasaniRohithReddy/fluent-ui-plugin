@@ -14,13 +14,61 @@ function walkTokens(
   }
 }
 
+/**
+ * The shipped Griffel/CSS names for tokens the dataset stores under a nested
+ * path. `typography.fontFamilies.base` is real data but `tokens.fontFamilies.base`
+ * does not exist in Griffel — the shipped name is `tokens.fontFamilyBase` /
+ * `--fontFamilyBase`. Without this alias layer fluent_get_token cannot resolve
+ * the three font-family tokens at all, and fluent_list_tokens teaches models to
+ * write a Griffel path that is undefined at runtime.
+ *
+ * Fixing this in the tool rather than the data is deliberate: mcp/data is shared.
+ */
+const TOKEN_ALIASES: Record<string, string> = {
+  fontfamilybase: 'typography.fontFamilies.base',
+  fontfamilymonospace: 'typography.fontFamilies.monospace',
+  fontfamilynumeric: 'typography.fontFamilies.numeric',
+};
+
+/** Reverse map: dataset path -> the real shipped token name. */
+const SHIPPED_NAME_BY_PATH: Record<string, string> = {
+  'typography.fontFamilies.base': 'fontFamilyBase',
+  'typography.fontFamilies.monospace': 'fontFamilyMonospace',
+  'typography.fontFamilies.numeric': 'fontFamilyNumeric',
+};
+
+/** How many substring matches to return before switching to a count + advice. */
+const MAX_FUZZY_MATCHES = 25;
+
+/**
+ * Categories whose values are theme-invariant in this dataset. Reported
+ * explicitly so a caller never assumes `theme` was honoured when it was not.
+ */
+const THEME_INVARIANT = new Set(['typography', 'spacing', 'borderRadius', 'strokeWidth', 'motion', 'shadow']);
+
+/**
+ * Fluent 2 ships distinct dark-theme shadow values (and shadow*Brand variants
+ * for use over brand fills). This dataset carries a single set, so `theme` is a
+ * no-op for shadows and that has to be stated rather than implied.
+ */
+const SHADOW_CAVEAT =
+  'theme does NOT affect this category here: mcp/data/fluent-tokens.json carries a single shadow set ' +
+  '(plus the shadow*Brand variants). Fluent 2 does define separate dark-theme shadow values, so for a dark ' +
+  'surface read tokens.shadowN from webDarkTheme at runtime rather than pasting these literals.';
+
+function themeNote(category: string): string | undefined {
+  if (category === 'shadow') return SHADOW_CAVEAT;
+  if (THEME_INVARIANT.has(category)) return 'theme does not affect this category: these values are theme-invariant.';
+  return undefined;
+}
+
 export function registerTokens(server: McpServer): void {
   server.registerTool(
     'fluent_list_tokens',
     {
       title: 'List Fluent 2 design tokens',
       description:
-        'List Fluent 2 design tokens by category (color, typography, spacing, borderRadius, strokeWidth, shadow, motion). For color, choose the theme (light/dark/highContrast). Values are concrete resolved values; each token X is exposed as the CSS variable --X and as tokens.X in Griffel makeStyles.',
+        'List Fluent 2 design tokens by category (color, typography, spacing, borderRadius, strokeWidth, shadow, motion). For color, choose the theme (light/dark/highContrast) — the color response also carries aliasGlobalTokens, the published alias-token to global-token-slot map (colorBrandBackground -> brand[80] light / brand[70] dark). Every other category is theme-invariant in this dataset and the response says so explicitly. Values are concrete resolved values; each token X is exposed as the CSS variable --X and as tokens.X in Griffel makeStyles.',
       inputSchema: {
         category: z
           .enum(['color', 'typography', 'spacing', 'borderRadius', 'strokeWidth', 'shadow', 'motion', 'all'])
@@ -28,7 +76,7 @@ export function registerTokens(server: McpServer): void {
         theme: z
           .enum(['light', 'dark', 'highContrast'])
           .default('light')
-          .describe('Theme for color tokens.'),
+          .describe('Theme for color tokens. Ignored (and reported as ignored) for every other category.'),
       },
     },
     async ({ category, theme }) => {
@@ -37,15 +85,36 @@ export function registerTokens(server: McpServer): void {
       const themeKey =
         theme === 'dark' ? 'semanticDark' : theme === 'highContrast' ? 'semanticHighContrast' : 'semanticLight';
       if (category === 'color') {
-        return textResult(JSON.stringify({ brandRamp: t.color.brandRamp, [themeKey]: t.color[themeKey] }, null, 2));
+        const meta = t.color?.aliasReferenceMeta;
+        return textResult(
+          JSON.stringify(
+            {
+              theme,
+              brandRamp: t.color.brandRamp,
+              [themeKey]: t.color[themeKey],
+              aliasGlobalTokens: globalSlotMap(t),
+              aliasGlobalTokensNote: meta
+                ? 'aliasGlobalTokens records which global token slot (family[slot]) each alias resolves to in the light and ' +
+                  'dark web themes — provenance, not a substitute for the concrete values above. Source: ' +
+                  meta.docUrl
+                : undefined,
+            },
+            null,
+            2
+          )
+        );
       }
       if (category === 'all') {
         return textResult(
           JSON.stringify(
             {
+              theme,
+              themeNote:
+                'theme applies to colorSemantic only. Every other category below is theme-invariant in this dataset. ' +
+                SHADOW_CAVEAT,
               colorBrandRamp: t.color.brandRamp,
               colorSemantic: t.color[themeKey],
-              typography: t.typography,
+              typography: withShippedNames(t.typography),
               spacing: t.spacing,
               borderRadius: t.borderRadius,
               strokeWidth: t.strokeWidth,
@@ -57,7 +126,11 @@ export function registerTokens(server: McpServer): void {
           )
         );
       }
-      return textResult(JSON.stringify(t[category], null, 2));
+      const note = themeNote(category);
+      const value = category === 'typography' ? withShippedNames(t[category]) : t[category];
+      return textResult(
+        JSON.stringify(note ? { category, theme, note, [category]: value } : { category, [category]: value }, null, 2)
+      );
     }
   );
 
@@ -66,15 +139,36 @@ export function registerTokens(server: McpServer): void {
     {
       title: 'Get a Fluent 2 design token value',
       description:
-        'Look up a Fluent 2 design token by name (e.g. colorBrandBackground, spacingHorizontalM, borderRadiusMedium, fontSizeBase300, shadow8, durationNormal). Returns concrete value(s) across light/dark/high-contrast where applicable plus the CSS variable name.',
+        'Look up a Fluent 2 design token by name (e.g. colorBrandBackground, spacingHorizontalM, borderRadiusMedium, fontSizeBase300, fontFamilyBase, shadow8, durationNormal). Returns concrete value(s) across light/dark/high-contrast where applicable plus the CSS variable name. An empty or whitespace-only name is rejected rather than treated as "match everything"; a broad fragment returns a capped list plus the total match count.',
       inputSchema: {
-        name: z.string().describe('Token name or fragment, e.g. colorBrandBackground.'),
+        name: z
+          .string()
+          .min(1, 'name must not be empty — pass a token name or fragment, e.g. "colorBrandBackground".')
+          .describe('Token name or fragment, e.g. colorBrandBackground.'),
+        maxMatches: z
+          .number()
+          .int()
+          .min(1)
+          .max(500)
+          .default(MAX_FUZZY_MATCHES)
+          .describe('Cap on the number of substring (fragment) matches returned. Exact matches are never capped.'),
       },
     },
-    async ({ name }) => {
+    async ({ name, maxMatches }) => {
       const t = loadJson<any>('fluent-tokens.json');
       if (!t) return textResult('Token data not found.');
-      const q = name.toLowerCase().replace(/^--/, '');
+
+      // An empty/whitespace query used to fall through to the substring branch,
+      // where `includes('')` matches every token and dumped the entire dataset
+      // as if it were an answer.
+      if (!name || !name.trim()) {
+        return textResult(
+          'Empty token name. Pass a token name or fragment, e.g. fluent_get_token { name: "colorBrandBackground" }, ' +
+            'or browse a category with fluent_list_tokens { category: "color" }.'
+        );
+      }
+
+      const q = name.trim().toLowerCase().replace(/^--/, '');
       const results: Record<string, any> = {};
 
       for (const [themeName, key] of [
@@ -94,25 +188,122 @@ export function registerTokens(server: McpServer): void {
       }
       for (const e of out) {
         const leaf = e.path.split('.').pop()!.toLowerCase();
-        if (leaf === q) results[e.path] = e.value;
+        if (leaf === q) results[label(e.path)] = e.value;
       }
 
-      if (Object.keys(results).length === 0) {
+      // Exact hit on a shipped name the dataset stores under a nested path.
+      const aliasPath = TOKEN_ALIASES[q];
+      if (aliasPath) {
+        const hit = out.find((e) => e.path === aliasPath);
+        if (hit) results[label(aliasPath)] = hit.value;
+      }
+
+      const exactCount = Object.keys(results).length;
+      let fuzzyTotal = 0;
+      if (exactCount === 0) {
+        const fuzzy: Array<[string, any]> = [];
         for (const [k, v] of Object.entries(t.color?.semanticLight || {})) {
-          if (k.toLowerCase().includes(q)) results[`color.light.${k}`] = v;
+          if (k.toLowerCase().includes(q)) fuzzy.push([`color.light.${k}`, v]);
         }
         for (const e of out) {
-          if (e.path.toLowerCase().includes(q)) results[e.path] = e.value;
+          const shipped = SHIPPED_NAME_BY_PATH[e.path];
+          if (e.path.toLowerCase().includes(q) || (shipped && shipped.toLowerCase().includes(q))) {
+            fuzzy.push([label(e.path), e.value]);
+          }
         }
+        fuzzyTotal = fuzzy.length;
+        for (const [k, v] of fuzzy.slice(0, maxMatches)) results[k] = v;
       }
 
       if (Object.keys(results).length === 0) {
         return textResult(`No token matching "${name}". Use fluent_list_tokens to browse categories.`);
       }
+
+      // Colour aliases carry provenance the resolved hex cannot: which global
+      // slot they point at per theme, the interaction state, and the category
+      // the design system files them under. Attached only for a narrow result
+      // set — on a broad fragment it would bury the values the caller asked for.
+      const aliasRefs = aliasReferencesFor(t, Object.keys(results));
+      if (Object.keys(aliasRefs).length) {
+        results.$aliasReference = {
+          note: 'Global token slot (family[slot]) each alias resolves to per theme, plus its state and published category.',
+          docUrl: t.color?.aliasReferenceMeta?.docUrl,
+          tokens: aliasRefs,
+        };
+      }
+
+      const header =
+        exactCount > 0
+          ? `Exact match(es) for "${name}"`
+          : fuzzyTotal > maxMatches
+            ? `"${name}" is a fragment, not a token name: ${fuzzyTotal} matches, showing ${maxMatches}. Narrow the query or use fluent_list_tokens to browse.`
+            : `"${name}" matched ${fuzzyTotal} token(s) by fragment`;
+
       return textResult(
-        `Matches for "${name}" — each token X maps to CSS variable --X and tokens.X in Griffel:\n\n` +
+        `${header} — each token X maps to CSS variable --X and tokens.X in Griffel:\n\n` +
           JSON.stringify(results, null, 2)
       );
     }
   );
+}
+
+/**
+ * The published alias -> global-token-slot map, flattened to one readable line
+ * per alias. Kept compact deliberately: the concrete per-theme values are
+ * already in the same response, so repeating the full record for 348 aliases
+ * would triple the payload to say the same thing.
+ */
+function globalSlotMap(t: any): Record<string, string> | undefined {
+  const ref = t?.color?.aliasReference;
+  if (!ref) return undefined;
+  const out: Record<string, string> = {};
+  for (const [name, entry] of Object.entries<any>(ref)) {
+    out[name] = `${entry?.globalLight ?? 'n/a'} (light) / ${entry?.globalDark ?? 'n/a'} (dark)`;
+  }
+  return out;
+}
+
+/** Alias-reference records for the colour tokens a lookup actually matched. */
+function aliasReferencesFor(t: any, resultKeys: string[]): Record<string, any> {
+  const ref = t?.color?.aliasReference;
+  if (!ref) return {};
+  const names = new Set<string>();
+  for (const key of resultKeys) {
+    const m = /^color\.(?:light|dark|highContrast)\.(.+)$/.exec(key);
+    if (m && ref[m[1]]) names.add(m[1]);
+  }
+  if (names.size === 0 || names.size > 12) return {};
+  const out: Record<string, any> = {};
+  for (const n of names) out[n] = ref[n];
+  return out;
+}
+
+/**
+ * Label a dataset path with the real shipped token name where the two differ,
+ * so a caller is never handed `typography.fontFamilies.base` alone and left to
+ * guess the Griffel key.
+ */
+function label(path: string): string {
+  const shipped = SHIPPED_NAME_BY_PATH[path];
+  return shipped ? `${shipped} (${path})` : path;
+}
+
+/** Add the shipped `fontFamily*` names alongside the nested `fontFamilies` map. */
+function withShippedNames(typography: any): any {
+  if (!typography || typeof typography !== 'object' || !typography.fontFamilies) return typography;
+  const families = typography.fontFamilies;
+  const shipped: Record<string, any> = {};
+  for (const [path, tokenName] of Object.entries(SHIPPED_NAME_BY_PATH)) {
+    const leaf = path.split('.').pop()!;
+    if (families[leaf] !== undefined) shipped[tokenName] = families[leaf];
+  }
+  return {
+    ...typography,
+    // The nested map is the dataset shape; these are the names that actually
+    // exist as tokens.X in Griffel and --X in CSS. Use these in code.
+    fontFamilyTokens: shipped,
+    fontFamilyTokensNote:
+      'Use fontFamilyBase / fontFamilyMonospace / fontFamilyNumeric in code (tokens.fontFamilyBase, --fontFamilyBase). ' +
+      '"fontFamilies.base" is this dataset\'s storage path, not a Griffel key.',
+  };
 }

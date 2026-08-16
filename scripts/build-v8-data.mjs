@@ -34,6 +34,12 @@
  *                 known session-state location)
  *     --check     do not write; fail if the on-disk file differs from the build
  *     --json      print the run summary as JSON
+ *
+ *   node scripts/build-v8-data.mjs --refresh-upstream [--ref master] [--out <file>]
+ *     Recompute ONLY the v8/v9 name classes (collisions, renames, casing traps,
+ *     behaviour traps) and the quoted package versions, against the live
+ *     API-Extractor reports in microsoft/fluentui. Needs network, does NOT need
+ *     the research folder. Run this whenever upstream ships new components.
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
@@ -44,6 +50,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
 const DEFAULT_OUT = join(REPO_ROOT, 'mcp', 'data', 'fluent-v8.json');
+const DEFAULT_MIGRATION_OUT = join(REPO_ROOT, 'mcp', 'data', 'migration.json');
 
 /** Candidate research folders, first existing wins. */
 const RESEARCH_CANDIDATES = [
@@ -1244,12 +1251,1360 @@ export function validate(data) {
   return { errors, warnings, counts, bytes: Buffer.byteLength(text + '\n', 'utf8') };
 }
 
+/* ================================================================== *
+ * v8/v9 NAME CLASSES — computed from the upstream API-Extractor reports
+ * ================================================================== *
+ *
+ * The old `collisions` array was hand-curated from a research markdown table.
+ * It mixed four different failure modes under one label and — because nobody
+ * ever intersected the real export lists — it omitted `Button`, `Checkbox`,
+ * `Dropdown`, `Label`, `Link`, `Slider`, `Spinner`, `SearchBox`, `SpinButton`,
+ * `CompoundButton` and `DialogContent`, i.e. the most-used components in both
+ * libraries.
+ *
+ * Membership is now MECHANICAL. The two API-Extractor reports in
+ * microsoft/fluentui are the authority:
+ *   v8: packages/react/etc/react.api.md
+ *   v9: packages/react-components/react-components/etc/react-components.api.md
+ * Intersecting their PascalCase exports yields the collision set; comparing
+ * case-insensitively yields the casing traps. Only the PROSE is hand-written,
+ * and a prose entry with no mechanical backing is dropped with a warning, so
+ * the list can never drift back into curation.
+ *
+ * The four classes are deliberately separate because the fix differs:
+ *   collisions    — same identifier exported by BOTH; disambiguate the import
+ *   renames       — v8 name -> a DIFFERENT v9 name; rename the symbol
+ *   casingTraps   — same word, different casing (ComboBox vs Combobox)
+ *   behaviorTraps — API semantics changed; rewrite the call site
+ */
+
+export const UPSTREAM = {
+  repo: 'microsoft/fluentui',
+  defaultRef: 'master',
+  reports: {
+    v8: 'packages/react/etc/react.api.md',
+    v9: 'packages/react-components/react-components/etc/react-components.api.md',
+  },
+  raw: (path, ref = UPSTREAM.defaultRef) =>
+    `https://raw.githubusercontent.com/${UPSTREAM.repo}/${ref}/${path}`,
+};
+
+/** Packages whose versions we quote but which own no collision export. */
+const EXTRA_VERSION_PACKAGES = [
+  '@fluentui/react',
+  '@fluentui/react-components',
+  '@fluentui/theme',
+  '@fluentui/tokens',
+  '@fluentui/utilities',
+  '@fluentui/react-utilities',
+  '@fluentui/font-icons-mdl2',
+  '@fluentui/react-icons-mdl2',
+  '@fluentui/fluent2-theme',
+  '@fluentui/codemods',
+  '@fluentui/react-migration-v8-v9',
+  '@fluentui/react-migration-v0-v9',
+  '@fluentui/react-portal-compat',
+  '@fluentui/react-portal-compat-context',
+  '@fluentui/react-calendar-compat',
+  '@fluentui/react-datepicker-compat',
+  '@fluentui/react-timepicker-compat',
+  '@fluentui/react-icons-compat',
+  '@fluentui/react-colorpicker-compat',
+  '@fluentui/react-utilities-compat',
+  '@fluentui/react-divider',
+  '@fluentui/react-switch',
+  '@fluentui/react-tabs',
+  '@fluentui/react-skeleton',
+  '@fluentui/react-progress',
+  '@fluentui/react-swatch-picker',
+  '@fluentui/react-menu',
+  '@fluentui/react-provider',
+  '@fluentui/react-combobox',
+];
+
+/**
+ * Where a package's package.json lives in the monorepo. There is no manifest
+ * mapping npm name -> path, and walking all 270+ package.json files costs
+ * minutes, so try the three layouts the repo actually uses (v9 libraries were
+ * split into `<pkg>/library/` in 2024; v8 packages never were).
+ */
+export function packageJsonCandidates(pkg) {
+  const short = pkg.replace(/^@fluentui\//, '');
+  return [
+    `packages/react-components/${short}/library/package.json`,
+    `packages/react-components/${short}/package.json`,
+    `packages/${short}/library/package.json`,
+    `packages/${short}/package.json`,
+  ];
+}
+
+/**
+ * Read one API-Extractor report into `name -> { package, form }`.
+ *
+ * API Extractor renames a symbol when the barrel re-exports something that
+ * collides with a local name — `import { Image as Image_2 }` /
+ * `export { Image_2 as Image }`. A parser that ignores the alias form silently
+ * loses Image, Text, Theme, PartialTheme and SelectionMode, which is exactly
+ * five of the collisions, so both export forms are handled here.
+ */
+export function parseApiReport(md, fallbackPackage) {
+  const imports = new Map();
+  const exports = new Map();
+  for (const line of String(md ?? '').split(/\r?\n/)) {
+    let m;
+    if ((m = /^import (?:type )?\{ ([A-Za-z0-9_$]+)(?: as ([A-Za-z0-9_$]+))? \} from '([^']+)';$/.exec(line))) {
+      imports.set(m[2] || m[1], m[3]);
+    } else if ((m = /^export \{ ([A-Za-z0-9_$]+)(?: as ([A-Za-z0-9_$]+))? \}$/.exec(line))) {
+      const local = m[1];
+      exports.set(m[2] || local, { package: imports.get(local) ?? fallbackPackage, form: 're-export' });
+    } else if (
+      (m = /^export (?:declare )?(const|function|class|abstract class|interface|type|enum|namespace) ([A-Za-z0-9_$]+)/.exec(line))
+    ) {
+      exports.set(m[2], { package: fallbackPackage, form: m[1] });
+    }
+  }
+  return exports;
+}
+
+/**
+ * Every v8 `I<Name>Props` that actually declares an `onChange` member.
+ *
+ * The inherited prose claimed the onChange break covered "Checkbox, Slider,
+ * Toggle, SpinButton, Link, Label, Image, Spinner". Four of those eight
+ * (`Link`, `Label`, `Image`, `Spinner`) have no onChange in v8 at all, so the
+ * list is derived here instead of trusted.
+ */
+export function extractV8OnChangeOwners(md) {
+  const lines = String(md ?? '').split(/\r?\n/);
+  const owners = [];
+  for (let i = 0; i < lines.length; i++) {
+    const m = /^export interface I([A-Za-z0-9]+)Props\b/.exec(lines[i]);
+    if (!m) continue;
+    let depth = (lines[i].match(/\{/g) || []).length - (lines[i].match(/\}/g) || []).length;
+    let hasOnChange = false;
+    for (let j = i + 1; j < lines.length && depth > 0 && j - i < 200; j++) {
+      if (/^\s{4}onChange\??:/.test(lines[j])) hasOnChange = true;
+      depth += (lines[j].match(/\{/g) || []).length - (lines[j].match(/\}/g) || []).length;
+    }
+    if (hasOnChange && !owners.includes(m[1])) owners.push(m[1]);
+  }
+  return owners.sort();
+}
+
+const isPascalExport = (n) => /^[A-Z][A-Za-z0-9]*$/.test(n);
+
+/** The mechanical part: intersect the two export sets. No curation. */
+export function computeNameClasses(v8Exports, v9Exports) {
+  const v8Pascal = [...v8Exports.keys()].filter(isPascalExport);
+  const v9Pascal = [...v9Exports.keys()].filter(isPascalExport);
+  const collisions = v8Pascal.filter((n) => v9Exports.has(n)).sort();
+
+  const v9ByLower = new Map(v9Pascal.map((n) => [n.toLowerCase(), n]));
+  const casingTraps = v8Pascal
+    .filter((n) => !v9Exports.has(n) && v9ByLower.has(n.toLowerCase()))
+    .map((n) => ({ v8Name: n, v9Name: v9ByLower.get(n.toLowerCase()) }))
+    .sort((a, b) => (a.v8Name < b.v8Name ? -1 : 1));
+
+  return {
+    collisions,
+    casingTraps,
+    counts: {
+      v8Exports: v8Exports.size,
+      v9Exports: v9Exports.size,
+      v8PascalExports: v8Pascal.length,
+      v9PascalExports: v9Pascal.length,
+      collisions: collisions.length,
+      casingTraps: casingTraps.length,
+    },
+  };
+}
+
+/**
+ * Fetch the two API reports plus every package.json whose version we quote.
+ *
+ * Versions are DERIVED, never pinned by hand: the dataset previously claimed
+ * `@fluentui/react-nav 9.4.3` while upstream had already shipped 9.4.4, and a
+ * stale version in a migration instruction is indistinguishable from a wrong
+ * one. `private` is captured too — a private package must never be recommended.
+ */
+export async function fetchUpstream({ ref = UPSTREAM.defaultRef, log = () => {} } = {}) {
+  const reports = {};
+  for (const [gen, path] of Object.entries(UPSTREAM.reports)) {
+    const url = UPSTREAM.raw(path, ref);
+    log(`fetching ${path}`);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`GET ${url} -> HTTP ${res.status}`);
+    const text = await res.text();
+    reports[gen] = {
+      path,
+      url,
+      bytes: Buffer.byteLength(text, 'utf8'),
+      sha256: sha256(text),
+      text,
+    };
+  }
+
+  const v8Exports = parseApiReport(reports.v8.text, '@fluentui/react');
+  const v9Exports = parseApiReport(reports.v9.text, '@fluentui/react-components');
+  const computed = computeNameClasses(v8Exports, v9Exports);
+  computed.v8OnChangeOwners = extractV8OnChangeOwners(reports.v8.text);
+
+  const wanted = new Set(EXTRA_VERSION_PACKAGES);
+  for (const name of computed.collisions) {
+    for (const set of [v8Exports, v9Exports]) {
+      const pkg = set.get(name)?.package;
+      if (pkg && pkg.startsWith('@fluentui/')) wanted.add(pkg);
+    }
+  }
+  for (const { v8Name, v9Name } of computed.casingTraps) {
+    for (const pkg of [v8Exports.get(v8Name)?.package, v9Exports.get(v9Name)?.package]) {
+      if (pkg && pkg.startsWith('@fluentui/')) wanted.add(pkg);
+    }
+  }
+
+  const versions = {};
+  const versionMisses = [];
+  for (const pkg of [...wanted].sort()) {
+    let found = null;
+    for (const candidate of packageJsonCandidates(pkg)) {
+      const res = await fetch(UPSTREAM.raw(candidate, ref));
+      if (!res.ok) continue;
+      let json;
+      try {
+        json = JSON.parse(await res.text());
+      } catch {
+        continue;
+      }
+      if (json.name !== pkg) continue;
+      found = { version: json.version ?? null, private: json.private === true, path: candidate };
+      break;
+    }
+    if (found) versions[pkg] = found;
+    else versionMisses.push(pkg);
+    log(`  ${pkg} = ${found ? found.version + (found.private ? ' (private)' : '') : 'NOT FOUND'}`);
+  }
+
+  return {
+    ref,
+    fetchedOn: new Date().toISOString().slice(0, 10),
+    reports: Object.fromEntries(
+      Object.entries(reports).map(([k, r]) => [k, { path: r.path, url: r.url, bytes: r.bytes, sha256: r.sha256 }])
+    ),
+    exports: {
+      v8: Object.fromEntries([...v8Exports].map(([k, v]) => [k, v.package])),
+      v9: Object.fromEntries([...v9Exports].map(([k, v]) => [k, v.package])),
+    },
+    computed,
+    versions,
+    versionMisses,
+  };
+}
+
+/* ---- hand-written prose, re-filed by class ------------------------- *
+ * Every string below was written by a human and is preserved verbatim from
+ * the previous `collisions` array where one existed. What changed is only
+ * WHICH class a row lives in, and the fact that package versions are no
+ * longer baked into the sentence — they are injected from upstream.
+ */
+export const NAME_CLASS_PROSE = {
+  collisions: {
+    Breadcrumb: {
+      v8: 'items: IBreadcrumbItem[], maxDisplayedItems, overflowIndex, dividerAs',
+      v9: '<Breadcrumb><BreadcrumbItem><BreadcrumbButton>',
+      hazard: 'Same name, array-vs-children; overflow collapsing must be hand-rolled in v9',
+      severity: 'medium',
+    },
+    Button: {
+      v8: 'class Button extends React.Component<IButtonProps> — the base class behind DefaultButton / PrimaryButton / IconButton / ActionButton / CommandBarButton; text, iconProps, primary, split + menuProps, allowDisabledFocus, styles',
+      v9: 'ForwardRefComponent<ButtonProps>: children for the label, an icon slot, appearance="secondary"|"primary"|"outline"|"subtle"|"transparent", shape, size, disabledFocusable',
+      hazard:
+        'The highest-traffic collision in either library and the one most likely to be generated wrong. Both packages export `Button`, but in v8 it is a rarely-rendered base class while in v9 it IS the button — so a v8 import inside a v9 app compiles and renders an unthemed v8 button. text / iconProps / primary / styles are all accepted-and-ignored props on the v9 side.',
+      severity: 'high',
+    },
+    Checkbox: {
+      v8: 'onChange(ev, checked?: boolean); boxSide, checkmarkIconProps, indeterminate / defaultIndeterminate, label, styles',
+      v9: "onChange(ev, data: CheckboxOnChangeData) where data.checked is boolean | 'mixed'; labelPosition, shape, size; children: never",
+      hazard:
+        'Same name, different onChange contract, and v8\'s `indeterminate` does not exist in v9 — it became checked="mixed". Passing indeterminate to the v9 Checkbox silently does nothing.',
+      severity: 'high',
+    },
+    ColorPicker: {
+      v8: 'color: IColor | string REQUIRED, alphaType, strings, onChange(ev, IColor)',
+      v9: '<ColorPicker><ColorArea/><ColorSlider/><AlphaSlider/>',
+      hazard: 'Same name; IColor type and the strings a11y bundle do not exist in v9',
+      severity: 'medium',
+    },
+    CompoundButton: {
+      v8: 'class CompoundButton extends React.Component<IButtonProps>; secondaryText, onRenderDescription',
+      v9: 'ForwardRefComponent<CompoundButtonProps>: a secondaryContent slot inside a contentContainer, plus appearance / shape / size from ButtonProps',
+      hazard:
+        'Both libraries export CompoundButton. `secondaryText` is an unknown prop on the v9 component, so the description simply never renders and nothing warns.',
+      severity: 'high',
+    },
+    Dialog: {
+      v8: 'hidden defaults to TRUE; content via dialogContentProps/modalProps',
+      v9: 'open boolean defaults false; <DialogSurface><DialogBody><DialogTitle> composition',
+      hazard: 'Inverted visibility prop: hidden={isOpen} renders backwards and is the #1 generated-code bug',
+      severity: 'high',
+    },
+    DialogContent: {
+      v8: 'IDialogContentProps: title, subText, type: DialogType, showCloseButton, topButtonsProps, isMultiline — normally passed as dialogContentProps rather than rendered directly',
+      v9: 'DialogContentProps = ComponentProps<DialogContentSlots> — a single scrollable body <div> slot with no title, no subText and no close button',
+      hazard:
+        'Both export DialogContent, and they own different parts of the dialog. In v8 it carries the title and the close button; in v9 the title is DialogTitle and the buttons are DialogActions, so a ported <DialogContent title subText> renders an empty box.',
+      severity: 'high',
+    },
+    Dropdown: {
+      v8: 'IDropdownProps: options: IDropdownOption[], selectedKey / selectedKeys, onChange(ev, option, index), placeholder, multiSelect, onRenderTitle',
+      v9: '<Dropdown><Option> children, selectedOptions, onOptionSelect(ev, data), multiselect, button + listbox slots',
+      hazard:
+        'Same name; options-array vs children, onChange vs onOptionSelect, and `selectedKey` has no v9 counterpart. Note the v9 Dropdown ships from @fluentui/react-combobox — there is no react-dropdown package to import from.',
+      severity: 'high',
+    },
+    Image: {
+      v8: 'IImageProps: src + imageFit: ImageFit enum, coverStyle, maximizeFrame, shouldFadeIn, errorSrc, onLoadingStateChange',
+      v9: "ImageProps: fit: 'none'|'center'|'contain'|'cover'|'default', block, bordered, shadow, shape",
+      hazard:
+        'Same name; the prop is `imageFit` with an enum in v8 and `fit` with string literals in v9, so a ported imageFit={ImageFit.cover} is dropped and the image renders unfitted.',
+      severity: 'medium',
+    },
+    Label: {
+      v8: 'ILabelProps: required, disabled, as, styles — renders a <label>',
+      v9: "LabelProps: size 'small'|'medium'|'large', weight 'regular'|'semibold', required?: boolean | Slot<'span'>, disabled",
+      hazard:
+        'Same name, and the props people actually pass (required, disabled) exist in both — so the swap type-checks. What silently changes is the type ramp (v9 has size/weight, v8 has neither) and the styles prop, which v9 drops.',
+      severity: 'medium',
+    },
+    Link: {
+      v8: 'ILinkProps: href, disabled, underline, as, styles — renders <a> or <button> depending on href',
+      v9: "LinkProps: appearance 'default'|'subtle', inline, disabled, disabledFocusable; root is Slot<'a', 'button' | 'span'>",
+      hazard:
+        "Same name; v8's `underline` boolean has no v9 counterpart (v9 expresses in-paragraph links with `inline`), and the styles prop is dropped, so links keep working but stop looking like links.",
+      severity: 'medium',
+    },
+    List: {
+      v8: 'Virtualized: items + onRenderCell, page windowing, IPage, getPageHeight',
+      v9: 'semantic <List>/<ListItem>, NO virtualization',
+      hazard: 'Same name but v9 renders every row into the DOM; severe perf regression on large datasets',
+      severity: 'high',
+    },
+    MessageBar: {
+      v8: 'messageBarType={MessageBarType.error}, isMultiline, actions, delayedRender live region',
+      v9: 'intent="error", <MessageBarBody>/<MessageBarActions>',
+      hazard: "Enum→string plus children composition; v8's automatic live-region announcement is not replicated",
+      severity: 'medium',
+    },
+    Nav: {
+      v8: 'groups: INavLinkGroup[] | null required; INavLink{name,url}; selectedKey; onLinkClick(ev,item)',
+      v9: '<NavDrawer><NavItem value>; selectedValue; onNavItemSelect',
+      hazard:
+        'Identical export name, zero API overlap; a naive swap type-checks nowhere and silently loses nav state',
+      severity: 'high',
+    },
+    PartialTheme: {
+      v8: 'PartialTheme (@fluentui/theme): optional palette / semanticColors / fonts / effects / spacing / components — a partial v8 ITheme',
+      v9: 'PartialTheme (@fluentui/react-theme, re-exported from @fluentui/tokens): Partial<Theme>, i.e. a partial FLAT token record',
+      hazard:
+        'Both export a type named PartialTheme, and the two shapes share no members. A mixed import type-checks a v8 palette object against the v9 provider (or vice versa) and the failure surfaces far away from the import line.',
+      severity: 'high',
+    },
+    Persona: {
+      v8: 'text, secondaryText, size={PersonaSize.size48}, presence={PersonaPresence.online}, imageUrl',
+      v9: "name, size={48}, presence={{status:'available'}}, avatar={{image:{src}}}",
+      hazard: 'text→name rename, enum→number, and presence changes from enum to an object shape',
+      severity: 'high',
+    },
+    Rating: {
+      v8: 'rating / defaultRating, max, onChange(event, rating?), RatingSize.Small|Large',
+      v9: 'value / defaultValue, onChange(ev, data), size="small"|"medium"|"large"',
+      hazard: 'rating→value rename plus enum→string literal; both compile-fail loudly except onChange arg 2',
+      severity: 'medium',
+    },
+    SearchBox: {
+      v8: 'ISearchBoxProps: onChange(ev, newValue?: string), onSearch(newValue), onClear, onEscape, underlined, iconProps, labelText, disableAnimation',
+      v9: 'SearchBoxProps extends InputProps: onChange(ev, data: InputOnChangeData) reading data.value, plus a dismiss slot — no onSearch, no onClear',
+      hazard:
+        'Same name; the second onChange argument changes from a string to a data object, and v8\'s onSearch (fired on Enter) and onClear have no v9 equivalent, so "press Enter to search" silently stops working.',
+      severity: 'high',
+    },
+    SelectionMode: {
+      v8: 'numeric enum from @fluentui/utilities: none = 0, single = 1, multiple = 2',
+      v9: "string union from @fluentui/react-utilities: 'single' | 'multiselect'",
+      hazard:
+        "Same name, enum vs string union. `SelectionMode.multiple` does not exist in v9 — the value is 'multiselect' — and a v8 enum member is a number, which is not a valid v9 selectionMode at all.",
+      severity: 'high',
+    },
+    Slider: {
+      v8: 'onChange(value, range?, event?) — VALUE first; also onChanged(event, value, range?); ranged / lowerValue, showValue, valueFormat, originFromZero',
+      v9: 'onChange(ev, data: SliderOnChangeData) reading data.value; min / max / step / vertical / size; no ranged mode and no showValue',
+      hazard:
+        'Same name and the worst argument-order break in the library: v8 passes the value first, v9 passes the event first. A ported handler reads a React synthetic event as a number.',
+      severity: 'high',
+    },
+    SpinButton: {
+      v8: 'value / defaultValue are STRINGS; onChange(ev, newValue?: string), onIncrement / onDecrement / onValidate, iconProps, upArrowButtonStyles',
+      v9: 'value / defaultValue are number | null; onChange(ev, data: SpinButtonOnChangeData) reading data.value and data.displayValue; incrementButton / decrementButton slots',
+      hazard:
+        'Same name; the value prop changes from string to number AND onChange gains a data object. A loosely-typed call site compiles and then produces NaN.',
+      severity: 'high',
+    },
+    Spinner: {
+      v8: 'ISpinnerProps: size: SpinnerSize enum, label, labelPosition, ariaLive, styles',
+      v9: "SpinnerProps: size 'extra-tiny'|'tiny'|'extra-small'|'small'|'medium'|'large'|'extra-large'|'huge', appearance 'primary'|'inverted', delay, labelPosition 'above'|'below'|'before'|'after'",
+      hazard:
+        'Same name; SpinnerSize.large is a number and is not one of v9\'s string sizes, so the size prop is ignored and every spinner renders at medium.',
+      severity: 'medium',
+    },
+    TagPicker: {
+      v8: 'IBasePickerProps<ITag>; onResolveSuggestions required; ITag{name,key}',
+      v9: '<TagPicker><TagPickerControl><TagPickerList>; onOptionSelect',
+      hazard: 'Same export name, entirely different contract; ITag does not exist in v9',
+      severity: 'high',
+    },
+    Text: {
+      v8: "variant?: keyof IFontStyles ('small','xLarge','mega'), block, nowrap; foundation-legacy tokens",
+      v9: 'size={100..1000}, weight, align, truncate, wrap',
+      hazard: 'Same name; the v8 variant string set does not exist in v9 and fails silently as an unknown prop',
+      severity: 'medium',
+    },
+    Theme: {
+      v8: 'Theme (@fluentui/theme) extends IScheme: palette, semanticColors, fonts, effects, spacing, components',
+      v9: 'Theme (@fluentui/react-theme, from @fluentui/tokens): a FLAT record of design tokens — colorNeutralForeground1, spacingHorizontalM, borderRadiusMedium, shadow8, …',
+      hazard:
+        'Both export a type called Theme and they have no members in common. This is the collision behind most "my theme object does not apply" reports: a mixed import lets the wrong theme satisfy a provider\'s prop type.',
+      severity: 'high',
+    },
+    Tooltip: {
+      v8: 'v8 exports BOTH Tooltip and TooltipHost; TooltipHost is the wrapper you use (content, delay: TooltipDelay, overflowMode, DirectionalHint)',
+      v9: '<Tooltip content relationship="label"|"description"> around exactly one child',
+      hazard:
+        'v8 exports both Tooltip and TooltipHost; the v9 Tooltip maps to v8 TooltipHost, not to v8 Tooltip, and it REQUIRES the relationship prop',
+      severity: 'medium',
+    },
+  },
+
+  renames: [
+    {
+      v8Name: 'Toggle',
+      v9Name: 'Switch',
+      v8: 'Toggle with onText/offText/inlineLabel, role defaults to \'switch\'',
+      v9: 'Switch with label/labelPosition; no onText/offText',
+      hazard: 'Renamed and reshaped; on/off text must become adjacent content in v9',
+      severity: 'medium',
+      alsoIndex: ['Toggle'],
+    },
+    {
+      v8Name: 'Pivot',
+      v9Name: 'TabList',
+      v8: 'Pivot + PivotItem, selectedKey, linkFormat, PivotItem renders its own tabpanel',
+      v9: 'TabList + Tab, selectedValue, appearance; Tab renders NO panel',
+      hazard: 'Renamed; panel content silently disappears because v9 Tab does not render children as a panel',
+      severity: 'medium',
+      alsoIndex: ['Pivot', 'PivotItem'],
+    },
+    {
+      v8Name: 'Shimmer',
+      v9Name: 'Skeleton',
+      v8: 'Shimmer with shimmerElements: IShimmerElement[], isDataLoaded transition, ariaLabel',
+      v9: 'Skeleton + SkeletonItem children',
+      hazard: 'Renamed; declarative element array becomes children and the isDataLoaded crossfade is lost',
+      severity: 'medium',
+      alsoIndex: ['Shimmer'],
+    },
+    {
+      v8Name: 'Separator',
+      v9Name: 'Divider',
+      v8: 'Two components: Separator (alignContent, vertical) and VerticalDivider (wrapper/divider slots)',
+      v9: 'single Divider with vertical prop',
+      hazard: "Two-to-one mapping; VerticalDivider's wrapper/divider style slots have no v9 target",
+      severity: 'medium',
+      alsoIndex: ['Separator', 'VerticalDivider'],
+    },
+    {
+      v8Name: 'ProgressIndicator',
+      v9Name: 'ProgressBar',
+      v8: 'percentComplete is 0 to 1; omit for indeterminate',
+      v9: 'ProgressBar value 0..max, max defaults to 1',
+      hazard: 'Scale semantics differ by prop name; passing a 0-100 number yields a permanently full bar',
+      severity: 'medium',
+      alsoIndex: ['ProgressIndicator'],
+    },
+    {
+      v8Name: 'TooltipHost',
+      v9Name: 'Tooltip',
+      v8: 'TooltipHost wrapper with content, delay: TooltipDelay, overflowMode, DirectionalHint',
+      v9: '<Tooltip content relationship="label"|"description"> around one child',
+      hazard:
+        'TooltipHost is the v8 component that v9 Tooltip replaces — but v8 ALSO exports a different component literally named Tooltip, so renaming TooltipHost -> Tooltip inside a v8 file changes which component you get. See the Tooltip collision.',
+      severity: 'medium',
+      alsoIndex: ['TooltipHost', 'TooltipDelay', 'DirectionalHint'],
+    },
+    {
+      v8Name: 'ContextualMenu',
+      v9Name: 'Menu',
+      v8: 'items: IContextualMenuItem[] array with key/text/subMenuProps; target: Target',
+      v9: '<Menu><MenuTrigger><MenuPopover><MenuList> composition',
+      hazard: 'Array-driven vs composition; nested subMenuProps trees have no mechanical v9 translation',
+      severity: 'high',
+      alsoIndex: ['ContextualMenu'],
+    },
+    {
+      v8Name: 'SwatchColorPicker',
+      v9Name: 'SwatchPicker',
+      v8: 'columnCount + colorCells: IColorCellProps[] required; onChange(ev, id, color)',
+      v9: 'SwatchPicker + ColorSwatch children',
+      hazard: 'Near-identical name; IColorCellProps has no v9 analogue and onChange arity differs',
+      severity: 'medium',
+      alsoIndex: ['SwatchColorPicker'],
+    },
+    {
+      v8Name: 'ThemeProvider',
+      v9Name: 'FluentProvider',
+      v8: 'ThemeProvider theme={createTheme({ palette, semanticColors })}',
+      v9: 'FluentProvider theme={webLightTheme} with flat design tokens',
+      hazard: 'IPartialTheme palette/semanticColors have no v9 counterpart; theme objects are not portable',
+      severity: 'high',
+      alsoIndex: ['ThemeProvider'],
+    },
+  ],
+
+  casingTraps: {
+    ComboBox: {
+      v8: 'options: IComboBoxOption[]; allowFreeform; text; selectedKey; styles is Partial<IComboBoxStyles>',
+      v9: '<Combobox><Option> children; freeform; selectedOptions',
+      hazard:
+        "Array-vs-children plus v8's non-standard styles type; also v8 root is not the outermost node (container is)",
+      casingHazard:
+        'v8 spells it ComboBox (capital B) and v9 spells it Combobox (lowercase b). They are different components, so the misspelling is not a typo the compiler catches — it resolves to whichever library exports that exact spelling, and only one of the two libraries has to be installed for it to compile.',
+      severity: 'high',
+    },
+  },
+
+  behaviorTraps: [
+    {
+      name: 'onChange signature (every v8 control that has an onChange)',
+      v8: 'onChange(ev, checked?) / onChange(value, range?, ev?) — second arg IS the value',
+      v9: 'onChange(ev, data) — second arg is a data object (data.checked, data.value)',
+      hazard:
+        'Silent, uniform break across every form control; handlers compile but receive an object, not a primitive',
+      severity: 'high',
+      deriveAppliesToFrom: 'v8OnChangeProps',
+      correction:
+        'The previous wording listed "Checkbox, Slider, Toggle, SpinButton, Link, Label, Image, Spinner". Link, Label, Image and Spinner declare no onChange in v8 at all — appliesTo is now derived from the v8 API report (every I<Name>Props that actually declares onChange).',
+      appliesTo: [],
+    },
+    {
+      name: 'styles prop (universal)',
+      v8: 'styles?: IStyleFunctionOrObject<IXStyleProps, IXStyles> on nearly every component',
+      v9: 'No styles prop at all; className + Griffel makeStyles',
+      hazard: 'Any generated styles={{root:{...}}} is invalid in v9 and silently dropped; and vice versa',
+      severity: 'high',
+      appliesTo: [],
+    },
+    {
+      name: 'Icon',
+      v8: 'Font glyph via iconName string; requires a one-time global initializeIcons()',
+      v9: '@fluentui/react-icons: one React component per icon, e.g. <DeleteRegular/>',
+      hazard:
+        'v8 icon names are not v9 imports; initializeIcons() is a no-op for v9 and missing it renders boxes',
+      severity: 'high',
+      appliesTo: ['Icon', 'initializeIcons'],
+    },
+  ],
+};
+
+/**
+ * Turn the mechanical name sets + the prose table into the four shipped
+ * arrays. Anything mechanical without prose is still emitted (with the prose
+ * fields null) so the count never lies; anything with prose but no mechanical
+ * backing is dropped into `warnings` rather than shipped.
+ */
+export function buildNameClasses(upstream, knownExports = new Set()) {
+  const warnings = [];
+  const v8Pkg = (n) => upstream.exports.v8[n] ?? null;
+  const v9Pkg = (n) => upstream.exports.v9[n] ?? null;
+  const ver = (pkg) => (pkg && upstream.versions[pkg]?.version) || null;
+  const imp = (name, pkg, barrel) => `import { ${name} } from '${barrel ?? pkg}';`;
+
+  const collisions = upstream.computed.collisions.map((name) => {
+    const prose = NAME_CLASS_PROSE.collisions[name];
+    if (!prose) warnings.push(`no prose for collision "${name}" — shipped with null description`);
+    const p8 = v8Pkg(name);
+    const p9 = v9Pkg(name);
+    return {
+      name,
+      class: 'collision',
+      v8: prose?.v8 ?? null,
+      v9: prose?.v9 ?? null,
+      hazard:
+        prose?.hazard ??
+        `Both @fluentui/react (v8) and @fluentui/react-components (v9) export "${name}". The import path alone decides which one you get.`,
+      severity: prose?.severity ?? 'high',
+      v8Import: imp(name, p8, '@fluentui/react'),
+      v9Import: imp(name, p9, '@fluentui/react-components'),
+      v8Package: p8,
+      v8PackageVersion: ver(p8),
+      v9Package: p9,
+      v9PackageVersion: ver(p9),
+      v9ReexportedFrom: '@fluentui/react-components',
+      disambiguate:
+        `import { ${name} as V8${name} } from '@fluentui/react';\n` +
+        `import { ${name} } from '@fluentui/react-components';`,
+      v8Names: [],
+    };
+  });
+
+  const proseOnly = Object.keys(NAME_CLASS_PROSE.collisions).filter(
+    (n) => !upstream.computed.collisions.includes(n)
+  );
+  for (const n of proseOnly) {
+    warnings.push(`prose lists "${n}" as a collision but the upstream API reports do not — dropped`);
+  }
+
+  const casingTraps = upstream.computed.casingTraps.map(({ v8Name, v9Name }) => {
+    const prose = NAME_CLASS_PROSE.casingTraps[v8Name];
+    if (!prose) warnings.push(`no prose for casing trap "${v8Name}" / "${v9Name}"`);
+    const p8 = v8Pkg(v8Name);
+    const p9 = v9Pkg(v9Name);
+    return {
+      name: v8Name,
+      class: 'casingTrap',
+      v8Name,
+      v9Name,
+      v8: prose?.v8 ?? null,
+      v9: prose?.v9 ?? null,
+      hazard:
+        prose?.casingHazard ??
+        `v8 exports "${v8Name}" and v9 exports "${v9Name}". Same word, different casing, different component — the compiler cannot tell you which one you meant.`,
+      apiHazard: prose?.hazard ?? null,
+      severity: prose?.severity ?? 'high',
+      v8Import: imp(v8Name, p8, '@fluentui/react'),
+      v9Import: imp(v9Name, p9, '@fluentui/react-components'),
+      v8Package: p8,
+      v8PackageVersion: ver(p8),
+      v9Package: p9,
+      v9PackageVersion: ver(p9),
+      v8Names: [],
+    };
+  });
+
+  const renames = NAME_CLASS_PROSE.renames.map((r) => {
+    const p8 = v8Pkg(r.v8Name);
+    const p9 = v9Pkg(r.v9Name);
+    if (!p8) warnings.push(`rename "${r.v8Name}" is not a v8 export in the upstream API report`);
+    if (!p9) warnings.push(`rename target "${r.v9Name}" is not a v9 export in the upstream API report`);
+    return {
+      name: `${r.v8Name} → ${r.v9Name}`,
+      class: 'rename',
+      v8Name: r.v8Name,
+      v9Name: r.v9Name,
+      v8: r.v8,
+      v9: r.v9,
+      hazard: r.hazard,
+      severity: r.severity,
+      v8Import: p8 ? imp(r.v8Name, p8, '@fluentui/react') : null,
+      v9Import: p9 ? imp(r.v9Name, p9, '@fluentui/react-components') : null,
+      v8Package: p8,
+      v8PackageVersion: ver(p8),
+      v9Package: p9,
+      v9PackageVersion: ver(p9),
+      alsoExportedByV9: Boolean(v9Pkg(r.v8Name)),
+      v8Names: [],
+    };
+  });
+
+  const behaviorTraps = NAME_CLASS_PROSE.behaviorTraps.map((t) => {
+    const derived =
+      t.deriveAppliesToFrom === 'v8OnChangeProps'
+        ? (upstream.computed.v8OnChangeOwners ?? []).filter((n) => Boolean(upstream.exports.v8[n]))
+        : null;
+    if (t.deriveAppliesToFrom && !derived?.length) {
+      warnings.push(`behaviour trap "${t.name}" could not derive appliesTo from ${t.deriveAppliesToFrom}`);
+    }
+    return {
+      name: t.name,
+      class: 'behaviorTrap',
+      v8: t.v8,
+      v9: t.v9,
+      hazard: t.hazard,
+      severity: t.severity,
+      appliesTo: derived ?? t.appliesTo ?? [],
+      appliesToSource: t.deriveAppliesToFrom
+        ? 'derived from packages/react/etc/react.api.md — every v8 I<Name>Props declaring an onChange member'
+        : 'hand-listed',
+      ...(t.correction ? { correction: t.correction } : {}),
+    };
+  });
+
+  // index names: prefer the explicit list, then anything in the row's own text
+  // that we can PROVE is a v8 export (same rule the traps table uses). Free
+  // text is restricted to PascalCase so a stray word like `on` — which really
+  // is a `@fluentui/utilities` export — does not become an index key.
+  const known = knownExports instanceof Set ? knownExports : new Set(knownExports);
+  const attach = (rows, explicitField) =>
+    rows.map((row) => {
+      const names = [];
+      const push = (n) => {
+        if (n && !names.includes(n)) names.push(n);
+      };
+      for (const n of row[explicitField] ?? []) push(n);
+      for (const tok of `${row.name} ${row.v8 ?? ''}`.match(/[A-Za-z_$][A-Za-z0-9_$]*/g) ?? []) {
+        if (!isPascalExport(tok)) continue;
+        if (known.has(tok) || upstream.exports.v8[tok]) push(tok);
+      }
+      return { ...row, v8Names: names };
+    });
+
+  const collisionRows = attach(
+    collisions.map((c) => ({ ...c, _seed: [c.name] })),
+    '_seed'
+  ).map(({ _seed, ...rest }) => rest);
+  const casingRows = attach(
+    casingTraps.map((c) => ({ ...c, _seed: [c.v8Name] })),
+    '_seed'
+  ).map(({ _seed, ...rest }) => rest);
+  const renameRows = NAME_CLASS_PROSE.renames.map((r, i) => ({
+    ...renames[i],
+    v8Names: (r.alsoIndex ?? [r.v8Name]).filter((n) => known.has(n) || upstream.exports.v8[n]),
+  }));
+  const behaviorRows = attach(
+    behaviorTraps.map((t) => ({ ...t, _seed: t.appliesTo })),
+    '_seed'
+  ).map(({ _seed, ...rest }) => rest);
+
+  return {
+    collisions: collisionRows,
+    renames: renameRows,
+    casingTraps: casingRows,
+    behaviorTraps: behaviorRows,
+    warnings,
+  };
+}
+
+/**
+ * Executable migration tooling that upstream actually ships. Paths are fetched
+ * so the rule list, the shim export list and every version are DERIVED — the
+ * previous guidance described these packages in prose and quoted versions by
+ * hand, which is how `@fluentui/react-nav 9.4.3` outlived upstream's 9.4.4.
+ */
+export const UPSTREAM_TOOLING_PATHS = {
+  codemodsReadme: 'packages/codemods/README.md',
+  codemodMods: [
+    'packages/codemods/src/codeMods/mods/componentToCompat/componentToCompat.mod.ts',
+    'packages/codemods/src/codeMods/mods/configMod/configMod.mod.ts',
+    'packages/codemods/src/codeMods/mods/officeToFluentImport/officeToFluentImport.mod.ts',
+    'packages/codemods/src/codeMods/mods/oldToNewButton/oldToNewButton.mod.ts',
+    'packages/codemods/src/codeMods/mods/personaToAvatar/personaToAvatar.mod.ts',
+  ],
+  codemodUpgradesJson: 'packages/codemods/src/codeMods/mods/upgrades.json',
+  shimIndex: 'packages/react-components/react-migration-v8-v9/library/src/index.ts',
+  shimApi: 'packages/react-components/react-migration-v8-v9/library/etc/react-migration-v8-v9.api.md',
+  shimReadme: 'packages/react-components/react-migration-v8-v9/library/README.md',
+  v0ShimIndex: 'packages/react-components/react-migration-v0-v9/library/src/index.ts',
+  v0ShimReadme: 'packages/react-components/react-migration-v0-v9/library/README.md',
+};
+
+/** Parse one `*.mod.ts` for the fields the codemod runner reads. */
+export function parseCodemod(path, source) {
+  const str = (re) => re.exec(source)?.[1] ?? null;
+  const enabled = /enabled:\s*(true|false)/.exec(source);
+  const comment = /enabled:\s*(?:true|false),?\s*\/\/\s*(.+)/.exec(source);
+  return {
+    id: path.split('/').at(-2),
+    name: str(/name:\s*'([^']+)'/) ?? str(/name:\s*"([^"]+)"/),
+    version: str(/version:\s*'([^']+)'/),
+    enabled: enabled ? enabled[1] === 'true' : null,
+    enabledNote: comment ? comment[1].trim() : null,
+    path,
+  };
+}
+
+/** The `-n / -r / -e / -l / -c` bullets in the codemods README. */
+export function parseCodemodFlags(readme) {
+  const flags = [];
+  for (const line of String(readme ?? '').split(/\r?\n/)) {
+    const m = /^\s*-\s*`(-[a-zA-Z])`\s*(.+)$/.exec(line);
+    if (m) flags.push({ flag: m[1], description: m[2].replace(/\s+/g, ' ').trim() });
+  }
+  return flags;
+}
+
+/**
+ * Every name a `export { A, B } from './x'` barrel re-exports, split into
+ * values and types — a type-only export is not something you can call, so
+ * listing `ColorVariants` beside `createV8Theme` would be misleading.
+ */
+export function parseBarrelExports(source) {
+  const values = [];
+  const types = [];
+  const re = /export\s+(type\s+)?\{([^}]*)\}\s+from/g;
+  let m;
+  while ((m = re.exec(String(source ?? ''))) !== null) {
+    const typeOnly = Boolean(m[1]);
+    for (const raw of m[2].split(',')) {
+      const isTypeMember = /\btype\b/.test(raw);
+      const n = raw.replace(/\btype\b/g, '').trim().split(/\s+as\s+/).pop();
+      if (!n || !/^[A-Za-z_$][A-Za-z0-9_$]*$/.test(n)) continue;
+      const bucket = typeOnly || isTypeMember ? types : values;
+      if (!bucket.includes(n)) bucket.push(n);
+    }
+  }
+  return { values, types };
+}
+
+/** `export const createV8Theme: (...) => Theme_2;` -> a quotable signature. */
+export function parseApiSignatures(apiMd, names) {
+  const out = {};
+  const lines = String(apiMd ?? '').split(/\r?\n/);
+  for (const n of names) {
+    const i = lines.findIndex((l) => new RegExp(`^export (declare )?const ${n}\\b`).test(l));
+    if (i > -1) out[n] = lines[i].replace(/^export (declare )?/, '').replace(/;\s*$/, '');
+  }
+  return out;
+}
+
+async function fetchText(path, ref) {
+  const res = await fetch(UPSTREAM.raw(path, ref));
+  return res.ok ? await res.text() : null;
+}
+
+export async function fetchTooling({ ref = UPSTREAM.defaultRef, log = () => {} } = {}) {
+  log('fetching migration tooling sources');
+  const codemodsReadme = await fetchText(UPSTREAM_TOOLING_PATHS.codemodsReadme, ref);
+  const mods = [];
+  for (const p of UPSTREAM_TOOLING_PATHS.codemodMods) {
+    const src = await fetchText(p, ref);
+    if (src) mods.push(parseCodemod(p, src));
+  }
+  const upgradesRaw = await fetchText(UPSTREAM_TOOLING_PATHS.codemodUpgradesJson, ref);
+  let upgrades = null;
+  try {
+    upgrades = upgradesRaw ? JSON.parse(upgradesRaw) : null;
+  } catch {
+    upgrades = null;
+  }
+  const shimIndex = await fetchText(UPSTREAM_TOOLING_PATHS.shimIndex, ref);
+  const shimApi = await fetchText(UPSTREAM_TOOLING_PATHS.shimApi, ref);
+  const shimReadme = await fetchText(UPSTREAM_TOOLING_PATHS.shimReadme, ref);
+  const v0Index = await fetchText(UPSTREAM_TOOLING_PATHS.v0ShimIndex, ref);
+  const v0Readme = await fetchText(UPSTREAM_TOOLING_PATHS.v0ShimReadme, ref);
+
+  const shimExports = parseBarrelExports(shimIndex);
+  const v0Exports = parseBarrelExports(v0Index);
+  return {
+    codemods: {
+      readmeTagline: /^Tool .+$/m.exec(String(codemodsReadme ?? '').split('\n').slice(0, 6).join('\n'))?.[0] ?? null,
+      flags: parseCodemodFlags(codemodsReadme),
+      mods,
+      upgradesJsonIsTemplate: Boolean(upgrades && (upgrades.upgrades ?? []).every((u) => !u.name)),
+      paths: {
+        readme: UPSTREAM_TOOLING_PATHS.codemodsReadme,
+        mods: UPSTREAM_TOOLING_PATHS.codemodMods,
+        upgradesJson: UPSTREAM_TOOLING_PATHS.codemodUpgradesJson,
+      },
+    },
+    shims: {
+      exports: shimExports.values,
+      components: shimExports.values.filter((n) => n.endsWith('Shim')),
+      propShims: shimExports.values.filter((n) => n.startsWith('shim')),
+      themeExports: shimExports.values.filter((n) => !n.endsWith('Shim') && !n.startsWith('shim')),
+      types: shimExports.types,
+      signatures: parseApiSignatures(shimApi, ['createV8Theme', 'createV9Theme', 'createBrandVariants']),
+      guidance: (String(shimReadme ?? '').match(/^Our recommendation[^\n]*/m) ?? [null])[0],
+      bundleWarning: (String(shimReadme ?? '').match(/^Shims depend on both[^\n]*/m) ?? [null])[0],
+      paths: { index: UPSTREAM_TOOLING_PATHS.shimIndex, api: UPSTREAM_TOOLING_PATHS.shimApi, readme: UPSTREAM_TOOLING_PATHS.shimReadme },
+    },
+    v0Shims: {
+      exports: v0Exports.values,
+      types: v0Exports.types,
+      warning: (String(v0Readme ?? '').match(/^These are not production-ready[^\n]*/m) ?? [null])[0],
+      paths: { index: UPSTREAM_TOOLING_PATHS.v0ShimIndex, readme: UPSTREAM_TOOLING_PATHS.v0ShimReadme },
+    },
+  };
+}
+
+/* ---- compat packages: what each one is FOR ------------------------- *
+ * Versions and the `private` flag come from upstream; only the sentence
+ * describing the package is written here, each traceable to its README.
+ */
+const COMPAT_PROSE = {
+  '@fluentui/react-calendar-compat': {
+    provides: 'The v8 Calendar (month/year/decade views) ported onto the v9 toolset with zero v8 dependencies.',
+    whenToUse: 'You need a calendar in a v9 app. v9 has no Calendar of its own.',
+    import: "import { Calendar } from '@fluentui/react-calendar-compat';",
+    readme: 'packages/react-components/react-calendar-compat/library/README.md',
+  },
+  '@fluentui/react-datepicker-compat': {
+    provides: 'The v8 DatePicker on v9, keeping most of the v8 API surface.',
+    whenToUse: 'Migrating a screen that uses v8 DatePicker — this is the only supported v9 target.',
+    import: "import { DatePicker } from '@fluentui/react-datepicker-compat';",
+    readme: 'packages/react-components/react-datepicker-compat/library/README.md',
+  },
+  '@fluentui/react-timepicker-compat': {
+    provides: 'A v8-style TimePicker built on v9 Combobox + Field.',
+    whenToUse: 'You need time selection in a v9 app.',
+    import: "import { TimePicker } from '@fluentui/react-timepicker-compat';",
+    readme: 'packages/react-components/react-timepicker-compat/library/README.md',
+  },
+  '@fluentui/react-icons-compat': {
+    provides: 'v8 icon utility functions (registerIcons and friends) usable from a v9 app.',
+    whenToUse:
+      'ONLY if you still depend on v8 icon registration. Otherwise use @fluentui/react-icons directly — that is the README\'s own recommendation.',
+    import: "import { registerIcons } from '@fluentui/react-icons-compat';",
+    readme: 'packages/react-components/react-icons-compat/library/README.md',
+  },
+  '@fluentui/react-portal-compat': {
+    provides:
+      'PortalCompatProvider — makes v9 portalled surfaces (Dialog/Popover/Tooltip/Menu) inherit v9 CSS variables when they mount inside a portal created by v8 or Northstar.',
+    whenToUse:
+      'ALWAYS, in any app running v8 and v9 together. Without it, v9 overlays render unthemed. It must be an inner child of FluentProvider.',
+    import:
+      "import { FluentProvider } from '@fluentui/react-components';\nimport { PortalCompatProvider } from '@fluentui/react-portal-compat';\n\n<FluentProvider>\n  <PortalCompatProvider>{/* your components */}</PortalCompatProvider>\n</FluentProvider>",
+    readme: 'packages/react-components/react-portal-compat/README.md',
+  },
+  '@fluentui/react-portal-compat-context': {
+    provides: 'The context primitive behind PortalCompatProvider; @fluentui/react depends on it directly.',
+    whenToUse: 'Transitively. You do not normally install this yourself.',
+    import: null,
+    readme: null,
+  },
+};
+
+/** Build the executable-tooling block for mcp/data/migration.json. */
+export function buildMigrationTooling(upstream, tooling) {
+  const v = (pkg) => upstream.versions[pkg] ?? null;
+  const src = (path) => `https://github.com/${UPSTREAM.repo}/blob/${upstream.ref}/${path}`;
+
+  const compatPackages = Object.entries(COMPAT_PROSE).map(([pkg, prose]) => {
+    const info = v(pkg);
+    return {
+      package: pkg,
+      version: info?.version ?? null,
+      private: info?.private ?? null,
+      installable: info ? !info.private : null,
+      provides: prose.provides,
+      whenToUse: prose.whenToUse,
+      install: info && !info.private ? `npm install ${pkg}` : null,
+      import: prose.import,
+      source: prose.readme ? src(prose.readme) : null,
+    };
+  });
+
+  const neverRecommend = Object.entries(upstream.versions)
+    .filter(([, info]) => info.private)
+    .map(([pkg, info]) => ({
+      package: pkg,
+      reason:
+        `"private": true in ${info.path} — it is never published to npm, so "npm install ${pkg}" cannot succeed.`,
+      source: src(info.path),
+    }));
+
+  return {
+    title: 'Executable migration tooling — the real packages, commands and imports Microsoft ships',
+    summary:
+      'There is NO official v8 -> v9 codemod. What upstream does ship is: (1) @fluentui/codemods, which upgrades an Office-UI-Fabric / pre-v8 codebase UP TO v8; (2) @fluentui/react-migration-v8-v9 shims + theme bridge, so v8 call sites can render v9; (3) *-compat packages that give a v9 app the v8 features v9 never got. Use them in that order.',
+    verifiedFrom: {
+      repo: `https://github.com/${UPSTREAM.repo}`,
+      ref: upstream.ref,
+      fetchedOn: upstream.fetchedOn,
+      note: 'Every version below is read from the upstream package.json at build time, never hand-written.',
+    },
+    decisionTable: [
+      {
+        situation: 'Codebase still imports from `office-ui-fabric-react` or `@uifabric/*`',
+        use: '@fluentui/codemods',
+        command: 'npx @fluentui/codemods',
+        why: 'Re-paths the old package names to `@fluentui/*` v8. Do this BEFORE thinking about v9.',
+      },
+      {
+        situation: 'Large v8 app, cannot rewrite every call site at once',
+        use: '@fluentui/react-migration-v8-v9',
+        command: 'npm install @fluentui/react-migration-v8-v9',
+        why: 'Shims take v8 props and render v9 underneath, so a screen can move without touching its call sites.',
+      },
+      {
+        situation: 'v8 and v9 running in the same tree',
+        use: '@fluentui/react-portal-compat',
+        command: 'npm install @fluentui/react-portal-compat',
+        why: 'Without PortalCompatProvider, every v9 Dialog/Popover/Tooltip renders unthemed.',
+      },
+      {
+        situation: 'v9 app needs Calendar / DatePicker / TimePicker (v9 has none)',
+        use: '*-compat packages',
+        command: 'npm install @fluentui/react-datepicker-compat',
+        why: 'v8 components rebuilt on the v9 toolset. Versioned 0.x and allowed to break — pin them.',
+      },
+      {
+        situation: 'Migrating from Fluent UI Northstar (v0)',
+        use: '@fluentui/react-migration-v0-v9',
+        command: 'npm install @fluentui/react-migration-v0-v9',
+        why: 'Northstar -> v9 shims. Read the warning below before shipping it.',
+      },
+    ],
+    codemods: {
+      package: '@fluentui/codemods',
+      version: v('@fluentui/codemods')?.version ?? null,
+      private: v('@fluentui/codemods')?.private ?? null,
+      scope: tooling.codemods.readmeTagline,
+      criticalCaveat:
+        'This is NOT a v8 -> v9 converter. It upgrades a pre-v8 / office-ui-fabric-react codebase up to v8. Nothing in this package emits v9 code.',
+      command: 'npx @fluentui/codemods',
+      listRulesCommand: 'npx @fluentui/codemods -l',
+      runOneRuleCommand: 'npx @fluentui/codemods -n RepathOfficeImportsToFluent',
+      configFile: {
+        name: 'modConfig.json',
+        shape: { stringFilters: [], regexFilters: [], includeMods: true },
+        note: 'Place in the repo root and pass -c instead of using command-line filters.',
+      },
+      flags: tooling.codemods.flags,
+      rules: tooling.codemods.mods.map((m) => ({
+        ...m,
+        runnable: m.enabled === true,
+        source: src(m.path),
+      })),
+      enabledRules: tooling.codemods.mods.filter((m) => m.enabled === true).map((m) => m.name),
+      disabledRules: tooling.codemods.mods.filter((m) => m.enabled === false).map((m) => m.name),
+      upgradesJson: {
+        path: UPSTREAM_TOOLING_PATHS.codemodUpgradesJson,
+        source: src(UPSTREAM_TOOLING_PATHS.codemodUpgradesJson),
+        isEmptyTemplate: tooling.codemods.upgradesJsonIsTemplate,
+        note: tooling.codemods.upgradesJsonIsTemplate
+          ? 'Upstream ships this file as an EMPTY template — the `configMod` rule is enabled but has nothing to run until you fill it in with your own {name,type,version,options.from,options.to} rows.'
+          : null,
+      },
+      source: src(UPSTREAM_TOOLING_PATHS.codemodsReadme),
+    },
+    shims: {
+      package: '@fluentui/react-migration-v8-v9',
+      version: v('@fluentui/react-migration-v8-v9')?.version ?? null,
+      private: v('@fluentui/react-migration-v8-v9')?.private ?? null,
+      install: 'npm install @fluentui/react-migration-v8-v9',
+      whatItDoes:
+        'Each shim exposes a v8 component\'s props interface and renders the v9 component underneath, so an existing v8 call site keeps compiling while the rendered output becomes Fluent 2.',
+      componentAreas: ['Button', 'Checkbox', 'Menu', 'Stack', 'Theme'],
+      componentAreasSource: `https://github.com/${UPSTREAM.repo}/tree/${upstream.ref}/packages/react-components/react-migration-v8-v9/library/src/components`,
+      components: tooling.shims.components,
+      propShims: tooling.shims.propShims,
+      themeExports: tooling.shims.themeExports,
+      typeExports: tooling.shims.types,
+      themeBridge: [
+        {
+          name: 'createV8Theme',
+          signature: tooling.shims.signatures.createV8Theme ?? null,
+          whatItDoes: 'Builds a v8 Theme from v9 brand variants + a v9 theme, so v8 components inherit the Fluent 2 palette.',
+          whenToUse: 'v9 is the source of truth and you still render v8 components (charts, DetailsList, Panel).',
+          import: "import { createV8Theme } from '@fluentui/react-migration-v8-v9';",
+        },
+        {
+          name: 'createV9Theme',
+          signature: tooling.shims.signatures.createV9Theme ?? null,
+          whatItDoes: 'The opposite direction — derives a v9 Theme from an existing v8 Theme.',
+          whenToUse: 'v8 owns the brand (an existing product theme) and you are adding v9 UI beside it.',
+          import: "import { createV9Theme } from '@fluentui/react-migration-v8-v9';",
+        },
+        {
+          name: 'createBrandVariants',
+          signature: tooling.shims.signatures.createBrandVariants ?? null,
+          whatItDoes: 'Turns a v8 IPalette into a v9 BrandVariants ramp (the 16-step brand scale v9 themes are built from).',
+          whenToUse: 'First step when the only brand definition you have is a v8 palette.',
+          import: "import { createBrandVariants } from '@fluentui/react-migration-v8-v9';",
+        },
+      ],
+      guidance: tooling.shims.guidance,
+      bundleWarning: tooling.shims.bundleWarning,
+      source: src(UPSTREAM_TOOLING_PATHS.shimIndex),
+    },
+    v0Shims: {
+      package: '@fluentui/react-migration-v0-v9',
+      version: v('@fluentui/react-migration-v0-v9')?.version ?? null,
+      private: v('@fluentui/react-migration-v0-v9')?.private ?? null,
+      install: 'npm install @fluentui/react-migration-v0-v9',
+      whatItDoes: 'Shims for migrating Fluent UI React Northstar (v0) to v9.',
+      exports: tooling.v0Shims.exports,
+      warning: tooling.v0Shims.warning,
+      source: src(UPSTREAM_TOOLING_PATHS.v0ShimIndex),
+    },
+    compatPackages,
+    neverRecommend,
+    eslint: {
+      package: '@fluentui/eslint-plugin-react-components',
+      rules: ['prefer-fluentui-v9', 'enforce-use-client'],
+      whatItDoes: 'Flags v8 imports that already have a v9 equivalent, so the migration cannot regress.',
+      note: 'Version not derived here — this package is not in the version set above; treat the rule names as the verified part.',
+    },
+  };
+}
+/**
+ * Sync the v8 dataset's own migration block to the derived upstream facts.
+ * `migration.shims.version` and every compat-package version were previously
+ * hand-copied and had already drifted a patch behind.
+ */
+export function applyMigrationFacts(data, upstream, tooling) {
+  const m = (data.migration ??= {});
+  const v = (pkg) => upstream.versions[pkg] ?? null;
+
+  m.shims = {
+    ...(m.shims ?? {}),
+    package: '@fluentui/react-migration-v8-v9',
+    version: v('@fluentui/react-migration-v8-v9')?.version ?? m.shims?.version ?? null,
+    components: tooling.shims.components,
+    propShims: tooling.shims.propShims,
+    themeExports: tooling.shims.themeExports,
+    themeBridge: Object.entries(tooling.shims.signatures).map(([name, signature]) => ({ name, signature })),
+    guidance: tooling.shims.guidance ?? m.shims?.guidance ?? null,
+    source: `https://github.com/${UPSTREAM.repo}/blob/${upstream.ref}/${UPSTREAM_TOOLING_PATHS.shimIndex}`,
+  };
+
+  const byPackage = new Map((m.compatPackages ?? []).map((p) => [p.package, p]));
+  for (const [pkg, info] of Object.entries(upstream.versions)) {
+    if (!/-compat$/.test(pkg) && pkg !== '@fluentui/react-portal-compat-context') continue;
+    const prev = byPackage.get(pkg) ?? { package: pkg };
+    byPackage.set(pkg, {
+      ...prev,
+      version: info.version,
+      published: !info.private,
+      installable: !info.private,
+      provides: COMPAT_PROSE[pkg]?.provides ?? prev.provides ?? null,
+      note: info.private ? '❌ "private": true — NOT published to npm. Never recommend installing it.' : '✅',
+      source: `https://github.com/${UPSTREAM.repo}/blob/${upstream.ref}/${info.path}`,
+    });
+  }
+  m.compatPackages = [...byPackage.values()].sort((a, b) => (a.package < b.package ? -1 : 1));
+
+  m.tooling = {
+    ...(m.tooling ?? {}),
+    officialV8ToV9Codemod: false,
+    codemodsPackage: '@fluentui/codemods',
+    codemodsVersion: v('@fluentui/codemods')?.version ?? null,
+    codemodsScope: tooling.codemods.readmeTagline,
+    codemodsPackageNote:
+      '@fluentui/codemods upgrades a pre-v8 / office-ui-fabric-react codebase UP TO v8. It is not a v8→v9 tool. Do not recommend it as a v9 migration step — but DO recommend it as the step before one, if the codebase still imports office-ui-fabric-react or @uifabric/*.',
+    codemodRules: tooling.codemods.mods.map((r) => ({
+      name: r.name,
+      id: r.id,
+      enabled: r.enabled,
+      enabledNote: r.enabledNote,
+      source: `https://github.com/${UPSTREAM.repo}/blob/${upstream.ref}/${r.path}`,
+    })),
+    eslintPlugin: '@fluentui/eslint-plugin-react-components',
+    eslintRules: ['prefer-fluentui-v9', 'enforce-use-client'],
+    executableSteps: 'See mcp/data/migration.json -> scenarios.tooling for the full runnable command/import set.',
+  };
+  return data;
+}
+
+/** Index rows by the exported name they answer to, not by array position. */
+export function buildClassIndex(rows) {
+  const idx = {};
+  for (const row of rows) {
+    // collision/rename rows key on `name`; the legacy traps table keys on
+    // `component`. Indexing the wrong field silently produces [null] entries.
+    const key = row.name ?? row.component;
+    if (!key) continue;
+    for (const n of row.v8Names ?? []) {
+      (idx[n] ??= []).push(key);
+    }
+  }
+  return sortKeys(idx);
+}
+
+/**
+ * Patch an already-built dataset with recomputed name classes + versions.
+ * Kept separate from `build()` so the classes can be refreshed from upstream
+ * without the research folder, which is what actually happens in practice.
+ */
+export function applyNameClasses(data, upstream, built) {
+  data.collisions = built.collisions;
+  data.collisionIndex = buildClassIndex(built.collisions);
+  data.renames = built.renames;
+  data.renameIndex = buildClassIndex(built.renames);
+  data.casingTraps = built.casingTraps;
+  data.casingTrapIndex = buildClassIndex(built.casingTraps);
+  data.behaviorTraps = built.behaviorTraps;
+  data.behaviorTrapIndex = buildClassIndex(built.behaviorTraps);
+  data.trapIndex = buildClassIndex(data.traps ?? []);
+
+  data.meta ??= {};
+  data.meta.verifiedVersions = sortKeys({
+    ...(data.meta.verifiedVersions ?? {}),
+    ...Object.fromEntries(
+      Object.entries(upstream.versions)
+        .filter(([, v]) => v.version && !v.private)
+        .map(([k, v]) => [k, v.version])
+    ),
+  });
+  data.meta.v9Baseline = upstream.versions['@fluentui/react-components']?.version
+    ? `@fluentui/react-components@${upstream.versions['@fluentui/react-components'].version}`
+    : data.meta.v9Baseline ?? null;
+  data.meta.upstreamApiReports = {
+    repo: `https://github.com/${UPSTREAM.repo}`,
+    ref: upstream.ref,
+    fetchedOn: upstream.fetchedOn,
+    reports: upstream.reports,
+    computed: upstream.computed,
+    method:
+      'collisions = PascalCase exports present in BOTH reports; casingTraps = present in both only when compared case-insensitively. Membership is computed, never curated. Note API Extractor emits aliased re-exports (`export { Image_2 as Image }`) for names that clash with a local symbol — a parser that only reads `export { X }` misses Image, PartialTheme, SelectionMode, Text and Theme and reports 21 collisions instead of 26.',
+  };
+  data.meta.upstreamPackageVersions = {
+    source: `https://github.com/${UPSTREAM.repo} package.json files on ref "${upstream.ref}"`,
+    fetchedOn: upstream.fetchedOn,
+    packages: sortKeys(upstream.versions),
+    note: 'Read from upstream package.json at build time. `private: true` packages are recorded here but must never be recommended for install.',
+  };
+
+  const priv = Object.entries(upstream.versions)
+    .filter(([, v]) => v.private)
+    .map(([k]) => k);
+  data.unverified = (data.unverified ?? []).filter(
+    (u) => !String(u.note ?? '').startsWith('[name-classes]') && !String(u.note ?? '').startsWith('[versions]')
+  );
+  for (const w of built.warnings) {
+    data.unverified.push({ source: 'scripts/build-v8-data.mjs', note: `[name-classes] ${w}` });
+  }
+  for (const p of upstream.versionMisses ?? []) {
+    data.unverified.push({
+      source: 'scripts/build-v8-data.mjs',
+      note: `[versions] could not resolve a package.json for ${p} in ${UPSTREAM.repo}@${upstream.ref}; no version is quoted for it.`,
+    });
+  }
+  if (priv.length) {
+    data.meta.upstreamPackageVersions.privatePackages = priv;
+  }
+  if (!upstream.versions['@fluentui/eslint-plugin-react-components']) {
+    data.unverified.push({
+      source: 'scripts/build-v8-data.mjs',
+      note: '[versions] @fluentui/eslint-plugin-react-components is quoted for its rule names (prefer-fluentui-v9, enforce-use-client) but no version was resolved from the monorepo, so none is published here.',
+    });
+  }
+
+  data.meta.datasetCounts = {
+    ...(data.meta.datasetCounts ?? {}),
+    components: Object.keys(data.components ?? {}).length,
+    collisions: data.collisions.length,
+    renames: data.renames.length,
+    casingTraps: data.casingTraps.length,
+    behaviorTraps: data.behaviorTraps.length,
+    traps: (data.traps ?? []).length,
+    unverified: data.unverified.length,
+    note: 'Measured from this file. Regenerate with scripts/build-v8-data.mjs.',
+  };
+  return data;
+}
+
 /* ------------------------------------------------------------------ *
  * main
  * ------------------------------------------------------------------ */
 
+/**
+ * `--refresh-upstream` recomputes only the name classes + versions against the
+ * live API reports and patches the existing dataset. It deliberately does NOT
+ * need the research folder: the research extracts are frozen, the upstream API
+ * is not, and the collision list is the part that goes stale dangerously.
+ */
+async function refreshUpstreamMain(args) {
+  const outFile = typeof args.out === 'string' ? resolve(args.out) : DEFAULT_OUT;
+  const ref = typeof args.ref === 'string' ? args.ref : UPSTREAM.defaultRef;
+  const quiet = Boolean(args.json);
+  const log = (m) => {
+    if (!quiet) process.stderr.write(m + '\n');
+  };
+
+  const data = readJsonIfExists(outFile);
+  if (!data) {
+    process.stderr.write(`ERROR: ${outFile} does not exist — run a full build first.\n`);
+    process.exit(2);
+  }
+
+  const upstream = await fetchUpstream({ ref, log });
+  const tooling = await fetchTooling({ ref, log });
+  const knownExports = new Set([
+    ...Object.keys(data.exportIndex ?? {}),
+    ...Object.keys(data.components ?? {}),
+  ]);
+  const built = buildNameClasses(upstream, knownExports);
+  applyNameClasses(data, upstream, built);
+  applyMigrationFacts(data, upstream, tooling);
+
+  const text = JSON.stringify(data, null, 2) + '\n';
+
+  // The adoption dataset quotes the same packages, so refresh it in the same
+  // pass — two files disagreeing about a version is worse than one being old.
+  const migrationFile =
+    typeof args['migration-out'] === 'string' ? resolve(args['migration-out']) : DEFAULT_MIGRATION_OUT;
+  const migrationData = readJsonIfExists(migrationFile);
+  let migrationText = null;
+  if (migrationData) {
+    migrationData.scenarios ??= {};
+    migrationData.scenarios.tooling = buildMigrationTooling(upstream, tooling);
+    migrationData.$meta ??= {};
+    migrationData.$meta.packageVersionsSeen = Object.fromEntries(
+      Object.entries(upstream.versions)
+        .filter(([, info]) => info.version)
+        .map(([pkg, info]) => [pkg, info.private ? `${info.version} (private — never published)` : info.version])
+    );
+    migrationData.$meta.packageVersionSource = {
+      repo: `https://github.com/${UPSTREAM.repo}`,
+      ref: upstream.ref,
+      fetchedOn: upstream.fetchedOn,
+      method: 'Read from each package.json in the monorepo at build time by scripts/build-v8-data.mjs --refresh-upstream.',
+    };
+    // v8ToV9 must point at the executable steps, not restate them.
+    if (migrationData.scenarios.v8ToV9) {
+      migrationData.scenarios.v8ToV9.executableTooling =
+        'Runnable commands, codemod rule list, shim exports, theme-bridge signatures and compat packages (with versions read from upstream) are in scenarios.tooling — request scenario="tooling".';
+    }
+    migrationText = JSON.stringify(migrationData, null, 2) + '\n';
+  }
+
+  if (args.check) {
+    const current = readFileSync(outFile, 'utf8');
+    if (current !== text) {
+      process.stderr.write(`ERROR: ${outFile} is out of date (re-run without --check)\n`);
+      process.exit(1);
+    }
+    if (migrationText && readFileSync(migrationFile, 'utf8') !== migrationText) {
+      process.stderr.write(`ERROR: ${migrationFile} is out of date (re-run without --check)\n`);
+      process.exit(1);
+    }
+  } else {
+    writeFileSync(outFile, text, 'utf8');
+    if (migrationText) writeFileSync(migrationFile, migrationText, 'utf8');
+  }
+
+  const summary = {
+    out: outFile,
+    migrationOut: migrationText ? migrationFile : null,
+    ref: upstream.ref,
+    fetchedOn: upstream.fetchedOn,
+    reports: upstream.reports,
+    counts: {
+      ...upstream.computed.counts,
+      renames: built.renames.length,
+      behaviorTraps: built.behaviorTraps.length,
+      codemodRules: tooling.codemods.mods.length,
+      codemodRulesEnabled: tooling.codemods.mods.filter((m) => m.enabled === true).length,
+      shimComponents: tooling.shims.components.length,
+    },
+    collisions: built.collisions.map((c) => c.name),
+    casingTraps: built.casingTraps.map((c) => `${c.v8Name} / ${c.v9Name}`),
+    privatePackages: Object.entries(upstream.versions)
+      .filter(([, v]) => v.private)
+      .map(([k]) => k),
+    warnings: built.warnings,
+  };
+  process.stdout.write(JSON.stringify(summary, null, 2) + '\n');
+  process.exit(0);
+}
+
 function main() {
   const args = parseArgs(process.argv.slice(2));
+  if (args['refresh-upstream']) {
+    refreshUpstreamMain(args).catch((err) => {
+      process.stderr.write(`ERROR: ${err.message}\n`);
+      process.exit(2);
+    });
+    return;
+  }
   const outFile = typeof args.out === 'string' ? resolve(args.out) : DEFAULT_OUT;
 
   let dir;
@@ -1261,6 +2616,36 @@ function main() {
   }
 
   const { data, warnings, sources } = build(dir);
+  // A full research rebuild cannot recompute the name classes — those come
+  // from the live upstream API reports, not from the frozen research extracts.
+  // Carry them over rather than letting a rebuild silently revert to the old
+  // hand-curated collision list.
+  const existing = readJsonIfExists(outFile);
+  if (existing?.meta?.upstreamApiReports) {
+    for (const k of [
+      'collisions',
+      'collisionIndex',
+      'renames',
+      'renameIndex',
+      'casingTraps',
+      'casingTrapIndex',
+      'behaviorTraps',
+      'behaviorTrapIndex',
+    ]) {
+      if (existing[k] !== undefined) data[k] = existing[k];
+    }
+    data.meta.upstreamApiReports = existing.meta.upstreamApiReports;
+    data.meta.upstreamPackageVersions = existing.meta.upstreamPackageVersions;
+    data.meta.verifiedVersions = sortKeys({
+      ...data.meta.verifiedVersions,
+      ...(existing.meta.verifiedVersions ?? {}),
+    });
+    data.trapIndex = buildClassIndex(data.traps ?? []);
+    data.meta.datasetCounts = existing.meta.datasetCounts ?? data.meta.datasetCounts;
+    warnings.push(
+      'name classes (collisions/renames/casingTraps/behaviorTraps) were carried over from the existing file — re-run with --refresh-upstream to recompute them against microsoft/fluentui.'
+    );
+  }
   const v = validate(data);
   const text = JSON.stringify(data, null, 2) + '\n';
 

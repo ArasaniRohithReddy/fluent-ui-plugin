@@ -12,7 +12,7 @@ A complete guide to installing and using the **fluent-ui** plugin, which helps y
 
 `fluent-ui` is an AI-assistant plugin made of three layers:
 
-1. **MCP tools** (28): a portable, standard MCP server (stdio) that runs everywhere. It returns grounded Fluent 2 data and generates code, themes, and projects.
+1. **MCP tools** (29): a portable, standard MCP server (stdio) that runs everywhere. It returns grounded Fluent 2 data and generates code, themes, and projects.
 2. **Agents** (7): a router plus specialists for web, native (iOS/Android/Windows), Power BI, Power Platform, migration, and design review.
 3. **Skills** (18) and **instructions** (`AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`): loaded natively by hosts that support them.
 
@@ -174,7 +174,7 @@ With no config or memory present, everything still works using sensible built-in
 
 **Skills** (`skills/**/SKILL.md`): web UI, theming, design tokens, design language, accessibility, AI/Copilot UI, Power BI theme, PBIP report, Power BI adoption, Power Apps, Power Pages, PCF, migration, design review, config, Fluent 1 (v8), native (iOS/Android/Windows), and Figma.
 
-**MCP tools** (28): `fluent_generate_powerbi_theme`, `fluent_scaffold_pbip`, `fluent_pbir_audit`, `fluent_pbir_apply_theme`, `fluent_pbir_normalize_inline`, `fluent_pbir_verify`, `fluent_powerbi_visuals`, `fluent_powerplatform_guidance`, `fluent_accessibility_checklist`, `fluent_list_tokens`, `fluent_get_token`, `fluent_search_components`, `fluent_get_component`, `fluent_generate_theme`, `fluent_generate_code`, `fluent_design_guidance`, `fluent_migration_guidance`, `fluent_get_images`, `fluent_get_config`, `fluent_init_config`, `fluent_set_config`, `fluent_remember`, `fluent_recall`, `fluent_v8_lookup`, `fluent_v8_guidance`, `fluent_figma_guidance`, `fluent_native_component`, `fluent_native_guidance`.
+**MCP tools** (29): `fluent_generate_powerbi_theme`, `fluent_scaffold_pbip`, `fluent_pbir_audit`, `fluent_pbir_apply_theme`, `fluent_pbir_normalize_inline`, `fluent_pbir_verify`, `fluent_powerbi_visuals`, `fluent_powerplatform_guidance`, `fluent_accessibility_checklist`, `fluent_list_tokens`, `fluent_get_token`, `fluent_search_components`, `fluent_get_component`, `fluent_generate_theme`, `fluent_generate_code`, `fluent_design_guidance`, `fluent_migration_guidance`, `fluent_get_images`, `fluent_icon_search`, `fluent_get_config`, `fluent_init_config`, `fluent_set_config`, `fluent_remember`, `fluent_recall`, `fluent_v8_lookup`, `fluent_v8_guidance`, `fluent_figma_guidance`, `fluent_native_component`, `fluent_native_guidance`.
 
 ## 6. Verify it is working
 

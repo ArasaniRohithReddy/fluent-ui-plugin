@@ -12,6 +12,8 @@ Fluent 2 is one design language expressed by three different native libraries. T
 | `fluent_native_component` | `{ platform, name }` → type, framework kind, import, key API, sample, a11y |
 | `fluent_native_guidance` | `{ platform, section }` → generations, install, tokens, theming, typography, accessibility, cross-platform, routes, unverified |
 
+Lookups accept the design-site name as well as the real type (`Shimmer` → `ShimmerView`, `Card` → `CardView`). Windows entries also carry an `apiKind` (`control` · `panel` · `brush` · `backdrop` · `shadow` · `icon` · `command` · `property` · `assembly` · `resourceKey`) — the Windows list documents more than just controls, so count `apiKind: control` when someone asks "how many components".
+
 ## Step 1 — pick the framework kind before writing a line
 Getting this wrong produces code that cannot compile.
 
@@ -40,8 +42,10 @@ implementation("com.microsoft.fluentui:FluentUIAndroid:0.3.14")
 ```
 ```xml
 <!-- Windows — WinUI 3 (current). WinUI 2 is Microsoft.UI.Xaml 2.8.7, maintenance only. -->
-<PackageReference Include="Microsoft.WindowsAppSDK" Version="2.3.1" />
+<PackageReference Include="Microsoft.WindowsAppSDK" Version="2.4.0" />
 ```
+WASDK 2.4.0 shipped **2026-08-13** (microsoft/WindowsAppSDK release `v2.4.0`, `prerelease=false`; `microsoft-ui-xaml` tagged `winui3/release/2.4.0` the same day). `1.8.11`, published the same day, is the current 1.8 servicing line. *api.nuget.org was unreachable during verification, so the NuGet publication of 2.4.0 itself is not independently confirmed — the GitHub release proves the ship event only.*
+
 Minimums, SDK levels, Compose config and per-module versions: `section: 'install'`.
 
 ## Tokens — three tiers everywhere, three vocabularies
@@ -57,18 +61,19 @@ button.tokenSet[.backgroundColor] = .uiColor { .systemPurple }
 FluentTheme(aliasTokens = ContosoAliasTokens(), themeMode = ThemeMode.Auto) { App() }
 ```
 ```xml
-<!-- Windows: XAML theme resources. Only two corner-radius tokens exist. -->
+<!-- Windows: XAML theme resources. Exactly two corner-radius tokens exist. -->
 <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
 <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
 ```
 - **Windows only:** `{ThemeResource}` re-evaluates on theme change — use it in styles, setters and templates. `{StaticResource}` evaluates once — use it *inside* `ThemeDictionaries`. Getting this backwards is the #1 Windows theming bug.
+- **Windows has exactly two corner-radius tokens** — `ControlCornerRadius` (4) and `OverlayCornerRadius` (8), identical across the Default, Light and HighContrast dictionaries (verified in `controls/dev/CommonStyles/CornerRadius_themeresources.xaml`). There is no per-size radius ramp.
 - **Windows has no spacing token set**, and derives brand from the user's `SystemAccentColor` rather than a fixed `#0F6CBD` ramp.
 
 Exact names and values: `section: 'tokens'`.
 
 ## Theming, dark mode, high contrast
 - **iOS** — brand via a `ColorProviding` conformance (18 required properties) applied with `FluentTheme.setSharedThemeColorProvider(...)`, or `.fluentTheme(FluentTheme(colorOverrides:))` in SwiftUI. Dark mode is automatic: every alias color is a `DynamicColor` with light/dark/darkElevated slots.
-- **Android** — subclass `AliasTokens`, override the 16-step `brandColor` ramp, pass it to `FluentTheme(...)`. `ThemeMode.Auto` follows the system. **High contrast is not supported at all.**
+- **Android** — subclass `AliasTokens`, override the 16-step `brandColor` ramp, pass it to `FluentTheme(...)`. `ThemeMode.Auto` follows the system. **No high-contrast support was found** — a repo-wide search for `highContrast` / `isHighTextContrastEnabled` / `HighContrast` returns 0 results and there is no HC token set or detection. Say "none found", not "Microsoft does not support it".
 - **Windows** — omit `RequestedTheme` so the app follows the OS. Ship explicit `Light`, `Dark` **and** `HighContrast` dictionaries, mapping the HC dictionary to the `SystemColor*` keys. Detect with `Microsoft.UI.System.ThemeSettings.HighContrast`. Materials (Mica, Mica Alt, Acrylic, Smoke) and their layering rules live in the same section.
 
 `section: 'theming'`.
@@ -81,7 +86,7 @@ Fluent gives you a lot for free, but the gaps are platform-specific and load-bea
 
 | Platform | Free | You must do |
 |---|---|---|
-| iOS | Localized VoiceOver labels (~40 locales), Dynamic Type on `Label`, progress traits and values | Touch targets — there is no global minimum-target API |
+| iOS | Localized VoiceOver labels (36 locales at 0.37.0), Dynamic Type on `Label`, progress traits and values | Touch targets — there is no global minimum-target API (`EasyTapButton` grows one button to 44×44pt) |
 | Android | Compose roles, merged `contentDescription`, drawer/sheet announcements, sp-based scaling | **48dp touch targets** (not enforced) and any high-contrast story |
 | Windows | UI Automation peers, keyboard nav, names promoted from text, HC theme resolution | `AutomationProperties.Name` on images, `LabeledBy` for inputs, peers for custom controls and DirectX interop |
 
@@ -93,7 +98,8 @@ Then run `fluent_accessibility_checklist`. Detail: `section: 'accessibility'`.
 ## Honesty rules
 1. Absence from this dataset does **not** prove an API does not exist — the tools say so, and so should you.
 2. `section: 'unverified'` lists exactly what the research could not confirm, per platform. Check it before asserting a version, an enum case list, or a Fluent 1 import package (several Android View imports are deliberately `null`).
-3. The Fluent 2 site has **no Windows component pages** — Windows facts come from Microsoft Learn and the WinUI repo. `section: 'routes'` has all 21 native routes (React Native is employee-gated) plus the site's broken `/core/`-less in-page links.
+3. The Fluent 2 site has **no per-control Windows pages**. `/components/windows/` itself returns **200** — it is a *stub*: one page, two link tiles (WinUI 3 Figma toolkit, WinUI 3 docs), no XAML type names. Windows facts come from Microsoft Learn and the WinUI repo. `section: 'routes'` has all 21 native routes plus the site's broken `/core/`-less in-page links.
+4. **React Native is out of scope, not covered-but-gated.** `microsoft/fluentui-react-native` is active (25 packages under `packages/components`), but this dataset covers only the three platform-native libraries. Both tools *accept* `platform: 'react-native'` and answer with the repo, the real package names and the reason — they do not reject it. The site's `/components/react-native/` route separately 302s to AAD sign-in; never try to authenticate. For React Native, read `packages/components/<Name>/src` upstream and use the **web** Fluent tools for the shared design language.
 
 ## Always
 Pick the framework kind first · look types up with `fluent_native_component` · never hardcode a value a token already names · support light, dark and (on Windows) high contrast · verify with `fluent_accessibility_checklist`.

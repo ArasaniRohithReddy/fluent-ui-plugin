@@ -32,7 +32,7 @@ The Fluent 2 site is the design source of truth, but it is not the whole job. Th
 | Area | Grounded in | Size | Served by |
 |---|---|---|:--|
 | **Native platforms** | `fluentui-apple`, `fluentui-android`, `microsoft-ui-xaml` + the in-box WPF Fluent theme | **155 components** — iOS 30 · Android 48 · Windows 77, each with its real type name, import/namespace and framework kind (`swiftui`/`uikit`, `compose`/`view`, `winui3`/`winui2`/`wpf`) | `fluent_native_component`, `fluent_native_guidance` · `fluent-native` skill · `fluent-native-engineer` agent |
-| **Fluent 1 (v8)** | `@fluentui/react@8.125.7` against the `@fluentui/react-components@9.74.5` baseline | **106 components**, **23 collisions** where v8 and v9 export the *same name* for different things (so a wrong import compiles and then misbehaves), plus 22 traps and a 180-entry export index | `fluent_v8_lookup`, `fluent_v8_guidance` · `fluent-v8` skill |
+| **Fluent 1 (v8)** | `@fluentui/react@8.125.7` against the `@fluentui/react-components@9.74.5` baseline | **106 components**, **26 collisions** where v8 and v9 export the *same name* for different things (so a wrong import compiles and then misbehaves), plus 22 traps and a 180-entry export index | `fluent_v8_lookup`, `fluent_v8_guidance` · `fluent-v8` skill |
 | **Figma → code** | Figma's own MCP server docs + the Fluent Figma UI kits | 2 server modes (remote/desktop), 14 per-host config shapes, entitlement + rate-limit matrix, Figma-variable → Fluent-token mapping | `fluent_figma_guidance` · `fluent-figma` skill |
 
 Why this matters: the site publishes 17 native component pages, and nothing at all about the v8/v9 name collisions. Both are exactly where an assistant that guesses produces code that compiles and is wrong.

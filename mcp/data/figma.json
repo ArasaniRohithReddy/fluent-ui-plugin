@@ -6,6 +6,7 @@
   },
   "meta": {
     "verifiedOn": "2026-08",
+    "lastCorrectionPass": "2026-08-16 — re-verified the rate limits (Starter is 20/month, not 6), the '(remote only)' tool set, the SharePoint toolkit target, the community-page HTTP behaviour (202 bot challenge, not 403), and the Fluent2Toolkits Android alias (dead). Added the Figma community plugins and the DTCG token export.",
     "productNameNote": "The product is the 'Figma MCP server'. The older name 'Dev Mode MCP server' is retired (the old help URL 302-redirects to the new title). Most published third-party guides are stale and still use the old name and the old tool names (get_code, get_image).",
     "serverVersionSeen": "2.2.91 (figma/mcp-server-guide:server.json)",
     "status": "Beta. Announced 2025-06-04 in open beta; still labelled beta as of this research (2026-08). Skills/write features carry the note: 'This will eventually be a usage-based paid feature, but is currently available for free during the beta period.'",
@@ -29,7 +30,12 @@
       "https://www.figma.com/mcp-catalog/",
       "https://github.com/figma/mcp-server-guide",
       "https://fluent2.microsoft.design/get-started/design",
+      "https://fluent2.microsoft.design/",
       "https://fluent2.microsoft.design/design-tokens",
+      "https://github.com/microsoft/figma-variables-import",
+      "https://design-tokens.github.io/community-group/format/",
+      "https://github.com/microsoft/fluentui/blob/master/apps/public-docsite/src/pages/Overviews/ResourcesPage/docs/default/ResourcesDesignResources.md",
+      "https://github.com/microsoft/microsoft-ui-xaml/blob/main/docs/design-notes/xaml-styling-guide.md",
       "https://learn.microsoft.com/en-us/windows/apps/design/downloads/",
       "https://code.claude.com/docs/en/mcp",
       "https://code.visualstudio.com/docs/agent-customization/mcp-servers"
@@ -56,8 +62,8 @@
       "quote": "We recommend using the Remote MCP server, which connects directly to Figma's hosted endpoint without requiring the Figma desktop app. The remote MCP server also provides the broadest set of features.",
       "requires": {
         "figmaAccount": true,
-        "figmaPlan": "Starter works but is capped at 6 tool calls per month regardless of seat. Professional, Organization, or Enterprise is the realistic floor.",
-        "seatType": "Dev or Full seat. View and Collab seats get 6 tool calls per month — enough to fail, not enough to work.",
+        "figmaPlan": "Starter works but is capped at 20 tool calls per month. Professional, Organization, or Enterprise is the realistic floor.",
+        "seatType": "Dev or Full seat. A View or Collab seat gets up to 20 calls per month on Starter and only 6 per month on Professional, Organization, and Enterprise — enough to fail, not enough to work.",
         "desktopApp": false,
         "devMode": false,
         "hostInFigmaMcpCatalog": true,
@@ -108,9 +114,9 @@
         { "name": "get_motion_context", "purpose": "Read motion/animation for the same nodeId as get_design_context (recursive option).", "returns": "Keyframe tracks, easing, CSS @keyframes, motion.dev snippets.", "availability": "both" },
         { "name": "get_figjam", "purpose": "Read a FigJam node.", "returns": "XML plus screenshots.", "availability": "both" },
         { "name": "whoami", "purpose": "Diagnose entitlement before a big job. Rate-limit exempt.", "returns": "Email, all plans, and seat type per plan.", "availability": "remote" },
-        { "name": "add_code_connect_map", "purpose": "Code Connect authoring. Rate-limit exempt.", "returns": "Mapping result.", "availability": "remote" },
-        { "name": "get_code_connect_suggestions", "purpose": "Code Connect authoring — suggested mappings.", "returns": "Suggested node-to-component mappings.", "availability": "remote" },
-        { "name": "send_code_connect_mappings", "purpose": "Code Connect authoring — publish mappings.", "returns": "Publish result.", "availability": "remote" },
+        { "name": "add_code_connect_map", "purpose": "Code Connect authoring. Rate-limit exempt.", "returns": "Mapping result.", "availability": "both", "availabilityNote": "CORRECTED 2026-08-16: previously recorded as remote-only. Figma's tools page marks it with no '(remote only)' tag, so it exists on the local/desktop server too." },
+        { "name": "get_code_connect_suggestions", "purpose": "Code Connect authoring — suggested mappings.", "returns": "Suggested node-to-component mappings.", "availability": "both", "availabilityNote": "CORRECTED 2026-08-16: previously recorded as remote-only; Figma's tools page carries no '(remote only)' tag on it." },
+        { "name": "send_code_connect_mappings", "purpose": "Code Connect authoring — publish mappings.", "returns": "Publish result.", "availability": "both", "availabilityNote": "CORRECTED 2026-08-16: previously recorded as remote-only; Figma's tools page carries no '(remote only)' tag on it." },
         { "name": "get_context_for_code_connect", "purpose": "Code Connect authoring — component context.", "returns": "Property definitions with types and variant options, plus the descendant tree.", "availability": "remote" },
         { "name": "use_figma", "purpose": "General-purpose write-to-canvas via the Plugin API.", "returns": "Write result (20 KB output response limit per call).", "availability": "remote" },
         { "name": "create_new_file", "purpose": "Write — create a Figma file.", "returns": "New file reference.", "availability": "remote" },
@@ -154,8 +160,8 @@
       "positioning": "Niche. Choose it only for the specific org/enterprise cases Figma calls out, or when you need selection-based prompting.",
       "requires": {
         "figmaAccount": true,
-        "figmaPlan": "Same rate limits as remote — Starter is 6 calls/month regardless of seat.",
-        "seatType": "Dev or Full seat strongly recommended; View/Collab = 6 calls/month.",
+        "figmaPlan": "Same rate limits as remote — Starter is 20 calls/month.",
+        "seatType": "Dev or Full seat strongly recommended; a View/Collab seat is 20 calls/month on Starter and 6 calls/month on Professional, Organization, and Enterprise.",
         "desktopApp": true,
         "devMode": true,
         "hostInFigmaMcpCatalog": true,
@@ -181,15 +187,20 @@
         "get_screenshot",
         "get_code_connect_map",
         "get_motion_context",
-        "get_figjam"
+        "get_figjam",
+        "add_code_connect_map",
+        "get_code_connect_suggestions",
+        "send_code_connect_mappings"
       ],
       "toolsNotAvailable": [
         "download_assets",
         "search_design_system",
         "get_libraries",
         "whoami",
-        "all write-to-canvas and Code Connect authoring tools"
+        "get_context_for_code_connect",
+        "all write-to-canvas tools (use_figma, create_new_file, upload_assets, generate_diagram, generate_figma_design)"
       ],
+      "toolsNotAvailableNote": "CORRECTED 2026-08-16: this list previously excluded 'all Code Connect authoring tools'. Only get_context_for_code_connect is marked '(remote only)' on Figma's tools page — add_code_connect_map, get_code_connect_suggestions, and send_code_connect_mappings carry no such tag and are therefore available on the local/desktop server as well.",
       "advantages": ["Selection-based prompting works (the remote server is link-only)."],
       "limits": [
         "Requires the Figma desktop app to be installed, running, and in Dev Mode.",
@@ -201,17 +212,34 @@
   ],
 
   "rateLimits": [
-    { "seat": "View, Collab", "plan": "Starter", "perDay": null, "perMinute": null, "perMonth": 6, "note": "6 tool calls per month. Enough to fail, not enough to work." },
-    { "seat": "View, Collab", "plan": "Professional", "perDay": null, "perMinute": null, "perMonth": 6, "note": "6 tool calls per month — the seat type caps you, not the plan." },
-    { "seat": "View, Collab", "plan": "Organization", "perDay": null, "perMinute": null, "perMonth": 6, "note": "6 tool calls per month." },
-    { "seat": "View, Collab", "plan": "Enterprise", "perDay": null, "perMinute": null, "perMonth": 6, "note": "6 tool calls per month." },
-    { "seat": "Dev, Full", "plan": "Starter", "perDay": null, "perMinute": null, "perMonth": 6, "note": "Starter has no Dev/Full tier in Figma's table; a Starter user is capped at 6 calls/month regardless of seat." },
+    { "seat": "View, Collab", "plan": "Starter", "perDay": null, "perMinute": null, "perMonth": 20, "note": "Up to 20 tool calls per month. Starter is the ONLY plan where a View/Collab seat gets more than 6 — Figma's own remediation text reads 'If you're on a Starter plan (20 tool calls per month), upgrade to a Pro, Organization, or Enterprise plan.' Still not enough for sustained work." },
+    { "seat": "View, Collab", "plan": "Professional", "perDay": null, "perMinute": null, "perMonth": 6, "note": "Up to 6 tool calls per month — the seat type caps you, not the plan." },
+    { "seat": "View, Collab", "plan": "Organization", "perDay": null, "perMinute": null, "perMonth": 6, "note": "Up to 6 tool calls per month." },
+    { "seat": "View, Collab", "plan": "Enterprise", "perDay": null, "perMinute": null, "perMonth": 6, "note": "Up to 6 tool calls per month." },
+    { "seat": "Dev, Full", "plan": "Starter", "perDay": null, "perMinute": null, "perMonth": 20, "note": "Figma's table leaves the Dev/Full x Starter cell empty, but its remediation prose states the cap as a PLAN fact — 'If you're on a Starter plan (20 tool calls per month)' — so a Starter user is capped at 20/month whatever the seat says. Read as a plan cap, not a seat cap." },
     { "seat": "Dev, Full", "plan": "Professional", "perDay": 200, "perMinute": 10, "perMonth": null, "note": "The realistic floor for actual work." },
     { "seat": "Dev, Full", "plan": "Organization", "perDay": 200, "perMinute": 15, "perMonth": null, "note": "Also the minimum plan for Code Connect." },
     { "seat": "Dev, Full", "plan": "Enterprise", "perDay": 600, "perMinute": 20, "perMonth": null, "note": "Highest documented allowance." }
   ],
+  "rateLimitsSource": "https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/ — re-read 2026-08-16. CORRECTION: this dataset previously claimed 6/month for Starter across the board. Figma's table gives View/Collab on Starter 'Up to 20/month'; the 6/month figure belongs to View/Collab on Professional, Organization, and Enterprise.",
   "rateLimitExemptTools": ["whoami", "add_code_connect_map", "generate_figma_design"],
-  "entitlementSummary": "Access is a rate limit, not an on/off switch. Anyone can connect; a Starter/View/Collab user simply runs out after ~6 calls in a month — often mid-task. Tell users this before they start. Diagnose with whoami (rate-limit exempt, reports email, plans, and seat type per plan).",
+  "remoteOnlyTools": {
+    "list": [
+      "create_new_file",
+      "download_assets",
+      "generate_diagram",
+      "generate_figma_design",
+      "get_context_for_code_connect",
+      "get_libraries",
+      "search_design_system",
+      "upload_assets",
+      "use_figma",
+      "whoami"
+    ],
+    "source": "https://developers.figma.com/docs/figma-mcp-server/tools-and-prompts/ — re-read 2026-08-16. These ten, and only these ten, carry the '(remote only)' tag in Figma's own tool list.",
+    "implication": "Every other documented tool — including the three Code Connect authoring tools add_code_connect_map, get_code_connect_suggestions, and send_code_connect_mappings — is available on BOTH the remote and the local/desktop server. This dataset previously mislabelled those three as remote-only."
+  },
+  "entitlementSummary": "Access is a rate limit, not an on/off switch. Anyone can connect; low-tier users simply run out — often mid-task. A View or Collab seat gets up to 20 calls per month on Starter and only 6 per month on Professional, Organization, and Enterprise; a Dev or Full seat gets 200/day (600/day on Enterprise). Even 20 calls is 4-6 frames at 3-5 calls each, so a Dev seat on Professional remains the realistic floor. Tell users this before they start. Diagnose with whoami (rate-limit exempt, reports email, plans, and seat type per plan).",
 
   "catalogGate": {
     "what": "Figma MCP Catalog — an allowlist of MCP clients permitted to connect to the Figma MCP server.",
@@ -267,13 +295,143 @@
   "fluentFigmaResources": [
     { "name": "Microsoft Fluent 2 Web", "url": "https://www.figma.com/community/file/836828295772957889/microsoft-fluent-2-web", "publisher": "Microsoft", "official": true, "covers": ["web"], "note": "Verified from microsoft/fluentui's own ResourcesDesignResources.md. Code-aligned building blocks; component props map to code." },
     { "name": "Microsoft Fluent 2 iOS", "url": "https://www.figma.com/community/file/836833645402438850/microsoft-fluent-2-ios", "publisher": "Microsoft", "official": true, "covers": ["ios"], "note": "Verified from microsoft/fluentui. Route generated code to fluentui-apple (SwiftUI/UIKit), not React." },
-    { "name": "Microsoft Fluent Android", "url": "https://www.figma.com/community/file/836835062056249539/microsoft-fluent-android", "publisher": "Microsoft", "official": true, "covers": ["android"], "note": "Verified from microsoft/fluentui. Route generated code to fluentui-android Compose, not React." },
-    { "name": "Windows UI Kit for Figma", "url": "https://www.figma.com/community/file/1440832812269040007", "publisher": "Microsoft", "official": true, "covers": ["windows"], "note": "Reached via https://aka.ms/WinUI/3.0-figma-toolkit from Microsoft Learn (redirect target confirmed). Contains UI components, design patterns, and styles/tokens. Route to WinUI 3." },
+    { "name": "Microsoft Fluent Android", "url": "https://www.figma.com/community/file/836835062056249539/microsoft-fluent-android", "publisher": "Microsoft", "official": true, "covers": ["android"], "note": "Verified from microsoft/fluentui (apps/public-docsite/.../ResourcesDesignResources.md). Route generated code to fluentui-android Compose, not React. USE THIS DIRECT URL: the alias https://aka.ms/Fluent2Toolkits/Android/Figma that fluent2.microsoft.design/get-started/design still links is DEAD — it 302s to bing.com?ref=aka&shorturl=Fluent2Toolkits/Android/Figma, which is what aka.ms serves for an unregistered short link. Re-observed 2026-08-16. The Web and iOS aliases in the same family still 301 correctly to their community files." },
+    { "name": "Windows UI Kit for Figma", "url": "https://www.figma.com/community/file/1440832812269040007/windows-ui-kit", "publisher": "Microsoft", "official": true, "covers": ["windows"], "note": "Reached via https://aka.ms/WinUI/3.0-figma-toolkit from Microsoft Learn (redirect target confirmed). Canonical slug .../1440832812269040007/windows-ui-kit is the form microsoft/microsoft-ui-xaml links in docs/design-notes/xaml-styling-guide.md. Contains UI components, design patterns, and styles/tokens. Route to WinUI 3." },
     { "name": "Microsoft Store Asset Guidance Kit", "url": "https://www.figma.com/community/file/1568793421368412416", "publisher": "Microsoft", "official": true, "covers": ["windows"], "note": "Listed on the same Microsoft Learn downloads page." },
-    { "name": "SharePoint Toolkit (Figma)", "url": "https://aka.ms/SharePointToolkits/Web/Figma", "publisher": "Microsoft", "official": true, "covers": ["web"], "note": "aka.ms alias; final community file ID not resolved." },
+    { "name": "Microsoft Teams UI Kit (Figma)", "url": "https://www.figma.com/community/file/916836509871353159", "publisher": "Microsoft", "official": true, "covers": ["web"], "confidence": "high", "note": "Cited first-party as 'Microsoft Teams UI Kit (Figma)' in MicrosoftDocs/msteams-docs (msteams-platform/concepts/design/design-teams-app-fundamentals.md) and in microsoft/app-camp (docs/aad/A03-after-apply-styling.md, docs/bespoke/B04-after-apply-styling.md). The community page itself returned an HTTP 202 bot challenge on every attempt, so title and on-page publisher are unconfirmed. Teams-specific, and older than Fluent 2 — prefer the Fluent 2 Core kits for new work." },
+    { "name": "Fluent Iconography (Figma)", "url": "https://www.figma.com/community/file/836835755999342788", "publisher": "Microsoft", "official": true, "covers": ["web", "ios", "android", "windows"], "confidence": "medium", "note": "MEDIUM CONFIDENCE — do not present this file id as settled. fluent2.microsoft.design/get-started/design names 'Fluent Iconography' as an enable-able library but publishes NO URL for it; this id comes from MicrosoftDocs/msteams-docs ('Get the latest Fluent icon set (Figma)'), a Teams-era doc that may point at a superseded file. The community page returned HTTP 202 on every attempt, so the title could not be read. If the id fails, send the user to https://www.figma.com/@microsoft." },
+    { "name": "Fluent Emoji (Figma)", "url": null, "publisher": "Microsoft", "official": true, "covers": ["web", "ios", "android", "windows"], "confidence": "name-only", "note": "NAME ONLY — no URL. fluent2.microsoft.design/get-started/design names the 'Fluent Emoji kits' alongside Fluent Iconography as additional libraries to enable, but publishes no file id, and none was found first-party. Following the same rule as the Fluent 1 / v8 kit below: point users at https://www.figma.com/@microsoft rather than hardcoding a guessed id." },
+    { "name": "SharePoint Toolkit (Figma)", "url": "https://aka.ms/SharePointToolkits/Web/Figma", "publisher": "Microsoft", "official": true, "covers": ["web"], "kind": "downloadable-archive", "isFigmaCommunityFile": false, "resolvesTo": "https://static2.sharepointonline.com/files/fabric/files/websharepointfigma_1910.zip", "note": "CORRECTED 2026-08-16. This is NOT a Figma Community file — the previous note ('aka.ms alias; final community file ID not resolved') implied one existed. The alias 301s straight to a downloadable ZIP archive (websharepointfigma_1910.zip, ~6.7 MB, content-type application/zip, HTTP 200) on Microsoft's static2.sharepointonline.com CDN. The '1910' stamp dates it to October 2019, so it predates Fluent 2 entirely and cannot be enabled as a Figma library or read by get_variable_defs. It is still linked from microsoft/fluentui's own resources doc. Treat it as a legacy download, not a live kit." },
     { "name": "Microsoft publisher hub on Figma Community", "url": "https://www.figma.com/@microsoft", "publisher": "Microsoft", "official": true, "covers": ["web", "ios", "android", "windows"], "note": "Fluent 2's own get-started/design page points here for all other kits. Send users here rather than hardcoding uncertain file IDs." },
     { "name": "Fluent 1 / Fluent UI React v8 Figma kit", "url": null, "publisher": "Microsoft", "official": null, "covers": ["web"], "note": "COULD NOT VERIFY. Microsoft's current resources page lists only Fluent 2 kits; web search returned four mutually inconsistent community file IDs (a hallucination signature), and https://aka.ms/FluentToolkits/Web/Figma redirects to a dead 2020 Sketch zip. Do not hardcode a URL — point v8 users at https://www.figma.com/@microsoft and let them search." }
   ],
+  "pluginCapability": {
+    "statement": "This plugin cannot run, invoke, automate, or trigger a Figma community plugin. Figma plugins execute only inside the Figma editor's own sandbox, launched by a signed-in human from the Figma UI; there is no MCP tool, REST endpoint, or CLI that starts one from outside. What we CAN do is name the right plugin, explain what it does, and generate the file it consumes — a designer still has to open Figma and run it.",
+    "whatWeCanDo": [
+      "Recommend the right plugin for a Fluent 2 task, with its real community URL and honest provenance.",
+      "Generate the DTCG token JSON that the Variables Import plugin ingests (fluent_figma_guidance { section: \"tokens-export\" }), so the human's job is reduced to Plugins > Variables Import > pick file.",
+      "Explain the plugin's documented behaviour, supported inputs, and limits."
+    ],
+    "whatWeCannotDo": [
+      "Launch or execute a plugin.",
+      "Pass parameters to a running plugin or read its output.",
+      "Install a plugin into someone's Figma account.",
+      "Confirm a plugin's result — only the person who ran it can."
+    ],
+    "commonConfusion": "The Figma MCP server's use_figma tool writes to a canvas THROUGH the Figma Plugin API. That is Figma running its own first-party bridge; it is not running a community plugin, and it cannot be pointed at one. Do not describe use_figma as 'running a plugin'."
+  },
+
+  "fluentFigmaPlugins": [
+    {
+      "name": "Variables Import",
+      "url": "https://www.figma.com/community/plugin/1253424530216967528/variables-import",
+      "pluginId": "1253424530216967528",
+      "publisher": "Microsoft",
+      "official": true,
+      "microsoftLinked": false,
+      "httpObserved": "200 on 2026-08-16 — og:title \"Variables Import | Figma\"; og:description \"This plugin lets you batch import a bunch of variables from a single JSON file, or multiple modes from multiple JSON files. It's intended as a temporary solution until native JSON import and expo[rt]...\"",
+      "provenance": "PROVEN first-party, the only plugin here that is. github.com/microsoft/figma-variables-import: manifest.json declares { \"name\": \"Variables Import\", \"id\": \"1253424530216967528\" } — byte-identical to the id in the community URL; package.json sets author \"Travis Spomer <travis@microsoft.com>\" and homepage \"https://www.figma.com/community/plugin/1253424530216967528\"; README closes with \"© 2023 Microsoft. MIT license.\"",
+      "sourceRepo": "https://github.com/microsoft/figma-variables-import",
+      "direction": "code -> Figma",
+      "whatItDoes": "Reads a Design Token Community Group (DTCG) JSON file and writes the tokens into the Figma file as Figma Variables, including multiple modes from multiple JSON files.",
+      "whyItMattersForFluent": "This is the only documented route from a code-side token set into Figma Variables, and it is the direction Figma's own MCP server does not cover — the Figma MCP server reads design context out of Figma, never pushes tokens in. Pair it with fluent_figma_guidance { section: \"tokens-export\" }, which emits Fluent 2 tokens in exactly this format.",
+      "supportedTokenTypes": ["string", "number", "dimension", "duration", "boolean", "alias (to any other supported token in the same JSON and Figma file)"],
+      "caveats": [
+        "The README is explicit that it is not a full DTCG parser: \"This plugin does not contain a fully spec-compliant parser for the DTCG format and cannot handle every single valid token file—it's just a tool we built for internal use.\"",
+        "Cross-file aliases are Community-build-limited. Verbatim from the README: \"The following are supported only when running a local copy of this plugin, not from the Figma Community: Aliases to any other supported token in a different JSON file and Figma file, if the other Figma file has published the variables to a team library.\"",
+        "package.json marks the repo \"private\": true and pins version 0.2.0 — treat it as an internal Microsoft utility that happens to be published, not a supported product.",
+        "We cannot run it. A human opens the Figma file and runs Plugins > Variables Import."
+      ]
+    },
+    {
+      "name": "Accessibility Assistant",
+      "url": "https://www.figma.com/community/plugin/731310036968334777/accessibility-assistant",
+      "pluginId": "731310036968334777",
+      "publisher": null,
+      "official": false,
+      "microsoftLinked": true,
+      "publisherNote": "NOT verified as Microsoft-authored, and must never be presented as first-party. Microsoft links it from the Resources section of https://fluent2.microsoft.design/ — a recommendation, not authorship. The on-page publisher byline is client-rendered and could not be read; the page's JSON-LD creator field was discarded as a source after it returned a demonstrably wrong value on a plugin with proven Microsoft authorship (see unverified).",
+      "linkedFromMicrosoftAs": "A11y – Focus Order — \"Quickly annotate your design's focus and tab order for a meaningful flow of interactive objects.\" (Resources card on https://fluent2.microsoft.design/, read 2026-08-16)",
+      "renamed": {
+        "was": "A11y – Focus Order",
+        "now": "Accessibility Assistant",
+        "evidence": "The URL Microsoft still publishes, https://www.figma.com/community/plugin/731310036968334777/A11y---Focus-Order, returned HTTP 200 and redirected to https://www.figma.com/community/plugin/731310036968334777/accessibility-assistant with og:title \"Accessibility Assistant | Figma\". Same plugin id, new name and scope. Observed 2026-08-16.",
+        "implication": "Microsoft's own site is one rename behind. Use the new slug; the old one still resolves."
+      },
+      "httpObserved": "200 on 2026-08-16 — og:description \"About this plugin: The Accessibility Assistant lets you add Figma native annotations to mark up accessibility for interactive elements, headings, images and landmarks of desktop, website, and mobile a[pps]...\"",
+      "direction": "in-Figma authoring (annotations)",
+      "whatItDoes": "Adds Figma-native accessibility annotations — focus/tab order, headings, images, landmarks — to a design so the handoff carries a11y intent.",
+      "whyItMattersForFluent": "Fluent 2 requires focus order and names/roles to survive design-to-code. Annotations authored here show up as design annotations, which sit ABOVE raw tokens in Figma's documented output priority order, so get_design_context is more likely to carry them into generated code."
+    },
+    {
+      "name": "A11y - Color Contrast Checker",
+      "url": "https://www.figma.com/community/plugin/733159460536249875/a11y-color-contrast-checker",
+      "pluginId": "733159460536249875",
+      "publisher": null,
+      "official": false,
+      "microsoftLinked": true,
+      "publisherNote": "NOT verified as Microsoft-authored, and must never be presented as first-party. Linked by Microsoft from the Resources section of https://fluent2.microsoft.design/, which is a recommendation and not a claim of authorship. Publisher byline is client-rendered and unreadable behind the 202 bot challenge; the JSON-LD creator field is not a trusted source here (see unverified).",
+      "linkedFromMicrosoftAs": "A11y – Color Contrast Checker — \"Ensure your text is readable by adhering to Web Content Accessibility Guideline standards.\" (Resources card on https://fluent2.microsoft.design/, read 2026-08-16)",
+      "httpObserved": "200 on 2026-08-16 — og:title \"A11y - Color Contrast Checker | Figma\"; og:description \"Ensure your text is readable for users by adhering to WCAG (Web Content Accessibility Guidelines) standards. This plugin checks the color contrast ratio of all visible text in a frame...\"",
+      "direction": "in-Figma checking",
+      "whatItDoes": "Checks the contrast ratio of every visible text layer in a frame against WCAG thresholds.",
+      "whyItMattersForFluent": "Catches a contrast failure at design time instead of at fluent_accessibility_checklist time. It does not replace that checklist — it checks colour only, in the design, and knows nothing about the rendered Fluent theme, dark mode, or high contrast."
+    },
+    {
+      "name": "Content Reel",
+      "url": "https://www.figma.com/community/plugin/731627216655469013/content-reel",
+      "pluginId": "731627216655469013",
+      "publisher": null,
+      "official": false,
+      "microsoftLinked": true,
+      "publisherNote": "NOT verified as Microsoft-authored, and must never be presented as first-party. Linked by Microsoft from the Resources section of https://fluent2.microsoft.design/ — a recommendation, not authorship. The page's JSON-LD creator names a third party, but that same field returns the same third party on a plugin Microsoft provably wrote, so it was discarded as evidence in both directions (see unverified). Publisher: unknown.",
+      "linkedFromMicrosoftAs": "Content Reel — \"Design layouts more efficiently by pulling text strings, images, and icons from one palette.\" (Resources card on https://fluent2.microsoft.design/, read 2026-08-16)",
+      "httpObserved": "200 on 2026-08-16 — og:title \"Content Reel | Figma\"; og:description \"Design layouts more efficiently by pulling text strings, images, and icons from one palette. Content Reel lets you create custom content and share it with other Figma users...\"",
+      "direction": "in-Figma authoring (content)",
+      "whatItDoes": "Fills text, image, and icon layers from a shared palette of content.",
+      "whyItMattersForFluent": "Realistic content changes layout truth — Fluent components size to their content, and lorem ipsum hides overflow, truncation, and wrapping bugs that only appear in code."
+    },
+    {
+      "name": "Icon Scaling Tool",
+      "url": "https://www.figma.com/community/plugin/875501505522624941/Icon-Scaling-Tool",
+      "pluginId": "875501505522624941",
+      "publisher": null,
+      "official": false,
+      "microsoftLinked": true,
+      "publisherNote": "NOT verified as Microsoft-authored, and must never be presented as first-party. Linked by Microsoft from the Resources section of https://fluent2.microsoft.design/, which is a recommendation and not a claim of authorship. The community page never returned a readable body, so even the plugin's current title is unconfirmed.",
+      "linkedFromMicrosoftAs": "Icon Scaling Tool — \"Creating multiple sizes of icons is easy. Draw once and scale to multiple sizes with a single click.\" (Resources card on https://fluent2.microsoft.design/, read 2026-08-16)",
+      "httpObserved": "202 on every one of 14 attempts across 2026-08-16 — the JS bot challenge, a ~2,475-byte empty body. UNVERIFIABLE, not dead: the URL is published by Microsoft and the id is well-formed. Do not report it as broken.",
+      "direction": "in-Figma authoring (icons)",
+      "whatItDoes": "Reported by Microsoft's own card text: draw an icon once and generate multiple sizes in one click. Behaviour beyond that card is unverified.",
+      "whyItMattersForFluent": "Fluent icons ship at discrete sizes (@fluentui/react-icons exposes 12/16/20/24/28/32/48). Multi-size output is what makes a custom icon sit correctly next to a Fluent one instead of being scaled at runtime."
+    },
+    {
+      "name": "Token Mapper",
+      "url": "https://www.figma.com/community/plugin/889923752072774330/token-mapper",
+      "pluginId": "889923752072774330",
+      "publisher": null,
+      "official": false,
+      "microsoftLinked": true,
+      "publisherNote": "NOT verified as Microsoft-authored, and must never be presented as first-party. It is not on the fluent2.microsoft.design Resources list at all; it is cited by a Microsoft repo (see citedBy) as a tool to use, which is weaker still — a doc recommendation, not authorship. Community page unreadable behind the 202 challenge.",
+      "citedBy": "microsoft/microsoft-ui-xaml, docs/design-notes/xaml-styling-guide.md, section \"Figma to Xaml\": \"To know what themeresource to use, refer to the [Token Mapper](https://www.figma.com/community/plugin/889923752072774330/token-mapper) Figma plugin.\" Fetched 2026-08-16.",
+      "httpObserved": "202 on every one of 14 attempts across 2026-08-16 — JS bot challenge, empty body. UNVERIFIABLE, not dead.",
+      "direction": "in-Figma inspection",
+      "whatItDoes": "Per the citing Microsoft doc, maps a Figma element to the resource key to use in code. Scope is unverified beyond that sentence.",
+      "whyItMattersForFluent": "Scoped to WINDOWS/WinUI, not web. The citing doc is about XAML ThemeResource keys against the Windows UI Kit. Do not offer it as a Fluent v9 web token mapper — for web, get_variable_defs plus fluent_get_token is the route.",
+      "platform": "windows"
+    }
+  ],
+  "fluentFigmaPluginsMeta": {
+    "verifiedOn": "2026-08-16",
+    "microsoftLinkSource": "https://fluent2.microsoft.design/ — the Resources section links exactly four Figma community plugins (A11y – Focus Order, A11y – Color Contrast Checker, Content Reel, Icon Scaling Tool), each as a card with a one-line description, alongside non-plugin links such as Fluent 1, Microsoft Design, Inclusive Design, and Medium.",
+    "honestyRule": "'Microsoft links it' is not 'Microsoft made it'. Only Variables Import carries repo-level proof of Microsoft authorship (matching plugin id in microsoft/figma-variables-import). Every other entry is official:false with publisher:null and an explicit publisherNote. Never upgrade one of these to first-party without new evidence of the same strength.",
+    "deliberatelyExcluded": [
+      { "name": "reactor-figma-sync", "reason": "Development-only and never published to the Figma Community — there is no plugin page and no id a user could open. Listing it would send people looking for something that does not exist." },
+      { "name": "VS Code Color Mapper", "reason": "Not a Fluent tool. It maps VS Code theme colours and has no relationship to Fluent 2 tokens, kits, or components." }
+    ],
+    "cannotRunThem": "See pluginCapability. We can name a plugin and generate the file it eats; we cannot run it."
+  },
+
   "fluentKitTiers": [
     { "tier": "Fluent 2 design language", "role": "The source of truth for Fluent and Copilot design styling decisions inclusive of color, stroke width, corner radius, spacing, and size tokens. Houses the global and alias Figma variables and drives light/dark toggling." },
     { "tier": "Fluent 2 Core UI Kits", "role": "Code-aligned building blocks for web, iOS, and Android." },
@@ -285,7 +443,7 @@
   "workflow": {
     "designToFluentCode": [
       "Preflight: confirm the Figma MCP tools (get_design_context et al.) are actually present in this host. If they are not, tell the user to register and authenticate the Figma MCP server — never fabricate design data.",
-      "Check entitlement early: call whoami (rate-limit exempt) to read seat type and plan. On a View/Collab seat or Starter plan, warn the user they have ~6 calls for the whole month before spending any.",
+      "Check entitlement early: call whoami (rate-limit exempt) to read seat type and plan. On a View/Collab seat warn the user first: that is up to 20 calls for the whole month on Starter, and only 6 per month on Professional, Organization, or Enterprise.",
       "Require a node-specific link. The designer right-clicks the frame > Copy link to selection, producing a ?node-id=... URL. Reject file-only URLs — remote has no selection-based prompting.",
       "Confirm the file has BOTH the Fluent 2 Core UI Kit and the Fluent 2 design language library enabled, or variables will not resolve.",
       "For a large frame, call get_metadata first and pick narrower node IDs — large selections truncate.",
@@ -323,7 +481,7 @@
       { "symptom": "Variables come back unresolved or partially named", "cause": "The file does not have the Fluent 2 design language library enabled alongside the Core UI Kit.", "fix": "Ask the designer to enable both libraries." },
       { "symptom": "Broken images a week later", "cause": "Asset URLs from get_design_context expire in about 7 days.", "fix": "Download and commit assets immediately." },
       { "symptom": "Truncated or empty design context on a big frame", "cause": "Large selections truncate.", "fix": "get_metadata first, then re-fetch narrower node IDs." },
-      { "symptom": "Rate limit hit mid-task", "cause": "View/Collab seat or Starter plan — 6 calls per month.", "fix": "There is no fix in-tool. Warn up front and check whoami first." },
+      { "symptom": "Rate limit hit mid-task", "cause": "View/Collab seat (6 per month on Professional/Organization/Enterprise, 20 per month on Starter) or a Starter plan (20 per month).", "fix": "There is no fix in-tool. Warn up front and check whoami first." },
       { "symptom": "Server connects but every call is unauthorized", "cause": "The host is not in the Figma MCP Catalog, or OAuth was never completed.", "fix": "Complete the host's own auth step; if the host is not catalog-listed, it cannot connect at all." },
       { "symptom": "iOS/Android/Windows kit output rendered as React", "cause": "Platform not routed.", "fix": "Fluent 2 iOS kit -> fluentui-apple (SwiftUI/UIKit); Fluent Android kit -> fluentui-android Compose; Windows UI Kit -> WinUI 3. Figma also ships a figma-swiftui skill for iOS." }
     ],
@@ -332,8 +490,8 @@
 
   "prerequisiteMatrix": [
     { "n": 1, "prerequisite": "Figma account", "remote": "required", "local": "required", "note": null },
-    { "n": 2, "prerequisite": "Dev or Full seat", "remote": "strongly recommended", "local": "strongly recommended", "note": "View/Collab/Starter = 6 calls per month." },
-    { "n": 3, "prerequisite": "Professional / Organization / Enterprise plan", "remote": "strongly recommended", "local": "strongly recommended", "note": "Starter is 6/month regardless of seat." },
+    { "n": 2, "prerequisite": "Dev or Full seat", "remote": "strongly recommended", "local": "strongly recommended", "note": "A View/Collab seat is 6 calls per month on Professional/Organization/Enterprise and 20 per month on Starter." },
+    { "n": 3, "prerequisite": "Professional / Organization / Enterprise plan", "remote": "strongly recommended", "local": "strongly recommended", "note": "Starter is 20 calls per month." },
     { "n": 4, "prerequisite": "Figma desktop app installed and running", "remote": "not needed", "local": "required", "note": "The Dev Mode toggle enables the local server." },
     { "n": 5, "prerequisite": "Dev Mode enabled in the file (Shift+D)", "remote": "not needed", "local": "required", "note": null },
     { "n": 6, "prerequisite": "Host listed in the Figma MCP Catalog", "remote": "required", "local": "required", "note": "Non-allowlisted clients are rejected." },
@@ -349,7 +507,10 @@
 
   "unverified": [
     "The Fluent 1 / Fluent UI React v8 Figma kit URL. No first-party source; web search returned four conflicting community file IDs, and aka.ms/FluentToolkits/Web/Figma redirects to a dead 2020 Sketch zip. Do not hardcode a URL.",
-    "Figma Community page contents. All figma.com/community/* fetches returned HTTP 403, so kit titles and on-page publisher could not be confirmed. The Web/iOS/Android URLs come from microsoft/fluentui and the Windows one from an aka.ms redirect on Microsoft Learn.",
+    "BROKEN LINK, verified not merely unverified: the Figma toolkit alias https://aka.ms/Fluent2Toolkits/Android/Figma is dead. It 302s to https://www.bing.com/?ref=aka&shorturl=Fluent2Toolkits/Android/Figma — the fallback aka.ms serves for an unregistered short link — yet fluent2.microsoft.design/get-started/design still publishes it. Never hand a user that alias for the Android kit; route them to https://www.figma.com/community/file/836835062056249539/microsoft-fluent-android, the direct URL microsoft/fluentui itself links in ResourcesDesignResources.md. The sibling aliases .../Web/Figma and .../iOS/Figma both still 301 correctly to their community files, so this is one dead alias, not a dead family. Re-observed 2026-08-16.",
+    "The Fluent Iconography Figma file id 836835755999342788 is MEDIUM confidence. Fluent 2's get-started/design page names the library but publishes no URL; the id comes from a Teams-era MicrosoftDocs page and the community page itself returned HTTP 202 on every attempt. The Fluent Emoji kit has no id at all and is recorded name-only.",
+    "The publisher of every Figma community plugin except Variables Import — and the Figma community page's own JSON-LD is NOT an acceptable source for it. On the pages that did return HTTP 200, the embedded schema.org block carries a `creator` of {\"name\":\"Eugene Gavriloff\",\"alternateName\":\"gavriloff\"} on BOTH Content Reel and Variables Import. Variables Import is provably Microsoft's (github.com/microsoft/figma-variables-import manifest.json declares the exact plugin id 1253424530216967528, package.json author Travis Spomer <travis@microsoft.com>), so that JSON-LD creator is demonstrably wrong at least once and was therefore discarded as a source everywhere. The rendered publisher byline is client-side only and sat behind the 202 challenge. Result: publisher is recorded as null for every plugin except Variables Import. Microsoft LINKS four plugins from the Resources section of fluent2.microsoft.design — a recommendation, never a claim of authorship.",
+    "Figma Community page contents. figma.com/community/* is fronted by an intermittent JS bot challenge: a request usually returns HTTP 202 with a ~2,475-byte zero-content body, but roughly 1 attempt in 4 returns HTTP 200 with the real ~750 KB document and readable og: metadata. (This dataset previously said 'all fetches returned HTTP 403' — that was wrong, and it mattered: 403 reads as forbidden/dead, 202 means unverifiable-right-now and worth retrying.) Treat a 202 as UNVERIFIABLE, never as a broken link. Every 200 captured on 2026-08-16 is recorded on the entry it verified; entries still marked unverifiable never returned one. The Web/iOS/Android kit URLs come from microsoft/fluentui and the Windows one from an aka.ms redirect on Microsoft Learn.",
     "Whether the Fluent 2 kits populate Figma 'code syntax' with Fluent token names such as var(--colorBrandBackground). This is the highest-value unknown — it decides whether token mapping is a lookup or an inference. Plan for name mapping.",
     "The actual get_variable_defs output for a Fluent file. No authentication was performed; the variable naming and grouping shown here is inferred from Fluent's documented global/alias model.",
     "The /sse deprecation date. Current docs show only /mcp; the June 4 2025 beta date is from secondary sources.",

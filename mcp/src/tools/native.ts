@@ -3,6 +3,12 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJson, textResult, provenanceFooter } from '../util.js';
 
 type PlatformId = 'ios' | 'android' | 'windows';
+/**
+ * React Native is accepted but NOT covered. Rejecting it in the Zod enum turned a
+ * legitimate question into a schema error, which reads as "the tool is broken"
+ * rather than "we do not cover that" — see outOfScope.reactNative in the dataset.
+ */
+const PLATFORM_VALUES = ['ios', 'android', 'windows', 'react-native'] as const;
 
 interface NativePlatform {
   label?: string;
@@ -15,6 +21,8 @@ interface NativePlatform {
   generations?: unknown;
   install?: unknown;
   components?: Record<string, unknown>;
+  apiKinds?: Array<{ apiKind: string; meaning?: string }>;
+  winui2Comparison?: unknown;
   tokens?: unknown;
   theming?: unknown;
   typography?: unknown;
@@ -32,6 +40,7 @@ interface NativeData {
   crossPlatform?: unknown;
   siteRoutes?: unknown;
   siteRouteNotes?: unknown;
+  outOfScope?: { reactNative?: unknown };
   unverified?: Array<{ platform?: string; note?: string }>;
 }
 
@@ -43,12 +52,42 @@ const PLATFORM_LABEL: Record<PlatformId, string> = {
   windows: 'Windows (WinUI 3 / WinUI 2 / WPF)',
 };
 
-/** Case-insensitive exact match, so `toggleswitch` still resolves to `ToggleSwitch`. */
+/**
+ * React Native asked for by name. The dataset carries the real repo, the real
+ * package names and the reason it is out of scope, so hand those back instead of
+ * failing — a schema rejection teaches the caller nothing.
+ */
+function reactNativeResponse(data: NativeData, asked: string) {
+  const rn = data.outOfScope?.reactNative;
+  if (!rn) {
+    return textResult(
+      `React Native is not covered by the Fluent native dataset, which spans iOS, Android and Windows only. See https://github.com/microsoft/fluentui-react-native.`,
+    );
+  }
+  return textResult(
+    `"${asked}" — React Native is OUT OF SCOPE for the Fluent native dataset (iOS, Android and Windows only). ` +
+      `This is a scope decision, not a claim that the library is unavailable.\n\n` +
+      JSON.stringify(rn, null, 2) +
+      `\n\nFor the shared design language use the web tools (fluent_get_component, fluent_list_tokens). ` +
+      `For React Native component APIs read packages/components/<Name>/src in microsoft/fluentui-react-native — ` +
+      `do not translate the web React v9 API, the packages differ.`,
+  );
+}
+
+/**
+ * Case-insensitive exact match, so `toggleswitch` still resolves to `ToggleSwitch`;
+ * then declared aliases, so the site/design name (`Shimmer`, `Card`) resolves to the
+ * real type (`ShimmerView`, `CardView`) instead of 404-ing on a name the docs use.
+ */
 function resolveName(name: string, pool: Record<string, unknown> | undefined): string | null {
   if (!pool) return null;
   const lower = name.toLowerCase();
   for (const key of Object.keys(pool)) {
     if (key.toLowerCase() === lower) return key;
+  }
+  for (const [key, value] of Object.entries(pool)) {
+    const aliases = (value as { aliases?: unknown })?.aliases;
+    if (Array.isArray(aliases) && aliases.some((a) => String(a).toLowerCase() === lower)) return key;
   }
   return null;
 }
@@ -70,17 +109,19 @@ function unverifiedFor(data: NativeData, platform: PlatformId): string[] {
     .filter(Boolean);
 }
 
+const PLATFORM_DESCRIPTION =
+  'Native platform: "ios" (fluentui-apple), "android" (fluentui-android) or "windows" (WinUI 3 / WinUI 2 / WPF). ' +
+  '"react-native" is accepted but NOT covered — it returns an explanation of why and where to look instead.';
+
 export function registerNative(server: McpServer): void {
   server.registerTool(
     'fluent_native_component',
     {
       title: 'Fluent 2 native component lookup — iOS, Android, Windows',
       description:
-        'Look up a Fluent 2 component on a NATIVE platform and get what is needed to write code that compiles: the real type name, which framework kind it belongs to (iOS uikit vs swiftui, Android view vs compose, Windows winui3 vs winui2 vs wpf), the exact import or namespace, key API/parameters, a short sample, and accessibility notes. Use before writing any Swift, Kotlin or XAML Fluent UI code — the same component name often means different types on different platforms.',
+        'Look up a Fluent 2 component on a NATIVE platform and get what is needed to write code that compiles: the real type name, which framework kind it belongs to (iOS uikit vs swiftui, Android view vs compose, Windows winui3 vs winui2 vs wpf), the exact import or namespace, key API/parameters, a short sample, and accessibility notes. Use before writing any Swift, Kotlin or XAML Fluent UI code — the same component name often means different types on different platforms. React Native is accepted but out of scope: it answers with the repo, the real package names and why, instead of erroring.',
       inputSchema: {
-        platform: z
-          .enum(['ios', 'android', 'windows'])
-          .describe('Native platform: "ios" (fluentui-apple), "android" (fluentui-android) or "windows" (WinUI 3 / WinUI 2 / WPF).'),
+        platform: z.enum(PLATFORM_VALUES).describe(PLATFORM_DESCRIPTION),
         name: z
           .string()
           .describe('The component or type name, e.g. "Avatar", "ToggleSwitch", "NavigationView", "FluentTextField".'),
@@ -89,6 +130,8 @@ export function registerNative(server: McpServer): void {
     async ({ platform, name }) => {
       const data = load();
       if (!data) return textResult('Fluent native dataset not found at mcp/data/fluent-native.json.');
+
+      if (platform === 'react-native') return reactNativeResponse(data, name);
 
       const plat = data.platforms?.[platform];
       if (!plat) return textResult(`Platform "${platform}" is not present in the Fluent native dataset.`);
@@ -104,8 +147,7 @@ export function registerNative(server: McpServer): void {
           if (other === platform) continue;
           const hit = resolveName(name, data.platforms?.[other]?.components);
           if (hit) elsewhere.push(`${other}: ${hit}`);
-        }
-        return textResult(
+        }        return textResult(
           `"${name}" was not found in the ${PLATFORM_LABEL[platform]} dataset.` +
             (near.length ? `\n\nDid you mean: ${near.join(', ')}` : '') +
             (elsewhere.length ? `\n\nA component with that name does exist on: ${elsewhere.join(', ')}` : '') +
@@ -124,6 +166,14 @@ export function registerNative(server: McpServer): void {
       const kind = (plat.components?.[resolved] as { kind?: string } | undefined)?.kind;
       const kindInfo = (plat.frameworkKinds ?? []).find((k) => k.kind === kind);
       if (kindInfo) out.frameworkKind = kindInfo;
+
+      // `kind` is the FRAMEWORK (winui3/uikit/compose...); `apiKind` says whether the
+      // entry is a control at all. Windows carries four non-controls (a layout panel,
+      // a WPF property, an assembly and a resource key) that are useful but must not
+      // be miscounted as components — surface the distinction rather than hide it.
+      const apiKind = (plat.components?.[resolved] as { apiKind?: string } | undefined)?.apiKind;
+      const apiKindInfo = (plat.apiKinds ?? []).find((k) => k.apiKind === apiKind);
+      if (apiKindInfo) out.apiKind = apiKindInfo;
 
       if (platform === 'windows' && kind === 'winui2') {
         out.maintenanceWarning = plat.maintenanceWarning;
@@ -163,9 +213,9 @@ export function registerNative(server: McpServer): void {
         'Reference guidance for Fluent 2 on native platforms: which generation of the library is current and which is frozen, install coordinates (Swift Package Manager/CocoaPods, Gradle/Maven, NuGet), the design-token system and how to override it, brand/dark/high-contrast theming, the type ramp, accessibility behaviour that is and is not provided for free, cross-platform token and naming parity, the Fluent 2 site routes for each platform, and everything this dataset could NOT verify. Read this before choosing a package version or hand-writing tokens.',
       inputSchema: {
         platform: z
-          .enum(['ios', 'android', 'windows'])
+          .enum(PLATFORM_VALUES)
           .default('windows')
-          .describe('Native platform. Ignored for the "cross-platform" and "routes" sections.'),
+          .describe(`${PLATFORM_DESCRIPTION} Ignored for the "cross-platform" and "routes" sections.`),
         section: z
           .enum([
             'generations',
@@ -194,6 +244,8 @@ export function registerNative(server: McpServer): void {
         return textResult(JSON.stringify({ siteRoutes: data.siteRoutes, siteRouteNotes: data.siteRouteNotes }, null, 2));
       }
 
+      if (platform === 'react-native') return reactNativeResponse(data, `section: ${section}`);
+
       const plat = data.platforms?.[platform];
       if (!plat) return textResult(`Platform "${platform}" is not present in the Fluent native dataset.`);
 
@@ -205,6 +257,7 @@ export function registerNative(server: McpServer): void {
               platform,
               count: notes.length,
               meaning: 'Facts the research could not confirm. Treat anything here as unknown, not as false.',
+              policy: data.meta?.unverifiedPolicy,
               notes,
             },
             null,
@@ -218,6 +271,8 @@ export function registerNative(server: McpServer): void {
           generationStory: plat.generationStory,
           maintenanceWarning: plat.maintenanceWarning,
           frameworkKinds: plat.frameworkKinds,
+          apiKinds: plat.apiKinds,
+          winui2Comparison: plat.winui2Comparison,
           criticalNotes: plat.criticalNotes,
           sourceBranches: plat.sourceBranches,
           generations: plat.generations,

@@ -8,7 +8,7 @@ A slide-by-slide script for presenting the plugin to managers, leaders, and expe
 - **Goal:** let anyone — dev, designer, UI engineer — build token-accurate, accessible Fluent 2 UIs *without doing it by hand*.
 
 ## 2. What we built
-- A portable **plugin**: **7 agents + 18 skills + an MCP server with 28 tools** — one standard stdio server, so it runs in any MCP-capable AI IDE. The bundled installer registers **9 hosts across 10 config locations**, and **3 config dialects** cover everything else (Copilot CLI, VS Code, VS Code Insiders, VSCodium, Cursor, Windsurf, Claude Desktop, Claude Code, Gemini CLI; Visual Studio, Antigravity and Cline via templates).
+- A portable **plugin**: **7 agents + 18 skills + an MCP server with 29 tools** — one standard stdio server, so it runs in any MCP-capable AI IDE. The bundled installer registers **9 hosts across 10 config locations**, and **3 config dialects** cover everything else (Copilot CLI, VS Code, VS Code Insiders, VSCodium, Cursor, Windsurf, Claude Desktop, Claude Code, Gemini CLI; Visual Studio, Antigravity and Cline via templates).
 - Covers **Web** (Fluent React v9 + Web Components), **Power BI** (themes + PBIP/PBIR), **Power Platform** (Power Apps, Power Pages, PCF), and the **native platforms** (iOS, Android, Windows) — one design language everywhere.
 - Plus the two places assistants quietly get Fluent wrong: **Fluent 1 (v8)**, where v8 and v9 export the *same name* for different components, and **Figma → code**, where the frame is the spec.
 
@@ -22,8 +22,8 @@ A slide-by-slide script for presenting the plugin to managers, leaders, and expe
 
 ## 4. Why it's trustworthy (grounding)
 - Crawled the **official Fluent 2 site** — 69 public pages **+ 14 gated AI/Copilot pages** (authenticated).
-- Token & component values **extracted from the real `@fluentui` packages** (`react-theme`, `tokens`, `react-components`) — not guessed. 366 color tokens ×3 themes; 99 components with real props; **753 source visuals** (diagrams, do/don't, anatomy, Motion videos) indexed with direct URLs, every one with alt text and a real CDN link.
-- The surfaces the site does not document are grounded in the shipping SDKs: **155 native components** (iOS 30 · Android 48 · Windows 77) from `fluentui-apple` / `fluentui-android` / `microsoft-ui-xaml`, and **106 v8 components with 23 name collisions** against v9.
+- Token & component values **extracted from the real `@fluentui` packages** (`react-theme`, `tokens`, `react-components`) — not guessed. 366 color tokens ×3 themes; 353 components with real props; **753 source visuals** (diagrams, do/don't, anatomy, Motion videos) indexed with direct URLs, every one with alt text and a real CDN link.
+- The surfaces the site does not document are grounded in the shipping SDKs: **185 native components** (iOS 30 · Android 48 · Windows 77) from `fluentui-apple` / `fluentui-android` / `microsoft-ui-xaml`, and **106 v8 components with 26 name collisions** against v9.
 - Power BI theme **schema-validated**; PBIP/PBIR validated against Fabric schemas.
 - Everything cites Microsoft Learn; uncertainties are flagged, not hidden.
 

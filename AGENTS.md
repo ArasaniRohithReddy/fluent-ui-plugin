@@ -27,12 +27,13 @@ This project is the **fluent-ui** plugin: **agents + skills + an MCP server** th
 | `fluent_design_guidance` | Fluent 2 design-language foundations (color, typography, layout, elevation, iconography, motion, shapes, material, content, responsible AI) |
 | `fluent_migration_guidance` | Scenario guidance to adopt/migrate existing UI to Fluent 2 (Fluent UI v8→v9, from another design system, hardcoded→tokens, per-surface) |
 | `fluent_get_images` | Direct URLs to the official Fluent 2 visuals — anatomy diagrams, do/don't examples, state/type illustrations, and Motion demo videos — for any component or topic. Use to **show** a user a diagram or hand them a source link |
+| `fluent_icon_search` | Find the right Fluent icon by meaning and get its **exact** verified export name + import (a guessed icon name is always a compile error) |
 | `fluent_get_config` / `fluent_recall` | Load the user's resolved presets (config > memory > default) + the recorded decision log |
 | `fluent_init_config` / `fluent_set_config` | Scaffold (first-run) or update the user's `fluent.config.json` presets |
 | `fluent_remember` | Record a clarified design decision to `.fluent/memory.json` |
 | `fluent_v8_lookup` / `fluent_v8_guidance` | **Fluent 1 (Fluent UI React v8 / Office UI Fabric)**: real v8 symbols, the v8→v9 per-component map, and the collision traps where v8 and v9 export the *same name* so code compiles and then misbehaves |
 | `fluent_native_component` / `fluent_native_guidance` | **Native platforms** — iOS, Android, Windows. Real type names, imports/namespaces, key API and samples, plus which generation is current vs frozen. The same component name resolves to a different type on each platform, so never infer native code from the web API |
-| `fluent_figma_guidance` | Figma MCP design-to-code: **entitlements first** (a View/Collab seat or any Starter plan gets ~6 tool calls per *month*), the client-catalog gate, remote vs desktop server, and Figma-variable→Fluent-token mapping. Credential-free — auth is the host's own OAuth flow |
+| `fluent_figma_guidance` | Figma MCP design-to-code: **entitlements first** (a View/Collab seat gets ~6 tool calls per *month* — 20 on Starter), the client-catalog gate, remote vs desktop server, and Figma-variable→Fluent-token mapping. Credential-free — auth is the host's own OAuth flow |
 
 ## Golden rules (never violate)
 1. **Never hardcode token values.** No raw hex/px that duplicates a token — look them up (`fluent_get_token`) and consume as `tokens.*` (Griffel), CSS variables, or theme values.
@@ -58,7 +59,7 @@ Users may declare presets in **`fluent.config.json`** (brand, theme, typography,
 - **iOS:** `MicrosoftFluentUI` (CocoaPods) / `FluentUI` (SPM). One evolving library — Fluent 2 is a **version cutover at 0.13.0**, not a separate package. Types are `MSF*`; both UIKit and SwiftUI are supported.
 - **Android:** `com.microsoft.fluentui:*`. Both generations ship in the **same artifacts**: `com.microsoft.fluentui.tokenized.*` is Fluent 2 (Compose, active), `com.microsoft.fluentui.<area>.*` is Fluent 1 (Views, feature-frozen). The import — not the dependency — decides which you get.
 - **Windows:** WinUI 3 via `Microsoft.WindowsAppSDK` is current. **WinUI 2 (`Microsoft.UI.Xaml`) is maintenance-only** — 2.8 (July 2022) was its last feature release. WPF has an official in-box Fluent theme from .NET 9 (`PresentationFramework.Fluent`); the popular *WPF-UI* package is community, not Microsoft.
-- **Figma → code:** check entitlement *first* with `whoami` (rate-limit exempt). A View/Collab seat or any Starter plan gets ~6 calls per **month**; a Dev seat on Professional is the realistic floor. The host owns auth — this plugin never touches a token.
+- **Figma → code:** check entitlement *first* with `whoami` (rate-limit exempt). Limits go by **seat**, not plan: a **View/Collab** seat gets ~6 calls per **month** (20 on Starter), while a **Dev/Full** seat gets 200/day (600/day on Enterprise) — so a Dev seat is the realistic floor. The host owns auth — this plugin never touches a token.
 
 ## Skills (load for depth)
 `fluent-web-ui` · `fluent-theming` · `fluent-design-tokens` · `fluent-design-language` · `fluent-accessibility` · `fluent-ai-copilot-ui` · `fluent-powerbi-theme` · `fluent-pbip-report` · `fluent-powerbi-adopt` · `fluent-powerapps` · `fluent-powerpages` · `fluent-pcf-component` · `fluent-migration` · `fluent-design-review` · `fluent-config` · `fluent-v8` · `fluent-native` · `fluent-figma`

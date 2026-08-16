@@ -3,7 +3,7 @@
     "title": "Fluent 2 design-language reference",
     "source": "Synthesized faithfully from the official Fluent 2 guide pages on https://fluent2.microsoft.design (see research/fluent-design.md). All 36 topics are deep-parsed from their source pages: each topic carries the page summary, expanded keyPoints, a 'sections' array (one entry per subsection heading + its text), a 'values' object of concrete stated values, an 'images' array (alt text, nearest-heading section, and CDN asset slug for every image/gif — empty-alt images retain a descriptive asset slug), and a 'doDont' object where the page pairs do/don't specimens. Concrete values (type ramp incl. per-platform ramps, spacing scale, corner radii, shadow ramp, breakpoints, motion tokens, RAI rubric) are quoted from the source pages; token values are cross-checked against mcp/data/fluent-tokens.json.",
     "docBase": "https://fluent2.microsoft.design",
-    "topicCount": 36,
+    "topicCount": 40,
     "gatedCapture": {
       "capturedAt": "2026-08",
       "method": "authenticated browser capture (Microsoft employee sign-in)",
@@ -20,7 +20,37 @@
       "warning": "Entries are bare imperatives. The negation lives in the \"dont\" key, NOT in the sentence — a dont often reads \"Use X ...\" and means \"Don't use X ...\". Never quote, render, or summarise a dont entry without its key, and never treat a leading \"Use\"/\"Do\" as evidence an entry is a do.",
       "correctRendering": "Prefix every \"dont\" entry with \"Don't \" when flattening to prose or a single list.",
       "whyVerbatim": "The strings are left exactly as published so they stay traceable to the source page; rewriting them to embed the negation would break that."
-    }
+    },
+    "additionalSources": [
+      {
+        "url": "https://fluent2.microsoft.design/component-roadmap/",
+        "topic": "component-roadmap",
+        "capturedAt": "2026-08-16",
+        "adds": "Four lifecycle stages with their promotion criteria and export surface, the planning cadence, and the 63-row roadmap table as structured rows.",
+        "licensing": "Facts and table rows only; page prose paraphrased, never reproduced."
+      },
+      {
+        "url": "https://fluent2.microsoft.design/get-started/whatisnew/",
+        "topic": "whats-new",
+        "capturedAt": "2026-08-16",
+        "adds": "The six named system-level change areas plus the per-platform component overview routes.",
+        "licensing": "Facts and headings only; page prose paraphrased, never reproduced."
+      },
+      {
+        "url": "https://fluent2.microsoft.design/components/web/react/",
+        "topic": "web-component-index",
+        "capturedAt": "2026-08-16",
+        "adds": "The site component manifest for both web libraries: names, slugs, routes, library availability and preview flags.",
+        "licensing": "Names, routes and flags only. Per-component descriptions from the source page are deliberately omitted; component records live in fluent-components.json."
+      },
+      {
+        "url": "https://fluent2.microsoft.design/sitemap-0.xml",
+        "topic": "site-routes",
+        "capturedAt": "2026-08-16",
+        "adds": "Route manifest count, the never-404 behaviour, the leaf-route/anchor facts, six employee-gated routes (metadata only) and the /color-tokens2/ duplicate registry.",
+        "licensing": "Route metadata only. No gated page content is captured."
+      }
+    ]
   },
   "topics": {
     "design-principles": {
@@ -8001,6 +8031,1712 @@
       "docUrl": "https://fluent2.microsoft.design/content-engineering/track-quality-over-time/",
       "accessStatus": "public",
       "capturedAt": "2026-08"
+    },
+    "component-roadmap": {
+      "title": "Component lifecycle and roadmap",
+      "summary": "Fluent 2 publishes a four-stage lifecycle for web components and a roadmap table that records, per component, its owning area, delivery phase, current status and the estimated next milestone. It is the source that answers whether a component is stable, in preview, or still planned.",
+      "keyPoints": [
+        "Components move through four stages: To Be Determined (TBD), Research, Unstable (Preview), then Stable (Released).",
+        "The stage decides where the component can be imported from: an Unstable component is reachable only through the unstable deep import, a Stable one from the package root.",
+        "Stable means design- and feature-complete, API changes governed by semver, cleared for production use, and through the required testing pass.",
+        "Planning granularity is roughly two quarters per component start-to-finish, with a mid-quarter check-in when the schedule moves; quarters follow the Microsoft financial year.",
+        "Published dates are approximate targets, not commitments, and move as a component progresses.",
+        "The published table covers 63 components across 17 areas.",
+        "The table is a point-in-time snapshot and lags the shipped library — cross-check status against the web-component-index topic, the React storybook, or the installed @fluentui/react-components version before relying on it."
+      ],
+      "sections": [
+        {
+          "heading": "Component lifecycle",
+          "text": "Four named stages set expectations for what exists, where it can be imported from, and how firm the estimate for the next stage is."
+        },
+        {
+          "heading": "Timeline and estimates",
+          "text": "Completion is estimated over roughly two quarters, tuned to component complexity, so partner teams can plan; a mid-quarter check-in flags schedule changes. Quarters are financial-year quarters."
+        },
+        {
+          "heading": "Component roadmap",
+          "text": "A table of every tracked component with its area, phase number, status and ETA. Preserved verbatim as structured rows under \"roadmap\"."
+        }
+      ],
+      "lifecycleStages": [
+        {
+          "order": 1,
+          "stage": "To Be Determined (TBD)",
+          "shortName": "TBD",
+          "meaning": "On the roadmap; not yet being designed or implemented.",
+          "criteria": [],
+          "exportSurface": null
+        },
+        {
+          "order": 2,
+          "stage": "Research",
+          "shortName": "Research",
+          "meaning": "A scaffold or prototype exists inside the agreed feature scope, with a quarter-boundary estimate for the next stage.",
+          "criteria": [
+            "A scaffold or prototype exists inside the agreed feature scope",
+            "A relatively high-confidence estimate of the next phase, landing on a quarter boundary"
+          ],
+          "exportSurface": null
+        },
+        {
+          "order": 3,
+          "stage": "Unstable (Preview)",
+          "shortName": "Unstable",
+          "meaning": "Usable in preview through the unstable deep import; most of the feature set exists but can still change.",
+          "criteria": [
+            "Reachable only through the unstable deep import",
+            "Most of the feature set complete, though features may still be added or removed",
+            "A relatively high-confidence estimate of the next phase, landing on a quarter boundary"
+          ],
+          "exportSurface": "unstable deep import"
+        },
+        {
+          "order": 4,
+          "stage": "Stable (Released)",
+          "shortName": "Stable",
+          "meaning": "Ready to use: shipped from the package root and supported in production.",
+          "criteria": [
+            "Exported from the library's top level rather than a deep import",
+            "Design- and feature-complete",
+            "Future API changes follow semver",
+            "Cleared for production use",
+            "Has completed the required testing pass"
+          ],
+          "exportSurface": "package top level"
+        }
+      ],
+      "timeline": {
+        "typicalDurationQuarters": 2,
+        "dependsOn": "component complexity",
+        "checkInCadence": "mid-quarter",
+        "quarterBasis": "Microsoft financial year",
+        "note": "Dates are approximate targets and change while a component moves through the lifecycle."
+      },
+      "roadmap": {
+        "columns": [
+          "Component",
+          "Area",
+          "Phase",
+          "Status",
+          "ETA"
+        ],
+        "rowCount": 63,
+        "statusCounts": {
+          "Stable": 29,
+          "Unstable": 10,
+          "In Progress": 1,
+          "Not Started": 22,
+          "Research": 1
+        },
+        "phaseCounts": {
+          "1": 7,
+          "2": 7,
+          "3": 6,
+          "4": 5,
+          "5": 4,
+          "6": 6,
+          "7": 8,
+          "8": 9,
+          "10": 4,
+          "15": 7
+        },
+        "areaCounts": {
+          "Avatar": 4,
+          "Button": 5,
+          "Icon": 1,
+          "Utility": 1,
+          "Nav": 4,
+          "Menu": 4,
+          "Basic": 2,
+          "Surfaces": 5,
+          "Surfaces?": 2,
+          "FormControls": 13,
+          "Progress": 3,
+          "Pickers": 6,
+          "Lists": 3,
+          "Notifications": 4,
+          "DateTime": 3,
+          "unspecified": 2,
+          "Contrib": 1
+        },
+        "etaValues": [
+          "Stable - Q2",
+          "Stable - Q2 (mid-Nov)",
+          "Unstable - Q3",
+          "Unstable - Q2",
+          "Research - Q2",
+          "TBD"
+        ],
+        "rows": [
+          {
+            "component": "Avatar",
+            "area": "Avatar",
+            "phase": 1,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Button",
+            "area": "Button",
+            "phase": 1,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "ToggleButton",
+            "area": "Button",
+            "phase": 1,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Icon",
+            "area": "Icon",
+            "phase": 1,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "FluentProvider",
+            "area": "Utility",
+            "phase": 1,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Link",
+            "area": "Nav",
+            "phase": 1,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Divider",
+            "area": "Menu",
+            "phase": 1,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Text",
+            "area": "Basic",
+            "phase": 2,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "MenuButton",
+            "area": "Button",
+            "phase": 2,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Menu",
+            "area": "Menu",
+            "phase": 2,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Popover",
+            "area": "Surfaces",
+            "phase": 2,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Tooltip",
+            "area": "Surfaces?",
+            "phase": 2,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Badge",
+            "area": "Avatar",
+            "phase": 2,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Accordion",
+            "area": "Nav",
+            "phase": 2,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Image",
+            "area": "Basic",
+            "phase": 3,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Label",
+            "area": "FormControls",
+            "phase": 3,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Input",
+            "area": "FormControls",
+            "phase": 3,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "CompoundButton",
+            "area": "Button",
+            "phase": 3,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "SplitButton",
+            "area": "Button",
+            "phase": 3,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Checkbox",
+            "area": "FormControls",
+            "phase": 3,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "TextArea",
+            "area": "FormControls",
+            "phase": 4,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Slider",
+            "area": "FormControls",
+            "phase": 4,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Switch",
+            "area": "FormControls",
+            "phase": 4,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Radio",
+            "area": "FormControls",
+            "phase": 4,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Portal",
+            "area": "Surfaces",
+            "phase": 4,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Tabs",
+            "area": "Surfaces?",
+            "phase": 5,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Spinner",
+            "area": "Progress",
+            "phase": 5,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Spinbutton",
+            "area": "FormControls",
+            "phase": 5,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Select",
+            "area": "FormControls",
+            "phase": 5,
+            "status": "Unstable",
+            "eta": "Stable - Q2"
+          },
+          {
+            "component": "Dialog",
+            "area": "Surfaces",
+            "phase": 6,
+            "status": "Stable",
+            "eta": null
+          },
+          {
+            "component": "Dropdown/ComboBox",
+            "area": "Pickers",
+            "phase": 6,
+            "status": "Unstable",
+            "eta": "Stable - Q2"
+          },
+          {
+            "component": "Toolbar",
+            "area": "Menu",
+            "phase": 6,
+            "status": "Unstable",
+            "eta": "Stable - Q2"
+          },
+          {
+            "component": "AvatarGroup",
+            "area": "Avatar",
+            "phase": 6,
+            "status": "Unstable",
+            "eta": "Stable - Q2"
+          },
+          {
+            "component": "Card",
+            "area": "Surfaces",
+            "phase": 6,
+            "status": "Unstable",
+            "eta": "Stable - Q2 (mid-Nov)"
+          },
+          {
+            "component": "ProgressIndicator",
+            "area": "Progress",
+            "phase": 6,
+            "status": "Unstable",
+            "eta": "Stable - Q2"
+          },
+          {
+            "component": "Table",
+            "area": "Lists",
+            "phase": 7,
+            "status": "Unstable",
+            "eta": "Stable - Q2"
+          },
+          {
+            "component": "Toast",
+            "area": "Notifications",
+            "phase": 7,
+            "status": "In Progress",
+            "eta": "Unstable - Q3"
+          },
+          {
+            "component": "Alert",
+            "area": "Notifications",
+            "phase": 7,
+            "status": "Unstable",
+            "eta": "Stable - Q2"
+          },
+          {
+            "component": "Drawer",
+            "area": "Surfaces",
+            "phase": 7,
+            "status": "Not Started",
+            "eta": "Unstable - Q2"
+          },
+          {
+            "component": "Tree",
+            "area": "Lists",
+            "phase": 7,
+            "status": "Not Started",
+            "eta": "Unstable - Q2"
+          },
+          {
+            "component": "Field",
+            "area": "FormControls",
+            "phase": 7,
+            "status": "Unstable",
+            "eta": "Stable - Q2"
+          },
+          {
+            "component": "Persona",
+            "area": "Avatar",
+            "phase": 7,
+            "status": "Unstable",
+            "eta": "Stable - Q2"
+          },
+          {
+            "component": "InfoButton",
+            "area": "FormControls",
+            "phase": 7,
+            "status": "Not Started",
+            "eta": "Unstable - Q2"
+          },
+          {
+            "component": "Virtualizer",
+            "area": "Lists",
+            "phase": 8,
+            "status": "Research",
+            "eta": "Unstable - Q2"
+          },
+          {
+            "component": "DatePicker",
+            "area": "DateTime",
+            "phase": 8,
+            "status": "Not Started",
+            "eta": "Research - Q2"
+          },
+          {
+            "component": "Shimmer",
+            "area": "Progress",
+            "phase": 8,
+            "status": "Not Started",
+            "eta": "Research - Q2"
+          },
+          {
+            "component": "Breadcrumb",
+            "area": "Nav",
+            "phase": 8,
+            "status": "Not Started",
+            "eta": "Research - Q2"
+          },
+          {
+            "component": "Pill",
+            "area": "Pickers",
+            "phase": 8,
+            "status": "Not Started",
+            "eta": "Research - Q2"
+          },
+          {
+            "component": "TeachingCallout",
+            "area": "Notifications",
+            "phase": 8,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "Rating",
+            "area": "FormControls",
+            "phase": 8,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "Coachmark",
+            "area": "Notifications",
+            "phase": 8,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "Nav",
+            "area": "Nav",
+            "phase": 8,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "PeoplePicker",
+            "area": "Pickers",
+            "phase": 10,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "TimePicker",
+            "area": "DateTime",
+            "phase": 10,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "ColorPicker",
+            "area": "Pickers",
+            "phase": 10,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "SwatchColorPicker",
+            "area": "Pickers",
+            "phase": 10,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "Carousel",
+            "area": null,
+            "phase": 15,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "OverflowSet",
+            "area": "Menu",
+            "phase": 15,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "Form",
+            "area": "FormControls",
+            "phase": 15,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "Calendar",
+            "area": "DateTime",
+            "phase": 15,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "Reaction",
+            "area": null,
+            "phase": 15,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "Picker",
+            "area": "Pickers",
+            "phase": 15,
+            "status": "Not Started",
+            "eta": "TBD"
+          },
+          {
+            "component": "Attachment",
+            "area": "Contrib",
+            "phase": 15,
+            "status": "Not Started",
+            "eta": "TBD"
+          }
+        ]
+      },
+      "caveats": [
+        "Status and ETA values are reproduced exactly as published, including the two rows whose area is blank and the \"Surfaces?\" area label.",
+        "Several components the table lists as Unstable or Not Started have since shipped as stable in @fluentui/react-components — treat the table as historical intent, not as current release state."
+      ],
+      "docUrl": "https://fluent2.microsoft.design/component-roadmap/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08-16"
+    },
+    "whats-new": {
+      "title": "What's new in Fluent 2",
+      "summary": "The orientation page for Fluent 2: it groups the changes from Fluent 1 into six system-level improvements that apply everywhere, then points at the per-platform component overviews for the platform-specific updates.",
+      "keyPoints": [
+        "Fluent 2 changes are presented in two layers: system-level changes that apply across the design system, and platform-level changes delivered per platform.",
+        "Six system-level improvement areas are called out; each is listed individually under systemLevelChanges with the illustration the page pairs it with.",
+        "Platform-level detail is not on this page — each platform component overview carries its own updates.",
+        "Pairs with the migration dataset (mcp/data/migration.json) and the fluent_migration_guidance tool when moving an existing UI from Fluent 1 (v8) to Fluent 2 (v9)."
+      ],
+      "sections": [
+        {
+          "heading": "System-level changes",
+          "text": "Six improvement areas carried across the whole system, each illustrated by one image on the source page."
+        },
+        {
+          "heading": "Platform-level changes",
+          "text": "Fluent 2 adapts per platform, so the platform-specific improvements are documented in each platform component overview rather than here."
+        }
+      ],
+      "systemLevelChanges": [
+        {
+          "name": "Cohesive color system",
+          "relatedTopic": "color",
+          "image": "https://fluent2websitecdn.azureedge.net/cdn/whatisnew1.BKVtI4kw.webp"
+        },
+        {
+          "name": "Token system",
+          "relatedTopic": "design-tokens",
+          "image": "https://fluent2websitecdn.azureedge.net/cdn/whatisnew2.D86JMylW.webp"
+        },
+        {
+          "name": "Standardized corners",
+          "relatedTopic": "shapes",
+          "image": "https://fluent2websitecdn.azureedge.net/cdn/whatisnew3.Qgu7X3SO.webp"
+        },
+        {
+          "name": "Customizability",
+          "relatedTopic": "design-tokens",
+          "image": "https://fluent2websitecdn.azureedge.net/cdn/whatisnew4.D2ljnonA.webp"
+        },
+        {
+          "name": "Robust usage guidance",
+          "relatedTopic": null,
+          "image": "https://fluent2websitecdn.azureedge.net/cdn/whatisnew5.BR_ABBWc.webp"
+        },
+        {
+          "name": "Accessibility notation",
+          "relatedTopic": "accessibility",
+          "image": "https://fluent2websitecdn.azureedge.net/cdn/whatisnew6.4lF4r482.webp"
+        }
+      ],
+      "platformLevelChanges": {
+        "note": "Updates are tailored per platform; read the platform component overview for the platform you ship on.",
+        "componentOverviews": [
+          {
+            "library": "web/react",
+            "overview": "https://fluent2.microsoft.design/components/web/react/"
+          },
+          {
+            "library": "ios",
+            "overview": "https://fluent2.microsoft.design/components/ios/"
+          },
+          {
+            "library": "android",
+            "overview": "https://fluent2.microsoft.design/components/android/"
+          },
+          {
+            "library": "windows",
+            "overview": "https://fluent2.microsoft.design/components/windows/"
+          }
+        ]
+      },
+      "values": {
+        "systemLevelChangeCount": 6,
+        "anchors": [
+          "#system-level-changes",
+          "#platform-level-changes"
+        ]
+      },
+      "relatedTopics": [
+        "color",
+        "design-tokens",
+        "shapes",
+        "accessibility"
+      ],
+      "relatedDatasets": [
+        "mcp/data/migration.json (fluent_migration_guidance)"
+      ],
+      "docUrl": "https://fluent2.microsoft.design/get-started/whatisnew/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08-16"
+    },
+    "web-component-index": {
+      "title": "Web component index (React and Web Components)",
+      "summary": "The manifest behind the Fluent 2 web component overview: which components the site publishes, the route for each one, which of the two web libraries offer it, and whether it is flagged preview. Use it for discovery and routing — not as a component reference.",
+      "keyPoints": [
+        "React library: 47 components published on the site.",
+        "Web Components (v3) library: 26 components published on the site.",
+        "Both libraries share one page per component — the Web Components entries resolve to the same /components/web/react/core/<slug>/usage routes and the page switches library in place.",
+        "No component in either library is flagged preview on the site index (inPreview is false for every entry), which is why the roadmap table and this index disagree.",
+        "The only leaf route is /usage/ — there are no /spec, /code or /accessibility sub-routes; those are in-page anchors (#resources #types #behavior #layout #accessibility #content).",
+        "Component records (props, imports, accessibility notes, samples) live in mcp/data/fluent-components.json and are served by fluent_get_component / fluent_search_components. This topic deliberately duplicates none of them."
+      ],
+      "sections": [
+        {
+          "heading": "Resources",
+          "text": "The overview page links the Figma UI kit and the two component storybooks."
+        },
+        {
+          "heading": "Components",
+          "text": "A card per component with a platform switcher between React and Web Components."
+        }
+      ],
+      "libraries": {
+        "web/react": {
+          "count": 47,
+          "indexRoute": "/components/web/react/"
+        },
+        "web/web-components": {
+          "count": 26,
+          "indexRoute": "/components/web/react/ (shared page, library switcher)"
+        }
+      },
+      "react": [
+        {
+          "name": "Accordion",
+          "slug": "accordion",
+          "route": "/components/web/react/core/accordion/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_accordion.B8eJ_Qlv.png"
+        },
+        {
+          "name": "Avatar",
+          "slug": "avatar",
+          "route": "/components/web/react/core/avatar/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_avatar.CLck4KeC.png"
+        },
+        {
+          "name": "Avatar group",
+          "slug": "avatargroup",
+          "route": "/components/web/react/core/avatargroup/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_avatargroup.qUF2ZF1F.png"
+        },
+        {
+          "name": "Badge",
+          "slug": "badge",
+          "route": "/components/web/react/core/badge/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_badge.HrWhDpUp.png"
+        },
+        {
+          "name": "Breadcrumb",
+          "slug": "breadcrumb",
+          "route": "/components/web/react/core/breadcrumb/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Button",
+          "slug": "button",
+          "route": "/components/web/react/core/button/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Card",
+          "slug": "card",
+          "route": "/components/web/react/core/card/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_card.COS49rMR.png"
+        },
+        {
+          "name": "Carousel",
+          "slug": "carousel",
+          "route": "/components/web/react/core/carousel/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Checkbox",
+          "slug": "checkbox",
+          "route": "/components/web/react/core/checkbox/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_checkbox.C4LCt4a7.png"
+        },
+        {
+          "name": "Combobox",
+          "slug": "combobox",
+          "route": "/components/web/react/core/combobox/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_combobox.pLntKsZA.png"
+        },
+        {
+          "name": "Dialog",
+          "slug": "dialog",
+          "route": "/components/web/react/core/dialog/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_dialog.Bw6E0OWs.png"
+        },
+        {
+          "name": "Divider",
+          "slug": "divider",
+          "route": "/components/web/react/core/divider/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_divider.BJR5Rh0l.png"
+        },
+        {
+          "name": "Drawer",
+          "slug": "drawer",
+          "route": "/components/web/react/core/drawer/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Dropdown",
+          "slug": "dropdown",
+          "route": "/components/web/react/core/dropdown/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_dropdown.BgcsGVV8.png"
+        },
+        {
+          "name": "Field",
+          "slug": "field",
+          "route": "/components/web/react/core/field/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_field.U6RUW_N0.png"
+        },
+        {
+          "name": "Fluent provider",
+          "slug": "fluentprovider",
+          "route": "/components/web/react/core/fluentprovider/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_fluentprovider.D5O9Ga8h.png"
+        },
+        {
+          "name": "Icon",
+          "slug": "icon",
+          "route": "/components/web/react/core/icon/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_icon.Bdk9VKmn.png"
+        },
+        {
+          "name": "Image",
+          "slug": "image",
+          "route": "/components/web/react/core/image/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Info label",
+          "slug": "infolabel",
+          "route": "/components/web/react/core/infolabel/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Input",
+          "slug": "input",
+          "route": "/components/web/react/core/input/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_input.Cagzgzx-.png"
+        },
+        {
+          "name": "Label",
+          "slug": "label",
+          "route": "/components/web/react/core/label/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_label.Bmkowt6P.png"
+        },
+        {
+          "name": "Link",
+          "slug": "link",
+          "route": "/components/web/react/core/link/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_link.CUfhnKsB.png"
+        },
+        {
+          "name": "List",
+          "slug": "list",
+          "route": "/components/web/react/core/list/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Menu",
+          "slug": "menu",
+          "route": "/components/web/react/core/menu/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_menu.DZ_QmfGO.png"
+        },
+        {
+          "name": "Message bar",
+          "slug": "messagebar",
+          "route": "/components/web/react/core/messagebar/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Nav",
+          "slug": "nav",
+          "route": "/components/web/react/core/nav/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Persona",
+          "slug": "persona",
+          "route": "/components/web/react/core/persona/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_persona.aUBVUDiX.png"
+        },
+        {
+          "name": "Popover",
+          "slug": "popover",
+          "route": "/components/web/react/core/popover/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_popover.wcuupTPt.png"
+        },
+        {
+          "name": "Progress bar",
+          "slug": "progressbar",
+          "route": "/components/web/react/core/progressbar/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_progressbar.CxzXu_M7.png"
+        },
+        {
+          "name": "Radio group",
+          "slug": "radiogroup",
+          "route": "/components/web/react/core/radiogroup/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_radiogroup.CsXFFZdv.png"
+        },
+        {
+          "name": "Rating",
+          "slug": "rating",
+          "route": "/components/web/react/core/rating/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Searchbox",
+          "slug": "searchbox",
+          "route": "/components/web/react/core/searchbox/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Select",
+          "slug": "select",
+          "route": "/components/web/react/core/select/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_select.ABFgkwx0.png"
+        },
+        {
+          "name": "Skeleton",
+          "slug": "skeleton",
+          "route": "/components/web/react/core/skeleton/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_shimmer.Dxr4gS_2.png"
+        },
+        {
+          "name": "Slider",
+          "slug": "slider",
+          "route": "/components/web/react/core/slider/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_slider.DgGIq6Z_.png"
+        },
+        {
+          "name": "Spin button",
+          "slug": "spin",
+          "route": "/components/web/react/core/spin/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_spin.c4zwZGzQ.png"
+        },
+        {
+          "name": "Spinner",
+          "slug": "spinner",
+          "route": "/components/web/react/core/spinner/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_spinner.BduIW_C0.png"
+        },
+        {
+          "name": "Switch",
+          "slug": "switch",
+          "route": "/components/web/react/core/switch/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_switch.Cd-7Ge6N.png"
+        },
+        {
+          "name": "Tablist",
+          "slug": "tablist",
+          "route": "/components/web/react/core/tablist/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_tablist.CTZsc6f-.png"
+        },
+        {
+          "name": "Tag",
+          "slug": "tag",
+          "route": "/components/web/react/core/tag/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Tag picker",
+          "slug": "tagpicker",
+          "route": "/components/web/react/core/tagpicker/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Text",
+          "slug": "text",
+          "route": "/components/web/react/core/text/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_text.B8EWu50L.png"
+        },
+        {
+          "name": "Textarea",
+          "slug": "textarea",
+          "route": "/components/web/react/core/textarea/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_textarea.DKS9fpjR.png"
+        },
+        {
+          "name": "Toast",
+          "slug": "toast",
+          "route": "/components/web/react/core/toast/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Toolbar",
+          "slug": "toolbar",
+          "route": "/components/web/react/core/toolbar/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_toolbar.Dw7et3HS.png"
+        },
+        {
+          "name": "Tooltip",
+          "slug": "tooltip",
+          "route": "/components/web/react/core/tooltip/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_tooltip.DzdzrdMi.png"
+        },
+        {
+          "name": "Tree",
+          "slug": "tree",
+          "route": "/components/web/react/core/tree/usage",
+          "libraries": [
+            "web/react"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        }
+      ],
+      "webComponents": [
+        {
+          "name": "Accordion",
+          "slug": "accordion",
+          "route": "/components/web/react/core/accordion/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_accordion.B8eJ_Qlv.png"
+        },
+        {
+          "name": "Avatar",
+          "slug": "avatar",
+          "route": "/components/web/react/core/avatar/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_avatar.CLck4KeC.png"
+        },
+        {
+          "name": "Badge",
+          "slug": "badge",
+          "route": "/components/web/react/core/badge/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_badge.HrWhDpUp.png"
+        },
+        {
+          "name": "Button",
+          "slug": "button",
+          "route": "/components/web/react/core/button/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Checkbox",
+          "slug": "checkbox",
+          "route": "/components/web/react/core/checkbox/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_checkbox.C4LCt4a7.png"
+        },
+        {
+          "name": "Combobox",
+          "slug": "combobox",
+          "route": "/components/web/react/core/combobox/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_combobox.pLntKsZA.png"
+        },
+        {
+          "name": "Dialog",
+          "slug": "dialog",
+          "route": "/components/web/react/core/dialog/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_dialog.Bw6E0OWs.png"
+        },
+        {
+          "name": "Divider",
+          "slug": "divider",
+          "route": "/components/web/react/core/divider/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_divider.BJR5Rh0l.png"
+        },
+        {
+          "name": "Drawer",
+          "slug": "drawer",
+          "route": "/components/web/react/core/drawer/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Dropdown",
+          "slug": "dropdown",
+          "route": "/components/web/react/core/dropdown/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_dropdown.BgcsGVV8.png"
+        },
+        {
+          "name": "Field",
+          "slug": "field",
+          "route": "/components/web/react/core/field/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_field.U6RUW_N0.png"
+        },
+        {
+          "name": "Image",
+          "slug": "image",
+          "route": "/components/web/react/core/image/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Input",
+          "slug": "input",
+          "route": "/components/web/react/core/input/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_input.Cagzgzx-.png"
+        },
+        {
+          "name": "Label",
+          "slug": "label",
+          "route": "/components/web/react/core/label/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_label.Bmkowt6P.png"
+        },
+        {
+          "name": "Link",
+          "slug": "link",
+          "route": "/components/web/react/core/link/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_link.CUfhnKsB.png"
+        },
+        {
+          "name": "Menu",
+          "slug": "menu",
+          "route": "/components/web/react/core/menu/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_menu.DZ_QmfGO.png"
+        },
+        {
+          "name": "Message bar",
+          "slug": "messagebar",
+          "route": "/components/web/react/core/messagebar/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_placeholder.DKLLlbq1.png"
+        },
+        {
+          "name": "Progress bar",
+          "slug": "progressbar",
+          "route": "/components/web/react/core/progressbar/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_progressbar.CxzXu_M7.png"
+        },
+        {
+          "name": "Radio group",
+          "slug": "radiogroup",
+          "route": "/components/web/react/core/radiogroup/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_radiogroup.CsXFFZdv.png"
+        },
+        {
+          "name": "Slider",
+          "slug": "slider",
+          "route": "/components/web/react/core/slider/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_slider.DgGIq6Z_.png"
+        },
+        {
+          "name": "Spinner",
+          "slug": "spinner",
+          "route": "/components/web/react/core/spinner/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_spinner.BduIW_C0.png"
+        },
+        {
+          "name": "Switch",
+          "slug": "switch",
+          "route": "/components/web/react/core/switch/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_switch.Cd-7Ge6N.png"
+        },
+        {
+          "name": "Tablist",
+          "slug": "tablist",
+          "route": "/components/web/react/core/tablist/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_tablist.CTZsc6f-.png"
+        },
+        {
+          "name": "Text",
+          "slug": "text",
+          "route": "/components/web/react/core/text/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_text.B8EWu50L.png"
+        },
+        {
+          "name": "Textarea",
+          "slug": "textarea",
+          "route": "/components/web/react/core/textarea/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_textarea.DKS9fpjR.png"
+        },
+        {
+          "name": "Tooltip",
+          "slug": "tooltip",
+          "route": "/components/web/react/core/tooltip/usage",
+          "libraries": [
+            "web/react",
+            "web/web-components"
+          ],
+          "inPreview": false,
+          "previewImage": "https://fluent2websitecdn.azureedge.net/cdn/overview_tooltip.DzdzrdMi.png"
+        }
+      ],
+      "otherPlatformIndexes": [
+        {
+          "library": "ios",
+          "overview": "https://fluent2.microsoft.design/components/ios/",
+          "componentCount": 12,
+          "components": [
+            "Activity indicator",
+            "Avatar",
+            "Avatar group",
+            "Button",
+            "Card nudge",
+            "Heads-up display",
+            "Navigation bar",
+            "Progress bar",
+            "Segmented control",
+            "Shimmer",
+            "Text field",
+            "Tooltip"
+          ]
+        },
+        {
+          "library": "android",
+          "overview": "https://fluent2.microsoft.design/components/android/",
+          "componentCount": 5,
+          "components": [
+            "Avatar",
+            "Avatar group",
+            "Button",
+            "Progress indicator",
+            "Shimmer"
+          ]
+        },
+        {
+          "library": "windows",
+          "overview": "https://fluent2.microsoft.design/components/windows/",
+          "componentCount": 0,
+          "components": []
+        }
+      ],
+      "resources": [
+        {
+          "title": "Fluent 2 Web UI Kit (Figma)",
+          "url": "https://aka.ms/Fluent2Toolkits/Web/Figma"
+        },
+        {
+          "title": "Fluent UI React v9 component storybook",
+          "url": "https://react.fluentui.dev/"
+        },
+        {
+          "title": "Fluent UI Web Components v3 component storybook",
+          "url": "https://web-components.fluentui.dev/"
+        }
+      ],
+      "values": {
+        "reactComponentCount": 47,
+        "webComponentsCount": 26,
+        "componentsInBothLibraries": 26,
+        "reactOnly": [
+          "Avatar group",
+          "Breadcrumb",
+          "Card",
+          "Carousel",
+          "Fluent provider",
+          "Icon",
+          "Info label",
+          "List",
+          "Nav",
+          "Persona",
+          "Popover",
+          "Rating",
+          "Searchbox",
+          "Select",
+          "Skeleton",
+          "Spin button",
+          "Tag",
+          "Tag picker",
+          "Toast",
+          "Toolbar",
+          "Tree"
+        ]
+      },
+      "licensing": "Names, slugs, routes, library availability, preview flags and image URLs only. The one-line component descriptions published on the source page are deliberately not reproduced here — read them at docUrl.",
+      "docUrl": "https://fluent2.microsoft.design/components/web/react/",
+      "accessStatus": "public",
+      "capturedAt": "2026-08-16"
+    },
+    "site-routes": {
+      "title": "Fluent 2 site routes: sitemap, employee-gated pages and known duplicates",
+      "summary": "How the fluent2.microsoft.design route space actually behaves: where the route manifest is, which routes require a Microsoft employee sign-in, why an unknown path never returns 404, and which published route is a duplicate. Use it to answer \"does this page exist\" without guessing.",
+      "keyPoints": [
+        "The route manifest is the sitemap at https://fluent2.microsoft.design/sitemap-0.xml — 132 routes, re-counted at capture time.",
+        "An unknown path does NOT return 404. Every unknown path answers HTTP 200 with the site 404 page (about 84,663 bytes, <title> starting with \"404\"), so status codes cannot be used to detect a missing page — match on the title or body size.",
+        "Employee-gated routes answer 302 to /.auth/login/aad with the requested path in post_login_redirect_uri. Report them as employee-only; never attempt to sign in or work around the gate.",
+        "Component pages have no /spec, /code or /accessibility sub-routes. /usage/ is the only leaf; the apparent tabs are in-page anchors (#resources #types #behavior #layout #accessibility #content).",
+        "/color-tokens2/ duplicates /color-tokens/ (same <title>, same alias-to-global mapping in plain-table form) and must not be ingested as a second source."
+      ],
+      "sitemap": {
+        "url": "https://fluent2.microsoft.design/sitemap-0.xml",
+        "routeCount": 132,
+        "verifiedAt": "2026-08-16"
+      },
+      "notFoundBehavior": {
+        "statusForUnknownPath": 200,
+        "approximateBodyBytes": 84663,
+        "detection": "The <title> of the returned page starts with \"404\"; body size is near-constant. Never trust the status code."
+      },
+      "leafRoutes": {
+        "componentLeaf": "/usage/",
+        "noSubRoutes": [
+          "/spec",
+          "/code",
+          "/accessibility"
+        ],
+        "inPageAnchors": [
+          "#resources",
+          "#types",
+          "#behavior",
+          "#layout",
+          "#accessibility",
+          "#content"
+        ]
+      },
+      "gatedRoutes": [
+        {
+          "route": "/get-started/contribute/",
+          "url": "https://fluent2.microsoft.design/get-started/contribute/",
+          "title": "Contribute",
+          "titleSource": "derived from the route slug — the page itself is not readable without sign-in",
+          "access": "employee-gated",
+          "httpStatus": 302,
+          "redirectsTo": "/.auth/login/aad",
+          "verifiedAt": "2026-08-16"
+        },
+        {
+          "route": "/fluent-helpdesk/gethelp/",
+          "url": "https://fluent2.microsoft.design/fluent-helpdesk/gethelp/",
+          "title": "Get help",
+          "titleSource": "derived from the route slug — the page itself is not readable without sign-in",
+          "access": "employee-gated",
+          "httpStatus": 302,
+          "redirectsTo": "/.auth/login/aad",
+          "verifiedAt": "2026-08-16"
+        },
+        {
+          "route": "/fluent-helpdesk/officehours/",
+          "url": "https://fluent2.microsoft.design/fluent-helpdesk/officehours/",
+          "title": "Office hours",
+          "titleSource": "derived from the route slug — the page itself is not readable without sign-in",
+          "access": "employee-gated",
+          "httpStatus": 302,
+          "redirectsTo": "/.auth/login/aad",
+          "verifiedAt": "2026-08-16"
+        },
+        {
+          "route": "/fluent-helpdesk/selfhelp/",
+          "url": "https://fluent2.microsoft.design/fluent-helpdesk/selfhelp/",
+          "title": "Self help",
+          "titleSource": "derived from the route slug — the page itself is not readable without sign-in",
+          "access": "employee-gated",
+          "httpStatus": 302,
+          "redirectsTo": "/.auth/login/aad",
+          "verifiedAt": "2026-08-16"
+        },
+        {
+          "route": "/fluent-helpdesk/systemstatus/",
+          "url": "https://fluent2.microsoft.design/fluent-helpdesk/systemstatus/",
+          "title": "System status",
+          "titleSource": "derived from the route slug — the page itself is not readable without sign-in",
+          "access": "employee-gated",
+          "httpStatus": 302,
+          "redirectsTo": "/.auth/login/aad",
+          "verifiedAt": "2026-08-16"
+        },
+        {
+          "route": "/fluent-helpdesk/theteam/",
+          "url": "https://fluent2.microsoft.design/fluent-helpdesk/theteam/",
+          "title": "The team",
+          "titleSource": "derived from the route slug — the page itself is not readable without sign-in",
+          "access": "employee-gated",
+          "httpStatus": 302,
+          "redirectsTo": "/.auth/login/aad",
+          "verifiedAt": "2026-08-16"
+        }
+      ],
+      "gatedPolicy": [
+        "Metadata only: route, derived title and access state. No page content is captured, quoted or summarised.",
+        "Never attempt to sign in, reuse a session, or otherwise bypass the gate. Tell the user the page is employee-only and hand them the URL.",
+        "The sitemap lists more gated routes than the six recorded here; these are the ones the plugin previously had no answer for."
+      ],
+      "knownDuplicateRoutes": [
+        {
+          "route": "/color-tokens2/",
+          "url": "https://fluent2.microsoft.design/color-tokens2/",
+          "duplicateOf": "/color-tokens/",
+          "sameTitle": "Web Alias Color Tokens - Fluent 2 Design System",
+          "bytes": 183047,
+          "structure": "One plain table (348 rows), no H1/H2, no swatches.",
+          "status": "Duplicate content, partial superset: it lists 13 alias tokens /color-tokens/ omits (Compound Brand x9, colorBackgroundOverlay, colorScrollbarOverlay, colorStrokeFocus1, colorStrokeFocus2), which were merged into color.aliasReference in fluent-tokens.json. Its shadow rows are truncated at the first comma of their rgba() value, so it is unusable for shadows.",
+          "action": "Do not re-scrape as a separate source. /color-tokens/ is canonical."
+        }
+      ],
+      "values": {
+        "sitemapRouteCount": 132,
+        "gatedRoutesRecorded": 6,
+        "knownDuplicateRoutes": 1
+      },
+      "docUrl": "https://fluent2.microsoft.design/sitemap-0.xml",
+      "accessStatus": "public",
+      "capturedAt": "2026-08-16"
     }
   }
 }

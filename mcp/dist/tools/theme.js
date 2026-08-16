@@ -30,11 +30,11 @@ export function registerTheme(server) {
         inputSchema: {
             brandColor: z
                 .string()
-                .regex(/^#?[0-9a-fA-F]{6}$/)
+                .regex(/^#?[0-9a-fA-F]{6}$/, 'brandColor must be a 6-digit hex like #0F6CBD (a leading # is optional); named colors such as "red" are not accepted.')
                 .describe('Brand hex, e.g. #0F6CBD.'),
             name: z
                 .string()
-                .regex(/^[A-Za-z_$][A-Za-z0-9_$]*$/)
+                .regex(/^[A-Za-z_$][A-Za-z0-9_$]*$/, 'name is used as a JavaScript identifier for the exported theme, so it must start with a letter, _ or $ and contain only letters, digits, _ or $.')
                 .default('brand')
                 .describe('A valid JS identifier used for the exported theme variables.'),
         },

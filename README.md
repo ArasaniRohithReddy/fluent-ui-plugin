@@ -58,6 +58,7 @@ Beyond greenfield, it also:
 | `fluent_design_guidance` | Fluent 2 design-language foundations: color, typography, layout, elevation, iconography, motion, shapes, material, content, responsible AI |
 | `fluent_migration_guidance` | Adopt/migrate to Fluent 2: Fluent UI v8 to v9, from another design system, hardcoded to tokens, per-surface |
 | `fluent_get_images` | Direct URLs to official Fluent 2 visuals (anatomy diagrams, do/don't examples, state/type illustrations, Motion demo videos) for any component or topic (show a diagram or hand over a source link) |
+| `fluent_icon_search` | Find the right Fluent icon by meaning and get its exact verified export name + import |
 | `fluent_get_config` / `fluent_recall` | Load the user's resolved presets (config > memory > default) + the recorded decision log |
 | `fluent_init_config` / `fluent_set_config` | Scaffold (first-run) or update the user's `fluent.config.json` presets |
 | `fluent_remember` | Record a design decision to `.fluent/memory.json` (append-only) |
@@ -106,7 +107,7 @@ plugin.json            # plugin manifest (+ mirrors in .claude-plugin/.codex-plu
 AGENTS.md · CLAUDE.md  # portable instructions (fan out to most hosts)
 agents/                # 7 agents (*.agent.md)
 skills/                # 18 skills (SKILL.md)
-mcp/                   # MCP server: 28 tools (src/, dist/, data/)
+mcp/                   # MCP server: 29 tools (src/, dist/, data/)
 templates/pbip/        # PBIP/PBIR project template
 hosts/                 # per-IDE MCP config templates + install guide
 assets/                # sample configs/apps + the fluent.config JSON schema
