@@ -4,7 +4,7 @@
 
 **Re-audited at content level on 2026-08-08.** Route counts alone are not enough: a page can gain content without the sitemap changing. This pass diffed the *body* of all 132 routes, not just their URLs. No route was added, removed or renamed since the first pass, and no upstream prose or table had drifted — but the re-audit found four defects **in our own extraction** (mis-sorted responsible-AI do/don't pairs, silently dropped markdown tables, garbled `card.accessibility` prose, and 13 missing content-engineering pages). All are fixed. Note that the earlier figure of 114 routes undercounted the sitemap; the true total is **132**.
 
-**Access note:** 25-26 routes now sit behind Microsoft's employee sign-in, including all 14 AI component pages. Topics captured before they were gated are flagged `accessStatus: employee-gated` with a `capturedAt` date, so stale content is visible rather than silently trusted.
+**Access note:** 25 of the 132 routes sit behind Microsoft's employee sign-in, including all 14 AI component pages. Their **guidance text is not redistributed in this repository** (see [`NOTICE`](../NOTICE)) — those records carry the facts, the official `docUrl`, and a `gatedNotice` saying where to read the rest. They are flagged `accessStatus: employee-gated` with a `capturedAt` date, so their status is visible rather than silently trusted.
 
 ## Site total: 132 routes
 
