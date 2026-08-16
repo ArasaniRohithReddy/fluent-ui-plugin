@@ -1,7 +1,7 @@
 {
   "name": "fluent-ui-plugin-site",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "GitHub Pages site for the Fluent UI 2.0 plugin — itself built with Fluent UI React v9 (Fluent 2).",
   "scripts": {

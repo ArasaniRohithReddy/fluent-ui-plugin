@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { loadJson, textResult } from '../util.js';
+import { loadJson, textResult, provenanceFooter } from '../util.js';
 const load = () => loadJson('fluent-native.json');
 const PLATFORM_LABEL = {
     ios: 'iOS (fluentui-apple)',
@@ -100,7 +100,12 @@ export function registerNative(server) {
             out.note =
                 'Check the "generation" field: Fluent 2 = Jetpack Compose (com.microsoft.fluentui.tokenized.*), Fluent 1 = View/XML. Do not mix the two APIs in one screen.';
         }
-        return textResult(JSON.stringify(out, null, 2));
+        return textResult(JSON.stringify(out, null, 2) +
+            provenanceFooter(data.unverified, {
+                terms: [resolved, name],
+                scope: platform,
+                seeAlso: `fluent_native_guidance { platform: "${platform}", section: "unverified" }`,
+            }));
     });
     server.registerTool('fluent_native_guidance', {
         title: 'Fluent 2 native reference — generations, install, tokens, theming, a11y',

@@ -169,7 +169,7 @@ Agent:
 | Topic | How to find |
 |---|---|
 | Config schema (all fields + defaults) | [`assets/schema/fluent.config.schema.json`](../../assets/schema/fluent.config.schema.json) · samples in `assets/samples/config/` |
-| Field → token mapping + rationale | `research/config-design.md` |
+| Field → token mapping + rationale | the `Field` / `Drives` tables above in this file · MCP `fluent_get_config` returns each field's resolved `source` |
 | Exact token values a preset resolves to | `fluent-design-tokens` skill · MCP `fluent_list_tokens` / `fluent_get_token` |
 | Brand ramp from `brand.color` | MCP `fluent_generate_theme` |
 | Design-token config conventions | `microsoft_docs_search(query="design tokens theme configuration Fluent UI react v9")` |

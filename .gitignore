@@ -16,5 +16,10 @@ scripts/pbir/.selftest-work/
 # Internal research notes + gated/verbatim Microsoft source content — kept local, NOT republished publicly
 research/
 
+# Guidance captured from sign-in-gated Microsoft pages. The published datasets keep only
+# factual scaffolding + a pointer to the official page; the full text lives here and is
+# merged back in at runtime for readers who have access. See NOTICE.
+mcp/data/local/
+
 # Screenshots of Microsoft's Fluent 2 site (copyright/gated) — kept local, not published
 assets/screenshots/

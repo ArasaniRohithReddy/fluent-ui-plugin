@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { loadJson, textResult } from '../util.js';
+import { loadJson, textResult, loadLocalOverlay, withLocalOverlay } from '../util.js';
 export function registerDesignGuidance(server) {
     server.registerTool('fluent_design_guidance', {
         title: 'Fluent 2 design-language guidance',
@@ -60,6 +60,7 @@ export function registerDesignGuidance(server) {
         const section = topics[topic];
         if (!section)
             return textResult(`No guidance for topic "${topic}".`);
-        return textResult(JSON.stringify(section, null, 2));
+        // Restore gated guidance when the reader has it locally (see NOTICE).
+        return textResult(JSON.stringify(withLocalOverlay(section, loadLocalOverlay('design-guidance.json'), section?.title), null, 2));
     });
 }

@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This project is the **fluent-ui** plugin (agents + skills + MCP server) for building **Microsoft Fluent 2 (Fluent UI 2.0)** UIs across Web, Power BI, and Power Platform.
+This project is the **fluent-ui** plugin (agents + skills + MCP server) for building **Microsoft Fluent 2 (Fluent UI 2.0)** UIs across Web, Power BI, Power Platform, and the native platforms — iOS, Android and Windows. It also adopts/migrates existing UIs to Fluent 2, including Fluent UI **v8 → v9**.
 
 Full guidance — MCP tools, golden rules, surface quickstarts, skills, and agents — lives in **AGENTS.md**:
 

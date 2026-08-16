@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { loadJson, textResult } from '../util.js';
+import { loadJson, textResult, provenanceFooter } from '../util.js';
 
 type PlatformId = 'ios' | 'android' | 'windows';
 
@@ -144,7 +144,14 @@ export function registerNative(server: McpServer): void {
           'Check the "generation" field: Fluent 2 = Jetpack Compose (com.microsoft.fluentui.tokenized.*), Fluent 1 = View/XML. Do not mix the two APIs in one screen.';
       }
 
-      return textResult(JSON.stringify(out, null, 2));
+      return textResult(
+        JSON.stringify(out, null, 2) +
+          provenanceFooter(data.unverified, {
+            terms: [resolved, name],
+            scope: platform,
+            seeAlso: `fluent_native_guidance { platform: "${platform}", section: "unverified" }`,
+          }),
+      );
     }
   );
 

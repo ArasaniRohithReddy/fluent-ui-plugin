@@ -13,9 +13,9 @@ npm run build     # produces mcp/dist/index.js
 ```
 Launch command used by every host:
 ```
-node "C:\Users\v-arasanir\Downloads\Rohith's Rough\fluent.ui\mcp\dist\index.js"
+node "<PATH>/fluent-ui-plugin/mcp/dist/index.js"
 ```
-> Replace that path if you move the plugin. `npx` publish is optional; local `node` works everywhere today.
+> Replace `<PATH>` with where you cloned the repository, and use an **absolute** path so the server resolves from any workspace. `npx` publish is optional; local `node` works everywhere today.
 
 ## Automated setup (recommended)
 Instead of editing each host's config by hand, run the bundled helper once. It finds every AI IDE / host installed on your machine, registers `fluent-ui` with the **absolute** path to the built server (so it works from any workspace), backs up every file it touches, and is safe to re-run:
@@ -23,7 +23,7 @@ Instead of editing each host's config by hand, run the bundled helper once. It f
 node hosts/register-mcp.mjs            # register into all installed hosts
 node hosts/register-mcp.mjs --dry-run  # preview changes, write nothing
 node hosts/register-mcp.mjs --figma    # also register Figma's remote MCP server
-node hosts/register-mcp.mjs --path "C:\\path\\to\\fluent.ui\\mcp\\dist\\index.js"   # custom server path
+node hosts/register-mcp.mjs --path "<PATH>/fluent-ui-plugin/mcp/dist/index.js"   # custom server path
 ```
 It covers the GitHub Copilot CLI (`~/.copilot/mcp-config.json`), VS Code and VS Code Insiders (user `mcp.json`), VSCodium, Cursor, Windsurf, Claude Code, Gemini CLI, and Claude Desktop, using the correct dialect for each. Build the server first (above). **After it runs, restart each host** (or reload its MCP servers) so the `fluent_*` tools appear.
 

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { loadJson, textResult } from '../util.js';
+import { loadJson, loadLocalOverlay, withLocalOverlay, textResult } from '../util.js';
 export function registerComponents(server) {
     server.registerTool('fluent_search_components', {
         title: 'Search Fluent 2 components',
@@ -55,9 +55,13 @@ export function registerComponents(server) {
         const q = name.toLowerCase();
         const comps = data?.components || [];
         const api = comps.find((c) => c.name.toLowerCase() === q) || comps.find((c) => c.name.toLowerCase().includes(q));
-        const use = usage.find((u) => u.name.toLowerCase() === q) || usage.find((u) => u.name.toLowerCase().includes(q));
-        if (!api && !use)
+        const found = usage.find((u) => u.name.toLowerCase() === q) || usage.find((u) => u.name.toLowerCase().includes(q));
+        if (!api && !found)
             return textResult(`No component "${name}". Use fluent_search_components to find one.`);
-        return textResult(JSON.stringify({ api: api || null, usage: use || null }, null, 2));
+        // Restore gated guidance when the reader has it locally (see NOTICE).
+        const use = found
+            ? withLocalOverlay(found, loadLocalOverlay('fluent-components-usage.json'), found.slug || found.name)
+            : null;
+        return textResult(JSON.stringify({ api: api || null, usage: use }, null, 2));
     });
 }

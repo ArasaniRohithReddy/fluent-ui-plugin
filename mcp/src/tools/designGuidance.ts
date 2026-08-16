@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { loadJson, textResult } from '../util.js';
+import { loadJson, textResult, loadLocalOverlay, withLocalOverlay } from '../util.js';
 
 export function registerDesignGuidance(server: McpServer): void {
   server.registerTool(
@@ -69,7 +69,14 @@ export function registerDesignGuidance(server: McpServer): void {
       }
       const section = topics[topic];
       if (!section) return textResult(`No guidance for topic "${topic}".`);
-      return textResult(JSON.stringify(section, null, 2));
+      // Restore gated guidance when the reader has it locally (see NOTICE).
+      return textResult(
+        JSON.stringify(
+          withLocalOverlay(section as any, loadLocalOverlay('design-guidance.json'), (section as any)?.title),
+          null,
+          2,
+        ),
+      );
     }
   );
 }

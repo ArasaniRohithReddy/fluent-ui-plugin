@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { loadJson, textResult } from '../util.js';
+import { loadJson, textResult, provenanceFooter } from '../util.js';
 
 interface FigmaHost {
   id: string;
@@ -129,7 +129,14 @@ export function registerFigma(server: McpServer): void {
               },
               null,
               2,
-            ),
+            ) +
+              // The kit URLs are the least-verified part of this dataset - the
+              // v8 kit link in particular has no first-party source - so the
+              // caveats have to travel with the answer, not sit in a side topic.
+              provenanceFooter(data.unverified, {
+                terms: ['kit', 'figma', 'url', 'toolkit'],
+                seeAlso: 'fluent_figma_guidance { section: "unverified" }',
+              }),
           );
         case 'code-connect':
           return textResult(JSON.stringify(data.codeConnect, null, 2));

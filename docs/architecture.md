@@ -3,34 +3,35 @@
 `fluent-ui` has three cooperating layers plus a grounded data layer.
 
 ```
-                         ┌─────────────────────────────────────────────┐
-   User in any IDE  ──▶  │  Agents (agents/*.agent.md)                  │
-   (Copilot, VS Code,    │   fluent-ui-builder ─ router                │
-    Cursor, Claude, …)   │   web · powerbi · power-platform · reviewer │
-                         └───────────────┬─────────────────────────────┘
+                         ┌──────────────────────────────────────────────────────────────────┐
+   User in any IDE  ──▶  │  Agents (agents/*.agent.md)                                      │
+   (Copilot, VS Code,    │   fluent-ui-builder ─ router                                     │
+    Cursor, Claude, …)   │   web · native · powerbi · power-platform · migration · reviewer │
+                         └───────────────┬──────────────────────────────────────────────────┘
                                          │ load for depth
-                         ┌───────────────▼─────────────────────────────┐
-                         │  Skills (skills/<name>/SKILL.md) × 15        │
-                         │   web-ui · theming · tokens · a11y · ai …    │
-                         └───────────────┬─────────────────────────────┘
+                         ┌───────────────▼──────────────────────────────────────────────────┐
+                         │  Skills (skills/<name>/SKILL.md) × 18                            │
+                         │   web-ui · theming · tokens · a11y · native · v8 · figma …       │
+                         └───────────────┬──────────────────────────────────────────────────┘
                                          │ call for facts / generation
-                         ┌───────────────▼─────────────────────────────┐
-                         │  MCP server (mcp/, stdio) — 28 tools         │
-                         │   components · tokens · theme · powerbi …    │
-                         └───────────────┬─────────────────────────────┘
+                         ┌───────────────▼──────────────────────────────────────────────────┐
+                         │  MCP server (mcp/, stdio) — 28 tools                             │
+                         │   components · tokens · theme · powerbi · native · v8 …          │
+                         └───────────────┬──────────────────────────────────────────────────┘
                                          │ reads
-                         ┌───────────────▼─────────────────────────────┐
-                         │  Grounded data (mcp/data/, templates/)       │
-                         │   fluent-tokens · fluent-components(+usage)  │
-                         │   powerbi-theme.base · powerplatform · pbip  │
-                         └─────────────────────────────────────────────┘
+                         ┌───────────────▼──────────────────────────────────────────────────┐
+                         │  Grounded data (mcp/data/, templates/)                           │
+                         │   fluent-tokens · fluent-components(+usage) · images             │
+                         │   fluent-v8 · fluent-native · figma · design-guidance            │
+                         │   powerbi-theme.base · powerplatform · pbip                      │
+                         └──────────────────────────────────────────────────────────────────┘
 ```
 
 ## Layers
 
-**Agents** (`agents/*.agent.md`) — orchestration. A primary router (`fluent-ui-builder`) plus five specialists. Frontmatter declares `name`, `description`, and the `skills` each may load. They *do the work* and call MCP tools; they never hardcode Fluent values.
+**Agents** (`agents/*.agent.md`) — orchestration. A primary router (`fluent-ui-builder`) plus six specialists (web, native, Power BI, Power Platform, migration, design review). Frontmatter declares `name`, `description`, and the `skills` each may load. They *do the work* and call MCP tools; they never hardcode Fluent values.
 
-**Skills** (`skills/<name>/SKILL.md`) — grounded, task-specific knowledge (15). Each carries concise Fluent 2 guidance + a Microsoft-Learn / `mslearn` CLI lookup path. Skills are read natively by Copilot, VS Code, Cursor, Claude Code, etc.
+**Skills** (`skills/<name>/SKILL.md`) — grounded, task-specific knowledge (18). Each carries concise Fluent 2 guidance + a Microsoft-Learn / `mslearn` CLI lookup path. Skills are read natively by Copilot, VS Code, Cursor, Claude Code, etc.
 
 **MCP server** (`mcp/`, Node + TypeScript, `@modelcontextprotocol/sdk`) — deterministic tools that make the guidance executable. Tool modules live in `mcp/src/tools/`; `mcp/src/util.ts` loads data + color math. Built to `mcp/dist/index.js` (stdio). The config tools (`fluent_get_config`, `fluent_init_config`, `fluent_set_config`, `fluent_remember`, `fluent_recall`) additionally read/write two optional **user-project** files — `fluent.config.json` (presets) and `.fluent/memory.json` (resolved presets + append-only decision log) — resolving each setting as **config > memory > built-in Fluent 2 default** (zero-config safe; never throws on missing files).
 
@@ -44,6 +45,9 @@
 - `design-guidance.json` — Fluent 2 design-language foundations (color, typography, layout, elevation, iconography, motion, shapes, material, content, responsible AI).
 - `fluent-images.json` — media index: every diagram, do/don't example, anatomy illustration and Motion video from the site with its real CDN URL + alt text (vision-OCR-recovered where the site alt was empty); powers `fluent_get_images`.
 - `migration.json` — adopt/migrate scenarios (Fluent UI v8→v9, from another design system, hardcoded→tokens, per-surface).
+- `fluent-v8.json` — Fluent 1 (`@fluentui/react@8`): 106 components, 23 name collisions with v9, traps, and the per-component v8→v9 map (powers `fluent_v8_lookup` / `fluent_v8_guidance`).
+- `fluent-native.json` — native platforms: 155 components (iOS 30 · Android 48 · Windows 77) with real type names, imports/namespaces, framework kinds, and which generation is current vs frozen (powers `fluent_native_component` / `fluent_native_guidance`).
+- `figma.json` — Figma MCP server: remote vs desktop, per-host config shapes, entitlement/rate-limit matrix, and Figma-variable → Fluent-token mapping (powers `fluent_figma_guidance`).
 - `templates/pbip/` — schema-valid PBIP/PBIR project the scaffolder clones.
 
 ## Data flow (example)

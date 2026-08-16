@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { readFileSync } from 'node:fs';
 import { registerPowerbiTheme } from './tools/powerbiTheme.js';
 import { registerPbip } from './tools/pbip.js';
 import { registerPbir } from './tools/pbir.js';
@@ -18,9 +19,12 @@ import { registerConfig } from './tools/config.js';
 import { registerV8 } from './tools/v8.js';
 import { registerFigma } from './tools/figma.js';
 import { registerNative } from './tools/native.js';
+// Read the version from package.json rather than repeating it here: a
+// hardcoded copy silently goes stale, and hosts show this string to users.
+const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
 const server = new McpServer({
     name: 'fluent-ui',
-    version: '1.0.0',
+    version: pkg.version,
 });
 // Power BI + Power Platform + a11y tools (data ready).
 registerPowerbiTheme(server);

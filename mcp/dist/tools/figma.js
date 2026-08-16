@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { loadJson, textResult } from '../util.js';
+import { loadJson, textResult, provenanceFooter } from '../util.js';
 const load = () => loadJson('figma.json');
 /**
  * Two states that must never collapse into each other: `false` means Figma
@@ -65,7 +65,14 @@ export function registerFigma(server) {
                     resources: data.fluentFigmaResources,
                     tiers: data.fluentKitTiers,
                     implication: data.fluentKitTiersImplication,
-                }, null, 2));
+                }, null, 2) +
+                    // The kit URLs are the least-verified part of this dataset - the
+                    // v8 kit link in particular has no first-party source - so the
+                    // caveats have to travel with the answer, not sit in a side topic.
+                    provenanceFooter(data.unverified, {
+                        terms: ['kit', 'figma', 'url', 'toolkit'],
+                        seeAlso: 'fluent_figma_guidance { section: "unverified" }',
+                    }));
             case 'code-connect':
                 return textResult(JSON.stringify(data.codeConnect, null, 2));
             case 'workflow':

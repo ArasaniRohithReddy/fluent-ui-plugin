@@ -3,6 +3,7 @@ import {
   FluentProvider, webLightTheme, webDarkTheme, makeStyles, tokens, shorthands,
   Button, Badge, TabList, Tab, Title1, Title3, Subtitle1, Subtitle2,
   Body1, Body1Strong, Caption1, Link, Divider,
+  Menu, MenuTrigger, MenuPopover, MenuList, MenuItem,
 } from '@fluentui/react-components';
 import {
   Code24Regular, DataBarVertical24Regular, Flash24Regular, Color24Regular,
@@ -10,7 +11,7 @@ import {
   Brain24Regular, WeatherMoon20Regular, WeatherSunny20Regular, Copy20Regular,
   Checkmark20Regular, ArrowRight20Regular, Star20Regular, Open16Regular, Sparkle20Filled,
   Bug24Regular, Lightbulb24Regular, Chat24Regular, BranchFork24Regular, ShieldCheckmark24Regular, PeopleCommunity24Regular,
-  Eye20Regular, Phone24Regular, History24Regular, DesignIdeas24Regular,
+  Eye20Regular, Phone24Regular, History24Regular, DesignIdeas24Regular, Navigation20Regular,
 } from '@fluentui/react-icons';
 
 const REPO = 'https://github.com/ArasaniRohithReddy/fluent-ui-plugin';
@@ -38,37 +39,47 @@ const useStyles = makeStyles({
   },
   nav: {
     display: 'flex', alignItems: 'center', gap: '16px', height: '62px',
-    // Seven links plus the brand cannot fit a phone. Wrap the links onto their
-    // own scrollable row instead of letting the header overflow the viewport.
-    '@media (max-width: 860px)': {
+    // Eight destinations plus the brand cannot fit a tablet header, so the
+    // links drop onto their own full-width row. The two queries below are
+    // mutually exclusive so neither can override the other.
+    '@media (min-width: 641px) and (max-width: 1024px)': {
       flexWrap: 'wrap', height: 'auto', justifyContent: 'space-between',
       columnGap: '12px', rowGap: '0', paddingTop: '10px', paddingBottom: '6px',
     },
+    // On a phone the links collapse into a menu, so the header stays one row.
+    '@media (max-width: 640px)': { gap: '8px' },
   },
   brand: {
     display: 'flex', alignItems: 'center', gap: '11px', fontWeight: tokens.fontWeightSemibold, fontSize: tokens.fontSizeBase400,
     minWidth: 0,
   },
+  brandName: { minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
   logo: {
     width: '34px', height: '34px', borderRadius: '11px', display: 'grid', placeItems: 'center', color: '#fff',
     background: 'linear-gradient(140deg,#2886de,#0f6cbd 52%,#0a7c86)',
     boxShadow: 'inset 0 1px 0 rgba(255,255,255,.45), inset 0 -6px 12px rgba(0,0,0,.18), 0 6px 14px rgba(15,108,189,.42)',
+    flexShrink: 0,
   },
   navlinks: {
-    display: 'flex', gap: '2px', marginLeft: 'auto',
-    '@media (max-width: 860px)': {
-      order: 3, width: '100%', marginLeft: 0, overflowX: 'auto', scrollbarWidth: 'none',
-      paddingBottom: '6px',
-      '::-webkit-scrollbar': { display: 'none' },
+    display: 'flex', gap: '2px', marginLeft: 'auto', flexWrap: 'wrap',
+    '@media (min-width: 641px) and (max-width: 1024px)': {
+      order: 3, width: '100%', marginLeft: '0', rowGap: '2px', paddingBottom: '4px',
     },
+    // Below 640px a scrollable row hid destinations off-screen with no cue at
+    // all, so the links become a real menu instead. Nothing is unreachable.
+    '@media (max-width: 640px)': { display: 'none' },
+  },
+  navmenu: {
+    display: 'none',
+    '@media (max-width: 640px)': { display: 'inline-flex' },
   },
   navlink: {
     ...shorthands.padding('7px', '13px'), borderRadius: tokens.borderRadiusMedium, color: tokens.colorNeutralForeground2, textDecorationLine: 'none', fontWeight: tokens.fontWeightMedium,
     whiteSpace: 'nowrap',
     ':hover': { backgroundColor: 'var(--glass-bg)', color: tokens.colorNeutralForeground1 },
-    // Without this the links shrink inside the scrollable row and their labels
-    // get clipped mid-word instead of the row scrolling.
-    '@media (max-width: 860px)': { flexShrink: 0 },
+    // Without this the links shrink inside their row and the labels get
+    // clipped mid-word instead of wrapping onto the next line.
+    '@media (max-width: 1024px)': { flexShrink: 0 },
   },
   section: {
     ...shorthands.padding('44px', 0),
@@ -99,6 +110,9 @@ const useStyles = makeStyles({
   },
   brandText: { color: tokens.colorBrandForeground1 },
   lead: { fontSize: 'clamp(16px,2.2vw,21px)', color: tokens.colorNeutralForeground2, maxWidth: '64ch', display: 'block', lineHeight: 1.5 },
+  // The plain-English promise, before any jargon. A non-technical reader must
+  // get the point from this sentence alone.
+  leadPlain: { fontSize: 'clamp(17px,2.5vw,24px)', color: tokens.colorNeutralForeground1, maxWidth: '58ch', display: 'block', lineHeight: 1.42, fontWeight: tokens.fontWeightSemibold, marginBottom: '14px' },
   cta: { display: 'flex', flexWrap: 'wrap', gap: '12px', margin: '24px 0 28px' },
   ctaGlow: { boxShadow: '0 8px 24px rgba(15,108,189,.5)' },
   stats: { display: 'flex', flexWrap: 'wrap', gap: '10px' },
@@ -123,6 +137,13 @@ const useStyles = makeStyles({
   card: {
     ...shorthands.padding('22px'), borderRadius: '18px',
     '@media (max-width: 640px)': { ...shorthands.padding('18px') },
+  },
+  // A bare inline <a> renders 19px tall, under the WCAG 2.5.8 (AA) 24px
+  // minimum target size. inline-flex + min-height gives the pointer target
+  // real height without changing where the text sits.
+  cardCta: {
+    display: 'inline-flex', alignItems: 'center', ...shorthands.gap('6px'),
+    minHeight: '24px', ...shorthands.padding('2px', '0'),
   },
   ic: { width: '46px', height: '46px', borderRadius: '13px', display: 'grid', placeItems: 'center', marginBottom: '15px', boxShadow: 'inset 0 1px 0 rgba(255,255,255,.25)' },
   tool: { display: 'flex', flexDirection: 'column', ...shorthands.padding('13px', '17px'), ...shorthands.gap('3px'), borderRadius: '14px' },
@@ -180,8 +201,53 @@ const FEATURES: Feat[] = [
   { c: '#107c10', Icon: PaintBrush24Regular, t: 'Tokens and theming', d: '366 design tokens across light, dark and high-contrast. Turn any brand color into a full Fluent theme.' },
   { c: '#ca5010', Icon: ArrowSwap24Regular, t: 'Migration', d: 'Adopt Fluent 2 in existing apps: Fluent UI v8 to v9, other design systems, or hardcoded values to tokens.' },
   { c: '#a4262c', Icon: Accessibility24Regular, t: 'Accessibility built in', d: 'A WCAG-aligned Fluent 2 checklist is enforced by default: names, roles, focus order, 4.5:1 contrast, and target sizes.' },
-  { c: '#e3008c', Icon: Image24Regular, t: 'Source visuals on demand', d: '705 diagrams, do/don\'t examples, anatomy illustrations and Motion videos, each with its real source URL.' },
+  { c: '#e3008c', Icon: Image24Regular, t: 'Source visuals on demand', d: '753 diagrams, do/don\'t examples, anatomy illustrations and Motion videos, each with its real source URL.' },
   { c: '#0f6cbd', Icon: Brain24Regular, t: 'Presets and memory', d: 'Optional per-team brand and accessibility presets, plus persistent memory so agents respect your conventions.' },
+];
+
+// Every destination in one place: the desktop link row and the phone menu must
+// never drift apart.
+const NAV: [string, string][] = [
+  ['#features', 'Features'],
+  ['#usage', 'Usage'],
+  ['#agents', 'Agents'],
+  ['#tools', 'Tools'],
+  ['#install', 'Install'],
+  ['#coverage', 'Coverage'],
+  ['#community', 'Community'],
+  [REPO, 'GitHub'],
+];
+
+// The 7 agents in agents/*.agent.md and the 18 skills in skills/*/SKILL.md.
+const AGENTS: [string, string][] = [
+  ['fluent-ui-builder', 'Primary router. Designs and builds Fluent 2, then hands off to the right specialist.'],
+  ['fluent-web-engineer', 'Fluent 2 web UIs in React v9 and Web Components v3, including Copilot and AI chat surfaces.'],
+  ['fluent-powerbi-designer', 'Fluent 2 Power BI themes, PBIP/PBIR scaffolding, and adoption into an existing report.'],
+  ['fluent-power-platform-engineer', 'Fluent 2 in Power Apps modern controls, Power Pages and PCF code components.'],
+  ['fluent-native-engineer', 'Fluent 2 on iOS (SwiftUI/UIKit), Android (Compose/Views) and Windows (WinUI 3, WPF).'],
+  ['fluent-migration-engineer', 'Adopts Fluent 2 in existing apps: v8 to v9, other design systems, hardcoded values to tokens.'],
+  ['fluent-design-reviewer', 'Audits an existing UI against Fluent 2 tokens, components and accessibility, with concrete fixes.'],
+];
+
+const SKILLS: [string, string][] = [
+  ['fluent-web-ui', 'React v9 and Web Components v3: setup, provider, Griffel and composition.'],
+  ['fluent-theming', 'FluentProvider, light, dark, high contrast, and brand themes from one color.'],
+  ['fluent-design-tokens', 'Color, type, spacing, radius, stroke, elevation and motion tokens.'],
+  ['fluent-design-language', 'The Fluent 2 foundations, from principles and layout to responsible AI.'],
+  ['fluent-accessibility', 'WCAG 2.1 AA: contrast, focus, keyboard, target size, names and roles.'],
+  ['fluent-ai-copilot-ui', 'Copilot chat surfaces: input, messages, suggestions, citations and the FRE.'],
+  ['fluent-powerbi-theme', 'Report theme JSON: dataColors, textClasses and visual defaults.'],
+  ['fluent-pbip-report', 'Fluent-themed PBIP/PBIR projects, structure and theme registration.'],
+  ['fluent-powerbi-adopt', 'Theme an existing report and repair the layout distortion it introduces.'],
+  ['fluent-powerapps', 'Canvas apps with modern controls and modern themes driven by App.Theme.'],
+  ['fluent-powerpages', 'Power Pages styling that maps Bootstrap onto Fluent 2 design tokens.'],
+  ['fluent-pcf-component', 'PCF controls on Fluent React v9 via platform libraries and the host theme.'],
+  ['fluent-native', 'iOS, Android and Windows: the right package, generation, types and theming.'],
+  ['fluent-v8', 'Fluent 1 (Fluent UI React v8) and the traps before any v8 to v9 move.'],
+  ['fluent-migration', 'Move to Fluent 2 from v8, another design system, or hardcoded values.'],
+  ['fluent-design-review', 'Audit any Fluent surface for token, component, content and a11y issues.'],
+  ['fluent-figma', 'Figma design-to-code, entitlement reality, and variables mapped to tokens.'],
+  ['fluent-config', 'Optional presets and memory so agents honor your team\'s conventions.'],
 ];
 
 const USAGE: [string, string][] = [
@@ -294,22 +360,32 @@ function CodeBlock({ code }: { code: string }) {
  * counted people who scrolled to the bottom, which undercounted badly.
  *
  * The service exposes no CORS headers, so the count cannot be fetched and
- * rendered as text. The label and chrome around it are native Fluent, and the
- * whole chip removes itself if the service is unreachable rather than leaving
- * a broken image behind.
+ * rendered as accessible text; the alt text says so instead of implying a
+ * number is available. The chrome around it is native Fluent, and the whole
+ * chip removes itself if the service is unreachable rather than leaving a
+ * broken image behind.
  */
 function VisitorCount() {
   const s = useStyles();
   const [failed, setFailed] = React.useState(false);
   if (failed) return null;
+  // hits.sh ignores an empty label and prints its default "hits", which read as
+  // "Visitors hits 132" next to our own caption. Naming the label instead lets
+  // the badge carry the whole phrase, so the chip reads "visitors 132".
   const src =
     'https://hits.sh/arasanirohithreddy.github.io/fluent-ui-plugin.svg' +
-    '?style=flat-square&label=&color=0f6cbd&labelColor=0f6cbd';
+    '?style=flat-square&label=visitors&color=0f6cbd&labelColor=0f6cbd';
   return (
-    <div className={s.visitors}>
+    <div className={s.visitors} role="group" aria-label="Visitor count">
       <Eye20Regular aria-hidden="true" />
-      <Caption1>Visitors</Caption1>
-      <img className={s.visitorsImg} src={src} alt="Total visitors to this site" onError={() => setFailed(true)} />
+      <img
+        className={s.visitorsImg}
+        src={src}
+        width={110}
+        height={20}
+        alt="Live badge image showing the total number of visits to this site. The count is drawn inside the image, so it cannot be read out."
+        onError={() => setFailed(true)}
+      />
     </div>
   );
 }
@@ -337,34 +413,45 @@ export function App() {
       <div className={s.root} id="top" style={rootVars}>
         <div className={s.bg} />
         <div className={s.layer}>
+          <a className="skip-link" href="#content">Skip to content</a>
           <header className={s.header}>
             <div className={`${s.wrap} ${s.nav}`}>
-              <span className={s.brand}><span className={s.logo}><Sparkle20Filled /></span> Fluent UI 2.0 Plugin</span>
-              <nav className={s.navlinks}>
-                <Link className={s.navlink} href="#features">Features</Link>
-                <Link className={s.navlink} href="#usage">Usage</Link>
-                <Link className={s.navlink} href="#tools">Tools</Link>
-                <Link className={s.navlink} href="#install">Install</Link>
-                <Link className={s.navlink} href="#coverage">Coverage</Link>
-                <Link className={s.navlink} href="#community">Community</Link>
-                <Link className={s.navlink} href={REPO}>GitHub</Link>
+              <span className={s.brand}><span className={s.logo}><Sparkle20Filled /></span> <span className={s.brandName}>Fluent UI 2.0 Plugin</span></span>
+              <nav className={s.navlinks} aria-label="Main">
+                {NAV.map(([href, label]) => (
+                  <Link key={href} className={s.navlink} href={href}>{label}</Link>
+                ))}
               </nav>
+              <Menu>
+                <MenuTrigger disableButtonEnhancement>
+                  <Button className={s.navmenu} appearance="subtle" icon={<Navigation20Regular />} aria-label="Open navigation menu" />
+                </MenuTrigger>
+                <MenuPopover>
+                  <MenuList>
+                    {NAV.map(([href, label]) => (
+                      <MenuItem key={href} onClick={() => { window.location.href = href; }}>{label}</MenuItem>
+                    ))}
+                  </MenuList>
+                </MenuPopover>
+              </Menu>
               <Button appearance="subtle" icon={dark ? <WeatherSunny20Regular /> : <WeatherMoon20Regular />} aria-label="Toggle light or dark theme" onClick={() => setDark(!dark)} />
             </div>
           </header>
 
+          <main id="content" tabIndex={-1}>
           {/* HERO */}
           <section className={s.hero}>
             <div className={s.wrap}>
-              <Badge appearance="tint" color="success" size="large">Open source, MIT licensed, works in 12+ AI IDEs</Badge>
-              <Title1 as="h1" className={s.h1} block>Build and adopt <span className={s.brandText}>Microsoft Fluent 2</span>, everywhere.</Title1>
-              <Subtitle2 className={s.lead} block>An AI-assistant plugin (Agents, Skills and MCP tools) that turns the official Fluent 2 design system into grounded, on-demand guidance and accessible code, inside the tools your teams already use. For Web, native iOS, Android and Windows, Power BI and Power Platform — in Fluent 2 and Fluent 1.</Subtitle2>
+              <Badge appearance="tint" color="success" size="large">Open source, MIT licensed, works in {HOSTS.length} AI IDEs</Badge>
+              <Title1 as="h1" className={s.h1} block>Build and adopt <span className={s.brandText}>Microsoft Fluent 2</span> on every surface.</Title1>
+              <Subtitle1 className={s.leadPlain} block>Ship interfaces that look and behave like Microsoft's own, first time, so no team has to work out the design rules for itself.</Subtitle1>
+              <Subtitle2 className={s.lead} block>Here is how: an AI-assistant plugin of {AGENTS.length} agents, {SKILLS.length} skills and {TOOLS.length} MCP (Model Context Protocol) tools that turns the official Fluent 2 design system into grounded, on-demand guidance and accessible code, inside the tools your teams already use. For Web, native iOS, Android and Windows, Power BI and Power Platform — in Fluent 2 and Fluent 1.</Subtitle2>
               <div className={s.cta}>
                 <Button appearance="primary" size="large" className={s.ctaGlow} icon={<ArrowRight20Regular />} iconPosition="after" as="a" href="#install">Get started</Button>
                 <Button appearance="secondary" size="large" icon={<Star20Regular />} as="a" href={REPO}>View on GitHub</Button>
               </div>
               <div className={s.stats}>
-                {[['61', 'Components (47 core, 14 AI)'], ['36', 'Design-language topics'], ['705', 'Source visuals indexed'], [String(TOOLS.length), 'MCP tools'], ['366', 'Design tokens, 3 themes'], ['155', 'Native types (iOS/Android/Windows)']].map(([b, l]) => (
+                {[[String(AGENTS.length), 'Specialist agents'], [String(SKILLS.length), 'Skills'], [String(TOOLS.length), 'MCP tools'], ['61', 'Components (47 core, 14 AI)'], ['366', 'Design tokens, 3 themes'], ['36', 'Design-language topics'], ['753', 'Source visuals indexed'], ['155', 'Native types (iOS/Android/Windows)']].map(([b, l]) => (
                   <div key={l} className={`${glass} ${s.stat}`}><span className={s.statB}>{b}</span><Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{l}</Caption1></div>
                 ))}
               </div>
@@ -389,7 +476,7 @@ export function App() {
               <div className={s.sectionHead}>
                 <Caption1 className={s.eyebrow}>What it does</Caption1>
                 <Title3 as="h2" block>One plugin. The whole Fluent 2 surface.</Title3>
-                <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>Every fact is grounded in the official <Link href="https://fluent2.microsoft.design">fluent2.microsoft.design</Link> site and the real <code>@fluentui</code> packages, so it is verified, not guessed.</Body1>
+                <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>Every component, token, topic and visual is read from the official <Link href="https://fluent2.microsoft.design">fluent2.microsoft.design</Link> site and the real <code>@fluentui</code> packages, and checked against them in CI, so answers are looked up rather than guessed.</Body1>
               </div>
               <div className={s.grid3}>
                 {FEATURES.map((f) => (
@@ -422,6 +509,35 @@ export function App() {
                       <ArrowRight20Regular style={{ color: tokens.colorBrandForeground1, flex: '0 0 auto', marginTop: 1 }} />
                       <Caption1 style={{ color: tokens.colorNeutralForeground2, lineHeight: 1.45 }}>{a}</Caption1>
                     </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* AGENTS AND SKILLS */}
+          <section id="agents" className={s.section}>
+            <div className={s.wrap}>
+              <div className={s.sectionHead}>
+                <Caption1 className={s.eyebrow}>Who does the work</Caption1>
+                <Title3 as="h2" block>{AGENTS.length} specialist agents, {SKILLS.length} skills</Title3>
+                <Body1 block style={{ color: tokens.colorNeutralForeground2 }}>Agents decide and do; skills are the depth they load on demand. Both are plain Markdown files in the repo, so every host that reads <code>agents/</code> and <code>skills/</code> picks them up with no extra setup.</Body1>
+              </div>
+              <Subtitle1 block style={{ marginBottom: 12 }}>Agents</Subtitle1>
+              <div className={s.grid2}>
+                {AGENTS.map(([name, desc]) => (
+                  <div key={name} className={`${glass} ${s.hoverable} ${s.tool}`}>
+                    <span className={s.toolCode}>{name}</span>
+                    <Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{desc}</Caption1>
+                  </div>
+                ))}
+              </div>
+              <Subtitle1 block style={{ margin: '26px 0 12px' }}>Skills</Subtitle1>
+              <div className={s.grid3}>
+                {SKILLS.map(([name, desc]) => (
+                  <div key={name} className={`${glass} ${s.hoverable} ${s.tool}`}>
+                    <span className={s.toolCode}>{name}</span>
+                    <Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{desc}</Caption1>
                   </div>
                 ))}
               </div>
@@ -483,7 +599,7 @@ export function App() {
                   <Body1 block style={{ color: 'rgba(255,255,255,.9)' }}>Every route in the official Fluent 2 site's own sitemap (132 routes) was cross-checked, so this is measured coverage, not an estimate.</Body1>
                 </div>
                 <div className={s.bandGrid}>
-                  {[['61 / 61', 'Web components (100%)'], ['36 / 36', 'Design and UX topics'], ['705', 'Source visuals with URLs'], ['35+', 'Power BI visuals catalogued'], ['12+', 'AI IDEs supported'], ['MIT', 'Open source license']].map(([b, l]) => (
+                  {[['61 / 61', 'Documented web components'], ['36 / 36', 'Design and UX topics'], ['753', 'Source visuals with URLs'], ['35', 'Power BI visuals catalogued'], [String(HOSTS.length), 'AI IDEs supported'], ['MIT', 'Open source license']].map(([b, l]) => (
                     <div key={l} className={s.bandStat}><span className={s.statB} style={{ color: '#fff' }}>{b}</span><Caption1 style={{ color: 'rgba(255,255,255,.82)' }}>{l}</Caption1></div>
                   ))}
                 </div>
@@ -505,17 +621,18 @@ export function App() {
                     <span className={s.ic} style={{ background: tint(c.c), color: c.c }}><c.Icon /></span>
                     <Body1Strong block>{c.t}</Body1Strong>
                     <Body1 block style={{ color: tokens.colorNeutralForeground2, margin: '4px 0 14px' }}>{c.d}</Body1>
-                    <Link href={c.href}>{c.cta} <Open16Regular /></Link>
+                    <Link className={s.cardCta} href={c.href}>{c.cta} <Open16Regular /></Link>
                   </div>
                 ))}
               </div>
             </div>
           </section>
+          </main>
 
           <footer className={s.footer}>
             <div className={`${s.wrap} ${s.footRow}`}>
               <div>
-                <span className={s.brand} style={{ marginBottom: 8 }}><span className={s.logo}><Sparkle20Filled /></span> Fluent UI 2.0 Plugin</span>
+                <span className={s.brand} style={{ marginBottom: 8 }}><span className={s.logo}><Sparkle20Filled /></span> <span className={s.brandName}>Fluent UI 2.0 Plugin</span></span>
                 <Caption1 block style={{ color: tokens.colorNeutralForeground3, marginTop: 8, maxWidth: '54ch' }}>Built with the Microsoft Fluent 2 design system (Fluent UI React v9). This site is a demo of the plugin's own output. It is not an official Microsoft product.</Caption1>
               </div>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
