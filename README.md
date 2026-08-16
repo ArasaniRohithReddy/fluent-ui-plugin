@@ -98,8 +98,11 @@ Then ask your assistant things like:
 - *"Review this component against Fluent 2 and accessibility."*
 
 ## Grounding & provenance (why it's trustworthy)
-- **Design system:** crawled the official **fluent2.microsoft.design**, 69 public pages + **14 gated AI/Copilot component pages** (captured via authenticated employee session).
-- **Tokens & components:** extracted from installed **`@fluentui/react-theme` / `@fluentui/tokens` / `@fluentui/react-components`** source (real values, not guesses); 61 components catalogued with usage.
+- **Design system:** crawled the official **fluent2.microsoft.design** — 121 of its 132 sitemap routes are referenced, with zero dead links. A small number of pages sit behind a Microsoft employee sign-in; their guidance text is **not redistributed here** (see [`NOTICE`](NOTICE)) — those records carry the facts, the official `docUrl`, and a note saying where to read the rest.
+- **Components:** generated from the Fluent UI React Storybook's machine-readable API — **353 records** with real props, slots, defaults, deprecations and maturity tiers, each carrying its `sourceUrl`. Plus **61** components with deep usage guidance from the design site.
+- **Tokens:** extracted from installed **`@fluentui/react-theme` / `@fluentui/tokens` / `@fluentui/react-components`** source (real values, not guesses), and cross-checked against the site's published alias tables with zero conflicts.
+- **Icons:** every name validated against `@fluentui/react-icons`' own export manifest at build time — the build fails rather than ship a name it can't prove.
+- **Themes:** `fluent_generate_theme` reproduces Microsoft's Theme Designer output exactly (verified stop-for-stop against the live tool).
 - **Power BI:** theme JSON **schema-validated** against `reportThemeSchema-2.156`; PBIP/PBIR scaffold validated against the official Fabric item schemas.
 - **Power Platform & host integration:** grounded in Microsoft Learn with cited sources.
 

@@ -21,7 +21,7 @@ A slide-by-slide script for presenting the plugin to managers, leaders, and expe
 6. *"Review this component"* → prioritized Fluent + accessibility findings.
 
 ## 4. Why it's trustworthy (grounding)
-- Crawled the **official Fluent 2 site** — 69 public pages **+ 14 gated AI/Copilot pages** (authenticated).
+- Crawled the **official Fluent 2 site** — **121 of its 132 sitemap routes** referenced, zero dead links. 25 routes sit behind an employee sign-in; their text is **not redistributed** (see `NOTICE`) — we ship the facts plus the official link.
 - Token & component values **extracted from the real `@fluentui` packages** (`react-theme`, `tokens`, `react-components`) — not guessed. 366 color tokens ×3 themes; 353 components with real props; **753 source visuals** (diagrams, do/don't, anatomy, Motion videos) indexed with direct URLs, every one with alt text and a real CDN link.
 - The surfaces the site does not document are grounded in the shipping SDKs: **185 native components** (iOS 30 · Android 48 · Windows 77) from `fluentui-apple` / `fluentui-android` / `microsoft-ui-xaml`, and **106 v8 components with 26 name collisions** against v9.
 - Power BI theme **schema-validated**; PBIP/PBIR validated against Fabric schemas.
