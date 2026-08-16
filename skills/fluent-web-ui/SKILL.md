@@ -52,8 +52,48 @@ Source: [Styling components](https://storybooks.fluentui.dev/react/?path=/docs/c
 
 Depth (options, anti-pattern snippets, the full 20-deprecated/3-live shorthands table, devtools): **`references/griffel.md`**.
 
-- Use **slots** (e.g. `Button icon=`, `CardHeader header=`, `Field label=`) instead of custom markup.
 - Layout with flex/grid + spacing tokens; radius via `tokens.borderRadius*`; elevation via `tokens.shadow*`.
+
+## Slots — the supported way to reach inside a component
+Fill a named part (`Button icon=`, `CardHeader header=`, `Avatar badge=`, `Field label=`) instead of writing custom markup. Four fills: **shorthand** (`contentBefore="$"`), **props object** (`badge={{ status: 'busy', className }}`), **`as`** (`button={{ as: 'a' }}`), and a **render function** as `children` — the escape hatch that also deletes the slot's own element.
+
+Source: [Customizing components with slots](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-customizing-components-with-slots--docs).
+
+| Rule | Why |
+|---|---|
+| **Don't use a slot to restyle every instance** — theme it | *"prefer to customize the theme … you can create a theme that overrides `colorNeutralStroke1Hover`"* |
+| **Don't use a slot to restyle one instance** — `makeStyles` + `className` | *"create a class style using `makeStyles` and then apply it to the component using `className`"* |
+| **A render function is a last resort** | *"This is an escape hatch in the slots API… If you replace the entire slot, verify accessibility, layout, and styling still work properly."* |
+| **`className`/`style` always land on the `root` slot** | So `<Input className>` styles the wrapping `span`. To style the field itself: `input={{ className }}`. |
+| **Some slots render conditionally** | `Avatar`'s `label` only renders with no image; `icon` only with no image *and* no name. Passing them otherwise does nothing. |
+
+Slot types, `slot.always`/`slot.optional`, `assertSlots`, the required JSX pragma, and the media-object recipe: **`references/slots.md`**.
+
+## Positioning every popup, menu and tooltip
+`Popover`, `Menu`, `Tooltip` and `Combobox`/`Dropdown` share one `positioning` prop ([Positioning components](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-positioning-components--docs)). These four mistakes are how UI escapes the viewport — none of them errors:
+
+| Rule | Why |
+|---|---|
+| **Set `flipBoundary` AND `overflowBoundary`** | They bound *different* behaviours (flip vs shift). Setting one leaves the other on the default clipping parents. |
+| **`position` outranks `align`, same-axis pairs collapse to `center`** | *"If position is vertical … and align is also vertical … then provided value for 'align' will be ignored and 'center' will be used instead."* `align` with no `position` does nothing at all. |
+| **`pinned: true` disables *all* repositioning** | *"regardless of the size of the component, the reference element or the viewport"* — this is the prop that lets a menu leave the screen. |
+| **`matchTargetSize: 'width'` needs `box-sizing: border-box`** | *"⚠️ Make sure that the positioned element use `box-sizing: border-box`"* — otherwise padding + border overhang the target. |
+
+```tsx
+const [boundary, setBoundary] = React.useState<HTMLDivElement | null>(null); // state ref, not useRef
+<div ref={setBoundary}>
+  <Menu positioning={{ overflowBoundary: boundary, flipBoundary: boundary, autoSize: true }}>…</Menu>
+</div>
+```
+Full prop table, arrow offsets (`mergeArrowOffset`), virtual/cursor targets, `onPositioningEnd`, and the obsolete `autoSize: 'always'` values: **`references/positioning.md`**.
+
+## Going beyond `className`
+| Need | API | Trap |
+|---|---|---|
+| Restyle Fluent components **app-wide** without forking | `CustomStyleHooksProvider_unstable` | Nested providers **do not merge** — *"does not automatically merge contexts' values"*; the inner one wins outright. And you must append `getSlotClassNameProp_unstable(slot)` **after** your styles or every consumer `className` loses. |
+| Own markup + styling, keep Fluent behaviour/ARIA | `use{Component}Base_unstable` | *"always pass the ref to `use{Component}Base_unstable`, never attach it yourself."* |
+
+Sources: [Advanced styling techniques](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-advanced-styling-techniques--docs) · [Building custom controls](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-building-custom-controls--docs). Layer model, full working component, checklists: **`references/custom-components.md`**.
 
 ## Components (highlights)
 Actions: `Button`, `MenuButton`, `SplitButton`, `ToggleButton`, `CompoundButton`, `Link`. Forms: `Field`, `Input`, `Textarea`, `Combobox`, `Dropdown`, `Select`, `SpinButton`, `Slider`, `Checkbox`, `Radio/RadioGroup`, `Switch`. Data/display: `Text`, `Persona`, `Avatar`, `Badge`, `Card`, `Table`, `DataGrid`, `Tree`, `Tag`. Navigation: `TabList`, `Breadcrumb`, `Menu`, `Nav`/`NavDrawer`, `Toolbar`. Overlays/status: `Dialog`, `Drawer`, `Popover`, `Tooltip`, `Toast`/`Toaster`, `MessageBar`, `ProgressBar`, `Spinner`, `Skeleton`. Use `fluent_get_component` for exact props + samples.
@@ -137,8 +177,19 @@ Or skip the bundler entirely with the pre-bundled CDN script:
 
 > Framework integrations (Angular/Vue/Blazor wrappers) are **not** documented upstream for v3. Treat any such guidance as unverified — use the standard custom-element interop of your framework.
 
+### Rendering Fluent **React** inside shadow DOM
+Different problem, different packages — and none of them ship in `@fluentui/react-components`: *"The implementation lives in the [Fluent UI Contrib repository](https://github.com/microsoft/fluentui-contrib)"* ([Web Components interop](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-web-components-interop-using-fluent-react-with-web-components--docs)).
+
+- **`FluentProvider` must be in the light DOM.** *"⚠️ `FluentProvider` must be in the light DOM for this method to work"* — inside a shadow root, *"styling/theming will not work as expected."* Use `ThemelessFluentProvider` when a provider must live inside, and supply the theme CSS custom properties yourself.
+- **Tabster can't see through shadow DOM.** Call `useShadowDOMSupport()` from `@fluentui-contrib/pierce-dom` *"before you render any Fluent React controls"* or keyboard navigation silently breaks.
+
+Setup, insertion-point API for non-Griffel CSS, and mixing v9 + v3 in one app: **`references/web-components-interop.md`**.
+
+## Where it runs
+Latest stable releases of all major browsers; **React 17, 18 and 19**; the three latest **major** TypeScript versions; **IE11 is not supported at any level**. Full matrix ≈ Edge/Chrome ≥ 84, Firefox ≥ 75, Safari ≥ 14.1. Below that there is a *partial* matrix where you must transpile (Fluent ships **ES2020**, and `??`/`?.` *"results in the application crashing"*) and polyfill yourself. Sources: [Supported platforms](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-supported-platforms--docs) · [Browser support matrix](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-browser-support-matrix--docs). Both tables, the crash-vs-degrade split, and iframe/CSP/multi-provider configuration: **`references/platform-support.md`**.
+
 ## Always
-**React:** wrap in `FluentProvider` · style with `tokens.*` (no magic values) · `mergeClasses` with consumer `className` last · pick real components (composition/slots) · verify the package level before importing.
+**React:** wrap in `FluentProvider` · style with `tokens.*` (no magic values) · `mergeClasses` with consumer `className` last · pick real components (composition/slots) · verify the package level before importing · give every floating surface both a `flipBoundary` and an `overflowBoundary`.
 **Web Components:** side-effect import to register each element · `setTheme()` to theme (no provider element) · install both peer deps.
 **Both:** verify accessibility with `fluent_accessibility_checklist` and the `fluent-accessibility` skill.
 
@@ -147,6 +198,11 @@ Or skip the bundler entirely with the pre-bundled CDN script:
 |---|---|
 | Griffel rules, shorthands table, debugging | `references/griffel.md` |
 | Preview/compat/unstable, React floors, install matrix | `references/package-maturity.md` |
+| Positioning: boundaries, autoSize, offsets, arrows | `references/positioning.md` |
+| Slots: types, `slot.*`, `assertSlots`, media object | `references/slots.md` |
+| Custom style hooks + base state hooks | `references/custom-components.md` |
+| Shadow DOM / Web Components interop, insertion point | `references/web-components-interop.md` |
+| Browser + React + TypeScript support, iframe/CSP config | `references/platform-support.md` |
 | Component API + samples | MCP `fluent_get_component` · `https://storybooks.fluentui.dev/react/` |
 | Web Components v3 setup, define modules, CDN | `https://github.com/microsoft/fluentui/blob/master/packages/web-components/README.md` |
 | Styling concepts (upstream) | `https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-styling-components--docs` |
@@ -155,6 +211,7 @@ Or skip the bundler entirely with the pre-bundled CDN script:
 | Fluent 2 design | `https://fluent2.microsoft.design` |
 
 > Note: `react.fluentui.dev` now 301-redirects to `storybooks.fluentui.dev/react/`. Use the canonical host.
+> Reading these pages yourself: `GET https://storybooks.fluentui.dev/react/llms/<storyId minus --docs>.txt` returns clean markdown for every docs page — but it **drops fenced code blocks from MDX-authored pages**. For code, read the MDX under `apps/public-docsite-v9/src/` in `microsoft/fluentui` (the `importPath` in `/react/index.json`).
 
 ### CLI alternative (if the Learn MCP server is unavailable)
 | MCP tool | CLI command |

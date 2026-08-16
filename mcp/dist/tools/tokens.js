@@ -149,18 +149,27 @@ const BRIDGE_NOTE = 'designNames maps the names Microsoft publishes on fluent2.m
  * Categories whose values are theme-invariant in this dataset. Reported
  * explicitly so a caller never assumes `theme` was honoured when it was not.
  */
-const THEME_INVARIANT = new Set(['typography', 'spacing', 'borderRadius', 'strokeWidth', 'motion', 'shadow']);
+const THEME_INVARIANT = new Set(['typography', 'spacing', 'borderRadius', 'strokeWidth', 'motion']);
 /**
- * Fluent 2 ships distinct dark-theme shadow values (and shadow*Brand variants
- * for use over brand fills). This dataset carries a single set, so `theme` is a
- * no-op for shadows and that has to be stated rather than implied.
+ * Shadows ARE theme-dependent: the geometry is identical but the colours are
+ * not (light uses rgba(0,0,0,0.12)/0.14, dark 0.24/0.28), so a dark-theme
+ * shadow is about twice as opaque. The dataset used to carry one set and
+ * silently return the light values for every theme; `shadowByTheme` now holds
+ * all three, derived with upstream's own formula from the per-theme
+ * ambient/key alias colours we already ship.
  */
-const SHADOW_CAVEAT = 'theme does NOT affect this category here: mcp/data/fluent-tokens.json carries a single shadow set ' +
-    '(plus the shadow*Brand variants). Fluent 2 does define separate dark-theme shadow values, so for a dark ' +
-    'surface read tokens.shadowN from webDarkTheme at runtime rather than pasting these literals.';
+const SHADOW_BRAND_NOTE = 'The shadow*Brand variants are theme-invariant because their ambient/key colours are; ' +
+    'the six neutral shadows differ between light and dark.';
+/** Resolve a shadow set for the requested theme, falling back to the flat set. */
+function shadowsFor(data, theme) {
+    const byTheme = data?.shadowByTheme;
+    if (!byTheme)
+        return data?.shadow ?? null;
+    return byTheme[theme] ?? byTheme.light ?? data?.shadow ?? null;
+}
 function themeNote(category) {
     if (category === 'shadow')
-        return SHADOW_CAVEAT;
+        return SHADOW_BRAND_NOTE;
     if (THEME_INVARIANT.has(category))
         return 'theme does not affect this category: these values are theme-invariant.';
     return undefined;
@@ -202,8 +211,8 @@ export function registerTokens(server) {
         if (category === 'all') {
             return textResult(JSON.stringify({
                 theme,
-                themeNote: 'theme applies to colorSemantic only. Every other category below is theme-invariant in this dataset. ' +
-                    SHADOW_CAVEAT,
+                themeNote: 'theme applies to colorSemantic and shadow. Every other category below is theme-invariant. ' +
+                    SHADOW_BRAND_NOTE,
                 designNameBridgeNote: 'Design-site names (Large corner radius, size120, Body 1) are NOT these token names and are offset in ' +
                     'places. Ask for one category to get its designNames map, or call fluent_get_token { name: ' +
                     '"Large corner radius" } / { name: "size120" }.',
@@ -213,12 +222,16 @@ export function registerTokens(server) {
                 spacing: t.spacing,
                 borderRadius: t.borderRadius,
                 strokeWidth: t.strokeWidth,
-                shadow: t.shadow,
+                shadow: shadowsFor(t, theme),
                 motion: t.motion,
             }, null, 2));
         }
         const note = themeNote(category);
-        const value = category === 'typography' ? withShippedNames(t[category]) : t[category];
+        const value = category === 'typography'
+            ? withShippedNames(t[category])
+            : category === 'shadow'
+                ? shadowsFor(t, theme)
+                : t[category];
         const designNames = designNameRows(t, category);
         return textResult(JSON.stringify({
             category,
@@ -268,9 +281,17 @@ export function registerTokens(server) {
             }
         }
         const out = [];
-        for (const cat of ['typography', 'spacing', 'borderRadius', 'strokeWidth', 'shadow', 'motion']) {
+        for (const cat of ['typography', 'spacing', 'borderRadius', 'strokeWidth', 'motion']) {
             if (t[cat])
                 walkTokens(t[cat], [cat], out);
+        }
+        // Shadows are theme-dependent, so resolve them for every theme rather
+        // than walking the flat set and silently returning the light values.
+        for (const themeName of ['light', 'dark', 'highContrast']) {
+            const set = shadowsFor(t, themeName);
+            if (set)
+                for (const [k, v] of Object.entries(set))
+                    out.push({ path: `shadow.${themeName}.${k}`, value: v });
         }
         for (const e of out) {
             const leaf = e.path.split('.').pop().toLowerCase();
