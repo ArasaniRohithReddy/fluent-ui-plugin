@@ -1,7 +1,7 @@
 {
   "name": "fluent-ui",
   "description": "Agents, skills, and MCP tools that help developers, designers, and UI engineers build Microsoft Fluent 2 (Fluent UI 2.0) experiences correctly — automatically. Covers Web (React v9 + Web Components), the native platforms (iOS, Android, Windows), Power BI (Fluent themes + PBIP/PBIR reports), and Power Platform (Power Apps, Power Pages, PCF) — plus first-class Fluent 1 (v8) support, v8-to-v9 migration, and Figma design-to-code. Grounded in the official Fluent 2 design system, tokens, and component guidance.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": {
     "name": "Rohith Reddy Arasani",
     "url": "https://github.com/ArasaniRohithReddy"
