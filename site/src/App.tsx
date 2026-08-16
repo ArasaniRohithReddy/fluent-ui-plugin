@@ -452,7 +452,7 @@ export function App() {
                 <Button appearance="secondary" size="large" icon={<Star20Regular />} as="a" href={REPO}>View on GitHub</Button>
               </div>
               <div className={s.stats}>
-                {[[String(AGENTS.length), 'Specialist agents'], [String(SKILLS.length), 'Skills'], [String(TOOLS.length), 'MCP tools'], ['353', 'React components catalogued'], ['2,976', 'Icons, searchable by meaning'], ['366', 'Design tokens, 3 themes'], ['40', 'Design-language topics'], ['753', 'Source visuals indexed'], ['185', 'Native types (iOS/Android/Windows)']].map(([b, l]) => (
+                {[[String(AGENTS.length), 'Specialist agents'], [String(SKILLS.length), 'Skills'], [String(TOOLS.length), 'MCP tools'], ['353', 'React components catalogued'], ['2,976', 'Icons, searchable by meaning'], ['366', 'Design tokens, 3 themes'], ['27', 'Fluent charts + data-viz palette'], ['42', 'Design-language topics'], ['753', 'Source visuals indexed'], ['185', 'Native types (iOS/Android/Windows)']].map(([b, l]) => (
                   <div key={l} className={`${glass} ${s.stat}`}><span className={s.statB}>{b}</span><Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{l}</Caption1></div>
                 ))}
               </div>

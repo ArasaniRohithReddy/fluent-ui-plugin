@@ -46,10 +46,64 @@ function provenanceFor(published, resolved, enriched) {
             note: 'From the published dataset (mcp/data/design-guidance.json). Every clone returns this same content.',
         };
 }
+/**
+ * Per-topic design-name -> code-token summary.
+ *
+ * The rows themselves already carry `codeToken` (mcp/data/design-guidance.json
+ * is generated with it), but a summary has to travel with the response too:
+ * the outline path withholds row text entirely, and a reader who only sees the
+ * design names would otherwise never learn that "Large" corner radius is
+ * borderRadiusXLarge rather than borderRadiusLarge.
+ */
+function codeTokenBridgeFor(topic) {
+    const tokens = loadJson('fluent-tokens.json');
+    const entries = tokens?.designNameBridge?.entries ?? [];
+    const mine = entries.filter((e) => e.topic === topic);
+    if (!mine.length)
+        return undefined;
+    const traps = mine.filter((e) => e.collisionSeverity === 'silent-value-trap');
+    const uncompilable = mine.filter((e) => e.collisionSeverity === 'does-not-compile');
+    const unmapped = mine.filter((e) => !e.codeToken && !e.codeSymbol);
+    // The example has to be a key that really resolves, so take it from the
+    // entry's own lookupKeys rather than composing a plausible-looking string.
+    const pick = traps[0] ?? mine[Math.floor(mine.length / 2)];
+    const example = pick?.lookupKeys?.[0] ?? pick?.designName ?? '';
+    return {
+        note: 'The design names on this page are NOT the code token names. Every row below carries codeToken — the token ' +
+            'that actually produces its stated value, matched by value rather than by name. Use codeToken in code.',
+        designNamesMapped: mine.length,
+        withoutACodeToken: unmapped.length,
+        ...(unmapped.length ? { unmappedDesignNames: unmapped.map((e) => `${e.designName} (${e.designValue})`) } : {}),
+        ...(traps.length
+            ? {
+                silentValueTraps: traps.map((e) => `"${e.designName}" = ${e.designValue} is tokens.${e.codeToken}. tokens.${e.expectedCodeName} exists and ` +
+                    `is ${e.expectedCodeNameActualValue} — writing it compiles and renders the wrong value.`),
+            }
+            : {}),
+        ...(uncompilable.length
+            ? {
+                namesThatAreNotTokens: `${uncompilable.length} design name(s) on this page do not exist as tokens at all ` +
+                    `(e.g. tokens.${uncompilable[0].designName} is undefined) — read codeToken on each row.`,
+            }
+            : {}),
+        resolveWith: `fluent_get_token { name: "${example}" }`,
+        index: 'mcp/data/fluent-tokens.json -> designNameBridge',
+    };
+}
+/** Number of bridge rows per topic, for the index. */
+function bridgeCounts() {
+    const tokens = loadJson('fluent-tokens.json');
+    const out = {};
+    for (const e of (tokens?.designNameBridge?.entries ?? [])) {
+        if (e?.topic)
+            out[e.topic] = (out[e.topic] ?? 0) + 1;
+    }
+    return out;
+}
 export function registerDesignGuidance(server) {
     server.registerTool('fluent_design_guidance', {
         title: 'Fluent 2 design-language guidance',
-        description: 'Return grounded, source-cited Fluent 2 (Fluent UI 2.0) design-language guidance from https://fluent2.microsoft.design. Covers 40 topics: the design foundations (design-principles, color, typography, layout, elevation, iconography, motion, shapes, material), UX frameworks (accessibility, content-design, design-tokens, handoffs, onboarding, wait-ux), AI/Copilot guidance (responsible-ai, ai-harm, entry-points, personality-principles, copilot-errors, data-usage-sharing), the full content-engineering practice (system prompt engineering and the evaluating-output-quality track, under content-engineering-* keys), and four system/site topics: component-roadmap (the lifecycle stages plus the per-component status table — the only way to answer "is X stable, preview, or still planned"), whats-new (what changed in Fluent 2), web-component-index (which components the site publishes for React and Web Components, with their routes), and site-routes (sitemap, employee-gated routes, the never-404 behaviour, known duplicate routes). Pass "all" to get a small INDEX of every topic with its size (never the whole corpus). A topic larger than maxChars comes back as an outline plus a section list; pass "section" to read one section in full, or raise "maxChars". Every response carries $provenance.source: "published" (what any clone of the plugin returns) or "local-overlay" (restored from this checkout\'s own gitignored mcp/data/local/ copy of guidance the published dataset withholds — see NOTICE). Use this for the reasoning layer (why/when to apply a style); use fluent_list_tokens / fluent_get_token for exact token values.',
+        description: 'Return grounded, source-cited Fluent 2 (Fluent UI 2.0) design-language guidance from https://fluent2.microsoft.design. Covers 42 topics: the design foundations (design-principles, color, typography, layout, elevation, iconography, motion, shapes, material), UX frameworks (accessibility, content-design, design-tokens, handoffs, onboarding, wait-ux), AI/Copilot guidance (responsible-ai, ai-harm, entry-points, personality-principles, copilot-errors, data-usage-sharing), the full content-engineering practice (system prompt engineering and the evaluating-output-quality track, under content-engineering-* keys), the two get-started routes (get-started-design — the Figma UI kits, kit tiers and the Figma variable groups; get-started-develop — the platform picker, packages, install commands and setup entry points for React, Web Components, iOS, Android and Windows), and four system/site topics: component-roadmap (the lifecycle stages plus the per-component status table — the only way to answer "is X stable, preview, or still planned"), whats-new (what changed in Fluent 2), web-component-index (which components the site publishes for React and Web Components, with their routes), and site-routes (sitemap, employee-gated routes, the never-404 behaviour, known duplicate routes). Pass "all" to get a small INDEX of every topic with its size (never the whole corpus). A topic larger than maxChars comes back as an outline plus a section list; pass "section" to read one section in full, or raise "maxChars". Every response carries $provenance.source: "published" (what any clone of the plugin returns) or "local-overlay" (restored from this checkout\'s own gitignored mcp/data/local/ copy of guidance the published dataset withholds — see NOTICE). The shapes, layout, typography, color and accessibility topics also carry $codeTokenBridge and a per-row codeToken: the design-site names are NOT the code token names and the radius scales are offset by one step ("Large" = 8px = borderRadiusXLarge, while borderRadiusLarge is 6px), so use codeToken, never the design name. Use this for the reasoning layer (why/when to apply a style); use fluent_list_tokens / fluent_get_token for exact token values — fluent_get_token also resolves design-side names directly.',
         inputSchema: {
             topic: z
                 .enum([
@@ -100,6 +154,11 @@ export function registerDesignGuidance(server) {
                 'whats-new',
                 'web-component-index',
                 'site-routes',
+                // The two get-started routes: /get-started/design (Figma UI kits,
+                // kit tiers, Figma variable groups) and /get-started/develop (the
+                // platform picker, packages and install commands).
+                'get-started-design',
+                'get-started-develop',
                 'all',
             ])
                 .default('all')
@@ -135,6 +194,7 @@ export function registerDesignGuidance(server) {
         };
         if (topic === 'all') {
             const entries = {};
+            const bridge = bridgeCounts();
             let enrichedCount = 0;
             for (const key of Object.keys(topics)) {
                 const t = resolveTopic(key);
@@ -150,6 +210,7 @@ export function registerDesignGuidance(server) {
                     sections: Array.isArray(t?.sections) ? t.sections.length : 0,
                     accessStatus: t?.accessStatus,
                     capturedAt: t?.capturedAt,
+                    ...(bridge[key] ? { codeTokenRows: bridge[key] } : {}),
                     ...(enriched ? { source: 'local-overlay' } : {}),
                     ...(isGated(t) ? { gated: true } : {}),
                 };
@@ -184,6 +245,7 @@ export function registerDesignGuidance(server) {
             return textResult(`No guidance for topic "${topic}".`);
         const gated = isGated(resolved);
         const provenance = provenanceFor(topics[topic], resolved, isEnriched(topics[topic]));
+        const codeTokens = codeTokenBridgeFor(topic);
         const body = gated ? { ...resolved, agentInstruction: GATED_INSTRUCTION } : resolved;
         // A named section is an explicit, bounded request: honour it in full.
         if (section && section.trim()) {
@@ -203,6 +265,7 @@ export function registerDesignGuidance(server) {
             }
             return textResult(capped(JSON.stringify({
                 $provenance: provenance,
+                ...(codeTokens ? { $codeTokenBridge: codeTokens } : {}),
                 topic,
                 title: body.title,
                 section,
@@ -212,7 +275,7 @@ export function registerDesignGuidance(server) {
                 sections: hits,
             }, null, 2), maxChars, `Narrow the section filter: "${section}" matched ${hits.length} of ${all.length} sections.`));
         }
-        const full = JSON.stringify({ $provenance: provenance, ...body }, null, 2);
+        const full = JSON.stringify({ $provenance: provenance, ...(codeTokens ? { $codeTokenBridge: codeTokens } : {}), ...body }, null, 2);
         if (full.length <= maxChars)
             return textResult(full);
         // Over the cap: hand back a structured outline that still parses, rather
@@ -221,6 +284,7 @@ export function registerDesignGuidance(server) {
         const sections = Array.isArray(body.sections) ? body.sections : [];
         const outline = {
             $provenance: provenance,
+            ...(codeTokens ? { $codeTokenBridge: codeTokens } : {}),
             topic,
             title: body.title,
             summary: body.summary,
