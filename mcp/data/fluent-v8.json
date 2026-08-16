@@ -4,14 +4,57 @@
     "library": "@fluentui/react",
     "majorVersion": 8,
     "verifiedVersions": {
+      "@fluentui/codemods": "8.4.29",
+      "@fluentui/fluent2-theme": "8.107.154",
       "@fluentui/font-icons-mdl2": "8.5.74",
       "@fluentui/react": "8.125.7",
-      "@fluentui/react-components": "9.74.5",
+      "@fluentui/react-breadcrumb": "9.4.5",
+      "@fluentui/react-button": "9.11.0",
+      "@fluentui/react-calendar-compat": "0.4.5",
+      "@fluentui/react-checkbox": "9.6.4",
+      "@fluentui/react-color-picker": "9.3.0",
+      "@fluentui/react-combobox": "9.17.5",
+      "@fluentui/react-components": "9.74.6",
+      "@fluentui/react-datepicker-compat": "0.6.36",
+      "@fluentui/react-dialog": "9.18.3",
+      "@fluentui/react-divider": "9.7.4",
+      "@fluentui/react-icons-compat": "0.2.22",
       "@fluentui/react-icons-mdl2": "1.4.7",
-      "@fluentui/theme": "2.7.2"
+      "@fluentui/react-image": "9.4.4",
+      "@fluentui/react-label": "9.4.4",
+      "@fluentui/react-link": "9.8.4",
+      "@fluentui/react-list": "9.6.17",
+      "@fluentui/react-menu": "9.25.3",
+      "@fluentui/react-message-bar": "9.7.5",
+      "@fluentui/react-migration-v0-v9": "9.6.35",
+      "@fluentui/react-migration-v8-v9": "9.10.17",
+      "@fluentui/react-nav": "9.4.4",
+      "@fluentui/react-persona": "9.7.7",
+      "@fluentui/react-portal-compat": "9.2.45",
+      "@fluentui/react-portal-compat-context": "9.0.16",
+      "@fluentui/react-progress": "9.5.4",
+      "@fluentui/react-provider": "9.22.20",
+      "@fluentui/react-rating": "9.4.4",
+      "@fluentui/react-search": "9.4.6",
+      "@fluentui/react-skeleton": "9.7.5",
+      "@fluentui/react-slider": "9.6.5",
+      "@fluentui/react-spinbutton": "9.6.5",
+      "@fluentui/react-spinner": "9.8.5",
+      "@fluentui/react-swatch-picker": "9.6.0",
+      "@fluentui/react-switch": "9.7.5",
+      "@fluentui/react-tabs": "9.12.4",
+      "@fluentui/react-tag-picker": "9.10.2",
+      "@fluentui/react-text": "9.6.19",
+      "@fluentui/react-theme": "9.2.2",
+      "@fluentui/react-timepicker-compat": "0.4.38",
+      "@fluentui/react-tooltip": "9.10.5",
+      "@fluentui/react-utilities": "9.26.6",
+      "@fluentui/theme": "2.7.2",
+      "@fluentui/tokens": "1.0.0-alpha.24",
+      "@fluentui/utilities": "8.17.2"
     },
     "verifiedOn": "2026-08-09",
-    "v9Baseline": "@fluentui/react-components@9.74.5",
+    "v9Baseline": "@fluentui/react-components@9.74.6",
     "migrationDocsLocation": "apps/public-docsite-v9/src/Concepts/Migration/FromV8/",
     "sources": [
       {
@@ -82,9 +125,360 @@
       "components": 106,
       "families": 46,
       "libEntryPoints": 46,
-      "collisions": 23,
-      "unverified": 134,
-      "note": "Measured from this file. Regenerate with scripts/build-v8-data.mjs."
+      "collisions": 26,
+      "unverified": 135,
+      "note": "Measured from this file. Regenerate with scripts/build-v8-data.mjs.",
+      "renames": 9,
+      "casingTraps": 1,
+      "behaviorTraps": 3,
+      "traps": 22
+    },
+    "upstreamApiReports": {
+      "repo": "https://github.com/microsoft/fluentui",
+      "ref": "master",
+      "fetchedOn": "2026-08-16",
+      "reports": {
+        "v8": {
+          "path": "packages/react/etc/react.api.md",
+          "url": "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react/etc/react.api.md",
+          "bytes": 348529,
+          "sha256": "a07a686067e34a537d971f1680922f0dfd54395079d951e4a07ed71bd749b065"
+        },
+        "v9": {
+          "path": "packages/react-components/react-components/etc/react-components.api.md",
+          "url": "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react-components/react-components/etc/react-components.api.md",
+          "bytes": 198884,
+          "sha256": "0a48a113cfd6e063b89c91d5cdfcbed36f50cf3e6dc012591566c1b5c7a56edd"
+        }
+      },
+      "computed": {
+        "collisions": [
+          "Breadcrumb",
+          "Button",
+          "Checkbox",
+          "ColorPicker",
+          "CompoundButton",
+          "Dialog",
+          "DialogContent",
+          "Dropdown",
+          "Image",
+          "Label",
+          "Link",
+          "List",
+          "MessageBar",
+          "Nav",
+          "PartialTheme",
+          "Persona",
+          "Rating",
+          "SearchBox",
+          "SelectionMode",
+          "Slider",
+          "SpinButton",
+          "Spinner",
+          "TagPicker",
+          "Text",
+          "Theme",
+          "Tooltip"
+        ],
+        "casingTraps": [
+          {
+            "v8Name": "ComboBox",
+            "v9Name": "Combobox"
+          }
+        ],
+        "counts": {
+          "v8Exports": 1458,
+          "v9Exports": 2027,
+          "v8PascalExports": 1102,
+          "v9PascalExports": 1072,
+          "collisions": 26,
+          "casingTraps": 1
+        },
+        "v8OnChangeOwners": [
+          "BaseExtendedPicker",
+          "BaseFloatingPicker",
+          "BasePicker",
+          "BaseSelectedItemsList",
+          "Checkbox",
+          "ChoiceGroup",
+          "ChoiceGroupOption",
+          "ColorPicker",
+          "ColorRectangle",
+          "ColorSlider",
+          "ComboBox",
+          "Dropdown",
+          "Rating",
+          "SearchBox",
+          "Slider",
+          "SpinButton",
+          "SwatchColorPicker",
+          "TextField",
+          "TimePicker",
+          "Toggle"
+        ]
+      },
+      "method": "collisions = PascalCase exports present in BOTH reports; casingTraps = present in both only when compared case-insensitively. Membership is computed, never curated. Note API Extractor emits aliased re-exports (`export { Image_2 as Image }`) for names that clash with a local symbol — a parser that only reads `export { X }` misses Image, PartialTheme, SelectionMode, Text and Theme and reports 21 collisions instead of 26."
+    },
+    "upstreamPackageVersions": {
+      "source": "https://github.com/microsoft/fluentui package.json files on ref \"master\"",
+      "fetchedOn": "2026-08-16",
+      "packages": {
+        "@fluentui/codemods": {
+          "version": "8.4.29",
+          "private": false,
+          "path": "packages/codemods/package.json"
+        },
+        "@fluentui/fluent2-theme": {
+          "version": "8.107.154",
+          "private": false,
+          "path": "packages/fluent2-theme/package.json"
+        },
+        "@fluentui/font-icons-mdl2": {
+          "version": "8.5.74",
+          "private": false,
+          "path": "packages/font-icons-mdl2/package.json"
+        },
+        "@fluentui/react": {
+          "version": "8.125.7",
+          "private": false,
+          "path": "packages/react/package.json"
+        },
+        "@fluentui/react-breadcrumb": {
+          "version": "9.4.5",
+          "private": false,
+          "path": "packages/react-components/react-breadcrumb/library/package.json"
+        },
+        "@fluentui/react-button": {
+          "version": "9.11.0",
+          "private": false,
+          "path": "packages/react-components/react-button/library/package.json"
+        },
+        "@fluentui/react-calendar-compat": {
+          "version": "0.4.5",
+          "private": false,
+          "path": "packages/react-components/react-calendar-compat/library/package.json"
+        },
+        "@fluentui/react-checkbox": {
+          "version": "9.6.4",
+          "private": false,
+          "path": "packages/react-components/react-checkbox/library/package.json"
+        },
+        "@fluentui/react-color-picker": {
+          "version": "9.3.0",
+          "private": false,
+          "path": "packages/react-components/react-color-picker/library/package.json"
+        },
+        "@fluentui/react-colorpicker-compat": {
+          "version": "0.0.0",
+          "private": true,
+          "path": "packages/react-components/react-colorpicker-compat/package.json"
+        },
+        "@fluentui/react-combobox": {
+          "version": "9.17.5",
+          "private": false,
+          "path": "packages/react-components/react-combobox/library/package.json"
+        },
+        "@fluentui/react-components": {
+          "version": "9.74.6",
+          "private": false,
+          "path": "packages/react-components/react-components/package.json"
+        },
+        "@fluentui/react-datepicker-compat": {
+          "version": "0.6.36",
+          "private": false,
+          "path": "packages/react-components/react-datepicker-compat/library/package.json"
+        },
+        "@fluentui/react-dialog": {
+          "version": "9.18.3",
+          "private": false,
+          "path": "packages/react-components/react-dialog/library/package.json"
+        },
+        "@fluentui/react-divider": {
+          "version": "9.7.4",
+          "private": false,
+          "path": "packages/react-components/react-divider/library/package.json"
+        },
+        "@fluentui/react-icons-compat": {
+          "version": "0.2.22",
+          "private": false,
+          "path": "packages/react-components/react-icons-compat/library/package.json"
+        },
+        "@fluentui/react-icons-mdl2": {
+          "version": "1.4.7",
+          "private": false,
+          "path": "packages/react-icons-mdl2/package.json"
+        },
+        "@fluentui/react-image": {
+          "version": "9.4.4",
+          "private": false,
+          "path": "packages/react-components/react-image/library/package.json"
+        },
+        "@fluentui/react-label": {
+          "version": "9.4.4",
+          "private": false,
+          "path": "packages/react-components/react-label/library/package.json"
+        },
+        "@fluentui/react-link": {
+          "version": "9.8.4",
+          "private": false,
+          "path": "packages/react-components/react-link/library/package.json"
+        },
+        "@fluentui/react-list": {
+          "version": "9.6.17",
+          "private": false,
+          "path": "packages/react-components/react-list/library/package.json"
+        },
+        "@fluentui/react-menu": {
+          "version": "9.25.3",
+          "private": false,
+          "path": "packages/react-components/react-menu/library/package.json"
+        },
+        "@fluentui/react-message-bar": {
+          "version": "9.7.5",
+          "private": false,
+          "path": "packages/react-components/react-message-bar/library/package.json"
+        },
+        "@fluentui/react-migration-v0-v9": {
+          "version": "9.6.35",
+          "private": false,
+          "path": "packages/react-components/react-migration-v0-v9/library/package.json"
+        },
+        "@fluentui/react-migration-v8-v9": {
+          "version": "9.10.17",
+          "private": false,
+          "path": "packages/react-components/react-migration-v8-v9/library/package.json"
+        },
+        "@fluentui/react-nav": {
+          "version": "9.4.4",
+          "private": false,
+          "path": "packages/react-components/react-nav/library/package.json"
+        },
+        "@fluentui/react-persona": {
+          "version": "9.7.7",
+          "private": false,
+          "path": "packages/react-components/react-persona/library/package.json"
+        },
+        "@fluentui/react-portal-compat": {
+          "version": "9.2.45",
+          "private": false,
+          "path": "packages/react-components/react-portal-compat/package.json"
+        },
+        "@fluentui/react-portal-compat-context": {
+          "version": "9.0.16",
+          "private": false,
+          "path": "packages/react-components/react-portal-compat-context/package.json"
+        },
+        "@fluentui/react-progress": {
+          "version": "9.5.4",
+          "private": false,
+          "path": "packages/react-components/react-progress/library/package.json"
+        },
+        "@fluentui/react-provider": {
+          "version": "9.22.20",
+          "private": false,
+          "path": "packages/react-components/react-provider/library/package.json"
+        },
+        "@fluentui/react-rating": {
+          "version": "9.4.4",
+          "private": false,
+          "path": "packages/react-components/react-rating/library/package.json"
+        },
+        "@fluentui/react-search": {
+          "version": "9.4.6",
+          "private": false,
+          "path": "packages/react-components/react-search/library/package.json"
+        },
+        "@fluentui/react-skeleton": {
+          "version": "9.7.5",
+          "private": false,
+          "path": "packages/react-components/react-skeleton/library/package.json"
+        },
+        "@fluentui/react-slider": {
+          "version": "9.6.5",
+          "private": false,
+          "path": "packages/react-components/react-slider/library/package.json"
+        },
+        "@fluentui/react-spinbutton": {
+          "version": "9.6.5",
+          "private": false,
+          "path": "packages/react-components/react-spinbutton/library/package.json"
+        },
+        "@fluentui/react-spinner": {
+          "version": "9.8.5",
+          "private": false,
+          "path": "packages/react-components/react-spinner/library/package.json"
+        },
+        "@fluentui/react-swatch-picker": {
+          "version": "9.6.0",
+          "private": false,
+          "path": "packages/react-components/react-swatch-picker/library/package.json"
+        },
+        "@fluentui/react-switch": {
+          "version": "9.7.5",
+          "private": false,
+          "path": "packages/react-components/react-switch/library/package.json"
+        },
+        "@fluentui/react-tabs": {
+          "version": "9.12.4",
+          "private": false,
+          "path": "packages/react-components/react-tabs/library/package.json"
+        },
+        "@fluentui/react-tag-picker": {
+          "version": "9.10.2",
+          "private": false,
+          "path": "packages/react-components/react-tag-picker/library/package.json"
+        },
+        "@fluentui/react-text": {
+          "version": "9.6.19",
+          "private": false,
+          "path": "packages/react-components/react-text/library/package.json"
+        },
+        "@fluentui/react-theme": {
+          "version": "9.2.2",
+          "private": false,
+          "path": "packages/react-components/react-theme/library/package.json"
+        },
+        "@fluentui/react-timepicker-compat": {
+          "version": "0.4.38",
+          "private": false,
+          "path": "packages/react-components/react-timepicker-compat/library/package.json"
+        },
+        "@fluentui/react-tooltip": {
+          "version": "9.10.5",
+          "private": false,
+          "path": "packages/react-components/react-tooltip/library/package.json"
+        },
+        "@fluentui/react-utilities": {
+          "version": "9.26.6",
+          "private": false,
+          "path": "packages/react-components/react-utilities/package.json"
+        },
+        "@fluentui/react-utilities-compat": {
+          "version": "0.0.0",
+          "private": true,
+          "path": "packages/react-components/react-utilities-compat/library/package.json"
+        },
+        "@fluentui/theme": {
+          "version": "2.7.2",
+          "private": false,
+          "path": "packages/theme/package.json"
+        },
+        "@fluentui/tokens": {
+          "version": "1.0.0-alpha.24",
+          "private": false,
+          "path": "packages/tokens/package.json"
+        },
+        "@fluentui/utilities": {
+          "version": "8.17.2",
+          "private": false,
+          "path": "packages/utilities/package.json"
+        }
+      },
+      "note": "Read from upstream package.json at build time. `private: true` packages are recorded here but must never be recommended for install.",
+      "privatePackages": [
+        "@fluentui/react-colorpicker-compat",
+        "@fluentui/react-utilities-compat"
+      ]
     }
   },
   "lineage": [
@@ -6677,11 +7071,286 @@
   },
   "collisions": [
     {
+      "name": "Breadcrumb",
+      "class": "collision",
+      "v8": "items: IBreadcrumbItem[], maxDisplayedItems, overflowIndex, dividerAs",
+      "v9": "<Breadcrumb><BreadcrumbItem><BreadcrumbButton>",
+      "hazard": "Same name, array-vs-children; overflow collapsing must be hand-rolled in v9",
+      "severity": "medium",
+      "v8Import": "import { Breadcrumb } from '@fluentui/react';",
+      "v9Import": "import { Breadcrumb } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-breadcrumb",
+      "v9PackageVersion": "9.4.5",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Breadcrumb as V8Breadcrumb } from '@fluentui/react';\nimport { Breadcrumb } from '@fluentui/react-components';",
+      "v8Names": [
+        "Breadcrumb",
+        "IBreadcrumbItem"
+      ]
+    },
+    {
+      "name": "Button",
+      "class": "collision",
+      "v8": "class Button extends React.Component<IButtonProps> — the base class behind DefaultButton / PrimaryButton / IconButton / ActionButton / CommandBarButton; text, iconProps, primary, split + menuProps, allowDisabledFocus, styles",
+      "v9": "ForwardRefComponent<ButtonProps>: children for the label, an icon slot, appearance=\"secondary\"|\"primary\"|\"outline\"|\"subtle\"|\"transparent\", shape, size, disabledFocusable",
+      "hazard": "The highest-traffic collision in either library and the one most likely to be generated wrong. Both packages export `Button`, but in v8 it is a rarely-rendered base class while in v9 it IS the button — so a v8 import inside a v9 app compiles and renders an unthemed v8 button. text / iconProps / primary / styles are all accepted-and-ignored props on the v9 side.",
+      "severity": "high",
+      "v8Import": "import { Button } from '@fluentui/react';",
+      "v9Import": "import { Button } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-button",
+      "v9PackageVersion": "9.11.0",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Button as V8Button } from '@fluentui/react';\nimport { Button } from '@fluentui/react-components';",
+      "v8Names": [
+        "Button",
+        "IButtonProps",
+        "DefaultButton",
+        "PrimaryButton",
+        "IconButton",
+        "ActionButton",
+        "CommandBarButton"
+      ]
+    },
+    {
+      "name": "Checkbox",
+      "class": "collision",
+      "v8": "onChange(ev, checked?: boolean); boxSide, checkmarkIconProps, indeterminate / defaultIndeterminate, label, styles",
+      "v9": "onChange(ev, data: CheckboxOnChangeData) where data.checked is boolean | 'mixed'; labelPosition, shape, size; children: never",
+      "hazard": "Same name, different onChange contract, and v8's `indeterminate` does not exist in v9 — it became checked=\"mixed\". Passing indeterminate to the v9 Checkbox silently does nothing.",
+      "severity": "high",
+      "v8Import": "import { Checkbox } from '@fluentui/react';",
+      "v9Import": "import { Checkbox } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-checkbox",
+      "v9PackageVersion": "9.6.4",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Checkbox as V8Checkbox } from '@fluentui/react';\nimport { Checkbox } from '@fluentui/react-components';",
+      "v8Names": [
+        "Checkbox"
+      ]
+    },
+    {
+      "name": "ColorPicker",
+      "class": "collision",
+      "v8": "color: IColor | string REQUIRED, alphaType, strings, onChange(ev, IColor)",
+      "v9": "<ColorPicker><ColorArea/><ColorSlider/><AlphaSlider/>",
+      "hazard": "Same name; IColor type and the strings a11y bundle do not exist in v9",
+      "severity": "medium",
+      "v8Import": "import { ColorPicker } from '@fluentui/react';",
+      "v9Import": "import { ColorPicker } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-color-picker",
+      "v9PackageVersion": "9.3.0",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { ColorPicker as V8ColorPicker } from '@fluentui/react';\nimport { ColorPicker } from '@fluentui/react-components';",
+      "v8Names": [
+        "ColorPicker",
+        "IColor"
+      ]
+    },
+    {
+      "name": "CompoundButton",
+      "class": "collision",
+      "v8": "class CompoundButton extends React.Component<IButtonProps>; secondaryText, onRenderDescription",
+      "v9": "ForwardRefComponent<CompoundButtonProps>: a secondaryContent slot inside a contentContainer, plus appearance / shape / size from ButtonProps",
+      "hazard": "Both libraries export CompoundButton. `secondaryText` is an unknown prop on the v9 component, so the description simply never renders and nothing warns.",
+      "severity": "high",
+      "v8Import": "import { CompoundButton } from '@fluentui/react';",
+      "v9Import": "import { CompoundButton } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-button",
+      "v9PackageVersion": "9.11.0",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { CompoundButton as V8CompoundButton } from '@fluentui/react';\nimport { CompoundButton } from '@fluentui/react-components';",
+      "v8Names": [
+        "CompoundButton",
+        "IButtonProps"
+      ]
+    },
+    {
+      "name": "Dialog",
+      "class": "collision",
+      "v8": "hidden defaults to TRUE; content via dialogContentProps/modalProps",
+      "v9": "open boolean defaults false; <DialogSurface><DialogBody><DialogTitle> composition",
+      "hazard": "Inverted visibility prop: hidden={isOpen} renders backwards and is the #1 generated-code bug",
+      "severity": "high",
+      "v8Import": "import { Dialog } from '@fluentui/react';",
+      "v9Import": "import { Dialog } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-dialog",
+      "v9PackageVersion": "9.18.3",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Dialog as V8Dialog } from '@fluentui/react';\nimport { Dialog } from '@fluentui/react-components';",
+      "v8Names": [
+        "Dialog"
+      ]
+    },
+    {
+      "name": "DialogContent",
+      "class": "collision",
+      "v8": "IDialogContentProps: title, subText, type: DialogType, showCloseButton, topButtonsProps, isMultiline — normally passed as dialogContentProps rather than rendered directly",
+      "v9": "DialogContentProps = ComponentProps<DialogContentSlots> — a single scrollable body <div> slot with no title, no subText and no close button",
+      "hazard": "Both export DialogContent, and they own different parts of the dialog. In v8 it carries the title and the close button; in v9 the title is DialogTitle and the buttons are DialogActions, so a ported <DialogContent title subText> renders an empty box.",
+      "severity": "high",
+      "v8Import": "import { DialogContent } from '@fluentui/react';",
+      "v9Import": "import { DialogContent } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-dialog",
+      "v9PackageVersion": "9.18.3",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { DialogContent as V8DialogContent } from '@fluentui/react';\nimport { DialogContent } from '@fluentui/react-components';",
+      "v8Names": [
+        "DialogContent",
+        "IDialogContentProps",
+        "DialogType"
+      ]
+    },
+    {
+      "name": "Dropdown",
+      "class": "collision",
+      "v8": "IDropdownProps: options: IDropdownOption[], selectedKey / selectedKeys, onChange(ev, option, index), placeholder, multiSelect, onRenderTitle",
+      "v9": "<Dropdown><Option> children, selectedOptions, onOptionSelect(ev, data), multiselect, button + listbox slots",
+      "hazard": "Same name; options-array vs children, onChange vs onOptionSelect, and `selectedKey` has no v9 counterpart. Note the v9 Dropdown ships from @fluentui/react-combobox — there is no react-dropdown package to import from.",
+      "severity": "high",
+      "v8Import": "import { Dropdown } from '@fluentui/react';",
+      "v9Import": "import { Dropdown } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-combobox",
+      "v9PackageVersion": "9.17.5",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Dropdown as V8Dropdown } from '@fluentui/react';\nimport { Dropdown } from '@fluentui/react-components';",
+      "v8Names": [
+        "Dropdown",
+        "IDropdownProps",
+        "IDropdownOption"
+      ]
+    },
+    {
+      "name": "Image",
+      "class": "collision",
+      "v8": "IImageProps: src + imageFit: ImageFit enum, coverStyle, maximizeFrame, shouldFadeIn, errorSrc, onLoadingStateChange",
+      "v9": "ImageProps: fit: 'none'|'center'|'contain'|'cover'|'default', block, bordered, shadow, shape",
+      "hazard": "Same name; the prop is `imageFit` with an enum in v8 and `fit` with string literals in v9, so a ported imageFit={ImageFit.cover} is dropped and the image renders unfitted.",
+      "severity": "medium",
+      "v8Import": "import { Image } from '@fluentui/react';",
+      "v9Import": "import { Image } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-image",
+      "v9PackageVersion": "9.4.4",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Image as V8Image } from '@fluentui/react';\nimport { Image } from '@fluentui/react-components';",
+      "v8Names": [
+        "Image",
+        "IImageProps",
+        "ImageFit"
+      ]
+    },
+    {
+      "name": "Label",
+      "class": "collision",
+      "v8": "ILabelProps: required, disabled, as, styles — renders a <label>",
+      "v9": "LabelProps: size 'small'|'medium'|'large', weight 'regular'|'semibold', required?: boolean | Slot<'span'>, disabled",
+      "hazard": "Same name, and the props people actually pass (required, disabled) exist in both — so the swap type-checks. What silently changes is the type ramp (v9 has size/weight, v8 has neither) and the styles prop, which v9 drops.",
+      "severity": "medium",
+      "v8Import": "import { Label } from '@fluentui/react';",
+      "v9Import": "import { Label } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-label",
+      "v9PackageVersion": "9.4.4",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Label as V8Label } from '@fluentui/react';\nimport { Label } from '@fluentui/react-components';",
+      "v8Names": [
+        "Label",
+        "ILabelProps"
+      ]
+    },
+    {
+      "name": "Link",
+      "class": "collision",
+      "v8": "ILinkProps: href, disabled, underline, as, styles — renders <a> or <button> depending on href",
+      "v9": "LinkProps: appearance 'default'|'subtle', inline, disabled, disabledFocusable; root is Slot<'a', 'button' | 'span'>",
+      "hazard": "Same name; v8's `underline` boolean has no v9 counterpart (v9 expresses in-paragraph links with `inline`), and the styles prop is dropped, so links keep working but stop looking like links.",
+      "severity": "medium",
+      "v8Import": "import { Link } from '@fluentui/react';",
+      "v9Import": "import { Link } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-link",
+      "v9PackageVersion": "9.8.4",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Link as V8Link } from '@fluentui/react';\nimport { Link } from '@fluentui/react-components';",
+      "v8Names": [
+        "Link",
+        "ILinkProps"
+      ]
+    },
+    {
+      "name": "List",
+      "class": "collision",
+      "v8": "Virtualized: items + onRenderCell, page windowing, IPage, getPageHeight",
+      "v9": "semantic <List>/<ListItem>, NO virtualization",
+      "hazard": "Same name but v9 renders every row into the DOM; severe perf regression on large datasets",
+      "severity": "high",
+      "v8Import": "import { List } from '@fluentui/react';",
+      "v9Import": "import { List } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-list",
+      "v9PackageVersion": "9.6.17",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { List as V8List } from '@fluentui/react';\nimport { List } from '@fluentui/react-components';",
+      "v8Names": [
+        "List",
+        "IPage"
+      ]
+    },
+    {
+      "name": "MessageBar",
+      "class": "collision",
+      "v8": "messageBarType={MessageBarType.error}, isMultiline, actions, delayedRender live region",
+      "v9": "intent=\"error\", <MessageBarBody>/<MessageBarActions>",
+      "hazard": "Enum→string plus children composition; v8's automatic live-region announcement is not replicated",
+      "severity": "medium",
+      "v8Import": "import { MessageBar } from '@fluentui/react';",
+      "v9Import": "import { MessageBar } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-message-bar",
+      "v9PackageVersion": "9.7.5",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { MessageBar as V8MessageBar } from '@fluentui/react';\nimport { MessageBar } from '@fluentui/react-components';",
+      "v8Names": [
+        "MessageBar",
+        "MessageBarType"
+      ]
+    },
+    {
       "name": "Nav",
+      "class": "collision",
       "v8": "groups: INavLinkGroup[] | null required; INavLink{name,url}; selectedKey; onLinkClick(ev,item)",
-      "v9": "@fluentui/react-nav 9.4.3: <NavDrawer><NavItem value>; selectedValue; onNavItemSelect",
+      "v9": "<NavDrawer><NavItem value>; selectedValue; onNavItemSelect",
       "hazard": "Identical export name, zero API overlap; a naive swap type-checks nowhere and silently loses nav state",
       "severity": "high",
+      "v8Import": "import { Nav } from '@fluentui/react';",
+      "v9Import": "import { Nav } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-nav",
+      "v9PackageVersion": "9.4.4",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Nav as V8Nav } from '@fluentui/react';\nimport { Nav } from '@fluentui/react-components';",
       "v8Names": [
         "Nav",
         "INavLinkGroup",
@@ -6689,350 +7358,429 @@
       ]
     },
     {
-      "name": "Dialog",
-      "v8": "hidden defaults to TRUE; content via dialogContentProps/modalProps",
-      "v9": "open boolean defaults false; <DialogSurface><DialogBody><DialogTitle> composition",
-      "hazard": "Inverted visibility prop: hidden={isOpen} renders backwards and is the #1 generated-code bug",
+      "name": "PartialTheme",
+      "class": "collision",
+      "v8": "PartialTheme (@fluentui/theme): optional palette / semanticColors / fonts / effects / spacing / components — a partial v8 ITheme",
+      "v9": "PartialTheme (@fluentui/react-theme, re-exported from @fluentui/tokens): Partial<Theme>, i.e. a partial FLAT token record",
+      "hazard": "Both export a type named PartialTheme, and the two shapes share no members. A mixed import type-checks a v8 palette object against the v9 provider (or vice versa) and the failure surfaces far away from the import line.",
       "severity": "high",
+      "v8Import": "import { PartialTheme } from '@fluentui/react';",
+      "v9Import": "import { PartialTheme } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/theme",
+      "v8PackageVersion": "2.7.2",
+      "v9Package": "@fluentui/react-theme",
+      "v9PackageVersion": "9.2.2",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { PartialTheme as V8PartialTheme } from '@fluentui/react';\nimport { PartialTheme } from '@fluentui/react-components';",
       "v8Names": [
-        "Dialog"
-      ]
-    },
-    {
-      "name": "List",
-      "v8": "Virtualized: items + onRenderCell, page windowing, IPage, getPageHeight",
-      "v9": "@fluentui/react-list 9.6.16: semantic <List>/<ListItem>, NO virtualization",
-      "hazard": "Same name but v9 renders every row into the DOM; severe perf regression on large datasets",
-      "severity": "high",
-      "v8Names": [
-        "List"
-      ]
-    },
-    {
-      "name": "onChange signature (Checkbox, Slider, Toggle, SpinButton, Link, Label, Image, Spinner)",
-      "v8": "onChange(ev, checked?) / onChange(value, range?, ev?) — second arg IS the value",
-      "v9": "onChange(ev, data) — second arg is a data object (data.checked, data.value)",
-      "hazard": "Silent, uniform break across every form control; handlers compile but receive an object, not a primitive",
-      "severity": "high",
-      "v8Names": [
-        "Checkbox",
-        "Slider",
-        "Toggle",
-        "SpinButton",
-        "Link",
-        "Label",
-        "Image",
-        "Spinner"
-      ]
-    },
-    {
-      "name": "styles prop (universal)",
-      "v8": "styles?: IStyleFunctionOrObject<IXStyleProps, IXStyles> on nearly every component",
-      "v9": "No styles prop at all; className + Griffel makeStyles",
-      "hazard": "Any generated styles={{root:{...}}} is invalid in v9 and silently dropped; and vice versa",
-      "severity": "high",
-      "v8Names": []
-    },
-    {
-      "name": "Icon",
-      "v8": "Font glyph via iconName string; requires a one-time global initializeIcons()",
-      "v9": "@fluentui/react-icons: one React component per icon, e.g. <DeleteRegular/>",
-      "hazard": "v8 icon names are not v9 imports; initializeIcons() is a no-op for v9 and missing it renders boxes",
-      "severity": "high",
-      "v8Names": [
-        "Icon",
-        "initializeIcons"
-      ]
-    },
-    {
-      "name": "ThemeProvider",
-      "v8": "ThemeProvider theme={createTheme({ palette, semanticColors })}",
-      "v9": "FluentProvider theme={webLightTheme} with flat design tokens",
-      "hazard": "IPartialTheme palette/semanticColors have no v9 counterpart; theme objects are not portable",
-      "severity": "high",
-      "v8Names": [
-        "ThemeProvider"
-      ]
-    },
-    {
-      "name": "ComboBox",
-      "v8": "options: IComboBoxOption[]; allowFreeform; text; selectedKey; styles is Partial<IComboBoxStyles>",
-      "v9": "@fluentui/react-combobox 9.17.4: <Combobox><Option> children; freeform; selectedOptions",
-      "hazard": "Array-vs-children plus v8's non-standard styles type; also v8 root is not the outermost node (container is)",
-      "severity": "high",
-      "v8Names": [
-        "ComboBox"
-      ]
-    },
-    {
-      "name": "TagPicker",
-      "v8": "IBasePickerProps<ITag>; onResolveSuggestions required; ITag{name,key}",
-      "v9": "@fluentui/react-tag-picker 9.10.1: <TagPicker><TagPickerControl><TagPickerList>; onOptionSelect",
-      "hazard": "Same export name, entirely different contract; ITag does not exist in v9",
-      "severity": "high",
-      "v8Names": [
-        "TagPicker"
-      ]
-    },
-    {
-      "name": "ContextualMenu",
-      "v8": "items: IContextualMenuItem[] array with key/text/subMenuProps; target: Target",
-      "v9": "@fluentui/react-menu 9.25.2: <Menu><MenuTrigger><MenuPopover><MenuList> composition",
-      "hazard": "Array-driven vs composition; nested subMenuProps trees have no mechanical v9 translation",
-      "severity": "high",
-      "v8Names": [
-        "ContextualMenu"
+        "PartialTheme",
+        "ITheme"
       ]
     },
     {
       "name": "Persona",
+      "class": "collision",
       "v8": "text, secondaryText, size={PersonaSize.size48}, presence={PersonaPresence.online}, imageUrl",
-      "v9": "@fluentui/react-persona 9.7.6: name, size={48}, presence={{status:'available'}}, avatar={{image:{src}}}",
+      "v9": "name, size={48}, presence={{status:'available'}}, avatar={{image:{src}}}",
       "hazard": "text→name rename, enum→number, and presence changes from enum to an object shape",
       "severity": "high",
+      "v8Import": "import { Persona } from '@fluentui/react';",
+      "v9Import": "import { Persona } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-persona",
+      "v9PackageVersion": "9.7.7",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Persona as V8Persona } from '@fluentui/react';\nimport { Persona } from '@fluentui/react-components';",
       "v8Names": [
         "Persona",
-        "PersonaSize"
+        "PersonaSize",
+        "PersonaPresence"
       ]
     },
     {
       "name": "Rating",
+      "class": "collision",
       "v8": "rating / defaultRating, max, onChange(event, rating?), RatingSize.Small|Large",
-      "v9": "@fluentui/react-rating 9.4.3: value / defaultValue, onChange(ev, data), size=\"small\"|\"medium\"|\"large\"",
+      "v9": "value / defaultValue, onChange(ev, data), size=\"small\"|\"medium\"|\"large\"",
       "hazard": "rating→value rename plus enum→string literal; both compile-fail loudly except onChange arg 2",
       "severity": "medium",
+      "v8Import": "import { Rating } from '@fluentui/react';",
+      "v9Import": "import { Rating } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-rating",
+      "v9PackageVersion": "9.4.4",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Rating as V8Rating } from '@fluentui/react';\nimport { Rating } from '@fluentui/react-components';",
       "v8Names": [
-        "Rating"
+        "Rating",
+        "RatingSize"
       ]
     },
     {
-      "name": "Breadcrumb",
-      "v8": "items: IBreadcrumbItem[], maxDisplayedItems, overflowIndex, dividerAs",
-      "v9": "@fluentui/react-breadcrumb 9.4.4: <Breadcrumb><BreadcrumbItem><BreadcrumbButton>",
-      "hazard": "Same name, array-vs-children; overflow collapsing must be hand-rolled in v9",
-      "severity": "medium",
+      "name": "SearchBox",
+      "class": "collision",
+      "v8": "ISearchBoxProps: onChange(ev, newValue?: string), onSearch(newValue), onClear, onEscape, underlined, iconProps, labelText, disableAnimation",
+      "v9": "SearchBoxProps extends InputProps: onChange(ev, data: InputOnChangeData) reading data.value, plus a dismiss slot — no onSearch, no onClear",
+      "hazard": "Same name; the second onChange argument changes from a string to a data object, and v8's onSearch (fired on Enter) and onClear have no v9 equivalent, so \"press Enter to search\" silently stops working.",
+      "severity": "high",
+      "v8Import": "import { SearchBox } from '@fluentui/react';",
+      "v9Import": "import { SearchBox } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-search",
+      "v9PackageVersion": "9.4.6",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { SearchBox as V8SearchBox } from '@fluentui/react';\nimport { SearchBox } from '@fluentui/react-components';",
       "v8Names": [
-        "Breadcrumb"
+        "SearchBox",
+        "ISearchBoxProps"
       ]
     },
     {
-      "name": "ColorPicker",
-      "v8": "color: IColor | string REQUIRED, alphaType, strings, onChange(ev, IColor)",
-      "v9": "@fluentui/react-color-picker 9.2.19: <ColorPicker><ColorArea/><ColorSlider/><AlphaSlider/>",
-      "hazard": "Same name; IColor type and the strings a11y bundle do not exist in v9",
-      "severity": "medium",
+      "name": "SelectionMode",
+      "class": "collision",
+      "v8": "numeric enum from @fluentui/utilities: none = 0, single = 1, multiple = 2",
+      "v9": "string union from @fluentui/react-utilities: 'single' | 'multiselect'",
+      "hazard": "Same name, enum vs string union. `SelectionMode.multiple` does not exist in v9 — the value is 'multiselect' — and a v8 enum member is a number, which is not a valid v9 selectionMode at all.",
+      "severity": "high",
+      "v8Import": "import { SelectionMode } from '@fluentui/react';",
+      "v9Import": "import { SelectionMode } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/utilities",
+      "v8PackageVersion": "8.17.2",
+      "v9Package": "@fluentui/react-utilities",
+      "v9PackageVersion": "9.26.6",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { SelectionMode as V8SelectionMode } from '@fluentui/react';\nimport { SelectionMode } from '@fluentui/react-components';",
       "v8Names": [
-        "ColorPicker"
+        "SelectionMode"
       ]
     },
     {
-      "name": "SwatchColorPicker / SwatchPicker",
-      "v8": "columnCount + colorCells: IColorCellProps[] required; onChange(ev, id, color)",
-      "v9": "@fluentui/react-swatch-picker 9.5.4: SwatchPicker + ColorSwatch children",
-      "hazard": "Near-identical name; IColorCellProps has no v9 analogue and onChange arity differs",
-      "severity": "medium",
+      "name": "Slider",
+      "class": "collision",
+      "v8": "onChange(value, range?, event?) — VALUE first; also onChanged(event, value, range?); ranged / lowerValue, showValue, valueFormat, originFromZero",
+      "v9": "onChange(ev, data: SliderOnChangeData) reading data.value; min / max / step / vertical / size; no ranged mode and no showValue",
+      "hazard": "Same name and the worst argument-order break in the library: v8 passes the value first, v9 passes the event first. A ported handler reads a React synthetic event as a number.",
+      "severity": "high",
+      "v8Import": "import { Slider } from '@fluentui/react';",
+      "v9Import": "import { Slider } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-slider",
+      "v9PackageVersion": "9.6.5",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Slider as V8Slider } from '@fluentui/react';\nimport { Slider } from '@fluentui/react-components';",
       "v8Names": [
-        "SwatchColorPicker"
+        "Slider"
+      ]
+    },
+    {
+      "name": "SpinButton",
+      "class": "collision",
+      "v8": "value / defaultValue are STRINGS; onChange(ev, newValue?: string), onIncrement / onDecrement / onValidate, iconProps, upArrowButtonStyles",
+      "v9": "value / defaultValue are number | null; onChange(ev, data: SpinButtonOnChangeData) reading data.value and data.displayValue; incrementButton / decrementButton slots",
+      "hazard": "Same name; the value prop changes from string to number AND onChange gains a data object. A loosely-typed call site compiles and then produces NaN.",
+      "severity": "high",
+      "v8Import": "import { SpinButton } from '@fluentui/react';",
+      "v9Import": "import { SpinButton } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-spinbutton",
+      "v9PackageVersion": "9.6.5",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { SpinButton as V8SpinButton } from '@fluentui/react';\nimport { SpinButton } from '@fluentui/react-components';",
+      "v8Names": [
+        "SpinButton"
+      ]
+    },
+    {
+      "name": "Spinner",
+      "class": "collision",
+      "v8": "ISpinnerProps: size: SpinnerSize enum, label, labelPosition, ariaLive, styles",
+      "v9": "SpinnerProps: size 'extra-tiny'|'tiny'|'extra-small'|'small'|'medium'|'large'|'extra-large'|'huge', appearance 'primary'|'inverted', delay, labelPosition 'above'|'below'|'before'|'after'",
+      "hazard": "Same name; SpinnerSize.large is a number and is not one of v9's string sizes, so the size prop is ignored and every spinner renders at medium.",
+      "severity": "medium",
+      "v8Import": "import { Spinner } from '@fluentui/react';",
+      "v9Import": "import { Spinner } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-spinner",
+      "v9PackageVersion": "9.8.5",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Spinner as V8Spinner } from '@fluentui/react';\nimport { Spinner } from '@fluentui/react-components';",
+      "v8Names": [
+        "Spinner",
+        "ISpinnerProps",
+        "SpinnerSize"
+      ]
+    },
+    {
+      "name": "TagPicker",
+      "class": "collision",
+      "v8": "IBasePickerProps<ITag>; onResolveSuggestions required; ITag{name,key}",
+      "v9": "<TagPicker><TagPickerControl><TagPickerList>; onOptionSelect",
+      "hazard": "Same export name, entirely different contract; ITag does not exist in v9",
+      "severity": "high",
+      "v8Import": "import { TagPicker } from '@fluentui/react';",
+      "v9Import": "import { TagPicker } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-tag-picker",
+      "v9PackageVersion": "9.10.2",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { TagPicker as V8TagPicker } from '@fluentui/react';\nimport { TagPicker } from '@fluentui/react-components';",
+      "v8Names": [
+        "TagPicker",
+        "IBasePickerProps",
+        "ITag"
       ]
     },
     {
       "name": "Text",
+      "class": "collision",
       "v8": "variant?: keyof IFontStyles ('small','xLarge','mega'), block, nowrap; foundation-legacy tokens",
-      "v9": "@fluentui/react-text 9.6.18: size={100..1000}, weight, align, truncate, wrap",
+      "v9": "size={100..1000}, weight, align, truncate, wrap",
       "hazard": "Same name; the v8 variant string set does not exist in v9 and fails silently as an unknown prop",
       "severity": "medium",
+      "v8Import": "import { Text } from '@fluentui/react';",
+      "v9Import": "import { Text } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-text",
+      "v9PackageVersion": "9.6.19",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Text as V8Text } from '@fluentui/react';\nimport { Text } from '@fluentui/react-components';",
       "v8Names": [
-        "Text"
+        "Text",
+        "IFontStyles"
       ]
     },
     {
-      "name": "Separator / VerticalDivider vs Divider",
-      "v8": "Two components: Separator (alignContent, vertical) and VerticalDivider (wrapper/divider slots)",
-      "v9": "@fluentui/react-divider 9.7.3: single Divider with vertical prop",
-      "hazard": "Two-to-one mapping; VerticalDivider's wrapper/divider style slots have no v9 target",
-      "severity": "medium",
+      "name": "Theme",
+      "class": "collision",
+      "v8": "Theme (@fluentui/theme) extends IScheme: palette, semanticColors, fonts, effects, spacing, components",
+      "v9": "Theme (@fluentui/react-theme, from @fluentui/tokens): a FLAT record of design tokens — colorNeutralForeground1, spacingHorizontalM, borderRadiusMedium, shadow8, …",
+      "hazard": "Both export a type called Theme and they have no members in common. This is the collision behind most \"my theme object does not apply\" reports: a mixed import lets the wrong theme satisfy a provider's prop type.",
+      "severity": "high",
+      "v8Import": "import { Theme } from '@fluentui/react';",
+      "v9Import": "import { Theme } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/theme",
+      "v8PackageVersion": "2.7.2",
+      "v9Package": "@fluentui/react-theme",
+      "v9PackageVersion": "9.2.2",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Theme as V8Theme } from '@fluentui/react';\nimport { Theme } from '@fluentui/react-components';",
       "v8Names": [
-        "Separator",
-        "VerticalDivider"
+        "Theme",
+        "IScheme"
       ]
     },
     {
-      "name": "Tooltip / TooltipHost",
-      "v8": "TooltipHost wrapper with content, delay: TooltipDelay, overflowMode, DirectionalHint; Tooltip is separate",
-      "v9": "@fluentui/react-tooltip 9.10.4: <Tooltip content relationship=\"label\"|\"description\"> around one child",
-      "hazard": "v8 exports both Tooltip and TooltipHost; v9 Tooltip maps to TooltipHost and REQUIRES relationship",
+      "name": "Tooltip",
+      "class": "collision",
+      "v8": "v8 exports BOTH Tooltip and TooltipHost; TooltipHost is the wrapper you use (content, delay: TooltipDelay, overflowMode, DirectionalHint)",
+      "v9": "<Tooltip content relationship=\"label\"|\"description\"> around exactly one child",
+      "hazard": "v8 exports both Tooltip and TooltipHost; the v9 Tooltip maps to v8 TooltipHost, not to v8 Tooltip, and it REQUIRES the relationship prop",
       "severity": "medium",
+      "v8Import": "import { Tooltip } from '@fluentui/react';",
+      "v9Import": "import { Tooltip } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-tooltip",
+      "v9PackageVersion": "9.10.5",
+      "v9ReexportedFrom": "@fluentui/react-components",
+      "disambiguate": "import { Tooltip as V8Tooltip } from '@fluentui/react';\nimport { Tooltip } from '@fluentui/react-components';",
       "v8Names": [
         "Tooltip",
         "TooltipHost",
         "TooltipDelay",
         "DirectionalHint"
       ]
-    },
-    {
-      "name": "Toggle / Switch",
-      "v8": "Toggle with onText/offText/inlineLabel, role defaults to 'switch'",
-      "v9": "@fluentui/react-switch 9.7.4: Switch with label/labelPosition; no onText/offText",
-      "hazard": "Renamed and reshaped; on/off text must become adjacent content in v9",
-      "severity": "medium",
-      "v8Names": [
-        "Toggle"
-      ]
-    },
-    {
-      "name": "MessageBar",
-      "v8": "messageBarType={MessageBarType.error}, isMultiline, actions, delayedRender live region",
-      "v9": "@fluentui/react-message-bar 9.7.4: intent=\"error\", <MessageBarBody>/<MessageBarActions>",
-      "hazard": "Enum→string plus children composition; v8's automatic live-region announcement is not replicated",
-      "severity": "medium",
-      "v8Names": [
-        "MessageBar"
-      ]
-    },
-    {
-      "name": "Pivot / TabList",
-      "v8": "Pivot + PivotItem, selectedKey, linkFormat, PivotItem renders its own tabpanel",
-      "v9": "@fluentui/react-tabs 9.12.3: TabList + Tab, selectedValue, appearance; Tab renders NO panel",
-      "hazard": "Renamed; panel content silently disappears because v9 Tab does not render children as a panel",
-      "severity": "medium",
-      "v8Names": [
-        "Pivot",
-        "PivotItem"
-      ]
-    },
-    {
-      "name": "Shimmer / Skeleton",
-      "v8": "Shimmer with shimmerElements: IShimmerElement[], isDataLoaded transition, ariaLabel",
-      "v9": "@fluentui/react-skeleton 9.7.4: Skeleton + SkeletonItem children",
-      "hazard": "Renamed; declarative element array becomes children and the isDataLoaded crossfade is lost",
-      "severity": "medium",
-      "v8Names": [
-        "Shimmer"
-      ]
-    },
-    {
-      "name": "ProgressIndicator / ProgressBar",
-      "v8": "percentComplete is 0 to 1; omit for indeterminate",
-      "v9": "@fluentui/react-progress 9.5.3: ProgressBar value 0..max, max defaults to 1",
-      "hazard": "Scale semantics differ by prop name; passing a 0-100 number yields a permanently full bar",
-      "severity": "medium",
-      "v8Names": [
-        "ProgressIndicator"
-      ]
     }
   ],
   "collisionIndex": {
+    "ActionButton": [
+      "Button"
+    ],
     "Breadcrumb": [
-      12
+      "Breadcrumb"
+    ],
+    "Button": [
+      "Button"
     ],
     "Checkbox": [
-      3
+      "Checkbox"
     ],
     "ColorPicker": [
-      13
+      "ColorPicker"
     ],
-    "ComboBox": [
-      7
+    "CommandBarButton": [
+      "Button"
     ],
-    "ContextualMenu": [
-      9
+    "CompoundButton": [
+      "CompoundButton"
+    ],
+    "DefaultButton": [
+      "Button"
     ],
     "Dialog": [
-      1
+      "Dialog"
+    ],
+    "DialogContent": [
+      "DialogContent"
+    ],
+    "DialogType": [
+      "DialogContent"
     ],
     "DirectionalHint": [
-      17
+      "Tooltip"
+    ],
+    "Dropdown": [
+      "Dropdown"
+    ],
+    "IBasePickerProps": [
+      "TagPicker"
+    ],
+    "IBreadcrumbItem": [
+      "Breadcrumb"
+    ],
+    "IButtonProps": [
+      "Button",
+      "CompoundButton"
+    ],
+    "IColor": [
+      "ColorPicker"
+    ],
+    "IDialogContentProps": [
+      "DialogContent"
+    ],
+    "IDropdownOption": [
+      "Dropdown"
+    ],
+    "IDropdownProps": [
+      "Dropdown"
+    ],
+    "IFontStyles": [
+      "Text"
+    ],
+    "IImageProps": [
+      "Image"
+    ],
+    "ILabelProps": [
+      "Label"
+    ],
+    "ILinkProps": [
+      "Link"
     ],
     "INavLink": [
-      0
+      "Nav"
     ],
     "INavLinkGroup": [
-      0
+      "Nav"
     ],
-    "Icon": [
-      5
+    "IPage": [
+      "List"
+    ],
+    "IScheme": [
+      "Theme"
+    ],
+    "ISearchBoxProps": [
+      "SearchBox"
+    ],
+    "ISpinnerProps": [
+      "Spinner"
+    ],
+    "ITag": [
+      "TagPicker"
+    ],
+    "ITheme": [
+      "PartialTheme"
+    ],
+    "IconButton": [
+      "Button"
     ],
     "Image": [
-      3
+      "Image"
+    ],
+    "ImageFit": [
+      "Image"
     ],
     "Label": [
-      3
+      "Label"
     ],
     "Link": [
-      3
+      "Link"
     ],
     "List": [
-      2
+      "List"
     ],
     "MessageBar": [
-      19
+      "MessageBar"
+    ],
+    "MessageBarType": [
+      "MessageBar"
     ],
     "Nav": [
-      0
+      "Nav"
+    ],
+    "PartialTheme": [
+      "PartialTheme"
     ],
     "Persona": [
-      10
+      "Persona"
+    ],
+    "PersonaPresence": [
+      "Persona"
     ],
     "PersonaSize": [
-      10
+      "Persona"
     ],
-    "Pivot": [
-      20
-    ],
-    "PivotItem": [
-      20
-    ],
-    "ProgressIndicator": [
-      22
+    "PrimaryButton": [
+      "Button"
     ],
     "Rating": [
-      11
+      "Rating"
     ],
-    "Separator": [
-      16
+    "RatingSize": [
+      "Rating"
     ],
-    "Shimmer": [
-      21
+    "SearchBox": [
+      "SearchBox"
+    ],
+    "SelectionMode": [
+      "SelectionMode"
     ],
     "Slider": [
-      3
+      "Slider"
     ],
     "SpinButton": [
-      3
+      "SpinButton"
     ],
     "Spinner": [
-      3
+      "Spinner"
     ],
-    "SwatchColorPicker": [
-      14
+    "SpinnerSize": [
+      "Spinner"
     ],
     "TagPicker": [
-      8
+      "TagPicker"
     ],
     "Text": [
-      15
+      "Text"
     ],
-    "ThemeProvider": [
-      6
-    ],
-    "Toggle": [
-      3,
-      18
+    "Theme": [
+      "Theme"
     ],
     "Tooltip": [
-      17
+      "Tooltip"
     ],
     "TooltipDelay": [
-      17
+      "Tooltip"
     ],
     "TooltipHost": [
-      17
-    ],
-    "VerticalDivider": [
-      16
-    ],
-    "initializeIcons": [
-      5
+      "Tooltip"
     ]
   },
   "traps": [
@@ -7216,73 +7964,73 @@
   ],
   "trapIndex": {
     "ActivityItem": [
-      16
+      "ActivityItem"
     ],
     "Coachmark": [
-      14
+      "Coachmark"
     ],
     "ComboBox": [
-      9
+      "ComboBox"
     ],
     "ContextualMenu": [
-      5
+      "ContextualMenu"
     ],
     "DatePicker": [
-      17
+      "DatePicker"
     ],
     "DetailsList": [
-      6
+      "DetailsList"
     ],
     "Dialog": [
-      0
+      "Dialog"
     ],
     "Dropdown": [
-      18
+      "Dropdown"
     ],
     "Facepile": [
-      12
+      "Facepile"
     ],
     "Icon": [
-      10
+      "Icon"
     ],
     "MarqueeSelection": [
-      15
+      "MarqueeSelection"
     ],
     "MessageBar": [
-      19
+      "MessageBar"
     ],
     "Modal": [
-      20
+      "Modal / Popup"
     ],
     "Nav": [
-      1
+      "Nav"
     ],
     "Panel": [
-      7
+      "Panel"
     ],
     "Popup": [
-      20
+      "Modal / Popup"
     ],
     "ProgressIndicator": [
-      4
+      "ProgressIndicator"
     ],
     "ResizeGroup": [
-      13
+      "ResizeGroup"
     ],
     "Slider": [
-      2
+      "Slider"
     ],
     "SpinButton": [
-      3
+      "SpinButton"
     ],
     "Sticky": [
-      11
+      "Sticky"
     ],
     "Toggle": [
-      21
+      "Toggle"
     ],
     "TooltipHost": [
-      8
+      "TooltipHost"
     ]
   },
   "deprecations": {
@@ -14523,59 +15271,12 @@
     "compatPackages": [
       {
         "package": "@fluentui/react-calendar-compat",
-        "version": "0.4.4",
+        "version": "0.4.5",
         "published": true,
         "installable": true,
-        "provides": "v8 Calendar ported to v9 (Griffel/tokens), zero v8 deps",
-        "note": "✅"
-      },
-      {
-        "package": "@fluentui/react-datepicker-compat",
-        "version": "0.6.35",
-        "published": true,
-        "installable": true,
-        "provides": "v8 DatePicker; depends on react-calendar-compat + react-input + react-field",
-        "note": "✅"
-      },
-      {
-        "package": "@fluentui/react-timepicker-compat",
-        "version": "0.4.37",
-        "published": true,
-        "installable": true,
-        "provides": "v8-style TimePicker, built on react-combobox + react-field",
-        "note": "✅"
-      },
-      {
-        "package": "@fluentui/react-portal-compat",
-        "version": "9.2.44",
-        "published": true,
-        "installable": true,
-        "provides": "PortalCompatProvider — makes v8 Layer/Callout/Panel portals inherit v9 CSS variables",
-        "note": "✅"
-      },
-      {
-        "package": "@fluentui/react-portal-compat-context",
-        "version": "9.0.15",
-        "published": true,
-        "installable": true,
-        "provides": "Context primitive; @fluentui/react@8.125.7 depends on it directly",
-        "note": "✅"
-      },
-      {
-        "package": "@fluentui/react-icons-compat",
-        "version": "0.2.21",
-        "published": true,
-        "installable": true,
-        "provides": "v8 icon utilities (registerIcons etc.) on v9",
-        "note": "✅"
-      },
-      {
-        "package": "@fluentui/react-utilities-compat",
-        "version": null,
-        "published": null,
-        "installable": null,
-        "provides": "Utility shims (couldn't fetch package.json; hit API rate limit)",
-        "note": "unverified"
+        "provides": "The v8 Calendar (month/year/decade views) ported onto the v9 toolset with zero v8 dependencies.",
+        "note": "✅",
+        "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-calendar-compat/library/package.json"
       },
       {
         "package": "@fluentui/react-colorpicker-compat",
@@ -14583,7 +15284,62 @@
         "published": false,
         "installable": false,
         "provides": "NOT PUBLISHED. Do not tell users to install it.",
-        "note": "❌ \"private\": true"
+        "note": "❌ \"private\": true — NOT published to npm. Never recommend installing it.",
+        "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-colorpicker-compat/package.json"
+      },
+      {
+        "package": "@fluentui/react-datepicker-compat",
+        "version": "0.6.36",
+        "published": true,
+        "installable": true,
+        "provides": "The v8 DatePicker on v9, keeping most of the v8 API surface.",
+        "note": "✅",
+        "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-datepicker-compat/library/package.json"
+      },
+      {
+        "package": "@fluentui/react-icons-compat",
+        "version": "0.2.22",
+        "published": true,
+        "installable": true,
+        "provides": "v8 icon utility functions (registerIcons and friends) usable from a v9 app.",
+        "note": "✅",
+        "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-icons-compat/library/package.json"
+      },
+      {
+        "package": "@fluentui/react-portal-compat",
+        "version": "9.2.45",
+        "published": true,
+        "installable": true,
+        "provides": "PortalCompatProvider — makes v9 portalled surfaces (Dialog/Popover/Tooltip/Menu) inherit v9 CSS variables when they mount inside a portal created by v8 or Northstar.",
+        "note": "✅",
+        "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-portal-compat/package.json"
+      },
+      {
+        "package": "@fluentui/react-portal-compat-context",
+        "version": "9.0.16",
+        "published": true,
+        "installable": true,
+        "provides": "The context primitive behind PortalCompatProvider; @fluentui/react depends on it directly.",
+        "note": "✅",
+        "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-portal-compat-context/package.json"
+      },
+      {
+        "package": "@fluentui/react-timepicker-compat",
+        "version": "0.4.38",
+        "published": true,
+        "installable": true,
+        "provides": "A v8-style TimePicker built on v9 Combobox + Field.",
+        "note": "✅",
+        "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-timepicker-compat/library/package.json"
+      },
+      {
+        "package": "@fluentui/react-utilities-compat",
+        "version": "0.0.0",
+        "published": false,
+        "installable": false,
+        "provides": "Utility shims (couldn't fetch package.json; hit API rate limit)",
+        "note": "❌ \"private\": true — NOT published to npm. Never recommend installing it.",
+        "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-utilities-compat/library/package.json"
       }
     ],
     "contribPackages": [
@@ -14615,7 +15371,7 @@
     ],
     "shims": {
       "package": "@fluentui/react-migration-v8-v9",
-      "version": "9.10.16",
+      "version": "9.10.17",
       "components": [
         "ActionButtonShim",
         "ButtonShim",
@@ -14625,33 +15381,52 @@
         "MenuButtonShim",
         "PrimaryButtonShim",
         "ToggleButtonShim",
-        "CheckboxShim",
         "MenuItemShim",
+        "StackItemShim",
         "StackShim",
-        "StackItemShim"
+        "CheckboxShim"
       ],
       "propShims": [
         "shimButtonProps",
-        "shimMenuProps",
-        "shimCheckboxProps"
+        "shimMenuProps"
       ],
       "themeExports": [
+        "black",
+        "blackAlpha",
+        "brandWeb",
         "createBrandVariants",
         "createV8Theme",
         "createV9Theme",
-        "brandWeb",
-        "sharedColors",
         "grey",
-        "black",
-        "white",
-        "blackAlpha",
-        "whiteAlpha",
         "grey14Alpha",
+        "hcButtonFace",
+        "hcButtonText",
         "hcCanvas",
+        "hcCanvasText",
+        "hcDisabled",
         "hcHighlight",
-        "hcHyperlink"
+        "hcHighlightText",
+        "hcHyperlink",
+        "sharedColors",
+        "white",
+        "whiteAlpha"
       ],
-      "guidance": "Our recommendation is to avoid using shims and instead migrate from using v8 components to using v9 components in your codebase. Shims provide a convenient way to start migrating to v9 while deferring the cost of updating a multitude of call points. Shims depend on both v8 and v9, so carefully consider the impact using a shim may have on bundle size and render performance vs. migrating to v9 directly."
+      "guidance": "Our recommendation is to avoid using shims and instead migrate from using v8 components to using v9 components in your codebase. Shims provide a convienient way to start migrating to v9 while defering the cost of updating a multitude of call points.",
+      "themeBridge": [
+        {
+          "name": "createV8Theme",
+          "signature": "const createV8Theme: (brandColors: BrandVariants, themeV9: Theme, isDarkTheme?: boolean, themeV8?: Theme_2) => Theme_2"
+        },
+        {
+          "name": "createV9Theme",
+          "signature": "const createV9Theme: (themeV8: Theme_2, baseThemeV9?: Theme) => Theme"
+        },
+        {
+          "name": "createBrandVariants",
+          "signature": "const createBrandVariants: (palette: IPalette, interpolation?: Interpolation) => BrandVariants"
+        }
+      ],
+      "source": "https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-migration-v8-v9/library/src/index.ts"
     },
     "coexistence": {
       "providerTopology": "import { ThemeProvider } from '@fluentui/react';                       // v8\nimport { FluentProvider, PortalMountNodeProvider } from '@fluentui/react-components';\nimport { PortalCompatProvider } from '@fluentui/react-portal-compat';\nimport { createV8Theme } from '@fluentui/react-migration-v8-v9';\n\nconst v9Theme = webLightTheme;                    // or createLightTheme(createBrandVariants(v8Palette))\nconst v8Theme = createV8Theme(brandVariants, v9Theme, /*isDark*/ false);\n\nroot.render(\n  <ThemeProvider theme={v8Theme}>              {/* v8 outer */}\n    <FluentProvider theme={v9Theme}>           {/* v9 inner */}\n      <PortalCompatProvider>                   {/* REQUIRED: inner child of FluentProvider */}\n        <App />\n      </PortalCompatProvider>\n    </FluentProvider>\n  </ThemeProvider>\n);",
@@ -14662,12 +15437,53 @@
     },
     "tooling": {
       "officialV8ToV9Codemod": false,
-      "codemodsPackageNote": "@fluentui/codemods (microsoft/fluentui:packages/codemods/README.md) is explicitly \"Tool enabling easy upgrades to Fluent UI React v8 version\" — i.e. it upgrades v6/v7 → v8. It is not a v8→v9 tool. Do not recommend npx @fluentui/codemods for v9 migration.",
+      "codemodsPackageNote": "@fluentui/codemods upgrades a pre-v8 / office-ui-fabric-react codebase UP TO v8. It is not a v8→v9 tool. Do not recommend it as a v9 migration step — but DO recommend it as the step before one, if the codebase still imports office-ui-fabric-react or @uifabric/*.",
       "eslintPlugin": "@fluentui/eslint-plugin-react-components",
       "eslintRules": [
         "prefer-fluentui-v9",
         "enforce-use-client"
-      ]
+      ],
+      "codemodsPackage": "@fluentui/codemods",
+      "codemodsVersion": "8.4.29",
+      "codemodsScope": "Tool enabling easy upgrades to Fluent UI React v8 version",
+      "codemodRules": [
+        {
+          "name": "ComponentToCompat",
+          "id": "componentToCompat",
+          "enabled": false,
+          "enabledNote": "No longer needed; remains for demo purposes",
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/codemods/src/codeMods/mods/componentToCompat/componentToCompat.mod.ts"
+        },
+        {
+          "name": "configMod",
+          "id": "configMod",
+          "enabled": true,
+          "enabledNote": null,
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/codemods/src/codeMods/mods/configMod/configMod.mod.ts"
+        },
+        {
+          "name": "RepathOfficeImportsToFluent",
+          "id": "officeToFluentImport",
+          "enabled": true,
+          "enabledNote": null,
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/codemods/src/codeMods/mods/officeToFluentImport/officeToFluentImport.mod.ts"
+        },
+        {
+          "name": "oldToNewButton",
+          "id": "oldToNewButton",
+          "enabled": false,
+          "enabledNote": "No longer needed; remains for demo purposes",
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/codemods/src/codeMods/mods/oldToNewButton/oldToNewButton.mod.ts"
+        },
+        {
+          "name": "PersonaToAvatar",
+          "id": "personaToAvatar",
+          "enabled": false,
+          "enabledNote": null,
+          "source": "https://github.com/microsoft/fluentui/blob/master/packages/codemods/src/codeMods/mods/personaToAvatar/personaToAvatar.mod.ts"
+        }
+      ],
+      "executableSteps": "See mcp/data/migration.json -> scenarios.tooling for the full runnable command/import set."
     },
     "doNotMigrateYet": [
       {
@@ -15356,7 +16172,11 @@
     "microsoft/fluentui-blazor dependency on web components v2/v3 surfaced only via web search, not verified from source",
     "registry.npmjs.org unreachable from this environment; exact npm publish timestamps not obtained — dates come from in-repo CHANGELOGs and jsDelivr",
     "Fluent 2 CSS custom property names such as --fontSizeBase400 and --colorNeutralForeground1 are illustrative of the token naming convention and were not individually verified against @fluentui/tokens output",
-    "Sample markup for elements other than button and dropdown (slot names, e.g. slot=\"label\" on fluent-text-input) is illustrative and not verified against component templates"
+    "Sample markup for elements other than button and dropdown (slot names, e.g. slot=\"label\" on fluent-text-input) is illustrative and not verified against component templates",
+    {
+      "source": "scripts/build-v8-data.mjs",
+      "note": "[versions] @fluentui/eslint-plugin-react-components is quoted for its rule names (prefer-fluentui-v9, enforce-use-client) but no version was resolved from the monorepo, so none is published here."
+    }
   ],
   "nonReact": {
     "note": "Fluent without React. Covers the CSS-only line (office-ui-fabric-core) and the web-components line, including which generation each belongs to.",
@@ -16220,5 +17040,414 @@
       "reality": "None. There is no CSS-only Fluent 2 library. The real answer is: consume design tokens as CSS custom properties — call setTheme(webLightTheme) (web components) or render under FluentProvider (React v9), then use var(--fontSizeBase400), var(--colorNeutralForeground1) etc. @fluentui/tokens ships JS/TS only, no .css artefact.",
       "doNotSubstitute": "Do not name a different package as the Fluent 2 equivalent of Fabric Core. None of them is one."
     }
+  },
+  "renames": [
+    {
+      "name": "Toggle → Switch",
+      "class": "rename",
+      "v8Name": "Toggle",
+      "v9Name": "Switch",
+      "v8": "Toggle with onText/offText/inlineLabel, role defaults to 'switch'",
+      "v9": "Switch with label/labelPosition; no onText/offText",
+      "hazard": "Renamed and reshaped; on/off text must become adjacent content in v9",
+      "severity": "medium",
+      "v8Import": "import { Toggle } from '@fluentui/react';",
+      "v9Import": "import { Switch } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-switch",
+      "v9PackageVersion": "9.7.5",
+      "alsoExportedByV9": false,
+      "v8Names": [
+        "Toggle"
+      ]
+    },
+    {
+      "name": "Pivot → TabList",
+      "class": "rename",
+      "v8Name": "Pivot",
+      "v9Name": "TabList",
+      "v8": "Pivot + PivotItem, selectedKey, linkFormat, PivotItem renders its own tabpanel",
+      "v9": "TabList + Tab, selectedValue, appearance; Tab renders NO panel",
+      "hazard": "Renamed; panel content silently disappears because v9 Tab does not render children as a panel",
+      "severity": "medium",
+      "v8Import": "import { Pivot } from '@fluentui/react';",
+      "v9Import": "import { TabList } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-tabs",
+      "v9PackageVersion": "9.12.4",
+      "alsoExportedByV9": false,
+      "v8Names": [
+        "Pivot",
+        "PivotItem"
+      ]
+    },
+    {
+      "name": "Shimmer → Skeleton",
+      "class": "rename",
+      "v8Name": "Shimmer",
+      "v9Name": "Skeleton",
+      "v8": "Shimmer with shimmerElements: IShimmerElement[], isDataLoaded transition, ariaLabel",
+      "v9": "Skeleton + SkeletonItem children",
+      "hazard": "Renamed; declarative element array becomes children and the isDataLoaded crossfade is lost",
+      "severity": "medium",
+      "v8Import": "import { Shimmer } from '@fluentui/react';",
+      "v9Import": "import { Skeleton } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-skeleton",
+      "v9PackageVersion": "9.7.5",
+      "alsoExportedByV9": false,
+      "v8Names": [
+        "Shimmer"
+      ]
+    },
+    {
+      "name": "Separator → Divider",
+      "class": "rename",
+      "v8Name": "Separator",
+      "v9Name": "Divider",
+      "v8": "Two components: Separator (alignContent, vertical) and VerticalDivider (wrapper/divider slots)",
+      "v9": "single Divider with vertical prop",
+      "hazard": "Two-to-one mapping; VerticalDivider's wrapper/divider style slots have no v9 target",
+      "severity": "medium",
+      "v8Import": "import { Separator } from '@fluentui/react';",
+      "v9Import": "import { Divider } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-divider",
+      "v9PackageVersion": "9.7.4",
+      "alsoExportedByV9": false,
+      "v8Names": [
+        "Separator",
+        "VerticalDivider"
+      ]
+    },
+    {
+      "name": "ProgressIndicator → ProgressBar",
+      "class": "rename",
+      "v8Name": "ProgressIndicator",
+      "v9Name": "ProgressBar",
+      "v8": "percentComplete is 0 to 1; omit for indeterminate",
+      "v9": "ProgressBar value 0..max, max defaults to 1",
+      "hazard": "Scale semantics differ by prop name; passing a 0-100 number yields a permanently full bar",
+      "severity": "medium",
+      "v8Import": "import { ProgressIndicator } from '@fluentui/react';",
+      "v9Import": "import { ProgressBar } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-progress",
+      "v9PackageVersion": "9.5.4",
+      "alsoExportedByV9": false,
+      "v8Names": [
+        "ProgressIndicator"
+      ]
+    },
+    {
+      "name": "TooltipHost → Tooltip",
+      "class": "rename",
+      "v8Name": "TooltipHost",
+      "v9Name": "Tooltip",
+      "v8": "TooltipHost wrapper with content, delay: TooltipDelay, overflowMode, DirectionalHint",
+      "v9": "<Tooltip content relationship=\"label\"|\"description\"> around one child",
+      "hazard": "TooltipHost is the v8 component that v9 Tooltip replaces — but v8 ALSO exports a different component literally named Tooltip, so renaming TooltipHost -> Tooltip inside a v8 file changes which component you get. See the Tooltip collision.",
+      "severity": "medium",
+      "v8Import": "import { TooltipHost } from '@fluentui/react';",
+      "v9Import": "import { Tooltip } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-tooltip",
+      "v9PackageVersion": "9.10.5",
+      "alsoExportedByV9": false,
+      "v8Names": [
+        "TooltipHost",
+        "TooltipDelay",
+        "DirectionalHint"
+      ]
+    },
+    {
+      "name": "ContextualMenu → Menu",
+      "class": "rename",
+      "v8Name": "ContextualMenu",
+      "v9Name": "Menu",
+      "v8": "items: IContextualMenuItem[] array with key/text/subMenuProps; target: Target",
+      "v9": "<Menu><MenuTrigger><MenuPopover><MenuList> composition",
+      "hazard": "Array-driven vs composition; nested subMenuProps trees have no mechanical v9 translation",
+      "severity": "high",
+      "v8Import": "import { ContextualMenu } from '@fluentui/react';",
+      "v9Import": "import { Menu } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-menu",
+      "v9PackageVersion": "9.25.3",
+      "alsoExportedByV9": false,
+      "v8Names": [
+        "ContextualMenu"
+      ]
+    },
+    {
+      "name": "SwatchColorPicker → SwatchPicker",
+      "class": "rename",
+      "v8Name": "SwatchColorPicker",
+      "v9Name": "SwatchPicker",
+      "v8": "columnCount + colorCells: IColorCellProps[] required; onChange(ev, id, color)",
+      "v9": "SwatchPicker + ColorSwatch children",
+      "hazard": "Near-identical name; IColorCellProps has no v9 analogue and onChange arity differs",
+      "severity": "medium",
+      "v8Import": "import { SwatchColorPicker } from '@fluentui/react';",
+      "v9Import": "import { SwatchPicker } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-swatch-picker",
+      "v9PackageVersion": "9.6.0",
+      "alsoExportedByV9": false,
+      "v8Names": [
+        "SwatchColorPicker"
+      ]
+    },
+    {
+      "name": "ThemeProvider → FluentProvider",
+      "class": "rename",
+      "v8Name": "ThemeProvider",
+      "v9Name": "FluentProvider",
+      "v8": "ThemeProvider theme={createTheme({ palette, semanticColors })}",
+      "v9": "FluentProvider theme={webLightTheme} with flat design tokens",
+      "hazard": "IPartialTheme palette/semanticColors have no v9 counterpart; theme objects are not portable",
+      "severity": "high",
+      "v8Import": "import { ThemeProvider } from '@fluentui/react';",
+      "v9Import": "import { FluentProvider } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-provider",
+      "v9PackageVersion": "9.22.20",
+      "alsoExportedByV9": false,
+      "v8Names": [
+        "ThemeProvider"
+      ]
+    }
+  ],
+  "renameIndex": {
+    "ContextualMenu": [
+      "ContextualMenu → Menu"
+    ],
+    "DirectionalHint": [
+      "TooltipHost → Tooltip"
+    ],
+    "Pivot": [
+      "Pivot → TabList"
+    ],
+    "PivotItem": [
+      "Pivot → TabList"
+    ],
+    "ProgressIndicator": [
+      "ProgressIndicator → ProgressBar"
+    ],
+    "Separator": [
+      "Separator → Divider"
+    ],
+    "Shimmer": [
+      "Shimmer → Skeleton"
+    ],
+    "SwatchColorPicker": [
+      "SwatchColorPicker → SwatchPicker"
+    ],
+    "ThemeProvider": [
+      "ThemeProvider → FluentProvider"
+    ],
+    "Toggle": [
+      "Toggle → Switch"
+    ],
+    "TooltipDelay": [
+      "TooltipHost → Tooltip"
+    ],
+    "TooltipHost": [
+      "TooltipHost → Tooltip"
+    ],
+    "VerticalDivider": [
+      "Separator → Divider"
+    ]
+  },
+  "casingTraps": [
+    {
+      "name": "ComboBox",
+      "class": "casingTrap",
+      "v8Name": "ComboBox",
+      "v9Name": "Combobox",
+      "v8": "options: IComboBoxOption[]; allowFreeform; text; selectedKey; styles is Partial<IComboBoxStyles>",
+      "v9": "<Combobox><Option> children; freeform; selectedOptions",
+      "hazard": "v8 spells it ComboBox (capital B) and v9 spells it Combobox (lowercase b). They are different components, so the misspelling is not a typo the compiler catches — it resolves to whichever library exports that exact spelling, and only one of the two libraries has to be installed for it to compile.",
+      "apiHazard": "Array-vs-children plus v8's non-standard styles type; also v8 root is not the outermost node (container is)",
+      "severity": "high",
+      "v8Import": "import { ComboBox } from '@fluentui/react';",
+      "v9Import": "import { Combobox } from '@fluentui/react-components';",
+      "v8Package": "@fluentui/react",
+      "v8PackageVersion": "8.125.7",
+      "v9Package": "@fluentui/react-combobox",
+      "v9PackageVersion": "9.17.5",
+      "v8Names": [
+        "ComboBox",
+        "IComboBoxOption",
+        "IComboBoxStyles"
+      ]
+    }
+  ],
+  "casingTrapIndex": {
+    "ComboBox": [
+      "ComboBox"
+    ],
+    "IComboBoxOption": [
+      "ComboBox"
+    ],
+    "IComboBoxStyles": [
+      "ComboBox"
+    ]
+  },
+  "behaviorTraps": [
+    {
+      "name": "onChange signature (every v8 control that has an onChange)",
+      "class": "behaviorTrap",
+      "v8": "onChange(ev, checked?) / onChange(value, range?, ev?) — second arg IS the value",
+      "v9": "onChange(ev, data) — second arg is a data object (data.checked, data.value)",
+      "hazard": "Silent, uniform break across every form control; handlers compile but receive an object, not a primitive",
+      "severity": "high",
+      "appliesTo": [
+        "BaseExtendedPicker",
+        "BaseFloatingPicker",
+        "BasePicker",
+        "BaseSelectedItemsList",
+        "Checkbox",
+        "ChoiceGroup",
+        "ChoiceGroupOption",
+        "ColorPicker",
+        "ComboBox",
+        "Dropdown",
+        "Rating",
+        "SearchBox",
+        "Slider",
+        "SpinButton",
+        "SwatchColorPicker",
+        "TextField",
+        "TimePicker",
+        "Toggle"
+      ],
+      "appliesToSource": "derived from packages/react/etc/react.api.md — every v8 I<Name>Props declaring an onChange member",
+      "correction": "The previous wording listed \"Checkbox, Slider, Toggle, SpinButton, Link, Label, Image, Spinner\". Link, Label, Image and Spinner declare no onChange in v8 at all — appliesTo is now derived from the v8 API report (every I<Name>Props that actually declares onChange).",
+      "v8Names": [
+        "BaseExtendedPicker",
+        "BaseFloatingPicker",
+        "BasePicker",
+        "BaseSelectedItemsList",
+        "Checkbox",
+        "ChoiceGroup",
+        "ChoiceGroupOption",
+        "ColorPicker",
+        "ComboBox",
+        "Dropdown",
+        "Rating",
+        "SearchBox",
+        "Slider",
+        "SpinButton",
+        "SwatchColorPicker",
+        "TextField",
+        "TimePicker",
+        "Toggle"
+      ]
+    },
+    {
+      "name": "styles prop (universal)",
+      "class": "behaviorTrap",
+      "v8": "styles?: IStyleFunctionOrObject<IXStyleProps, IXStyles> on nearly every component",
+      "v9": "No styles prop at all; className + Griffel makeStyles",
+      "hazard": "Any generated styles={{root:{...}}} is invalid in v9 and silently dropped; and vice versa",
+      "severity": "high",
+      "appliesTo": [],
+      "appliesToSource": "hand-listed",
+      "v8Names": [
+        "IStyleFunctionOrObject"
+      ]
+    },
+    {
+      "name": "Icon",
+      "class": "behaviorTrap",
+      "v8": "Font glyph via iconName string; requires a one-time global initializeIcons()",
+      "v9": "@fluentui/react-icons: one React component per icon, e.g. <DeleteRegular/>",
+      "hazard": "v8 icon names are not v9 imports; initializeIcons() is a no-op for v9 and missing it renders boxes",
+      "severity": "high",
+      "appliesTo": [
+        "Icon",
+        "initializeIcons"
+      ],
+      "appliesToSource": "hand-listed",
+      "v8Names": [
+        "Icon",
+        "initializeIcons"
+      ]
+    }
+  ],
+  "behaviorTrapIndex": {
+    "BaseExtendedPicker": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "BaseFloatingPicker": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "BasePicker": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "BaseSelectedItemsList": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "Checkbox": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "ChoiceGroup": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "ChoiceGroupOption": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "ColorPicker": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "ComboBox": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "Dropdown": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "IStyleFunctionOrObject": [
+      "styles prop (universal)"
+    ],
+    "Icon": [
+      "Icon"
+    ],
+    "Rating": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "SearchBox": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "Slider": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "SpinButton": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "SwatchColorPicker": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "TextField": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "TimePicker": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "Toggle": [
+      "onChange signature (every v8 control that has an onChange)"
+    ],
+    "initializeIcons": [
+      "Icon"
+    ]
   }
 }

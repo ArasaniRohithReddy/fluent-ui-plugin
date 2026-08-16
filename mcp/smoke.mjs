@@ -34,7 +34,7 @@ console.log('TOOLS(' + tools.tools.length + '):', toolNames.join(', '));
 // A bare count tells you something moved but not what, so also assert the tools
 // we depend on are actually present - a rename would otherwise keep the count
 // correct while silently breaking every caller.
-const EXPECTED_TOOL_COUNT = 28;
+const EXPECTED_TOOL_COUNT = 29;
 const REQUIRED_TOOLS = [
   'fluent_search_components', 'fluent_get_component', 'fluent_list_tokens', 'fluent_get_token',
   'fluent_generate_theme', 'fluent_generate_powerbi_theme', 'fluent_scaffold_pbip', 'fluent_powerbi_visuals',
@@ -42,7 +42,7 @@ const REQUIRED_TOOLS = [
   'fluent_design_guidance', 'fluent_migration_guidance', 'fluent_get_images',
   'fluent_get_config', 'fluent_init_config', 'fluent_set_config', 'fluent_remember', 'fluent_recall',
   'fluent_v8_lookup', 'fluent_v8_guidance', 'fluent_figma_guidance',
-  'fluent_native_component', 'fluent_native_guidance',
+  'fluent_native_component', 'fluent_native_guidance', 'fluent_icon_search',
 ];
 const missingTools = REQUIRED_TOOLS.filter((t) => !toolNames.includes(t));
 if (missingTools.length) console.log('  missing tools:', missingTools.join(', '));
@@ -383,7 +383,7 @@ console.log('design_guidance(motion): ok=' + (dgText.length > 0 && dgText.includ
 const dgAll = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'all' } });
 const dgAllText = dgAll.content[0].text;
 let dgTopics = 0; try { const j = JSON.parse(dgAllText); dgTopics = Object.keys(j.topics || {}).length; } catch {}
-console.log('design_guidance(all): topics=' + dgTopics + ' ok=' + (dgTopics === 36 && dgAllText.includes('design-principles') && dgAllText.includes('design-tokens')));
+console.log('design_guidance(all): topics=' + dgTopics + ' ok=' + (dgTopics === 40 && dgAllText.includes('design-principles') && dgAllText.includes('design-tokens')));
 // Every topic must declare where it came from and when. Without this a topic
 // captured before Microsoft put the page behind a sign-in is indistinguishable
 // from one verified today, and callers silently trust stale guidance.
@@ -411,6 +411,59 @@ console.log('design_guidance(copilot-errors): ok=' + (dgErrText.length > 0 && dg
 const dgDT = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'design-tokens' } });
 const dgDTText = dgDT.content[0].text;
 console.log('design_guidance(design-tokens): ok=' + (dgDTText.length > 0 && dgDTText.includes('Alias tokens') && dgDTText.includes('design-tokens')));
+
+// "Is X stable, preview or still planned?" was unanswerable before the roadmap
+// topic landed. Assert the lifecycle stages AND a real table row, so a topic
+// that degrades to prose without its status table fails here.
+const dgRoad = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'component-roadmap', maxChars: 120000 } });
+const dgRoadText = dgRoad.content[0].text;
+let roadRows = 0;
+try { roadRows = JSON.parse(dgRoadText).roadmap.rows.length; } catch {}
+console.log('design_guidance(component-roadmap): rows=' + roadRows + ' ok=' + (roadRows === 63
+  && /Unstable \(Preview\)/.test(dgRoadText) && /Stable \(Released\)/.test(dgRoadText)
+  && dgRoadText.includes('unstable deep import')));
+
+const dgNew = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'whats-new' } });
+const dgNewText = dgNew.content[0].text;
+console.log('design_guidance(whats-new): ok=' + (dgNewText.includes('Standardized corners') && dgNewText.includes('Accessibility notation')
+  && hasLinkTo(dgNewText, 'fluent2.microsoft.design', '/get-started/whatisnew/')));
+
+// The component manifest is an index, not a component reference: it must carry
+// routes and library availability and must NOT start duplicating the records in
+// fluent-components.json.
+const dgIdx = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'web-component-index', maxChars: 120000 } });
+let idxReact = 0, idxWc = 0;
+try { const j = JSON.parse(dgIdx.content[0].text); idxReact = j.react.length; idxWc = j.webComponents.length; } catch {}
+console.log('design_guidance(web-component-index): react=' + idxReact + ' webComponents=' + idxWc
+  + ' ok=' + (idxReact === 47 && idxWc === 26 && dgIdx.content[0].text.includes('/components/web/react/core/accordion/usage')));
+
+// The site answers HTTP 200 for unknown paths, so a plugin that trusts status
+// codes will happily ingest the 404 page. And a gated page must be reported as
+// employee-only, never as missing.
+const dgRoutes = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'site-routes', maxChars: 120000 } });
+const dgRoutesText = dgRoutes.content[0].text;
+let gatedCount = 0, gatedWithContent = 0;
+try {
+  const g = JSON.parse(dgRoutesText).gatedRoutes || [];
+  gatedCount = g.length;
+  gatedWithContent = g.filter((r) => r.sections || r.keyPoints || r.summary || r.text).length;
+} catch {}
+console.log('design_guidance(site-routes): gated=' + gatedCount + ' ok=' + (gatedCount === 6 && gatedWithContent === 0
+  && dgRoutesText.includes('/.auth/login/aad') && /200/.test(dgRoutesText) && dgRoutesText.includes('/color-tokens2/')));
+
+// Alias colour tokens carry provenance the hex cannot: which global slot they
+// resolve to per theme. Values still come from the npm package - if these two
+// ever disagree the package wins, so assert both together.
+const tkColor = (await client.callTool({ name: 'fluent_list_tokens', arguments: { category: 'color' } })).content[0].text;
+console.log('list_tokens(color) exposes global slot map: ok=' + (tkColor.includes('aliasGlobalTokens')
+  && /"colorBrandBackground":\s*"brand\[80\] \(light\) \/ brand\[70\] \(dark\)"/.test(tkColor)));
+const gtAlias = (await client.callTool({ name: 'fluent_get_token', arguments: { name: 'colorNeutralBackground1Hover' } })).content[0].text;
+console.log('get_token(colorNeutralBackground1Hover) global slots + state: ok=' + (gtAlias.includes('"globalLight": "grey[96]"')
+  && gtAlias.includes('"globalDark": "grey[24]"') && gtAlias.includes('"state": "Hover"') && gtAlias.includes('#f5f5f5')));
+// Supplemented from /color-tokens2/ (the duplicate route) because the canonical
+// page omits the compound-brand aliases entirely.
+const gtCompound = (await client.callTool({ name: 'fluent_get_token', arguments: { name: 'colorCompoundBrandBackground' } })).content[0].text;
+console.log('get_token(colorCompoundBrandBackground): ok=' + (gtCompound.includes('"globalLight": "brand[80]"') && gtCompound.includes('#0f6cbd')));
 
 const imgAnat = await client.callTool({ name: 'fluent_get_images', arguments: { owner: 'Card', kind: 'anatomy' } });
 const imgAnatText = imgAnat.content[0].text;
@@ -688,21 +741,26 @@ console.log('doDont convention documented: ok=' + dgOk);
 
 // Figma. The rate-limit table on Figma's page renders with the Dev/Full row
 // shifted: the value under "Starter" actually belongs to Professional. Figma's
-// own prose disambiguates it - "If you're on a Starter plan (6 tool calls per
+// own prose disambiguates it - "If you're on a Starter plan (20 tool calls per
 // month), upgrade to a Pro, Organization, or Enterprise plan." A naive
 // re-transcription of the table would claim Starter Dev/Full gets 200/day and
-// send users into a workflow that dies after 6 calls. Pin the corrected read.
+// send users into a workflow that dies inside a month. Pin the corrected read.
+// CORRECTED 2026-08: Starter is 20/month, not 6. The 6/month figure belongs to
+// View/Collab on the three PAID plans - asserting 6 for Starter overstated the
+// paywall and is the error this check previously locked in.
 const fig = (await client.callTool({ name: 'fluent_figma_guidance', arguments: { section: 'access' } })).content[0].text;
 let figOk = false, starterOk = false;
 try {
   const j = JSON.parse(fig);
   const rows = j.rateLimits ?? [];
   const starterDev = rows.find((r) => /Dev/.test(r.seat) && r.plan === 'Starter');
+  const starterView = rows.find((r) => /View/.test(r.seat) && r.plan === 'Starter');
+  const paidView = rows.find((r) => /View/.test(r.seat) && r.plan === 'Enterprise');
   const entDev = rows.find((r) => /Dev/.test(r.seat) && r.plan === 'Enterprise');
-  starterOk = starterDev?.perMonth === 6 && starterDev?.perDay === null;
+  starterOk = starterDev?.perMonth === 20 && starterDev?.perDay === null && starterView?.perMonth === 20 && paidView?.perMonth === 6;
   figOk = starterOk && entDev?.perDay === 600 && (j.exemptFromRateLimits ?? []).includes('whoami');
 } catch {}
-console.log('figma access: starter-dev-capped=' + starterOk + ' ok=' + figOk);
+console.log('figma access: starter-capped-at-20 + paid-view-6=' + starterOk + ' ok=' + figOk);
 
 // Unconfirmed hosts must stay null, never false. `false` would assert Figma
 // documents them as unsupported; we only know we could not read the catalog.
@@ -749,12 +807,1169 @@ console.log('native unknown name reported not invented: ok=' + (/not/i.test(nMis
 // servicing patch. If this ever reads as "2.8.7 is the current release" we would
 // be pointing new Windows work at a frozen framework. Verified against Learn.
 const nWinG = (await client.callTool({ name: 'fluent_native_guidance', arguments: { platform: 'windows' } })).content[0].text;
-const winuiOk = /maintenance/i.test(nWinG) && /2\.8/.test(nWinG) && /2\.3\.1/.test(nWinG);
+const winuiOk = /maintenance/i.test(nWinG) && /2\.8/.test(nWinG) && /2\.4\.0/.test(nWinG);
 console.log('native winui2 maintenance + wasdk current: ok=' + winuiOk);
 
 // WPF-UI (lepoco) is a community project. Presenting it as Microsoft would send
 // users to ship an unofficial dependency believing it is first-party.
 console.log('native wpf community disclaimer surfaced: ok=' + /not Microsoft|community/i.test(nWinG));
+
+// --- Native dataset regressions -------------------------------------------
+// Windows App SDK 2.3.1 was stale: 2.4.0 shipped 2026-08-13 (microsoft/WindowsAppSDK
+// release v2.4.0, prerelease=false). A stale pin here makes developers ship an
+// outdated package, so assert the old number is gone from BOTH the data and the skill.
+const nativeRaw = readFileSync(new URL('data/fluent-native.json', import.meta.url), 'utf8');
+const nativeSkill = readFileSync(new URL('../skills/fluent-native/SKILL.md', import.meta.url), 'utf8');
+const nativeData = JSON.parse(nativeRaw);
+console.log(
+  'native wasdk 2.3.1 purged from dataset + skill: ok=' +
+    (!/2\.3\.1/.test(nativeRaw) && !/2\.3\.1/.test(nativeSkill) && /2\.4\.0/.test(nativeRaw) && /2\.4\.0/.test(nativeSkill)),
+);
+
+// The 14 Android Fluent 2 composables that were found by directory listing and then
+// never added. Each must resolve to a tokenized.* import (Fluent 2 Compose), not to
+// a Fluent 1 View package.
+const ANDROID_ADDED = [
+  'ActionBar', 'AnnouncementCard', 'FileCard', 'SideRail', 'ViewPager', 'PeoplePicker',
+  'AvatarCarousel', 'AvatarPie', 'PersonaChip', 'PersonaList', 'ProgressText',
+  'PillBar', 'PillSwitch', 'PillTabs',
+];
+let androidAddedOk = 0;
+for (const nm of ANDROID_ADDED) {
+  const t = (await client.callTool({ name: 'fluent_native_component', arguments: { platform: 'android', name: nm } })).content[0].text;
+  if (/com\.microsoft\.fluentui\.tokenized\./.test(t) && /"generation": "Fluent 2"/.test(t)) androidAddedOk++;
+}
+console.log('native android 14 new composables resolve (' + androidAddedOk + '/' + ANDROID_ADDED.length + '): ok=' + (androidAddedOk === ANDROID_ADDED.length));
+
+// PillBar lives in Pill.kt and PeoplePicker exists on BOTH generations — the exact
+// traps this dataset is for. Assert the artifact/import, not just presence.
+const nPillBar = (await client.callTool({ name: 'fluent_native_component', arguments: { platform: 'android', name: 'PillBar' } })).content[0].text;
+console.log(
+  'native android PillBar keeps file-name-vs-composable trap: ok=' +
+    (/tokenized\.segmentedcontrols\.PillBar/.test(nPillBar) && /Pill\.kt/.test(nPillBar)),
+);
+
+// iOS Shimmer is documented on the Fluent 2 site (/components/ios/core/shimmer/usage/
+// returns 200) and was missing entirely. It must resolve by the SITE name too.
+const nShimmer = (await client.callTool({ name: 'fluent_native_component', arguments: { platform: 'ios', name: 'Shimmer' } })).content[0].text;
+console.log(
+  'native ios Shimmer resolves by site name to ShimmerView: ok=' +
+    (/ShimmerView/.test(nShimmer) && /MSFShimmerStyle/.test(nShimmer) && /import FluentUI/.test(nShimmer)),
+);
+
+// Every Windows entry must be classified. `kind` is the FRAMEWORK (winui3/winui2/wpf);
+// `apiKind` says whether it is a control at all — without it the "77 components" count
+// silently included a layout panel, a WPF property, an assembly and a resource key.
+const winComponents = Object.entries(nativeData.platforms.windows.components);
+const winMissingKind = winComponents.filter(([, c]) => !c.kind || !c.apiKind).map(([n]) => n);
+const declaredApiKinds = new Set((nativeData.platforms.windows.apiKinds ?? []).map((k) => k.apiKind));
+const winBadApiKind = winComponents.filter(([, c]) => !declaredApiKinds.has(c.apiKind)).map(([n]) => n);
+console.log(
+  'native windows every entry has kind + declared apiKind: ok=' +
+    (winMissingKind.length === 0 && winBadApiKind.length === 0 && declaredApiKinds.size > 1),
+);
+
+// `a11y` has to mean accessibility or it is worth nothing. Version-introduction
+// facts and Mica styling tips belong in `notes`.
+const a11yPolluted = winComponents
+  .filter(([, c]) => typeof c.a11y === 'string' && /Introduced in WinUI|WinUI 3 only|Mica|corner radius|ThemeShadow/i.test(c.a11y))
+  .map(([n]) => n);
+console.log('native windows a11y field free of non-a11y notes: ok=' + (a11yPolluted.length === 0));
+
+// meta.counts must track the real lengths, or the dataset lies about its own size.
+const c = nativeData.meta.counts;
+const countsOk =
+  c.components.ios === Object.keys(nativeData.platforms.ios.components).length &&
+  c.components.android === Object.keys(nativeData.platforms.android.components).length &&
+  c.components.windows === winComponents.length &&
+  c.components.total === c.components.ios + c.components.android + c.components.windows &&
+  c.windowsControlsOnly === winComponents.filter(([, x]) => x.apiKind === 'control').length &&
+  c.siteRoutes === nativeData.siteRoutes.length &&
+  c.unverified === nativeData.unverified.length;
+console.log('native meta.counts match actual lengths (unverified=' + c.unverified + '): ok=' + countsOk);
+
+// Retired caveats must actually disappear. gh api now succeeds against microsoft/*,
+// so the three "403 SAML" notes and the unread-PillBar-signature note are false and
+// must not resurface. Scope this to the caveat list itself — meta.unverifiedPolicy
+// deliberately names what was retired, and that prose is the audit trail, not a caveat.
+const unvText = JSON.stringify(nativeData.unverified);
+const retiredGone = !/403 SAML|GitHub contents API was blocked|PillBar composable name was confirmed|branch-tip \(master/i.test(unvText);
+console.log('native retired SAML/PillBar caveats gone from caveat list: ok=' + retiredGone);
+const nUnvAndroid = (await client.callTool({ name: 'fluent_native_guidance', arguments: { platform: 'android', section: 'unverified' } })).content[0].text;
+let unvAndroidOk = false;
+try {
+  const parsed = JSON.parse(nUnvAndroid);
+  unvAndroidOk =
+    Array.isArray(parsed.notes) &&
+    parsed.count === parsed.notes.length &&
+    !parsed.notes.some((n) => /403 SAML|branch-tip \(master/i.test(n)) &&
+    parsed.notes.some((n) => /read from source at tag v0\.3\.14/i.test(n));
+} catch {}
+console.log('native unverified section drops retired caveats: ok=' + unvAndroidOk);
+
+// The provenance footer is the honesty mechanism — it must still fire.
+console.log('native provenance footer still emitted: ok=' + (/Provenance: \d+ caveat/.test(nShimmer) && /Provenance: \d+ caveat/.test(nPillBar)));
+
+// React Native must be ANSWERED, not schema-rejected. A hard Zod error reads as a
+// broken tool; the dataset knows the repo, the packages and why it is out of scope.
+const nRn = (await client.callTool({ name: 'fluent_native_component', arguments: { platform: 'react-native', name: 'Avatar' } })).content[0].text;
+console.log(
+  'native react-native answered gracefully, not rejected: ok=' +
+    (/out of scope/i.test(nRn) && /fluentui-react-native/.test(nRn) && !/Invalid enum|invalid_enum_value/i.test(nRn)),
+);
+console.log('native skill agrees react-native is out of scope: ok=' + /React Native is out of scope/i.test(nativeSkill));
+
+// ---------------------------------------------------------------------------
+// Component catalog integrity.
+//
+// The catalog is regenerated by scripts/generate-components.mjs from the Fluent
+// UI Storybook LLM pages plus the API-Extractor report. Before that rewrite it
+// shipped API facts that would not compile: `Nav` was imported alone next to a
+// sample built from NavDrawer/NavDrawerBody/NavItem, `Tree.selectionMode` was
+// the API-Extractor internal `SelectionMode_2`, `Toast.appearance` was an
+// internal context type, slots were missing everywhere, and 10 records were
+// keyed by an English sentence. These guard each of those regressions.
+// ---------------------------------------------------------------------------
+{
+  const catalog = JSON.parse(readFileSync(new URL('data/fluent-components.json', import.meta.url), 'utf8'));
+  const comps = catalog.components || [];
+  const byName = (n) => comps.filter((c) => c.name === n);
+  const propOf = (c, p) => (c.keyProps || []).find((x) => x.name === p);
+
+  console.log('component catalog size (' + comps.length + ' records): ok=' + (comps.length > 200));
+
+  // A record keyed by prose ("Chat input") hands an MCP consumer a sentence
+  // where it expects a component name.
+  const spaced = comps.filter((c) => /\s/.test(c.name));
+  console.log('no component name contains a space (' + spaced.map((c) => c.name).join(', ') + '): ok=' + (spaced.length === 0));
+
+  // Maturity is what tells a caller whether an import even resolves from the
+  // suite (preview/compat packages are not re-exported).
+  const noMaturity = comps.filter((c) => !c.maturity);
+  const badMaturity = comps.filter(
+    (c) => c.maturity && !['stable', 'preview', 'compat', 'migration', 'utility', 'deprecated'].includes(c.maturity)
+  );
+  console.log(
+    'every component has a valid maturity (' +
+      Object.entries(comps.reduce((a, c) => ((a[c.maturity] = (a[c.maturity] || 0) + 1), a), {}))
+        .map(([k, v]) => `${k}:${v}`)
+        .join(' ') +
+      '): ok=' + (noMaturity.length === 0 && badMaturity.length === 0)
+  );
+
+  // `SelectionMode_2` is an API-Extractor disambiguation suffix, not a TypeScript
+  // type. Anything ending _<digits> came from the wrong side of the toolchain.
+  const mangled = comps.flatMap((c) => (c.keyProps || []).filter((p) => /_\d+$/.test(p.type || '')).map((p) => `${c.name}.${p.name}:${p.type}`));
+  console.log('no mangled API-Extractor prop types (' + (mangled.slice(0, 3).join(', ') || 'none') + '): ok=' + (mangled.length === 0));
+
+  // `required` did not exist in the old schema, so Tab.value read as optional.
+  const missingRequired = comps.flatMap((c) => (c.keyProps || []).filter((p) => typeof p.required !== 'boolean'));
+  console.log('every prop declares required (' + missingRequired.length + ' missing): ok=' + (missingRequired.length === 0));
+
+  // Every sample tag must be importable from the record's own import block, or
+  // be declared inside the sample itself (bundleIcon consts, local helpers). Nav
+  // is the case that failed before: the sample rendered NavDrawer while the
+  // import said Nav. The boundary in the pattern keeps TypeScript type arguments
+  // (`<DataGridBody<Item>>`) out of the tag list.
+  const JSX_TAG = /(^|[^\w>])<([A-Z][\w$]*)(?=[\s/>])/g;
+  const tagsIn = (s) => [...new Set([...String(s).matchAll(JSX_TAG)].map((m) => m[2]))];
+  const unresolvedTags = [];
+  for (const c of comps) {
+    if (!c.sample || !c.reactImport) continue;
+    const declared = new Set([...c.sample.matchAll(/^\s*(?:const|let|function)\s+([A-Z][\w$]*)/gm)].map((m) => m[1]));
+    for (const t of tagsIn(c.sample)) {
+      if (declared.has(t)) continue;
+      if (new RegExp('\\b' + t + '\\b').test(c.reactImport)) continue;
+      unresolvedTags.push(`${c.name}:<${t}>`);
+    }
+  }
+  console.log('every sample tag is imported or locally declared (' + (unresolvedTags.slice(0, 4).join(', ') || 'none') + '): ok=' + (unresolvedTags.length === 0));
+
+  const navFile = byName('Nav')[0];
+  const navSampleTags = navFile ? tagsIn(navFile.sample || '') : [];
+  const navDeclared = new Set([...(navFile?.sample || '').matchAll(/^\s*const\s+([A-Z][\w$]*)/gm)].map((m) => m[1]));
+  const navOk =
+    !!navFile &&
+    navSampleTags.length > 0 &&
+    navSampleTags.every((t) => navDeclared.has(t) || new RegExp('\\b' + t + '\\b').test(navFile.reactImport)) &&
+    /NavDrawer\b/.test(navFile.reactImport) &&
+    !!propOf(navFile, 'density') &&
+    propOf(navFile, 'selectedValue')?.type === 'string';
+  console.log('Nav sample identifiers all appear in its import: ok=' + navOk);
+
+  const dg = byName('DataGrid')[0];
+  const dgOk =
+    !!dg &&
+    propOf(dg, 'items')?.required === true &&
+    propOf(dg, 'columns')?.required === true &&
+    !!propOf(dg, 'getRowId') &&
+    propOf(dg, 'selectionMode')?.type === '"multiselect" | "single"';
+  console.log('DataGrid exposes items/columns/getRowId and a real selectionMode: ok=' + dgOk);
+
+  const toastOk = propOf(byName('Toast')[0] || {}, 'appearance')?.type === '"brand" | "inverted"';
+  console.log('Toast.appearance is the literal union, not a context type: ok=' + toastOk);
+
+  const avatarColor = propOf(byName('Avatar')[0] || {}, 'color')?.type || '';
+  const avatarOk = avatarColor.includes('"anchor"') && (byName('Avatar')[0]?.slots || []).includes('image');
+  console.log('Avatar.color includes "anchor" and slots are populated: ok=' + avatarOk);
+
+  // Components/List and Migration Shims/V0/List both export `List`. Before this
+  // rewrite the two were conflated into one record with the shim's props.
+  const lists = byName('List');
+  const listOk =
+    lists.length === 2 &&
+    lists.some((l) => l.maturity === 'stable' && !propOf(l, 'layout')) &&
+    lists.some((l) => l.maturity === 'migration' && propOf(l, 'layout') && propOf(l, 'truncateHeader'));
+  console.log('List v9 and the V0 shim are separate records: ok=' + listOk);
+
+  // Slots were missing from every component sampled. Spot-check the shapes that
+  // are impossible to compose without them.
+  const slotExpect = {
+    Input: ['root', 'input', 'contentBefore', 'contentAfter'],
+    Field: ['label', 'hint', 'validationMessage', 'validationMessageIcon'],
+    Popover: ['surfaceMotion', 'mountNode'],
+  };
+  const slotMisses = Object.entries(slotExpect).filter(([n, want]) => {
+    const got = byName(n)[0]?.slots || [];
+    return !want.every((s) => got.includes(s));
+  });
+  console.log('slots present on Input/Field/Popover: ok=' + (slotMisses.length === 0));
+
+  // Records we cannot confirm against any public source must say so rather than
+  // sitting alongside grounded ones looking identical.
+  const unver = comps.filter((c) => c.verified === false);
+  const unverOk =
+    unver.every((c) => c.sourceUrl === null && typeof c.verificationNote === 'string') &&
+    comps.filter((c) => c.verified === true).every((c) => typeof c.sourceUrl === 'string');
+  console.log('unverified records flagged, verified records carry a sourceUrl (' + unver.length + ' unverified): ok=' + unverOk);
+
+  // -------------------------------------------------------------------------
+  // Web components. Tags come from the shipped custom elements manifest. We used
+  // to ship <fluent-textarea>, which has never existed in v2 or v3 - the real tag
+  // is fluent-text-area - so generated markup rendered an unknown element and
+  // displayed nothing. A hand-typed tag must not be possible again.
+  // -------------------------------------------------------------------------
+  {
+    const tagged = comps.filter((c) => c.webComponent);
+    const badShape = tagged.filter((c) => !/^<fluent-[a-z0-9-]+>$/.test(c.webComponent));
+    const phantom = comps.filter((c) => c.webComponent === '<fluent-textarea>');
+    console.log('no phantom <fluent-textarea>; every tag well-formed (' + tagged.length + ' tagged): ok=' +
+      (phantom.length === 0 && badShape.length === 0));
+
+    const textarea = comps.find((c) => c.id === 'components-textarea');
+    const taOk = textarea && textarea.webComponent === '<fluent-text-area>' &&
+      /web-components\/textarea\/define\.js/.test(textarea.webComponentDefine || '');
+    console.log('Textarea maps to <fluent-text-area> with a real define path: ok=' + !!taOk);
+
+    // Mandatory children were missing entirely, which made the Dialog/Drawer/
+    // Accordion/Tree/Dropdown web-component entries unusable.
+    const need = ['<fluent-accordion-item>', '<fluent-drawer-body>', '<fluent-dropdown-option>',
+      '<fluent-listbox>', '<fluent-rating-display>', '<fluent-text-area>', '<fluent-tree-item>'];
+    const have = new Set(comps.map((c) => c.webComponent));
+    const missingTags = need.filter((t) => !have.has(t));
+    console.log('child/element tags present (' + (missingTags.join(', ') || 'none missing') + '): ok=' + (missingTags.length === 0));
+
+    // WC attributes are kebab-case; storing the React camelCase names here would
+    // produce markup the element never reads.
+    const camel = comps.flatMap((c) => (c.webComponentAttributes || [])
+      .filter((a) => /[A-Z]/.test(a.name)).map((a) => c.name + '.' + a.name));
+    console.log('web-component attributes are kebab-case (' + (camel.slice(0, 3).join(', ') || 'none camelCase') + '): ok=' + (camel.length === 0));
+
+    const wcMeta = catalog.meta.webComponents || {};
+    const wcMetaOk = wcMeta.version === catalog.meta.webComponentsPackageVersion &&
+      wcMeta.tagsDeclared === 42 && Array.isArray(wcMeta.unmappedTags);
+    console.log('web-components meta pinned to the manifest (v' + wcMeta.version + ', ' + wcMeta.tagsDeclared + ' tags): ok=' + wcMetaOk);
+  }
+
+  // -------------------------------------------------------------------------
+  // AI (Copilot) suite. ai.fluentui.dev is Entra-gated, but the npm tarball is
+  // public, so these records are grounded like everything else.
+  // -------------------------------------------------------------------------
+  {
+    const ai = comps.filter((c) => c.category === 'AI / Copilot');
+    const aiOk = ai.length > 100 &&
+      ai.every((c) => c.verified === true && /^https:\/\/unpkg\.com\//.test(c.sourceUrl || '')) &&
+      ai.every((c) => typeof c.subPackage === 'string' && /^import \{/.test(c.reactImportTreeShakable || ''));
+    console.log('AI suite grounded in npm tarballs (' + ai.length + ' components): ok=' + aiOk);
+
+    // umbrellaExport:false means `from '@fluentui-copilot/react-copilot'` does
+    // NOT resolve - the import has to name the sub-package.
+    const subOnly = ai.filter((c) => c.umbrellaExport === false);
+    const subOnlyOk = subOnly.length > 0 &&
+      subOnly.every((c) => c.reactImport.includes("from '" + c.subPackage + "'")) &&
+      ai.filter((c) => c.umbrellaExport === true)
+        .every((c) => c.reactImport.includes("from '@fluentui-copilot/react-copilot'"));
+    console.log('sub-package-only AI components import from the sub-package (' + subOnly.length + '): ok=' + subOnlyOk);
+
+    const ll = comps.find((c) => c.name === 'LatencyLoader');
+    const llOk = !!ll && ll.umbrellaExport === false &&
+      ll.reactImport === "import { LatencyLoader } from '@fluentui-copilot/react-latency';";
+    console.log('LatencyLoader imports from react-latency, not the umbrella: ok=' + llOk);
+
+    // Deprecation direction is not guessable: CopilotMessageV2 is deprecated in
+    // favour of CopilotMessage, but PromptStarter is deprecated in favour of
+    // PromptStarterV2. Both come from the shipped @deprecated tags.
+    const dep = Object.fromEntries(((catalog.meta.aiSuite || {}).deprecated || []).map((d) => [d.name, d.useInstead]));
+    const cmv2 = comps.find((c) => c.name === 'CopilotMessageV2');
+    const depOk = /use CopilotMessage/.test(dep.CopilotMessageV2 || '') &&
+      /PromptStarterV2/.test(dep.PromptStarter || '') && !!cmv2 && cmv2.maturity === 'deprecated';
+    console.log('AI deprecations recorded with their real direction: ok=' + depOk);
+
+    // Names that are site pattern labels, not exports.
+    const retiredNames = new Set(((catalog.meta.aiSuite || {}).retired || []).map((r) => r.was));
+    const sug = comps.find((c) => c.name === 'Suggestion');
+    const retiredOk = retiredNames.size > 0 &&
+      comps.filter((c) => retiredNames.has(c.name)).length === 0 &&
+      !!(sug && sug.retiredNames && sug.retiredNames.length);
+    console.log('non-exported pattern names retired into the real export (' + [...retiredNames].join(', ') + '): ok=' + retiredOk);
+
+    const icon = comps.find((c) => c.name === 'Icon');
+    console.log('Icon verified against @fluentui/react-icons: ok=' +
+      !!(icon && icon.verified === true && /react-icons/.test(icon.sourceUrl || '')));
+  }
+}
+
+// A search hit must survive a round-trip into fluent_get_component - that is the
+// exact path an agent takes, and a name the search advertises but the getter
+// cannot resolve is a dead end.
+{
+  const names = ['Button', 'DataGrid', 'Nav', 'Toast', 'Avatar', 'ColorPicker', 'DrawerBody', 'Calendar', 'Collapse', 'TeachingPopoverBody', 'CopilotMessage', 'ChatInput', 'LatencyLoader'];
+  const failures = [];
+  for (const n of names) {
+    const s = await client.callTool({ name: 'fluent_search_components', arguments: { query: n } });
+    if (!s.content[0].text.includes(`"name": "${n}"`)) { failures.push(`${n}:search`); continue; }
+    const g = await client.callTool({ name: 'fluent_get_component', arguments: { name: n } });
+    let api = null;
+    try { api = JSON.parse(g.content[0].text).api; } catch {}
+    if (!api || api.name !== n || !api.reactImport || !api.maturity) failures.push(`${n}:get`);
+  }
+  console.log('search -> get round-trip for ' + names.length + ' components (' + (failures.join(', ') || 'none failed') + '): ok=' + (failures.length === 0));
+
+  // Colliding names must be reachable by id, not silently shadowed.
+  const shim = await client.callTool({ name: 'fluent_get_component', arguments: { name: 'migration-shims-v0-list' } });
+  let shimOk = false, ambiguousOk = false;
+  try {
+    const j = JSON.parse(shim.content[0].text);
+    shimOk = j.api?.id === 'migration-shims-v0-list' && j.api?.maturity === 'migration';
+    const both = JSON.parse((await client.callTool({ name: 'fluent_get_component', arguments: { name: 'List' } })).content[0].text);
+    ambiguousOk = typeof both.nameIsAmbiguous === 'string' && Array.isArray(both.alsoNamed) && both.alsoNamed.length === 1;
+  } catch {}
+  console.log('colliding component names resolvable by id and flagged as ambiguous: ok=' + (shimOk && ambiguousOk));
+
+  // An empty argument used to act as a wildcard: `''.includes('')` is true, so
+  // get_component returned the first record in the file as the answer (5k chars)
+  // and search_components dumped the catalog (37k). An agent passing an
+  // unresolved variable must be told, not answered.
+  const blanks = [];
+  for (const [tool, args] of [
+    ['fluent_get_component', { name: '' }],
+    ['fluent_get_component', { name: '   ' }],
+    ['fluent_search_components', { query: '' }],
+    ['fluent_search_components', { query: '\t\n ' }],
+  ]) {
+    const text = (await client.callTool({ name: tool, arguments: args })).content[0].text;
+    const refused = /is required and was empty/.test(text) && text.length < 800 && !/"api"/.test(text);
+    if (!refused) blanks.push(`${tool}(${JSON.stringify(args)}) -> ${text.length} chars`);
+  }
+  console.log('empty/whitespace input is refused, not treated as a wildcard (' + (blanks.join('; ') || 'all 4 refused') + '): ok=' + (blanks.length === 0));
+
+  // A v9 miss on a v8 name was a dead end even though fluent_v8_lookup has the
+  // full record. Mirror what fluent_native_component already does for platforms.
+  {
+    const v8only = JSON.parse((await client.callTool({ name: 'fluent_get_component', arguments: { name: 'PrimaryButton' } })).content[0].text);
+    const pointsAtV8 = v8only.fluent1v8?.name === 'PrimaryButton' &&
+      /fluent_v8_lookup/.test(v8only.fluent1v8?.nextStep || '') && v8only.fluent1v8?.alsoInFluent2 === false;
+    // Same-name collisions are the higher-stakes case: the wrong import compiles.
+    const collide = JSON.parse((await client.callTool({ name: 'fluent_get_component', arguments: { name: 'Persona' } })).content[0].text);
+    const warnsCollision = collide.api?.name === 'Persona' && collide.fluent1v8?.alsoInFluent2 === true &&
+      /compiles cleanly/.test(collide.fluent1v8?.note || '');
+    // A name in neither generation must still say what to do next.
+    const neither = (await client.callTool({ name: 'fluent_get_component', arguments: { name: 'ZzNotAComponent' } })).content[0].text;
+    const graceful = /fluent_search_components/.test(neither) && !/fluent1v8/.test(neither);
+    console.log('v9 miss on a v8 name points at fluent_v8_lookup: ok=' + (pointsAtV8 && warnsCollision && graceful));
+  }
+
+  // The design site names patterns in prose ("Chat input"); the code exports
+  // identifiers (ChatInput). Both used to return half the picture and neither
+  // mentioned the other.
+  {
+    const prose = JSON.parse((await client.callTool({ name: 'fluent_get_component', arguments: { name: 'Chat input' } })).content[0].text);
+    const code = JSON.parse((await client.callTool({ name: 'fluent_get_component', arguments: { name: 'ChatInput' } })).content[0].text);
+    const both = (j) => j.api?.name === 'ChatInput' && j.usage?.name === 'Chat input' &&
+      Array.isArray(j.api?.keyProps) && typeof j.api?.reactImport === 'string';
+    const sameRecord = both(prose) && both(code) && prose.api.id === code.api.id;
+    // And a spaced/kebab spelling of a real export should resolve, not dead-end.
+    const spaced = JSON.parse((await client.callTool({ name: 'fluent_get_component', arguments: { name: '  Data Grid  ' } })).content[0].text);
+    console.log('design-site name and export name return one merged record: ok=' + (sameRecord && spaced.api?.name === 'DataGrid'));
+
+    // Searching the prose name must find the code record rather than nothing.
+    const s = (await client.callTool({ name: 'fluent_search_components', arguments: { query: 'Chat input' } })).content[0].text;
+    console.log('search finds a component by its design-site name: ok=' + /"name": "ChatInput"/.test(s));
+  }
+
+  // A 5,000-character argument echoed back verbatim is pure context burn.
+  {
+    const huge = (await client.callTool({ name: 'fluent_get_component', arguments: { name: 'x'.repeat(5000) } })).content[0].text;
+    console.log('oversized input is truncated in the reply (' + huge.length + ' chars): ok=' + (huge.length < 400));
+  }
+
+  // mcp/data/local/ is gitignored, so this checkout and a fresh clone answer the
+  // same call differently. Correct behaviour, but it has to be visible: without
+  // a marker, a demo from an enriched checkout shows an audience prose no user
+  // of the published plugin can obtain. Same $provenance shape as
+  // fluent_design_guidance. Overlay-aware: passes in both states.
+  {
+    const overlayPresent = existsSync(new URL('data/local/fluent-components-usage.json', import.meta.url));
+    const jsonOfComp = async (name) => {
+      try { return JSON.parse((await client.callTool({ name: 'fluent_get_component', arguments: { name } })).content[0].text); }
+      catch { return null; }
+    };
+    // ChatInput's usage record is one of the 14 gated AI entries; DataGrid has
+    // no gated usage at all, so it is `published` in every checkout.
+    const gated = await jsonOfComp('ChatInput');
+    const plain = await jsonOfComp('DataGrid');
+    const firstKeyOk = Object.keys(gated ?? {})[0] === '$provenance' && Object.keys(plain ?? {})[0] === '$provenance';
+    const plainOk = plain?.$provenance?.source === 'published' && !plain.$provenance.overlayFile;
+    const gatedOk = overlayPresent
+      ? gated?.$provenance?.source === 'local-overlay' &&
+        /mcp\/data\/local\/fluent-components-usage\.json/.test(gated.$provenance.overlayFile ?? '') &&
+        gated.$provenance.restoredChars > gated.$provenance.publishedChars &&
+        /NOTICE/.test(gated.$provenance.note ?? '')
+      : gated?.$provenance?.source === 'published';
+    console.log(
+      'usage guidance labelled published vs local-overlay (' +
+        (overlayPresent ? 'overlay present: ' + gated?.$provenance?.publishedChars + ' -> ' + gated?.$provenance?.restoredChars + ' chars' : 'no overlay: published shape') +
+        '): ok=' + (firstKeyOk && plainOk && gatedOk)
+    );
+
+    // Never claim a restore that did not happen, in either direction.
+    const names = ['Button', 'Chat input', 'Timestamp', 'Attachment', 'Nav', 'CopilotMessage'];
+    const bad = [];
+    for (const n of names) {
+      const j = await jsonOfComp(n);
+      const src = j?.$provenance?.source;
+      if (src !== 'published' && src !== 'local-overlay') { bad.push(`${n}:${src}`); continue; }
+      if (src === 'local-overlay' && !overlayPresent) bad.push(`${n}: claims overlay with none present`);
+      if (src === 'local-overlay' && !(j.$provenance.restoredChars > j.$provenance.publishedChars)) bad.push(`${n}: overlay claimed but nothing restored`);
+    }
+    console.log('every response declares a real provenance source (' + (bad.join('; ') || names.length + ' checked') + '): ok=' + (bad.length === 0));
+  }
+}
+
+// Icons. The whole point of this tool is that the name it returns compiles, so
+// every assertion here ends at the same place: does this export actually exist
+// upstream. Reconstruct the verified export set from the dataset and check
+// every name the server hands back against it.
+const iconRaw = readFileSync(new URL('data/fluent-icons.json', import.meta.url), 'utf8');
+const iconData = JSON.parse(iconRaw);
+const iconExports = new Set();
+for (const f of iconData.families ?? []) {
+  for (const [style, sizes] of Object.entries(f.variants ?? {})) for (const s of sizes) iconExports.add(`${f.base}${s}${style}`);
+  for (const style of f.resizable ?? []) iconExports.add(`${f.base}${style}`);
+  // NOTE: rtlBase is deliberately NOT expanded here. The right-to-left twin is
+  // its own family with its own sizes (TaskListSquareLtr ships 48, the Rtl twin
+  // does not), so pasting the LTR sizes onto the RTL base invents names.
+}
+const iconSearch = async (args) => (await client.callTool({ name: 'fluent_icon_search', arguments: args })).content[0].text;
+// Pull every export-shaped token out of a response: Base + optional real size + style.
+const iconNamesIn = (text) =>
+  [...String(text).matchAll(/\b([A-Z][A-Za-z0-9]*?(?:12|16|20|24|28|32|48)?(?:Filled|Regular|Light|Color))\b/g)].map((m) => m[1]);
+
+// A single hallucinated name defeats the tool, so run the real queries an agent
+// would run and verify EVERY name in every response.
+{
+  const queries = [
+    ['save', /\bSave\d*(Regular|Filled)\b/],
+    ['trash', /\bDelete\d*(Regular|Filled)\b/],
+    ['user', /\bPerson\d*(Regular|Filled)\b/],
+    ['send email', /\bSend\d*(Regular|Filled)\b/],
+    ['shield', /\bShield\d*(Regular|Filled)\b/],
+    ['calendar', /\bCalendar[A-Za-z]*\d*(Regular|Filled)\b/],
+  ];
+  let allReal = true, checked = 0, bad = [], missedIntent = [];
+  for (const [q, expect] of queries) {
+    const text = await iconSearch({ query: q, limit: 5 });
+    const names = iconNamesIn(text);
+    checked += names.length;
+    for (const n of names) if (!iconExports.has(n)) { allReal = false; bad.push(q + ':' + n); }
+    if (!expect.test(text)) missedIntent.push(q);
+    if (!/import \{ [A-Za-z0-9]+ \} from '@fluentui\/react-icons';/.test(text)) missedIntent.push(q + ' (no import line)');
+  }
+  if (bad.length) console.log('  hallucinated icon names:', bad.slice(0, 10).join(', '));
+  if (missedIntent.length) console.log('  queries that missed the expected icon:', missedIntent.join(', '));
+  console.log('icon search returns only verified export names (' + checked + ' names across ' + queries.length + ' queries): ok=' + (allReal && checked > 20));
+  console.log('icon search finds the icon behind the word (save/trash/user/send email/shield/calendar): ok=' + (missedIntent.length === 0));
+}
+
+// A wrong size is the commonest icon mistake. It has to be answered with the
+// real list, not a schema error and never with an invented 26px name.
+{
+  const t = await iconSearch({ query: 'settings', size: 26 });
+  const ok = /not a Fluent icon size/i.test(t) && /12, 16, 20, 24, 28, 32, 48/.test(t) && !/[A-Za-z]26(Regular|Filled|Light|Color)/.test(t);
+  console.log('icon search rejects size=26 with the real size list: ok=' + ok);
+}
+
+// Same question asked as a name: "is AddCircle26Regular real?" must be a clear
+// no, with a real replacement attached.
+{
+  const t = await iconSearch({ query: 'AddCircle26Regular' });
+  const names = iconNamesIn(t).filter((n) => n !== 'AddCircle26Regular');
+  const ok = /is NOT a real/.test(t) && /26 is not a Fluent icon size/.test(t) && /AddCircle24Regular/.test(t) && names.every((n) => iconExports.has(n));
+  console.log('icon validate AddCircle26Regular: rejected + real replacement offered: ok=' + ok);
+}
+
+// And the inverse: a real name must be confirmed, not hedged.
+{
+  const t = await iconSearch({ query: 'AddCircle24Regular' });
+  console.log('icon validate AddCircle24Regular: confirmed real: ok=' + (/is a real @fluentui\/react-icons export/.test(t) && !/is NOT a real/.test(t)));
+}
+
+// An icon that never existed (a rename, a hallucination, a half-remembered
+// name) must fail with real alternatives rather than a shrug.
+{
+  const t = await iconSearch({ query: 'SaveDisk24Regular' });
+  const names = iconNamesIn(t).filter((n) => n !== 'SaveDisk24Regular');
+  const ok = /is NOT a real/.test(t) && names.length > 0 && names.every((n) => iconExports.has(n));
+  console.log('icon validate unknown family SaveDisk24Regular: rejected + real suggestions: ok=' + ok);
+}
+
+// The guidance that stops the generated code being wrong in a different way.
+{
+  const save = await iconSearch({ query: 'save', limit: 1 });
+  const bundle = save.match(/bundleIcon\(([A-Za-z0-9]+), ([A-Za-z0-9]+)\)/);
+  const bundleOk = !!bundle && /Filled$/.test(bundle[1]) && /Regular$/.test(bundle[2]) && iconExports.has(bundle[1]) && iconExports.has(bundle[2]);
+  console.log('icon bundleIcon snippet is Filled-then-Regular with real names: ok=' + bundleOk);
+  console.log('icon a11y note surfaced (aria-hidden vs aria-label + role=img): ok=' + (/aria-hidden="true"/.test(save) && /aria-label/.test(save) && /role="img"/.test(save)));
+
+  const color = await iconSearch({ query: 'AddCircle24Color' });
+  console.log('icon Color variant carries the HCM/contrast warning: ok=' + (/High Contrast Mode/i.test(color) && /Prefer Regular/i.test(color)));
+
+  const twelve = await iconSearch({ query: 'AddCircle12Regular' });
+  console.log('icon 12px flagged informational, not interactive: ok=' + /informational/i.test(twelve));
+
+  const rtl = await iconSearch({ query: 'send', limit: 1 });
+  console.log('icon RTL direction surfaced for a mirrored icon: ok=' + (/right-to-left/i.test(rtl) && /mirror/i.test(rtl)));
+
+  // The right-to-left twin of a design is a SEPARATE family with its own sizes:
+  // TaskListSquareLtr ships 48, TaskListSquareRtl does not. Reusing the LTR size
+  // on the RTL name invents an export, which is exactly the failure this tool
+  // exists to prevent.
+  const pair = await iconSearch({ query: 'task list square', size: 48, limit: 1 });
+  const pairNames = iconNamesIn(pair);
+  const pairOk = /Rtl/.test(pair) && pairNames.length > 0 && pairNames.every((n) => iconExports.has(n));
+  if (!pairOk) console.log('  invented names:', pairNames.filter((n) => !iconExports.has(n)).join(', '));
+  console.log('icon LTR/RTL twin resolved to a real export, not a pasted size: ok=' + pairOk);
+}
+
+// meta must describe the file it is in. A stale count is how a dataset starts
+// lying about itself.
+{
+  const c = iconData.meta?.counts ?? {};
+  const v = iconData.meta?.validation ?? {};
+  const countsOk =
+    c.families === (iconData.families?.length ?? -1) &&
+    c.verifiedExportNames === iconExports.size &&
+    c.familiesWithMetaphor === (iconData.families ?? []).filter((f) => f.metaphor?.length).length &&
+    c.familiesWithDescription === (iconData.families ?? []).filter((f) => f.description).length &&
+    v.reconstructedNamesNotInManifest === 0;
+  console.log('icon dataset meta counts match the arrays (' + c.families + ' families, ' + iconExports.size + ' verified names): ok=' + countsOk);
+
+  // Licence boundary: names and words only. Artwork would change what this
+  // repository redistributes, and NOTICE has to name the source either way.
+  const noArtwork = !/<svg|<path\b|viewBox=|"d":\s*"M/i.test(iconRaw);
+  const notice = readFileSync(new URL('../NOTICE', import.meta.url), 'utf8');
+  const noticeOk =
+    /fluentui-system-icons/.test(notice) && /MIT License/.test(notice) &&
+    /Copyright \(c\) 2020 Microsoft Corporation/.test(notice) && /no SVG artwork/i.test(notice);
+  console.log('icon dataset embeds no artwork: ok=' + noArtwork);
+  console.log('NOTICE attributes microsoft/fluentui-system-icons (MIT, names-only): ok=' + noticeOk);
+  console.log('icon dataset pins its upstream commit + licence: ok=' + (/^[0-9a-f]{40}$/.test(iconData.meta?.source?.commit ?? '') && iconData.meta?.license?.spdx === 'MIT'));
+}
+
+// ---------------------------------------------------------------------------
+// Fluent 1 (v8) name classes. The v8/v9 collision list is a headline feature,
+// and it shipped for months without `Button` in it — the single most-used
+// export in both libraries. Membership is now computed from the two upstream
+// API-Extractor reports, so pin the exports that computation MUST contain.
+// ---------------------------------------------------------------------------
+{
+  const v8Data = JSON.parse(readFileSync(new URL('./data/fluent-v8.json', import.meta.url), 'utf8'));
+  const collisionNames = (v8Data.collisions ?? []).map((c) => c.name);
+
+  const MUST_COLLIDE = ['Button', 'Checkbox', 'Dropdown', 'Link', 'Label'];
+  const missingCollisions = MUST_COLLIDE.filter((n) => !collisionNames.includes(n));
+  if (missingCollisions.length) console.log('  missing collisions:', missingCollisions.join(', '));
+  console.log('v8 collisions include Button/Checkbox/Dropdown/Link/Label: ok=' + (missingCollisions.length === 0));
+
+  // Every collision must hand back BOTH import paths, or the caller cannot act
+  // on the warning.
+  const withoutImports = (v8Data.collisions ?? []).filter((c) => !c.v8Import || !c.v9Import);
+  console.log('v8 every collision carries both import paths: ok=' + (withoutImports.length === 0));
+
+  // ComboBox (v8) vs Combobox (v9) is a casing difference, not a collision.
+  // Filing it as a collision would say the two names are the same; they are not.
+  const casing = (v8Data.casingTraps ?? []).find((c) => c.v8Name === 'ComboBox' && c.v9Name === 'Combobox');
+  console.log(
+    'v8 ComboBox/Combobox is a casing trap, not a collision: ok=' +
+      Boolean(casing && !collisionNames.includes('ComboBox') && !collisionNames.includes('Combobox'))
+  );
+
+  // Renames and behaviour traps are separate classes with their own fix.
+  const renameNames = (v8Data.renames ?? []).map((r) => `${r.v8Name}->${r.v9Name}`);
+  const renamesOk =
+    renameNames.includes('Toggle->Switch') &&
+    renameNames.includes('Pivot->TabList') &&
+    (v8Data.behaviorTraps ?? []).length > 0;
+  console.log('v8 renames + behaviorTraps are separate classes: ok=' + renamesOk);
+
+  // datasetCounts is published as a census of THIS file. If it drifts it is a
+  // lie shipped as provenance.
+  const dc = v8Data.meta?.datasetCounts ?? {};
+  const countsOk =
+    dc.collisions === (v8Data.collisions ?? []).length &&
+    dc.renames === (v8Data.renames ?? []).length &&
+    dc.casingTraps === (v8Data.casingTraps ?? []).length &&
+    dc.behaviorTraps === (v8Data.behaviorTraps ?? []).length &&
+    dc.traps === (v8Data.traps ?? []).length &&
+    dc.unverified === (v8Data.unverified ?? []).length &&
+    dc.components === Object.keys(v8Data.components ?? {}).length;
+  if (!countsOk) console.log('  datasetCounts:', JSON.stringify(dc));
+  console.log('v8 meta.datasetCounts matches actual lengths: ok=' + countsOk);
+
+  // Versions are derived from upstream package.json, not pinned by hand.
+  const upstreamMeta = v8Data.meta?.upstreamApiReports ?? {};
+  const provenanceOk =
+    Boolean(upstreamMeta.fetchedOn) &&
+    Boolean(upstreamMeta.reports?.v8?.sha256) &&
+    Boolean(upstreamMeta.reports?.v9?.sha256) &&
+    upstreamMeta.computed?.collisions?.length === (v8Data.collisions ?? []).length;
+  console.log('v8 collision provenance records both API reports + fetch date: ok=' + provenanceOk);
+}
+
+// ---------------------------------------------------------------------------
+// Migration must be executable, not advisory: real packages, real commands.
+// ---------------------------------------------------------------------------
+{
+  const migData = JSON.parse(readFileSync(new URL('./data/migration.json', import.meta.url), 'utf8'));
+  const tooling = migData.scenarios?.tooling ?? {};
+
+  // A private package can never be installed. Recommending one sends a user to
+  // a command that cannot succeed.
+  const recommended = [
+    ...(tooling.compatPackages ?? []),
+    tooling.codemods,
+    tooling.shims,
+    tooling.v0Shims,
+  ].filter(Boolean);
+  const privateRecommended = recommended.filter((p) => p.private === true).map((p) => p.package);
+  if (privateRecommended.length) console.log('  private packages recommended:', privateRecommended.join(', '));
+  console.log('migration recommends no private package: ok=' + (privateRecommended.length === 0));
+
+  // ...and the private ones are named explicitly so an agent knows to refuse.
+  const neverNames = (tooling.neverRecommend ?? []).map((n) => n.package);
+  console.log(
+    'migration names @fluentui/react-colorpicker-compat as never-recommend: ok=' +
+      neverNames.includes('@fluentui/react-colorpicker-compat')
+  );
+
+  const codemodOk =
+    tooling.codemods?.command === 'npx @fluentui/codemods' &&
+    (tooling.codemods?.rules ?? []).length >= 5 &&
+    (tooling.codemods?.rules ?? []).some((r) => r.name === 'RepathOfficeImportsToFluent' && r.enabled === true) &&
+    /NOT a v8 -> v9 converter/i.test(tooling.codemods?.criticalCaveat ?? '');
+  console.log('migration codemods are runnable + honestly scoped: ok=' + codemodOk);
+
+  const bridge = (tooling.shims?.themeBridge ?? []).map((t) => t.name);
+  const shimOk =
+    ['createV8Theme', 'createV9Theme', 'createBrandVariants'].every((n) => bridge.includes(n)) &&
+    (tooling.shims?.components ?? []).includes('CheckboxShim');
+  console.log('migration shims expose all three theme-bridge helpers: ok=' + shimOk);
+
+  const versionsOk =
+    migData.$meta?.packageVersionsSeen?.['@fluentui/react-nav'] === '9.4.4' &&
+    Boolean(migData.$meta?.packageVersionSource?.fetchedOn);
+  console.log('migration versions are derived from upstream package.json: ok=' + versionsOk);
+}
+
+// Round-trip through the server: an agent asking about Button must be warned.
+{
+  const btn = (await client.callTool({ name: 'fluent_v8_lookup', arguments: { name: 'Button' } })).content[0].text;
+  const btnOk =
+    /collisionWarning/.test(btn) &&
+    /@fluentui\/react'/.test(btn) &&
+    /@fluentui\/react-components'/.test(btn) &&
+    /V8Button/.test(btn);
+  console.log('fluent_v8_lookup(Button) warns + gives both import paths: ok=' + btnOk);
+
+  const cb = (await client.callTool({ name: 'fluent_v8_lookup', arguments: { name: 'ComboBox' } })).content[0].text;
+  console.log('fluent_v8_lookup(ComboBox) surfaces the casing trap: ok=' + (/casingTrap/i.test(cb) && /Combobox/.test(cb)));
+
+  const tg = (await client.callTool({ name: 'fluent_v8_lookup', arguments: { name: 'Toggle' } })).content[0].text;
+  console.log('fluent_v8_lookup(Toggle) reports the rename to Switch: ok=' + (/renames/.test(tg) && /Switch/.test(tg)));
+
+  const mt = (await client.callTool({ name: 'fluent_migration_guidance', arguments: { scenario: 'tooling' } })).content[0].text;
+  const mtOk =
+    /npx @fluentui\/codemods/.test(mt) &&
+    /@fluentui\/react-migration-v8-v9/.test(mt) &&
+    /createV8Theme/.test(mt) &&
+    /react-datepicker-compat/.test(mt);
+  console.log('fluent_migration_guidance(tooling) returns runnable steps: ok=' + mtOk);
+}
+
+// --- Figma community plugins + DTCG token export -----------------------------
+// Added 2026-08. Three things are being defended here: the corrected Starter
+// rate limit, the provenance labelling on plugins Microsoft merely LINKS, and
+// the fact that we can generate a plugin's input file but can never run it.
+
+// The 6/month Starter claim was wrong and was repeated in half a dozen places in
+// this dataset. Assert on the raw JSON, not the tool output, so a caveat that
+// quotes the old number cannot hide a live claim (or vice versa).
+{
+  const raw = readFileSync(new URL('data/figma.json', import.meta.url), 'utf8');
+  const data = JSON.parse(raw);
+  const offenders = [];
+  const scan = (node, path) => {
+    if (typeof node === 'string') {
+      // Only a Starter-scoped 6/month claim is wrong; 6/month is CORRECT for a
+      // View/Collab seat on Professional, Organization, and Enterprise. A string
+      // that names BOTH numbers is doing the corrected comparison, so the
+      // heuristic is: mentions Starter + a 6/month figure + never says 20.
+      const claim = /\b6\s*(?:tool\s*)?calls?\s*(?:per|\/)\s*month|\b6\s*\/\s*month|\b6\s*per\s*month/i;
+      if (claim.test(node) && /starter/i.test(node) && !/\b20\b/.test(node)) {
+        offenders.push(path + ': ' + node.slice(0, 120));
+      }
+    } else if (node && typeof node === 'object') {
+      for (const [k, v] of Object.entries(node)) scan(v, path + '.' + k);
+    }
+  };
+  scan(data, '$');
+  const starterRows = (data.rateLimits ?? []).filter((r) => r.plan === 'Starter');
+  const numbersOk = starterRows.length === 2 && starterRows.every((r) => r.perMonth === 20);
+  if (offenders.length) for (const o of offenders.slice(0, 5)) console.log('  stale Starter claim: ' + o);
+  console.log(
+    'figma.json carries no Starter 6-per-month claim (' + starterRows.length + ' Starter rows, all 20/month=' + numbersOk + '): ok=' +
+      (offenders.length === 0 && numbersOk),
+  );
+}
+
+// Provenance. This repo has already shipped one provenance incident, so the
+// shape of the honesty is asserted, not just its presence: every plugin needs an
+// explicit boolean (not undefined, not "unknown"), and anything not proven
+// first-party needs a publisherNote saying so in words.
+const figPlugins = (await client.callTool({ name: 'fluent_figma_guidance', arguments: { section: 'plugins' } })).content[0].text;
+{
+  let ok = false, note = 'plugins section did not parse';
+  try {
+    const j = JSON.parse(figPlugins.split('\n---\n')[0]);
+    const list = j.plugins ?? [];
+    const missingBool = list.filter((p) => typeof p.official !== 'boolean').map((p) => p.name);
+    const missingNote = list.filter((p) => p.official === false && !(typeof p.publisherNote === 'string' && p.publisherNote.length > 40)).map((p) => p.name);
+    const nullPublisher = list.filter((p) => p.official === false && p.publisher !== null).map((p) => p.name);
+    const proven = list.filter((p) => p.official === true).map((p) => p.name);
+    ok =
+      list.length >= 6 &&
+      missingBool.length === 0 &&
+      missingNote.length === 0 &&
+      nullPublisher.length === 0 &&
+      proven.length === 1 &&
+      proven[0] === 'Variables Import';
+    note = ok
+      ? `${list.length} plugins, only Variables Import claims first-party`
+      : `no explicit official: [${missingBool}] missing publisherNote: [${missingNote}] publisher not null: [${nullPublisher}] claimed first-party: [${proven}]`;
+  } catch {}
+  console.log('figma plugins provenance labelled (' + note + '): ok=' + ok);
+}
+
+// The single most dangerous misread of a plugin list is "the agent can run
+// these". The refusal has to be IN the payload, not in a doc somewhere.
+{
+  const saysCannot = /cannot run,? invoke,? automate,? or trigger a Figma community plugin/i.test(figPlugins);
+  const explainsWhy = /only inside the Figma editor|Figma editor's sandbox/i.test(figPlugins);
+  const disambiguatesUseFigma = /use_figma/.test(figPlugins) && /not a community plugin/i.test(figPlugins);
+  console.log(
+    'figma plugins state we cannot run them (why=' + explainsWhy + ', use_figma disambiguated=' + disambiguatesUseFigma + '): ok=' +
+      (saysCannot && explainsWhy && disambiguatesUseFigma),
+  );
+}
+
+// Real community URLs, and the one plugin we DO claim is Microsoft's must carry
+// the evidence that makes the claim checkable.
+{
+  let ok = false, note = 'plugins section did not parse';
+  try {
+    const j = JSON.parse(figPlugins.split('\n---\n')[0]);
+    const list = j.plugins ?? [];
+    const urlsOk = list.every((p) => hasLinkTo(p.url ?? '', 'www.figma.com', '/community/plugin/'));
+    const vi = list.find((p) => p.name === 'Variables Import');
+    const proofOk = /1253424530216967528/.test(vi?.provenance ?? '') && /figma-variables-import/.test(vi?.sourceRepo ?? '');
+    const renamed = list.find((p) => p.name === 'Accessibility Assistant');
+    const renameOk = /A11y/i.test(renamed?.renamed?.was ?? '');
+    ok = urlsOk && proofOk && renameOk;
+    note = `urls=${urlsOk} variables-import-proof=${proofOk} focus-order-rename=${renameOk}`;
+  } catch {}
+  console.log('figma plugin URLs + Microsoft proof (' + note + '): ok=' + ok);
+}
+
+// The DTCG export is the code -> Figma direction. Assert the SHAPE, because a
+// document that parses but uses a type the plugin rejects is worse than none.
+{
+  const summary = (
+    await client.callTool({ name: 'fluent_figma_guidance', arguments: { section: 'tokens-export' } })
+  ).content[0].text;
+  let ok = false, note = 'tokens-export did not parse';
+  try {
+    const j = JSON.parse(summary);
+    const modes = Object.keys(j.manifest?.collections?.['Fluent Theme']?.modes ?? {});
+    // Only these six are BOTH DTCG types and mapped by the plugin's
+    // tokenTypeToFigmaType. "fontSize" in particular must never appear: the
+    // plugin runs it through rem->px, turning "14px" into 224.
+    const allowed = ['color', 'dimension', 'duration', 'number', 'fontFamily', 'fontWeight'];
+    const typesOk = Array.isArray(j.dtcgTypesUsed) && j.dtcgTypesUsed.every((t) => allowed.includes(t));
+    const gapsOk = (j.notExpressible ?? []).some((g) => /shadow/i.test(g.category)) &&
+      (j.notExpressible ?? []).some((g) => /curve/i.test(g.category));
+    const cannotRun = /cannot run/i.test(j.weCannotRunPlugins ?? '');
+    ok = modes.includes('Light') && modes.includes('Dark') && typesOk && gapsOk && cannotRun && j.totalTokens > 500;
+    note = `modes=[${modes}] types=[${j.dtcgTypesUsed}] tokens=${j.totalTokens} gapsDeclared=${gapsOk}`;
+  } catch {}
+  console.log('figma tokens-export summary (' + note + '): ok=' + ok);
+}
+
+// And the generated document itself: valid DTCG token objects, plugin-parsable
+// colours, and the code-syntax extension that makes get_variable_defs answer
+// with a real Fluent token name instead of a guess.
+{
+  const doc = (
+    await client.callTool({
+      name: 'fluent_figma_guidance',
+      arguments: { section: 'tokens-export', dtcgFile: 'light', maxChars: 200000 },
+    })
+  ).content[0].text;
+  let ok = false, note = 'DTCG document did not parse';
+  try {
+    const j = JSON.parse(doc);
+    const entries = Object.entries(j.Color ?? {});
+    const everyToken = entries.every(([, t]) => typeof t.$type === 'string' && t.$value !== undefined);
+    // The plugin's jsonColorToFigmaColor accepts ONLY #RRGGBB / #RRGGBBAA.
+    const badColors = entries.filter(([, t]) => t.$type === 'color' && !/^#[0-9a-f]{6}([0-9a-f]{2})?$/.test(String(t.$value)));
+    const brand = j.Color?.colorBrandBackground;
+    const codeSyntaxOk = brand?.$extensions?.codeSyntax === 'tokens.colorBrandBackground' && brand?.$extensions?.codeSyntaxPlatform === 'WEB';
+    const alphaOk = j.Color?.colorSubtleBackground?.$value === '#00000000';
+    ok = entries.length > 300 && everyToken && badColors.length === 0 && codeSyntaxOk && alphaOk;
+    note = `${entries.length} colour tokens, unparsable=${badColors.length}, codeSyntax=${codeSyntaxOk}, transparent->hex=${alphaOk}`;
+  } catch {}
+  console.log('figma DTCG document parses + plugin-safe (' + note + '): ok=' + ok);
+}
+
+// The kits section appends a provenance footer of the caveats relevant to kits.
+// Two edits to `unverified` could silently break it: renaming the caveats out of
+// term range, or deleting them. Assert the footer still fires AND still carries
+// the Android alias correction, which is the one a user acts on.
+{
+  const kits = (await client.callTool({ name: 'fluent_figma_guidance', arguments: { section: 'kits' } })).content[0].text;
+  const footerFires = /Provenance: \d+ caveat\(s\) recorded/.test(kits) && /Directly relevant to this query/.test(kits);
+  const androidWarned = /aka\.ms\/Fluent2Toolkits\/Android\/Figma/.test(kits) && /bing\.com/.test(kits);
+  const sharepointFixed = /websharepointfigma_1910\.zip/.test(kits) && /NOT a Figma Community file/i.test(kits);
+  console.log(
+    'figma kits provenance footer still fires (android-alias-warned=' + androidWarned + ', sharepoint-corrected=' + sharepointFixed + '): ok=' +
+      (footerFires && androidWarned && sharepointFixed),
+  );
+}
+
+// Tool availability. Figma's tools page tags exactly ten tools "(remote only)".
+// The three Code Connect authoring tools are NOT among them, and claiming they
+// are would tell a desktop-server user a working tool does not exist.
+{
+  const servers = (await client.callTool({ name: 'fluent_figma_guidance', arguments: { section: 'servers', maxChars: 200000 } })).content[0].text;
+  let ok = false, note = 'servers section did not parse';
+  try {
+    const j = JSON.parse(servers);
+    const remote = (j.servers ?? []).find((s) => s.id === 'figma-remote');
+    const byName = Object.fromEntries((remote?.tools ?? []).map((t) => [t.name, t.availability]));
+    const bothNow = ['add_code_connect_map', 'get_code_connect_suggestions', 'send_code_connect_mappings'];
+    const stillRemote = ['download_assets', 'search_design_system', 'get_libraries', 'whoami', 'get_context_for_code_connect'];
+    const fixed = bothNow.every((n) => byName[n] === 'both');
+    const intact = stillRemote.every((n) => byName[n] === 'remote');
+    ok = fixed && intact;
+    note = `codeConnectAuthoring=both:${fixed} genuineRemoteOnly:${intact}`;
+  } catch {}
+  console.log('figma tool availability corrected (' + note + '): ok=' + ok);
+}
+
+// ===========================================================================
+// Adversarial-audit regression checks (P1-P6).
+// Every defect below was reproduced with real output before it was fixed; these
+// checks exist so it cannot come back silently.
+// ===========================================================================
+{
+  const { writeFileSync, mkdirSync } = await import('node:fs');
+  const { createHash } = await import('node:crypto');
+  const AUD = './.audit-smoke';
+  const text = async (name, args = {}) => {
+    // A schema rejection comes back as isError with the message in content on
+    // this SDK version, so both shapes have to be normalized to a string.
+    try {
+      const r = await client.callTool({ name, arguments: args });
+      return r.content[0].text;
+    } catch (e) {
+      return String(e && e.message ? e.message : e);
+    }
+  };
+  const jsonOf = (s) => { try { return JSON.parse(s); } catch { return null; } };
+  const hashDir = (dir) => {
+    const h = createHash('sha256');
+    for (const f of readdirSync(dir, { recursive: true }).sort()) {
+      const p = dir + '/' + String(f).split('\\').join('/');
+      try { h.update(String(f)); h.update(readFileSync(p)); } catch { /* directory entry */ }
+    }
+    return h.digest('hex');
+  };
+  rmSync(AUD, { recursive: true, force: true });
+  mkdirSync(AUD, { recursive: true });
+
+  // ---- P1: the plugin's own scaffold must pass the plugin's own verifier.
+  // It used to fail V3 (reportVersionAtImport hardcoded 2.1.0 while the template
+  // declared 2.4.0/2.0.0/3.0.0) and V5 (the scaffolded visual carried inline
+  // background/border/title overrides, so the theme it ships was inert on 3 of
+  // 4 keys from birth).
+  const scafDir = AUD + '/scaffold';
+  await text('fluent_scaffold_pbip', { name: 'AuditDemo', outputDir: scafDir, brandColor: '#0F6CBD' });
+  const auditReportDir = scafDir + '/AuditDemo.Report';
+  const vText = await text('fluent_pbir_verify', { reportDir: auditReportDir });
+  const vJson = jsonOf(await text('fluent_pbir_verify', { reportDir: auditReportDir, format: 'json' }));
+  const vPassed = vJson ? Object.values(vJson.checks ?? {}).filter((c) => c && c.pass).length : 0;
+  const vFailed = vJson ? Object.values(vJson.checks ?? {}).filter((c) => c && !c.pass).length : -1;
+  console.log('scaffold_pbip output passes pbir_verify (' + vPassed + ' passed, ' + vFailed + ' failed): ok='
+    + (vFailed === 0 && vPassed === 9 && /VERIFY PASSED/.test(vText)));
+  {
+    const rep = jsonOf(readFileSync(auditReportDir + '/definition/report.json', 'utf8')) ?? {};
+    const rv = rep.themeCollection?.customTheme?.reportVersionAtImport ?? {};
+    console.log('scaffold computes reportVersionAtImport (' + JSON.stringify(rv) + '): ok='
+      + (rv.visual === '2.4.0' && rv.page === '2.0.0' && rv.report === '3.0.0'));
+    const vis = jsonOf(readFileSync(auditReportDir + '/definition/pages/fluentpage01/visuals/fluentcard01/visual.json', 'utf8')) ?? {};
+    const vco = vis.visual?.visualContainerObjects ?? {};
+    console.log('scaffolded visual ships no theme-defeating inline overrides (keys=' + Object.keys(vco).length + '): ok='
+      + (!vco.background && !vco.border && !vco.title));
+  }
+
+  // ---- P1 regression guards: dryRun defaults to true, normalize is idempotent,
+  // and the three policies stay distinct.
+  {
+    const before = hashDir(auditReportDir);
+    await text('fluent_pbir_normalize_inline', { reportDir: auditReportDir });
+    await text('fluent_pbir_apply_theme', { reportDir: auditReportDir, themeJson: JSON.stringify({ name: 'Probe', $schema: 'https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.114.json' }) });
+    console.log('dryRun defaults to true and mutates nothing: ok=' + (hashDir(auditReportDir) === before));
+
+    const first = jsonOf(await text('fluent_pbir_normalize_inline', { reportDir: auditReportDir, dryRun: false, format: 'json' }));
+    const second = jsonOf(await text('fluent_pbir_normalize_inline', { reportDir: auditReportDir, dryRun: false, format: 'json' }));
+    const afterFirst = hashDir(auditReportDir);
+    console.log('normalize_inline is idempotent (' + (first?.ledger?.length ?? -1) + ' then ' + (second?.ledger?.length ?? -1) + ' changes): ok='
+      + ((second?.ledger?.length ?? -1) === 0 && hashDir(auditReportDir) === afterFirst));
+
+    const policies = {};
+    for (const policy of ['theme-wins', 'report', 'remap-colors']) {
+      policies[policy] = await text('fluent_pbir_normalize_inline', { reportDir: auditReportDir, policy });
+    }
+    const distinct = new Set(Object.values(policies)).size;
+    console.log('all 3 normalize policies behave distinctly (' + distinct + ' distinct outputs): ok=' + (distinct === 3));
+    const errText = await text('fluent_pbir_verify', { reportDir: AUD + '/not-a-report' });
+    console.log('PBIR error messages stay explanatory: ok='
+      + (/PBIR error/.test(errText) && /enhanced report format|definition\/pages/.test(errText)));
+  }
+
+  // ---- P2: `all` must be an index, not the whole corpus (506,264 chars before).
+  {
+    const dgAll = await text('fluent_design_guidance', { topic: 'all' });
+    const j = jsonOf(dgAll);
+    // Target was <5,000. 40 topics x mandatory per-topic provenance
+    // (accessStatus + capturedAt, asserted above) plus the doDont convention
+    // warning put the floor at ~7.3k; that is still a 98.6% reduction.
+    console.log('design_guidance(all) is an index, not the corpus (' + dgAll.length + ' chars): ok='
+      + (dgAll.length < 8000 && j?.index === true && Object.keys(j?.topics ?? {}).length > 30));
+    const figAll = await text('fluent_figma_guidance', { section: 'all' });
+    console.log('figma_guidance(all) is an index (' + figAll.length + ' chars): ok='
+      + (figAll.length < 8000 && jsonOf(figAll)?.index === true));
+    const ppAll = await text('fluent_powerplatform_guidance', { surface: 'all' });
+    console.log('powerplatform_guidance(all) is an index (' + ppAll.length + ' chars): ok='
+      + (ppAll.length < 8000 && jsonOf(ppAll)?.index === true));
+    // The two outlier topics are capped into a parseable outline — but only
+    // when their prose is actually present. Both are sign-in-gated pages whose
+    // text lives in the gitignored mcp/data/local/ overlay, so on a fresh clone
+    // (and in CI) they are small stubs that never reach the cap. Assert the
+    // behaviour that applies to the state we're in, or this check fails for
+    // everyone who doesn't happen to have the overlay.
+    for (const topic of ['data-usage-sharing', 'responsible-ai']) {
+      const t = await text('fluent_design_guidance', { topic });
+      const o = jsonOf(t);
+      const restored = o?.$provenance?.source === 'local-overlay';
+      const ok = restored
+        ? t.length < 32000 && o?.truncated === true && typeof o?.agentInstruction === 'string'
+        : t.length < 32000 && typeof o?.docUrl === 'string';
+      console.log('design_guidance(' + topic + ') is bounded (' + t.length + ' chars, '
+        + (restored ? 'overlay: capped outline' : 'published stub') + '): ok=' + ok);
+    }
+    // A named section is an explicit bounded request and comes back in full.
+    const sec = jsonOf(await text('fluent_design_guidance', { topic: 'color', section: 'accessibility' }));
+    console.log('design_guidance section retrieval works (matched ' + (sec?.matched ?? -1) + '): ok='
+      + ((sec?.matched ?? 0) > 0 && Array.isArray(sec?.sections) && typeof sec.sections[0]?.text === 'string'));
+  }
+
+  // ---- P3: an empty query used to act as a wildcard and dump 32,251 chars.
+  {
+    let rejected = false;
+    const empty = await text('fluent_get_token', { name: '' });
+    rejected = /Empty token name|name must not be empty/.test(empty);
+    console.log('get_token rejects an empty name instead of dumping every token (' + empty.length + ' chars): ok='
+      + (rejected && empty.length < 1200));
+    const ws = await text('fluent_get_token', { name: '   ' });
+    console.log('get_token rejects a whitespace-only name (' + ws.length + ' chars): ok='
+      + (/Empty token name/.test(ws) && ws.length < 1000));
+    const broad = await text('fluent_get_token', { name: 'color' });
+    console.log('get_token caps a broad fragment (' + broad.length + ' chars): ok='
+      + (broad.length < 6000 && /showing|matched/.test(broad)));
+    let famOk = true;
+    for (const n of ['fontFamilyBase', 'fontFamilyMonospace', 'fontFamilyNumeric']) {
+      const r = await text('fluent_get_token', { name: n });
+      if (/^No token matching/.test(r) || !r.includes(n)) famOk = false;
+    }
+    console.log('the 3 fontFamily tokens resolve under their shipped names: ok=' + famOk);
+    const shadow = await text('fluent_list_tokens', { category: 'shadow', theme: 'dark' });
+    console.log('list_tokens states that theme is a no-op for shadow: ok='
+      + (/theme does NOT affect this category/.test(shadow) && /dark-theme shadow/.test(shadow)));
+  }
+
+  // ---- P4: config tools used to accept anything and destroy malformed files.
+  {
+    const bad = AUD + '/badcfg';
+    mkdirSync(bad, { recursive: true });
+    const badPath = bad + '/fluent.config.json';
+    const badRaw = '{ this is not json ';
+    writeFileSync(badPath, badRaw, 'utf8');
+    const g = jsonOf(await text('fluent_get_config', { projectDir: bad })) ?? {};
+    console.log('malformed config reported as present with a parseError: ok='
+      + (g.configExists === true && g.configParsed === false && typeof g.parseError === 'string'));
+    const setOnBad = jsonOf(await text('fluent_set_config', { projectDir: bad, key: 'brand.name', value: 'acme' })) ?? {};
+    console.log('set_config refuses to overwrite a malformed config: ok='
+      + (setOnBad.written === false && typeof setOnBad.parseError === 'string'
+        && readFileSync(badPath, 'utf8') === badRaw));
+
+    const badMem = AUD + '/badmem';
+    mkdirSync(badMem + '/.fluent', { recursive: true });
+    const memPath = badMem + '/.fluent/memory.json';
+    const memRaw = '{ nope ';
+    writeFileSync(memPath, memRaw, 'utf8');
+    const rem = jsonOf(await text('fluent_remember', { projectDir: badMem, question: 'q', answer: 'a' })) ?? {};
+    console.log('remember refuses to overwrite a malformed memory file: ok='
+      + (rem.written === false && typeof rem.memoryParseError === 'string'
+        && readFileSync(memPath, 'utf8') === memRaw));
+
+    const ok1 = AUD + '/cfg';
+    mkdirSync(ok1, { recursive: true });
+    const unknown = jsonOf(await text('fluent_set_config', { projectDir: ok1, key: 'nope.nothere', value: 'x' })) ?? {};
+    console.log('set_config rejects an unknown key: ok='
+      + (unknown.written === false && /not a known Fluent 2 preset/.test(unknown.error ?? '')));
+    const badColor = jsonOf(await text('fluent_set_config', { projectDir: ok1, key: 'brand.color', value: 'not-a-color' })) ?? {};
+    console.log('set_config rejects a value the theme tools would refuse: ok='
+      + (badColor.written === false && /6-digit hex/.test(badColor.error ?? '')));
+    const badEnum = jsonOf(await text('fluent_set_config', { projectDir: ok1, key: 'accessibility.targetLevel', value: 'AAAA' })) ?? {};
+    console.log('set_config rejects an out-of-enum value: ok=' + (badEnum.written === false));
+    const good = jsonOf(await text('fluent_set_config', { projectDir: ok1, key: 'brand.color', value: '#D13438' })) ?? {};
+    console.log('set_config still writes a valid value: ok=' + (good.written === true && good.value === '#D13438'));
+
+    const deep = AUD + '/nope/nothere/zzz';
+    const init = jsonOf(await text('fluent_init_config', { projectDir: deep })) ?? {};
+    console.log('init_config refuses to materialize a deep missing tree: ok='
+      + (init.written === false && !existsSync(AUD + '/nope')));
+    const clobber = jsonOf(await text('fluent_init_config', { projectDir: ok1 })) ?? {};
+    const clobber2 = jsonOf(await text('fluent_init_config', { projectDir: ok1, brandColor: '#742774' })) ?? {};
+    console.log('init_config still refuses to clobber without force: ok='
+      + (clobber.written === false || clobber2.written === false));
+
+    const memDir = AUD + '/mem';
+    mkdirSync(memDir, { recursive: true });
+    await text('fluent_remember', { projectDir: memDir, question: 'What brand color?', answer: 'blue' });
+    const up = jsonOf(await text('fluent_remember', { projectDir: memDir, question: 'What brand color?', answer: 'green' })) ?? {};
+    const decisions = up.decisions ?? [];
+    console.log('remember upserts instead of duplicating an id (' + decisions.length + ' decision(s), action=' + up.action + '): ok='
+      + (decisions.length === 1 && decisions[0].answer === 'green' && decisions[0].supersededAnswer === 'blue'));
+    const miss = jsonOf(await text('fluent_recall', { projectDir: memDir, filter: 'zzzz' })) ?? {};
+    const hit = jsonOf(await text('fluent_recall', { projectDir: memDir, filter: 'brand' })) ?? {};
+    console.log('recall echoes the filter and a match count: ok='
+      + (miss.filter === 'zzzz' && miss.matched === 0 && miss.total >= 1 && hit.matched === 1));
+  }
+
+  // ---- P5: webcomponents used to return the same 592-char snippet for all four
+  // kinds, and once emitted a <fluent-card> element that does not exist in v3.
+  {
+    const tagData = jsonOf(readFileSync(new URL('data/web-component-tags.json', import.meta.url), 'utf8')) ?? {};
+    const realTags = new Set(tagData.tags ?? []);
+    const outputs = {};
+    for (const kind of ['app', 'form', 'card', 'copilot-chat']) {
+      outputs[kind] = await text('fluent_generate_code', { kind, framework: 'webcomponents' });
+    }
+    console.log('every webcomponents kind returns a different snippet (' + new Set(Object.values(outputs)).size + '/4 distinct): ok='
+      + (new Set(Object.values(outputs)).size === 4));
+    const bogus = [];
+    for (const [kind, out] of Object.entries(outputs)) {
+      for (const m of out.match(/<(fluent-[a-z0-9-]+)/g) ?? []) {
+        const tag = m.slice(1);
+        if (!realTags.has(tag)) bogus.push(kind + ':' + tag);
+      }
+    }
+    console.log('every emitted <fluent-*> tag exists in v3 (' + (bogus.join(', ') || 'none bogus') + '): ok='
+      + (realTags.size > 0 && bogus.length === 0));
+    console.log('webcomponents form actually contains a form: ok='
+      + (/<form/.test(outputs.form) && /fluent-text-input/.test(outputs.form) && /fluent-field/.test(outputs.form)));
+    console.log('webcomponents copilot-chat is a chat and names the React-only limit: ok='
+      + (/REACT ONLY/i.test(outputs['copilot-chat']) && /fluent-text-area/.test(outputs['copilot-chat'])));
+    console.log('webcomponents snippets carry the mandatory side-effect imports: ok='
+      + Object.values(outputs).every((o) => /@fluentui\/web-components\/[a-z-]+\.js/.test(o)));
+  }
+
+  // ---- P6: smaller correctness fixes.
+  {
+    const themeErr = await text('fluent_generate_theme', { brandColor: 'red' });
+    console.log('generate_theme colour error self-describes: ok=' + /6-digit hex/.test(themeErr));
+    const initSchema = (await client.listTools()).tools.find((t) => t.name === 'fluent_init_config');
+    const targetsEnum = initSchema?.inputSchema?.properties?.targets?.items?.enum ?? [];
+    console.log('init_config targets enum is published in the schema (' + targetsEnum.length + ' values): ok='
+      + (targetsEnum.includes('web-react') && targetsEnum.includes('powerbi')));
+    // Gated topics return four empty arrays; without a machine-readable refusal
+    // that shape invites invention. With the local overlay present the topic is
+    // restored instead, which is the correct behaviour but proves nothing here.
+    const overlayPresent = existsSync(new URL('data/local/design-guidance.json', import.meta.url));
+    const gated = jsonOf(await text('fluent_design_guidance', { topic: 'personality-principles' })) ?? {};
+    const gatedOk = overlayPresent
+      ? !gated.gatedNotice
+      : typeof gated.agentInstruction === 'string' && /Do not infer or generate guidance/.test(gated.agentInstruction);
+    console.log('gated topic carries a machine-readable refusal (' + (overlayPresent ? 'overlay present: restored instead' : 'public-clone shape') + '): ok=' + gatedOk);
+
+    // ---- Presentation integrity: mcp/data/local/ is gitignored, so a checkout
+    // that has it answers differently from a fresh clone. The difference has to
+    // be visible in the output, not silent.
+    const pubTopic = jsonOf(await text('fluent_design_guidance', { topic: 'color' })) ?? {};
+    console.log('published topic is labelled source:"published": ok='
+      + (pubTopic.$provenance?.source === 'published'));
+    const gatedTopic = jsonOf(await text('fluent_design_guidance', { topic: 'entry-points' })) ?? {};
+    const provOk = overlayPresent
+      ? gatedTopic.$provenance?.source === 'local-overlay'
+        && /mcp\/data\/local\//.test(gatedTopic.$provenance?.overlayFile ?? '')
+        && gatedTopic.$provenance?.restoredChars > gatedTopic.$provenance?.publishedChars
+      : gatedTopic.$provenance?.source === 'published';
+    console.log('overlay-restored content is labelled source:"local-overlay" (' + (overlayPresent ? 'overlay present' : 'no overlay: published shape') + '): ok=' + provOk);
+    const idx = jsonOf(await text('fluent_design_guidance', { topic: 'all' })) ?? {};
+    const marked = Object.values(idx.topics ?? {}).filter((t) => t && t.source === 'local-overlay').length;
+    console.log('index reports overlay coverage (present=' + idx.localOverlay?.present + ', marked rows=' + marked + '): ok='
+      + (typeof idx.localOverlay?.present === 'boolean' && idx.localOverlay.present === overlayPresent
+        && (overlayPresent ? marked === idx.localOverlay.enrichedTopics && marked > 0 : marked === 0)));
+    const cfgOverlay = (jsonOf(await text('fluent_get_config', { projectDir: AUD })) ?? {}).localOverlay ?? {};
+    console.log('get_config answers "what would a clone see?" in one call (present=' + cfgOverlay.present
+      + ', records=' + cfgOverlay.totalRecords + '): ok='
+      + (cfgOverlay.present === overlayPresent && Array.isArray(cfgOverlay.files)
+        && (overlayPresent ? cfgOverlay.totalRecords > 0 : cfgOverlay.totalRecords === 0)));
+  }
+
+  rmSync(AUD, { recursive: true, force: true });
+}
 
 await client.close();
 

@@ -195,7 +195,7 @@ const FEATURES: Feat[] = [
   { c: '#986f0b', Icon: DataBarVertical24Regular, t: 'Power BI', d: 'Every visual with its Learn doc, a Fluent 2 theme JSON, and PBIP/PBIR scaffolding. Also applies Fluent 2 to an existing report and repairs the layout distortion the theme introduces.' },
   { c: '#5c2e91', Icon: Flash24Regular, t: 'Power Platform', d: 'Fluent 2 guidance for Power Apps canvas, model-driven apps (the New Look), Power Pages, and PCF components.' },
   { c: '#004e8c', Icon: Phone24Regular, t: 'Native: iOS, Android and Windows', d: '155 real types across SwiftUI/UIKit, Jetpack Compose and WinUI 3/WPF, with the per-platform theming entry point. The name is shared; the type is not.' },
-  { c: '#7719aa', Icon: History24Regular, t: 'Fluent 1 (Fluent UI React v8)', d: '106 components, a per-component v8 to v9 map, and the 23 places where both versions export the same name for different components.' },
+  { c: '#7719aa', Icon: History24Regular, t: 'Fluent 1 (Fluent UI React v8)', d: '106 components, a per-component v8 to v9 map, and the 26 places where both versions export the same name for different components.' },
   { c: '#8378de', Icon: DesignIdeas24Regular, t: 'Figma to Fluent code', d: 'Design handoff through the Figma MCP server, mapped to real Fluent components and tokens. Host-owned auth, with the plan limits stated up front.' },
   { c: '#038387', Icon: Color24Regular, t: 'Design language', d: '36 topics covering color, typography, layout, motion, elevation, iconography, content engineering, AI evaluation, and responsible AI.' },
   { c: '#107c10', Icon: PaintBrush24Regular, t: 'Tokens and theming', d: '366 design tokens across light, dark and high-contrast. Turn any brand color into a full Fluent theme.' },
@@ -269,6 +269,7 @@ const TOOLS: [string, string][] = [
   ['fluent_design_guidance', 'Design-language guidance across 36 topics'],
   ['fluent_migration_guidance', 'Adopt or migrate to Fluent 2 (v8 to v9)'],
   ['fluent_get_images', 'Direct URLs to diagrams, do/don\'t and Motion videos'],
+  ['fluent_icon_search', 'Find the right Fluent icon and its exact import'],
   ['fluent_accessibility_checklist', 'Fluent 2 accessibility checklist'],
   ['fluent_generate_powerbi_theme', 'Fluent-aligned Power BI theme JSON'],
   ['fluent_scaffold_pbip', 'Fluent-themed Power BI PBIP/PBIR project'],
@@ -451,7 +452,7 @@ export function App() {
                 <Button appearance="secondary" size="large" icon={<Star20Regular />} as="a" href={REPO}>View on GitHub</Button>
               </div>
               <div className={s.stats}>
-                {[[String(AGENTS.length), 'Specialist agents'], [String(SKILLS.length), 'Skills'], [String(TOOLS.length), 'MCP tools'], ['61', 'Components (47 core, 14 AI)'], ['366', 'Design tokens, 3 themes'], ['36', 'Design-language topics'], ['753', 'Source visuals indexed'], ['155', 'Native types (iOS/Android/Windows)']].map(([b, l]) => (
+                {[[String(AGENTS.length), 'Specialist agents'], [String(SKILLS.length), 'Skills'], [String(TOOLS.length), 'MCP tools'], ['353', 'React components catalogued'], ['2,976', 'Icons, searchable by meaning'], ['366', 'Design tokens, 3 themes'], ['40', 'Design-language topics'], ['753', 'Source visuals indexed'], ['185', 'Native types (iOS/Android/Windows)']].map(([b, l]) => (
                   <div key={l} className={`${glass} ${s.stat}`}><span className={s.statB}>{b}</span><Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{l}</Caption1></div>
                 ))}
               </div>

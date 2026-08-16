@@ -24,6 +24,8 @@ Answer honestly, then get back to the code in front of you. `fluent_v8_guidance 
 
 That's the `fluent-migration` skill (and the `fluent-migration-engineer` agent): side-by-side coexistence, `@fluentui/react-migration-v8-v9` shims, `PortalCompatProvider` so v9 overlays render correctly inside a v8 tree, and `createV8Theme` for bridging themes. Coexistence is officially supported — *"Combining Fluent UI React v9 components with Fluent UI React v8 or v0 components is possible and allows gradual migration."*
 
-Before you swap any import, read `collisions-and-traps.md`: 23 export names exist in **both** libraries with different behaviour, so a mechanical rename type-checks and then misbehaves at runtime.
+Before you swap any import, read `collisions-and-traps.md`: **26** export names exist in **both** libraries with different behaviour (including `Button`, `Checkbox`, `Dropdown`, `Label`, `Link`, `Slider`, `Spinner`, `Theme`), so a mechanical rename type-checks and then misbehaves at runtime — plus 1 casing trap (`ComboBox`/`Combobox`), 9 renames and 3 behaviour traps. The list is computed from the upstream API-Extractor reports, not curated.
+
+For the **runnable** part — `npx @fluentui/codemods`, the `@fluentui/react-migration-v8-v9` shims, `createV8Theme`/`createV9Theme`/`createBrandVariants`, and the `*-compat` packages with versions read from upstream — call `fluent_migration_guidance scenario=tooling`.
 
 `fluent_v8_guidance section=docs-errata` lists 17 verified errors in Microsoft's own v8→v9 migration docs — check it before trusting a mapping you read there.

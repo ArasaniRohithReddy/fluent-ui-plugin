@@ -14,6 +14,20 @@
       "semanticLight/semanticDark/semanticHighContrast contain the concrete resolved values for the built-in web themes.",
       "brandRamp is the default web brand ramp (brandWeb). createLightTheme(brandVariants)/createDarkTheme(brandVariants) accept a BrandVariants object of 16 slots (10..160).",
       "Typography ramp values are resolved to concrete px/weight from the light theme; they are identical in dark theme."
+    ],
+    "additionalSources": [
+      {
+        "url": "https://fluent2.microsoft.design/color-tokens/",
+        "capturedAt": "2026-08-16",
+        "adds": "color.aliasReference — alias to global token slot mapping, interaction state, and the 14 published categories.",
+        "licensing": "Structured facts only (token names, global slot names, category and state labels). No descriptive prose reproduced."
+      },
+      {
+        "url": "https://fluent2.microsoft.design/color-tokens2/",
+        "capturedAt": "2026-08-16",
+        "adds": "Same mapping in plain-table form; used only for the 13 aliases /color-tokens/ omits.",
+        "licensing": "Structured facts only."
+      }
     ]
   },
   "color": {
@@ -1656,6 +1670,3300 @@
       "strokeWidthThicker": "--strokeWidthThicker",
       "strokeWidthThickest": "--strokeWidthThickest",
       "strokeWidthThin": "--strokeWidthThin"
+    },
+    "aliasReference": {
+      "colorNeutralBackground1": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground1",
+        "state": "Rest",
+        "globalLight": "white",
+        "globalDark": "grey[16]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground1Hover": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground1",
+        "state": "Hover",
+        "globalLight": "grey[96]",
+        "globalDark": "grey[24]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground1Pressed": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground1",
+        "state": "Pressed",
+        "globalLight": "grey[88]",
+        "globalDark": "grey[12]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground1Selected": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground1",
+        "state": "Selected",
+        "globalLight": "grey[92]",
+        "globalDark": "grey[22]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground2": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground2",
+        "state": "Rest",
+        "globalLight": "grey[98]",
+        "globalDark": "grey[12]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground2Hover": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground2",
+        "state": "Hover",
+        "globalLight": "grey[94]",
+        "globalDark": "grey[20]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground2Pressed": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground2",
+        "state": "Pressed",
+        "globalLight": "grey[86]",
+        "globalDark": "grey[8]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground2Selected": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground2",
+        "state": "Selected",
+        "globalLight": "grey[90]",
+        "globalDark": "grey[18]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground3": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground3",
+        "state": "Rest",
+        "globalLight": "grey[96]",
+        "globalDark": "grey[8]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground3Hover": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground3",
+        "state": "Hover",
+        "globalLight": "grey[92]",
+        "globalDark": "grey[16]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground3Pressed": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground3",
+        "state": "Pressed",
+        "globalLight": "grey[84]",
+        "globalDark": "grey[4]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground3Selected": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground3",
+        "state": "Selected",
+        "globalLight": "grey[88]",
+        "globalDark": "grey[14]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground4": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground4",
+        "state": "Rest",
+        "globalLight": "grey[94]",
+        "globalDark": "grey[4]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground4Hover": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground4",
+        "state": "Hover",
+        "globalLight": "grey[98]",
+        "globalDark": "grey[12]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground4Pressed": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground4",
+        "state": "Pressed",
+        "globalLight": "grey[96]",
+        "globalDark": "black",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground4Selected": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground4",
+        "state": "Selected",
+        "globalLight": "white",
+        "globalDark": "grey[10]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground5": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground5",
+        "state": "Rest",
+        "globalLight": "grey[92]",
+        "globalDark": "black",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground5Hover": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground5",
+        "state": "Hover",
+        "globalLight": "grey[96]",
+        "globalDark": "grey[8]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground5Pressed": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground5",
+        "state": "Pressed",
+        "globalLight": "grey[94]",
+        "globalDark": "grey[2]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground5Selected": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground5",
+        "state": "Selected",
+        "globalLight": "grey[98]",
+        "globalDark": "grey[6]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackground6": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground6",
+        "state": "Rest",
+        "globalLight": "grey[90]",
+        "globalDark": "grey[20]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackgroundInverted": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackgroundInverted",
+        "state": "Rest",
+        "globalLight": "grey[16]",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackgroundInvertedDisabled": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackgroundInverted",
+        "state": "Disabled",
+        "globalLight": "whiteAlpha[10]",
+        "globalDark": "whiteAlpha[10]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackgroundStatic": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackgroundStatic",
+        "state": "Rest",
+        "globalLight": "grey[20]",
+        "globalDark": "grey[24]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackgroundAlpha": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackgroundAlpha",
+        "state": "Rest",
+        "globalLight": "whiteAlpha[50]",
+        "globalDark": "grey10Alpha[50]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackgroundAlpha2": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackgroundAlpha2",
+        "state": "Rest",
+        "globalLight": "whiteAlpha[80]",
+        "globalDark": "grey12Alpha[70]",
+        "source": "/color-tokens/"
+      },
+      "colorSubtleBackground": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorSubtleBackground",
+        "state": "Rest",
+        "globalLight": "transparent",
+        "globalDark": "transparent",
+        "source": "/color-tokens/"
+      },
+      "colorSubtleBackgroundHover": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorSubtleBackground",
+        "state": "Hover",
+        "globalLight": "grey[96]",
+        "globalDark": "grey[22]",
+        "source": "/color-tokens/"
+      },
+      "colorSubtleBackgroundPressed": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorSubtleBackground",
+        "state": "Pressed",
+        "globalLight": "grey[88]",
+        "globalDark": "grey[18]",
+        "source": "/color-tokens/"
+      },
+      "colorSubtleBackgroundSelected": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorSubtleBackground",
+        "state": "Selected",
+        "globalLight": "grey[92]",
+        "globalDark": "grey[20]",
+        "source": "/color-tokens/"
+      },
+      "colorSubtleBackgroundLightAlphaHover": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorSubtleBackgroundLightAlpha",
+        "state": "Hover",
+        "globalLight": "whiteAlpha[70]",
+        "globalDark": "grey14Alpha[80]",
+        "source": "/color-tokens/"
+      },
+      "colorSubtleBackgroundLightAlphaPressed": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorSubtleBackgroundLightAlpha",
+        "state": "Pressed",
+        "globalLight": "whiteAlpha[50]",
+        "globalDark": "grey14Alpha[50]",
+        "source": "/color-tokens/"
+      },
+      "colorSubtleBackgroundLightAlphaSelected": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorSubtleBackgroundLightAlpha",
+        "state": "Selected",
+        "globalLight": "transparent",
+        "globalDark": "transparent",
+        "source": "/color-tokens/"
+      },
+      "colorSubtleBackgroundInverted": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorSubtleBackgroundInverted",
+        "state": "Rest",
+        "globalLight": "transparent",
+        "globalDark": "transparent",
+        "source": "/color-tokens/"
+      },
+      "colorSubtleBackgroundInvertedHover": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorSubtleBackgroundInverted",
+        "state": "Hover",
+        "globalLight": "blackAlpha[10]",
+        "globalDark": "blackAlpha[10]",
+        "source": "/color-tokens/"
+      },
+      "colorSubtleBackgroundInvertedPressed": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorSubtleBackgroundInverted",
+        "state": "Pressed",
+        "globalLight": "blackAlpha[30]",
+        "globalDark": "blackAlpha[30]",
+        "source": "/color-tokens/"
+      },
+      "colorSubtleBackgroundInvertedSelected": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorSubtleBackgroundInverted",
+        "state": "Selected",
+        "globalLight": "blackAlpha[20]",
+        "globalDark": "blackAlpha[20]",
+        "source": "/color-tokens/"
+      },
+      "colorTransparentBackground": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorTransparentBackground",
+        "state": "Rest",
+        "globalLight": "transparent",
+        "globalDark": "transparent",
+        "source": "/color-tokens/"
+      },
+      "colorTransparentBackgroundHover": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorTransparentBackground",
+        "state": "Hover",
+        "globalLight": "transparent",
+        "globalDark": "transparent",
+        "source": "/color-tokens/"
+      },
+      "colorTransparentBackgroundPressed": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorTransparentBackground",
+        "state": "Pressed",
+        "globalLight": "transparent",
+        "globalDark": "transparent",
+        "source": "/color-tokens/"
+      },
+      "colorTransparentBackgroundSelected": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorTransparentBackground",
+        "state": "Selected",
+        "globalLight": "transparent",
+        "globalDark": "transparent",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralBackgroundDisabled": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralBackground",
+        "state": "Disabled",
+        "globalLight": "grey[94]",
+        "globalDark": "grey[8]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralCardBackground": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralCardBackground",
+        "state": "Rest",
+        "globalLight": "grey[98]",
+        "globalDark": "grey[20]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralCardBackgroundHover": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralCardBackground",
+        "state": "Hover",
+        "globalLight": "white",
+        "globalDark": "grey[24]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralCardBackgroundPressed": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralCardBackground",
+        "state": "Pressed",
+        "globalLight": "grey[96]",
+        "globalDark": "grey[18]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralCardBackgroundSelected": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralCardBackground",
+        "state": "Selected",
+        "globalLight": "grey[92]",
+        "globalDark": "grey[22]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralCardBackgroundDisabled": {
+        "category": "Neutral Background",
+        "categoryId": "neutral-background",
+        "group": "colorNeutralCardBackground",
+        "state": "Disabled",
+        "globalLight": "grey[94]",
+        "globalDark": "grey[8]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground1": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground1",
+        "state": "Rest",
+        "globalLight": "grey[14]",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground1Hover": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground1",
+        "state": "Hover",
+        "globalLight": "grey[14]",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground1Pressed": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground1",
+        "state": "Pressed",
+        "globalLight": "grey[14]",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground1Selected": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground1",
+        "state": "Selected",
+        "globalLight": "grey[14]",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground2": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground2",
+        "state": "Rest",
+        "globalLight": "grey[26]",
+        "globalDark": "grey[84]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground2Hover": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground2",
+        "state": "Hover",
+        "globalLight": "grey[14]",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground2Pressed": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground2",
+        "state": "Pressed",
+        "globalLight": "grey[14]",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground2Selected": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground2",
+        "state": "Selected",
+        "globalLight": "grey[14]",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground2BrandHover": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground2Brand",
+        "state": "Hover",
+        "globalLight": "brand[80]",
+        "globalDark": "brand[100]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground2BrandPressed": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground2Brand",
+        "state": "Pressed",
+        "globalLight": "brand[70]",
+        "globalDark": "brand[90]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground2BrandSelected": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground2Brand",
+        "state": "Selected",
+        "globalLight": "brand[80]",
+        "globalDark": "brand[100]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground3": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground3",
+        "state": "Rest",
+        "globalLight": "grey[38]",
+        "globalDark": "grey[68]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground3Hover": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground3",
+        "state": "Hover",
+        "globalLight": "grey[26]",
+        "globalDark": "grey[84]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground3Pressed": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground3",
+        "state": "Pressed",
+        "globalLight": "grey[26]",
+        "globalDark": "grey[84]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground3Selected": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground3",
+        "state": "Selected",
+        "globalLight": "grey[26]",
+        "globalDark": "grey[84]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground3BrandHover": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground3Brand",
+        "state": "Hover",
+        "globalLight": "brand[80]",
+        "globalDark": "brand[100]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground3BrandPressed": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground3Brand",
+        "state": "Pressed",
+        "globalLight": "brand[70]",
+        "globalDark": "brand[90]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground3BrandSelected": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground3Brand",
+        "state": "Selected",
+        "globalLight": "brand[80]",
+        "globalDark": "brand[100]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground4": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground4",
+        "state": "Rest",
+        "globalLight": "grey[44]",
+        "globalDark": "grey[60]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundDisabled": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground",
+        "state": "Disabled",
+        "globalLight": "grey[74]",
+        "globalDark": "grey[36]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundInvertedDisabled": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForegroundInverted",
+        "state": "Disabled",
+        "globalLight": "whiteAlpha[40]",
+        "globalDark": "whiteAlpha[40]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundInverted": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForegroundInverted",
+        "state": "Rest",
+        "globalLight": "white",
+        "globalDark": "grey[14]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundInvertedHover": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForegroundInverted",
+        "state": "Hover",
+        "globalLight": "white",
+        "globalDark": "grey[14]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundInvertedPressed": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForegroundInverted",
+        "state": "Pressed",
+        "globalLight": "white",
+        "globalDark": "grey[14]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundInvertedSelected": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForegroundInverted",
+        "state": "Selected",
+        "globalLight": "white",
+        "globalDark": "grey[14]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground2Link": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground2Link",
+        "state": "Rest",
+        "globalLight": "grey[26]",
+        "globalDark": "grey[84]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground2LinkHover": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground2Link",
+        "state": "Hover",
+        "globalLight": "grey[14]",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground2LinkPressed": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground2Link",
+        "state": "Pressed",
+        "globalLight": "grey[14]",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground2LinkSelected": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground2Link",
+        "state": "Selected",
+        "globalLight": "grey[14]",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForeground1Static": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForeground1Static",
+        "state": "Rest",
+        "globalLight": "grey[14]",
+        "globalDark": "grey[14]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundStaticInverted": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForegroundStaticInverted",
+        "state": "Rest",
+        "globalLight": "white",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundInverted2": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForegroundInverted2",
+        "state": "Rest",
+        "globalLight": "white",
+        "globalDark": "grey[14]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundOnBrand": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForegroundOnBrand",
+        "state": "Rest",
+        "globalLight": "white",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundInvertedLink": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForegroundInvertedLink",
+        "state": "Rest",
+        "globalLight": "white",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundInvertedLinkHover": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForegroundInvertedLink",
+        "state": "Hover",
+        "globalLight": "white",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundInvertedLinkPressed": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForegroundInvertedLink",
+        "state": "Pressed",
+        "globalLight": "white",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralForegroundInvertedLinkSelected": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralForegroundInvertedLink",
+        "state": "Selected",
+        "globalLight": "white",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStencil1": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralStencil1",
+        "state": "Rest",
+        "globalLight": "grey[90]",
+        "globalDark": "grey[34]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStencil2": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralStencil2",
+        "state": "Rest",
+        "globalLight": "grey[98]",
+        "globalDark": "grey[20]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStencil1Alpha": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralStencil1Alpha",
+        "state": "Rest",
+        "globalLight": "blackAlpha[10]",
+        "globalDark": "whiteAlpha[10]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStencil2Alpha": {
+        "category": "Neutral Foreground",
+        "categoryId": "neutral-foreground",
+        "group": "colorNeutralStencil2Alpha",
+        "state": "Rest",
+        "globalLight": "blackAlpha[5]",
+        "globalDark": "whiteAlpha[5]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeAccessible": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeAccessible",
+        "state": "Rest",
+        "globalLight": "grey[38]",
+        "globalDark": "grey[68]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeAccessibleHover": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeAccessible",
+        "state": "Hover",
+        "globalLight": "grey[34]",
+        "globalDark": "grey[74]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeAccessiblePressed": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeAccessible",
+        "state": "Pressed",
+        "globalLight": "grey[30]",
+        "globalDark": "grey[70]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeAccessibleSelected": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeAccessible",
+        "state": "Selected",
+        "globalLight": "brand[80]",
+        "globalDark": "brand[100]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStroke1": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStroke1",
+        "state": "Rest",
+        "globalLight": "grey[82]",
+        "globalDark": "grey[40]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStroke1Hover": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStroke1",
+        "state": "Hover",
+        "globalLight": "grey[78]",
+        "globalDark": "grey[46]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStroke1Pressed": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStroke1",
+        "state": "Pressed",
+        "globalLight": "grey[70]",
+        "globalDark": "grey[42]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStroke1Selected": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStroke1",
+        "state": "Selected",
+        "globalLight": "grey[74]",
+        "globalDark": "grey[44]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStroke2": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStroke2",
+        "state": "Rest",
+        "globalLight": "grey[88]",
+        "globalDark": "grey[32]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStroke3": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStroke3",
+        "state": "Rest",
+        "globalLight": "grey[94]",
+        "globalDark": "grey[24]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeSubtle": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeSubtle",
+        "state": "Rest",
+        "globalLight": "grey[88]",
+        "globalDark": "grey[4]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeOnBrand": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeOnBrand",
+        "state": "Rest",
+        "globalLight": "white",
+        "globalDark": "grey[16]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeOnBrand2": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeOnBrand2",
+        "state": "Rest",
+        "globalLight": "white",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeOnBrand2Hover": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeOnBrand2",
+        "state": "Hover",
+        "globalLight": "white",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeOnBrand2Pressed": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeOnBrand2",
+        "state": "Pressed",
+        "globalLight": "white",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeOnBrand2Selected": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeOnBrand2",
+        "state": "Selected",
+        "globalLight": "white",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeDisabled": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStroke",
+        "state": "Disabled",
+        "globalLight": "grey[88]",
+        "globalDark": "grey[26]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeInvertedDisabled": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeInverted",
+        "state": "Disabled",
+        "globalLight": "whiteAlpha[40]",
+        "globalDark": "whiteAlpha[40]",
+        "source": "/color-tokens/"
+      },
+      "colorTransparentStroke": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorTransparentStroke",
+        "state": "Rest",
+        "globalLight": "transparent",
+        "globalDark": "transparent",
+        "source": "/color-tokens/"
+      },
+      "colorTransparentStrokeDisabled": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorTransparentStroke",
+        "state": "Disabled",
+        "globalLight": "transparent",
+        "globalDark": "transparent",
+        "source": "/color-tokens/"
+      },
+      "colorTransparentStrokeInteractive": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorTransparentStrokeInteractive",
+        "state": "Rest",
+        "globalLight": "transparent",
+        "globalDark": "transparent",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeAlpha": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeAlpha",
+        "state": "Rest",
+        "globalLight": "blackAlpha[5]",
+        "globalDark": "whiteAlpha[10]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralStrokeAlpha2": {
+        "category": "Neutral Stroke",
+        "categoryId": "neutral-stroke",
+        "group": "colorNeutralStrokeAlpha2",
+        "state": "Rest",
+        "globalLight": "whiteAlpha[20]",
+        "globalDark": "whiteAlpha[20]",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralShadowAmbient": {
+        "category": "Neutral Shadow",
+        "categoryId": "neutral-shadow",
+        "group": "colorNeutralShadowAmbient",
+        "state": "Rest",
+        "globalLight": "rgba(0,0,0,0.12)",
+        "globalDark": "rgba(0,0,0,0.24)",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralShadowKey": {
+        "category": "Neutral Shadow",
+        "categoryId": "neutral-shadow",
+        "group": "colorNeutralShadowKey",
+        "state": "Rest",
+        "globalLight": "rgba(0,0,0,0.14)",
+        "globalDark": "rgba(0,0,0,0.28)",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralShadowAmbientLighter": {
+        "category": "Neutral Shadow",
+        "categoryId": "neutral-shadow",
+        "group": "colorNeutralShadowAmbientLighter",
+        "state": "Rest",
+        "globalLight": "rgba(0,0,0,0.06)",
+        "globalDark": "rgba(0,0,0,0.12)",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralShadowKeyLighter": {
+        "category": "Neutral Shadow",
+        "categoryId": "neutral-shadow",
+        "group": "colorNeutralShadowKeyLighter",
+        "state": "Rest",
+        "globalLight": "rgba(0,0,0,0.07)",
+        "globalDark": "rgba(0,0,0,0.14)",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralShadowAmbientDarker": {
+        "category": "Neutral Shadow",
+        "categoryId": "neutral-shadow",
+        "group": "colorNeutralShadowAmbientDarker",
+        "state": "Rest",
+        "globalLight": "rgba(0,0,0,0.20)",
+        "globalDark": "rgba(0,0,0,0.40)",
+        "source": "/color-tokens/"
+      },
+      "colorNeutralShadowKeyDarker": {
+        "category": "Neutral Shadow",
+        "categoryId": "neutral-shadow",
+        "group": "colorNeutralShadowKeyDarker",
+        "state": "Rest",
+        "globalLight": "rgba(0,0,0,0.24)",
+        "globalDark": "rgba(0,0,0,0.48)",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackground": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackground",
+        "state": "Rest",
+        "globalLight": "brand[80]",
+        "globalDark": "brand[70]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackgroundHover": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackground",
+        "state": "Hover",
+        "globalLight": "brand[70]",
+        "globalDark": "brand[80]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackgroundPressed": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackground",
+        "state": "Pressed",
+        "globalLight": "brand[40]",
+        "globalDark": "brand[40]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackgroundSelected": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackground",
+        "state": "Selected",
+        "globalLight": "brand[60]",
+        "globalDark": "brand[60]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackgroundStatic": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackgroundStatic",
+        "state": "Rest",
+        "globalLight": "brand[80]",
+        "globalDark": "brand[80]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackground2": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackground2",
+        "state": "Rest",
+        "globalLight": "brand[160]",
+        "globalDark": "brand[20]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackground2Hover": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackground2",
+        "state": "Hover",
+        "globalLight": "brand[150]",
+        "globalDark": "brand[40]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackground2Pressed": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackground2",
+        "state": "Pressed",
+        "globalLight": "brand[130]",
+        "globalDark": "brand[10]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackground3Static": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackground3Static",
+        "state": "Rest",
+        "globalLight": "brand[60]",
+        "globalDark": "brand[60]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackground4Static": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackground4Static",
+        "state": "Rest",
+        "globalLight": "brand[40]",
+        "globalDark": "brand[40]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackgroundInverted": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackgroundInverted",
+        "state": "Rest",
+        "globalLight": "white",
+        "globalDark": "white",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackgroundInvertedHover": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackgroundInverted",
+        "state": "Hover",
+        "globalLight": "brand[160]",
+        "globalDark": "brand[160]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackgroundInvertedPressed": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackgroundInverted",
+        "state": "Pressed",
+        "globalLight": "brand[140]",
+        "globalDark": "brand[140]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandBackgroundInvertedSelected": {
+        "category": "Brand Background",
+        "categoryId": "brand-background",
+        "group": "colorBrandBackgroundInverted",
+        "state": "Selected",
+        "globalLight": "brand[150]",
+        "globalDark": "brand[150]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForegroundLink": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForegroundLink",
+        "state": "Rest",
+        "globalLight": "brand[70]",
+        "globalDark": "brand[100]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForegroundLinkHover": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForegroundLink",
+        "state": "Hover",
+        "globalLight": "brand[60]",
+        "globalDark": "brand[110]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForegroundLinkPressed": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForegroundLink",
+        "state": "Pressed",
+        "globalLight": "brand[40]",
+        "globalDark": "brand[90]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForegroundLinkSelected": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForegroundLink",
+        "state": "Selected",
+        "globalLight": "brand[70]",
+        "globalDark": "brand[100]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForeground1": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForeground1",
+        "state": "Rest",
+        "globalLight": "brand[80]",
+        "globalDark": "brand[100]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForeground2": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForeground2",
+        "state": "Rest",
+        "globalLight": "brand[70]",
+        "globalDark": "brand[110]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForeground2Hover": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForeground2",
+        "state": "Hover",
+        "globalLight": "brand[60]",
+        "globalDark": "brand[130]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForeground2Pressed": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForeground2",
+        "state": "Pressed",
+        "globalLight": "brand[30]",
+        "globalDark": "brand[160]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForegroundInverted": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForegroundInverted",
+        "state": "Rest",
+        "globalLight": "brand[100]",
+        "globalDark": "brand[80]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForegroundInvertedHover": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForegroundInverted",
+        "state": "Hover",
+        "globalLight": "brand[110]",
+        "globalDark": "brand[70]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForegroundInvertedPressed": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForegroundInverted",
+        "state": "Pressed",
+        "globalLight": "brand[100]",
+        "globalDark": "brand[60]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForegroundOnLight": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForegroundOnLight",
+        "state": "Rest",
+        "globalLight": "brand[80]",
+        "globalDark": "brand[80]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForegroundOnLightHover": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForegroundOnLight",
+        "state": "Hover",
+        "globalLight": "brand[70]",
+        "globalDark": "brand[70]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForegroundOnLightPressed": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForegroundOnLight",
+        "state": "Pressed",
+        "globalLight": "brand[50]",
+        "globalDark": "brand[50]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandForegroundOnLightSelected": {
+        "category": "Brand Foreground",
+        "categoryId": "brand-foreground",
+        "group": "colorBrandForegroundOnLight",
+        "state": "Selected",
+        "globalLight": "brand[60]",
+        "globalDark": "brand[60]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandStroke1": {
+        "category": "Brand Stroke",
+        "categoryId": "brand-stroke",
+        "group": "colorBrandStroke1",
+        "state": "Rest",
+        "globalLight": "brand[80]",
+        "globalDark": "brand[100]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandStroke2": {
+        "category": "Brand Stroke",
+        "categoryId": "brand-stroke",
+        "group": "colorBrandStroke2",
+        "state": "Rest",
+        "globalLight": "brand[140]",
+        "globalDark": "brand[50]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandStroke2Hover": {
+        "category": "Brand Stroke",
+        "categoryId": "brand-stroke",
+        "group": "colorBrandStroke2",
+        "state": "Hover",
+        "globalLight": "brand[120]",
+        "globalDark": "brand[50]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandStroke2Pressed": {
+        "category": "Brand Stroke",
+        "categoryId": "brand-stroke",
+        "group": "colorBrandStroke2",
+        "state": "Pressed",
+        "globalLight": "brand[80]",
+        "globalDark": "brand[30]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandStroke2Contrast": {
+        "category": "Brand Stroke",
+        "categoryId": "brand-stroke",
+        "group": "colorBrandStroke2Contrast",
+        "state": "Rest",
+        "globalLight": "brand[140]",
+        "globalDark": "brand[50]",
+        "source": "/color-tokens/"
+      },
+      "colorBrandShadowAmbient": {
+        "category": "Brand Shadow",
+        "categoryId": "brand-shadow",
+        "group": "colorBrandShadowAmbient",
+        "state": "Rest",
+        "globalLight": "rgba(0,0,0,0.30)",
+        "globalDark": "rgba(0,0,0,0.30)",
+        "source": "/color-tokens/"
+      },
+      "colorBrandShadowKey": {
+        "category": "Brand Shadow",
+        "categoryId": "brand-shadow",
+        "group": "colorBrandShadowKey",
+        "state": "Rest",
+        "globalLight": "rgba(0,0,0,0.25)",
+        "globalDark": "rgba(0,0,0,0.25)",
+        "source": "/color-tokens/"
+      },
+      "colorStatusDangerBackground1": {
+        "category": "Status Background",
+        "categoryId": "status-background",
+        "group": "colorStatusDangerBackground1",
+        "state": "Rest",
+        "globalLight": "cranberry[tint60]",
+        "globalDark": "cranberry[shade40]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusDangerBackground2": {
+        "category": "Status Background",
+        "categoryId": "status-background",
+        "group": "colorStatusDangerBackground2",
+        "state": "Rest",
+        "globalLight": "cranberry[tint40]",
+        "globalDark": "cranberry[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusDangerBackground3": {
+        "category": "Status Background",
+        "categoryId": "status-background",
+        "group": "colorStatusDangerBackground3",
+        "state": "Rest",
+        "globalLight": "cranberry[primary]",
+        "globalDark": "cranberry[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusDangerBackground3Hover": {
+        "category": "Status Background",
+        "categoryId": "status-background",
+        "group": "colorStatusDangerBackground3",
+        "state": "Hover",
+        "globalLight": "cranberry[shade10]",
+        "globalDark": "cranberry[shade10]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusDangerBackground3Pressed": {
+        "category": "Status Background",
+        "categoryId": "status-background",
+        "group": "colorStatusDangerBackground3",
+        "state": "Pressed",
+        "globalLight": "cranberry[shade20]",
+        "globalDark": "cranberry[shade20]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusSuccessBackground1": {
+        "category": "Status Background",
+        "categoryId": "status-background",
+        "group": "colorStatusSuccessBackground1",
+        "state": "Rest",
+        "globalLight": "green[tint60]",
+        "globalDark": "green[shade40]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusSuccessBackground2": {
+        "category": "Status Background",
+        "categoryId": "status-background",
+        "group": "colorStatusSuccessBackground2",
+        "state": "Rest",
+        "globalLight": "green[tint40]",
+        "globalDark": "green[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusSuccessBackground3": {
+        "category": "Status Background",
+        "categoryId": "status-background",
+        "group": "colorStatusSuccessBackground3",
+        "state": "Rest",
+        "globalLight": "green[primary]",
+        "globalDark": "green[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusWarningBackground1": {
+        "category": "Status Background",
+        "categoryId": "status-background",
+        "group": "colorStatusWarningBackground1",
+        "state": "Rest",
+        "globalLight": "orange[tint60]",
+        "globalDark": "orange[shade40]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusWarningBackground2": {
+        "category": "Status Background",
+        "categoryId": "status-background",
+        "group": "colorStatusWarningBackground2",
+        "state": "Rest",
+        "globalLight": "orange[tint40]",
+        "globalDark": "orange[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusWarningBackground3": {
+        "category": "Status Background",
+        "categoryId": "status-background",
+        "group": "colorStatusWarningBackground3",
+        "state": "Rest",
+        "globalLight": "orange[primary]",
+        "globalDark": "orange[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusDangerForeground1": {
+        "category": "Status Foreground",
+        "categoryId": "status-foreground",
+        "group": "colorStatusDangerForeground1",
+        "state": "Rest",
+        "globalLight": "cranberry[shade10]",
+        "globalDark": "cranberry[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusDangerForeground2": {
+        "category": "Status Foreground",
+        "categoryId": "status-foreground",
+        "group": "colorStatusDangerForeground2",
+        "state": "Rest",
+        "globalLight": "cranberry[shade30]",
+        "globalDark": "cranberry[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusDangerForeground3": {
+        "category": "Status Foreground",
+        "categoryId": "status-foreground",
+        "group": "colorStatusDangerForeground3",
+        "state": "Rest",
+        "globalLight": "cranberry[primary]",
+        "globalDark": "cranberry[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusDangerForegroundInverted": {
+        "category": "Status Foreground",
+        "categoryId": "status-foreground",
+        "group": "colorStatusDangerForegroundInverted",
+        "state": "Rest",
+        "globalLight": "cranberry[tint30]",
+        "globalDark": "cranberry[shade10]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusSuccessForeground1": {
+        "category": "Status Foreground",
+        "categoryId": "status-foreground",
+        "group": "colorStatusSuccessForeground1",
+        "state": "Rest",
+        "globalLight": "green[shade10]",
+        "globalDark": "green[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusSuccessForeground2": {
+        "category": "Status Foreground",
+        "categoryId": "status-foreground",
+        "group": "colorStatusSuccessForeground2",
+        "state": "Rest",
+        "globalLight": "green[shade30]",
+        "globalDark": "green[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusSuccessForeground3": {
+        "category": "Status Foreground",
+        "categoryId": "status-foreground",
+        "group": "colorStatusSuccessForeground3",
+        "state": "Rest",
+        "globalLight": "green[primary]",
+        "globalDark": "green[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusSuccessForegroundInverted": {
+        "category": "Status Foreground",
+        "categoryId": "status-foreground",
+        "group": "colorStatusSuccessForegroundInverted",
+        "state": "Rest",
+        "globalLight": "green[tint30]",
+        "globalDark": "green[shade10]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusWarningForeground1": {
+        "category": "Status Foreground",
+        "categoryId": "status-foreground",
+        "group": "colorStatusWarningForeground1",
+        "state": "Rest",
+        "globalLight": "orange[shade20]",
+        "globalDark": "orange[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusWarningForeground2": {
+        "category": "Status Foreground",
+        "categoryId": "status-foreground",
+        "group": "colorStatusWarningForeground2",
+        "state": "Rest",
+        "globalLight": "orange[shade30]",
+        "globalDark": "orange[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusWarningForeground3": {
+        "category": "Status Foreground",
+        "categoryId": "status-foreground",
+        "group": "colorStatusWarningForeground3",
+        "state": "Rest",
+        "globalLight": "orange[shade20]",
+        "globalDark": "orange[tint20]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusWarningForegroundInverted": {
+        "category": "Status Foreground",
+        "categoryId": "status-foreground",
+        "group": "colorStatusWarningForegroundInverted",
+        "state": "Rest",
+        "globalLight": "orange[tint30]",
+        "globalDark": "orange[shade20]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusDangerBorderActive": {
+        "category": "Status Stroke",
+        "categoryId": "status-stroke",
+        "group": "colorStatusDangerBorderActive",
+        "state": "Rest",
+        "globalLight": "cranberry[primary]",
+        "globalDark": "cranberry[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusDangerBorder1": {
+        "category": "Status Stroke",
+        "categoryId": "status-stroke",
+        "group": "colorStatusDangerBorder1",
+        "state": "Rest",
+        "globalLight": "cranberry[tint40]",
+        "globalDark": "cranberry[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusDangerBorder2": {
+        "category": "Status Stroke",
+        "categoryId": "status-stroke",
+        "group": "colorStatusDangerBorder2",
+        "state": "Rest",
+        "globalLight": "cranberry[primary]",
+        "globalDark": "cranberry[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusSuccessBorderActive": {
+        "category": "Status Stroke",
+        "categoryId": "status-stroke",
+        "group": "colorStatusSuccessBorderActive",
+        "state": "Rest",
+        "globalLight": "green[primary]",
+        "globalDark": "green[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusSuccessBorder1": {
+        "category": "Status Stroke",
+        "categoryId": "status-stroke",
+        "group": "colorStatusSuccessBorder1",
+        "state": "Rest",
+        "globalLight": "green[tint40]",
+        "globalDark": "green[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusSuccessBorder2": {
+        "category": "Status Stroke",
+        "categoryId": "status-stroke",
+        "group": "colorStatusSuccessBorder2",
+        "state": "Rest",
+        "globalLight": "green[primary]",
+        "globalDark": "green[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusWarningBorderActive": {
+        "category": "Status Stroke",
+        "categoryId": "status-stroke",
+        "group": "colorStatusWarningBorderActive",
+        "state": "Rest",
+        "globalLight": "orange[primary]",
+        "globalDark": "orange[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusWarningBorder1": {
+        "category": "Status Stroke",
+        "categoryId": "status-stroke",
+        "group": "colorStatusWarningBorder1",
+        "state": "Rest",
+        "globalLight": "orange[tint40]",
+        "globalDark": "orange[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorStatusWarningBorder2": {
+        "category": "Status Stroke",
+        "categoryId": "status-stroke",
+        "group": "colorStatusWarningBorder2",
+        "state": "Rest",
+        "globalLight": "orange[shade20]",
+        "globalDark": "orange[tint20]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRedBackground1": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteRedBackground1",
+        "state": "Rest",
+        "globalLight": "red[tint60]",
+        "globalDark": "red[shade40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRedBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteRedBackground2",
+        "state": "Rest",
+        "globalLight": "red[tint40]",
+        "globalDark": "red[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRedBackground3": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteRedBackground3",
+        "state": "Rest",
+        "globalLight": "red[primary]",
+        "globalDark": "red[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGreenBackground1": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteGreenBackground1",
+        "state": "Rest",
+        "globalLight": "green[tint60]",
+        "globalDark": "green[shade40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGreenBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteGreenBackground2",
+        "state": "Rest",
+        "globalLight": "green[tint40]",
+        "globalDark": "green[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGreenBackground3": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteGreenBackground3",
+        "state": "Rest",
+        "globalLight": "green[primary]",
+        "globalDark": "green[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkOrangeBackground1": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteDarkOrangeBackground1",
+        "state": "Rest",
+        "globalLight": "darkOrange[tint60]",
+        "globalDark": "darkOrange[shade40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkOrangeBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteDarkOrangeBackground2",
+        "state": "Rest",
+        "globalLight": "darkOrange[tint40]",
+        "globalDark": "darkOrange[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkOrangeBackground3": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteDarkOrangeBackground3",
+        "state": "Rest",
+        "globalLight": "darkOrange[primary]",
+        "globalDark": "darkOrange[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteYellowBackground1": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteYellowBackground1",
+        "state": "Rest",
+        "globalLight": "yellow[tint60]",
+        "globalDark": "yellow[shade40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteYellowBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteYellowBackground2",
+        "state": "Rest",
+        "globalLight": "yellow[tint40]",
+        "globalDark": "yellow[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteYellowBackground3": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteYellowBackground3",
+        "state": "Rest",
+        "globalLight": "yellow[primary]",
+        "globalDark": "yellow[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBerryBackground1": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteBerryBackground1",
+        "state": "Rest",
+        "globalLight": "berry[tint60]",
+        "globalDark": "berry[shade40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBerryBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteBerryBackground2",
+        "state": "Rest",
+        "globalLight": "berry[tint40]",
+        "globalDark": "berry[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBerryBackground3": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteBerryBackground3",
+        "state": "Rest",
+        "globalLight": "berry[primary]",
+        "globalDark": "berry[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLightGreenBackground1": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteLightGreenBackground1",
+        "state": "Rest",
+        "globalLight": "lightGreen[tint60]",
+        "globalDark": "lightGreen[shade40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLightGreenBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteLightGreenBackground2",
+        "state": "Rest",
+        "globalLight": "lightGreen[tint40]",
+        "globalDark": "lightGreen[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLightGreenBackground3": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteLightGreenBackground3",
+        "state": "Rest",
+        "globalLight": "lightGreen[primary]",
+        "globalDark": "lightGreen[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMarigoldBackground1": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteMarigoldBackground1",
+        "state": "Rest",
+        "globalLight": "marigold[tint60]",
+        "globalDark": "marigold[shade40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMarigoldBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteMarigoldBackground2",
+        "state": "Rest",
+        "globalLight": "marigold[tint40]",
+        "globalDark": "marigold[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMarigoldBackground3": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteMarigoldBackground3",
+        "state": "Rest",
+        "globalLight": "marigold[primary]",
+        "globalDark": "marigold[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkRedBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteDarkRedBackground2",
+        "state": "Rest",
+        "globalLight": "darkRed[tint40]",
+        "globalDark": "darkRed[shade20]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteCranberryBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteCranberryBackground2",
+        "state": "Rest",
+        "globalLight": "cranberry[tint40]",
+        "globalDark": "cranberry[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePumpkinBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPalettePumpkinBackground2",
+        "state": "Rest",
+        "globalLight": "pumpkin[tint40]",
+        "globalDark": "pumpkin[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePeachBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPalettePeachBackground2",
+        "state": "Rest",
+        "globalLight": "peach[tint40]",
+        "globalDark": "peach[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGoldBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteGoldBackground2",
+        "state": "Rest",
+        "globalLight": "gold[tint40]",
+        "globalDark": "gold[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBrassBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteBrassBackground2",
+        "state": "Rest",
+        "globalLight": "brass[tint40]",
+        "globalDark": "brass[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBrownBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteBrownBackground2",
+        "state": "Rest",
+        "globalLight": "brown[tint40]",
+        "globalDark": "brown[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteForestBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteForestBackground2",
+        "state": "Rest",
+        "globalLight": "forest[tint40]",
+        "globalDark": "forest[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteSeafoamBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteSeafoamBackground2",
+        "state": "Rest",
+        "globalLight": "seafoam[tint40]",
+        "globalDark": "seafoam[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkGreenBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteDarkGreenBackground2",
+        "state": "Rest",
+        "globalLight": "darkGreen[tint40]",
+        "globalDark": "darkGreen[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLightTealBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteLightTealBackground2",
+        "state": "Rest",
+        "globalLight": "lightTeal[tint40]",
+        "globalDark": "lightTeal[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteTealBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteTealBackground2",
+        "state": "Rest",
+        "globalLight": "teal[tint40]",
+        "globalDark": "teal[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteSteelBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteSteelBackground2",
+        "state": "Rest",
+        "globalLight": "steel[tint40]",
+        "globalDark": "steel[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBlueBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteBlueBackground2",
+        "state": "Rest",
+        "globalLight": "blue[tint40]",
+        "globalDark": "blue[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRoyalBlueBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteRoyalBlueBackground2",
+        "state": "Rest",
+        "globalLight": "royalBlue[tint40]",
+        "globalDark": "royalBlue[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteCornflowerBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteCornflowerBackground2",
+        "state": "Rest",
+        "globalLight": "cornflower[tint40]",
+        "globalDark": "cornflower[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteNavyBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteNavyBackground2",
+        "state": "Rest",
+        "globalLight": "navy[tint40]",
+        "globalDark": "navy[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLavenderBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteLavenderBackground2",
+        "state": "Rest",
+        "globalLight": "lavender[tint40]",
+        "globalDark": "lavender[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePurpleBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPalettePurpleBackground2",
+        "state": "Rest",
+        "globalLight": "purple[tint40]",
+        "globalDark": "purple[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGrapeBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteGrapeBackground2",
+        "state": "Rest",
+        "globalLight": "grape[tint40]",
+        "globalDark": "grape[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLilacBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteLilacBackground2",
+        "state": "Rest",
+        "globalLight": "lilac[tint40]",
+        "globalDark": "lilac[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePinkBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPalettePinkBackground2",
+        "state": "Rest",
+        "globalLight": "pink[tint40]",
+        "globalDark": "pink[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMagentaBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteMagentaBackground2",
+        "state": "Rest",
+        "globalLight": "magenta[tint40]",
+        "globalDark": "magenta[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePlumBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPalettePlumBackground2",
+        "state": "Rest",
+        "globalLight": "plum[tint40]",
+        "globalDark": "plum[shade20]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBeigeBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteBeigeBackground2",
+        "state": "Rest",
+        "globalLight": "beige[tint40]",
+        "globalDark": "beige[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMinkBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteMinkBackground2",
+        "state": "Rest",
+        "globalLight": "mink[tint40]",
+        "globalDark": "mink[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePlatinumBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPalettePlatinumBackground2",
+        "state": "Rest",
+        "globalLight": "platinum[tint40]",
+        "globalDark": "platinum[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteAnchorBackground2": {
+        "category": "Generic Status Background",
+        "categoryId": "generic-status-background",
+        "group": "colorPaletteAnchorBackground2",
+        "state": "Rest",
+        "globalLight": "anchor[tint40]",
+        "globalDark": "anchor[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRedForeground1": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteRedForeground1",
+        "state": "Rest",
+        "globalLight": "red[shade10]",
+        "globalDark": "red[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRedForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteRedForeground2",
+        "state": "Rest",
+        "globalLight": "red[shade30]",
+        "globalDark": "red[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRedForeground3": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteRedForeground3",
+        "state": "Rest",
+        "globalLight": "red[primary]",
+        "globalDark": "red[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGreenForeground1": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteGreenForeground1",
+        "state": "Rest",
+        "globalLight": "green[shade10]",
+        "globalDark": "green[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGreenForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteGreenForeground2",
+        "state": "Rest",
+        "globalLight": "green[shade30]",
+        "globalDark": "green[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGreenForeground3": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteGreenForeground3",
+        "state": "Rest",
+        "globalLight": "green[primary]",
+        "globalDark": "green[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkOrangeForeground1": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteDarkOrangeForeground1",
+        "state": "Rest",
+        "globalLight": "darkOrange[shade10]",
+        "globalDark": "darkOrange[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkOrangeForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteDarkOrangeForeground2",
+        "state": "Rest",
+        "globalLight": "darkOrange[shade30]",
+        "globalDark": "darkOrange[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkOrangeForeground3": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteDarkOrangeForeground3",
+        "state": "Rest",
+        "globalLight": "darkOrange[primary]",
+        "globalDark": "darkOrange[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteYellowForeground1": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteYellowForeground1",
+        "state": "Rest",
+        "globalLight": "yellow[shade30]",
+        "globalDark": "yellow[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteYellowForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteYellowForeground2",
+        "state": "Rest",
+        "globalLight": "yellow[shade30]",
+        "globalDark": "yellow[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteYellowForeground3": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteYellowForeground3",
+        "state": "Rest",
+        "globalLight": "yellow[primary]",
+        "globalDark": "yellow[tint20]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBerryForeground1": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteBerryForeground1",
+        "state": "Rest",
+        "globalLight": "berry[shade10]",
+        "globalDark": "berry[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBerryForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteBerryForeground2",
+        "state": "Rest",
+        "globalLight": "berry[shade30]",
+        "globalDark": "berry[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBerryForeground3": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteBerryForeground3",
+        "state": "Rest",
+        "globalLight": "berry[primary]",
+        "globalDark": "berry[tint20]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLightGreenForeground1": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteLightGreenForeground1",
+        "state": "Rest",
+        "globalLight": "lightGreen[shade10]",
+        "globalDark": "lightGreen[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLightGreenForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteLightGreenForeground2",
+        "state": "Rest",
+        "globalLight": "lightGreen[shade30]",
+        "globalDark": "lightGreen[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLightGreenForeground3": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteLightGreenForeground3",
+        "state": "Rest",
+        "globalLight": "lightGreen[primary]",
+        "globalDark": "lightGreen[tint20]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMarigoldForeground1": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteMarigoldForeground1",
+        "state": "Rest",
+        "globalLight": "marigold[shade10]",
+        "globalDark": "marigold[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMarigoldForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteMarigoldForeground2",
+        "state": "Rest",
+        "globalLight": "marigold[shade30]",
+        "globalDark": "marigold[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMarigoldForeground3": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteMarigoldForeground3",
+        "state": "Rest",
+        "globalLight": "marigold[primary]",
+        "globalDark": "marigold[tint20]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRedForegroundInverted": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteRedForegroundInverted",
+        "state": "Rest",
+        "globalLight": "red[tint20]",
+        "globalDark": "red[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGreenForegroundInverted": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteGreenForegroundInverted",
+        "state": "Rest",
+        "globalLight": "green[tint20]",
+        "globalDark": "green[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteYellowForegroundInverted": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteYellowForegroundInverted",
+        "state": "Rest",
+        "globalLight": "yellow[tint40]",
+        "globalDark": "yellow[shade30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkRedForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteDarkRedForeground2",
+        "state": "Rest",
+        "globalLight": "darkRed[shade30]",
+        "globalDark": "darkRed[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteCranberryForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteCranberryForeground2",
+        "state": "Rest",
+        "globalLight": "cranberry[shade30]",
+        "globalDark": "cranberry[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePumpkinForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPalettePumpkinForeground2",
+        "state": "Rest",
+        "globalLight": "pumpkin[shade30]",
+        "globalDark": "pumpkin[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePeachForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPalettePeachForeground2",
+        "state": "Rest",
+        "globalLight": "peach[shade30]",
+        "globalDark": "peach[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGoldForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteGoldForeground2",
+        "state": "Rest",
+        "globalLight": "gold[shade30]",
+        "globalDark": "gold[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBrassForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteBrassForeground2",
+        "state": "Rest",
+        "globalLight": "brass[shade30]",
+        "globalDark": "brass[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBrownForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteBrownForeground2",
+        "state": "Rest",
+        "globalLight": "brown[shade30]",
+        "globalDark": "brown[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteForestForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteForestForeground2",
+        "state": "Rest",
+        "globalLight": "forest[shade30]",
+        "globalDark": "forest[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteSeafoamForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteSeafoamForeground2",
+        "state": "Rest",
+        "globalLight": "seafoam[shade30]",
+        "globalDark": "seafoam[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkGreenForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteDarkGreenForeground2",
+        "state": "Rest",
+        "globalLight": "darkGreen[shade30]",
+        "globalDark": "darkGreen[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLightTealForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteLightTealForeground2",
+        "state": "Rest",
+        "globalLight": "lightTeal[shade30]",
+        "globalDark": "lightTeal[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteTealForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteTealForeground2",
+        "state": "Rest",
+        "globalLight": "teal[shade30]",
+        "globalDark": "teal[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteSteelForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteSteelForeground2",
+        "state": "Rest",
+        "globalLight": "steel[shade30]",
+        "globalDark": "steel[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBlueForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteBlueForeground2",
+        "state": "Rest",
+        "globalLight": "blue[shade30]",
+        "globalDark": "blue[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRoyalBlueForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteRoyalBlueForeground2",
+        "state": "Rest",
+        "globalLight": "royalBlue[shade30]",
+        "globalDark": "royalBlue[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteCornflowerForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteCornflowerForeground2",
+        "state": "Rest",
+        "globalLight": "cornflower[shade30]",
+        "globalDark": "cornflower[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteNavyForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteNavyForeground2",
+        "state": "Rest",
+        "globalLight": "navy[shade30]",
+        "globalDark": "navy[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLavenderForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteLavenderForeground2",
+        "state": "Rest",
+        "globalLight": "lavender[shade30]",
+        "globalDark": "lavender[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePurpleForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPalettePurpleForeground2",
+        "state": "Rest",
+        "globalLight": "purple[shade30]",
+        "globalDark": "purple[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGrapeForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteGrapeForeground2",
+        "state": "Rest",
+        "globalLight": "grape[shade30]",
+        "globalDark": "grape[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLilacForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteLilacForeground2",
+        "state": "Rest",
+        "globalLight": "lilac[shade30]",
+        "globalDark": "lilac[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePinkForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPalettePinkForeground2",
+        "state": "Rest",
+        "globalLight": "pink[shade30]",
+        "globalDark": "pink[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMagentaForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteMagentaForeground2",
+        "state": "Rest",
+        "globalLight": "magenta[shade30]",
+        "globalDark": "magenta[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePlumForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPalettePlumForeground2",
+        "state": "Rest",
+        "globalLight": "plum[shade30]",
+        "globalDark": "plum[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBeigeForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteBeigeForeground2",
+        "state": "Rest",
+        "globalLight": "beige[shade30]",
+        "globalDark": "beige[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMinkForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteMinkForeground2",
+        "state": "Rest",
+        "globalLight": "mink[shade30]",
+        "globalDark": "mink[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePlatinumForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPalettePlatinumForeground2",
+        "state": "Rest",
+        "globalLight": "platinum[shade30]",
+        "globalDark": "platinum[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteAnchorForeground2": {
+        "category": "Generic Status Foreground",
+        "categoryId": "generic-status-foreground",
+        "group": "colorPaletteAnchorForeground2",
+        "state": "Rest",
+        "globalLight": "anchor[shade30]",
+        "globalDark": "anchor[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRedBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteRedBorderActive",
+        "state": "Rest",
+        "globalLight": "red[primary]",
+        "globalDark": "red[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRedBorder1": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteRedBorder1",
+        "state": "Rest",
+        "globalLight": "red[tint40]",
+        "globalDark": "red[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRedBorder2": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteRedBorder2",
+        "state": "Rest",
+        "globalLight": "red[primary]",
+        "globalDark": "red[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGreenBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteGreenBorderActive",
+        "state": "Rest",
+        "globalLight": "green[primary]",
+        "globalDark": "green[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGreenBorder1": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteGreenBorder1",
+        "state": "Rest",
+        "globalLight": "green[tint40]",
+        "globalDark": "green[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGreenBorder2": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteGreenBorder2",
+        "state": "Rest",
+        "globalLight": "green[primary]",
+        "globalDark": "green[tint40]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkOrangeBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteDarkOrangeBorderActive",
+        "state": "Rest",
+        "globalLight": "darkOrange[primary]",
+        "globalDark": "darkOrange[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkOrangeBorder1": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteDarkOrangeBorder1",
+        "state": "Rest",
+        "globalLight": "darkOrange[tint40]",
+        "globalDark": "darkOrange[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkOrangeBorder2": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteDarkOrangeBorder2",
+        "state": "Rest",
+        "globalLight": "darkOrange[primary]",
+        "globalDark": "darkOrange[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteYellowBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteYellowBorderActive",
+        "state": "Rest",
+        "globalLight": "yellow[primary]",
+        "globalDark": "yellow[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteYellowBorder1": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteYellowBorder1",
+        "state": "Rest",
+        "globalLight": "yellow[tint40]",
+        "globalDark": "yellow[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteYellowBorder2": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteYellowBorder2",
+        "state": "Rest",
+        "globalLight": "yellow[primary]",
+        "globalDark": "yellow[tint20]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBerryBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteBerryBorderActive",
+        "state": "Rest",
+        "globalLight": "berry[primary]",
+        "globalDark": "berry[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBerryBorder1": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteBerryBorder1",
+        "state": "Rest",
+        "globalLight": "berry[tint40]",
+        "globalDark": "berry[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBerryBorder2": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteBerryBorder2",
+        "state": "Rest",
+        "globalLight": "berry[primary]",
+        "globalDark": "berry[tint20]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLightGreenBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteLightGreenBorderActive",
+        "state": "Rest",
+        "globalLight": "lightGreen[primary]",
+        "globalDark": "lightGreen[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLightGreenBorder1": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteLightGreenBorder1",
+        "state": "Rest",
+        "globalLight": "lightGreen[tint40]",
+        "globalDark": "lightGreen[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLightGreenBorder2": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteLightGreenBorder2",
+        "state": "Rest",
+        "globalLight": "lightGreen[primary]",
+        "globalDark": "lightGreen[tint20]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMarigoldBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteMarigoldBorderActive",
+        "state": "Rest",
+        "globalLight": "marigold[primary]",
+        "globalDark": "marigold[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMarigoldBorder1": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteMarigoldBorder1",
+        "state": "Rest",
+        "globalLight": "marigold[tint40]",
+        "globalDark": "marigold[primary]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMarigoldBorder2": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteMarigoldBorder2",
+        "state": "Rest",
+        "globalLight": "marigold[primary]",
+        "globalDark": "marigold[tint20]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkRedBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteDarkRedBorderActive",
+        "state": "Rest",
+        "globalLight": "darkRed[primary]",
+        "globalDark": "darkRed[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteCranberryBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteCranberryBorderActive",
+        "state": "Rest",
+        "globalLight": "cranberry[primary]",
+        "globalDark": "cranberry[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePumpkinBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPalettePumpkinBorderActive",
+        "state": "Rest",
+        "globalLight": "pumpkin[primary]",
+        "globalDark": "pumpkin[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePeachBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPalettePeachBorderActive",
+        "state": "Rest",
+        "globalLight": "peach[primary]",
+        "globalDark": "peach[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGoldBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteGoldBorderActive",
+        "state": "Rest",
+        "globalLight": "gold[primary]",
+        "globalDark": "gold[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBrassBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteBrassBorderActive",
+        "state": "Rest",
+        "globalLight": "brass[primary]",
+        "globalDark": "brass[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBrownBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteBrownBorderActive",
+        "state": "Rest",
+        "globalLight": "brown[primary]",
+        "globalDark": "brown[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteForestBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteForestBorderActive",
+        "state": "Rest",
+        "globalLight": "forest[primary]",
+        "globalDark": "forest[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteSeafoamBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteSeafoamBorderActive",
+        "state": "Rest",
+        "globalLight": "seafoam[primary]",
+        "globalDark": "seafoam[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteDarkGreenBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteDarkGreenBorderActive",
+        "state": "Rest",
+        "globalLight": "darkGreen[primary]",
+        "globalDark": "darkGreen[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLightTealBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteLightTealBorderActive",
+        "state": "Rest",
+        "globalLight": "lightTeal[primary]",
+        "globalDark": "lightTeal[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteTealBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteTealBorderActive",
+        "state": "Rest",
+        "globalLight": "teal[primary]",
+        "globalDark": "teal[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteSteelBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteSteelBorderActive",
+        "state": "Rest",
+        "globalLight": "steel[primary]",
+        "globalDark": "steel[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBlueBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteBlueBorderActive",
+        "state": "Rest",
+        "globalLight": "blue[primary]",
+        "globalDark": "blue[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteRoyalBlueBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteRoyalBlueBorderActive",
+        "state": "Rest",
+        "globalLight": "royalBlue[primary]",
+        "globalDark": "royalBlue[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteCornflowerBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteCornflowerBorderActive",
+        "state": "Rest",
+        "globalLight": "cornflower[primary]",
+        "globalDark": "cornflower[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteNavyBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteNavyBorderActive",
+        "state": "Rest",
+        "globalLight": "navy[primary]",
+        "globalDark": "navy[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLavenderBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteLavenderBorderActive",
+        "state": "Rest",
+        "globalLight": "lavender[primary]",
+        "globalDark": "lavender[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePurpleBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPalettePurpleBorderActive",
+        "state": "Rest",
+        "globalLight": "purple[primary]",
+        "globalDark": "purple[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteGrapeBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteGrapeBorderActive",
+        "state": "Rest",
+        "globalLight": "grape[primary]",
+        "globalDark": "grape[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteLilacBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteLilacBorderActive",
+        "state": "Rest",
+        "globalLight": "lilac[primary]",
+        "globalDark": "lilac[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePinkBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPalettePinkBorderActive",
+        "state": "Rest",
+        "globalLight": "pink[primary]",
+        "globalDark": "pink[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMagentaBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteMagentaBorderActive",
+        "state": "Rest",
+        "globalLight": "magenta[primary]",
+        "globalDark": "magenta[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePlumBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPalettePlumBorderActive",
+        "state": "Rest",
+        "globalLight": "plum[primary]",
+        "globalDark": "plum[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteBeigeBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteBeigeBorderActive",
+        "state": "Rest",
+        "globalLight": "beige[primary]",
+        "globalDark": "beige[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteMinkBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteMinkBorderActive",
+        "state": "Rest",
+        "globalLight": "mink[primary]",
+        "globalDark": "mink[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPalettePlatinumBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPalettePlatinumBorderActive",
+        "state": "Rest",
+        "globalLight": "platinum[primary]",
+        "globalDark": "platinum[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorPaletteAnchorBorderActive": {
+        "category": "Generic Status Stroke",
+        "categoryId": "generic-status-stroke",
+        "group": "colorPaletteAnchorBorderActive",
+        "state": "Rest",
+        "globalLight": "anchor[primary]",
+        "globalDark": "anchor[tint30]",
+        "source": "/color-tokens/"
+      },
+      "colorCompoundBrandForeground1": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorCompoundBrandForeground1",
+        "state": null,
+        "globalLight": "brand[80]",
+        "globalDark": "brand[100]",
+        "source": "/color-tokens2/"
+      },
+      "colorCompoundBrandForeground1Hover": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorCompoundBrandForeground1Hover",
+        "state": null,
+        "globalLight": "brand[70]",
+        "globalDark": "brand[110]",
+        "source": "/color-tokens2/"
+      },
+      "colorCompoundBrandForeground1Pressed": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorCompoundBrandForeground1Pressed",
+        "state": null,
+        "globalLight": "brand[60]",
+        "globalDark": "brand[90]",
+        "source": "/color-tokens2/"
+      },
+      "colorBackgroundOverlay": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorBackgroundOverlay",
+        "state": null,
+        "globalLight": "blackAlpha[40]",
+        "globalDark": "blackAlpha[50]",
+        "source": "/color-tokens2/"
+      },
+      "colorScrollbarOverlay": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorScrollbarOverlay",
+        "state": null,
+        "globalLight": "blackAlpha[50]",
+        "globalDark": "whiteAlpha[60]",
+        "source": "/color-tokens2/"
+      },
+      "colorCompoundBrandBackground": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorCompoundBrandBackground",
+        "state": null,
+        "globalLight": "brand[80]",
+        "globalDark": "brand[100]",
+        "source": "/color-tokens2/"
+      },
+      "colorCompoundBrandBackgroundHover": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorCompoundBrandBackgroundHover",
+        "state": null,
+        "globalLight": "brand[70]",
+        "globalDark": "brand[110]",
+        "source": "/color-tokens2/"
+      },
+      "colorCompoundBrandBackgroundPressed": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorCompoundBrandBackgroundPressed",
+        "state": null,
+        "globalLight": "brand[60]",
+        "globalDark": "brand[90]",
+        "source": "/color-tokens2/"
+      },
+      "colorCompoundBrandStroke": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorCompoundBrandStroke",
+        "state": null,
+        "globalLight": "brand[80]",
+        "globalDark": "brand[100]",
+        "source": "/color-tokens2/"
+      },
+      "colorCompoundBrandStrokeHover": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorCompoundBrandStrokeHover",
+        "state": null,
+        "globalLight": "brand[70]",
+        "globalDark": "brand[110]",
+        "source": "/color-tokens2/"
+      },
+      "colorCompoundBrandStrokePressed": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorCompoundBrandStrokePressed",
+        "state": null,
+        "globalLight": "brand[60]",
+        "globalDark": "brand[90]",
+        "source": "/color-tokens2/"
+      },
+      "colorStrokeFocus1": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorStrokeFocus1",
+        "state": null,
+        "globalLight": "white",
+        "globalDark": "black",
+        "source": "/color-tokens2/"
+      },
+      "colorStrokeFocus2": {
+        "category": null,
+        "categoryId": null,
+        "group": "colorStrokeFocus2",
+        "state": null,
+        "globalLight": "black",
+        "globalDark": "white",
+        "source": "/color-tokens2/"
+      }
+    },
+    "aliasReferenceMeta": {
+      "title": "Web alias colour tokens — alias token to global token slot map",
+      "what": "For every documented alias colour token: which global token slot (family[slot]) it resolves to in the light and dark web themes, plus the interaction state and the category the site files it under. Concrete hex values stay in semanticLight/semanticDark/semanticHighContrast.",
+      "docUrl": "https://fluent2.microsoft.design/color-tokens/",
+      "supplementUrl": "https://fluent2.microsoft.design/color-tokens2/",
+      "capturedAt": "2026-08-16",
+      "aliasCount": 348,
+      "aliasCountPrimary": 335,
+      "aliasCountSupplemented": 13,
+      "supplementedTokens": [
+        "colorCompoundBrandForeground1",
+        "colorCompoundBrandForeground1Hover",
+        "colorCompoundBrandForeground1Pressed",
+        "colorBackgroundOverlay",
+        "colorScrollbarOverlay",
+        "colorCompoundBrandBackground",
+        "colorCompoundBrandBackgroundHover",
+        "colorCompoundBrandBackgroundPressed",
+        "colorCompoundBrandStroke",
+        "colorCompoundBrandStrokeHover",
+        "colorCompoundBrandStrokePressed",
+        "colorStrokeFocus1",
+        "colorStrokeFocus2"
+      ],
+      "categories": [
+        {
+          "id": "neutral-background",
+          "title": "Neutral Background",
+          "groups": 16,
+          "aliases": 47
+        },
+        {
+          "id": "neutral-foreground",
+          "title": "Neutral Foreground",
+          "groups": 18,
+          "aliases": 41
+        },
+        {
+          "id": "neutral-stroke",
+          "title": "Neutral Stroke",
+          "groups": 13,
+          "aliases": 23
+        },
+        {
+          "id": "neutral-shadow",
+          "title": "Neutral Shadow",
+          "groups": 6,
+          "aliases": 6
+        },
+        {
+          "id": "brand-background",
+          "title": "Brand Background",
+          "groups": 6,
+          "aliases": 14
+        },
+        {
+          "id": "brand-foreground",
+          "title": "Brand Foreground",
+          "groups": 5,
+          "aliases": 15
+        },
+        {
+          "id": "brand-stroke",
+          "title": "Brand Stroke",
+          "groups": 3,
+          "aliases": 5
+        },
+        {
+          "id": "brand-shadow",
+          "title": "Brand Shadow",
+          "groups": 2,
+          "aliases": 2
+        },
+        {
+          "id": "status-background",
+          "title": "Status Background",
+          "groups": 9,
+          "aliases": 11
+        },
+        {
+          "id": "status-foreground",
+          "title": "Status Foreground",
+          "groups": 12,
+          "aliases": 12
+        },
+        {
+          "id": "status-stroke",
+          "title": "Status Stroke",
+          "groups": 9,
+          "aliases": 9
+        },
+        {
+          "id": "generic-status-background",
+          "title": "Generic Status Background",
+          "groups": 49,
+          "aliases": 49
+        },
+        {
+          "id": "generic-status-foreground",
+          "title": "Generic Status Foreground",
+          "groups": 52,
+          "aliases": 52
+        },
+        {
+          "id": "generic-status-stroke",
+          "title": "Generic Status Stroke",
+          "groups": 49,
+          "aliases": 49
+        }
+      ],
+      "states": {
+        "Rest": 242,
+        "Hover": 30,
+        "Pressed": 30,
+        "Selected": 25,
+        "Disabled": 8,
+        "unlabelled": 13
+      },
+      "globalSlotSyntax": "family[slot] — e.g. grey[16], brand[80], cranberry[tint60], whiteAlpha[50]. Literal values (white, black, transparent, rgba(...)) appear as-is.",
+      "verification": {
+        "method": "Every alias on /color-tokens/ carries a rendered swatch; its hex was compared with the value already in this file (extracted from the installed @fluentui/react-theme + @fluentui/tokens packages).",
+        "aliasesCrossChecked": 325,
+        "lightMismatches": 0,
+        "darkMismatches": 0,
+        "conflictPolicy": "The npm package is authoritative. Where the published page disagrees the package value is kept and the difference is recorded in \"discrepancies\" — scraped values never overwrite package values.",
+        "discrepancies": [],
+        "aliasesNotInPackage": []
+      },
+      "coverage": {
+        "packageSemanticTokens": 366,
+        "documentedOnSite": 348,
+        "undocumentedOnSite": [
+          "colorNeutralBackground7",
+          "colorNeutralBackground7Hover",
+          "colorNeutralBackground7Pressed",
+          "colorNeutralBackground7Selected",
+          "colorNeutralBackground8",
+          "colorNeutralBackgroundDisabled2",
+          "colorNeutralBackgroundInvertedHover",
+          "colorNeutralBackgroundInvertedPressed",
+          "colorNeutralBackgroundInvertedSelected",
+          "colorNeutralForeground5",
+          "colorNeutralForeground5Hover",
+          "colorNeutralForeground5Pressed",
+          "colorNeutralForeground5Selected",
+          "colorNeutralStroke4",
+          "colorNeutralStroke4Hover",
+          "colorNeutralStroke4Pressed",
+          "colorNeutralStroke4Selected",
+          "colorNeutralStrokeDisabled2"
+        ],
+        "note": "Tokens in \"undocumentedOnSite\" ship in the package and resolve normally; the published colour-token pages simply do not list them."
+      },
+      "notes": [
+        "The published pages document light and dark only — there is no high-contrast column. semanticHighContrast still comes from @fluentui/react-theme teamsHighContrastTheme.",
+        "/color-tokens2/ renders the same alias-to-global mapping as a plain table (no swatches, no headings, same <title>). It is a duplicate, not a second source: only the 13 aliases missing from /color-tokens/ were taken from it.",
+        "Shadow rows on /color-tokens2/ are truncated at the first comma of their rgba() value (published rendering defect), so shadow slots come from /color-tokens/ only.",
+        "Alias state rows map to the token name suffix: Rest = base name, Hover/Pressed/Selected/Disabled = the matching suffixed token."
+      ]
     }
   },
   "typography": {

@@ -2,13 +2,39 @@ import { z } from 'zod';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJson, textResult, provenanceFooter } from '../util.js';
 
+interface NameClassRow {
+  name: string;
+  class?: string;
+  v8?: string | null;
+  v9?: string | null;
+  hazard?: string | null;
+  severity?: string | null;
+  v8Name?: string;
+  v9Name?: string;
+  v8Import?: string | null;
+  v9Import?: string | null;
+  v8Package?: string | null;
+  v8PackageVersion?: string | null;
+  v9Package?: string | null;
+  v9PackageVersion?: string | null;
+  disambiguate?: string;
+  appliesTo?: string[];
+  v8Names?: string[];
+}
+
 interface V8Data {
   meta?: Record<string, unknown>;
   components?: Record<string, unknown>;
   exportIndex?: Record<string, string>;
   v8Only?: { tier1?: Array<{ name: string; libImport?: string; whyBlocking?: string }>; tier2Compat?: unknown };
-  collisions?: Array<{ name: string; v8?: string; v9?: string; hazard?: string }>;
+  collisions?: NameClassRow[];
   collisionIndex?: Record<string, string | string[]>;
+  renames?: NameClassRow[];
+  renameIndex?: Record<string, string | string[]>;
+  casingTraps?: NameClassRow[];
+  casingTrapIndex?: Record<string, string | string[]>;
+  behaviorTraps?: NameClassRow[];
+  behaviorTrapIndex?: Record<string, string | string[]>;
   traps?: Array<{ component: string; trap?: string; correct?: string; v8Names?: string[] }>;
   trapIndex?: Record<string, string | string[]>;
   lineage?: unknown;
@@ -51,7 +77,7 @@ export function registerV8(server: McpServer): void {
     {
       title: 'Fluent 1 (v8) symbol lookup — v9 equivalent, collisions, traps',
       description:
-        'Look up a Fluent UI React v8 (Fluent 1 / Office UI Fabric) component or export and get everything needed to use or migrate it: exact import path, whether a Fluent 2 (v9) equivalent exists, v8-only status and why it blocks migration, name collisions where v8 and v9 share an export name but behave differently, and known runtime traps. Use before writing or migrating any v8 code.',
+        'Look up a Fluent UI React v8 (Fluent 1 / Office UI Fabric) component or export and get everything needed to use or migrate it: exact import path, whether a Fluent 2 (v9) equivalent exists, v8-only status and why it blocks migration, and the four ways a v8 name misleads you in a v9 codebase — collisions (the SAME name exported by both, e.g. Button/Checkbox/Dropdown/Label/Link, with both import paths and how to alias them), casing traps (ComboBox vs Combobox), renames (v8 name -> a different v9 name), and behaviour traps (same name, changed API semantics). Use before writing or migrating any v8 code.',
       inputSchema: {
         name: z.string().describe('The v8 component or export name, e.g. "DetailsList", "Stack", "Nav", "Dialog".'),
       },
@@ -60,7 +86,15 @@ export function registerV8(server: McpServer): void {
       const data = load();
       if (!data) return textResult('Fluent 1 dataset not found at mcp/data/fluent-v8.json.');
 
-      const resolved = resolveName(name, [data.components, data.exportIndex, data.collisionIndex, data.trapIndex]);
+      const resolved = resolveName(name, [
+        data.components,
+        data.exportIndex,
+        data.collisionIndex,
+        data.renameIndex,
+        data.casingTrapIndex,
+        data.behaviorTrapIndex,
+        data.trapIndex,
+      ]);
       if (!resolved) {
         const all = new Set([
           ...Object.keys(data.components ?? {}),
@@ -89,14 +123,44 @@ export function registerV8(server: McpServer): void {
 
       // Collisions are the highest-value warning here: the names match, the code
       // compiles, and the behaviour is wrong at runtime.
-      const collisionKeys = asKeys(data.collisionIndex?.[resolved]);
-      const collisions = (data.collisions ?? []).filter(
-        (c) => c.name === resolved || collisionKeys.includes(c.name)
-      );
+      const pick = (rows: NameClassRow[] | undefined, index: Record<string, string | string[]> | undefined) => {
+        const keys = asKeys(index?.[resolved]);
+        return (rows ?? []).filter(
+          (r) => r.name === resolved || keys.includes(r.name) || (r.v8Names ?? []).includes(resolved)
+        );
+      };
+
+      const collisions = pick(data.collisions, data.collisionIndex);
       if (collisions.length) {
         out.collisions = collisions;
         out.collisionWarning =
           'v8 and v9 both export this name with different behaviour. A swap type-checks and then misbehaves at runtime — read the hazard before changing imports.';
+        out.importPaths = collisions.map((c) => ({
+          name: c.name,
+          v8: c.v8Import ?? null,
+          v9: c.v9Import ?? null,
+          disambiguate: c.disambiguate ?? null,
+        }));
+      }
+
+      const casingTraps = pick(data.casingTraps, data.casingTrapIndex);
+      if (casingTraps.length) {
+        out.casingTraps = casingTraps;
+        out.casingWarning =
+          'v8 and v9 spell this name with DIFFERENT casing for different components. The compiler cannot catch it — check the exact spelling against the import path.';
+      }
+
+      const renames = pick(data.renames, data.renameIndex);
+      if (renames.length) {
+        out.renames = renames;
+        out.renameNote = 'This v8 export has a v9 counterpart under a DIFFERENT name. Rename the symbol, do not just re-point the import.';
+      }
+
+      const behaviorTraps = pick(data.behaviorTraps, data.behaviorTrapIndex);
+      if (behaviorTraps.length) {
+        out.behaviorTraps = behaviorTraps;
+        out.behaviorWarning =
+          'The name survives but the API semantics changed. The call site must be rewritten, not just re-imported.';
       }
 
       const trapKeys = asKeys(data.trapIndex?.[resolved]);
@@ -120,7 +184,7 @@ export function registerV8(server: McpServer): void {
     {
       title: 'Fluent 1 (v8) reference — versions, theming, styling, platforms',
       description:
-        'Reference guidance for Fluent UI React v8 (Fluent 1 / Office UI Fabric): package lineage, whether to stay on v8 or migrate to Fluent 2, current support status, theming (palette, semanticColors, ThemeGenerator), the @fluentui/fluent2-theme package that gives a v8 app the Fluent 2 look without migrating, styling APIs and icons, host-platform version pins (SPFx, PCF, Dynamics, Office, Teams), the v8 to v9 migration path, and documented errors in Microsoft\'s own migration docs.',
+        'Reference guidance for Fluent UI React v8 (Fluent 1 / Office UI Fabric): package lineage, whether to stay on v8 or migrate to Fluent 2, current support status, theming (palette, semanticColors, ThemeGenerator), the @fluentui/fluent2-theme package that gives a v8 app the Fluent 2 look without migrating, styling APIs and icons, host-platform version pins (SPFx, PCF, Dynamics, Office, Teams), the v8 to v9 migration path, the v8/v9 name-class tables (collisions, renames, casing-traps, behavior-traps) computed from the upstream API-Extractor reports, and documented errors in Microsoft\'s own migration docs.',
       inputSchema: {
         section: z
           .enum([
@@ -138,6 +202,9 @@ export function registerV8(server: McpServer): void {
             'migration',
             'v8-only',
             'collisions',
+            'renames',
+            'casing-traps',
+            'behavior-traps',
             'traps',
             'docs-errata',
             'unverified',
@@ -166,6 +233,9 @@ export function registerV8(server: McpServer): void {
         migration: data.migration,
         'v8-only': data.v8Only,
         collisions: data.collisions,
+        renames: data.renames,
+        'casing-traps': data.casingTraps,
+        'behavior-traps': data.behaviorTraps,
         traps: data.traps,
         'docs-errata': data.docsErrata,
         unverified: data.unverified,

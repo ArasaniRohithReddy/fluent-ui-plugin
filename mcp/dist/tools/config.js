@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { resolve, join, dirname } from 'node:path';
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import { textResult } from '../util.js';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
+import { textResult, DATA_DIR } from '../util.js';
 /**
  * User-defined presets config (fluent.config.json) + persistent agent memory
  * (.fluent/memory.json). Zero-config safe: every tool falls back to built-in
@@ -134,17 +134,46 @@ function coerceForPath(dotPath, value) {
 // ---------------------------------------------------------------------------
 /** Parse a JSON file, returning null on missing / empty / unreadable / corrupt. Never throws. */
 function readJsonSafe(file) {
+    return readJsonState(file).value;
+}
+function readJsonState(file) {
+    let raw;
     try {
         if (!existsSync(file))
-            return null;
-        const raw = readFileSync(file, 'utf8').trim();
-        if (!raw)
-            return null;
-        return JSON.parse(raw);
+            return { exists: false, parsed: false, value: null };
+        raw = readFileSync(file, 'utf8').trim();
     }
-    catch {
-        return null;
+    catch (e) {
+        return {
+            exists: true,
+            parsed: false,
+            value: null,
+            error: `unreadable: ${e instanceof Error ? e.message : String(e)}`,
+        };
     }
+    if (!raw)
+        return { exists: false, parsed: false, value: null };
+    let parsedValue;
+    try {
+        parsedValue = JSON.parse(raw);
+    }
+    catch (e) {
+        return {
+            exists: true,
+            parsed: false,
+            value: null,
+            error: `not valid JSON: ${e instanceof Error ? e.message : String(e)}`,
+        };
+    }
+    if (!parsedValue || typeof parsedValue !== 'object' || Array.isArray(parsedValue)) {
+        return {
+            exists: true,
+            parsed: false,
+            value: null,
+            error: `expected a JSON object at the top level, found ${Array.isArray(parsedValue) ? 'an array' : typeof parsedValue}`,
+        };
+    }
+    return { exists: true, parsed: true, value: parsedValue };
 }
 /** Write JSON (pretty, trailing newline), creating parent directories as needed. */
 function writeJson(file, data) {
@@ -187,6 +216,52 @@ function slugify(s) {
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '')
         .slice(0, 60);
+}
+function describeLocalOverlay() {
+    const dir = join(DATA_DIR, 'local');
+    const base = {
+        dir,
+        what: 'Guidance withheld from the published repo for licensing reasons (sign-in-gated Microsoft pages; see NOTICE). ' +
+            'The published datasets ship the facts plus a docUrl; a reader who has access can keep the full text here and the ' +
+            'tools merge it back at runtime.',
+    };
+    let names = [];
+    try {
+        if (!existsSync(dir))
+            return { present: false, ...base, files: [], totalRecords: 0, note: 'Not present — this checkout returns exactly what a fresh clone returns.' };
+        names = readdirSync(dir).filter((n) => n.toLowerCase().endsWith('.json')).sort();
+    }
+    catch (e) {
+        return { present: false, ...base, files: [], totalRecords: 0, error: e instanceof Error ? e.message : String(e) };
+    }
+    if (!names.length) {
+        return { present: false, ...base, files: [], totalRecords: 0, note: 'Directory exists but holds no overlay files — output matches a fresh clone.' };
+    }
+    const files = [];
+    let totalRecords = 0;
+    for (const file of names) {
+        const state = readJsonState(join(dir, file));
+        if (!state.parsed || !state.value) {
+            files.push({ file, records: 0, error: state.error ?? 'unreadable' });
+            continue;
+        }
+        const keys = Object.keys(state.value);
+        totalRecords += keys.length;
+        // Record names are the human titles/slugs the tools key on; listing a few
+        // makes the coverage concrete without dumping the withheld content itself.
+        files.push({ file, records: keys.length, keys: keys.slice(0, 12) });
+    }
+    return {
+        present: true,
+        ...base,
+        files,
+        totalRecords,
+        note: `This checkout restores ${totalRecords} record(s) from ${files.length} overlay file(s). Responses built from them are ` +
+            'marked $provenance.source:"local-overlay" (fluent_design_guidance). A fresh clone returns the published stub for ' +
+            'those records instead — same facts and docUrl, no prose.',
+        agentInstruction: 'When demoing or documenting output, state which records came from the overlay: a user of the published plugin ' +
+            'cannot reproduce them. Never copy overlay text into the repo.',
+    };
 }
 function randomId() {
     return 'decision-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
@@ -237,6 +312,151 @@ function collectLeaves(obj, prefix = '', out = {}) {
 const KNOWN_PRESET_PATHS = new Set(Object.keys(collectLeaves(DEFAULTS)));
 function isKnownPresetPath(p) {
     return KNOWN_PRESET_PATHS.has(p);
+}
+// ---------------------------------------------------------------------------
+// Value validation
+// ---------------------------------------------------------------------------
+//
+// fluent_set_config used to write anything: `nope.nothere` was accepted as a
+// setting and `brand.color = "not-a-color"` was persisted even though
+// fluent_generate_theme and fluent_generate_powerbi_theme both hard-reject that
+// value. Persisting a config every downstream tool refuses is worse than
+// refusing the write, so keys are checked against the known preset schema and
+// values against the SAME rules the consuming tools enforce.
+/** The same hex rule fluent_generate_theme / fluent_generate_powerbi_theme use. */
+const HEX_RE = /^#?[0-9a-fA-F]{6}$/;
+/** The same identifier rule fluent_generate_theme uses for the exported theme name. */
+const JS_IDENT_RE = /^[A-Za-z_$][A-Za-z0-9_$]*$/;
+/** Enumerated presets. Mirrors the fluent_init_config zod enums (the authoritative list). */
+const PRESET_ENUMS = {
+    'theme.mode': ['light', 'dark', 'system'],
+    'theme.base': ['web', 'teams'],
+    'shape.cornerRadius': ['sharp', 'small', 'medium', 'large', 'xlarge', 'pill'],
+    'shape.control': ['sharp', 'small', 'medium', 'large', 'xlarge', 'pill'],
+    'shape.card': ['sharp', 'small', 'medium', 'large', 'xlarge', 'pill'],
+    'density.controlSize': ['small', 'medium', 'large'],
+    'density.spacing': ['compact', 'comfortable', 'spacious'],
+    'accessibility.targetLevel': ['A', 'AA', 'AAA'],
+    'accessibility.reducedMotion': ['respect', 'ignore'],
+    'accessibility.forcedColors': ['respect', 'ignore'],
+    iconStyle: ['regular', 'filled'],
+    fluentVersion: ['v8', 'v9'],
+    'migration.from': ['fluent-v8', 'mui', 'bootstrap', 'antd', 'chakra', 'css', 'none'],
+    'content.capitalization': ['sentence', 'title'],
+    'surfaces.powerbi.normalizeInline': ['ask', 'always', 'never'],
+    'surfaces.powerbi.canvas': ['keep', 'fluent'],
+    'surfaces.web.framework': ['react-v9', 'web-components'],
+    'surfaces.web.styling': ['griffel', 'css-vars'],
+    'surfaces.powerapps.controls': ['modern', 'classic'],
+    'surfaces.powerapps.themeSource': ['app-theme', 'none'],
+    'surfaces.pcf.controlType': ['virtual', 'standard'],
+    'execution.profile': ['fast', 'balanced', 'thorough'],
+    'execution.fanOut': ['ask', 'always', 'never'],
+    'execution.enforcement': ['advise', 'enforce'],
+};
+/** Inclusive numeric ranges for the numeric presets. */
+const PRESET_RANGES = {
+    'typography.baseSize': [8, 72],
+    'typography.scale': [0.5, 3],
+    'accessibility.minTargetSize': [1, 200],
+    'accessibility.minContrast': [1, 21],
+    'accessibility.minContrastLargeText': [1, 21],
+    'accessibility.minContrastNonText': [1, 21],
+    'surfaces.powerbi.effectivenessTarget': [0, 1],
+    'execution.maxParallel': [1, 64],
+};
+/** Known preset paths that look like the one the caller asked for. */
+function nearestPaths(key, limit = 8) {
+    const lower = key.toLowerCase();
+    const leaf = lower.split('.').pop() ?? lower;
+    const all = [...KNOWN_PRESET_PATHS];
+    const scored = all
+        .map((p) => {
+        const pl = p.toLowerCase();
+        let score = 0;
+        if (pl === lower)
+            score = 100;
+        else if (pl.includes(lower) || lower.includes(pl))
+            score = 60;
+        else if (pl.endsWith('.' + leaf) || pl === leaf)
+            score = 50;
+        else if (pl.includes(leaf))
+            score = 30;
+        else if (leaf.length > 3 && pl.split('.').some((seg) => seg.startsWith(leaf.slice(0, 4))))
+            score = 10;
+        return { p, score };
+    })
+        .filter((s) => s.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, limit)
+        .map((s) => s.p);
+    return scored;
+}
+/** Validate (and normalize) a value for a known preset dot-path. */
+function validatePreset(key, rawValue) {
+    if (!isKnownPresetPath(key)) {
+        const near = nearestPaths(key);
+        return {
+            ok: false,
+            error: `"${key}" is not a known Fluent 2 preset. fluent_set_config only writes settings the plugin understands, because an unknown key is never read back by any tool.`,
+            hint: near.length
+                ? `Did you mean: ${near.join(', ')}?`
+                : `Known top-level groups: ${Object.keys(DEFAULTS).join(', ')}. Call fluent_get_config to see every path.`,
+        };
+    }
+    const def = defaultAt(key);
+    if (Array.isArray(def)) {
+        return {
+            ok: false,
+            error: `"${key}" is a list, and fluent_set_config only sets single values.`,
+            hint: key === 'targets'
+                ? 'Use fluent_init_config { targets: ["web-react", "powerbi"], force: true }.'
+                : `Use fluent_init_config (it takes arrays for guidelines / constraints / references / targets), or edit fluent.config.json directly.`,
+        };
+    }
+    const value = coerceForPath(key, rawValue);
+    if (typeof def === 'number' && typeof value !== 'number') {
+        return { ok: false, error: `"${key}" expects a number, got ${JSON.stringify(rawValue)}.` };
+    }
+    if (typeof def === 'boolean' && typeof value !== 'boolean') {
+        return { ok: false, error: `"${key}" expects true or false, got ${JSON.stringify(rawValue)}.` };
+    }
+    if (typeof def === 'string' && typeof value !== 'string') {
+        return { ok: false, error: `"${key}" expects a string, got ${JSON.stringify(rawValue)}.` };
+    }
+    if (typeof value === 'number') {
+        if (!Number.isFinite(value))
+            return { ok: false, error: `"${key}" must be a finite number.` };
+        const range = PRESET_RANGES[key];
+        if (range && (value < range[0] || value > range[1])) {
+            return { ok: false, error: `"${key}" must be between ${range[0]} and ${range[1]}, got ${value}.` };
+        }
+    }
+    // Colors: enforce the rule the theme generators enforce, and normalize to a
+    // leading '#' so the stored value is directly usable.
+    if (/(^|\.)color$/i.test(key) || key === 'brand.color') {
+        if (typeof value !== 'string' || !HEX_RE.test(value.trim())) {
+            return {
+                ok: false,
+                error: `"${key}" must be a 6-digit hex color like #0F6CBD, got ${JSON.stringify(rawValue)}. fluent_generate_theme and fluent_generate_powerbi_theme reject anything else, so persisting it would produce a config no tool can use.`,
+            };
+        }
+        return { ok: true, value: ensureHash(value.trim()) };
+    }
+    if (key === 'brand.name' && typeof value === 'string' && !JS_IDENT_RE.test(value)) {
+        return {
+            ok: false,
+            error: `"brand.name" is used as a JavaScript identifier for the exported theme (fluent_generate_theme), so it must match ${JS_IDENT_RE}. Got ${JSON.stringify(rawValue)}.`,
+        };
+    }
+    const allowed = PRESET_ENUMS[key];
+    if (allowed && typeof value === 'string' && !allowed.includes(value)) {
+        return { ok: false, error: `"${key}" must be one of: ${allowed.join(' | ')}. Got ${JSON.stringify(rawValue)}.` };
+    }
+    if (typeof value === 'string' && !value.trim()) {
+        return { ok: false, error: `"${key}" must not be empty.` };
+    }
+    return { ok: true, value };
 }
 /**
  * Deep-merge a source object onto a target, recording the winning source
@@ -306,19 +526,32 @@ export function registerConfig(server) {
     // 1) fluent_get_config -----------------------------------------------------
     server.registerTool('fluent_get_config', {
         title: 'Get resolved Fluent 2 presets (config + memory + defaults)',
-        description: 'Read-only resolver for the effective Fluent 2 design presets. Merges fluent.config.json (user intent) over .fluent/memory.json (agent memory) over built-in Fluent 2 defaults, per field. Returns { configExists, memoryExists, config: <resolved effective settings>, sources: { <dot-path>: "config"|"memory"|"default" } }. The resolved config includes guidelines.rules / guidelines.constraints: the team\'s own house rules in their words. Honour them, and treat guidelines.constraints as outranking every preset and inferred default. Zero-config safe: with no files present it returns all-defaults (brand #0f6cbd, webLightTheme look) and never throws. Call this at the START of a build task to load context.',
+        description: 'Read-only resolver for the effective Fluent 2 design presets. Merges fluent.config.json (user intent) over .fluent/memory.json (agent memory) over built-in Fluent 2 defaults, per field. Returns { configExists, configParsed, parseError?, memoryExists, memoryParsed, memoryParseError?, localOverlay, config: <resolved effective settings>, sources: { <dot-path>: "config"|"memory"|"default" } }. localOverlay answers "what would a fresh clone see?" in one call: whether this checkout carries mcp/data/local/ (guidance withheld from the published repo for licensing reasons — see NOTICE), which files it holds and how many records they restore. A file that exists but does not parse is reported as configExists:true with a parseError — never as absent — and the write tools refuse to touch it until it is fixed. The resolved config includes guidelines.rules / guidelines.constraints: the team\'s own house rules in their words. Honour them, and treat guidelines.constraints as outranking every preset and inferred default. Zero-config safe: with no files present it returns all-defaults (brand #0f6cbd, webLightTheme look) and never throws. Call this at the START of a build task to load context.',
         inputSchema: {
             projectDir: projectDirArg,
         },
     }, async ({ projectDir }) => {
         const root = projectRoot(projectDir);
-        const config = readJsonSafe(configPathFor(root));
-        const memory = readJsonSafe(memoryPathFor(root));
-        const { config: resolved, sources } = resolveEffective(config, memory);
+        const cfgState = readJsonState(configPathFor(root));
+        const memState = readJsonState(memoryPathFor(root));
+        const { config: resolved, sources } = resolveEffective(cfgState.value, memState.value);
+        const broken = (cfgState.exists && !cfgState.parsed) || (memState.exists && !memState.parsed);
         return textResult(JSON.stringify({
-            configExists: config !== null,
-            memoryExists: memory !== null,
+            configExists: cfgState.exists,
+            configParsed: cfgState.parsed,
+            ...(cfgState.error ? { parseError: `${configPathFor(root)}: ${cfgState.error}` } : {}),
+            memoryExists: memState.exists,
+            memoryParsed: memState.parsed,
+            ...(memState.error ? { memoryParseError: `${memoryPathFor(root)}: ${memState.error}` } : {}),
+            ...(broken
+                ? {
+                    agentInstruction: 'A file exists but could not be parsed, so its settings are NOT in the resolved config below. ' +
+                        'fluent_set_config / fluent_remember will refuse to write until it is valid — do not "fix" it by ' +
+                        'overwriting; show the user the parse error and let them repair or delete the file.',
+                }
+                : {}),
             projectDir: root,
+            localOverlay: describeLocalOverlay(),
             config: resolved,
             sources,
         }, null, 2));
@@ -398,15 +631,59 @@ export function registerConfig(server) {
                 .boolean()
                 .default(false)
                 .describe('Overwrite an existing fluent.config.json when true.'),
+            createDir: z
+                .boolean()
+                .default(false)
+                .describe('Create projectDir even when its PARENT is missing too. Off by default: a typo used to materialize a whole directory tree at the drive root. One missing level under an existing parent is always created.'),
         },
-    }, async ({ projectDir, brandColor, targets, accessibilityLevel, themeMode, shape, controlSize, iconStyle, migrationFrom, fluentVersion, executionProfile, fanOut, powerbiNormalizeInline, webFramework, guidelines, constraints, references, force, }) => {
+    }, async ({ projectDir, brandColor, targets, accessibilityLevel, themeMode, shape, controlSize, iconStyle, migrationFrom, fluentVersion, executionProfile, fanOut, powerbiNormalizeInline, webFramework, guidelines, constraints, references, force, createDir, }) => {
         const root = projectRoot(projectDir);
+        // A mistyped projectDir used to create the whole tree (C:\nope\nothere\zzz)
+        // at the drive root and report success. Creating ONE missing level under
+        // an existing parent is ordinary ("init a new project folder"); conjuring
+        // several levels is a typo, so that needs an explicit opt-in.
+        if (!existsSync(root)) {
+            const parent = dirname(root);
+            const parentExists = existsSync(parent);
+            if (!parentExists && !createDir) {
+                return textResult(JSON.stringify({
+                    written: false,
+                    error: `projectDir does not exist and neither does its parent: ${root}`,
+                    hint: `Nothing above "${parent}" exists either, which usually means the path is a typo. Point projectDir at an existing project root, or pass createDir:true to create the whole tree deliberately.`,
+                    projectDir: root,
+                }, null, 2));
+            }
+            try {
+                mkdirSync(root, { recursive: true });
+            }
+            catch (e) {
+                return textResult(JSON.stringify({
+                    written: false,
+                    error: `could not create ${root}: ${e instanceof Error ? e.message : String(e)}`,
+                    projectDir: root,
+                }, null, 2));
+            }
+        }
         const cfgPath = configPathFor(root);
         const memPath = memoryPathFor(root);
-        const existed = existsSync(cfgPath);
+        const cfgState = readJsonState(cfgPath);
+        const existed = cfgState.exists;
+        // Overwriting a file we could not parse destroys content we cannot show
+        // the user first. force:true is an explicit "yes, replace it".
+        if (existed && !cfgState.parsed && !force) {
+            return textResult(JSON.stringify({
+                written: false,
+                configExists: true,
+                parseError: `${cfgPath}: ${cfgState.error}`,
+                error: 'fluent.config.json exists but could not be parsed. Refusing to overwrite it — the current contents would be lost.',
+                hint: 'Fix or delete the file, or pass force:true to replace it deliberately.',
+                configPath: cfgPath,
+            }, null, 2));
+        }
         // Always make sure a memory skeleton exists (records agent context later).
         let memoryCreated = false;
-        if (!existsSync(memPath)) {
+        const memState = readJsonState(memPath);
+        if (!memState.exists) {
             if (!tryWriteJson(memPath, emptyMemory()))
                 memoryCreated = true;
         }
@@ -417,7 +694,7 @@ export function registerConfig(server) {
                 configPath: cfgPath,
                 memoryPath: memPath,
                 memoryCreated,
-                config: readJsonSafe(cfgPath),
+                config: cfgState.value,
             }, null, 2));
         }
         const merged = clone(DEFAULTS);
@@ -487,16 +764,16 @@ export function registerConfig(server) {
     // 3) fluent_set_config -----------------------------------------------------
     server.registerTool('fluent_set_config', {
         title: 'Set a single fluent.config.json value',
-        description: 'Set one preset by dot-path (e.g. "brand.color", "accessibility.targetLevel", "shape.card") in projectDir/fluent.config.json. Loads the existing config or starts a new one (with "$schema") if none exists, sets the value, writes it back, and returns the updated config. The value is coerced to the setting\'s type. Keys containing "..", a path separator, or a prototype key ("__proto__"/"prototype"/"constructor") are rejected. Returns an error note instead of throwing on invalid input or write failure.',
+        description: 'Set one preset by dot-path (e.g. "brand.color", "accessibility.targetLevel", "shape.card") in projectDir/fluent.config.json. The key must be a known Fluent 2 preset and the value must satisfy the SAME rule the consuming tool enforces — brand.color, for example, must be a 6-digit hex because fluent_generate_theme rejects anything else. Unknown keys and invalid values are refused with the nearest valid alternatives rather than persisted. If fluent.config.json exists but does not parse, the write is refused (the file is never silently replaced). Loads the existing config or starts a new one (with "$schema") if none exists, sets the value, writes it back, and returns the updated config. Keys containing "..", a path separator, or a prototype key ("__proto__"/"prototype"/"constructor") are rejected. Returns an error note instead of throwing on invalid input or write failure.',
         inputSchema: {
             projectDir: projectDirArg,
             key: z
                 .string()
                 .min(1)
-                .describe('Dot-path of the setting to change, e.g. "brand.color" or "accessibility.targetLevel".'),
+                .describe('Dot-path of the setting to change, e.g. "brand.color" or "accessibility.targetLevel". Must be a known preset — call fluent_get_config to list them.'),
             value: z
                 .union([z.string(), z.number(), z.boolean()])
-                .describe('New value for the setting (string, number, or boolean).'),
+                .describe('New value for the setting (string, number, or boolean). Validated against the setting\'s type, range or enum.'),
         },
     }, async ({ projectDir, key, value }) => {
         if (!key || key.includes('..') || key.includes('/') || key.includes('\\')) {
@@ -509,13 +786,34 @@ export function registerConfig(server) {
         if (parts.some((p) => DANGEROUS_KEYS.has(p))) {
             return textResult(JSON.stringify({ error: 'Invalid key. Segments "__proto__", "prototype", and "constructor" are not allowed.', key }, null, 2));
         }
+        const checked = validatePreset(key, value);
+        if (!checked.ok) {
+            return textResult(JSON.stringify({
+                written: false,
+                key,
+                value,
+                error: checked.error,
+                ...(checked.hint ? { hint: checked.hint } : {}),
+            }, null, 2));
+        }
         const root = projectRoot(projectDir);
         const cfgPath = configPathFor(root);
-        let cfg = readJsonSafe(cfgPath);
-        if (!cfg || typeof cfg !== 'object' || Array.isArray(cfg)) {
-            cfg = { $schema: SCHEMA_URL };
+        const state = readJsonState(cfgPath);
+        // Refusing here is the whole point: the previous behaviour treated an
+        // unparseable file as absent and replaced it with a two-key stub.
+        if (state.exists && !state.parsed) {
+            return textResult(JSON.stringify({
+                written: false,
+                configExists: true,
+                parseError: `${cfgPath}: ${state.error}`,
+                error: 'fluent.config.json exists but could not be parsed. Refusing to write — doing so would discard the file\'s current contents.',
+                hint: 'Show the user the parse error and let them repair the file (or delete it), then retry.',
+                key,
+                configPath: cfgPath,
+            }, null, 2));
         }
-        const coerced = coerceForPath(key, value);
+        const cfg = state.parsed && state.value ? state.value : { $schema: SCHEMA_URL };
+        const coerced = checked.value;
         setPath(cfg, key, coerced);
         const werr = tryWriteJson(cfgPath, cfg);
         if (werr) {
@@ -526,7 +824,7 @@ export function registerConfig(server) {
     // 4) fluent_remember -------------------------------------------------------
     server.registerTool('fluent_remember', {
         title: 'Record a design decision in agent memory',
-        description: 'Append a design decision (a resolved clarification) to projectDir/.fluent/memory.json so it is never re-asked. Stores { id, question, answer, scope, surface?, timestamp, source }. Creates the memory file if missing. If the decision id is a known preset dot-path (e.g. "brand.color"), the effective value is also mirrored into memory.preferences. Never throws.',
+        description: 'Record a design decision in projectDir/.fluent/memory.json so it is never re-asked. Stores { id, question, answer, scope, surface?, timestamp, source }. UPSERTS on id: recording the same decision again REPLACES the previous answer (keeping firstRecordedAt, bumping revision, and reporting previousAnswer) instead of leaving two decisions with the same id and contradictory answers. Creates the memory file if missing; refuses to write if it exists but does not parse. If the decision id is a known preset dot-path (e.g. "brand.color"), the effective value is also mirrored into memory.preferences. Never throws.',
         inputSchema: {
             projectDir: projectDirArg,
             question: z.string().min(1).describe('The clarification that was asked / resolved.'),
@@ -551,8 +849,24 @@ export function registerConfig(server) {
     }, async ({ projectDir, question, answer, id, scope, surface, source }) => {
         const root = projectRoot(projectDir);
         const memPath = memoryPathFor(root);
-        const mem = normalizeMemory(readJsonSafe(memPath));
+        const state = readJsonState(memPath);
+        // A corrupt memory file used to be normalized away, silently discarding
+        // every decision it held.
+        if (state.exists && !state.parsed) {
+            return textResult(JSON.stringify({
+                written: false,
+                memoryExists: true,
+                memoryParseError: `${memPath}: ${state.error}`,
+                error: '.fluent/memory.json exists but could not be parsed. Refusing to write — every recorded decision in it would be lost.',
+                hint: 'Show the user the parse error and let them repair or delete the file, then retry.',
+                memoryPath: memPath,
+            }, null, 2));
+        }
+        const mem = normalizeMemory(state.value);
         const decisionId = id && id.trim() ? id.trim() : slugify(question) || randomId();
+        const now = new Date().toISOString();
+        const existingIndex = mem.decisions.findIndex((d) => d && d.id === decisionId);
+        const existing = existingIndex >= 0 ? mem.decisions[existingIndex] : null;
         const decision = {
             id: decisionId,
             question,
@@ -561,24 +875,59 @@ export function registerConfig(server) {
         };
         if (surface)
             decision.surface = surface;
-        decision.timestamp = new Date().toISOString();
+        decision.timestamp = now;
         decision.source = source || 'user';
-        mem.decisions.push(decision);
-        // If the decision maps to a known preset, mirror it into effective preferences.
-        if (isKnownPresetPath(decisionId)) {
-            setPath(mem.preferences, decisionId, coerceForPath(decisionId, answer));
+        let action = 'created';
+        if (existing) {
+            // Upsert. Two decisions with the same id and contradictory answers make
+            // recall non-deterministic: the reader cannot tell which one is current.
+            action = existing.answer === answer ? 'unchanged' : 'updated';
+            decision.firstRecordedAt = existing.firstRecordedAt || existing.timestamp || now;
+            decision.revision = (typeof existing.revision === 'number' ? existing.revision : 1) + (action === 'updated' ? 1 : 0);
+            if (action === 'updated') {
+                decision.supersededAnswer = existing.answer;
+                decision.supersededAt = now;
+            }
+            mem.decisions[existingIndex] = decision;
         }
-        mem.updatedAt = new Date().toISOString();
+        else {
+            decision.firstRecordedAt = now;
+            decision.revision = 1;
+            mem.decisions.push(decision);
+        }
+        // If the decision maps to a known preset, mirror it into effective preferences.
+        let preferenceMirrored = null;
+        let preferenceRejected = null;
+        if (isKnownPresetPath(decisionId)) {
+            const checked = validatePreset(decisionId, answer);
+            if (checked.ok) {
+                setPath(mem.preferences, decisionId, checked.value);
+                preferenceMirrored = decisionId;
+            }
+            else {
+                // The decision is still recorded; only the typed mirror is refused,
+                // so a bad value never becomes an effective preset.
+                preferenceRejected = checked.error;
+            }
+        }
+        mem.updatedAt = now;
         const werr = tryWriteJson(memPath, mem);
         if (werr) {
             return textResult(JSON.stringify({ error: `Could not write ${memPath}: ${werr}` }, null, 2));
         }
-        return textResult(JSON.stringify(mem, null, 2));
+        return textResult(JSON.stringify({
+            action,
+            id: decisionId,
+            decisionCount: mem.decisions.length,
+            ...(preferenceMirrored ? { preferenceMirrored } : {}),
+            ...(preferenceRejected ? { preferenceNotMirrored: preferenceRejected } : {}),
+            ...mem,
+        }, null, 2));
     });
     // 5) fluent_recall ---------------------------------------------------------
     server.registerTool('fluent_recall', {
         title: 'Recall recorded design decisions from agent memory',
-        description: 'Read projectDir/.fluent/memory.json and return { version, updatedAt, preferences, decisions, memoryExists }. Optionally filter the decision log by a case-insensitive substring over id/question/answer/surface. Returns an empty structure when no memory exists. Use this before asking the user anything, to avoid re-asking. Never throws.',
+        description: 'Read projectDir/.fluent/memory.json and return { version, updatedAt, preferences, decisions, memoryExists, filter, matched, total }. Optionally filter the decision log by a case-insensitive substring over id/question/answer/surface — the filter and the match count are always echoed back, so an empty result is unambiguous ("matched 0 of 12") rather than indistinguishable from an empty memory. Returns an empty structure when no memory exists, and reports a parse error rather than pretending the file is absent. Use this before asking the user anything, to avoid re-asking. Never throws.',
         inputSchema: {
             projectDir: projectDirArg,
             filter: z
@@ -588,11 +937,13 @@ export function registerConfig(server) {
         },
     }, async ({ projectDir, filter }) => {
         const root = projectRoot(projectDir);
-        const raw = readJsonSafe(memoryPathFor(root));
-        const mem = normalizeMemory(raw);
+        const state = readJsonState(memoryPathFor(root));
+        const mem = normalizeMemory(state.value);
+        const total = mem.decisions.length;
         let decisions = mem.decisions;
-        if (filter && filter.trim()) {
-            const f = filter.trim().toLowerCase();
+        const active = filter && filter.trim() ? filter.trim() : null;
+        if (active) {
+            const f = active.toLowerCase();
             decisions = decisions.filter((d) => {
                 const hay = [d && d.id, d && d.question, d && d.answer, d && d.surface]
                     .filter(Boolean)
@@ -604,9 +955,16 @@ export function registerConfig(server) {
         return textResult(JSON.stringify({
             version: mem.version,
             updatedAt: mem.updatedAt,
+            memoryExists: state.exists,
+            ...(state.error ? { memoryParseError: `${memoryPathFor(root)}: ${state.error}` } : {}),
+            filter: active,
+            matched: decisions.length,
+            total,
+            matchSummary: active
+                ? `matched ${decisions.length} of ${total} decision(s) for filter "${active}"`
+                : `${total} decision(s), no filter applied`,
             preferences: mem.preferences,
             decisions,
-            memoryExists: raw !== null,
         }, null, 2));
     });
 }

@@ -55,12 +55,13 @@ export const App = () => (
 
 ## 4. Traps that compile and then misbehave
 
-Full set with fixes and code: `references/collisions-and-traps.md`.
+Full set with fixes and code: `references/collisions-and-traps.md`. Four *distinct* classes, four different fixes: **26 collisions** (same identifier exported by both libraries — `Button`, `Checkbox`, `Dropdown`, `Label`, `Link`, `Slider`, `Spinner`, `SearchBox`, `SpinButton`, `Theme`, `SelectionMode`, …), **1 casing trap** (`ComboBox` v8 vs `Combobox` v9), **9 renames** (`Toggle`→`Switch`, `Pivot`→`TabList`, …) and **3 behaviour traps** (`onChange` signature, the `styles` prop, `Icon`). Membership is computed from the upstream API-Extractor reports, so it does not drift.
 
+- **`import { Button } from '@fluentui/react'` in a v9 app compiles** and renders the v8 base class. `Button` is the highest-traffic collision in either library — `fluent_v8_lookup name="Button"` returns both import paths and the alias to disambiguate with.
 - **`<Dialog hidden>` is inverted** — `hidden` defaults to `true`, so pass `hidden={!isVisible}`. `Panel`/`Modal` use `isOpen` (default closed). Renaming `hidden`→`open` in a migration produces an always-open dialog.
 - **`ProgressIndicator.percentComplete` is 0–1**, while v9's `ProgressBar.value` is **0–max** — an off-by-100 waiting to happen.
 - **v8 `List` is virtualized; v9 `List` is not.** Same export name, and 100 000 rows land in the DOM.
-- **`Slider.onChange(value, range?, event?)` vs `onChanged(event, value, range?)`** — reversed argument order; mixing them silently reads an event object as a number.
+- **`Slider.onChange(value, range?, event?)` vs `onChanged(event, value, range?)`** — reversed argument order; mixing them silently reads an event object as a number. Across the version boundary it is worse: v8 passes the value first, v9 passes the event first.
 - **`Layer` stops ~30 React synthetic events** at its boundary, so ancestor handlers (a global Escape, say) never fire. Set `eventBubblingEnabled`.
 - **`ThemeProvider` emits no CSS custom properties** (v8 bakes literal values into classes), and nothing errors outside a provider — `useTheme()` falls back to a fresh default theme, so the UI just looks "almost right" in default Fluent blue.
 - **Import traps that break the build:** `IStyleFunctionOrObject` and `styled` live in `@fluentui/react/lib/Utilities` (**not** `lib/Styling`); `NeutralColors`/`SharedColors`/`CommunicationColors`/`Depths` in `@fluentui/theme` (**not** `@fluentui/react`); `@fluentui/react/lib/ThemeProvider` does not exist — use the barrel.
@@ -70,7 +71,7 @@ Full set with fixes and code: `references/collisions-and-traps.md`.
 | For | Read |
 |---|---|
 | Components: `Stack`, surfaces, lists, progress, deprecated props | `references/components.md` |
-| v8/v9 name collisions and the full trap list with fixes | `references/collisions-and-traps.md` |
+| v8/v9 collisions, casing traps, renames, behaviour traps + the full trap list | `references/collisions-and-traps.md` |
 | Theme APIs, palette, `semanticColors`, effects/fonts/spacing, dark theme, ThemeGenerator, `fluent2-theme` | `references/theming.md` |
 | Import paths, `styles` prop + style slots, `mergeStyleSets`/`styled()`, icon registration | `references/styling.md` |
 | `FocusZone`, `FocusTrapZone`, `Layer`, `Announced`, high contrast, gaps, review grep list | `references/accessibility.md` |
@@ -79,11 +80,12 @@ Full set with fixes and code: `references/collisions-and-traps.md`.
 
 ## 6. Ask the MCP server instead of recalling
 
-The `fluent-v8` dataset (106 components, 180 exports, 23 collisions, 22 traps, theming, styling, icons, platforms, 17 docs errata) is queryable — call it, don't recite lists.
+The `fluent-v8` dataset (106 components, 180 exports, 26 collisions, 9 renames, 1 casing trap, 3 behaviour traps, 22 runtime traps, theming, styling, icons, platforms, 17 docs errata) is queryable — call it, don't recite lists.
 
-- **`fluent_v8_lookup name="DetailsList"`** — import path, v9 equivalent or v8-only status with `whyBlocking`, collisions, traps. Run it before writing or migrating any v8 symbol.
-- **`fluent_v8_guidance section=…`** — `lineage` · `version-decision` · `support` · `theming` · `fluent2-theme` · `styling` · `icons` · `design-language` · `accessibility` · `platforms` · `migration` · `v8-only` · `collisions` · `traps` · `docs-errata` · `unverified`.
+- **`fluent_v8_lookup name="DetailsList"`** — import path, v9 equivalent or v8-only status with `whyBlocking`, collisions (with both import paths + a `disambiguate` snippet), casing traps, renames, behaviour traps and runtime traps. Run it before writing or migrating any v8 symbol.
+- **`fluent_v8_guidance section=…`** — `lineage` · `version-decision` · `support` · `theming` · `fluent2-theme` · `styling` · `icons` · `design-language` · `accessibility` · `platforms` · `migration` · `v8-only` · `collisions` · `renames` · `casing-traps` · `behavior-traps` · `traps` · `docs-errata` · `unverified`.
 - `scripts/v8/` generates, audits and converts v8 themes headlessly (no DOM) — `scripts/v8/README.md`.
+- Refresh the name classes + every quoted package version straight from `microsoft/fluentui`: `node scripts/build-v8-data.mjs --refresh-upstream`.
 
 ## Always
 Check which library you actually have (§1) · call `initializeIcons()` **once** at entry · theme through **`ThemeProvider`**, not `Customizer`, and give `createTheme` **all 50 palette slots** · style against **`semanticColors`** + `theme.effects`/`theme.fonts`, never raw hex · remember `<Dialog hidden>` is inverted · add `[HighContrastSelector]` branches and `prefers-reduced-motion` yourself.
