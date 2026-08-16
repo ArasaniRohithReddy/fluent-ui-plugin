@@ -19,6 +19,64 @@ export function loadJson(file) {
         return null;
     }
 }
+/**
+ * Guidance from sign-in-gated Microsoft pages is not redistributed (see NOTICE),
+ * so the published datasets carry only factual scaffolding plus a `gatedNotice`.
+ * A reader who has access can keep the full text in `mcp/data/local/` — which is
+ * gitignored — and it is merged back in here. Absent, everything still works.
+ */
+export function loadLocalOverlay(file) {
+    const p = join(DATA_DIR, 'local', file);
+    if (!existsSync(p))
+        return null;
+    try {
+        return JSON.parse(readFileSync(p, 'utf8'));
+    }
+    catch {
+        return null;
+    }
+}
+/** Merge a local overlay entry over a published record, if one exists. */
+export function withLocalOverlay(record, overlay, key) {
+    if (!overlay || !key || !overlay[key])
+        return record;
+    const { gatedNotice, ...rest } = record;
+    return { ...rest, ...overlay[key] };
+}
+/**
+ * Every dataset records what the research could NOT confirm in an `unverified`
+ * list. That honesty was previously unreachable: it only surfaced if the caller
+ * happened to ask for section='unverified', so a lookup returned confident API
+ * detail with no hint that a caveat existed. This surfaces the relevant ones at
+ * the point of use.
+ *
+ * `terms` are matched against each note, so a query for iOS `Avatar` shows the
+ * caveats that mention Avatar or iOS and stays quiet about unrelated ones.
+ */
+export function provenanceFooter(unverified, opts = {}) {
+    const list = Array.isArray(unverified) ? unverified : [];
+    if (!list.length)
+        return '';
+    const textOf = (u) => (typeof u === 'string' ? u : [u.platform, u.source, u.note].filter(Boolean).join(' — '));
+    const scoped = opts.scope
+        ? list.filter((u) => typeof u === 'string' || !u.platform || u.platform.toLowerCase() === opts.scope.toLowerCase())
+        : list;
+    const terms = (opts.terms || []).map((t) => t.toLowerCase()).filter((t) => t.length > 2);
+    const relevant = terms.length
+        ? scoped.filter((u) => { const s = textOf(u).toLowerCase(); return terms.some((t) => s.includes(t)); })
+        : [];
+    const lines = ['', '---', `Provenance: ${scoped.length} caveat(s) recorded for this dataset${opts.scope ? ` (${opts.scope})` : ''}.`];
+    if (relevant.length) {
+        lines.push('', 'Directly relevant to this query — treat as NOT independently verified:');
+        for (const u of relevant.slice(0, 5))
+            lines.push(`  ! ${textOf(u)}`);
+        if (relevant.length > 5)
+            lines.push(`  ...and ${relevant.length - 5} more.`);
+    }
+    if (opts.seeAlso)
+        lines.push('', `See them all: ${opts.seeAlso}`);
+    return lines.join('\n');
+}
 /** Standard MCP text tool result. */
 export function textResult(text) {
     return { content: [{ type: 'text', text }] };

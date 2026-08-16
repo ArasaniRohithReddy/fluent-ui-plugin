@@ -30,12 +30,14 @@ Prerequisites: Node.js 18 or newer.
 
 ```bash
 cd mcp
-npm ci
+npm install
 npm run build     # compiles TypeScript to dist/
 npm test          # runs the smoke test (asserts tool and topic counts)
 ```
 
 Please keep both green before you open a pull request.
+
+> `npm install` is the documented command everywhere in this repo because it works behind corporate proxies. CI uses `npm ci` deliberately: it is lockfile-exact and fails on drift, which is what you want on a build machine and not what you want on a first clone.
 
 ### Grounding rules (important)
 
@@ -50,7 +52,7 @@ This plugin is trusted because it is grounded in official sources, not guesses. 
 
 ```bash
 cd site
-npm ci
+npm install
 npm run build     # outputs the static site to ../docs
 ```
 

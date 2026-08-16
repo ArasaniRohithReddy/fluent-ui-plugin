@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { loadJson, textResult } from '../util.js';
+import { loadJson, textResult, provenanceFooter } from '../util.js';
 
 interface V8Data {
   meta?: Record<string, unknown>;
@@ -105,7 +105,13 @@ export function registerV8(server: McpServer): void {
       );
       if (traps.length) out.traps = traps;
 
-      return textResult(JSON.stringify(out, null, 2));
+      return textResult(
+        JSON.stringify(out, null, 2) +
+          provenanceFooter(data.unverified, {
+            terms: [resolved, name],
+            seeAlso: 'fluent_v8_guidance { section: "unverified" }',
+          }),
+      );
     }
   );
 

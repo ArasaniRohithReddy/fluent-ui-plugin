@@ -16,7 +16,7 @@ Closes #
 
 ## How I tested
 
-- [ ] `cd mcp && npm ci && npm run build && npm test` passes
+- [ ] `cd mcp && npm install && npm run build && npm test` passes
 - [ ] `cd site && npm run build` succeeds (if the site changed)
 - [ ] Verified the affected tool or output by hand
 

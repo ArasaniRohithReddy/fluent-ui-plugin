@@ -193,6 +193,83 @@ console.log('tool_count: ok=' + (tools.tools.length === EXPECTED_TOOL_COUNT && m
   console.log('site layout classes are responsive (' + respNote + '): ok=' + respOk);
 }
 
+// The datasets record what the research could NOT confirm, but that honesty was
+// unreachable: a lookup returned confident API detail while 203 caveats sat in a
+// side channel only a caller who asked for section='unverified' would ever see.
+// These assert the caveats now travel with the answer.
+{
+  const nat = await client.callTool({ name: 'fluent_native_component', arguments: { platform: 'ios', name: 'Avatar' } });
+  const v8p = await client.callTool({ name: 'fluent_v8_lookup', arguments: { name: 'Stack' } });
+  const figp = await client.callTool({ name: 'fluent_figma_guidance', arguments: { section: 'kits' } });
+  const hasProv = (r) => r.content[0].text.includes('Provenance:');
+  const hasCaveat = (r) => r.content[0].text.includes('NOT independently verified');
+  const all = [nat, v8p, figp];
+  console.log('unverified caveats surface at point of use: ok=' + (all.every(hasProv) && all.every(hasCaveat)));
+  // The pointer has to name a parameter that actually exists, or it sends the
+  // caller into an error - `section`, not `topic`.
+  const badParam = all.some((r) => /\{\s*topic:/.test(r.content[0].text));
+  console.log('provenance pointer uses a real parameter: ok=' + !badParam);
+}
+
+// Guidance from sign-in-gated Microsoft pages must not be redistributed (NOTICE).
+// The published datasets keep factual scaffolding plus a `gatedNotice`; the prose
+// lives in gitignored mcp/data/local/ and is merged back at runtime.
+{
+  const root = new URL('../', import.meta.url);
+  let gOk = false, gNote = '';
+  try {
+    const usage = JSON.parse(readFileSync(new URL('mcp/data/fluent-components-usage.json', root), 'utf8'));
+    const gated = Object.values(usage).filter((u) => u && u.contentSource === 'gated-capture');
+    const leaked = gated.filter((u) => (u.description && u.description.length) || (u.behavior && u.behavior.length) || u.capture);
+    const noticed = gated.filter((u) => u.gatedNotice);
+    const notice = readFileSync(new URL('NOTICE', root), 'utf8');
+    // NOTICE previously claimed no gated content was redistributed while 141KB was.
+    const honest = !/No\s+Microsoft-internal or sign-in-gated content is redistributed/i.test(notice);
+    gOk = gated.length > 0 && leaked.length === 0 && noticed.length === gated.length && honest;
+    gNote = gOk
+      ? `${gated.length} gated entries carry a pointer, no prose redistributed`
+      : [leaked.length ? `${leaked.length} entries still carry gated prose` : '',
+         noticed.length !== gated.length ? `${gated.length - noticed.length} missing gatedNotice` : '',
+         honest ? '' : 'NOTICE makes a claim the data contradicts'].filter(Boolean).join('; ');
+  } catch (e) { gNote = String(e && e.message ? e.message : e); }
+  console.log('no sign-in-gated prose in tracked data (' + gNote + '): ok=' + gOk);
+}
+
+// The plugin manifest exists in four places because each host looks somewhere
+// different, and hand-maintained copies drift: the root file reached 41
+// keywords while the three copies sat frozen at 27, so the manifests Claude,
+// Codex and GitHub actually read described an older, smaller product than the
+// one shipping. Root is the source of truth; this fails the build on drift.
+{
+  const root = new URL('../', import.meta.url);
+  let mfOk = false, mfNote = '';
+  try {
+    const rootMf = JSON.parse(readFileSync(new URL('plugin.json', root), 'utf8'));
+    const copies = ['.claude-plugin/plugin.json', '.codex-plugin/plugin.json', '.github/plugin/plugin.json'];
+    const stable = (o) => JSON.stringify(o, Object.keys(o).sort());
+    const drift = copies.filter((c) => stable(JSON.parse(readFileSync(new URL(c, root), 'utf8'))) !== stable(rootMf));
+    // Every version string a user can see must agree, including the one the
+    // server reports over MCP (read from package.json, not hardcoded).
+    const versions = {
+      plugin: rootMf.version,
+      mcp: JSON.parse(readFileSync(new URL('mcp/package.json', root), 'utf8')).version,
+      site: JSON.parse(readFileSync(new URL('site/package.json', root), 'utf8')).version,
+    };
+    const mismatched = Object.entries(versions).filter(([, v]) => v !== rootMf.version).map(([k]) => k);
+    // The manifest must describe everything the plugin ships, or hosts undersell it.
+    const blob = JSON.stringify(rootMf).toLowerCase();
+    const surfaces = ['ios', 'android', 'windows', 'figma', 'power bi', 'v8'];
+    const unlisted = surfaces.filter((s) => !blob.includes(s));
+    mfOk = drift.length === 0 && mismatched.length === 0 && unlisted.length === 0;
+    mfNote = mfOk
+      ? `3 copies in sync, all versions ${rootMf.version}, all surfaces listed`
+      : [drift.length ? 'drifted: ' + drift.join(', ') : '',
+         mismatched.length ? 'version mismatch: ' + mismatched.join(', ') : '',
+         unlisted.length ? 'surfaces missing from manifest: ' + unlisted.join(', ') : ''].filter(Boolean).join('; ');
+  } catch (e) { mfNote = String(e && e.message ? e.message : e); }
+  console.log('plugin manifests in sync (' + mfNote + '): ok=' + mfOk);
+}
+
 // register-mcp.mjs --figma writes each host's Figma entry from figma.json.
 // These key names are host-specific and fail SILENTLY when wrong (Windsurf
 // ignores `url`, Gemini ignores anything but `httpUrl`), and Claude Desktop's
@@ -576,13 +653,38 @@ try {
 } catch {}
 console.log('doDont convention documented: ok=' + dgOk);
 
-const aiTopic = (await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'personality-principles' } })).content[0].text;
-let aiOk = false;
-try {
-  const j = JSON.parse(aiTopic);
-  aiOk = j.accessStatus === 'employee-gated-captured' && (j.doDont?.dont?.length ?? 0) > 0 && (j.doDont?.do?.length ?? 0) > 0;
-} catch {}
-console.log('gated AI topic enriched: ok=' + aiOk);
+// This topic is published behind a Microsoft employee sign-in, so its guidance
+// text is deliberately NOT redistributed (see NOTICE). Assert against the
+// TRACKED file rather than the tool output: a machine that has the gitignored
+// mcp/data/local/ overlay gets the full text merged back at runtime, which is
+// correct behaviour but tells you nothing about what a public clone receives.
+{
+  let aiOk = false, aiNote = '';
+  try {
+    const dg = JSON.parse(readFileSync(new URL('data/design-guidance.json', import.meta.url), 'utf8'));
+    const t = dg.topics?.['personality-principles'];
+    const gated = typeof t?.accessStatus === 'string' && t.accessStatus.startsWith('employee-gated');
+    const pointsToSource = typeof t?.docUrl === 'string' && t.docUrl.includes('fluent2.microsoft.design');
+    const explains = typeof t?.gatedNotice === 'string' && t.gatedNotice.length > 40;
+    const noProse = !t?.summary && !(t?.sections?.length) && !(t?.doDont?.do?.length);
+    aiOk = gated && pointsToSource && explains && noProse;
+    aiNote = aiOk ? 'resolves, links the official page, prose withheld' : `gated=${gated} docUrl=${pointsToSource} notice=${explains} withheld=${noProse}`;
+  } catch (e) { aiNote = String(e && e.message ? e.message : e); }
+  console.log('gated AI topic resolves without redistributing prose (' + aiNote + '): ok=' + aiOk);
+}
+
+// The overlay must actually restore the withheld text for a reader who has it,
+// otherwise withholding it would be a straight capability loss.
+{
+  const overlay = new URL('data/local/design-guidance.json', import.meta.url);
+  let ovNote = 'no local overlay present — public-clone behaviour', ovOk = true;
+  if (existsSync(overlay)) {
+    const restored = JSON.parse((await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'personality-principles' } })).content[0].text);
+    ovOk = !!restored.summary && (restored.sections?.length ?? 0) > 0 && !restored.gatedNotice;
+    ovNote = ovOk ? 'local overlay restores full guidance' : 'local overlay present but did NOT restore';
+  }
+  console.log('gated overlay round-trips (' + ovNote + '): ok=' + ovOk);
+}
 
 // Figma. The rate-limit table on Figma's page renders with the Dev/Full row
 // shifted: the value under "Starter" actually belongs to Professional. Figma's

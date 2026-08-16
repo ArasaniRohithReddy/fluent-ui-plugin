@@ -1,10 +1,10 @@
 {
-  "$comment": "VS Code / VS Code Insiders (.vscode/mcp.json) and Visual Studio 2022/2026 (.mcp.json). Uses the 'servers' key with type 'stdio'. Replace the args path if the plugin lives elsewhere.",
+  "$comment": "VS Code / VS Code Insiders (.vscode/mcp.json) and Visual Studio 2022/2026 (.mcp.json). Uses the 'servers' key with type 'stdio'. Replace <PATH> with the absolute path to where you cloned the repository.",
   "servers": {
     "fluent-ui": {
       "type": "stdio",
       "command": "node",
-      "args": ["C:\\Users\\v-arasanir\\Downloads\\Rohith's Rough\\fluent.ui\\mcp\\dist\\index.js"]
+      "args": ["<PATH>/fluent-ui-plugin/mcp/dist/index.js"]
     }
   }
 }

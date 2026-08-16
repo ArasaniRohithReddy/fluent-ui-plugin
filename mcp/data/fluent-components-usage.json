@@ -5472,8 +5472,6 @@
     "slug": "chatinput",
     "category": "ai",
     "platform": "web/react",
-    "description": "The chat input is the area in a Copilot chat where a user can enter their Copilot prompt or question. It’s aimed more at conversational UX than durable content generation. If you need a component to help people create entities, try the Prompt input.",
-    "whenToUse": "If you need a component to help people create entities, try the Prompt input.",
     "anatomy": [
       "Prompt textarea",
       "Submit prompt",
@@ -5486,13 +5484,7 @@
     ],
     "types": [],
     "states": [],
-    "behavior": [
-      "The submit button is hidden until the user inserts content into the textarea.",
-      "The add button opens a menu with options to add files, people, meetings, and other entities to the prompt, or to chat with an agent.",
-      "Suggestions appear above the chat input, and the AI generated disclaimer is shown below it.",
-      "---",
-      "Chat input is a highly composed Copilot pattern and, on its own, doesn’t dictate many UX behaviors. Instead, to understand how to help users get the most of this pattern, see the documentation for its component parts."
-    ],
+    "behavior": [],
     "accessibility": [],
     "content": [],
     "bestPractices": {
@@ -5541,101 +5533,27 @@
         "source": "gated-capture"
       }
     ],
-    "sections": [
-      "Subcomponents",
-      "Anatomy",
-      "Sidecar anatomy",
-      "Full chat anatomy",
-      "Behavior",
-      "Layout"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-copilotchat--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/usage",
-      "title": "React Chat input - Fluent 2 Design System",
-      "intro": "The chat input is the area in a Copilot chat where a user can enter their Copilot prompt or question. It’s aimed more at conversational UX than durable content generation. If you need a component to help people create entities, try the Prompt input.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Subcomponents",
-          "text": "Chat input is a highly composed Copilot pattern and, on its own, doesn’t dictate many UX behaviors. Instead, to understand how to help users get the most of this pattern, see the documentation for its component parts.\n\nAttachment\nSuggestions"
-        },
-        {
-          "level": 2,
-          "heading": "Anatomy",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Sidecar anatomy",
-          "text": "1. Prompt textarea\n\n2. Submit prompt\n\n3. Suggestion list OPTIONAL\n\n4. Prompt guide OPTIONAL\n\n5. Attachment list\n\n6. Attachments\n\n7. Plugins OPTIONAL\n\n8. Voice input OPTIONAL"
-        },
-        {
-          "level": 3,
-          "heading": "Full chat anatomy",
-          "text": "1. Prompt textarea\n\n2. Submit prompt\n\n3. Suggestion list OPTIONAL\n\n4. Prompt guide OPTIONAL\n\n5. Attachment list\n\n6. Attachments\n\n7. Plugins OPTIONAL\n\n8. Voice input OPTIONAL"
-        },
-        {
-          "level": 2,
-          "heading": "Behavior",
-          "text": "The submit button is hidden until the user inserts content into the textarea.\n\nThe add button opens a menu with options to add files, people, meetings, and other entities to the prompt, or to chat with an agent."
-        },
-        {
-          "level": 2,
-          "heading": "Layout",
-          "text": "Suggestions appear above the chat input, and the AI generated disclaimer is shown below it."
-        }
-      ],
-      "links": [
-        {
-          "text": "Chat input storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-copilotchat--docs"
-        },
-        {
-          "text": "Attachment",
-          "href": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/attachment/usage"
-        },
-        {
-          "text": "Suggestions",
-          "href": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/suggestions/usage"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "Attachment",
     "slug": "attachment",
     "category": "ai",
     "platform": "web/react",
-    "description": "An attachment represents an entity that Copilot should use for grounding a response. They appear as interactive tags in the input footer.",
     "whenToUse": "",
     "anatomy": [],
     "types": [],
     "states": [],
-    "behavior": [
-      "Loading: Use the loading state of the attachment to communicate that it’s being included in the Copilot prompt.",
-      "Handoff: Selecting the attachment title will initiate handoff and open the file in the appropriate app.",
-      "Dismissal: Attachments are always dismissible so people can choose to remove and change attachments as needed. Attachments can be dismissed by selecting the dismiss button.",
-      "Attachment list overflow: When attachments reach the max width of 180 pixels, remaining attachments collapse into an overflow menu. The overflow menu can also display a loading state to indicate that there are more attachments that are processing than the ones currently in view. Attachments in the overflow are dismissible from the menu.",
-      "Naming attachments: Attachments should match file names exactly. Exclude the document type from the attachment name.",
-      "Attachment icons: Use the icon slot to indicate what type of file the attachment is. Keep logical relationships between visual indicators in the icon slot and attachment types."
-    ],
+    "behavior": [],
     "accessibility": [],
-    "content": [
-      "Naming attachments: Attachments should match file names exactly. Exclude the document type from the attachment name. Attachments will grow to fit the length of the file name.",
-      "Attachment icons: Use the icon slot to indicate what type of file the attachment is. Keep logical relationships between visual indicators in the icon slot and attachment types. Reserve icons to indicate files and file types, use avatars to represent people, and use image thumbnails to represent image files. ---"
-    ],
+    "content": [],
     "bestPractices": {
-      "do": [
-        "Use the loading state of the attachment to communicate that it’s being included in the Copilot prompt."
-      ],
+      "do": [],
       "dont": []
     },
     "images": [
@@ -5680,127 +5598,27 @@
         "source": "gated-capture"
       }
     ],
-    "sections": [
-      "Behavior",
-      "Loading",
-      "Handoff",
-      "Dismissal",
-      "Layout",
-      "Attachment list overflow",
-      "Content",
-      "Naming attachments",
-      "Attachment icons"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-attachments-attachment--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/attachment/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/attachment/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/attachment/usage",
-      "title": "React Attachment - Fluent 2 Design System",
-      "intro": "An attachment represents an entity that Copilot should use for grounding a response. They appear as interactive tags in the input footer.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Behavior",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Loading",
-          "text": "Use the loading state of the attachment to communicate that it’s being included in the Copilot prompt."
-        },
-        {
-          "level": 3,
-          "heading": "Handoff",
-          "text": "Selecting the attachment title will initiate handoff and open the file in the appropriate app."
-        },
-        {
-          "level": 3,
-          "heading": "Dismissal",
-          "text": "Attachments are always dismissible so people can choose to remove and change attachments as needed. Attachments can be dismissed by selecting the dismiss button."
-        },
-        {
-          "level": 2,
-          "heading": "Layout",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Attachment list overflow",
-          "text": "When attachments reach the max width of 180 pixels, remaining attachments collapse into an overflow menu. The overflow menu can also display a loading state to indicate that there are more attachments that are processing than the ones currently in view.\n\nAttachments in the overflow are dismissible from the menu."
-        },
-        {
-          "level": 2,
-          "heading": "Content",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Naming attachments",
-          "text": "Attachments should match file names exactly. Exclude the document type from the attachment name. Attachments will grow to fit the length of the file name."
-        },
-        {
-          "level": 3,
-          "heading": "Attachment icons",
-          "text": "Use the icon slot to indicate what type of file the attachment is. Keep logical relationships between visual indicators in the icon slot and attachment types. Reserve icons to indicate files and file types, use avatars to represent people, and use image thumbnails to represent image files."
-        }
-      ],
-      "links": [
-        {
-          "text": "interactive tags",
-          "href": "https://fluent2.microsoft.design/components/web/react/core/tag/usage"
-        },
-        {
-          "text": "Attachment storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-attachments-attachment--docs"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "Suggestions",
     "slug": "suggestions",
     "category": "ai",
     "platform": "web/react",
-    "description": "A suggestion is a helpful prompt that gives users ideas of how they can continue to interact with Copilot. Suggestions are AI-generated and based in a user’s context to help teach Copilot’s capabilities in a conversational way.",
-    "whenToUse": "Use suggestions to provide shortcuts for submitting prompts and to reply to or build on top of previous outputs. Suggestions are similar to prompt starters, but emphasize conversational context and multi-turn prompting instead of teaching prompt building.",
     "anatomy": [],
     "types": [],
     "states": [],
-    "behavior": [
-      "Chat input autofill: Selecting a suggestion always inserts the prompt text into the chat input. Inserting into the chat input gives people the opportunity to edit the prompt either by changing it or expanding on it if needed.",
-      "Avoid buttons: Avoid using buttons within the output when a prompt would be submitted. Reserve buttons instead for system actions and confirmations.",
-      "Text wrapping: Suggestions will grow to fit their content. If content is longer than the width of the container, suggestion text will wrap. Text should never truncate so users maintain the full context of what they’re sending to Copilot. Avoid text wrapping whenever possible to keep suggestions easy to scan. Try to keep suggestion text to one line Don’t include too much information because suggestions become hard to scan",
-      "Suggestion overflow: Multiple suggestions will expand to fill the width of their container. If there are more suggestions than will fit, limit them to two lines of suggestions in full chat experiences and three lines in sidecar experiences.",
-      "Limit suggestion overflow to two lines in full chat experiences",
-      "Limit suggestion overflow to three lines in sidecar experiences",
-      "Keep it short and actionable when possible: Keep text short to prevent text wrapping. Text should never truncate.",
-      "Progressive disclosure: Sometimes, a good prompt needs to be long and descriptive in order to get the best output. In these cases, don’t include the whole prompt in the suggestion.",
-      "Progressively disclosing the longer prompt helps people understand how to build robust prompts that can best accomplish a particular task."
-    ],
+    "behavior": [],
     "accessibility": [],
-    "content": [
-      "Keep it short and actionable when possible: Keep text short to prevent text wrapping. Text should never truncate. Use the icon slot to show suggestions pulled from first- or third-party apps.",
-      "Progressive disclosure: Sometimes, a good prompt needs to be long and descriptive in order to get the best output. In these cases, don’t include the whole prompt in the suggestion. Instead, summarize the prompt’s goal into a shorter phrase in the suggestion. When someone selects the suggestion, it autofills the entire prompt in the chat input. Progressively disclosing the longer prompt helps people understand how to build robust prompts that can best accomplish a particular task. ---"
-    ],
+    "content": [],
     "bestPractices": {
-      "do": [
-        "Limit suggestion overflow to two lines in full chat experiences",
-        "Limit suggestion overflow to three lines in sidecar experiences",
-        "Keep it short and actionable when possible",
-        "Keep text short to prevent text wrapping."
-      ],
-      "dont": [
-        "Avoid buttons: Avoid using buttons within the output when a prompt would be submitted. Reserve buttons instead for system actions and confirmations.",
-        "Avoid text wrapping whenever possible to keep suggestions easy to scan.",
-        "Don’t include too much information because suggestions become hard to scan",
-        "Avoid buttons"
-      ]
+      "do": [],
+      "dont": []
     },
     "images": [
       {
@@ -5844,102 +5662,18 @@
         "source": "gated-capture"
       }
     ],
-    "sections": [
-      "Behavior",
-      "Chat input autofill",
-      "Layout",
-      "Avoid buttons",
-      "Text wrapping",
-      "Suggestion overflow",
-      "Limit suggestion overflow to two lines in full chat experiences",
-      "Limit suggestion overflow to three lines in sidecar experiences",
-      "Content",
-      "Keep it short and actionable when possible",
-      "Progressive disclosure"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-suggestions--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/suggestions/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/suggestions/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/suggestions/usage",
-      "title": "React Chat input suggestions - Fluent 2 Design System",
-      "intro": "A suggestion is a helpful prompt that gives users ideas of how they can continue to interact with Copilot. Suggestions are AI-generated and based in a user’s context to help teach Copilot’s capabilities in a conversational way.\n\nUse suggestions to provide shortcuts for submitting prompts and to reply to or build on top of previous outputs. Suggestions are similar to prompt starters, but emphasize conversational context and multi-turn prompting instead of teaching prompt building.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Behavior",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Chat input autofill",
-          "text": "Selecting a suggestion always inserts the prompt text into the chat input. Inserting into the chat input gives people the opportunity to edit the prompt either by changing it or expanding on it if needed."
-        },
-        {
-          "level": 2,
-          "heading": "Layout",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Avoid buttons",
-          "text": "Avoid using buttons within the output when a prompt would be submitted. Reserve buttons instead for system actions and confirmations."
-        },
-        {
-          "level": 3,
-          "heading": "Text wrapping",
-          "text": "Suggestions will grow to fit their content. If content is longer than the width of the container, suggestion text will wrap. Text should never truncate so users maintain the full context of what they’re sending to Copilot.\n\nAvoid text wrapping whenever possible to keep suggestions easy to scan.\n\nTry to keep suggestion text to one line\n\nDon’t include too much information because suggestions become hard to scan"
-        },
-        {
-          "level": 3,
-          "heading": "Suggestion overflow",
-          "text": "Multiple suggestions will expand to fill the width of their container. If there are more suggestions than will fit, limit them to two lines of suggestions in full chat experiences and three lines in sidecar experiences."
-        },
-        {
-          "level": 4,
-          "heading": "Limit suggestion overflow to two lines in full chat experiences",
-          "text": ""
-        },
-        {
-          "level": 4,
-          "heading": "Limit suggestion overflow to three lines in sidecar experiences",
-          "text": ""
-        },
-        {
-          "level": 2,
-          "heading": "Content",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Keep it short and actionable when possible",
-          "text": "Keep text short to prevent text wrapping. Text should never truncate. Use the icon slot to show suggestions pulled from first- or third-party apps."
-        },
-        {
-          "level": 3,
-          "heading": "Progressive disclosure",
-          "text": "Sometimes, a good prompt needs to be long and descriptive in order to get the best output. In these cases, don’t include the whole prompt in the suggestion. Instead, summarize the prompt’s goal into a shorter phrase in the suggestion. When someone selects the suggestion, it autofills the entire prompt in the chat input.\n\nProgressively disclosing the longer prompt helps people understand how to build robust prompts that can best accomplish a particular task."
-        }
-      ],
-      "links": [
-        {
-          "text": "Suggestions storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-suggestions--docs"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "Chat output",
     "slug": "chatoutput",
     "category": "ai",
     "platform": "web/react",
-    "description": "Chat output shows the back and forth interactions between Copilot and the user. The Chat output pattern includes all subcomponents between the header and the chat input.",
     "whenToUse": "",
     "anatomy": [
       "Timestamp",
@@ -5955,9 +5689,7 @@
     ],
     "types": [],
     "states": [],
-    "behavior": [
-      "Chat output is a highly composed Copilot pattern and, on its own, doesn’t dictate many UX behaviors. Instead, to understand how to help users get the most of this pattern, see the documentation for its component parts."
-    ],
+    "behavior": [],
     "accessibility": [],
     "content": [],
     "bestPractices": {
@@ -5974,103 +5706,29 @@
         "source": "gated-capture"
       }
     ],
-    "sections": [
-      "Subcomponents",
-      "Anatomy",
-      "Chat output anatomy",
-      "Output dependent components"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-copilotchat--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/usage",
-      "title": "React Chat output - Fluent 2 Design System",
-      "intro": "Chat output shows the back and forth interactions between Copilot and the user. The Chat output pattern includes all subcomponents between the header and the chat input.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Subcomponents",
-          "text": "Chat output is a highly composed Copilot pattern and, on its own, doesn’t dictate many UX behaviors. Instead, to understand how to help users get the most of this pattern, see the documentation for its component parts.\n\nCitations & references\nCopilot message\nUser message\nSensitivity\nTimestamp"
-        },
-        {
-          "level": 2,
-          "heading": "Anatomy",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Chat output anatomy",
-          "text": "1. Timestamp\n\n2. Secondary actions (shown on hover)\n\n3. User message\n\n4. Copilot or GPT branding\n\n5. AI notice\n\n6. Citations OUTPUT DEPENDENT\n\n7. References OUTPUT DEPENDENT\n\n8. Contextual buttons OPTIONAL\n\n9. Secondary actions"
-        },
-        {
-          "level": 3,
-          "heading": "Output dependent components",
-          "text": "Citations and references are dependent on the output that Copilot generates. They will only appear if Copilot references a graph entity."
-        }
-      ],
-      "links": [
-        {
-          "text": "Chat output storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-copilotchat--docs"
-        },
-        {
-          "text": "Citations & references",
-          "href": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/citationsandreferences/usage"
-        },
-        {
-          "text": "Copilot message",
-          "href": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/copilotmessage/usage"
-        },
-        {
-          "text": "User message",
-          "href": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/usermessage/usage"
-        },
-        {
-          "text": "Sensitivity",
-          "href": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/sensitivity/usage"
-        },
-        {
-          "text": "Timestamp",
-          "href": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/timestamp/usage"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "Citations and references",
     "slug": "citationsandreferences",
     "category": "ai",
     "platform": "web/react",
-    "description": "Citations and references help build trust for AI experiences by surfacing the information Copilot used to create its output. References represent the source grounding data. Citations connect a Copilot output to a reference.",
-    "whenToUse": "Citations and references always appear in tandem.",
     "anatomy": [],
     "types": [
       "Citations: Citations let a user know in context that Copilot has generated an answer from a graph entity. The citation connects the output to a reference listed in the output footer.",
       "References: References represent source grounding data Copilot used to build a response."
     ],
     "states": [],
-    "behavior": [
-      "Entity preview on hover: When hovering over a citation or a reference, users will see a popover showing a preview of that entity. Previews can either show summaries of the file, as seen below, or can have actionable suggestions within them to help users find an obvious next step.",
-      "App handoff on entity selection: When selecting a reference, that entity will open in its respective Office Web app, Teams, or Outlook.",
-      "Reference overflow: References are shown in the output footer until they reach the max width of their container. If there is overflow, use a Show more button to indicate that there are more references used to build the output that a user can interact with. Selecting the show more button will open a collapsible list of all cited references.",
-      "Naming references: References will match file names exactly. Exclude the document type from the reference name.",
-      "Reference icons: Use the icon slot to indicate what type of file the reference is."
-    ],
+    "behavior": [],
     "accessibility": [],
-    "content": [
-      "Naming references: References will match file names exactly. Exclude the document type from the reference name. References will grow to fit the length of the file name.",
-      "Reference icons: Use the icon slot to indicate what type of file the reference is. ---"
-    ],
+    "content": [],
     "bestPractices": {
-      "do": [
-        "Use the icon slot to indicate what type of file the reference is."
-      ],
+      "do": [],
       "dont": []
     },
     "images": [
@@ -6115,106 +5773,24 @@
         "source": "gated-capture"
       }
     ],
-    "sections": [
-      "Types",
-      "Behavior",
-      "Entity preview on hover",
-      "App handoff on entity selection",
-      "Layout",
-      "Reference overflow",
-      "Content",
-      "Naming references",
-      "Reference icons"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-citations-and-references-citations-and-references--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/citationsandreferences/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/citationsandreferences/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/citationsandreferences/usage",
-      "title": "React Citations and references - Fluent 2 Design System",
-      "intro": "Citations and references help build trust for AI experiences by surfacing the information Copilot used to create its output. References represent the source grounding data. Citations connect a Copilot output to a reference.\n\nCitations and references always appear in tandem.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Types",
-          "text": "Citations\n\nCitations let a user know in context that Copilot has generated an answer from a graph entity. The citation connects the output to a reference listed in the output footer.\n\nReferences\n\nReferences represent source grounding data Copilot used to build a response."
-        },
-        {
-          "level": 2,
-          "heading": "Behavior",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Entity preview on hover",
-          "text": "When hovering over a citation or a reference, users will see a popover showing a preview of that entity. Previews can either show summaries of the file, as seen below, or can have actionable suggestions within them to help users find an obvious next step."
-        },
-        {
-          "level": 3,
-          "heading": "App handoff on entity selection",
-          "text": "When selecting a reference, that entity will open in its respective Office Web app, Teams, or Outlook."
-        },
-        {
-          "level": 2,
-          "heading": "Layout",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Reference overflow",
-          "text": "References are shown in the output footer until they reach the max width of their container. If there is overflow, use a Show more button to indicate that there are more references used to build the output that a user can interact with. Selecting the show more button will open a collapsible list of all cited references."
-        },
-        {
-          "level": 2,
-          "heading": "Content",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Naming references",
-          "text": "References will match file names exactly. Exclude the document type from the reference name. References will grow to fit the length of the file name."
-        },
-        {
-          "level": 3,
-          "heading": "Reference icons",
-          "text": "Use the icon slot to indicate what type of file the reference is."
-        }
-      ],
-      "links": [
-        {
-          "text": "Citations and references storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-citations-and-references-citations-and-references--docs"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "Copilot message",
     "slug": "copilotmessage",
     "category": "ai",
     "platform": "web/react",
-    "description": "Copilot message is the Copilot response in conversational UX scenarios.",
     "whenToUse": "",
     "anatomy": [],
     "types": [],
     "states": [],
-    "behavior": [
-      "Latency and loading: To communicate that a message is still being generated, use the progress properties. This will trigger the loading state on the individual Copilot message. If the generated output is longer than the available vertical space,",
-      "Loading an immediate response: The Copilot title and AI disclaimer are hidden during the immediate response phase of the latency pattern. Copilot provides the user with a series of statements and the Copilot Loader until it’s ready to move into the streaming phase. The submit button on the input turns into a stop button so that users might cancel the action Copilot is taking.",
-      "Streaming a response: When the streaming phase begins, the immediate response statements are replaced with the Copilot title and AI disclaimer. The Copilot Loader is appended to the bottom of the component and appears whenever Copilot needs a moment to continue processing the output.",
-      "Streaming below the fold: When the content generated by Copilot extends below the viewable area, a down button appears above of the output content. The Copilot Loader and the down button should not be visible at the same time.",
-      "Copilot messages output directly onto the main surface instead of in an elevated or contained card. In addition to the Copilot avatar, name, and AI disclaimer, placing the Copilot message on the main surface helps to create the distinction between a Copilot message and a message from another human.",
-      "Footnote: Copilot messages can contain footnotes that house contextual information or metadata related to that particular response. Footnotes are comprised of Sensitivity and Reference subcomponents.",
-      "Actions: Any actions related to that particular Copilot message appear at the bottom of the Copilot message, beneath the output text and footnote. Emphasize primary actions in this space. Primary actions are calls to action contextual to the Copilot message content. These could include handoff patterns to open a reference or a draft in another app or ways to share the prompt and response."
-    ],
-    "accessibility": [
-      "Focus: Pressing Enter on a focused Copilot message will trap and cycle focus within the message so that users can access the information and interactions within. Pressing Esc will move focus out of the Copilot message and back to the Copilot chat container so that users can move from message to message. If there are available contextual actions on hover, they are also available on a focused message. ---"
-    ],
+    "behavior": [],
+    "accessibility": [],
     "content": [],
     "bestPractices": {
       "do": [],
@@ -6262,96 +5838,18 @@
         "source": "gated-capture"
       }
     ],
-    "sections": [
-      "Behavior",
-      "Latency and loading",
-      "Loading an immediate response",
-      "Streaming a response",
-      "Streaming below the fold",
-      "Layout",
-      "Footnote",
-      "Actions",
-      "Accessibility",
-      "Focus"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-copilotmessagev2--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/copilotmessage/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/copilotmessage/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/copilotmessage/usage",
-      "title": "React Copilot Message - Fluent 2 Design System",
-      "intro": "Copilot message is the Copilot response in conversational UX scenarios.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Behavior",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Latency and loading",
-          "text": "To communicate that a message is still being generated, use the progress properties. This will trigger the loading state on the individual Copilot message. If the generated output is longer than the available vertical space,"
-        },
-        {
-          "level": 4,
-          "heading": "Loading an immediate response",
-          "text": "The Copilot title and AI disclaimer are hidden during the immediate response phase of the latency pattern. Copilot provides the user with a series of statements and the Copilot Loader until it’s ready to move into the streaming phase.\n\nThe submit button on the input turns into a stop button so that users might cancel the action Copilot is taking."
-        },
-        {
-          "level": 4,
-          "heading": "Streaming a response",
-          "text": "When the streaming phase begins, the immediate response statements are replaced with the Copilot title and AI disclaimer. The Copilot Loader is appended to the bottom of the component and appears whenever Copilot needs a moment to continue processing the output."
-        },
-        {
-          "level": 4,
-          "heading": "Streaming below the fold",
-          "text": "When the content generated by Copilot extends below the viewable area, a down button appears above of the output content. The Copilot Loader and the down button should not be visible at the same time."
-        },
-        {
-          "level": 2,
-          "heading": "Layout",
-          "text": "Copilot messages output directly onto the main surface instead of in an elevated or contained card. In addition to the Copilot avatar, name, and AI disclaimer, placing the Copilot message on the main surface helps to create the distinction between a Copilot message and a message from another human."
-        },
-        {
-          "level": 3,
-          "heading": "Footnote",
-          "text": "Copilot messages can contain footnotes that house contextual information or metadata related to that particular response. Footnotes are comprised of Sensitivity and Reference subcomponents."
-        },
-        {
-          "level": 3,
-          "heading": "Actions",
-          "text": "Any actions related to that particular Copilot message appear at the bottom of the Copilot message, beneath the output text and footnote. Emphasize primary actions in this space. Primary actions are calls to action contextual to the Copilot message content. These could include handoff patterns to open a reference or a draft in another app or ways to share the prompt and response."
-        },
-        {
-          "level": 2,
-          "heading": "Accessibility",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Focus",
-          "text": "Pressing Enter on a focused Copilot message will trap and cycle focus within the message so that users can access the information and interactions within. Pressing Esc will move focus out of the Copilot message and back to the Copilot chat container so that users can move from message to message.\n\nIf there are available contextual actions on hover, they are also available on a focused message."
-        }
-      ],
-      "links": [
-        {
-          "text": "Copilot message storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-copilotmessagev2--docs"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "Sensitivity",
     "slug": "sensitivity",
     "category": "ai",
     "platform": "web/react",
-    "description": "Sensitivity indicates that a Copilot output is derived from sensitive data. Copilot generated responses will inherit the most restrictive sensitive from the sources it references.",
     "whenToUse": "",
     "anatomy": [],
     "types": [
@@ -6359,15 +5857,11 @@
       "Sensitivity label: Use the sensitivity label on the relevant reference to indicate the sensitivity classification."
     ],
     "states": [],
-    "behavior": [
-      "Sensitivity popover: On hover, the sensitivity popover shows the sensitivity label, which alerts users to the exact sensitivity level. The sensitivity popover also gives a brief summary of the file and its contents. ---"
-    ],
+    "behavior": [],
     "accessibility": [],
     "content": [],
     "bestPractices": {
-      "do": [
-        "Use the sensitivity label on the relevant reference to indicate the sensitivity classification."
-      ],
+      "do": [],
       "dont": []
     },
     "images": [
@@ -6396,78 +5890,27 @@
         "source": "gated-capture"
       }
     ],
-    "sections": [
-      "Types",
-      "Behavior",
-      "Sensitivity popover"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-sensitivity-sensitivityicon--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/sensitivity/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/sensitivity/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/sensitivity/usage",
-      "title": "React Sensitivity - Fluent 2 Design System",
-      "intro": "Sensitivity indicates that a Copilot output is derived from sensitive data. Copilot generated responses will inherit the most restrictive sensitive from the sources it references.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Types",
-          "text": "Sensitivity icon\n\nPlace the sensitivity icon on a Copilot response or output to indicate that that output was generated from sensitive data. In chat, always include a citation linking to the source entity.\n\nSensitivity label\n\nUse the sensitivity label on the relevant reference to indicate the sensitivity classification."
-        },
-        {
-          "level": 2,
-          "heading": "Behavior",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Sensitivity popover",
-          "text": "On hover, the sensitivity popover shows the sensitivity label, which alerts users to the exact sensitivity level. The sensitivity popover also gives a brief summary of the file and its contents."
-        }
-      ],
-      "links": [
-        {
-          "text": "Sensitivity storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-sensitivity-sensitivityicon--docs"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "Timestamp",
     "slug": "timestamp",
     "category": "ai",
     "platform": "web/react",
-    "description": "Timestamps divide messages by day in a chat thread.",
     "whenToUse": "",
     "anatomy": [],
     "types": [],
     "states": [],
-    "behavior": [
-      "Use relative timing until it exceeds one week. After that, use dates without the year until it exceeds one year.",
-      "For example:",
-      "Today, Yesterday, Wednesday, Tuesday, Monday",
-      "August 21, August 8, etc.",
-      "September 4, 2023"
-    ],
+    "behavior": [],
     "accessibility": [],
-    "content": [
-      "Use relative timing until it exceeds one week. After that, use dates without the year until it exceeds one year. Don’t include specific time of day.",
-      "For example:",
-      "---",
-      "Today, Yesterday, Wednesday, Tuesday, Monday",
-      "August 21, August 8, etc.",
-      "September 4, 2023"
-    ],
+    "content": [],
     "bestPractices": {
-      "do": [
-        "Use relative timing until it exceeds one week."
-      ],
+      "do": [],
       "dont": []
     },
     "images": [
@@ -6480,49 +5923,23 @@
         "source": "gated-capture"
       }
     ],
-    "sections": [
-      "Content"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-timestamp--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/timestamp/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/timestamp/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/timestamp/usage",
-      "title": "React Timestamp - Fluent 2 Design System",
-      "intro": "Timestamps divide messages by day in a chat thread.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Content",
-          "text": "Use relative timing until it exceeds one week. After that, use dates without the year until it exceeds one year. Don’t include specific time of day.\n\nFor example:\n\nToday, Yesterday, Wednesday, Tuesday, Monday\nAugust 21, August 8, etc.\nSeptember 4, 2023"
-        }
-      ],
-      "links": [
-        {
-          "text": "Timestamp storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-timestamp--docs"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "User message",
     "slug": "usermessage",
     "category": "ai",
     "platform": "web/react",
-    "description": "The user message is the chat card that represents the user’s input to Copilot. User messages look identical to user messages in Teams to reinforce the mental model of synchronous conversation.",
     "whenToUse": "",
     "anatomy": [],
     "types": [],
     "states": [],
-    "behavior": [
-      "Secondary actions: User messages can have a secondary action menu available on focus or hover. This menu is not immediately discoverable and should be reserved for lesser actions like copying, bookmarking, or sharing. Secondary actions are helpful when a user has a particular task they associate with that prompt, like saving it to reuse or sharing it with colleagues. Copilot actions should never appear in the hover menu. ---"
-    ],
+    "behavior": [],
     "accessibility": [],
     "content": [],
     "bestPractices": {
@@ -6539,49 +5956,18 @@
         "source": "gated-capture"
       }
     ],
-    "sections": [
-      "Behavior",
-      "Secondary actions"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-usermessagev2--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/usermessage/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/usermessage/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/usermessage/usage",
-      "title": "React User message - Fluent 2 Design System",
-      "intro": "The user message is the chat card that represents the user’s input to Copilot. User messages look identical to user messages in Teams to reinforce the mental model of synchronous conversation.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Behavior",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Secondary actions",
-          "text": "User messages can have a secondary action menu available on focus or hover. This menu is not immediately discoverable and should be reserved for lesser actions like copying, bookmarking, or sharing.\n\nSecondary actions are helpful when a user has a particular task they associate with that prompt, like saving it to reuse or sharing it with colleagues. Copilot actions should never appear in the hover menu."
-        }
-      ],
-      "links": [
-        {
-          "text": "User message storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-copilotchat-usermessagev2--docs"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "Copilot FRE",
     "slug": "copilotfre",
     "category": "ai",
     "platform": "web/react",
-    "description": "The Copilot FRE is used to introduce Copilot the first time it becomes available to someone within a particular app or service. It is made up of the Fluent dialog combined with Fluent carousel, with some customizations.",
-    "whenToUse": "If you want to introduce a new Copilot feature to someone who has already seen Copilot in your app or service, use prompt starters, zero-prompt, and/or the prompt guide instead.",
     "anatomy": [
       "Each Copilot FRE page consists of:",
       "Illustration that shows Copilot in context of the host app or service",
@@ -6593,36 +5979,12 @@
     ],
     "types": [],
     "states": [],
-    "behavior": [
-      "Triggers: The Copilot FRE dialog is triggered when someone opens an app, file, or web service where Copilot is available to them for the first time. If another FRE is being shown for the host app or service, postpone the Copilot FRE to the next session.",
-      "Dismissal: The FRE dialog is modal and blocking, that is, people must dismiss or complete the FRE before they can take any other action in the host app or service. To avoid annoying people, show the FRE a maximum of two times per platform, per app, and per user. To dismiss it, they must select Close, Not now, or Try Copilot. Note that, in React, there is no X (Close) button, but in Win32, an X appears in the top right corner. If they close the FRE by selecting Close or Not now, the FRE reappears the next time they open the app or service. If they select Try Copilot, the FRE closes, the Copilot chat panel opens, and we don’t show the FRE again to that person.",
-      "Placement: The Copilot FRE appears in the center of the app screen, in focus, with an overlay obscuring the app behind it. Because it is a modal dialog, users can’t interact with the content behind the FRE until it’s closed.",
-      "Anatomy: Each Copilot FRE page consists of: Illustration that shows Copilot in context of the host app or service Title, with a call to action for using Copilot Body content, describing ways to use Copilot in the app Temporary dismissal (Not now), or navigation (Previous) button Progress indicator (page 1 of 2, page 2 of 2) Navigation (Next) or completion (Try Copilot) button",
-      "The FRE introduces Copilot to new users with a summary of basic functionality, and tips on how to get started.",
-      "The FRE should consist of no more than two pages, because research has found that users rarely click through or pay attention to more than two pages in a FRE carousel.",
-      "Page 1 describes what you can do with Copilot: The content follows a template, with blank parts that can be modified per app to highlight the most common and useful scenarios for Copilot within that app.",
-      "Title: Starts with an action verb and describes the overall value for Copilot in that app.",
-      "Body:"
-    ],
-    "accessibility": [
-      "For screen readers, provide alt text and an ARIA description for the illustration on each page. Because learning new things requires cognitive energy, keep the information brief, conveying the general idea of the illustration, not every detail.",
-      "An ARIA description for the progress indicator states the page and total number of pages, for example, “Page 1 of 2”.",
-      "Do",
-      "For the illustration, provide ARIA text with a short, general description of what is being illustrated.",
-      "Don’t",
-      "Don’t go into unnecessary visual detail in ARIA descriptions for screen readers."
-    ],
-    "content": [
-      "The FRE introduces Copilot to new users with a summary of basic functionality, and tips on how to get started.",
-      "The FRE should consist of no more than two pages, because research has found that users rarely click through or pay attention to more than two pages in a FRE carousel.",
-      "Page 1 describes what you can do with Copilot: The content follows a template, with blank parts that can be modified per app to highlight the most common and useful scenarios for Copilot within that app. Title: Starts with an action verb and describes the overall value for Copilot in that app. Body: First sentence starts with an action verb, describes the overall value, and must differ from the title. Second sentence highlights the top 3 capabilities that Copilot can perform in the app. Follow the template below and fill in the blanks. Make sure the first capability is something that always works. For example in Word, “summarize this document.” Limit each capability to 3-4 words, and begin each with an action.",
-      "Page 2 provides transparency about potential inaccuracies: The second page sets expectations about Copilot’s accuracy. This content is required so that we are transparent with customers about the fallibility of AI. It’s best to reuse the body content below without modification. If you decide to experiment with a different title, be sure it relates to checking for accuracy or the fallibility of AI, and be sure to adjust the body copy so it doesn’t repeat what’s in the title. The second sentence of the description needs to encourage people to send feedback to improve Copilot in the future. ---"
-    ],
+    "behavior": [],
+    "accessibility": [],
+    "content": [],
     "bestPractices": {
       "do": [],
-      "dont": [
-        "Don’t go into unnecessary visual detail in ARIA descriptions for screen readers."
-      ]
+      "dont": []
     },
     "images": [
       {
@@ -6698,105 +6060,18 @@
         "source": "gated-capture"
       }
     ],
-    "sections": [
-      "Behavior",
-      "Triggers",
-      "Dismissal",
-      "Layout",
-      "Placement",
-      "Anatomy",
-      "Accessibility",
-      "Content",
-      "Page 1 describes what you can do with Copilot",
-      "Page 2 provides transparency about potential inaccuracies"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-firstrunexperience--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/copilotfre/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/copilotfre/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/copilotfre/usage",
-      "title": "React Copilot FRE - Fluent 2 Design System",
-      "intro": "The Copilot FRE is used to introduce Copilot the first time it becomes available to someone within a particular app or service. It is made up of the Fluent dialog combined with Fluent carousel, with some customizations.\n\nIf you want to introduce a new Copilot feature to someone who has already seen Copilot in your app or service, use prompt starters, zero-prompt, and/or the prompt guide instead.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Behavior",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Triggers",
-          "text": "The Copilot FRE dialog is triggered when someone opens an app, file, or web service where Copilot is available to them for the first time.\n\nIf another FRE is being shown for the host app or service, postpone the Copilot FRE to the next session."
-        },
-        {
-          "level": 3,
-          "heading": "Dismissal",
-          "text": "The FRE dialog is modal and blocking, that is, people must dismiss or complete the FRE before they can take any other action in the host app or service.\n\nTo dismiss it, they must select Close, Not now, or Try Copilot. Note that, in React, there is no X (Close) button, but in Win32, an X appears in the top right corner.\nIf they close the FRE by selecting Close or Not now, the FRE reappears the next time they open the app or service.\nIf they select Try Copilot, the FRE closes, the Copilot chat panel opens, and we don’t show the FRE again to that person.\n\nTo avoid annoying people, show the FRE a maximum of two times per platform, per app, and per user."
-        },
-        {
-          "level": 2,
-          "heading": "Layout",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Placement",
-          "text": "The Copilot FRE appears in the center of the app screen, in focus, with an overlay obscuring the app behind it. Because it is a modal dialog, users can’t interact with the content behind the FRE until it’s closed."
-        },
-        {
-          "level": 3,
-          "heading": "Anatomy",
-          "text": "Each Copilot FRE page consists of:\n\n1. Illustration that shows Copilot in context of the host app or service\n\n2. Title, with a call to action for using Copilot\n\n3. Body content, describing ways to use Copilot in the app\n\n4. Temporary dismissal (Not now), or navigation (Previous) button\n\n5. Progress indicator (page 1 of 2, page 2 of 2)\n\n6. Navigation (Next) or completion (Try Copilot) button"
-        },
-        {
-          "level": 2,
-          "heading": "Accessibility",
-          "text": "For screen readers, provide alt text and an ARIA description for the illustration on each page. Because learning new things requires cognitive energy, keep the information brief, conveying the general idea of the illustration, not every detail.\n\nAn ARIA description for the progress indicator states the page and total number of pages, for example, “Page 1 of 2”.\n\nDo\n\nFor the illustration, provide ARIA text with a short, general description of what is being illustrated.\n\nDon’t\n\nDon’t go into unnecessary visual detail in ARIA descriptions for screen readers."
-        },
-        {
-          "level": 2,
-          "heading": "Content",
-          "text": "The FRE introduces Copilot to new users with a summary of basic functionality, and tips on how to get started.\n\nThe FRE should consist of no more than two pages, because research has found that users rarely click through or pay attention to more than two pages in a FRE carousel."
-        },
-        {
-          "level": 3,
-          "heading": "Page 1 describes what you can do with Copilot",
-          "text": "The content follows a template, with blank parts that can be modified per app to highlight the most common and useful scenarios for Copilot within that app.\n\n1. Title: Starts with an action verb and describes the overall value for Copilot in that app.\n\n2. Body:\n\nFirst sentence starts with an action verb, describes the overall value, and must differ from the title.\nSecond sentence highlights the top 3 capabilities that Copilot can perform in the app. Follow the template below and fill in the blanks. Make sure the first capability is something that always works. For example in Word, “summarize this document.” Limit each capability to 3-4 words, and begin each with an action."
-        },
-        {
-          "level": 3,
-          "heading": "Page 2 provides transparency about potential inaccuracies",
-          "text": "The second page sets expectations about Copilot’s accuracy. This content is required so that we are transparent with customers about the fallibility of AI.\n\nIt’s best to reuse the body content below without modification.\n\nIf you decide to experiment with a different title, be sure it relates to checking for accuracy or the fallibility of AI, and be sure to adjust the body copy so it doesn’t repeat what’s in the title. The second sentence of the description needs to encourage people to send feedback to improve Copilot in the future."
-        }
-      ],
-      "links": [
-        {
-          "text": "Fluent dialog",
-          "href": "https://fluent2.microsoft.design/components/web/react/core/dialog/usage"
-        },
-        {
-          "text": "prompt starters",
-          "href": "https://fluent2.microsoft.design/components/web/react/ai/promptstarters/usage"
-        },
-        {
-          "text": "First run experience storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-firstrunexperience--docs"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "Entity cards",
     "slug": "entitycards",
     "category": "ai",
     "platform": "web/react",
-    "description": "An entity is a content type that is stored in Substrate such as a file, meeting, or person. Entity cards contain AI generated insights and actions that represent the content in each entity and suggest next steps based on that content. Each type of entity card has variations that add new features.",
-    "whenToUse": "Use entity cards to represent a document, meeting, or person stored in substrate. Don’t use entity cards to represent a prompt, action, or agent. If you need to represent a prompt, action, or agent, use the corresponding card type instead.",
     "anatomy": [
       "Title + sensitivity label",
       "Icon + backplate",
@@ -6815,42 +6090,11 @@
       "Meeting cards: Designed to represent people in an organization. May include details to summarize reasons for displaying each card."
     ],
     "states": [],
-    "behavior": [
-      "Relationship to Glance cards and AI Overviews: Entity cards, glance cards, and AI Overviews are all connected. One is an extension of the other and they work as building blocks to each other. Each of the 3 shared components follows a modular framework which allows for flexibility to accommodate 1P & 3P product needs.",
-      "AI Insights: A team can choose to hide insights or quick actions by default. When insights are not visible at rest, selecting the AI sparkle button reveals them.",
-      "Quick actions: Users can access quick actions through the overflow menu. The buttons appear on hover, providing easy access to commonly used actions.",
-      "Handoff to app: Selecting either the title or product icon hands off users to the corresponding app. These interactions are commonly observed across Microsoft products but can be adapted to meet unique requirements.",
-      "Interactive preview: Selecting the “Play” button enables users to interact with the preview. For a PowerPoint file, this allows users to navigate through the slides in an expanded card view.",
-      "Width and height: Card width and height for web experiences should remain consistent. Card width should stay within 240 and 680 pixels while card height should stay within 580 pixels depending on the card type being used.",
-      "Content structure: Entity cards are meant to hold information about the entity in a way that prioritizes readability and consistency. Most elements are optional aside from the title, icon and backplate, and overflow menu to maintain the card’s function.",
-      "Required: Title + sensitivity label",
-      "Icon + backplate",
-      "Quick actions / Overflow",
-      "Optional: Metadata",
-      "Reason marker",
-      "Preview (static or interactive, play button appears on hover)",
-      "Insights or summary",
-      "Suggested actions",
-      "Additional Action",
-      "AI Insights and summaries: AI Insights and summaries provide AI generated information about an entity. In full length cards, AI Insights are static.",
-      "Quick actions: Quick actions suggest next steps for the user based on the entity and the information provided in the insights."
-    ],
-    "accessibility": [
-      "In insights-shy cards, the Insights button must be exposed in order to be accessible by the user. In general, revealing buttons only on hover is known to cause accessibility issues."
-    ],
-    "content": [
-      "Content structure: Entity cards are meant to hold information about the entity in a way that prioritizes readability and consistency. Most elements are optional aside from the title, icon and backplate, and overflow menu to maintain the card’s function.",
-      "Required: Title + sensitivity label Icon + backplate Quick actions / Overflow",
-      "Optional: Metadata Reason marker Preview (static or interactive, play button appears on hover) Insights or summary Suggested actions Additional Action",
-      "Reason marker: Reason markers are an optional element that let users know why they’re seeing a given Entity card. Keep reason markers brief and to the point to avoid truncation and localization issues. Avoid repetition of any information already visible on the card. Use time markers only when knowing how long ago an action occured is essential.",
-      "AI Insights and summaries: AI Insights and summaries provide AI generated information about an entity. In full length cards, AI Insights are static. In abbreviated cards, AI Insights can be accessed through a button next to the Overflow menu.",
-      "Quick actions: Quick actions suggest next steps for the user based on the entity and the information provided in the insights. Format insights as buttons by using actionable language and avoiding punctuation. Ensure suggested actions relate to both the entity and insights. For example, if insights provided in the card are about comments left by another user, use the Quick action “View comment”.",
-      "Quick action examples: Use sentence-style capitalization—only capitalize the first word. For more info, see Capitalization in the Microsoft Writing Style Guide. --- View comment Draft a response Summarize document Ask a question List key points List contributors Create an agenda"
-    ],
+    "behavior": [],
+    "accessibility": [],
+    "content": [],
     "bestPractices": {
-      "do": [
-        "Use sentence-style capitalization—only capitalize the first word."
-      ],
+      "do": [],
       "dont": []
     },
     "images": [
@@ -7050,179 +6294,27 @@
         "source": "ocr-vision"
       }
     ],
-    "sections": [
-      "Types",
-      "Behavior",
-      "Relationship to Glance cards and AI Overviews",
-      "AI Insights",
-      "Quick actions",
-      "Handoff to app",
-      "Interactive preview",
-      "Layout",
-      "Width and height",
-      "Accessibility",
-      "Content",
-      "Content structure",
-      "Required",
-      "Optional",
-      "Reason marker",
-      "AI Insights and summaries",
-      "Quick actions",
-      "Quick action examples"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-entitycards-entitycard--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/entitycards/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/entitycards/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/entitycards/usage",
-      "title": "React Entity cards - Fluent 2 Design System",
-      "intro": "An entity is a content type that is stored in Substrate such as a file, meeting, or person. Entity cards contain AI generated insights and actions that represent the content in each entity and suggest next steps based on that content. Each type of entity card has variations that add new features.\n\nUse entity cards to represent a document, meeting, or person stored in substrate. Don’t use entity cards to represent a prompt, action, or agent. If you need to represent a prompt, action, or agent, use the corresponding card type instead.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Types",
-          "text": "An entity card can present as a full horizontal or vertical card, an abbreviated vertical or horizontal card, a list item, a chicklet.\n\nDocument cards\n\nDesigned to represent people in an organization. May include details to summarize reasons for displaying each card.\n\nPeople cards\n\nDesigned to represent people in an organization. May include details to summarize reasons for displaying each card.\n\nMeeting cards\n\nDesigned to represent people in an organization. May include details to summarize reasons for displaying each card."
-        },
-        {
-          "level": 2,
-          "heading": "Behavior",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Relationship to Glance cards and AI Overviews",
-          "text": "Entity cards, glance cards, and AI Overviews are all connected. One is an extension of the other and they work as building blocks to each other. Each of the 3 shared components follows a modular framework which allows for flexibility to accommodate 1P & 3P product needs."
-        },
-        {
-          "level": 3,
-          "heading": "AI Insights",
-          "text": "A team can choose to hide insights or quick actions by default. When insights are not visible at rest, selecting the AI sparkle button reveals them."
-        },
-        {
-          "level": 3,
-          "heading": "Behavior — Quick actions",
-          "text": "Users can access quick actions through the overflow menu. The buttons appear on hover, providing easy access to commonly used actions."
-        },
-        {
-          "level": 3,
-          "heading": "Handoff to app",
-          "text": "Selecting either the title or product icon hands off users to the corresponding app. These interactions are commonly observed across Microsoft products but can be adapted to meet unique requirements."
-        },
-        {
-          "level": 3,
-          "heading": "Interactive preview",
-          "text": "Selecting the “Play” button enables users to interact with the preview. For a PowerPoint file, this allows users to navigate through the slides in an expanded card view."
-        },
-        {
-          "level": 2,
-          "heading": "Layout",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Width and height",
-          "text": "Card width and height for web experiences should remain consistent. Card width should stay within 240 and 680 pixels while card height should stay within 580 pixels depending on the card type being used."
-        },
-        {
-          "level": 2,
-          "heading": "Accessibility",
-          "text": "In insights-shy cards, the Insights button must be exposed in order to be accessible by the user. In general, revealing buttons only on hover is known to cause accessibility issues."
-        },
-        {
-          "level": 2,
-          "heading": "Content",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Content structure",
-          "text": "Entity cards are meant to hold information about the entity in a way that prioritizes readability and consistency. Most elements are optional aside from the title, icon and backplate, and overflow menu to maintain the card’s function."
-        },
-        {
-          "level": 4,
-          "heading": "Required",
-          "text": "Title + sensitivity label\nIcon + backplate\nQuick actions / Overflow"
-        },
-        {
-          "level": 4,
-          "heading": "Optional",
-          "text": "4. Metadata\n5. Reason marker\n6. Preview (static or interactive, play button appears on hover)\n7. Insights or summary\n8. Suggested actions\n9. Additional Action"
-        },
-        {
-          "level": 3,
-          "heading": "Reason marker",
-          "text": "Reason markers are an optional element that let users know why they’re seeing a given Entity card.\n\nKeep reason markers brief and to the point to avoid truncation and localization issues. Avoid repetition of any information already visible on the card. Use time markers only when knowing how long ago an action occured is essential."
-        },
-        {
-          "level": 3,
-          "heading": "AI Insights and summaries",
-          "text": "AI Insights and summaries provide AI generated information about an entity. In full length cards, AI Insights are static. In abbreviated cards, AI Insights can be accessed through a button next to the Overflow menu."
-        },
-        {
-          "level": 3,
-          "heading": "Content — Quick actions",
-          "text": "Quick actions suggest next steps for the user based on the entity and the information provided in the insights.\n\nFormat insights as buttons by using actionable language and avoiding punctuation. Ensure suggested actions relate to both the entity and insights. For example, if insights provided in the card are about comments left by another user, use the Quick action “View comment”."
-        },
-        {
-          "level": 4,
-          "heading": "Quick action examples",
-          "text": "View comment\nDraft a response\nSummarize document\nAsk a question\nList key points\nList contributors\nCreate an agenda\n\nUse sentence-style capitalization—only capitalize the first word. For more info, see Capitalization in the Microsoft Writing Style Guide."
-        }
-      ],
-      "links": [
-        {
-          "text": "Entity cards storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-entitycards-entitycard--docs"
-        },
-        {
-          "text": "Capitalization",
-          "href": "https://learn.microsoft.com/en-us/style-guide/capitalization"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "Ghost text",
     "slug": "ghosttext",
     "category": "ai",
     "platform": "web/react",
-    "description": "Ghost text, also known as placeholder text, helps provide guidance for user input. Once a user starts to type, the ghost text disappears.",
-    "whenToUse": "Ghost text is intended to quickly and simply describe the action the user should take or help them understand the information Copilot needs to generate a good output.",
     "anatomy": [],
     "types": [],
     "states": [],
-    "behavior": [
-      "Temporary and transient: Ghost text disappears once users begin to add their prompt. Because of this, it’s important to make sure that the information included is only helpful, not necessary for the user to complete the prompt.",
-      "Contextual changes: Ghost text may also change once the text area is selected, to give a new hint to the user and show them more ways to get value from Copilot. In the zero state, the ghost text can encourage the user to start a draft. Once Copilot has generated a draft, the ghost text can let the user know they can use Copilot to make changes.",
-      "Type ahead: There are times when Copilot will attempt to guess the remainder of a user’s prompt. These are prompt suggestions and aren’t ghost text, but behave in the same way by being transparent text and changing as a user types.",
-      "Use ghost text to give a short, supplementary hint for how to get the best response from Copilot or a clue as to how to move forward. Keep the content contextual to what the user is trying to accomplish.",
-      "Unlike prompt starters, ghost text doesn’t always have to be action oriented. Use your best judgement to discern what information would be most helpful to a user, a suggested action or a question.",
-      "Skip the period in placeholder text. For more info, see Periods in the Microsoft Writing Style Guide.",
-      "Ghost text can spark ideas by asking questions.",
-      "Ghost text can point to a path forward by suggesting actions."
-    ],
-    "accessibility": [
-      "Don’t use ghost text for essential information that people will need in order to interact with Copilot. When someone focuses on the input, the placeholder disappears, and removing the prompt can make it difficult for some people, including those with cognitive impairments, to enter information.",
-      "Ghost text must be associated with an aria-label for assistive technologies."
-    ],
-    "content": [
-      "Use ghost text to give a short, supplementary hint for how to get the best response from Copilot or a clue as to how to move forward. Keep the content contextual to what the user is trying to accomplish. For example, in a chat scenario the ghost text might be “Ask Copilot what you missed,” but in an on-canvas word processing scenario it might be “Keep writing this in a more professional tone.”",
-      "Unlike prompt starters, ghost text doesn’t always have to be action oriented. Use your best judgement to discern what information would be most helpful to a user, a suggested action or a question.",
-      "Skip the period in placeholder text. For more info, see Periods in the Microsoft Writing Style Guide.",
-      "Ghost text can spark ideas by asking questions.",
-      "Ghost text can point to a path forward by suggesting actions.",
-      "---"
-    ],
+    "behavior": [],
+    "accessibility": [],
+    "content": [],
     "bestPractices": {
       "do": [],
-      "dont": [
-        "Don’t use ghost text for essential information that people will need in order to interact with Copilot. When someone focuses on the input, the placeholder disappears, and removing the prompt can make it difficult for some people, including those with cognitive impairments, to enter information."
-      ]
+      "dont": []
     },
     "images": [
       {
@@ -7258,98 +6350,30 @@
         "source": "ocr-vision"
       }
     ],
-    "sections": [
-      "Behavior",
-      "Temporary and transient",
-      "Contextual changes",
-      "Type ahead",
-      "Accessibility",
-      "Content"
-    ],
+    "sections": [],
     "storybookUrl": "",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/ghosttext/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/ghosttext/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/ghosttext/usage",
-      "title": "React ghost text - Fluent 2 Design System",
-      "intro": "Ghost text, also known as placeholder text, helps provide guidance for user input. Once a user starts to type, the ghost text disappears.\n\nGhost text is intended to quickly and simply describe the action the user should take or help them understand the information Copilot needs to generate a good output.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Behavior",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Temporary and transient",
-          "text": "Ghost text disappears once users begin to add their prompt. Because of this, it’s important to make sure that the information included is only helpful, not necessary for the user to complete the prompt."
-        },
-        {
-          "level": 3,
-          "heading": "Contextual changes",
-          "text": "Ghost text may also change once the text area is selected, to give a new hint to the user and show them more ways to get value from Copilot.\n\nIn the zero state, the ghost text can encourage the user to start a draft.\n\nOnce Copilot has generated a draft, the ghost text can let the user know they can use Copilot to make changes."
-        },
-        {
-          "level": 3,
-          "heading": "Type ahead",
-          "text": "There are times when Copilot will attempt to guess the remainder of a user’s prompt. These are prompt suggestions and aren’t ghost text, but behave in the same way by being transparent text and changing as a user types."
-        },
-        {
-          "level": 2,
-          "heading": "Accessibility",
-          "text": "Don’t use ghost text for essential information that people will need in order to interact with Copilot. When someone focuses on the input, the placeholder disappears, and removing the prompt can make it difficult for some people, including those with cognitive impairments, to enter information.\n\nGhost text must be associated with an aria-label for assistive technologies."
-        },
-        {
-          "level": 2,
-          "heading": "Content",
-          "text": "Use ghost text to give a short, supplementary hint for how to get the best response from Copilot or a clue as to how to move forward. Keep the content contextual to what the user is trying to accomplish. For example, in a chat scenario the ghost text might be “Ask Copilot what you missed,” but in an on-canvas word processing scenario it might be “Keep writing this in a more professional tone.”\n\nUnlike prompt starters, ghost text doesn’t always have to be action oriented. Use your best judgement to discern what information would be most helpful to a user, a suggested action or a question.\n\nSkip the period in placeholder text. For more info, see Periods in the Microsoft Writing Style Guide.\n\nGhost text can spark ideas by asking questions.\n\nGhost text can point to a path forward by suggesting actions."
-        }
-      ],
-      "links": []
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "Prompt starters",
     "slug": "promptstarters",
     "category": "ai",
     "platform": "web/react",
-    "description": "Prompt starters give people hints about how they can interact with Copilot. Use them to teach how to build prompts, give users a starting point for building a robust prompt, and show Copilot capabilities. Prompt starters are most often found in zero prompt experiences or inside the prompt library dialog.",
-    "whenToUse": "Prompt starters teach people how to build effective prompts. If you need to help people build additional conversational context, use prompt suggestions.",
     "anatomy": [],
     "types": [
       "Chat starter: The chat starter appears in side car experiences and sends the suggested prompt to the input where people can tweak it or send it to Copilot. They’re lightweight and straightforward and should help people accomplish and in-context task.",
       "Library starter: The library starter is a more heavyweight card that provides more information and actions around a card. Use library starters to show people many different kinds of prompts they can try. Library starters can be shared or saved for later and are not limited to a particular context."
     ],
     "states": [],
-    "behavior": [
-      "Textarea autofill: Selecting a prompt starter always inserts the prompt text into the textarea, even if no additional information is required to finish the prompt. If a reference is required, the CiQ menu will also open automatically. Inserting into the textarea gives people the opportunity to edit the prompt either by changing it or expanding on it if needed.",
-      "Visual cues to fill in the blank: Prompt starters give users an idea of what a prompt can accomplish with data of their choice. To indicate that choice, there are different visual cues to direct people toward Microsoft Graph entities or free-form text entry.",
-      "Blue text or tags for Microsoft Graph entities: Entities that exist in the Microsoft Graph, like meetings, calendar events, emails, chats, and people, are represented by blue text. By default, the text is comms blue but can be changed to reflect the color of the product it appears in. For example, Excel might show the entity text in green. When a user selects a prompt starter that calls for a Microsoft Graph entry, the blue text doesn’t autofill into the textarea. Instead, the CiQ menu opens and has focus so that the user can choose the entity they want to complete the prompt. Badge for CiQ Blue text for CiQ",
-      "Gray texts in brackets for free-form entry: To prompt users to enter free-form text that doesn’t map to Microsoft Graph data points, use gray texts in brackets. The content of that text should be general so that the distinction between a free-form entry and graph data remains clear. When a user selects a prompt starter that calls for free-form entry, the gray, bracketed text doesn’t autofill into the textarea. Instead, the cursor appears to suggest that the user can complete the prompt on their own. Free-form entry in chat starters Free-form entry in library starter",
-      "Chat starter limits: Don’t use more than three chat prompt starters. Space is limited so highlight the most helpful prompts.",
-      "Badge for CiQ",
-      "Blue text for CiQ",
-      "Writing library starters: Prompt library starters tend to have more screen real estate that chat starters. Therefore, titles in library starters can be more descriptive.",
-      "Library starter body text summarizes a long, in-depth prompt that will appear in the input. Keep the starter body text brief, usually the first sentence of the larger prompt.",
-      "Writing chat starters: Prompts represent user agency. Use third person to represent a command to Copilot.",
-      "Include ellipses ( … ) to indicate that open-ended information should be added to complete the prompt. Try to truncate prompts at the end of a word and use a space before the ellipses.",
-      "If no additional information is required to submit the prompt, format content regularly."
-    ],
+    "behavior": [],
     "accessibility": [],
-    "content": [
-      "Writing library starters: Prompt library starters tend to have more screen real estate that chat starters. Therefore, titles in library starters can be more descriptive. Library starter body text summarizes a long, in-depth prompt that will appear in the input. Keep the starter body text brief, usually the first sentence of the larger prompt.",
-      "Writing chat starters: Prompts represent user agency. Use third person to represent a command to Copilot. Use first person to refer to the user or their information. Include ellipses ( … ) to indicate that open-ended information should be added to complete the prompt. Try to truncate prompts at the end of a word and use a space before the ellipses. If a prompt requires a specific entity reference, call out the type of reference necessary to complete the prompt, like file or person. If no additional information is required to submit the prompt, format content regularly. ---"
-    ],
+    "content": [],
     "bestPractices": {
       "do": [],
-      "dont": [
-        "Don’t use more than three chat prompt starters. Space is limited so highlight the most helpful prompts."
-      ]
+      "dont": []
     },
     "images": [
       {
@@ -7417,143 +6441,26 @@
         "source": "gated-capture"
       }
     ],
-    "sections": [
-      "Types",
-      "Behavior",
-      "Textarea autofill",
-      "Layout",
-      "Visual cues to fill in the blank",
-      "Blue text or tags for Microsoft Graph entities",
-      "Gray texts in brackets for free-form entry",
-      "Chat starter limits",
-      "Content",
-      "Writing library starters",
-      "Writing chat starters"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-promptstarter--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/promptstarters/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/promptstarters/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/promptstarters/usage",
-      "title": "React Prompt starters - Fluent 2 Design System",
-      "intro": "Prompt starters give people hints about how they can interact with Copilot. Use them to teach how to build prompts, give users a starting point for building a robust prompt, and show Copilot capabilities. Prompt starters are most often found in zero prompt experiences or inside the prompt library dialog.\n\nPrompt starters teach people how to build effective prompts. If you need to help people build additional conversational context, use prompt suggestions.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Types",
-          "text": "Chat starter\n\nThe chat starter appears in side car experiences and sends the suggested prompt to the input where people can tweak it or send it to Copilot. They’re lightweight and straightforward and should help people accomplish and in-context task.\n\nLibrary starter\n\nThe library starter is a more heavyweight card that provides more information and actions around a card. Use library starters to show people many different kinds of prompts they can try. Library starters can be shared or saved for later and are not limited to a particular context."
-        },
-        {
-          "level": 2,
-          "heading": "Behavior",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Textarea autofill",
-          "text": "Selecting a prompt starter always inserts the prompt text into the textarea, even if no additional information is required to finish the prompt. If a reference is required, the CiQ menu will also open automatically.\n\nInserting into the textarea gives people the opportunity to edit the prompt either by changing it or expanding on it if needed."
-        },
-        {
-          "level": 2,
-          "heading": "Layout",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Visual cues to fill in the blank",
-          "text": "Prompt starters give users an idea of what a prompt can accomplish with data of their choice. To indicate that choice, there are different visual cues to direct people toward Microsoft Graph entities or free-form text entry."
-        },
-        {
-          "level": 4,
-          "heading": "Blue text or tags for Microsoft Graph entities",
-          "text": "Entities that exist in the Microsoft Graph, like meetings, calendar events, emails, chats, and people, are represented by blue text. By default, the text is comms blue but can be changed to reflect the color of the product it appears in. For example, Excel might show the entity text in green.\n\nWhen a user selects a prompt starter that calls for a Microsoft Graph entry, the blue text doesn’t autofill into the textarea. Instead, the CiQ menu opens and has focus so that the user can choose the entity they want to complete the prompt.\n\nBadge for CiQ\n\nBlue text for CiQ"
-        },
-        {
-          "level": 4,
-          "heading": "Gray texts in brackets for free-form entry",
-          "text": "To prompt users to enter free-form text that doesn’t map to Microsoft Graph data points, use gray texts in brackets. The content of that text should be general so that the distinction between a free-form entry and graph data remains clear.\n\nWhen a user selects a prompt starter that calls for free-form entry, the gray, bracketed text doesn’t autofill into the textarea. Instead, the cursor appears to suggest that the user can complete the prompt on their own.\n\nFree-form entry in chat starters\n\nFree-form entry in library starter"
-        },
-        {
-          "level": 3,
-          "heading": "Chat starter limits",
-          "text": "Don’t use more than three chat prompt starters. Space is limited so highlight the most helpful prompts."
-        },
-        {
-          "level": 2,
-          "heading": "Content",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Writing library starters",
-          "text": "Prompt library starters tend to have more screen real estate that chat starters. Therefore, titles in library starters can be more descriptive.\n\nLibrary starter body text summarizes a long, in-depth prompt that will appear in the input. Keep the starter body text brief, usually the first sentence of the larger prompt."
-        },
-        {
-          "level": 3,
-          "heading": "Writing chat starters",
-          "text": "Prompts represent user agency. Use third person to represent a command to Copilot. Use first person to refer to the user or their information.\n\nInclude ellipses ( … ) to indicate that open-ended information should be added to complete the prompt. Try to truncate prompts at the end of a word and use a space before the ellipses. If a prompt requires a specific entity reference, call out the type of reference necessary to complete the prompt, like file or person.\n\nIf no additional information is required to submit the prompt, format content regularly."
-        }
-      ],
-      "links": [
-        {
-          "text": "suggestions.",
-          "href": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/suggestions/usage"
-        },
-        {
-          "text": "Prompt starters storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-promptstarter--docs"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   },
   {
     "name": "System message",
     "slug": "systemmessage",
     "category": "ai",
     "platform": "web/react",
-    "description": "System messages are used in Copilot for messages from the system that need to sit outside the chat conversation. They are typically used to inform someone about an action related to the chat but occurring somewhere else or in the background.",
-    "whenToUse": "If Copilot performs an action for the user that is visible in the main canvas without switching contexts, use chat output for this message instead. For system-level errors like Copilot being unavailable, use a message bar instead.",
     "anatomy": [
       "SystemMessage — a non-conversational status line shown beneath a Copilot response (e.g. “Copilot created an email draft in Outlook.”), optionally with an inline action"
     ],
     "types": [],
     "states": [],
-    "behavior": [
-      "In handoff scenarios, the system message is triggered when the user chooses an action button in the Copilot chat that requires handoff, such as “Edit in Word” or “Create a policy.”",
-      "When handoff goes to a different app or service, a system message appears in both the initiating app chatS and the destination app chat, with slight variation in content to fit each context.",
-      "Placement and styling: After Copilot takes action on behalf of the user, the system message appears below the last message or option in the chat. It uses muted styling to deemphasize and differentiate it from the main conversation. It may include an icon related to the action performed. For handoff messages, this is usually the Open icon, which indicates opening something in a different window or browser tab.",
-      "System messages are always written in third person, describing what Copilot did and where. The message is a full sentence, and ends with a period.",
-      "Handoff messages: System messages are most commonly used for handoffs, which can be used to:",
-      "Navigate to another page or file in the same app or service",
-      "Navigate to a different app or service (on the web, opens in a different tab)",
-      "When Copilot takes a requested action on behalf of the user and hands the user off to another page, file, app, or service to continue working, a system message appears in Copilot chat. This is called a handoff.",
-      "When the handoff goes to a different app or service in a new window or browser tab, separate messages, called bookends, appear in the originating and destination chat panes.",
-      "Handoff messages are tailored to fit the context where they appear. In the originating app, the message clarifies where the user will go to continue working, and in the destination app, they include where the action was initiated.",
-      "Each handoff message includes an action and a noun. The action is typically ”opened” or “created,” and the noun is the name of the page, guide, app, or location that Copilot opened.",
-      "The system message should also inform if any styling, content, filters, or fields were applied or altered by Copilot.",
-      "In bookended handoff messages, the action and noun text should be the same for both the initiating and receiving apps.",
-      "For the app initiating, describe where the noun will be handed off to.",
-      "For the receiving app, describe where the noun is coming from.",
-      "Shown in initiating app: In the initiating app, messages generally follow the format “Copilot/Copilot chat [verbed] an [object] in [destination app].” For messages about opening a different web page, use the phrase “…opened [destination] in a new browser tab.” Examples:",
-      "Copilot opened an email draft in Outlook. [origin: Word; destination: Outlook]",
-      "Copilot opened a workbook in Excel. [origin: Word; destination: Excel]",
-      "Copilot opened a presentation in PowerPoint. [origin: Copilot Chat; destination: PowerPoint]"
-    ],
-    "accessibility": [
-      "When the system message is in focus, pressing Enter moves focus to any focusable elements, such as a link, when present. Pressing Esc moves focus back to the whole system message.",
-      "By default, the system message announces “system message” followed by the contents of the message. An announcement property can optionally be added to announce a custom message."
-    ],
-    "content": [
-      "System messages are always written in third person, describing what Copilot did and where. The message is a full sentence, and ends with a period. Use a conversational voice and tone, but keep it as brief as possible. One line is ideal, but the message may wrap to another line if needed.",
-      "Handoff messages: System messages are most commonly used for handoffs, which can be used to: When Copilot takes a requested action on behalf of the user and hands the user off to another page, file, app, or service to continue working, a system message appears in Copilot chat. This is called a handoff. When the handoff goes to a different app or service in a new window or browser tab, separate messages, called bookends, appear in the originating and destination chat panes. Handoff messages are tailored to fit the context where they appear. In the originating app, the message clarifies where the user will go to continue working, and in the destination app, they include where the action was initiated. Each handoff message includes an action and a noun. The action is typically ”opened” or “created,” and the noun is the name of the page, guide, app, or location that Copilot opened. Don’t use terms that describe specific UI, such as “wizard” or “drawer.” The system message should also inform if any styling, content, filters, or fields were applied or altered by Copilot. In bookended handoff messages, the action and noun text should be the same for both the initiating and receiving apps. Navigate to another page or file in the same app or service Navigate to a different app or service (on the web, opens in a different tab) For the app initiating, describe where the noun will be handed off to. For the receiving app, describe where the noun is coming from.",
-      "Shown in initiating app: In the initiating app, messages generally follow the format “Copilot/Copilot chat [verbed] an [object] in [destination app].” For messages about opening a different web page, use the phrase “…opened [destination] in a new browser tab.” Examples: Copilot opened an email draft in Outlook. [origin: Word; destination: Outlook] Copilot opened a workbook in Excel. [origin: Word; destination: Excel] Copilot opened a presentation in PowerPoint. [origin: Copilot Chat; destination: PowerPoint] Copilot opened Microsoft Purview in a new browser tab. [origin: M365 admin center; destination: Microsoft Purview]",
-      "Shown in destination app: In the destination app, messages are similar, but need to also clarify where the new content came from. It will generally follow the format “Copilot [verbed] an [object] from [originating app].” If the action originated in Copilot Chat, use “Copilot Chat verbed an object.” Examples: Copilot opened an email draft from Word. [origin: Word; destination: Outlook] Copilot created a new workbook from Word. [origin: Word; destination: Excel] Copilot Chat created an email draft. [origin: Copilot Chat; destination: Outlook] Copilot opened Microsoft Purview from the Microsoft 365 admin center. [origin: M365 admin center; destination: Microsoft Purview]"
-    ],
+    "behavior": [],
+    "accessibility": [],
+    "content": [],
     "bestPractices": {
       "do": [],
       "dont": []
@@ -7587,88 +6494,11 @@
         "source": "ocr-vision"
       }
     ],
-    "sections": [
-      "Behavior",
-      "Layout",
-      "Placement and styling",
-      "Accessibility",
-      "Content",
-      "Handoff messages",
-      "Shown in initiating app",
-      "Shown in destination app"
-    ],
+    "sections": [],
     "storybookUrl": "https://ai.fluentui.dev/?path=/docs/components-systemmessage--docs",
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/systemmessage/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "capture": {
-      "accessStatus": "employee-gated-captured",
-      "capturedAt": "2026-08",
-      "method": "authenticated browser capture (Microsoft employee sign-in)",
-      "sourceUrl": "https://fluent2.microsoft.design/components/web/react/ai/systemmessage/usage",
-      "finalUrl": "https://fluent2.microsoft.design/components/web/react/ai/systemmessage/usage",
-      "title": "React System message - Fluent 2 Design System",
-      "intro": "System messages are used in Copilot for messages from the system that need to sit outside the chat conversation. They are typically used to inform someone about an action related to the chat but occurring somewhere else or in the background.\n\nIf Copilot performs an action for the user that is visible in the main canvas without switching contexts, use chat output for this message instead. For system-level errors like Copilot being unavailable, use a message bar instead.",
-      "sections": [
-        {
-          "level": 2,
-          "heading": "Behavior",
-          "text": "In handoff scenarios, the system message is triggered when the user chooses an action button in the Copilot chat that requires handoff, such as “Edit in Word” or “Create a policy.”\n\nWhen handoff goes to a different app or service, a system message appears in both the initiating app chatS and the destination app chat, with slight variation in content to fit each context."
-        },
-        {
-          "level": 2,
-          "heading": "Layout",
-          "text": ""
-        },
-        {
-          "level": 3,
-          "heading": "Placement and styling",
-          "text": "After Copilot takes action on behalf of the user, the system message appears below the last message or option in the chat. It uses muted styling to deemphasize and differentiate it from the main conversation.\n\nIt may include an icon related to the action performed. For handoff messages, this is usually the Open icon, which indicates opening something in a different window or browser tab."
-        },
-        {
-          "level": 2,
-          "heading": "Accessibility",
-          "text": "When the system message is in focus, pressing Enter moves focus to any focusable elements, such as a link, when present. Pressing Esc moves focus back to the whole system message.\n\nBy default, the system message announces “system message” followed by the contents of the message. An announcement property can optionally be added to announce a custom message."
-        },
-        {
-          "level": 2,
-          "heading": "Content",
-          "text": "System messages are always written in third person, describing what Copilot did and where. The message is a full sentence, and ends with a period. Use a conversational voice and tone, but keep it as brief as possible. One line is ideal, but the message may wrap to another line if needed."
-        },
-        {
-          "level": 3,
-          "heading": "Handoff messages",
-          "text": "System messages are most commonly used for handoffs, which can be used to:\n\nNavigate to another page or file in the same app or service\nNavigate to a different app or service (on the web, opens in a different tab)\n\nWhen Copilot takes a requested action on behalf of the user and hands the user off to another page, file, app, or service to continue working, a system message appears in Copilot chat. This is called a handoff.\n\nWhen the handoff goes to a different app or service in a new window or browser tab, separate messages, called bookends, appear in the originating and destination chat panes.\n\nHandoff messages are tailored to fit the context where they appear. In the originating app, the message clarifies where the user will go to continue working, and in the destination app, they include where the action was initiated.\n\nEach handoff message includes an action and a noun. The action is typically ”opened” or “created,” and the noun is the name of the page, guide, app, or location that Copilot opened. Don’t use terms that describe specific UI, such as “wizard” or “drawer.”\n\nThe system message should also inform if any styling, content, filters, or fields were applied or altered by Copilot.\n\nIn bookended handoff messages, the action and noun text should be the same for both the initiating and receiving apps.\n\nFor the app initiating, describe where the noun will be handed off to.\nFor the receiving app, describe where the noun is coming from."
-        },
-        {
-          "level": 3,
-          "heading": "Shown in initiating app",
-          "text": "In the initiating app, messages generally follow the format “Copilot/Copilot chat [verbed] an [object] in [destination app].” For messages about opening a different web page, use the phrase “…opened [destination] in a new browser tab.” Examples:\n\nCopilot opened an email draft in Outlook. [origin: Word; destination: Outlook]\nCopilot opened a workbook in Excel. [origin: Word; destination: Excel]\nCopilot opened a presentation in PowerPoint. [origin: Copilot Chat; destination: PowerPoint]\nCopilot opened Microsoft Purview in a new browser tab. [origin: M365 admin center; destination: Microsoft Purview]"
-        },
-        {
-          "level": 3,
-          "heading": "Shown in destination app",
-          "text": "In the destination app, messages are similar, but need to also clarify where the new content came from. It will generally follow the format “Copilot [verbed] an [object] from [originating app].” If the action originated in Copilot Chat, use “Copilot Chat verbed an object.” Examples:\n\nCopilot opened an email draft from Word. [origin: Word; destination: Outlook]\nCopilot created a new workbook from Word. [origin: Word; destination: Excel]\nCopilot Chat created an email draft. [origin: Copilot Chat; destination: Outlook]\nCopilot opened Microsoft Purview from the Microsoft 365 admin center. [origin: M365 admin center; destination: Microsoft Purview]"
-        }
-      ],
-      "links": [
-        {
-          "text": "chat output",
-          "href": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/usage"
-        },
-        {
-          "text": "errors",
-          "href": "https://fluent2.microsoft.design/copilot-errors"
-        },
-        {
-          "text": "message bar",
-          "href": "https://fluent2.microsoft.design/components/web/react/core/messagebar/usage"
-        },
-        {
-          "text": "System message storybook React guidance",
-          "href": "https://ai.fluentui.dev/?path=/docs/components-systemmessage--docs"
-        }
-      ]
-    }
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
   }
 ]

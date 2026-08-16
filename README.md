@@ -1,4 +1,4 @@
-# fluent-ui: build flawless Fluent 2 UIs, automatically
+# fluent-ui: build token-accurate Fluent 2 UIs, automatically
 
 [![CI](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/ArasaniRohithReddy/fluent-ui-plugin?color=0f6cbd&label=release)](https://github.com/ArasaniRohithReddy/fluent-ui-plugin/releases/latest)
@@ -15,7 +15,7 @@
 ---
 
 ## Why this exists
-Fluent 2 is large and precise: the right component, the right token, the right theme, and accessibility, every time. Doing that by hand is slow and error-prone. `fluent-ui` turns the official Fluent 2 design system into **grounded, executable help**: apply the **design-language foundations** (color, typography, layout, elevation, iconography, motion, shapes, material, content, responsible AI), look up real components and token values, generate brand themes, produce valid Power BI themes and **PBIP/PBIR** projects, and get Power Apps / Power Pages / PCF guidance, so users design flawlessly without doing it manually.
+Fluent 2 is large and precise: the right component, the right token, the right theme, and accessibility, every time. Doing that by hand is slow and error-prone. `fluent-ui` turns the official Fluent 2 design system into **grounded, executable help**: apply the **design-language foundations** (color, typography, layout, elevation, iconography, motion, shapes, material, content, responsible AI), look up real components and token values, generate brand themes, produce valid Power BI themes and **PBIP/PBIR** projects, and get Power Apps / Power Pages / PCF guidance, so users get token-accurate, accessible Fluent 2 without doing it manually.
 
 Beyond greenfield, it also:
 - **Adopt/migrate existing UIs to Fluent 2**: Fluent UI v8 to v9 (keeps Fluent 1 alongside Fluent 2), from other design systems, and hardcoded values to tokens.
@@ -65,13 +65,14 @@ Beyond greenfield, it also:
 | `fluent_native_component` / `fluent_native_guidance` | **Native iOS / Android / Windows**: real type names, imports and namespaces, key API and samples, plus which generation is current vs frozen |
 | `fluent_figma_guidance` | Figma MCP design-to-code: entitlements (rate limits per seat and plan), the client-catalog gate, remote vs desktop server, and Figma-variable to Fluent-token mapping. Credential-free |
 
-## Works in every major host
-The MCP server is a standard stdio server; agents/skills/instructions fan out via `AGENTS.md`, `CLAUDE.md`, and `.github/`. Priority hosts: **GitHub Copilot CLI, VS Code, VS Code Insiders, Visual Studio, GitHub Copilot desktop app**; also Cursor, Claude, Gemini, Antigravity, Windsurf, Cline. See **[`hosts/README.md`](hosts/README.md)** for copy-paste configs (3 MCP dialects).
+## Host coverage
+The MCP server is a standard stdio server; agents/skills/instructions fan out via `AGENTS.md`, `CLAUDE.md`, and `.github/`. `node hosts/register-mcp.mjs` auto-registers **9 hosts across 10 config locations**; **3 MCP dialects** cover everything else. Priority hosts: **GitHub Copilot CLI, VS Code, VS Code Insiders, Visual Studio, GitHub Copilot desktop app**; also Cursor, Claude, Gemini, Antigravity, Windsurf, Cline. See **[`hosts/README.md`](hosts/README.md)** for copy-paste configs.
 
 ## Quickstart
 ```bash
-# 1) Build the MCP server
-cd mcp
+# 1) Clone and build the MCP server
+git clone https://github.com/ArasaniRohithReddy/fluent-ui-plugin.git
+cd fluent-ui-plugin/mcp
 npm install
 npm run build            # -> mcp/dist/index.js
 
@@ -79,7 +80,12 @@ npm run build            # -> mcp/dist/index.js
 #    Copilot dialect   -> hosts/mcp.copilot.json
 #    VS Code / VS       -> hosts/mcp.vscode.json
 #    Claude-style       -> hosts/mcp.claude-style.json
+#    Or register every installed host at once:
+#    node hosts/register-mcp.mjs
 ```
+**Did it work?** Restart your host, then ask it to run `fluent_accessibility_checklist`.
+A grounded Fluent 2 checklist back means the server is live; "tool not found" means the config path is wrong.
+
 Then ask your assistant things like:
 - *"Build a Fluent 2 sign-in form with dark mode."*
 - *"Generate a Power BI theme from brand `#742774` and scaffold a PBIP report."*
@@ -98,19 +104,26 @@ Then ask your assistant things like:
 plugin.json            # plugin manifest (+ mirrors in .claude-plugin/.codex-plugin/.github)
 .mcp.json              # bundled MCP server registration (Copilot dialect)
 AGENTS.md · CLAUDE.md  # portable instructions (fan out to most hosts)
-agents/                # 6 agents (*.agent.md)
+agents/                # 7 agents (*.agent.md)
 skills/                # 18 skills (SKILL.md)
 mcp/                   # MCP server: 28 tools (src/, dist/, data/)
 templates/pbip/        # PBIP/PBIR project template
 hosts/                 # per-IDE MCP config templates + install guide
-docs/                  # architecture + presentation
-research/              # grounded research notes (design, code, powerbi, power platform, hosts)
-assets/screenshots/    # Fluent 2 reference captures
+assets/                # sample configs/apps + the fluent.config JSON schema
+scripts/               # PBIR engine + data-build scripts
+site/                  # the live site (Fluent UI React v9 app)
+docs/                  # architecture · presentation · coverage + the published site build
+.github/               # CI workflows, issue/PR templates, Copilot instructions
 ```
+> Not published: `research/` (grounded research notes) and `assets/screenshots/` (Fluent 2 site captures) are **gitignored local-only** working folders — they hold gated/copyright Microsoft content, so they are not in the repository.
 
 ## Docs
+- [`GUIDE.md`](GUIDE.md): install it, then use it — per-host setup and worked examples.
 - [`docs/architecture.md`](docs/architecture.md): how the pieces fit together.
+- [`docs/COVERAGE.md`](docs/COVERAGE.md): what's covered, measured against the source of truth.
 - [`docs/presentation.md`](docs/presentation.md): leadership presentation outline.
+- [`CHANGELOG.md`](CHANGELOG.md): what changed in each release.
+- [`NOTICE`](NOTICE): attribution, trademarks, and how sign-in-gated Microsoft material is handled.
 
 ## Contributing and community
 This is an open-source project (MIT) and contributions are welcome.

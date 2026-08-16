@@ -111,4 +111,4 @@ tokens only need substitution when generating a differently named project.
 - TMDL files are **tab-indented**; keep tabs (not spaces) when editing.
 - All JSON files here were validated against their official Draft-7 schemas with
   zero errors. TMDL structure mirrors a real Desktop export but was not run
-  through Power BI Desktop in this environment — see `research/powerbi.md`.
+  through Power BI Desktop in this environment.

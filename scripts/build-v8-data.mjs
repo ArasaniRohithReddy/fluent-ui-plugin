@@ -1107,7 +1107,15 @@ export function build(dir) {
       verifiedVersions: sortKeys(verifiedVersions),
       verifiedOn,
       v9Baseline: componentsJson?.meta?.v9Baseline ?? null,
-      counts: componentsJson?.meta?.counts ?? null,
+      // These describe the upstream v8 library, not this dataset. Published
+      // as `counts` they read as a census of the file and contradict it
+      // (71 families vs 46 here), right beside "values are never inferred".
+      upstreamLibraryCounts: componentsJson?.meta?.counts
+        ? {
+            ...componentsJson.meta.counts,
+            note: 'Totals for the upstream Fluent UI React v8 library as reported by the source research, NOT the size of this dataset. See datasetCounts.',
+          }
+        : null,
       migrationDocsLocation: extractMigrationDocsLocation(migrationMd),
       sources,
       generatedBy: 'scripts/build-v8-data.mjs',

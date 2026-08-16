@@ -1,6 +1,6 @@
 # fluent-ui plugin: install and usage guide
 
-A complete guide to installing and using the **fluent-ui** plugin, which helps you build and adopt **Microsoft Fluent 2 (Fluent UI 2.0)** across Web, Power BI, and Power Platform, from any major AI IDE.
+A complete guide to installing and using the **fluent-ui** plugin, which helps you build and adopt **Microsoft Fluent 2 (Fluent UI 2.0)** across Web, Power BI, Power Platform, the native platforms (iOS, Android, Windows), Fluent 1 (v8) and Figma design-to-code, from any MCP-capable AI IDE.
 
 - Live site: https://arasanirohithreddy.github.io/fluent-ui-plugin/
 - Repository: https://github.com/ArasaniRohithReddy/fluent-ui-plugin
@@ -12,9 +12,9 @@ A complete guide to installing and using the **fluent-ui** plugin, which helps y
 
 `fluent-ui` is an AI-assistant plugin made of three layers:
 
-1. **MCP tools** (19): a portable, standard MCP server (stdio) that runs everywhere. It returns grounded Fluent 2 data and generates code, themes, and projects.
+1. **MCP tools** (28): a portable, standard MCP server (stdio) that runs everywhere. It returns grounded Fluent 2 data and generates code, themes, and projects.
 2. **Agents** (7): a router plus specialists for web, native (iOS/Android/Windows), Power BI, Power Platform, migration, and design review.
-3. **Skills** (15) and **instructions** (`AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`): loaded natively by hosts that support them.
+3. **Skills** (18) and **instructions** (`AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`): loaded natively by hosts that support them.
 
 Everything is grounded in the official `fluent2.microsoft.design` site and the real `@fluentui` packages, so results are verified, not guessed.
 
@@ -146,6 +146,16 @@ After installing, just ask your AI assistant in **natural language**. The router
 - "Convert these hardcoded hex values and pixels to Fluent 2 tokens."
 - "Review this component against Fluent 2 and list what to fix."
 
+### Native (iOS, Android, Windows)
+- "What is the Fluent Avatar type on iOS, and is it SwiftUI or UIKit?"
+- "Which Kotlin package do I import for a Fluent 2 Compose button on Android?"
+- "Which Windows generation should I target — WinUI 3, WinUI 2, or the WPF Fluent theme?"
+
+### Fluent 1 (v8) and Figma
+- "Does `Nav` mean the same component in v8 and v9?" (returns the collision trap)
+- "Give me the real v8 symbol and its v9 replacement for this component."
+- "How do I go from a Figma frame to Fluent 2 code, and what are the rate limits?"
+
 ### Design guidance, tokens, and visuals
 - "Summarize the Fluent 2 motion guidance."
 - "Show the do and don't examples for buttons." (returns real image URLs)
@@ -162,9 +172,9 @@ With no config or memory present, everything still works using sensible built-in
 
 **Agents** (`agents/*.agent.md`): `fluent-ui-builder` (router), `fluent-web-engineer`, `fluent-powerbi-designer`, `fluent-power-platform-engineer`, `fluent-native-engineer`, `fluent-migration-engineer`, `fluent-design-reviewer`.
 
-**Skills** (`skills/**/SKILL.md`): web UI, theming, design tokens, design language, accessibility, AI/Copilot UI, Power BI theme, PBIP report, Power Apps, Power Pages, PCF, migration, design review, and config.
+**Skills** (`skills/**/SKILL.md`): web UI, theming, design tokens, design language, accessibility, AI/Copilot UI, Power BI theme, PBIP report, Power BI adoption, Power Apps, Power Pages, PCF, migration, design review, config, Fluent 1 (v8), native (iOS/Android/Windows), and Figma.
 
-**MCP tools** (23): `fluent_search_components`, `fluent_get_component`, `fluent_list_tokens`, `fluent_get_token`, `fluent_generate_theme`, `fluent_generate_code`, `fluent_design_guidance`, `fluent_migration_guidance`, `fluent_get_images`, `fluent_accessibility_checklist`, `fluent_generate_powerbi_theme`, `fluent_scaffold_pbip`, `fluent_pbir_audit`, `fluent_pbir_apply_theme`, `fluent_pbir_normalize_inline`, `fluent_pbir_verify`, `fluent_powerbi_visuals`, `fluent_powerplatform_guidance`, `fluent_get_config`, `fluent_init_config`, `fluent_set_config`, `fluent_remember`, `fluent_recall`.
+**MCP tools** (28): `fluent_generate_powerbi_theme`, `fluent_scaffold_pbip`, `fluent_pbir_audit`, `fluent_pbir_apply_theme`, `fluent_pbir_normalize_inline`, `fluent_pbir_verify`, `fluent_powerbi_visuals`, `fluent_powerplatform_guidance`, `fluent_accessibility_checklist`, `fluent_list_tokens`, `fluent_get_token`, `fluent_search_components`, `fluent_get_component`, `fluent_generate_theme`, `fluent_generate_code`, `fluent_design_guidance`, `fluent_migration_guidance`, `fluent_get_images`, `fluent_get_config`, `fluent_init_config`, `fluent_set_config`, `fluent_remember`, `fluent_recall`, `fluent_v8_lookup`, `fluent_v8_guidance`, `fluent_figma_guidance`, `fluent_native_component`, `fluent_native_guidance`.
 
 ## 6. Verify it is working
 

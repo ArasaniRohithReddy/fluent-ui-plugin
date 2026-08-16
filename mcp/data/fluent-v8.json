@@ -12,11 +12,6 @@
     },
     "verifiedOn": "2026-08-09",
     "v9Baseline": "@fluentui/react-components@9.74.5",
-    "counts": {
-      "families": 71,
-      "authorable": 118,
-      "libEntryPoints": 92
-    },
     "migrationDocsLocation": "apps/public-docsite-v9/src/Concepts/Migration/FromV8/",
     "sources": [
       {
@@ -76,7 +71,21 @@
       }
     ],
     "generatedBy": "scripts/build-v8-data.mjs",
-    "note": "Assembled from verified research extracts. Values are never inferred: anything the research could not confirm is null or listed in `unverified`."
+    "note": "Assembled from verified research extracts. Values are never inferred: anything the research could not confirm is null or listed in `unverified`.",
+    "upstreamLibraryCounts": {
+      "families": 71,
+      "authorable": 118,
+      "libEntryPoints": 92,
+      "note": "Totals for the upstream Fluent UI React v8 library as reported by the source research, NOT the size of this dataset. See datasetCounts."
+    },
+    "datasetCounts": {
+      "components": 106,
+      "families": 46,
+      "libEntryPoints": 46,
+      "collisions": 23,
+      "unverified": 134,
+      "note": "Measured from this file. Regenerate with scripts/build-v8-data.mjs."
+    }
   },
   "lineage": [
     {

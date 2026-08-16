@@ -1,4 +1,4 @@
-# fluent-ui — build flawless Fluent 2 UIs
+# fluent-ui — build token-accurate Fluent 2 UIs
 
 This project is the **fluent-ui** plugin: **agents + skills + an MCP server** that help developers, designers, and UI engineers implement **Microsoft Fluent 2 (Fluent UI 2.0)** *correctly and automatically* across **Web**, **Power BI**, **Power Platform**, and the **native platforms — iOS, Android and Windows**. It also **adopts/migrates** existing UIs to Fluent 2 — Fluent UI **v8 → v9** (keeping **Fluent 1 (v8)** alongside **Fluent 2 (v9)**), from other design systems, and hardcoded values → tokens.
 

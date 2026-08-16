@@ -5,6 +5,31 @@ body { min-height: 100vh; -webkit-font-smoothing: antialiased; text-rendering: o
 #root { min-height: 100vh; }
 a { text-decoration: none; }
 ::selection { background: rgba(15,108,189,.30); }
+
+/* Skip link: the first focusable element on the page, visible only on focus.
+   Keyboard and screen-reader users otherwise tab the whole header on every
+   page load before reaching content. */
+.skip-link {
+  position: absolute; left: 12px; top: -80px; z-index: 999;
+  display: inline-flex; align-items: center; min-height: 24px;
+  padding: 10px 16px; border-radius: 8px;
+  background: #0f6cbd; color: #fff; font: 600 14px/1.2 "Segoe UI", system-ui, sans-serif;
+  transition: top .15s ease;
+}
+.skip-link:focus { top: 12px; }
+/* Fluent v9 Buttons and Tabs draw their own ring on [data-fui-focus-visible],
+   but Link resolves to outline:none here, so every nav link and card CTA had
+   no visible keyboard focus at all (verified in a browser by tabbing). Draw it
+   explicitly from the theme's own focus-stroke token so it stays correct in
+   light, dark and forced-colors. Scoped to .fui-Link so Buttons rendered as
+   anchors are not double-ringed. */
+a.fui-Link[data-fui-focus-visible],
+a.fui-Link:focus-visible {
+  outline: 2px solid var(--colorStrokeFocus2, #000);
+  outline-offset: 2px;
+  border-radius: var(--borderRadiusMedium, 4px);
+}
+.skip-link:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
 ::-webkit-scrollbar { width: 12px; height: 12px; }
 ::-webkit-scrollbar-thumb { background: rgba(128,128,128,.35); border-radius: 8px; border: 3px solid transparent; background-clip: content-box; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(128,128,128,.55); background-clip: content-box; }

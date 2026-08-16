@@ -6,7 +6,22 @@ Microsoft Corporation. "Microsoft", "Fluent", "Fluent 2", "Fluent UI", "Power BI
 
 Design guidance and reference data in this repository are derived from the publicly
 available, MIT-licensed @fluentui/* npm packages and publicly available Fluent 2
-documentation, and are provided for interoperability and developer reference. No
-Microsoft-internal or sign-in-gated content is redistributed in this repository.
+documentation, and are provided for interoperability and developer reference.
+
+Sign-in-gated material
+----------------------
+A small number of Fluent 2 pages — notably the AI/Copilot component usage pages and four
+"Working with AI" topics — are published by Microsoft behind an employee sign-in. Their
+guidance text is NOT redistributed in this repository. For those items the published
+datasets carry only factual scaffolding (component and part names, section headings, the
+official documentation URL, and links to publicly hosted images), plus a `gatedNotice`
+field pointing readers to the official page. Readers who have access can restore the full
+text on their own machine; see scripts/split-gated-content.mjs. The same rule keeps
+`research/` and `assets/screenshots/` out of this repository.
+
+Image URLs reference Microsoft's public CDN rather than vendoring copies of the assets.
+
+If you are a rights holder and believe anything here should be removed or attributed
+differently, please open an issue and it will be addressed promptly.
 
 This software is licensed under the MIT License — see LICENSE.

@@ -15,7 +15,7 @@ Thanks for using fluent-ui. Here is where to get help.
 
 ## Before you open an issue
 
-- Confirm the MCP server builds: `cd mcp && npm ci && npm run build && npm test`.
+- Confirm the MCP server builds: `cd mcp && npm install && npm run build && npm test`.
 - Note your host or IDE, the plugin version, and the tool involved.
 - Search existing issues and discussions to avoid duplicates.
 

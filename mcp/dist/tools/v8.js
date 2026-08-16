@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { loadJson, textResult } from '../util.js';
+import { loadJson, textResult, provenanceFooter } from '../util.js';
 const load = () => loadJson('fluent-v8.json');
 /** Index values are sometimes a single key and sometimes a list of them. */
 const asKeys = (v) => v === undefined ? [] : Array.isArray(v) ? v : [v];
@@ -62,7 +62,11 @@ export function registerV8(server) {
         const traps = (data.traps ?? []).filter((t) => t.component === resolved || trapKeys.includes(t.component) || (t.v8Names ?? []).includes(resolved));
         if (traps.length)
             out.traps = traps;
-        return textResult(JSON.stringify(out, null, 2));
+        return textResult(JSON.stringify(out, null, 2) +
+            provenanceFooter(data.unverified, {
+                terms: [resolved, name],
+                seeAlso: 'fluent_v8_guidance { section: "unverified" }',
+            }));
     });
     server.registerTool('fluent_v8_guidance', {
         title: 'Fluent 1 (v8) reference — versions, theming, styling, platforms',

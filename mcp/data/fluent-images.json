@@ -25,7 +25,9 @@
         "pattern": 7,
         "workflow": 2
       },
-      "withOcrText": 65
+      "withOcrText": 65,
+      "distinctUrls": 750,
+      "note": "total counts media RECORDS (753); 3 assets are referenced by two component pages each, so distinct URLs is 750. Both numbers are correct - they answer different questions."
     },
     "gatedCapture": {
       "capturedAt": "2026-08",
