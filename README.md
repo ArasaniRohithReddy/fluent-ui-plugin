@@ -21,6 +21,9 @@ Beyond greenfield, it also:
 - **Adopt/migrate existing UIs to Fluent 2**: Fluent UI v8 to v9 (keeps Fluent 1 alongside Fluent 2), from other design systems, and hardcoded values to tokens.
 - **Support Fluent 1 (v8) as a first-class target**, not just a migration source — including the collision traps where v8 and v9 export the *same name* for different components, so a wrong import compiles cleanly and misbehaves at runtime.
 - **Cover the native platforms**: real iOS, Android and Windows types, imports and API. The same component *name* maps to a different *type* on every platform — and on Android both Fluent generations ship in the **same Maven artifacts**, separated only by Kotlin package — so native code can't safely be inferred from the web API.
+- **Find the right icon**: 2,976 Fluent icon families searchable by *meaning*, returning the exact verified export and import. Fluent names icons for the object, not the function — so a guessed name (`Refresh24Regular`, `Logout24Regular`) is a compile error, while the real ones are `ArrowSync24Regular` and `SignOut24Regular`.
+- **Chart with Fluent**: the 27 `@fluentui/react-charts` components plus `DataVizPalette`, wired into the Power BI theme generator so a Fluent-themed report and a Fluent-themed React chart use the **same series colours**.
+- **Bridge design names to code tokens**: the Fluent 2 site's names are offset from the code tokens — the site's "Large" corner radius (8px) is `borderRadiusXLarge`, because `borderRadiusLarge` is 6px. Every design name resolves to the token that actually produces its value.
 - **Optional user presets (`fluent.config.json`) + persistent memory**: agents honor your brand/accessibility/shape/size presets and remember your decisions; fully zero-config by default (no setup required).
 
 ## What's inside

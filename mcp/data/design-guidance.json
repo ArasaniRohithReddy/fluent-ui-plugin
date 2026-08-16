@@ -3,7 +3,7 @@
     "title": "Fluent 2 design-language reference",
     "source": "Synthesized faithfully from the official Fluent 2 guide pages on https://fluent2.microsoft.design (see research/fluent-design.md). All 36 topics are deep-parsed from their source pages: each topic carries the page summary, expanded keyPoints, a 'sections' array (one entry per subsection heading + its text), a 'values' object of concrete stated values, an 'images' array (alt text, nearest-heading section, and CDN asset slug for every image/gif — empty-alt images retain a descriptive asset slug), and a 'doDont' object where the page pairs do/don't specimens. Concrete values (type ramp incl. per-platform ramps, spacing scale, corner radii, shadow ramp, breakpoints, motion tokens, RAI rubric) are quoted from the source pages; token values are cross-checked against mcp/data/fluent-tokens.json.",
     "docBase": "https://fluent2.microsoft.design",
-    "topicCount": 40,
+    "topicCount": 42,
     "gatedCapture": {
       "capturedAt": "2026-08",
       "method": "authenticated browser capture (Microsoft employee sign-in)",
@@ -50,7 +50,30 @@
         "adds": "Route manifest count, the never-404 behaviour, the leaf-route/anchor facts, six employee-gated routes (metadata only) and the /color-tokens2/ duplicate registry.",
         "licensing": "Route metadata only. No gated page content is captured."
       }
-    ]
+    ],
+    "designToCodeTokenBridge": {
+      "what": "Design-site names on these pages now carry the code token that actually produces the stated value, matched by value rather than by name.",
+      "topics": [
+        "shapes",
+        "layout",
+        "typography",
+        "color",
+        "accessibility"
+      ],
+      "rowFields": [
+        "codeToken",
+        "codeTokens",
+        "codeValue",
+        "valueMatch",
+        "griffel",
+        "codeTokenNote",
+        "nameCollisionWarning"
+      ],
+      "index": "mcp/data/fluent-tokens.json -> designNameBridge (single source of truth; this file is generated from it)",
+      "biggestTrap": "borderRadiusLarge. The design site says Large = 8 pixels; the token is 6px. The 8px token is borderRadiusXLarge, and the 12px \"X-Large\" is borderRadius2XLarge.",
+      "resolveWith": "fluent_get_token resolves design-side names too, e.g. { name: \"Large corner radius\" } or { name: \"size120\" }",
+      "generatedBy": "scripts/build-design-token-bridge.mjs"
+    }
   },
   "topics": {
     "design-principles": {
@@ -282,7 +305,141 @@
           "Power Apps",
           "Booking"
         ],
-        "interactionStates": "Components generally darken with interaction: lightest rest → darker hover → darkest pressed/selected. Focus keeps the control color but thickens the container stroke. Windows reverses this (controls get lighter)."
+        "interactionStates": "Components generally darken with interaction: lightest rest → darker hover → darkest pressed/selected. Focus keeps the control color but thickens the container stroke. Windows reverses this (controls get lighter).",
+        "codeTokens": [
+          {
+            "designName": "Neutral",
+            "codeToken": "colorNeutralBackground1",
+            "codeTokens": [
+              "colorNeutralBackground1",
+              "colorNeutralBackground2",
+              "colorNeutralForeground1",
+              "colorNeutralForeground2",
+              "colorNeutralForegroundDisabled",
+              "colorNeutralStroke1",
+              "colorNeutralStrokeAccessible"
+            ],
+            "codeTokenFamilies": [
+              "colorNeutralBackground*",
+              "colorNeutralForeground*",
+              "colorNeutralStroke*"
+            ],
+            "tokenCount": 117
+          },
+          {
+            "designName": "Brand",
+            "codeToken": "colorBrandBackground",
+            "codeTokens": [
+              "colorBrandBackground",
+              "colorBrandBackgroundHover",
+              "colorBrandBackgroundPressed",
+              "colorBrandBackgroundSelected",
+              "colorBrandForeground1",
+              "colorBrandForegroundLink",
+              "colorBrandStroke1",
+              "colorNeutralForegroundOnBrand",
+              "colorCompoundBrandBackground",
+              "colorCompoundBrandForeground1",
+              "colorCompoundBrandStroke"
+            ],
+            "codeTokenFamilies": [
+              "colorBrand*",
+              "colorCompoundBrand*"
+            ],
+            "tokenCount": 45,
+            "note": "A custom brand comes from createLightTheme/createDarkTheme over a BrandVariants ramp — see fluent_generate_theme. Never hand-write a brand hex into a component."
+          },
+          {
+            "designName": "Shared",
+            "codeToken": "colorPaletteBerryBackground2",
+            "codeTokens": [
+              "colorPaletteBerryBackground2",
+              "colorPaletteBerryForeground2",
+              "colorPaletteBerryBorderActive"
+            ],
+            "codeTokenFamilies": [
+              "colorPaletteAnchor*",
+              "colorPaletteBeige*",
+              "colorPaletteBerry*",
+              "colorPaletteBlue*",
+              "colorPaletteBrass*",
+              "colorPaletteBrown*",
+              "colorPaletteCornflower*",
+              "colorPaletteCranberry*",
+              "colorPaletteDark*",
+              "colorPaletteForest*",
+              "colorPaletteGold*",
+              "colorPaletteGrape*",
+              "colorPaletteGreen*",
+              "colorPaletteLavender*",
+              "colorPaletteLight*",
+              "colorPaletteLilac*",
+              "colorPaletteMagenta*",
+              "colorPaletteMarigold*",
+              "colorPaletteMink*",
+              "colorPaletteNavy*",
+              "colorPalettePeach*",
+              "colorPalettePink*",
+              "colorPalettePlatinum*",
+              "colorPalettePlum*",
+              "colorPalettePumpkin*",
+              "colorPalettePurple*",
+              "colorPaletteRed*",
+              "colorPaletteRoyal*",
+              "colorPaletteSeafoam*",
+              "colorPaletteSteel*",
+              "colorPaletteTeal*",
+              "colorPaletteYellow*"
+            ],
+            "tokenCount": 150,
+            "note": "32 hue families ship as colorPalette<Hue>Background|Foreground|Border<n>. Most hues ship the Background2 / Foreground2 / BorderActive trio; Red, Green, Yellow, Berry, Marigold and the Dark/Light sets ship more."
+          },
+          {
+            "designName": "Semantic status",
+            "codeToken": "colorStatusDangerBackground3",
+            "codeTokens": [
+              "colorStatusDangerBackground3",
+              "colorStatusDangerForeground1",
+              "colorStatusWarningBackground3",
+              "colorStatusWarningForeground1",
+              "colorStatusSuccessBackground3",
+              "colorStatusSuccessForeground1"
+            ],
+            "codeTokenFamilies": [
+              "colorStatusDanger*",
+              "colorStatusWarning*",
+              "colorStatusSuccess*"
+            ],
+            "tokenCount": 32,
+            "designNameToCodeName": {
+              "danger": "colorStatusDanger* (red)",
+              "caution": "colorStatusWarning* — the site says \"caution\", the code says Warning",
+              "positive": "colorStatusSuccess* — the site says \"positive\", the code says Success"
+            },
+            "nameCollisionWarning": "The site's words are danger / caution / positive; the token names are Danger / Warning / Success. There is no colorStatusCaution* or colorStatusPositive*.",
+            "note": "Never signal status with colour alone — pair it with an icon or text (WCAG 1.4.1)."
+          },
+          {
+            "designName": "Interaction states",
+            "codeToken": "colorNeutralBackground1Hover",
+            "codeTokens": [
+              "colorNeutralBackground1Hover",
+              "colorNeutralBackground1Pressed",
+              "colorNeutralBackground1Selected",
+              "colorSubtleBackgroundHover",
+              "colorStrokeFocus1",
+              "colorStrokeFocus2"
+            ],
+            "codeTokenFamilies": [
+              "*Hover",
+              "*Pressed",
+              "*Selected",
+              "colorStrokeFocus1/2"
+            ],
+            "tokenCount": 103,
+            "note": "The state is a SUFFIX on the rest token, not a separate family: colorNeutralBackground1 -> colorNeutralBackground1Hover. Focus uses the two-tone colorStrokeFocus1/colorStrokeFocus2 outline."
+          }
+        ]
       },
       "images": [
         {
@@ -371,7 +528,146 @@
       },
       "docUrl": "https://fluent2.microsoft.design/color",
       "accessStatus": "public",
-      "capturedAt": "2026-08"
+      "capturedAt": "2026-08",
+      "codeTokenBridge": {
+        "note": "The palette names on this page are families, not values. These are the real token names behind each one; 366 alias tokens ship per theme.",
+        "palettes": [
+          {
+            "designName": "Neutral",
+            "codeToken": "colorNeutralBackground1",
+            "codeTokens": [
+              "colorNeutralBackground1",
+              "colorNeutralBackground2",
+              "colorNeutralForeground1",
+              "colorNeutralForeground2",
+              "colorNeutralForegroundDisabled",
+              "colorNeutralStroke1",
+              "colorNeutralStrokeAccessible"
+            ],
+            "codeTokenFamilies": [
+              "colorNeutralBackground*",
+              "colorNeutralForeground*",
+              "colorNeutralStroke*"
+            ],
+            "tokenCount": 117
+          },
+          {
+            "designName": "Brand",
+            "codeToken": "colorBrandBackground",
+            "codeTokens": [
+              "colorBrandBackground",
+              "colorBrandBackgroundHover",
+              "colorBrandBackgroundPressed",
+              "colorBrandBackgroundSelected",
+              "colorBrandForeground1",
+              "colorBrandForegroundLink",
+              "colorBrandStroke1",
+              "colorNeutralForegroundOnBrand",
+              "colorCompoundBrandBackground",
+              "colorCompoundBrandForeground1",
+              "colorCompoundBrandStroke"
+            ],
+            "codeTokenFamilies": [
+              "colorBrand*",
+              "colorCompoundBrand*"
+            ],
+            "tokenCount": 45,
+            "note": "A custom brand comes from createLightTheme/createDarkTheme over a BrandVariants ramp — see fluent_generate_theme. Never hand-write a brand hex into a component."
+          },
+          {
+            "designName": "Shared",
+            "codeToken": "colorPaletteBerryBackground2",
+            "codeTokens": [
+              "colorPaletteBerryBackground2",
+              "colorPaletteBerryForeground2",
+              "colorPaletteBerryBorderActive"
+            ],
+            "codeTokenFamilies": [
+              "colorPaletteAnchor*",
+              "colorPaletteBeige*",
+              "colorPaletteBerry*",
+              "colorPaletteBlue*",
+              "colorPaletteBrass*",
+              "colorPaletteBrown*",
+              "colorPaletteCornflower*",
+              "colorPaletteCranberry*",
+              "colorPaletteDark*",
+              "colorPaletteForest*",
+              "colorPaletteGold*",
+              "colorPaletteGrape*",
+              "colorPaletteGreen*",
+              "colorPaletteLavender*",
+              "colorPaletteLight*",
+              "colorPaletteLilac*",
+              "colorPaletteMagenta*",
+              "colorPaletteMarigold*",
+              "colorPaletteMink*",
+              "colorPaletteNavy*",
+              "colorPalettePeach*",
+              "colorPalettePink*",
+              "colorPalettePlatinum*",
+              "colorPalettePlum*",
+              "colorPalettePumpkin*",
+              "colorPalettePurple*",
+              "colorPaletteRed*",
+              "colorPaletteRoyal*",
+              "colorPaletteSeafoam*",
+              "colorPaletteSteel*",
+              "colorPaletteTeal*",
+              "colorPaletteYellow*"
+            ],
+            "tokenCount": 150,
+            "note": "32 hue families ship as colorPalette<Hue>Background|Foreground|Border<n>. Most hues ship the Background2 / Foreground2 / BorderActive trio; Red, Green, Yellow, Berry, Marigold and the Dark/Light sets ship more."
+          },
+          {
+            "designName": "Semantic status",
+            "codeToken": "colorStatusDangerBackground3",
+            "codeTokens": [
+              "colorStatusDangerBackground3",
+              "colorStatusDangerForeground1",
+              "colorStatusWarningBackground3",
+              "colorStatusWarningForeground1",
+              "colorStatusSuccessBackground3",
+              "colorStatusSuccessForeground1"
+            ],
+            "codeTokenFamilies": [
+              "colorStatusDanger*",
+              "colorStatusWarning*",
+              "colorStatusSuccess*"
+            ],
+            "tokenCount": 32,
+            "designNameToCodeName": {
+              "danger": "colorStatusDanger* (red)",
+              "caution": "colorStatusWarning* — the site says \"caution\", the code says Warning",
+              "positive": "colorStatusSuccess* — the site says \"positive\", the code says Success"
+            },
+            "nameCollisionWarning": "The site's words are danger / caution / positive; the token names are Danger / Warning / Success. There is no colorStatusCaution* or colorStatusPositive*.",
+            "note": "Never signal status with colour alone — pair it with an icon or text (WCAG 1.4.1)."
+          },
+          {
+            "designName": "Interaction states",
+            "codeToken": "colorNeutralBackground1Hover",
+            "codeTokens": [
+              "colorNeutralBackground1Hover",
+              "colorNeutralBackground1Pressed",
+              "colorNeutralBackground1Selected",
+              "colorSubtleBackgroundHover",
+              "colorStrokeFocus1",
+              "colorStrokeFocus2"
+            ],
+            "codeTokenFamilies": [
+              "*Hover",
+              "*Pressed",
+              "*Selected",
+              "colorStrokeFocus1/2"
+            ],
+            "tokenCount": 103,
+            "note": "The state is a SUFFIX on the rest token, not a separate family: colorNeutralBackground1 -> colorNeutralBackground1Hover. Focus uses the two-tone colorStrokeFocus1/colorStrokeFocus2 outline."
+          }
+        ],
+        "themeTokenSets": "color.semanticLight / semanticDark / semanticHighContrast in mcp/data/fluent-tokens.json",
+        "resolveWith": "fluent_list_tokens { category: \"color\", theme: \"light\" } — or fluent_get_token for one alias"
+      }
     },
     "typography": {
       "title": "Typography",
@@ -435,97 +731,290 @@
               "name": "Caption 2",
               "weight": "Regular",
               "size": "10px",
-              "lineHeight": "14px"
+              "lineHeight": "14px",
+              "codeToken": "caption2",
+              "codeTokens": {
+                "fontSize": "fontSizeBase100",
+                "lineHeight": "lineHeightBase100",
+                "fontWeight": "fontWeightRegular"
+              },
+              "codeValue": {
+                "fontSize": "10px",
+                "lineHeight": "14px",
+                "fontWeight": 400
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Caption 2 Strong",
               "weight": "Semibold",
               "size": "10px",
-              "lineHeight": "14px"
+              "lineHeight": "14px",
+              "codeToken": "caption2Strong",
+              "codeTokens": {
+                "fontSize": "fontSizeBase100",
+                "lineHeight": "lineHeightBase100",
+                "fontWeight": "fontWeightSemibold"
+              },
+              "codeValue": {
+                "fontSize": "10px",
+                "lineHeight": "14px",
+                "fontWeight": 600
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Caption 1",
               "weight": "Regular",
               "size": "12px",
-              "lineHeight": "16px"
+              "lineHeight": "16px",
+              "codeToken": "caption1",
+              "codeTokens": {
+                "fontSize": "fontSizeBase200",
+                "lineHeight": "lineHeightBase200",
+                "fontWeight": "fontWeightRegular"
+              },
+              "codeValue": {
+                "fontSize": "12px",
+                "lineHeight": "16px",
+                "fontWeight": 400
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Caption 1 Strong",
               "weight": "Semibold",
               "size": "12px",
-              "lineHeight": "16px"
+              "lineHeight": "16px",
+              "codeToken": "caption1Strong",
+              "codeTokens": {
+                "fontSize": "fontSizeBase200",
+                "lineHeight": "lineHeightBase200",
+                "fontWeight": "fontWeightSemibold"
+              },
+              "codeValue": {
+                "fontSize": "12px",
+                "lineHeight": "16px",
+                "fontWeight": 600
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Caption 1 Stronger",
               "weight": "Bold",
               "size": "12px",
-              "lineHeight": "16px"
+              "lineHeight": "16px",
+              "codeToken": "caption1Stronger",
+              "codeTokens": {
+                "fontSize": "fontSizeBase200",
+                "lineHeight": "lineHeightBase200",
+                "fontWeight": "fontWeightBold"
+              },
+              "codeValue": {
+                "fontSize": "12px",
+                "lineHeight": "16px",
+                "fontWeight": 700
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Body 1",
               "weight": "Regular",
               "size": "14px",
-              "lineHeight": "20px"
+              "lineHeight": "20px",
+              "codeToken": "body1",
+              "codeTokens": {
+                "fontSize": "fontSizeBase300",
+                "lineHeight": "lineHeightBase300",
+                "fontWeight": "fontWeightRegular"
+              },
+              "codeValue": {
+                "fontSize": "14px",
+                "lineHeight": "20px",
+                "fontWeight": 400
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Body 1 Strong",
               "weight": "Semibold",
               "size": "14px",
-              "lineHeight": "20px"
+              "lineHeight": "20px",
+              "codeToken": "body1Strong",
+              "codeTokens": {
+                "fontSize": "fontSizeBase300",
+                "lineHeight": "lineHeightBase300",
+                "fontWeight": "fontWeightSemibold"
+              },
+              "codeValue": {
+                "fontSize": "14px",
+                "lineHeight": "20px",
+                "fontWeight": 600
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Body 1 Stronger",
               "weight": "Bold",
               "size": "14px",
-              "lineHeight": "20px"
+              "lineHeight": "20px",
+              "codeToken": "body1Stronger",
+              "codeTokens": {
+                "fontSize": "fontSizeBase300",
+                "lineHeight": "lineHeightBase300",
+                "fontWeight": "fontWeightBold"
+              },
+              "codeValue": {
+                "fontSize": "14px",
+                "lineHeight": "20px",
+                "fontWeight": 700
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Subtitle 2",
               "weight": "Semibold",
               "size": "16px",
-              "lineHeight": "22px"
+              "lineHeight": "22px",
+              "codeToken": "subtitle2",
+              "codeTokens": {
+                "fontSize": "fontSizeBase400",
+                "lineHeight": "lineHeightBase400",
+                "fontWeight": "fontWeightSemibold"
+              },
+              "codeValue": {
+                "fontSize": "16px",
+                "lineHeight": "22px",
+                "fontWeight": 600
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Subtitle 2 Stronger",
               "weight": "Bold",
               "size": "16px",
-              "lineHeight": "22px"
+              "lineHeight": "22px",
+              "codeToken": "subtitle2Stronger",
+              "codeTokens": {
+                "fontSize": "fontSizeBase400",
+                "lineHeight": "lineHeightBase400",
+                "fontWeight": "fontWeightBold"
+              },
+              "codeValue": {
+                "fontSize": "16px",
+                "lineHeight": "22px",
+                "fontWeight": 700
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Subtitle 1",
               "weight": "Semibold",
               "size": "20px",
-              "lineHeight": "26px"
+              "lineHeight": "26px",
+              "codeToken": "subtitle1",
+              "codeTokens": {
+                "fontSize": "fontSizeBase500",
+                "lineHeight": "lineHeightBase500",
+                "fontWeight": "fontWeightSemibold"
+              },
+              "codeValue": {
+                "fontSize": "20px",
+                "lineHeight": "28px",
+                "fontWeight": 600
+              },
+              "valueMatch": "partial",
+              "codeTokenNote": "The site's published values and the shipped subtitle1 style disagree on lineHeight. Everything else matches. The npm package is what renders."
             },
             {
               "name": "Title 3",
               "weight": "Semibold",
               "size": "24px",
-              "lineHeight": "32px"
+              "lineHeight": "32px",
+              "codeToken": "title3",
+              "codeTokens": {
+                "fontSize": "fontSizeBase600",
+                "lineHeight": "lineHeightBase600",
+                "fontWeight": "fontWeightSemibold"
+              },
+              "codeValue": {
+                "fontSize": "24px",
+                "lineHeight": "32px",
+                "fontWeight": 600
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Title 2",
               "weight": "Semibold",
               "size": "28px",
-              "lineHeight": "36px"
+              "lineHeight": "36px",
+              "codeToken": "title2",
+              "codeTokens": {
+                "fontSize": "fontSizeHero700",
+                "lineHeight": "lineHeightHero700",
+                "fontWeight": "fontWeightSemibold"
+              },
+              "codeValue": {
+                "fontSize": "28px",
+                "lineHeight": "36px",
+                "fontWeight": 600
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Title 1",
               "weight": "Semibold",
               "size": "32px",
-              "lineHeight": "40px"
+              "lineHeight": "40px",
+              "codeToken": "title1",
+              "codeTokens": {
+                "fontSize": "fontSizeHero800",
+                "lineHeight": "lineHeightHero800",
+                "fontWeight": "fontWeightSemibold"
+              },
+              "codeValue": {
+                "fontSize": "32px",
+                "lineHeight": "40px",
+                "fontWeight": 600
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Large Title",
               "weight": "Semibold",
               "size": "40px",
-              "lineHeight": "52px"
+              "lineHeight": "52px",
+              "codeToken": "largeTitle",
+              "codeTokens": {
+                "fontSize": "fontSizeHero900",
+                "lineHeight": "lineHeightHero900",
+                "fontWeight": "fontWeightSemibold"
+              },
+              "codeValue": {
+                "fontSize": "40px",
+                "lineHeight": "52px",
+                "fontWeight": 600
+              },
+              "valueMatch": "exact"
             },
             {
               "name": "Display",
               "weight": "Semibold",
               "size": "68px",
-              "lineHeight": "92px"
+              "lineHeight": "92px",
+              "codeToken": "display",
+              "codeTokens": {
+                "fontSize": "fontSizeHero1000",
+                "lineHeight": "lineHeightHero1000",
+                "fontWeight": "fontWeightSemibold"
+              },
+              "codeValue": {
+                "fontSize": "68px",
+                "lineHeight": "92px",
+                "fontWeight": 600
+              },
+              "valueMatch": "exact"
             }
           ],
           "windows": [
@@ -919,97 +1408,290 @@
           "name": "Caption 2",
           "weight": "Regular",
           "size": "10px",
-          "lineHeight": "14px"
+          "lineHeight": "14px",
+          "codeToken": "caption2",
+          "codeTokens": {
+            "fontSize": "fontSizeBase100",
+            "lineHeight": "lineHeightBase100",
+            "fontWeight": "fontWeightRegular"
+          },
+          "codeValue": {
+            "fontSize": "10px",
+            "lineHeight": "14px",
+            "fontWeight": 400
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Caption 2 Strong",
           "weight": "Semibold",
           "size": "10px",
-          "lineHeight": "14px"
+          "lineHeight": "14px",
+          "codeToken": "caption2Strong",
+          "codeTokens": {
+            "fontSize": "fontSizeBase100",
+            "lineHeight": "lineHeightBase100",
+            "fontWeight": "fontWeightSemibold"
+          },
+          "codeValue": {
+            "fontSize": "10px",
+            "lineHeight": "14px",
+            "fontWeight": 600
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Caption 1",
           "weight": "Regular",
           "size": "12px",
-          "lineHeight": "16px"
+          "lineHeight": "16px",
+          "codeToken": "caption1",
+          "codeTokens": {
+            "fontSize": "fontSizeBase200",
+            "lineHeight": "lineHeightBase200",
+            "fontWeight": "fontWeightRegular"
+          },
+          "codeValue": {
+            "fontSize": "12px",
+            "lineHeight": "16px",
+            "fontWeight": 400
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Caption 1 Strong",
           "weight": "Semibold",
           "size": "12px",
-          "lineHeight": "16px"
+          "lineHeight": "16px",
+          "codeToken": "caption1Strong",
+          "codeTokens": {
+            "fontSize": "fontSizeBase200",
+            "lineHeight": "lineHeightBase200",
+            "fontWeight": "fontWeightSemibold"
+          },
+          "codeValue": {
+            "fontSize": "12px",
+            "lineHeight": "16px",
+            "fontWeight": 600
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Caption 1 Stronger",
           "weight": "Bold",
           "size": "12px",
-          "lineHeight": "16px"
+          "lineHeight": "16px",
+          "codeToken": "caption1Stronger",
+          "codeTokens": {
+            "fontSize": "fontSizeBase200",
+            "lineHeight": "lineHeightBase200",
+            "fontWeight": "fontWeightBold"
+          },
+          "codeValue": {
+            "fontSize": "12px",
+            "lineHeight": "16px",
+            "fontWeight": 700
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Body 1",
           "weight": "Regular",
           "size": "14px",
-          "lineHeight": "20px"
+          "lineHeight": "20px",
+          "codeToken": "body1",
+          "codeTokens": {
+            "fontSize": "fontSizeBase300",
+            "lineHeight": "lineHeightBase300",
+            "fontWeight": "fontWeightRegular"
+          },
+          "codeValue": {
+            "fontSize": "14px",
+            "lineHeight": "20px",
+            "fontWeight": 400
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Body 1 Strong",
           "weight": "Semibold",
           "size": "14px",
-          "lineHeight": "20px"
+          "lineHeight": "20px",
+          "codeToken": "body1Strong",
+          "codeTokens": {
+            "fontSize": "fontSizeBase300",
+            "lineHeight": "lineHeightBase300",
+            "fontWeight": "fontWeightSemibold"
+          },
+          "codeValue": {
+            "fontSize": "14px",
+            "lineHeight": "20px",
+            "fontWeight": 600
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Body 1 Stronger",
           "weight": "Bold",
           "size": "14px",
-          "lineHeight": "20px"
+          "lineHeight": "20px",
+          "codeToken": "body1Stronger",
+          "codeTokens": {
+            "fontSize": "fontSizeBase300",
+            "lineHeight": "lineHeightBase300",
+            "fontWeight": "fontWeightBold"
+          },
+          "codeValue": {
+            "fontSize": "14px",
+            "lineHeight": "20px",
+            "fontWeight": 700
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Subtitle 2",
           "weight": "Semibold",
           "size": "16px",
-          "lineHeight": "22px"
+          "lineHeight": "22px",
+          "codeToken": "subtitle2",
+          "codeTokens": {
+            "fontSize": "fontSizeBase400",
+            "lineHeight": "lineHeightBase400",
+            "fontWeight": "fontWeightSemibold"
+          },
+          "codeValue": {
+            "fontSize": "16px",
+            "lineHeight": "22px",
+            "fontWeight": 600
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Subtitle 2 Stronger",
           "weight": "Bold",
           "size": "16px",
-          "lineHeight": "22px"
+          "lineHeight": "22px",
+          "codeToken": "subtitle2Stronger",
+          "codeTokens": {
+            "fontSize": "fontSizeBase400",
+            "lineHeight": "lineHeightBase400",
+            "fontWeight": "fontWeightBold"
+          },
+          "codeValue": {
+            "fontSize": "16px",
+            "lineHeight": "22px",
+            "fontWeight": 700
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Subtitle 1",
           "weight": "Semibold",
           "size": "20px",
-          "lineHeight": "26px"
+          "lineHeight": "26px",
+          "codeToken": "subtitle1",
+          "codeTokens": {
+            "fontSize": "fontSizeBase500",
+            "lineHeight": "lineHeightBase500",
+            "fontWeight": "fontWeightSemibold"
+          },
+          "codeValue": {
+            "fontSize": "20px",
+            "lineHeight": "28px",
+            "fontWeight": 600
+          },
+          "valueMatch": "partial",
+          "codeTokenNote": "The site's published values and the shipped subtitle1 style disagree on lineHeight. Everything else matches. The npm package is what renders."
         },
         {
           "name": "Title 3",
           "weight": "Semibold",
           "size": "24px",
-          "lineHeight": "32px"
+          "lineHeight": "32px",
+          "codeToken": "title3",
+          "codeTokens": {
+            "fontSize": "fontSizeBase600",
+            "lineHeight": "lineHeightBase600",
+            "fontWeight": "fontWeightSemibold"
+          },
+          "codeValue": {
+            "fontSize": "24px",
+            "lineHeight": "32px",
+            "fontWeight": 600
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Title 2",
           "weight": "Semibold",
           "size": "28px",
-          "lineHeight": "36px"
+          "lineHeight": "36px",
+          "codeToken": "title2",
+          "codeTokens": {
+            "fontSize": "fontSizeHero700",
+            "lineHeight": "lineHeightHero700",
+            "fontWeight": "fontWeightSemibold"
+          },
+          "codeValue": {
+            "fontSize": "28px",
+            "lineHeight": "36px",
+            "fontWeight": 600
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Title 1",
           "weight": "Semibold",
           "size": "32px",
-          "lineHeight": "40px"
+          "lineHeight": "40px",
+          "codeToken": "title1",
+          "codeTokens": {
+            "fontSize": "fontSizeHero800",
+            "lineHeight": "lineHeightHero800",
+            "fontWeight": "fontWeightSemibold"
+          },
+          "codeValue": {
+            "fontSize": "32px",
+            "lineHeight": "40px",
+            "fontWeight": 600
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Large Title",
           "weight": "Semibold",
           "size": "40px",
-          "lineHeight": "52px"
+          "lineHeight": "52px",
+          "codeToken": "largeTitle",
+          "codeTokens": {
+            "fontSize": "fontSizeHero900",
+            "lineHeight": "lineHeightHero900",
+            "fontWeight": "fontWeightSemibold"
+          },
+          "codeValue": {
+            "fontSize": "40px",
+            "lineHeight": "52px",
+            "fontWeight": 600
+          },
+          "valueMatch": "exact"
         },
         {
           "name": "Display",
           "weight": "Semibold",
           "size": "68px",
-          "lineHeight": "92px"
+          "lineHeight": "92px",
+          "codeToken": "display",
+          "codeTokens": {
+            "fontSize": "fontSizeHero1000",
+            "lineHeight": "lineHeightHero1000",
+            "fontWeight": "fontWeightSemibold"
+          },
+          "codeValue": {
+            "fontSize": "68px",
+            "lineHeight": "92px",
+            "fontWeight": 600
+          },
+          "valueMatch": "exact"
         }
       ],
       "styling": {
@@ -1020,7 +1702,18 @@
       },
       "docUrl": "https://fluent2.microsoft.design/typography",
       "accessStatus": "public",
-      "capturedAt": "2026-08"
+      "capturedAt": "2026-08",
+      "codeTokenBridge": {
+        "note": "Each web ramp step carries its code ramp key plus the fontSize/lineHeight/fontWeight tokens that compose it. Prefer typographyStyles.<key> (or the <Text>/<Title3> components) over pasting the three tokens.",
+        "platformScope": "codeToken is attached to the WEB ramp only — mcp/data/fluent-tokens.json is the web (v9) token set. The windows/macOS/iOS/android ramps on this page are native and deliberately unmapped; use fluent_native_component.",
+        "disagreements": [
+          "Subtitle 1: lineHeight (site 20px / 26px / Semibold vs shipped {\"fontSize\":\"20px\",\"lineHeight\":\"28px\",\"fontWeight\":600})"
+        ],
+        "codeRampStepsWithoutDesignRow": [
+          "body2"
+        ],
+        "resolveWith": "fluent_get_token { name: \"Body 1\" }"
+      }
     },
     "layout": {
       "title": "Layout",
@@ -1115,71 +1808,200 @@
         "spacingRamp": [
           {
             "token": "sizeNone",
-            "px": 0
+            "px": 0,
+            "codeToken": "spacingHorizontalNone",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalNone",
+              "vertical": "spacingVerticalNone"
+            },
+            "codeValue": "0",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalNone",
+            "nameCollisionWarning": "\"sizeNone\" is a design-language / Figma variable name, not a Griffel token. tokens.sizeNone does not exist and --sizeNone is never emitted by FluentProvider. The 0px code tokens are tokens.spacingHorizontalNone and tokens.spacingVerticalNone."
           },
           {
             "token": "size20",
-            "px": 2
+            "px": 2,
+            "codeToken": "spacingHorizontalXXS",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalXXS",
+              "vertical": "spacingVerticalXXS"
+            },
+            "codeValue": "2px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalXXS",
+            "nameCollisionWarning": "\"size20\" is a design-language / Figma variable name, not a Griffel token. tokens.size20 does not exist and --size20 is never emitted by FluentProvider. The 2px code tokens are tokens.spacingHorizontalXXS and tokens.spacingVerticalXXS."
           },
           {
             "token": "size40",
-            "px": 4
+            "px": 4,
+            "codeToken": "spacingHorizontalXS",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalXS",
+              "vertical": "spacingVerticalXS"
+            },
+            "codeValue": "4px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalXS",
+            "nameCollisionWarning": "\"size40\" is a design-language / Figma variable name, not a Griffel token. tokens.size40 does not exist and --size40 is never emitted by FluentProvider. The 4px code tokens are tokens.spacingHorizontalXS and tokens.spacingVerticalXS."
           },
           {
             "token": "size60",
-            "px": 6
+            "px": 6,
+            "codeToken": "spacingHorizontalSNudge",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalSNudge",
+              "vertical": "spacingVerticalSNudge"
+            },
+            "codeValue": "6px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalSNudge",
+            "nameCollisionWarning": "\"size60\" is a design-language / Figma variable name, not a Griffel token. tokens.size60 does not exist and --size60 is never emitted by FluentProvider. The 6px code tokens are tokens.spacingHorizontalSNudge and tokens.spacingVerticalSNudge."
           },
           {
             "token": "size80",
-            "px": 8
+            "px": 8,
+            "codeToken": "spacingHorizontalS",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalS",
+              "vertical": "spacingVerticalS"
+            },
+            "codeValue": "8px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalS",
+            "nameCollisionWarning": "\"size80\" is a design-language / Figma variable name, not a Griffel token. tokens.size80 does not exist and --size80 is never emitted by FluentProvider. The 8px code tokens are tokens.spacingHorizontalS and tokens.spacingVerticalS."
           },
           {
             "token": "size100",
-            "px": 10
+            "px": 10,
+            "codeToken": "spacingHorizontalMNudge",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalMNudge",
+              "vertical": "spacingVerticalMNudge"
+            },
+            "codeValue": "10px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalMNudge",
+            "nameCollisionWarning": "\"size100\" is a design-language / Figma variable name, not a Griffel token. tokens.size100 does not exist and --size100 is never emitted by FluentProvider. The 10px code tokens are tokens.spacingHorizontalMNudge and tokens.spacingVerticalMNudge."
           },
           {
             "token": "size120",
-            "px": 12
+            "px": 12,
+            "codeToken": "spacingHorizontalM",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalM",
+              "vertical": "spacingVerticalM"
+            },
+            "codeValue": "12px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalM",
+            "nameCollisionWarning": "\"size120\" is a design-language / Figma variable name, not a Griffel token. tokens.size120 does not exist and --size120 is never emitted by FluentProvider. The 12px code tokens are tokens.spacingHorizontalM and tokens.spacingVerticalM."
           },
           {
             "token": "size160",
-            "px": 16
+            "px": 16,
+            "codeToken": "spacingHorizontalL",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalL",
+              "vertical": "spacingVerticalL"
+            },
+            "codeValue": "16px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalL",
+            "nameCollisionWarning": "\"size160\" is a design-language / Figma variable name, not a Griffel token. tokens.size160 does not exist and --size160 is never emitted by FluentProvider. The 16px code tokens are tokens.spacingHorizontalL and tokens.spacingVerticalL."
           },
           {
             "token": "size200",
-            "px": 20
+            "px": 20,
+            "codeToken": "spacingHorizontalXL",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalXL",
+              "vertical": "spacingVerticalXL"
+            },
+            "codeValue": "20px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalXL",
+            "nameCollisionWarning": "\"size200\" is a design-language / Figma variable name, not a Griffel token. tokens.size200 does not exist and --size200 is never emitted by FluentProvider. The 20px code tokens are tokens.spacingHorizontalXL and tokens.spacingVerticalXL."
           },
           {
             "token": "size240",
-            "px": 24
+            "px": 24,
+            "codeToken": "spacingHorizontalXXL",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalXXL",
+              "vertical": "spacingVerticalXXL"
+            },
+            "codeValue": "24px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalXXL",
+            "nameCollisionWarning": "\"size240\" is a design-language / Figma variable name, not a Griffel token. tokens.size240 does not exist and --size240 is never emitted by FluentProvider. The 24px code tokens are tokens.spacingHorizontalXXL and tokens.spacingVerticalXXL."
           },
           {
             "token": "size280",
-            "px": 28
+            "px": 28,
+            "codeToken": null,
+            "codeValue": null,
+            "valueMatch": "none",
+            "codeTokenNote": "No spacing token in @fluentui/react-theme has the value 28px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size280 has no code equivalent. Use a raw 28px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+            "nameCollisionWarning": "\"size280\" is a design-language / Figma variable name, not a Griffel token. tokens.size280 does not exist and --size280 is never emitted by FluentProvider."
           },
           {
             "token": "size320",
-            "px": 32
+            "px": 32,
+            "codeToken": "spacingHorizontalXXXL",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalXXXL",
+              "vertical": "spacingVerticalXXXL"
+            },
+            "codeValue": "32px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalXXXL",
+            "nameCollisionWarning": "\"size320\" is a design-language / Figma variable name, not a Griffel token. tokens.size320 does not exist and --size320 is never emitted by FluentProvider. The 32px code tokens are tokens.spacingHorizontalXXXL and tokens.spacingVerticalXXXL."
           },
           {
             "token": "size360",
-            "px": 36
+            "px": 36,
+            "codeToken": null,
+            "codeValue": null,
+            "valueMatch": "none",
+            "codeTokenNote": "No spacing token in @fluentui/react-theme has the value 36px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size360 has no code equivalent. Use a raw 36px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+            "nameCollisionWarning": "\"size360\" is a design-language / Figma variable name, not a Griffel token. tokens.size360 does not exist and --size360 is never emitted by FluentProvider."
           },
           {
             "token": "size400",
-            "px": 40
+            "px": 40,
+            "codeToken": null,
+            "codeValue": null,
+            "valueMatch": "none",
+            "codeTokenNote": "No spacing token in @fluentui/react-theme has the value 40px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size400 has no code equivalent. Use a raw 40px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+            "nameCollisionWarning": "\"size400\" is a design-language / Figma variable name, not a Griffel token. tokens.size400 does not exist and --size400 is never emitted by FluentProvider."
           },
           {
             "token": "size480",
-            "px": 48
+            "px": 48,
+            "codeToken": null,
+            "codeValue": null,
+            "valueMatch": "none",
+            "codeTokenNote": "No spacing token in @fluentui/react-theme has the value 48px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size480 has no code equivalent. Use a raw 48px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+            "nameCollisionWarning": "\"size480\" is a design-language / Figma variable name, not a Griffel token. tokens.size480 does not exist and --size480 is never emitted by FluentProvider."
           },
           {
             "token": "size520",
-            "px": 52
+            "px": 52,
+            "codeToken": null,
+            "codeValue": null,
+            "valueMatch": "none",
+            "codeTokenNote": "No spacing token in @fluentui/react-theme has the value 52px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size520 has no code equivalent. Use a raw 52px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+            "nameCollisionWarning": "\"size520\" is a design-language / Figma variable name, not a Griffel token. tokens.size520 does not exist and --size520 is never emitted by FluentProvider."
           },
           {
             "token": "size560",
-            "px": 56
+            "px": 56,
+            "codeToken": null,
+            "codeValue": null,
+            "valueMatch": "none",
+            "codeTokenNote": "No spacing token in @fluentui/react-theme has the value 56px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size560 has no code equivalent. Use a raw 56px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+            "nameCollisionWarning": "\"size560\" is a design-language / Figma variable name, not a Griffel token. tokens.size560 does not exist and --size560 is never emitted by FluentProvider."
           }
         ],
         "breakpoints": [
@@ -1396,71 +2218,200 @@
         "values": [
           {
             "token": "sizeNone",
-            "px": 0
+            "px": 0,
+            "codeToken": "spacingHorizontalNone",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalNone",
+              "vertical": "spacingVerticalNone"
+            },
+            "codeValue": "0",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalNone",
+            "nameCollisionWarning": "\"sizeNone\" is a design-language / Figma variable name, not a Griffel token. tokens.sizeNone does not exist and --sizeNone is never emitted by FluentProvider. The 0px code tokens are tokens.spacingHorizontalNone and tokens.spacingVerticalNone."
           },
           {
             "token": "size20",
-            "px": 2
+            "px": 2,
+            "codeToken": "spacingHorizontalXXS",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalXXS",
+              "vertical": "spacingVerticalXXS"
+            },
+            "codeValue": "2px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalXXS",
+            "nameCollisionWarning": "\"size20\" is a design-language / Figma variable name, not a Griffel token. tokens.size20 does not exist and --size20 is never emitted by FluentProvider. The 2px code tokens are tokens.spacingHorizontalXXS and tokens.spacingVerticalXXS."
           },
           {
             "token": "size40",
-            "px": 4
+            "px": 4,
+            "codeToken": "spacingHorizontalXS",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalXS",
+              "vertical": "spacingVerticalXS"
+            },
+            "codeValue": "4px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalXS",
+            "nameCollisionWarning": "\"size40\" is a design-language / Figma variable name, not a Griffel token. tokens.size40 does not exist and --size40 is never emitted by FluentProvider. The 4px code tokens are tokens.spacingHorizontalXS and tokens.spacingVerticalXS."
           },
           {
             "token": "size60",
-            "px": 6
+            "px": 6,
+            "codeToken": "spacingHorizontalSNudge",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalSNudge",
+              "vertical": "spacingVerticalSNudge"
+            },
+            "codeValue": "6px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalSNudge",
+            "nameCollisionWarning": "\"size60\" is a design-language / Figma variable name, not a Griffel token. tokens.size60 does not exist and --size60 is never emitted by FluentProvider. The 6px code tokens are tokens.spacingHorizontalSNudge and tokens.spacingVerticalSNudge."
           },
           {
             "token": "size80",
-            "px": 8
+            "px": 8,
+            "codeToken": "spacingHorizontalS",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalS",
+              "vertical": "spacingVerticalS"
+            },
+            "codeValue": "8px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalS",
+            "nameCollisionWarning": "\"size80\" is a design-language / Figma variable name, not a Griffel token. tokens.size80 does not exist and --size80 is never emitted by FluentProvider. The 8px code tokens are tokens.spacingHorizontalS and tokens.spacingVerticalS."
           },
           {
             "token": "size100",
-            "px": 10
+            "px": 10,
+            "codeToken": "spacingHorizontalMNudge",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalMNudge",
+              "vertical": "spacingVerticalMNudge"
+            },
+            "codeValue": "10px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalMNudge",
+            "nameCollisionWarning": "\"size100\" is a design-language / Figma variable name, not a Griffel token. tokens.size100 does not exist and --size100 is never emitted by FluentProvider. The 10px code tokens are tokens.spacingHorizontalMNudge and tokens.spacingVerticalMNudge."
           },
           {
             "token": "size120",
-            "px": 12
+            "px": 12,
+            "codeToken": "spacingHorizontalM",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalM",
+              "vertical": "spacingVerticalM"
+            },
+            "codeValue": "12px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalM",
+            "nameCollisionWarning": "\"size120\" is a design-language / Figma variable name, not a Griffel token. tokens.size120 does not exist and --size120 is never emitted by FluentProvider. The 12px code tokens are tokens.spacingHorizontalM and tokens.spacingVerticalM."
           },
           {
             "token": "size160",
-            "px": 16
+            "px": 16,
+            "codeToken": "spacingHorizontalL",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalL",
+              "vertical": "spacingVerticalL"
+            },
+            "codeValue": "16px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalL",
+            "nameCollisionWarning": "\"size160\" is a design-language / Figma variable name, not a Griffel token. tokens.size160 does not exist and --size160 is never emitted by FluentProvider. The 16px code tokens are tokens.spacingHorizontalL and tokens.spacingVerticalL."
           },
           {
             "token": "size200",
-            "px": 20
+            "px": 20,
+            "codeToken": "spacingHorizontalXL",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalXL",
+              "vertical": "spacingVerticalXL"
+            },
+            "codeValue": "20px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalXL",
+            "nameCollisionWarning": "\"size200\" is a design-language / Figma variable name, not a Griffel token. tokens.size200 does not exist and --size200 is never emitted by FluentProvider. The 20px code tokens are tokens.spacingHorizontalXL and tokens.spacingVerticalXL."
           },
           {
             "token": "size240",
-            "px": 24
+            "px": 24,
+            "codeToken": "spacingHorizontalXXL",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalXXL",
+              "vertical": "spacingVerticalXXL"
+            },
+            "codeValue": "24px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalXXL",
+            "nameCollisionWarning": "\"size240\" is a design-language / Figma variable name, not a Griffel token. tokens.size240 does not exist and --size240 is never emitted by FluentProvider. The 24px code tokens are tokens.spacingHorizontalXXL and tokens.spacingVerticalXXL."
           },
           {
             "token": "size280",
-            "px": 28
+            "px": 28,
+            "codeToken": null,
+            "codeValue": null,
+            "valueMatch": "none",
+            "codeTokenNote": "No spacing token in @fluentui/react-theme has the value 28px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size280 has no code equivalent. Use a raw 28px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+            "nameCollisionWarning": "\"size280\" is a design-language / Figma variable name, not a Griffel token. tokens.size280 does not exist and --size280 is never emitted by FluentProvider."
           },
           {
             "token": "size320",
-            "px": 32
+            "px": 32,
+            "codeToken": "spacingHorizontalXXXL",
+            "codeTokens": {
+              "horizontal": "spacingHorizontalXXXL",
+              "vertical": "spacingVerticalXXXL"
+            },
+            "codeValue": "32px",
+            "valueMatch": "exact",
+            "griffel": "tokens.spacingHorizontalXXXL",
+            "nameCollisionWarning": "\"size320\" is a design-language / Figma variable name, not a Griffel token. tokens.size320 does not exist and --size320 is never emitted by FluentProvider. The 32px code tokens are tokens.spacingHorizontalXXXL and tokens.spacingVerticalXXXL."
           },
           {
             "token": "size360",
-            "px": 36
+            "px": 36,
+            "codeToken": null,
+            "codeValue": null,
+            "valueMatch": "none",
+            "codeTokenNote": "No spacing token in @fluentui/react-theme has the value 36px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size360 has no code equivalent. Use a raw 36px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+            "nameCollisionWarning": "\"size360\" is a design-language / Figma variable name, not a Griffel token. tokens.size360 does not exist and --size360 is never emitted by FluentProvider."
           },
           {
             "token": "size400",
-            "px": 40
+            "px": 40,
+            "codeToken": null,
+            "codeValue": null,
+            "valueMatch": "none",
+            "codeTokenNote": "No spacing token in @fluentui/react-theme has the value 40px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size400 has no code equivalent. Use a raw 40px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+            "nameCollisionWarning": "\"size400\" is a design-language / Figma variable name, not a Griffel token. tokens.size400 does not exist and --size400 is never emitted by FluentProvider."
           },
           {
             "token": "size480",
-            "px": 48
+            "px": 48,
+            "codeToken": null,
+            "codeValue": null,
+            "valueMatch": "none",
+            "codeTokenNote": "No spacing token in @fluentui/react-theme has the value 48px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size480 has no code equivalent. Use a raw 48px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+            "nameCollisionWarning": "\"size480\" is a design-language / Figma variable name, not a Griffel token. tokens.size480 does not exist and --size480 is never emitted by FluentProvider."
           },
           {
             "token": "size520",
-            "px": 52
+            "px": 52,
+            "codeToken": null,
+            "codeValue": null,
+            "valueMatch": "none",
+            "codeTokenNote": "No spacing token in @fluentui/react-theme has the value 52px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size520 has no code equivalent. Use a raw 52px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+            "nameCollisionWarning": "\"size520\" is a design-language / Figma variable name, not a Griffel token. tokens.size520 does not exist and --size520 is never emitted by FluentProvider."
           },
           {
             "token": "size560",
-            "px": 56
+            "px": 56,
+            "codeToken": null,
+            "codeValue": null,
+            "valueMatch": "none",
+            "codeTokenNote": "No spacing token in @fluentui/react-theme has the value 56px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size560 has no code equivalent. Use a raw 56px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+            "nameCollisionWarning": "\"size560\" is a design-language / Figma variable name, not a Griffel token. tokens.size560 does not exist and --size560 is never emitted by FluentProvider."
           }
         ]
       },
@@ -1508,7 +2459,21 @@
       ],
       "docUrl": "https://fluent2.microsoft.design/layout",
       "accessStatus": "public",
-      "capturedAt": "2026-08"
+      "capturedAt": "2026-08",
+      "codeTokenBridge": {
+        "note": "NONE of the sizeNNN names exist in code. FluentProvider emits spacingHorizontal*/spacingVertical*; tokens.size120 is undefined. Each row carries the real token for its px value, or codeToken: null where the code ramp has no step.",
+        "codeRamp": "0 / 2 / 4 / 6 / 8 / 10 / 12 / 16 / 20 / 24 / 32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL)",
+        "designStepsWithNoCodeToken": [
+          "size280 (28px)",
+          "size360 (36px)",
+          "size400 (40px)",
+          "size480 (48px)",
+          "size520 (52px)",
+          "size560 (56px)"
+        ],
+        "codeTokensWithoutDesignRow": [],
+        "resolveWith": "fluent_get_token { name: \"size120\" }"
+      }
     },
     "elevation": {
       "title": "Elevation",
@@ -1840,54 +2805,98 @@
           {
             "token": "None",
             "usage": "Navigation bars, tab bars",
-            "value": "0 pixels"
+            "value": "0 pixels",
+            "codeToken": "borderRadiusNone",
+            "codeValue": "0",
+            "valueMatch": "exact",
+            "griffel": "tokens.borderRadiusNone"
           },
           {
             "token": "Small",
             "usage": "Small badges",
-            "value": "2 pixels"
+            "value": "2 pixels",
+            "codeToken": "borderRadiusSmall",
+            "codeValue": "2px",
+            "valueMatch": "exact",
+            "griffel": "tokens.borderRadiusSmall"
           },
           {
             "token": "Medium",
             "usage": "Buttons, dropdown",
-            "value": "4 pixels"
+            "value": "4 pixels",
+            "codeToken": "borderRadiusMedium",
+            "codeValue": "4px",
+            "valueMatch": "exact",
+            "griffel": "tokens.borderRadiusMedium"
           },
           {
             "token": "Large",
             "usage": "Large buttons",
-            "value": "8 pixels"
+            "value": "8 pixels",
+            "codeToken": "borderRadiusXLarge",
+            "codeValue": "8px",
+            "valueMatch": "exact",
+            "griffel": "tokens.borderRadiusXLarge",
+            "nameCollisionWarning": "NAME COLLISION: the design site calls this \"Large\" (8 pixels), but tokens.borderRadiusLarge exists and is 6px — a different step. Writing tokens.borderRadiusLarge compiles and silently renders 6px. The token that actually yields 8 pixels is tokens.borderRadiusXLarge."
           },
           {
             "token": "X-Large",
             "usage": "Button sheets, popovers",
-            "value": "12 pixels"
+            "value": "12 pixels",
+            "codeToken": "borderRadius2XLarge",
+            "codeValue": "12px",
+            "valueMatch": "exact",
+            "griffel": "tokens.borderRadius2XLarge",
+            "nameCollisionWarning": "NAME COLLISION: the design site calls this \"X-Large\" (12 pixels), but tokens.borderRadiusXLarge exists and is 8px — a different step. Writing tokens.borderRadiusXLarge compiles and silently renders 8px. The token that actually yields 12 pixels is tokens.borderRadius2XLarge."
           },
           {
             "token": "Circle",
             "usage": "Personas",
-            "value": "50%"
+            "value": "50%",
+            "codeToken": "borderRadiusCircular",
+            "codeValue": "10000px",
+            "valueMatch": "equivalent",
+            "griffel": "tokens.borderRadiusCircular",
+            "codeTokenNote": "The site states 50%; the code token is a 10000px radius, which clamps to a full round on any realistic box. Same rendered shape, different literal — do not treat 10000px and 50% as interchangeable numbers.",
+            "nameCollisionWarning": "The design name \"Circle\" is not the code name: use tokens.borderRadiusCircular. There is no tokens.borderRadiusCircle."
           }
         ],
         "strokeThickness": [
           {
             "token": "Thin",
             "web": "1 pixel",
-            "mobile": "1 pixel"
+            "mobile": "1 pixel",
+            "codeToken": "strokeWidthThin",
+            "codeValue": "1px",
+            "valueMatch": "exact",
+            "griffel": "tokens.strokeWidthThin"
           },
           {
             "token": "Thick",
             "web": "2 pixels",
-            "mobile": "2 pixels"
+            "mobile": "2 pixels",
+            "codeToken": "strokeWidthThick",
+            "codeValue": "2px",
+            "valueMatch": "exact",
+            "griffel": "tokens.strokeWidthThick"
           },
           {
             "token": "Thicker",
             "web": "3 pixels",
-            "mobile": "4 pixels"
+            "mobile": "4 pixels",
+            "codeToken": "strokeWidthThicker",
+            "codeValue": "3px",
+            "valueMatch": "exact",
+            "griffel": "tokens.strokeWidthThicker"
           },
           {
             "token": "Thickest",
             "web": "4 pixels",
-            "mobile": "6 pixels"
+            "mobile": "6 pixels",
+            "codeToken": "strokeWidthThickest",
+            "codeValue": "4px",
+            "valueMatch": "exact",
+            "griffel": "tokens.strokeWidthThickest"
           }
         ]
       },
@@ -2014,32 +3023,60 @@
           {
             "token": "None",
             "usage": "Navigation bars, tab bars",
-            "value": "0 pixels"
+            "value": "0 pixels",
+            "codeToken": "borderRadiusNone",
+            "codeValue": "0",
+            "valueMatch": "exact",
+            "griffel": "tokens.borderRadiusNone"
           },
           {
             "token": "Small",
             "usage": "Small badges",
-            "value": "2 pixels"
+            "value": "2 pixels",
+            "codeToken": "borderRadiusSmall",
+            "codeValue": "2px",
+            "valueMatch": "exact",
+            "griffel": "tokens.borderRadiusSmall"
           },
           {
             "token": "Medium",
             "usage": "Buttons, dropdown",
-            "value": "4 pixels"
+            "value": "4 pixels",
+            "codeToken": "borderRadiusMedium",
+            "codeValue": "4px",
+            "valueMatch": "exact",
+            "griffel": "tokens.borderRadiusMedium"
           },
           {
             "token": "Large",
             "usage": "Large buttons",
-            "value": "8 pixels"
+            "value": "8 pixels",
+            "codeToken": "borderRadiusXLarge",
+            "codeValue": "8px",
+            "valueMatch": "exact",
+            "griffel": "tokens.borderRadiusXLarge",
+            "nameCollisionWarning": "NAME COLLISION: the design site calls this \"Large\" (8 pixels), but tokens.borderRadiusLarge exists and is 6px — a different step. Writing tokens.borderRadiusLarge compiles and silently renders 6px. The token that actually yields 8 pixels is tokens.borderRadiusXLarge."
           },
           {
             "token": "X-Large",
             "usage": "Button sheets, popovers",
-            "value": "12 pixels"
+            "value": "12 pixels",
+            "codeToken": "borderRadius2XLarge",
+            "codeValue": "12px",
+            "valueMatch": "exact",
+            "griffel": "tokens.borderRadius2XLarge",
+            "nameCollisionWarning": "NAME COLLISION: the design site calls this \"X-Large\" (12 pixels), but tokens.borderRadiusXLarge exists and is 8px — a different step. Writing tokens.borderRadiusXLarge compiles and silently renders 8px. The token that actually yields 12 pixels is tokens.borderRadius2XLarge."
           },
           {
             "token": "Circle",
             "usage": "Personas",
-            "value": "50%"
+            "value": "50%",
+            "codeToken": "borderRadiusCircular",
+            "codeValue": "10000px",
+            "valueMatch": "equivalent",
+            "griffel": "tokens.borderRadiusCircular",
+            "codeTokenNote": "The site states 50%; the code token is a 10000px radius, which clamps to a full round on any realistic box. Same rendered shape, different literal — do not treat 10000px and 50% as interchangeable numbers.",
+            "nameCollisionWarning": "The design name \"Circle\" is not the code name: use tokens.borderRadiusCircular. There is no tokens.borderRadiusCircle."
           }
         ]
       },
@@ -2047,27 +3084,74 @@
         {
           "token": "Thin",
           "web": "1 pixel",
-          "mobile": "1 pixel"
+          "mobile": "1 pixel",
+          "codeToken": "strokeWidthThin",
+          "codeValue": "1px",
+          "valueMatch": "exact",
+          "griffel": "tokens.strokeWidthThin"
         },
         {
           "token": "Thick",
           "web": "2 pixels",
-          "mobile": "2 pixels"
+          "mobile": "2 pixels",
+          "codeToken": "strokeWidthThick",
+          "codeValue": "2px",
+          "valueMatch": "exact",
+          "griffel": "tokens.strokeWidthThick"
         },
         {
           "token": "Thicker",
           "web": "3 pixels",
-          "mobile": "4 pixels"
+          "mobile": "4 pixels",
+          "codeToken": "strokeWidthThicker",
+          "codeValue": "3px",
+          "valueMatch": "exact",
+          "griffel": "tokens.strokeWidthThicker"
         },
         {
           "token": "Thickest",
           "web": "4 pixels",
-          "mobile": "6 pixels"
+          "mobile": "6 pixels",
+          "codeToken": "strokeWidthThickest",
+          "codeValue": "4px",
+          "valueMatch": "exact",
+          "griffel": "tokens.strokeWidthThickest"
         }
       ],
       "docUrl": "https://fluent2.microsoft.design/shapes",
       "accessStatus": "public",
-      "capturedAt": "2026-08"
+      "capturedAt": "2026-08",
+      "codeTokenBridge": {
+        "note": "Corner-radius design names and code token names are OFFSET BY ONE STEP above Medium. Read codeToken on each row — never turn the design name into a token name yourself.",
+        "cornerRadiusOffset": [
+          "Large (8 pixels) -> tokens.borderRadiusXLarge; tokens.borderRadiusLarge is 6px",
+          "X-Large (12 pixels) -> tokens.borderRadius2XLarge; tokens.borderRadiusXLarge is 8px"
+        ],
+        "codeTokensWithoutDesignRow": [
+          {
+            "codeToken": "borderRadius3XLarge",
+            "value": "16px"
+          },
+          {
+            "codeToken": "borderRadius4XLarge",
+            "value": "24px"
+          },
+          {
+            "codeToken": "borderRadius5XLarge",
+            "value": "32px"
+          },
+          {
+            "codeToken": "borderRadius6XLarge",
+            "value": "40px"
+          },
+          {
+            "codeToken": "borderRadiusLarge",
+            "value": "6px"
+          }
+        ],
+        "strokeWidthAligns": true,
+        "resolveWith": "fluent_get_token { name: \"Large corner radius\" }"
+      }
     },
     "iconography": {
       "title": "Iconography",
@@ -2734,6 +3818,42 @@
           "dark",
           "high-contrast",
           "branded"
+        ],
+        "themeObjects": [
+          {
+            "designName": "light",
+            "codeSymbol": "webLightTheme",
+            "codePackage": "@fluentui/react-components",
+            "tokenSet": "semanticLight",
+            "usage": "<FluentProvider theme={webLightTheme}>",
+            "nameCollisionWarning": "The design site calls this \"light\"; the exported symbol is webLightTheme. There is no theme named \"light\"/\"dark\"/\"high-contrast\"/\"branded\" in the package."
+          },
+          {
+            "designName": "dark",
+            "codeSymbol": "webDarkTheme",
+            "codePackage": "@fluentui/react-components",
+            "tokenSet": "semanticDark",
+            "usage": "<FluentProvider theme={webDarkTheme}>",
+            "nameCollisionWarning": "The design site calls this \"dark\"; the exported symbol is webDarkTheme. There is no theme named \"light\"/\"dark\"/\"high-contrast\"/\"branded\" in the package."
+          },
+          {
+            "designName": "high-contrast",
+            "codeSymbol": "teamsHighContrastTheme",
+            "codePackage": "@fluentui/react-components",
+            "tokenSet": "semanticHighContrast",
+            "usage": "<FluentProvider theme={teamsHighContrastTheme}>",
+            "nameCollisionWarning": "The design site calls this \"high-contrast\"; the exported symbol is teamsHighContrastTheme. There is no theme named \"light\"/\"dark\"/\"high-contrast\"/\"branded\" in the package.",
+            "caution": "This is the only high-contrast theme upstream exports and it is the legacy Teams one. On Windows, browser forced-colors mode is what users actually get: ship webLightTheme/webDarkTheme and handle @media (forced-colors: active). Reach for teamsHighContrastTheme only when a host mirrors the Teams HC setting."
+          },
+          {
+            "designName": "branded",
+            "codeSymbol": "createLightTheme(brandVariants) / createDarkTheme(brandVariants)",
+            "codePackage": "@fluentui/react-components",
+            "tokenSet": "generated from a 16-slot BrandVariants ramp (slots 10..160, brand at 80)",
+            "usage": "const light = createLightTheme(myBrand); <FluentProvider theme={light}>",
+            "nameCollisionWarning": "The design site calls this \"branded\"; the exported symbol is createLightTheme(brandVariants) / createDarkTheme(brandVariants). There is no theme named \"light\"/\"dark\"/\"high-contrast\"/\"branded\" in the package.",
+            "note": "fluent_generate_theme turns one brand hex into the ramp plus both themes."
+          }
         ]
       },
       "images": [
@@ -2833,7 +3953,54 @@
       },
       "docUrl": "https://fluent2.microsoft.design/accessibility",
       "accessStatus": "public",
-      "capturedAt": "2026-08"
+      "capturedAt": "2026-08",
+      "codeTokenBridge": {
+        "note": "The four theme names on this page are adjectives, not exports. These are the objects to pass to FluentProvider.",
+        "themes": [
+          {
+            "designName": "light",
+            "codeSymbol": "webLightTheme",
+            "codePackage": "@fluentui/react-components",
+            "tokenSet": "semanticLight",
+            "usage": "<FluentProvider theme={webLightTheme}>",
+            "nameCollisionWarning": "The design site calls this \"light\"; the exported symbol is webLightTheme. There is no theme named \"light\"/\"dark\"/\"high-contrast\"/\"branded\" in the package."
+          },
+          {
+            "designName": "dark",
+            "codeSymbol": "webDarkTheme",
+            "codePackage": "@fluentui/react-components",
+            "tokenSet": "semanticDark",
+            "usage": "<FluentProvider theme={webDarkTheme}>",
+            "nameCollisionWarning": "The design site calls this \"dark\"; the exported symbol is webDarkTheme. There is no theme named \"light\"/\"dark\"/\"high-contrast\"/\"branded\" in the package."
+          },
+          {
+            "designName": "high-contrast",
+            "codeSymbol": "teamsHighContrastTheme",
+            "codePackage": "@fluentui/react-components",
+            "tokenSet": "semanticHighContrast",
+            "usage": "<FluentProvider theme={teamsHighContrastTheme}>",
+            "nameCollisionWarning": "The design site calls this \"high-contrast\"; the exported symbol is teamsHighContrastTheme. There is no theme named \"light\"/\"dark\"/\"high-contrast\"/\"branded\" in the package.",
+            "caution": "This is the only high-contrast theme upstream exports and it is the legacy Teams one. On Windows, browser forced-colors mode is what users actually get: ship webLightTheme/webDarkTheme and handle @media (forced-colors: active). Reach for teamsHighContrastTheme only when a host mirrors the Teams HC setting."
+          },
+          {
+            "designName": "branded",
+            "codeSymbol": "createLightTheme(brandVariants) / createDarkTheme(brandVariants)",
+            "codePackage": "@fluentui/react-components",
+            "tokenSet": "generated from a 16-slot BrandVariants ramp (slots 10..160, brand at 80)",
+            "usage": "const light = createLightTheme(myBrand); <FluentProvider theme={light}>",
+            "nameCollisionWarning": "The design site calls this \"branded\"; the exported symbol is createLightTheme(brandVariants) / createDarkTheme(brandVariants). There is no theme named \"light\"/\"dark\"/\"high-contrast\"/\"branded\" in the package.",
+            "note": "fluent_generate_theme turns one brand hex into the ramp plus both themes."
+          }
+        ],
+        "allThemeExports": [
+          "webLightTheme",
+          "webDarkTheme",
+          "teamsLightTheme",
+          "teamsDarkTheme",
+          "teamsHighContrastTheme"
+        ],
+        "resolveWith": "fluent_get_token { name: \"dark theme\" }"
+      }
     },
     "content-design": {
       "title": "Content design",
@@ -9735,6 +10902,501 @@
         "knownDuplicateRoutes": 1
       },
       "docUrl": "https://fluent2.microsoft.design/sitemap-0.xml",
+      "accessStatus": "public",
+      "capturedAt": "2026-08-16"
+    },
+    "get-started-design": {
+      "title": "Get started: design (Figma UI kits)",
+      "summary": "Route record for the \"Start designing\" page: which Figma UI kits exist and where each one lives, how the kit library is tiered, the click-path that switches the libraries on, and the five variable groups the design-language file publishes — each mapped to the code token family it becomes.",
+      "keyPoints": [
+        "The Fluent 2 UI kits are hosted in Figma; there are three platform Core kits — Web, iOS and Android.",
+        "The kits are organised in four tiers: Fluent 2 design language, Fluent 2 Core UI Kits, Copilot UI Kits, Labs UI Kits.",
+        "The design-language file is the styling source of truth for five variable groups (see figmaVariables.groups).",
+        "Enable a kit from the library picker inside Figma's Assets panel; Account settings can switch them on for every new draft.",
+        "Component properties and variants in the kits are meant to line up with the code library props.",
+        "Figma variables are what make light/dark switching work in the kits.",
+        "The variable groups are the design-side names — see figmaVariables.codeTokenBridge before writing any of them as a token."
+      ],
+      "sections": [
+        {
+          "heading": "Fluent 2 in Figma",
+          "text": "Where the kits are hosted and the three platform Core kits."
+        },
+        {
+          "heading": "UI kit organization",
+          "text": "The four tiers and the role each one plays."
+        },
+        {
+          "heading": "Enabling the libraries",
+          "text": "Turning the kits on for a file, and for every future draft."
+        },
+        {
+          "heading": "Designing with Fluent",
+          "text": "Where components live in the Assets panel and how variants map to code props."
+        },
+        {
+          "heading": "Styling with Figma Variables",
+          "text": "The variable groups the design-language file publishes."
+        }
+      ],
+      "uiKits": [
+        {
+          "name": "Fluent 2 Web UI Kit",
+          "platform": "web",
+          "url": "https://aka.ms/Fluent2Toolkits/Web/Figma"
+        },
+        {
+          "name": "Fluent 2 iOS UI Kit",
+          "platform": "ios",
+          "url": "https://aka.ms/Fluent2Toolkits/iOS/Figma"
+        },
+        {
+          "name": "Fluent 2 Android UI Kit",
+          "platform": "android",
+          "url": "https://aka.ms/Fluent2Toolkits/Android/Figma"
+        }
+      ],
+      "kitTiers": [
+        {
+          "tier": "Fluent 2 design language",
+          "role": "The styling source of truth.",
+          "publishes": [
+            "color",
+            "stroke width",
+            "corner radius",
+            "spacing",
+            "size"
+          ]
+        },
+        {
+          "tier": "Fluent 2 Core UI Kits",
+          "role": "Building blocks kept aligned with the code libraries.",
+          "platforms": [
+            "web",
+            "ios",
+            "android"
+          ]
+        },
+        {
+          "tier": "Copilot UI Kits",
+          "role": "AI components and patterns layered on top of Core.",
+          "platforms": [
+            "web",
+            "ios",
+            "android"
+          ]
+        },
+        {
+          "tier": "Labs UI Kits",
+          "role": "Partner-contributed experimental kits.",
+          "platforms": [
+            "web",
+            "mobile"
+          ]
+        }
+      ],
+      "enablingLibraries": {
+        "steps": [
+          "Open the Assets panel in the Figma file.",
+          "Open the library picker from that panel.",
+          "Switch on the Fluent 2 UI kits you need.",
+          "To keep them on for every new draft, do it from Account settings instead of per file."
+        ],
+        "alsoAvailable": [
+          "Fluent Iconography kit",
+          "Fluent Emoji kits"
+        ],
+        "moreKits": "https://www.figma.com/@microsoft"
+      },
+      "designingWithFluent": {
+        "componentsLiveIn": "Assets panel",
+        "nestingDepth": "Components are kept at most two levels deep.",
+        "variants": "Variants and component properties carry the configuration, and are intended to map to the code props.",
+        "figmaHelp": "https://help.figma.com/hc/en-us/articles/5579474826519-Explore-component-properties"
+      },
+      "figmaVariables": {
+        "file": "Fluent 2 design language",
+        "scope": "global and alias variables, for web and mobile",
+        "supports": [
+          "light/dark mode switching",
+          "Fluent and Copilot styling"
+        ],
+        "groups": [
+          {
+            "group": "color",
+            "codeTokenFamily": "color* (colorNeutral*, colorBrand*, colorPalette*, colorStatus*)",
+            "caution": null
+          },
+          {
+            "group": "stroke width",
+            "codeTokenFamily": "strokeWidthThin | Thick | Thicker | Thickest",
+            "caution": null
+          },
+          {
+            "group": "corner radius",
+            "codeTokenFamily": "borderRadius*",
+            "caution": "The design names are OFFSET from the code names above Medium: design \"Large\" (8px) is tokens.borderRadiusXLarge, not tokens.borderRadiusLarge (6px)."
+          },
+          {
+            "group": "spacing",
+            "codeTokenFamily": "spacingHorizontal* / spacingVertical*",
+            "caution": "Horizontal and vertical are separate token families in code; Figma exposes one spacing scale."
+          },
+          {
+            "group": "size",
+            "codeTokenFamily": "spacingHorizontal* / spacingVertical* (by value)",
+            "caution": "The sizeNNN names do not exist in code at all — tokens.size120 is undefined. The 12px tokens are spacingHorizontalM / spacingVerticalM, and the ramp has no code token above 32px."
+          }
+        ],
+        "codeTokenBridge": "fluent-tokens.json -> designNameBridge maps every one of these design names to the code token that produces the same value. Resolve one with fluent_get_token { name: \"Large corner radius\" }."
+      },
+      "links": [
+        {
+          "label": "Fluent 2 Web UI Kit (Figma)",
+          "url": "https://aka.ms/Fluent2Toolkits/Web/Figma"
+        },
+        {
+          "label": "Fluent 2 iOS UI Kit (Figma)",
+          "url": "https://aka.ms/Fluent2Toolkits/iOS/Figma"
+        },
+        {
+          "label": "Fluent 2 Android UI Kit (Figma)",
+          "url": "https://aka.ms/Fluent2Toolkits/Android/Figma"
+        },
+        {
+          "label": "Microsoft in the Figma community",
+          "url": "https://www.figma.com/@microsoft"
+        },
+        {
+          "label": "Figma: explore component properties",
+          "url": "https://help.figma.com/hc/en-us/articles/5579474826519-Explore-component-properties"
+        }
+      ],
+      "images": [
+        {
+          "asset": "https://fluent2websitecdn.azureedge.net/cdn/get-started-design.DAxCWgKV.webp",
+          "section": "Start designing"
+        },
+        {
+          "asset": "https://fluent2websitecdn.azureedge.net/cdn/get-started-design-ui-kit.tlSCvd64.png",
+          "section": "UI kit organization"
+        },
+        {
+          "asset": "https://fluent2websitecdn.azureedge.net/cdn/get-started-design-enabling.UenZnDSN.png",
+          "section": "Enabling the libraries"
+        },
+        {
+          "asset": "https://fluent2websitecdn.azureedge.net/cdn/get-started-design-designing-01.D7cv4djS.webp",
+          "section": "Designing with Fluent"
+        },
+        {
+          "asset": "https://fluent2websitecdn.azureedge.net/cdn/get-started-design-designing-02.C9_tBb0r.webp",
+          "section": "Designing with Fluent"
+        },
+        {
+          "asset": "https://fluent2websitecdn.azureedge.net/cdn/get-started-design-styling.Dif2EeP5.png",
+          "section": "Styling with Figma Variables"
+        }
+      ],
+      "values": {
+        "uiKitCount": 3,
+        "kitTierCount": 4,
+        "figmaVariableGroups": [
+          "color",
+          "stroke width",
+          "corner radius",
+          "spacing",
+          "size"
+        ]
+      },
+      "relatedTools": [
+        "fluent_figma_guidance",
+        "fluent_get_token",
+        "fluent_list_tokens"
+      ],
+      "licensing": "Facts and structured data only — kit names, tier names, ordered steps, variable group names, links and image URLs. Descriptive sentences from the source page are paraphrased or omitted; read the page at docUrl for its own wording. See NOTICE.",
+      "docUrl": "https://fluent2.microsoft.design/get-started/design",
+      "httpStatus": 200,
+      "accessStatus": "public",
+      "capturedAt": "2026-08-16"
+    },
+    "get-started-develop": {
+      "title": "Get started: develop (platform picker and install)",
+      "summary": "Route record for the \"Start developing\" page: the five platforms Fluent 2 publishes a library for, and for each one the package name, the install command, the minimum toolchain and the setup entry point.",
+      "keyPoints": [
+        "Five platforms are offered: React, Web Components, iOS, Android and Windows.",
+        "React: @fluentui/react-components (Fluent UI React v9), styled with Griffel.",
+        "Web Components: @fluentui/web-components (v3), built on FAST Element and shipped as JavaScript modules.",
+        "iOS: fluentui-apple, via Swift Package Manager or the MicrosoftFluentUI CocoaPod.",
+        "Android: com.microsoft.fluentui artifacts on Maven Central, whole-library or per-module.",
+        "Windows has no Fluent UI package of its own on this page — it points at WinUI 3.",
+        "Web Components take their theme from @fluentui/tokens via setTheme(), not from a React provider."
+      ],
+      "sections": [
+        {
+          "heading": "Pick your platform",
+          "text": "React, Web Components, iOS, Android and Windows, each with its own install path."
+        },
+        {
+          "heading": "Tooling and requirements",
+          "text": "Minimum toolchain per platform."
+        },
+        {
+          "heading": "Installing",
+          "text": "Package manager commands per platform."
+        },
+        {
+          "heading": "Setting up your app",
+          "text": "The theming entry point each library uses."
+        }
+      ],
+      "platforms": [
+        {
+          "id": "react",
+          "label": "React",
+          "library": "Fluent UI React v9",
+          "package": "@fluentui/react-components",
+          "install": {
+            "npm": "npm install @fluentui/react-components",
+            "yarn": "yarn add @fluentui/react-components"
+          },
+          "builtOn": [
+            "React",
+            "TypeScript"
+          ],
+          "stylingEngine": {
+            "name": "Griffel",
+            "what": "CSS-in-JS; styles are inserted into the DOM as needed.",
+            "url": "https://github.com/microsoft/griffel"
+          },
+          "requirements": {
+            "node": "https://nodejs.org/en/",
+            "packageManager": "npm, yarn or another package manager"
+          },
+          "setup": {
+            "provider": "FluentProvider",
+            "importFrom": "@fluentui/react-components",
+            "themeProp": "theme",
+            "builtInThemes": [
+              "webLightTheme",
+              "webDarkTheme",
+              "teamsLightTheme",
+              "teamsDarkTheme",
+              "teamsHighContrastTheme"
+            ],
+            "steps": [
+              "Import FluentProvider and a theme from @fluentui/react-components.",
+              "Render FluentProvider once at the root of the app and pass the theme object to its theme prop.",
+              "Render every other v9 component inside that provider."
+            ]
+          },
+          "migration": {
+            "from": "an older Fluent UI React version",
+            "url": "https://react.fluentui.dev/?path=/docs/concepts-migration-getting-started--page",
+            "alsoUse": "fluent_migration_guidance / fluent_v8_lookup for the v8 -> v9 symbol map"
+          },
+          "links": [
+            {
+              "label": "Griffel",
+              "url": "https://github.com/microsoft/griffel"
+            },
+            {
+              "label": "Node.js",
+              "url": "https://nodejs.org/en/"
+            },
+            {
+              "label": "Yarn",
+              "url": "https://yarnpkg.com/"
+            },
+            {
+              "label": "fluentui repo",
+              "url": "https://github.com/microsoft/fluentui"
+            }
+          ]
+        },
+        {
+          "id": "web-components",
+          "label": "Web Components",
+          "library": "Fluent UI Web Components v3",
+          "package": "@fluentui/web-components",
+          "install": {
+            "npm": "npm i @fluentui/web-components",
+            "yarn": "yarn add @fluentui/web-components",
+            "pnpm": "pnpm add @fluentui/web-components",
+            "cdn": "A CDN distribution is available; without it a package manager and Node.js are needed."
+          },
+          "builtOn": [
+            "FAST Element",
+            "TypeScript"
+          ],
+          "distributedAs": "JavaScript modules",
+          "setup": {
+            "themeFunction": "setTheme",
+            "themeFunctionFrom": "@fluentui/web-components",
+            "themeObjectFrom": "@fluentui/tokens",
+            "themingModel": "Tokens are applied as CSS custom properties; setTheme swaps the values.",
+            "elementRegistration": {
+              "what": "Named definition exports register a single element against the Fluent design system registry.",
+              "example": "ButtonDefinition.define(FluentDesignSystem.registry)",
+              "importFrom": "@fluentui/web-components"
+            },
+            "steps": [
+              "Install the package with any package manager, or load the CDN build.",
+              "Call setTheme with a theme object to apply Fluent token values.",
+              "Register the elements you use, then place the <fluent-*> tags in markup."
+            ]
+          }
+        },
+        {
+          "id": "ios",
+          "label": "iOS",
+          "library": "Fluent UI Apple",
+          "repo": "https://github.com/microsoft/fluentui-apple/",
+          "packages": {
+            "swiftPackageManager": "https://github.com/microsoft/fluentui-apple.git",
+            "cocoaPods": "pod 'MicrosoftFluentUI'"
+          },
+          "frameworks": [
+            "UIKit",
+            "AppKit"
+          ],
+          "targets": [
+            "iOS",
+            "iPadOS",
+            "macOS"
+          ],
+          "languages": [
+            "Swift",
+            "Objective-C"
+          ],
+          "requirements": {
+            "ios": "14 or later",
+            "macOS": "10.15 or later",
+            "xcode": "14.1 or later",
+            "swift": "5.7.1 or later"
+          },
+          "imports": {
+            "swift": "import FluentUI",
+            "objectiveC": "#import <FluentUI/FluentUI-Swift.h>"
+          },
+          "manualInstall": {
+            "xcodeProject": "ios/FluentUI.xcodeproj",
+            "staticLibrary": "libFluentUI.a",
+            "staticLibraryLocation": [
+              "your project",
+              "your target",
+              "General",
+              "Frameworks, Libraries, and Embedded Content"
+            ],
+            "demoResourceBundle": "FluentUIResources-iOS.bundle",
+            "demoResourceBundleLocation": [
+              "your project",
+              "your target",
+              "Build Phases",
+              "Copy Bundle Resources"
+            ],
+            "steps": [
+              "Clone or download the repo, then place the fluentui-apple folder inside your own project folder.",
+              "Add the Xcode project named above to your workspace.",
+              "Link the static library named above from the target setting named in staticLibraryLocation.",
+              "For a demo environment, add the resource bundle named above under demoResourceBundleLocation."
+            ]
+          },
+          "fluent2Note": "Fluent 2 lands one component at a time. Tokenizing a component removes its Fluent 1 counterpart from the library, so a project that still needs the older one has to pin an earlier version — the last one published before that tokenization.",
+          "releaseNotes": "https://github.com/microsoft/fluentui-apple/releases",
+          "cocoaPodsGuide": "https://guides.cocoapods.org/using/getting-started.html"
+        },
+        {
+          "id": "android",
+          "label": "Android",
+          "library": "Fluent UI Android",
+          "repo": "https://github.com/microsoft/fluentui-android",
+          "groupId": "com.microsoft.fluentui",
+          "wholeLibraryArtifact": "FluentUIAndroid",
+          "gradle": "implementation 'com.microsoft.fluentui:FluentUIAndroid:$version'",
+          "moduleExample": "implementation 'com.microsoft.fluentui:fluentui_drawer:$version'",
+          "modularSince": "0.0.12",
+          "repositories": {
+            "mavenCentral": "required for 0.0.17 and later",
+            "jcenter": "only works for 0.0.16 and earlier"
+          },
+          "language": "Kotlin",
+          "requirements": {
+            "minSdk": 21,
+            "compileSdk": 33,
+            "kotlin": "1.8.21",
+            "jetpackComposeBom": "2023.06.01",
+            "jetpackComposeCompiler": "1.4.7",
+            "duoSdk": "1.0.0-alpha01",
+            "androidStudio": "Flamingo"
+          },
+          "imports": {
+            "wholeLibrary": "import com.microsoft.fluentui",
+            "singleComponent": "import com.microsoft.fluentui.persona.AvatarView"
+          },
+          "surfaceDuo": {
+            "mavenUrl": "https://pkgs.dev.azure.com/MicrosoftDeviceSDK/DuoSDK-Public/_packaging/Duo-SDK-Feed/maven/v1",
+            "dependency": "com.microsoft.device:dualscreen-layout:1.0.0-alpha01"
+          },
+          "extraDependencies": [
+            {
+              "whenUsing": "PeoplePickerView",
+              "dependency": "com.splitwise:tokenautocomplete:2.0.8"
+            },
+            {
+              "whenUsing": "CalendarView or DateTimePickerDialog",
+              "dependency": "com.jakewharton.threetenabp:threetenabp:1.1.0"
+            }
+          ],
+          "fluent2Note": "Fluent 2 arrives component by component here too, but the Fluent 1 version stays in the same module — the module is split into a tokenized folder (Fluent 2) and a non-tokenized one (Fluent 1). The import decides which generation is used, not the dependency. See fluent_native_component.",
+          "modularization": "https://github.com/microsoft/fluentui-android#modularization",
+          "releaseNotes": "https://github.com/microsoft/fluentui-android/releases",
+          "demos": "https://github.com/microsoft/fluentui-android/tree/master/FluentUI.Demo"
+        },
+        {
+          "id": "windows",
+          "label": "Windows",
+          "library": "WinUI 3",
+          "note": "The page has no Fluent UI package for Windows: it points at WinUI, whose controls carry the Fluent design language.",
+          "docs": "https://learn.microsoft.com/en-us/windows/apps/winui/winui3/",
+          "alsoUse": "fluent_native_component { platform: \"windows\" } for the real control names."
+        }
+      ],
+      "crossReferences": [
+        "fluent_generate_code scaffolds a themed React v9 or Web Components app from this same setup.",
+        "fluent_native_component resolves the real iOS/Android/Windows type names — never infer them from the web API.",
+        "fluent_get_token { name: \"dark theme\" } resolves which theme object to pass to FluentProvider."
+      ],
+      "images": [
+        {
+          "asset": "https://fluent2websitecdn.azureedge.net/cdn/get-started-develop.DHHfwS_N.webp",
+          "section": "Start developing"
+        }
+      ],
+      "values": {
+        "platformCount": 5,
+        "platforms": [
+          "react",
+          "web-components",
+          "ios",
+          "android",
+          "windows"
+        ],
+        "webPackages": [
+          "@fluentui/react-components",
+          "@fluentui/web-components",
+          "@fluentui/tokens"
+        ]
+      },
+      "relatedTools": [
+        "fluent_generate_code",
+        "fluent_native_component",
+        "fluent_migration_guidance",
+        "fluent_get_token"
+      ],
+      "licensing": "Facts and structured data only — package names, install commands, version numbers, ordered steps, links and image URLs. Descriptive sentences from the source page are paraphrased or omitted; read the page at docUrl for its own wording. See NOTICE.",
+      "docUrl": "https://fluent2.microsoft.design/get-started/develop",
+      "httpStatus": 200,
       "accessStatus": "public",
       "capturedAt": "2026-08-16"
     }

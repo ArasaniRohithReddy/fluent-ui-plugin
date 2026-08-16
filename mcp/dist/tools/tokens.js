@@ -32,6 +32,119 @@ const SHIPPED_NAME_BY_PATH = {
 };
 /** How many substring matches to return before switching to a count + advice. */
 const MAX_FUZZY_MATCHES = 25;
+/** How many design-name bridge rows to attach to one lookup. */
+const MAX_BRIDGE_HITS = 6;
+/** Lowercase, strip every separator: "Large corner radius" -> "largecornerradius". */
+const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '');
+let bridgeIndexCache = null;
+/** lookupKey -> entries. Built once; the dataset does not change at runtime. */
+function bridgeIndex(t) {
+    if (bridgeIndexCache)
+        return bridgeIndexCache;
+    const map = new Map();
+    for (const e of (t?.designNameBridge?.entries ?? [])) {
+        for (const key of e.lookupKeys ?? []) {
+            const k = slug(key);
+            if (!k)
+                continue;
+            const list = map.get(k) ?? [];
+            if (!list.includes(e))
+                list.push(e);
+            map.set(k, list);
+        }
+    }
+    bridgeIndexCache = map;
+    return map;
+}
+/** The rows a caller actually wants to see — not the whole generated record. */
+function compactBridge(e) {
+    const out = {
+        designName: e.designName,
+        designLabel: e.designLabel,
+        designValue: e.designValue,
+        kind: e.kind,
+        codeToken: e.codeToken,
+        codeValue: e.codeValue,
+        valueMatch: e.valueMatch,
+    };
+    for (const k of [
+        'codeTokens',
+        'codeStyle',
+        'codeSymbol',
+        'codePackage',
+        'griffel',
+        'cssVar',
+        'usage',
+        'collisionSeverity',
+        'expectedCodeName',
+        'expectedCodeNameActualValue',
+        'mismatches',
+        'warning',
+        'reason',
+        'note',
+        'caution',
+        'docUrl',
+    ]) {
+        if (e[k] !== undefined)
+            out[k] = e[k];
+    }
+    return out;
+}
+/** Design-side names (and their px forms) that resolve to this query. */
+function resolveDesignName(t, q) {
+    const hits = bridgeIndex(t).get(slug(q));
+    return hits ? hits.slice(0, MAX_BRIDGE_HITS) : [];
+}
+/**
+ * A code token that is itself one half of a name collision. Attached whenever a
+ * lookup lands on `borderRadiusLarge` from either direction, so the offset is
+ * stated at the exact moment someone is about to use the wrong step.
+ */
+function collisionsForResults(t, resultKeys) {
+    const map = t?.designNameBridge?.collisionsByCodeToken;
+    if (!map)
+        return undefined;
+    const out = {};
+    for (const key of resultKeys) {
+        const leaf = key.replace(/\s*\(.*\)$/, '').split('.').pop();
+        if (leaf && map[leaf] && !out[leaf])
+            out[leaf] = map[leaf];
+    }
+    return Object.keys(out).length ? out : undefined;
+}
+/** Compact per-category rows for fluent_list_tokens. */
+function designNameRows(t, category) {
+    const kinds = {
+        borderRadius: ['cornerRadius'],
+        strokeWidth: ['strokeWidth'],
+        spacing: ['spacing'],
+        typography: ['typeRamp'],
+        color: ['color'],
+    };
+    const want = kinds[category];
+    if (!want)
+        return undefined;
+    const rows = (t?.designNameBridge?.entries ?? [])
+        .filter((e) => want.includes(e.kind))
+        .map((e) => {
+        const row = {
+            designName: e.designName,
+            designValue: e.designValue,
+            codeToken: e.codeToken,
+            codeValue: e.codeValue,
+            valueMatch: e.valueMatch,
+        };
+        if (e.warning)
+            row.nameCollisionWarning = e.warning;
+        if (e.reason && !e.codeToken)
+            row.reason = e.reason;
+        return row;
+    });
+    return rows.length ? rows : undefined;
+}
+const BRIDGE_NOTE = 'designNames maps the names Microsoft publishes on fluent2.microsoft.design to the code tokens that actually ' +
+    'produce those values, matched BY VALUE. The two scales are offset in places — the site\'s "Large" corner radius ' +
+    'is 8px, which is borderRadiusXLarge; borderRadiusLarge is 6px. Never turn a design name into a token name yourself.';
 /**
  * Categories whose values are theme-invariant in this dataset. Reported
  * explicitly so a caller never assumes `theme` was honoured when it was not.
@@ -55,7 +168,7 @@ function themeNote(category) {
 export function registerTokens(server) {
     server.registerTool('fluent_list_tokens', {
         title: 'List Fluent 2 design tokens',
-        description: 'List Fluent 2 design tokens by category (color, typography, spacing, borderRadius, strokeWidth, shadow, motion). For color, choose the theme (light/dark/highContrast) — the color response also carries aliasGlobalTokens, the published alias-token to global-token-slot map (colorBrandBackground -> brand[80] light / brand[70] dark). Every other category is theme-invariant in this dataset and the response says so explicitly. Values are concrete resolved values; each token X is exposed as the CSS variable --X and as tokens.X in Griffel makeStyles.',
+        description: 'List Fluent 2 design tokens by category (color, typography, spacing, borderRadius, strokeWidth, shadow, motion). For color, choose the theme (light/dark/highContrast) — the color response also carries aliasGlobalTokens, the published alias-token to global-token-slot map (colorBrandBackground -> brand[80] light / brand[70] dark). Every other category is theme-invariant in this dataset and the response says so explicitly. Values are concrete resolved values; each token X is exposed as the CSS variable --X and as tokens.X in Griffel makeStyles. Categories that have one also return designNames: the design-site names from fluent2.microsoft.design mapped BY VALUE to these code tokens, because the two scales are offset — the site\'s "Large" corner radius is 8px = borderRadiusXLarge, while borderRadiusLarge is 6px.',
         inputSchema: {
             category: z
                 .enum(['color', 'typography', 'spacing', 'borderRadius', 'strokeWidth', 'shadow', 'motion', 'all'])
@@ -82,6 +195,8 @@ export function registerTokens(server) {
                         'dark web themes — provenance, not a substitute for the concrete values above. Source: ' +
                         meta.docUrl
                     : undefined,
+                designNames: designNameRows(t, 'color'),
+                designNamesNote: BRIDGE_NOTE,
             }, null, 2));
         }
         if (category === 'all') {
@@ -89,6 +204,9 @@ export function registerTokens(server) {
                 theme,
                 themeNote: 'theme applies to colorSemantic only. Every other category below is theme-invariant in this dataset. ' +
                     SHADOW_CAVEAT,
+                designNameBridgeNote: 'Design-site names (Large corner radius, size120, Body 1) are NOT these token names and are offset in ' +
+                    'places. Ask for one category to get its designNames map, or call fluent_get_token { name: ' +
+                    '"Large corner radius" } / { name: "size120" }.',
                 colorBrandRamp: t.color.brandRamp,
                 colorSemantic: t.color[themeKey],
                 typography: withShippedNames(t.typography),
@@ -101,16 +219,22 @@ export function registerTokens(server) {
         }
         const note = themeNote(category);
         const value = category === 'typography' ? withShippedNames(t[category]) : t[category];
-        return textResult(JSON.stringify(note ? { category, theme, note, [category]: value } : { category, [category]: value }, null, 2));
+        const designNames = designNameRows(t, category);
+        return textResult(JSON.stringify({
+            category,
+            ...(note ? { theme, note } : {}),
+            [category]: value,
+            ...(designNames ? { designNames, designNamesNote: BRIDGE_NOTE } : {}),
+        }, null, 2));
     });
     server.registerTool('fluent_get_token', {
         title: 'Get a Fluent 2 design token value',
-        description: 'Look up a Fluent 2 design token by name (e.g. colorBrandBackground, spacingHorizontalM, borderRadiusMedium, fontSizeBase300, fontFamilyBase, shadow8, durationNormal). Returns concrete value(s) across light/dark/high-contrast where applicable plus the CSS variable name. An empty or whitespace-only name is rejected rather than treated as "match everything"; a broad fragment returns a capped list plus the total match count.',
+        description: 'Look up a Fluent 2 design token by name (e.g. colorBrandBackground, spacingHorizontalM, borderRadiusMedium, fontSizeBase300, fontFamilyBase, shadow8, durationNormal). Returns concrete value(s) across light/dark/high-contrast where applicable plus the CSS variable name. ALSO resolves DESIGN-SITE names — the vocabulary fluent2.microsoft.design and fluent_design_guidance use — to the code token that actually produces that value: "Large corner radius" -> borderRadiusXLarge (8px), "size120" -> spacingHorizontalM/spacingVerticalM (12px), "Body 1" -> body1 / fontSizeBase300, "dark theme" -> webDarkTheme. The two scales are OFFSET, so this is not cosmetic: borderRadiusLarge is 6px, not the 8px the site calls Large. Any lookup that lands on one side of that offset comes back with $nameCollisionWarning. An empty or whitespace-only name is rejected rather than treated as "match everything"; a broad fragment returns a capped list plus the total match count.',
         inputSchema: {
             name: z
                 .string()
                 .min(1, 'name must not be empty — pass a token name or fragment, e.g. "colorBrandBackground".')
-                .describe('Token name or fragment, e.g. colorBrandBackground.'),
+                .describe('Token name or fragment (colorBrandBackground), or a Fluent 2 design-site name ("Large corner radius", "size120", "Body 1", "dark theme").'),
             maxMatches: z
                 .number()
                 .int()
@@ -178,8 +302,15 @@ export function registerTokens(server) {
             for (const [k, v] of fuzzy.slice(0, maxMatches))
                 results[k] = v;
         }
-        if (Object.keys(results).length === 0) {
-            return textResult(`No token matching "${name}". Use fluent_list_tokens to browse categories.`);
+        // Design-side names resolve here, and only on an exact lookup-key hit:
+        // "Large corner radius", "size120", "Body 1", "dark theme". Matching by
+        // fragment instead would bury the values the caller asked for.
+        const bridgeHits = resolveDesignName(t, name);
+        if (Object.keys(results).length === 0 && bridgeHits.length === 0) {
+            return textResult(`No token matching "${name}". Use fluent_list_tokens to browse categories. ` +
+                'If this is a name from the Fluent 2 design site (e.g. "Large corner radius", "size120", "Body 1", ' +
+                '"dark theme"), it is a design-language name, not a token name — this tool resolves those too, so check ' +
+                'the exact wording.');
         }
         // Colour aliases carry provenance the resolved hex cannot: which global
         // slot they point at per theme, the interaction state, and the category
@@ -193,11 +324,32 @@ export function registerTokens(server) {
                 tokens: aliasRefs,
             };
         }
+        // The offset is the whole point of the bridge: state it on the way in
+        // (someone asked for borderRadiusLarge) as well as on the way out
+        // (someone asked for "Large corner radius").
+        const collisions = collisionsForResults(t, Object.keys(results));
+        if (collisions) {
+            results.$nameCollisionWarning = {
+                note: 'A token here shares its name with a DIFFERENT step of the Fluent 2 design-site scale. Read this before ' +
+                    'trusting a token name that came from design guidance.',
+                tokens: collisions,
+            };
+        }
+        if (bridgeHits.length) {
+            results.$designNameBridge = {
+                note: `"${name}" is a Fluent 2 design-site name. Resolved to the code token that produces the same value, ` +
+                    'matched by value rather than by name.',
+                matched: bridgeHits.length,
+                resolved: bridgeHits.map(compactBridge),
+            };
+        }
         const header = exactCount > 0
             ? `Exact match(es) for "${name}"`
             : fuzzyTotal > maxMatches
                 ? `"${name}" is a fragment, not a token name: ${fuzzyTotal} matches, showing ${maxMatches}. Narrow the query or use fluent_list_tokens to browse.`
-                : `"${name}" matched ${fuzzyTotal} token(s) by fragment`;
+                : fuzzyTotal === 0 && bridgeHits.length > 0
+                    ? `"${name}" is a design-site name, not a token name — resolved through the design-name bridge`
+                    : `"${name}" matched ${fuzzyTotal} token(s) by fragment`;
         return textResult(`${header} — each token X maps to CSS variable --X and tokens.X in Griffel:\n\n` +
             JSON.stringify(results, null, 2));
     });

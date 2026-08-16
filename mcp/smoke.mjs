@@ -373,7 +373,13 @@ console.log('search_components(button): ok=' + sc.content[0].text.includes('Butt
 const gcomp = await client.callTool({ name: 'fluent_get_component', arguments: { name: 'Combobox' } });
 console.log('get_component(Combobox): ok=' + gcomp.content[0].text.includes('Combobox'));
 const th = await client.callTool({ name: 'fluent_generate_theme', arguments: { brandColor: '#D13438', name: 'red' } });
-console.log('generate_theme: ok=' + (th.content[0].text.includes('BrandVariants') && th.content[0].text.includes('createDarkTheme') && th.content[0].text.includes("80: '#D13438'")));
+// Slot 80 used to be asserted as the input hex itself ("80: '#D13438'"). That was only true of
+// the old HSL ramp, which pinned slot 80 to the key colour. The real Theme Designer algorithm
+// treats the key colour as the point where the two Bezier curves MEET and samples the 16 slots
+// at fixed, hue-specific lightness stops, so slot 80 is a near neighbour instead: #b53031.
+// Verified byte-for-byte against Microsoft's live Theme Designer, so the new value is the
+// correct one - see the ramp-parity checks at the end of this file.
+console.log('generate_theme: ok=' + (th.content[0].text.includes('BrandVariants') && th.content[0].text.includes('createDarkTheme') && th.content[0].text.includes("80: '#b53031'")));
 const cd = await client.callTool({ name: 'fluent_generate_code', arguments: { kind: 'form', framework: 'react', componentName: 'ContactForm' } });
 console.log('generate_code(form): ok=' + cd.content[0].text.includes('FluentProvider'));
 
@@ -383,7 +389,9 @@ console.log('design_guidance(motion): ok=' + (dgText.length > 0 && dgText.includ
 const dgAll = await client.callTool({ name: 'fluent_design_guidance', arguments: { topic: 'all' } });
 const dgAllText = dgAll.content[0].text;
 let dgTopics = 0; try { const j = JSON.parse(dgAllText); dgTopics = Object.keys(j.topics || {}).length; } catch {}
-console.log('design_guidance(all): topics=' + dgTopics + ' ok=' + (dgTopics === 40 && dgAllText.includes('design-principles') && dgAllText.includes('design-tokens')));
+// 42 since the two get-started routes (/get-started/design, /get-started/develop)
+// were added — they were the last uncovered public routes with real content.
+console.log('design_guidance(all): topics=' + dgTopics + ' ok=' + (dgTopics === 42 && dgAllText.includes('design-principles') && dgAllText.includes('design-tokens')));
 // Every topic must declare where it came from and when. Without this a topic
 // captured before Microsoft put the page behind a sign-in is indistinguishable
 // from one verified today, and callers silently trust stale guidance.
@@ -1780,11 +1788,13 @@ const figPlugins = (await client.callTool({ name: 'fluent_figma_guidance', argum
   {
     const dgAll = await text('fluent_design_guidance', { topic: 'all' });
     const j = jsonOf(dgAll);
-    // Target was <5,000. 40 topics x mandatory per-topic provenance
+    // Target was <5,000. 42 topics x mandatory per-topic provenance
     // (accessStatus + capturedAt, asserted above) plus the doDont convention
-    // warning put the floor at ~7.3k; that is still a 98.6% reduction.
+    // warning put the floor at ~8.2k; that is still a 98.4% reduction.
+    // Raised from 8,000 when the two get-started topics landed: the cap tracks
+    // the corpus, and 40 -> 42 rows cannot be absorbed by trimming a row.
     console.log('design_guidance(all) is an index, not the corpus (' + dgAll.length + ' chars): ok='
-      + (dgAll.length < 8000 && j?.index === true && Object.keys(j?.topics ?? {}).length > 30));
+      + (dgAll.length < 9000 && j?.index === true && Object.keys(j?.topics ?? {}).length > 30));
     const figAll = await text('fluent_figma_guidance', { section: 'all' });
     console.log('figma_guidance(all) is an index (' + figAll.length + ' chars): ok='
       + (figAll.length < 8000 && jsonOf(figAll)?.index === true));
@@ -1969,6 +1979,610 @@ const figPlugins = (await client.callTool({ name: 'fluent_figma_guidance', argum
   }
 
   rmSync(AUD, { recursive: true, force: true });
+}
+
+// ---------------------------------------------------------------------------
+// fluent_generate_theme: brand-ramp parity with Microsoft's Fluent 2 Theme Designer.
+//
+// The ramp used to be interpolated in HSL with hand-tuned lightness factors, which meant a
+// user's generated theme never matched the theme the official tool would have given them.
+// It is now a port of microsoft/fluentui
+// packages/react-components/theme-designer/src/{utils/getBrandTokensFromPalette,colors/*}.ts
+// (LCH key colour, two quadratic Bezier curves through D50 CIE LAB toward black and white,
+// hue-specific lightness stops, sRGB gamut snapping).
+//
+// GROUND TRUTH below was scraped on 2026-08-16 from Microsoft's live Theme Designer at
+// https://storybooks.fluentui.dev/react/iframe.html?viewMode=docs&id=theme-theme-designer--docs
+// by driving its own inputs and reading the rendered swatches. Its Form.tsx defaults both
+// sliders to 0 and passes { hueTorsion: torsion/100, darkCp: vibrancy/100, lightCp: vibrancy/100 },
+// which is what this tool defaults to.
+{
+  const themeText = async (args) =>
+    (await client.callTool({ name: 'fluent_generate_theme', arguments: args })).content[0].text;
+  const rampOf = (t) => {
+    const out = {};
+    for (const m of t.matchAll(/^ {2}(\d+): '(#[0-9a-fA-F]{6})',$/gm)) out[m[1]] = m[2];
+    return out;
+  };
+  const EXPECTED_KEYS = Array.from({ length: 16 }, (_, i) => String((i + 1) * 10));
+  // WCAG relative luminance - a strictly monotonic function of L*, so it is a fair proxy
+  // for "the ramp gets lighter at every step".
+  const luminance = (hex) => {
+    const ch = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+      .map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+    return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2];
+  };
+
+  const DESIGNER = [
+    ['Fluent brand #0F6CBD', { brandColor: '#0F6CBD' }, '#020305 #111723 #16263d #193253 #1b3f6a #1b4c82 #18599b #1267b4 #3174c2 #4f82c8 #6790cf #7d9ed5 #92acdc #a6bae2 #bac9e9 #cdd8ef'],
+    ['saturated red #D13438', { brandColor: '#D13438' }, '#060201 #25110d #3f1916 #551e1b #6c2320 #842826 #9c2c2c #b53031 #cf3337 #d94d49 #e1645c #e87a70 #ee8f84 #f4a399 #f8b7af #fbcbc5'],
+    ['green #107C10', { brandColor: '#107C10' }, '#020401 #101c0a #142f10 #163d11 #174c12 #175a12 #156a12 #117910 #308728 #4b9440 #62a156 #79ae6d #8ebb84 #a4c89a #bad5b2 #cfe2c9'],
+    ['very light #FAF0E6', { brandColor: '#FAF0E6' }, '#030303 #181717 #272625 #333230 #403e3c #4d4a48 #5a5754 #686460 #76726d #847f7a #938d88 #a29c95 #b1aaa3 #c1b9b1 #d0c8c0 #e0d7ce'],
+    ['very dark #0B0F14', { brandColor: '#0B0F14' }, '#020304 #14171b #232529 #2e3134 #3b3d40 #47494d #545659 #616366 #6f7174 #7d7f81 #8b8d8f #9a9b9d #a9aaab #b8b9ba #c7c8c9 #d6d7d8'],
+    ['highly saturated cyan #00E5FF', { brandColor: '#00E5FF' }, '#020404 #101a1c #162c30 #1a393e #1d474e #1f555d #21636d #22727e #23818f #2391a0 #21a1b2 #1fb1c4 #1ac1d7 #13d2e9 #03e2fc #7dedff'],
+    ['near-grey #7A7B7C', { brandColor: '#7A7B7C' }, '#030303 #171717 #252525 #303131 #3c3d3d #49494a #565657 #636464 #707172 #7e7f80 #8c8d8e #9b9b9c #a9aaab #b8b9b9 #c7c8c8 #d7d7d7'],
+    ['pure grey #808080', { brandColor: '#808080' }, '#030303 #171717 #252525 #313131 #3d3d3d #494949 #565656 #636363 #717171 #7f7f7f #8d8d8d #9b9b9b #aaaaaa #b9b9b9 #c8c8c8 #d7d7d7'],
+    ['pure black #000000', { brandColor: '#000000' }, '#030303 #171717 #252525 #313131 #3d3d3d #494949 #565656 #636363 #717171 #7f7f7f #8d8d8d #9b9b9b #aaaaaa #b9b9b9 #c8c8c8 #d7d7d7'],
+    ['pure white #FFFFFF', { brandColor: '#FFFFFF' }, '#030303 #171717 #252525 #313131 #3d3d3d #494949 #565656 #636363 #717171 #7f7f7f #8d8d8d #9b9b9b #aaaaaa #b9b9b9 #c8c8c8 #d7d7d7'],
+    ['#0F6CBD at vibrancy 50', { brandColor: '#0F6CBD', vibrancy: 50 }, '#010307 #07182d #00274b #00335f #003f74 #004c8a #005aa0 #0067b7 #2575c7 #3e82d4 #5590e0 #6b9fea #81adf3 #98bbfa #aecafe #c5d9ff'],
+    ['#0F6CBD at hueTorsion 30', { brandColor: '#0F6CBD', hueTorsion: 30 }, '#010305 #0e1823 #10273d #103453 #0f406a #0d4d82 #0c5a9b #0d67b4 #3574c2 #5581c8 #6e8ecf #859cd5 #9aaadc #aeb8e2 #c1c7e9 #d3d6ef'],
+    ['#D13438 at hueTorsion -25, vibrancy -40', { brandColor: '#D13438', hueTorsion: -25, vibrancy: -40 }, '#050201 #21140e #381e17 #4c261d #602d24 #76352b #8d3c33 #a5423a #bf4742 #c95c56 #d1706a #d9837e #e09692 #e7a9a6 #edbbba #f3cecd'],
+  ];
+
+  const ramps = new Map();
+  const mismatched = [];
+  for (const [label, args, expected] of DESIGNER) {
+    const ramp = rampOf(await themeText(args));
+    ramps.set(label, ramp);
+    const got = EXPECTED_KEYS.map((k) => ramp[k]).join(' ');
+    if (got !== expected) mismatched.push(`${label}\n      got  ${got}\n      want ${expected}`);
+  }
+  console.log('generate_theme reproduces the live Fluent 2 Theme Designer ramp for all '
+    + DESIGNER.length + ' cases (16 stops each, exact hex): ok=' + (mismatched.length === 0));
+  if (mismatched.length) for (const m of mismatched) console.log('    - ' + m);
+
+  const fluent = ramps.get('Fluent brand #0F6CBD');
+  console.log("generate_theme(#0F6CBD) slot 80 = " + fluent['80'] + " and slot 160 = " + fluent['160']
+    + " (Theme Designer values, NOT the hand-curated brandWeb literal): ok="
+    + (fluent['80'] === '#1267b4' && fluent['160'] === '#cdd8ef'));
+
+  const nonMonotonic = [];
+  for (const [label, ramp] of ramps) {
+    const ls = EXPECTED_KEYS.map((k) => luminance(ramp[k]));
+    for (let i = 1; i < ls.length; i++) if (!(ls[i] > ls[i - 1])) nonMonotonic.push(`${label}@${EXPECTED_KEYS[i]}`);
+  }
+  console.log('every generated ramp is strictly monotonic in lightness across all 16 stops ('
+    + ramps.size + ' ramps checked): ok=' + (nonMonotonic.length === 0)
+    + (nonMonotonic.length ? ' broken=' + nonMonotonic.join(',') : ''));
+
+  const keyProblems = [];
+  const stopProblems = [];
+  for (const [label, ramp] of ramps) {
+    if (Object.keys(ramp).join(',') !== EXPECTED_KEYS.join(',')) keyProblems.push(label + ' -> ' + Object.keys(ramp).join(','));
+    for (const k of EXPECTED_KEYS) {
+      const v = ramp[k];
+      if (!/^#[0-9a-f]{6}$/.test(String(v))) stopProblems.push(`${label}@${k}=${v}`);
+    }
+  }
+  console.log('stop keys are exactly 10..160 in order, 16 of them, for every ramp: ok=' + (keyProblems.length === 0)
+    + (keyProblems.length ? ' bad=' + keyProblems.join(' | ') : ''));
+
+  // The old HSL ramp clamped lightness, so degenerate inputs could repeat a stop or emit NaN
+  // once a channel went out of range. Black, white and grey are the inputs that used to hurt.
+  const degenerate = ['pure black #000000', 'pure white #FFFFFF', 'pure grey #808080', 'near-grey #7A7B7C'];
+  const dupes = [];
+  for (const label of degenerate) {
+    const vals = EXPECTED_KEYS.map((k) => ramps.get(label)[k]);
+    if (new Set(vals).size !== 16) dupes.push(label + ' -> ' + (16 - new Set(vals).size) + ' duplicate stop(s)');
+  }
+  const black = await themeText({ brandColor: '#000000' });
+  const white = await themeText({ brandColor: '#FFFFFF' });
+  const grey = await themeText({ brandColor: '#808080' });
+  const nan = /NaN|undefined|#NaN/.test(black + white + grey);
+  console.log('black / white / grey inputs produce 16 distinct, NaN-free stops: ok='
+    + (dupes.length === 0 && !nan && stopProblems.length === 0)
+    + (dupes.length ? ' dupes=' + dupes.join(' | ') : '') + (nan ? ' NaN in output' : '')
+    + (stopProblems.length ? ' malformed=' + stopProblems.join(',') : ''));
+
+  // Output shape must not have moved: TS module, both theme factories, and 16 CSS variables.
+  const shape = await themeText({ brandColor: '#0F6CBD', name: 'contoso' });
+  const cssVars = EXPECTED_KEYS.every((k) => shape.includes(`--colorBrand${k}: ${fluent[k]};`));
+  console.log('output shape stable (BrandVariants + createLightTheme + createDarkTheme + 16 --colorBrand* vars): ok='
+    + (shape.includes('export const contoso: BrandVariants')
+      && shape.includes('createLightTheme(contoso)') && shape.includes('createDarkTheme(contoso)')
+      && shape.includes(':root {') && cssVars));
+
+  // The notes must describe the algorithm that actually runs; the old text advertised HSL.
+  console.log('generate_theme notes describe the real LAB/Bezier algorithm and no longer claim HSL: ok='
+    + (/Bezier/.test(shape) && /LAB/.test(shape) && !/HSL/i.test(shape)));
+
+  // Quoted round-trip evidence for two brand colours, straight off the MCP stdio transport.
+  console.log('ROUND-TRIP fluent_generate_theme(#0F6CBD) -> 80: ' + fluent['80']
+    + ' | ' + EXPECTED_KEYS.map((k) => fluent[k]).join(' '));
+  const red = ramps.get('saturated red #D13438');
+  console.log('ROUND-TRIP fluent_generate_theme(#D13438) -> 80: ' + red['80']
+    + ' | ' + EXPECTED_KEYS.map((k) => red[k]).join(' '));
+}
+
+// ===========================================================================
+// Design-name -> code-token bridge (ADDED).
+//
+// The defect: mcp/data/design-guidance.json carried Microsoft's design-site
+// names and mcp/data/fluent-tokens.json carried the code names, and the two
+// radius scales are OFFSET BY ONE STEP. An agent told "Large = 8 pixels" wrote
+// tokens.borderRadiusLarge and silently got 6px. Every check below is about
+// keeping that bridge true: names that exist, values that agree, and the offset
+// stated out loud. All of them are overlay-independent — the affected topics
+// are public, so these pass identically in a fresh clone and in a checkout that
+// has mcp/data/local/.
+// ===========================================================================
+{
+  const text = async (name, args = {}) => {
+    try {
+      const r = await client.callTool({ name, arguments: args });
+      return r.content[0].text;
+    } catch (e) {
+      return String(e && e.message ? e.message : e);
+    }
+  };
+  const jsonOf = (s) => { try { return JSON.parse(s); } catch { return null; } };
+
+  const tokenData = JSON.parse(readFileSync(new URL('data/fluent-tokens.json', import.meta.url), 'utf8'));
+  const guidanceData = JSON.parse(readFileSync(new URL('data/design-guidance.json', import.meta.url), 'utf8'));
+  const bridge = tokenData.designNameBridge ?? {};
+  const bridgeEntries = bridge.entries ?? [];
+
+  // Every token name the bridge hands out has to exist, or the bridge is just a
+  // second way to write code that does not compile.
+  const tokenNames = new Set();
+  (function collect(node) {
+    if (!node || typeof node !== 'object') return;
+    for (const [k, v] of Object.entries(node)) {
+      tokenNames.add(k);
+      if (v && typeof v === 'object' && !Array.isArray(v)) collect(v);
+    }
+  })({
+    typography: tokenData.typography,
+    spacing: tokenData.spacing,
+    borderRadius: tokenData.borderRadius,
+    strokeWidth: tokenData.strokeWidth,
+    shadow: tokenData.shadow,
+    motion: tokenData.motion,
+  });
+  for (const k of Object.keys(tokenData.color?.semanticLight ?? {})) tokenNames.add(k);
+
+  {
+    const ghosts = [];
+    for (const e of bridgeEntries) {
+      if (e.codeToken && !tokenNames.has(e.codeToken)) ghosts.push(`${e.id}:${e.codeToken}`);
+      const members = Array.isArray(e.codeTokens) ? e.codeTokens : Object.values(e.codeTokens ?? {});
+      for (const m of members) if (m && !tokenNames.has(m)) ghosts.push(`${e.id}:${m}`);
+    }
+    console.log('every bridge codeToken exists in fluent-tokens.json (' + bridgeEntries.length + ' entries, '
+      + (ghosts.join(', ') || 'no ghosts') + '): ok=' + (bridgeEntries.length >= 40 && ghosts.length === 0));
+  }
+
+  // The whole point is matching by VALUE. An "exact" row whose token carries a
+  // different number would reintroduce the original defect wearing a new label.
+  {
+    const px = (v) => {
+      if (typeof v === 'number') return v;
+      if (typeof v !== 'string') return NaN;
+      if (v.trim() === '0') return 0;
+      const m = /^(-?\d+(?:\.\d+)?)\s*(?:px|pixel|pixels)$/i.exec(v.trim());
+      return m ? Number(m[1]) : NaN;
+    };
+    const bad = [];
+    let compared = 0;
+    for (const e of bridgeEntries) {
+      if (e.valueMatch !== 'exact') continue;
+      if (e.kind === 'typeRamp') {
+        compared++;
+        const size = tokenData.typography.fontSizes[e.codeTokens.fontSize];
+        const lh = tokenData.typography.lineHeights[e.codeTokens.lineHeight];
+        const wt = tokenData.typography.fontWeights[e.codeTokens.fontWeight];
+        const ramp = tokenData.typography.ramp[e.codeToken];
+        if (px(size) !== px(ramp?.fontSize) || px(lh) !== px(ramp?.lineHeight) || wt !== ramp?.fontWeight) {
+          bad.push(`${e.id}: tokens do not compose the ramp step`);
+        }
+        if (!String(e.designValue).startsWith(String(ramp?.fontSize))) bad.push(`${e.id}: ${e.designValue} vs ${ramp?.fontSize}`);
+        continue;
+      }
+      compared++;
+      if (px(e.designValue) !== px(e.codeValue)) bad.push(`${e.id}: ${e.designValue} != ${e.codeValue}`);
+    }
+    console.log('every exact-match codeToken carries the design row\'s stated value (' + compared + ' compared, '
+      + (bad.join('; ') || 'all agree') + '): ok=' + (compared >= 30 && bad.length === 0));
+  }
+
+  // Rows that could NOT be mapped must say so instead of silently borrowing the
+  // nearest token — that substitution is the failure mode this replaces.
+  {
+    const unmapped = bridgeEntries.filter((e) => !e.codeToken && !e.codeSymbol);
+    const silent = unmapped.filter((e) => !e.reason || e.valueMatch !== 'none');
+    console.log('unmapped design names admit it with a reason (' + unmapped.length + ' unmapped, '
+      + (silent.length ? silent.map((e) => e.id).join(', ') : 'all explained') + '): ok='
+      + (unmapped.length > 0 && silent.length === 0));
+  }
+
+  // The offset itself. Assert the real numbers, not just that a warning exists.
+  {
+    const radius = guidanceData.topics.shapes.values.cornerRadius;
+    const byName = Object.fromEntries(radius.map((r) => [r.token, r]));
+    const large = byName['Large'];
+    const xl = byName['X-Large'];
+    const medium = byName['Medium'];
+    const offsetOk =
+      large?.codeToken === 'borderRadiusXLarge' && large?.codeValue === '8px' &&
+      xl?.codeToken === 'borderRadius2XLarge' && xl?.codeValue === '12px' &&
+      tokenData.borderRadius.borderRadiusLarge === '6px' &&
+      /NAME COLLISION/.test(large?.nameCollisionWarning ?? '') && /borderRadiusLarge/.test(large?.nameCollisionWarning ?? '') &&
+      /NAME COLLISION/.test(xl?.nameCollisionWarning ?? '') &&
+      medium?.codeToken === 'borderRadiusMedium' && !medium?.nameCollisionWarning;
+    console.log('radius offset rows carry the collision warning (Large->' + large?.codeToken + ', X-Large->' + xl?.codeToken
+      + ', Medium unflagged): ok=' + offsetOk);
+
+    // Both stored copies of the table must agree; the dataset keeps each table
+    // twice and enriching only one would leave half the readers on stale data.
+    const copyOk = JSON.stringify(guidanceData.topics.shapes.cornerRadius.scale) === JSON.stringify(radius)
+      && JSON.stringify(guidanceData.topics.layout.spacingRamp.values) === JSON.stringify(guidanceData.topics.layout.values.spacingRamp)
+      && JSON.stringify(guidanceData.topics.typography.typeRamp) === JSON.stringify(guidanceData.topics.typography.values.typeRamp.web);
+    console.log('both stored copies of every enriched table agree: ok=' + copyOk);
+  }
+
+  // sizeNNN does not exist in code at all — a different failure from the radius
+  // offset (this one does not compile) and it has to be labelled differently.
+  {
+    const ramp = guidanceData.topics.layout.values.spacingRamp;
+    const s120 = ramp.find((r) => r.token === 'size120');
+    const s280 = ramp.find((r) => r.token === 'size280');
+    const ok = s120?.codeToken === 'spacingHorizontalM' && s120?.codeTokens?.vertical === 'spacingVerticalM'
+      && s120?.codeValue === '12px' && /does not exist/.test(s120?.nameCollisionWarning ?? '')
+      && s280?.codeToken === null && /no spacing token/i.test(s280?.codeTokenNote ?? '')
+      && ramp.every((r) => 'codeToken' in r);
+    console.log('spacing ramp maps sizeNNN by value and nulls the steps code lacks (size120->' + s120?.codeToken
+      + ', size280->' + s280?.codeToken + '): ok=' + ok);
+  }
+
+  // The type ramp connects rather than duplicates: the three token names plus
+  // the composed style, and an honest "partial" where the site and the package
+  // disagree (Subtitle 1 is 26px on the site, 28px in the package).
+  {
+    const web = guidanceData.topics.typography.values.typeRamp.web;
+    const body1 = web.find((r) => r.name === 'Body 1');
+    const sub1 = web.find((r) => r.name === 'Subtitle 1');
+    const ok = body1?.codeToken === 'body1' && body1?.codeTokens?.fontSize === 'fontSizeBase300'
+      && body1?.codeTokens?.lineHeight === 'lineHeightBase300' && body1?.codeTokens?.fontWeight === 'fontWeightRegular'
+      && body1?.valueMatch === 'exact'
+      && sub1?.valueMatch === 'partial' && /lineHeight/.test(sub1?.codeTokenNote ?? '');
+    console.log('type ramp links to fontSize/lineHeight/fontWeight tokens and flags the one disagreement: ok=' + ok);
+  }
+
+  // Colour and accessibility were the two topics that named nothing usable.
+  {
+    const colorRows = guidanceData.topics.color.codeTokenBridge?.palettes ?? [];
+    const light = tokenData.color.semanticLight;
+    const colorOk = colorRows.length >= 4
+      && colorRows.every((r) => r.codeToken in light && (r.codeTokens ?? []).every((t) => t in light));
+    console.log('color topic names real alias tokens (' + colorRows.length + ' palettes, '
+      + Object.keys(light).length + ' aliases): ok=' + colorOk);
+
+    const themes = guidanceData.topics.accessibility.values.themeObjects ?? [];
+    const bySymbol = Object.fromEntries(themes.map((t) => [t.designName, t.codeSymbol]));
+    const themeOk = themes.length === 4 && bySymbol.light === 'webLightTheme' && bySymbol.dark === 'webDarkTheme'
+      && bySymbol['high-contrast'] === 'teamsHighContrastTheme'
+      && /createLightTheme/.test(bySymbol.branded ?? '')
+      && Array.isArray(guidanceData.topics.accessibility.values.themes);
+    console.log('accessibility topic names real theme objects and keeps the published themes list: ok=' + themeOk);
+  }
+
+  // The tools, not just the data. A design-side name has to resolve through
+  // fluent_get_token, and the answer has to be the RIGHT token.
+  {
+    const cases = [
+      ['size120', 'spacingHorizontalM', /12px/],
+      ['Large corner radius', 'borderRadiusXLarge', /borderRadiusLarge exists and is 6px/],
+      ['Body 1', 'body1', /fontSizeBase300/],
+      ['dark theme', 'webDarkTheme', /FluentProvider/],
+    ];
+    const bad = [];
+    for (const [query, expect, alsoMatch] of cases) {
+      const r = await text('fluent_get_token', { name: query });
+      const j = jsonOf(r.slice(r.indexOf('{')));
+      const resolved = j?.$designNameBridge?.resolved ?? [];
+      const hit = resolved.some((e) => e.codeToken === expect || e.codeSymbol === expect);
+      if (!hit || !alsoMatch.test(r)) bad.push(query);
+    }
+    console.log('get_token resolves design-side names to the right code token (' + cases.length + ' cases, '
+      + (bad.join(', ') || 'all correct') + '): ok=' + (bad.length === 0));
+
+    // The trap is symmetric: asking for the wrong-but-real token must warn too.
+    const rev = await text('fluent_get_token', { name: 'borderRadiusLarge' });
+    const revJson = jsonOf(rev.slice(rev.indexOf('{')));
+    const warn = revJson?.$nameCollisionWarning?.tokens?.borderRadiusLarge;
+    console.log('get_token warns when a lookup lands on the wrong half of the offset: ok='
+      + (revJson?.['borderRadius.borderRadiusLarge'] === '6px'
+        && warn?.correctTokenForDesignName === 'borderRadiusXLarge'));
+
+    // An unrelated fragment must not start dragging bridge rows into the answer.
+    const broad = await text('fluent_get_token', { name: 'color' });
+    console.log('bridge does not fire on an unrelated fragment (' + broad.length + ' chars): ok='
+      + (!/\$designNameBridge/.test(broad) && broad.length < 6000));
+  }
+
+  // fluent_design_guidance has to carry the mapping too — including on the
+  // outline path, where row text is withheld and a design name with no code
+  // token beside it is exactly how the original defect reached a model.
+  {
+    const bad = [];
+    for (const topic of ['shapes', 'layout', 'typography', 'color', 'accessibility']) {
+      const j = jsonOf(await text('fluent_design_guidance', { topic, maxChars: 120000 }));
+      const b = j?.$codeTokenBridge;
+      if (!b || !(b.designNamesMapped > 0) || !/codeToken/.test(b.note ?? '')) bad.push(topic);
+    }
+    console.log('design_guidance returns the code token alongside the design name ('
+      + (bad.join(', ') || '5/5 topics') + '): ok=' + (bad.length === 0));
+
+    // maxChars 6000: above the outline's own size (5,184) but far below the
+    // topic's 48k, so this exercises the outline path and still returns JSON.
+    const outline = jsonOf(await text('fluent_design_guidance', { topic: 'layout', maxChars: 6000 }));
+    console.log('the bridge survives the truncated-outline path: ok='
+      + (outline?.truncated === true && (outline?.$codeTokenBridge?.designNamesMapped ?? 0) > 0));
+
+    const idx = jsonOf(await text('fluent_design_guidance', { topic: 'all' }));
+    const rows = Object.values(idx?.topics ?? {}).filter((t) => t && t.codeTokenRows > 0).length;
+    console.log('the all-index reports which topics carry code tokens (' + rows + ' topics): ok=' + (rows === 5));
+
+    // The example the tool prints must be a key that really resolves.
+    const shapes = jsonOf(await text('fluent_design_guidance', { topic: 'shapes', maxChars: 120000 }));
+    const example = /name:\s*"([^"]+)"/.exec(shapes?.$codeTokenBridge?.resolveWith ?? '')?.[1];
+    const echoed = example ? await text('fluent_get_token', { name: example }) : '';
+    console.log('the resolveWith example the bridge prints actually resolves ("' + example + '"): ok='
+      + (!!example && /\$designNameBridge/.test(echoed)));
+  }
+
+  // fluent_list_tokens must teach the same mapping at browse time.
+  {
+    const br = jsonOf(await text('fluent_list_tokens', { category: 'borderRadius' }));
+    const names = br?.designNames ?? [];
+    const large = names.find((r) => r.designName === 'Large');
+    console.log('list_tokens(borderRadius) publishes the design-name map (' + names.length + ' rows): ok='
+      + (names.length === 6 && large?.codeToken === 'borderRadiusXLarge' && /offset/i.test(br?.designNamesNote ?? '')));
+    const sp = jsonOf(await text('fluent_list_tokens', { category: 'spacing' }));
+    console.log('list_tokens(spacing) publishes the sizeNNN map (' + (sp?.designNames?.length ?? 0) + ' rows): ok='
+      + ((sp?.designNames?.length ?? 0) === 17 && sp?.spacing?.horizontal?.spacingHorizontalM === '12px'));
+  }
+
+  // The two get-started routes. Facts + docUrl, no redistributed prose: the
+  // repo has had one incident, so the shape is asserted, not assumed.
+  {
+    const design = jsonOf(await text('fluent_design_guidance', { topic: 'get-started-design', maxChars: 120000 }));
+    const develop = jsonOf(await text('fluent_design_guidance', { topic: 'get-started-develop', maxChars: 120000 }));
+    const designOk = design?.docUrl === 'https://fluent2.microsoft.design/get-started/design'
+      && (design?.uiKits ?? []).length === 3 && (design?.kitTiers ?? []).length === 4
+      && (design?.figmaVariables?.groups ?? []).length === 5
+      && design.figmaVariables.groups.some((g2) => g2.group === 'corner radius' && /borderRadiusXLarge/.test(g2.caution ?? ''))
+      && typeof design?.licensing === 'string' && design?.accessStatus === 'public';
+    console.log('get-started-design covers the UI kits, tiers and Figma variable groups: ok=' + designOk);
+
+    const byId = Object.fromEntries((develop?.platforms ?? []).map((p) => [p.id, p]));
+    const developOk = develop?.docUrl === 'https://fluent2.microsoft.design/get-started/develop'
+      && Object.keys(byId).length === 5
+      && byId.react?.package === '@fluentui/react-components' && /npm install/.test(byId.react?.install?.npm ?? '')
+      && byId['web-components']?.package === '@fluentui/web-components'
+      && byId['web-components']?.setup?.themeFunction === 'setTheme'
+      && byId.ios?.packages?.cocoaPods?.includes('MicrosoftFluentUI')
+      && byId.android?.groupId === 'com.microsoft.fluentui'
+      && hasLinkTo(JSON.stringify(byId.windows), 'learn.microsoft.com', '/en-us/windows/apps/winui/winui3/')
+      && typeof develop?.licensing === 'string' && develop?.accessStatus === 'public';
+    console.log('get-started-develop covers all 5 platforms with real packages and install commands: ok=' + developOk);
+
+    // Both are public routes: they must read identically in a fresh clone.
+    console.log('both get-started topics are published, not overlay-dependent: ok='
+      + (design?.$provenance?.source === 'published' && develop?.$provenance?.source === 'published'));
+  }
+
+  // The generator is the single source of truth for both files. If someone edits
+  // one by hand the two drift, and the drift is invisible until an agent is
+  // already writing the wrong token.
+  {
+    const drift = [];
+    const rowsFor = { shapes: guidanceData.topics.shapes.values.cornerRadius, layout: guidanceData.topics.layout.values.spacingRamp };
+    for (const e of bridgeEntries.filter((x) => x.kind === 'cornerRadius')) {
+      const row = rowsFor.shapes.find((r) => r.token === e.designName);
+      if (row?.codeToken !== e.codeToken) drift.push(e.id);
+    }
+    for (const e of bridgeEntries.filter((x) => x.kind === 'spacing')) {
+      const row = rowsFor.layout.find((r) => r.token === e.designName);
+      if (row?.codeToken !== e.codeToken) drift.push(e.id);
+    }
+    console.log('design-guidance rows and the token-side bridge index agree ('
+      + (drift.join(', ') || 'no drift') + '): ok=' + (drift.length === 0));
+  }
+}
+
+// ===========================================================================
+// Fluent charting coverage (mcp/data/fluent-charts.json).
+// The plugin shipped Power BI tooling with zero data-visualisation story:
+// `@fluentui/react-charts` and `DataVizPalette` appeared 0 times across
+// mcp/data/*.json, so "which Fluent chart do I use for X, and how do I theme
+// it?" had no grounded answer. These checks hold the new dataset to the same
+// standard as the rest, and pin the Power BI palette to Fluent's own.
+// ===========================================================================
+{
+  const chartsData = JSON.parse(readFileSync(new URL('data/fluent-charts.json', import.meta.url), 'utf8'));
+  const say = async (name, args = {}) => {
+    const r = await client.callTool({ name, arguments: args });
+    return r.content[0].text;
+  };
+  const asJson = (s) => { try { return JSON.parse(s); } catch { return null; } };
+
+  // ---- The dataset describes itself honestly.
+  const charts = chartsData.charts ?? [];
+  console.log('charts dataset count matches its own meta (' + charts.length + ' vs meta.chartsCatalogued='
+    + chartsData.meta.chartsCatalogued + '): ok=' + (charts.length > 0 && charts.length === chartsData.meta.chartsCatalogued));
+
+  const TIERS = new Set(['stable', 'preview', 'legacy']);
+  const untiered = charts.filter((c) => !TIERS.has(c.maturity) || !c.maturityReason);
+  console.log('every chart carries a maturity tier + reason (' + (untiered.map((c) => c.name).join(', ') || 'all ' + charts.length + ' tiered') + '): ok='
+    + (charts.length > 0 && untiered.length === 0));
+
+  // The three sibling packages export the SAME component names at three
+  // different maturities, so calling the 0.0.x one "stable" or the v8 one
+  // "current" would be a real defect, not a wording nit.
+  const pkgs = Object.fromEntries((chartsData.meta.packages ?? []).map((p) => [p.name, p]));
+  const tiersOk =
+    pkgs['@fluentui/react-charts']?.maturity === 'stable' &&
+    pkgs['@fluentui/react-charting']?.maturity === 'legacy' &&
+    pkgs['@fluentui/chart-web-components']?.maturity === 'preview' &&
+    /^0\./.test(pkgs['@fluentui/chart-web-components']?.version ?? '') &&
+    /^5\./.test(pkgs['@fluentui/react-charting']?.version ?? '') &&
+    /^9\./.test(pkgs['@fluentui/react-charts']?.version ?? '') &&
+    /same name/i.test(pkgs['@fluentui/react-charting']?.collisionWarning ?? '');
+  console.log('chart packages tiered stable/legacy/preview with the name-collision warning ('
+    + Object.values(pkgs).map((p) => p.name.replace('@fluentui/', '') + '@' + p.version + '=' + p.maturity).join(', ') + '): ok=' + tiersOk);
+
+  // Curated mappings must point at visuals this plugin actually catalogs.
+  {
+    const pv = JSON.parse(readFileSync(new URL('data/powerbi-visuals.json', import.meta.url), 'utf8'));
+    const known = new Set();
+    for (const cat of pv.categories ?? []) for (const v of cat.visuals ?? []) known.add(v.name);
+    for (const f of pv.featurePages ?? []) known.add(f.name);
+    const dangling = charts.filter((c) => c.powerbiEquivalent && !known.has(c.powerbiEquivalent));
+    console.log('every curated powerbiEquivalent names a real Power BI visual ('
+      + (dangling.map((c) => c.name + '->' + c.powerbiEquivalent).join(', ') || charts.filter((c) => c.powerbiEquivalent).length + ' mapped, 0 dangling') + '): ok='
+      + (dangling.length === 0));
+  }
+
+  // ---- The palette is the real one, not a plausible-looking one.
+  const qual = chartsData.dataVizPalette?.qualitative ?? [];
+  const sem = chartsData.dataVizPalette?.semantic ?? [];
+  const hexOk = [...qual, ...sem].every((c) => /^#[0-9a-f]{6}$/i.test(c.light) && /^#[0-9a-f]{6}$/i.test(c.dark));
+  const slotsOk = qual.every((c, i) => c.slot === i + 1 && c.token === 'DataVizPalette.color' + (i + 1));
+  console.log('DataVizPalette is complete and well-formed (' + qual.length + ' qualitative + ' + sem.length + ' semantic, slots in order): ok='
+    + (qual.length === 40 && sem.length === 7 && hexOk && slotsOk));
+
+  // ---- The Power BI theme now paints with that palette.
+  // BEFORE: dataColors was a hand-picked 12-colour list led by #0F6CBD, which
+  // is NOT what @fluentui/react-charts paints with - the same series rendered
+  // in two different colours on the two surfaces.
+  const expectLight = qual.map((c) => '#' + c.light.replace('#', '').toUpperCase());
+  const themeText = await say('fluent_generate_powerbi_theme', { brandColor: '#0F6CBD', name: 'Fluent Charts Smoke' });
+  const theme = asJson(themeText);
+  const dcMatch = !!theme && JSON.stringify(theme.dataColors) === JSON.stringify(expectLight);
+  console.log('powerbi theme dataColors ARE the DataVizPalette qualitative slots (' + (theme?.dataColors?.length ?? 0) + '/' + expectLight.length
+    + ' in slot order, first=' + (theme?.dataColors?.[0] ?? '-') + '): ok=' + dcMatch);
+
+  const semGet = (k) => sem.find((s) => s.key === k);
+  console.log('powerbi theme good/bad ARE the DataVizPalette semantic colours (good=' + theme?.good + ' bad=' + theme?.bad + '): ok='
+    + (theme?.good?.toUpperCase() === semGet('success').light.toUpperCase() && theme?.bad?.toUpperCase() === semGet('error').light.toUpperCase()));
+
+  const darkTheme = asJson(await say('fluent_generate_powerbi_theme', { paletteTheme: 'dark', dataColorCount: 12 }));
+  const expectDark = qual.slice(0, 12).map((c) => '#' + c.dark.replace('#', '').toUpperCase());
+  console.log('paletteTheme="dark" emits the dark variants (slot 11 light=' + expectLight[10] + ' dark=' + (darkTheme?.dataColors?.[10] ?? '-') + '): ok='
+    + (JSON.stringify(darkTheme?.dataColors) === JSON.stringify(expectDark) && expectDark[10] !== expectLight[10]));
+
+  // brandColor deliberately no longer overwrites series 1: replacing a slot
+  // chosen for qualitative separation with an arbitrary brand hex breaks the
+  // match with the React chart. The old behaviour is still reachable.
+  const branded = asJson(await say('fluent_generate_powerbi_theme', { brandColor: '#D13438' }));
+  const brandFirst = asJson(await say('fluent_generate_powerbi_theme', { brandColor: '#D13438', brandFirstDataColor: true }));
+  console.log('brandColor recolors the brand accents but not series 1 (dataColors[0]=' + branded?.dataColors?.[0]
+    + ', tableAccent=' + branded?.tableAccent + ', opt-in override=' + brandFirst?.dataColors?.[0] + '): ok='
+    + (branded?.dataColors?.[0] === expectLight[0] && branded?.tableAccent === '#D13438' && branded?.maximum === '#D13438'
+      && brandFirst?.dataColors?.[0] === '#D13438' && brandFirst?.dataColors?.[1] === expectLight[1]));
+
+  // ---- The theme is still a legal Power BI theme.
+  // reportThemeSchema-2.156 is additionalProperties:false at the top level and
+  // types every colour as ^#[0-9a-fA-F]{8}$|^#(?:[0-9a-fA-F]{3}){1,2}$, so a
+  // stray key or a malformed hex would be rejected on import.
+  {
+    const SCHEMA_TOP_LEVEL = new Set(['$schema', 'name', 'baseTheme', 'visualStyles', 'dataColors', 'icons', 'textClasses',
+      'foreground', 'firstLevelElements', 'secondLevelElements', 'thirdLevelElements', 'fourthLevelElements', 'background',
+      'secondaryBackground', 'good', 'neutral', 'bad', 'maximum', 'center', 'minimum', 'null', 'accent', 'tableAccent',
+      'foregroundLight', 'foregroundDark', 'foregroundNeutralLight', 'foregroundNeutralDark', 'foregroundNeutralSecondary',
+      'foregroundNeutralSecondaryAlt', 'foregroundNeutralSecondaryAlt2', 'foregroundNeutralTertiary', 'foregroundNeutralTertiaryAlt',
+      'foregroundSelected', 'foregroundButton', 'backgroundLight', 'backgroundNeutral', 'backgroundDark', 'hyperlink',
+      'visitedHyperlink', 'shapeStroke', 'disabledText', 'mapPushpin']);
+    const COLOR = /^#[0-9a-fA-F]{8}$|^#(?:[0-9a-fA-F]{3}){1,2}$/;
+    const strayKeys = Object.keys(theme ?? {}).filter((k) => !SCHEMA_TOP_LEVEL.has(k));
+    const badColors = [
+      ...(theme?.dataColors ?? []),
+      ...['good', 'neutral', 'bad', 'maximum', 'center', 'minimum', 'null', 'tableAccent', 'background', 'secondaryBackground',
+        'firstLevelElements', 'secondLevelElements', 'thirdLevelElements', 'fourthLevelElements'].map((k) => theme?.[k]).filter(Boolean),
+    ].filter((c) => !COLOR.test(c));
+    console.log('generated theme stays schema-shaped (' + (strayKeys.join(', ') || 'no keys outside reportThemeSchema-2.156')
+      + '; ' + (badColors.join(', ') || 'all colours match the schema pattern') + '): ok='
+      + (!!theme && strayKeys.length === 0 && badColors.length === 0
+        && String(theme.$schema).includes('reportThemeSchema-2.156') && Array.isArray(theme.dataColors)));
+  }
+
+  // ---- ...and it still survives the whole PBIR pipeline.
+  {
+    const OUT = './.charts-smoke';
+    const REPORT = OUT + '/PaletteReport.Report';
+    rmSync(OUT, { recursive: true, force: true });
+    await say('fluent_scaffold_pbip', { name: 'PaletteReport', outputDir: OUT });
+    const applied = asJson(await say('fluent_pbir_apply_theme', { reportDir: REPORT, themeJson: themeText, themeName: 'FluentCharts', dryRun: false, format: 'json' }));
+    const onDisk = existsSync(REPORT + '/StaticResources/RegisteredResources/FluentCharts.json')
+      ? JSON.parse(readFileSync(REPORT + '/StaticResources/RegisteredResources/FluentCharts.json', 'utf8'))
+      : null;
+    console.log('DataVizPalette theme still applies via fluent_pbir_apply_theme (registered=' + (onDisk ? 'yes' : 'no')
+      + ', dataColors survive=' + (onDisk ? onDisk.dataColors.length : 0) + '/' + expectLight.length + '): ok='
+      + (!!applied && !!onDisk && JSON.stringify(onDisk.dataColors) === JSON.stringify(expectLight)));
+    const verified = asJson(await say('fluent_pbir_verify', { reportDir: REPORT, format: 'json' }));
+    const failedChecks = (verified?.checks ?? []).filter((c) => !c.pass).map((c) => c.id);
+    console.log('report themed with the DataVizPalette theme passes pbir_verify (' + (failedChecks.join(', ') || (verified?.checks?.length ?? 0) + ' checks passed') + '): ok='
+      + (!!verified && verified.checks.length === 9 && failedChecks.length === 0));
+    rmSync(OUT, { recursive: true, force: true });
+  }
+
+  // ---- The question an agent actually asks, answered end to end.
+  {
+    const answer = await say('fluent_powerbi_visuals', { query: 'trend over time', surface: 'fluent-charts' });
+    const ok = /\bLineChart\b/.test(answer)
+      && answer.includes("import { LineChart } from '@fluentui/react-charts'")
+      && /DataVizPalette/.test(answer)
+      && /FluentProvider/.test(answer)
+      && /Accessibility:/.test(answer)
+      && /Power BI equivalent: Line chart/.test(answer)
+      && hasLinkTo(answer, 'storybooks.fluentui.dev');
+    console.log('"which Fluent chart for a trend over time" answers with component + import + theming + a11y + Power BI mapping: ok=' + ok);
+
+    // The default surface has to keep answering the Power BI question it always
+    // answered, or an existing caller silently loses their Learn docs.
+    const both = await say('fluent_powerbi_visuals', { query: 'trend over time' });
+    console.log('surface="both" still returns the Power BI visuals alongside the Fluent charts: ok='
+      + (hasLinkTo(both, 'learn.microsoft.com') && /\bLineChart\b/.test(both) && /Line chart/.test(both)));
+    const pbiOnly = await say('fluent_powerbi_visuals', { query: 'trend over time', surface: 'powerbi' });
+    console.log('surface="powerbi" excludes the React catalog: ok='
+      + (hasLinkTo(pbiOnly, 'learn.microsoft.com') && !pbiOnly.includes('@fluentui/react-charts')));
+
+    const overview = asJson(await say('fluent_powerbi_visuals', {}));
+    console.log('no-argument overview advertises both catalogs (' + (overview?.fluentCharts?.summary ?? 'missing') + '): ok='
+      + (!!overview?.powerbi?.counts && !!overview?.fluentCharts?.byCategory && overview.fluentCharts.dataVizPalette.qualitative === 40));
+  }
+
+  // ---- Props are read from the API-Extractor report, not invented.
+  {
+    const line = charts.find((c) => c.name === 'LineChart');
+    const cartesian = chartsData.sharedPropsInterfaces?.CartesianChartProps?.props ?? [];
+    // `mode` exists only as a field of the inline `reflowProps?: { mode: ... }`
+    // object and is declared without `?`. A naive parser hoisted it to a
+    // top-level REQUIRED prop on ten charts - i.e. told every caller to pass a
+    // prop that does not exist.
+    const leaked = cartesian.some((p) => p.name === 'mode') || line?.requiredProps?.includes('mode');
+    console.log('chart props come from the API report, with no nested fields hoisted (LineChart requires ['
+      + (line?.requiredProps ?? []).join(', ') + '], CartesianChartProps=' + cartesian.length + ' props): ok='
+      + (JSON.stringify(line?.requiredProps) === JSON.stringify(['data']) && cartesian.length > 40 && !leaked
+        && line?.keyProps?.some((p) => p.name === 'allowMultipleShapesForPoints')));
+
+    const a11yRules = chartsData.accessibility?.rules ?? [];
+    console.log('charts dataset carries the accessibility angle (' + a11yRules.length + ' rules, each with evidence): ok='
+      + (a11yRules.length >= 5 && a11yRules.every((r) => r.rule && r.how && r.verifiedFrom)
+        && a11yRules.some((r) => /colour alone|color alone/i.test(r.rule))
+        && a11yRules.some((r) => /contrast/i.test(r.rule))));
+  }
 }
 
 await client.close();

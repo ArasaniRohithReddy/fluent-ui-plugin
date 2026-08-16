@@ -1,0 +1,4104 @@
+{
+  "meta": {
+    "title": "Microsoft Fluent 2 data-visualisation catalog (@fluentui/react-charts + DataVizPalette)",
+    "fluentVersion": "Fluent 2 / Fluent UI React v9",
+    "reactPackage": "@fluentui/react-charts",
+    "reactPackageVersion": "9.3.24",
+    "generatedBy": "scripts/build-charts-data.mjs",
+    "generatedAt": "2026-08-16",
+    "upstreamRef": "master",
+    "sources": [
+      {
+        "id": "package-json",
+        "url": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/package.json",
+        "detail": "@fluentui/react-charts@9.3.24, \"React web chart controls for Microsoft fluentui v9 system.\". Depends on @fluentui/react-theme@^9.2.2 (the v9 token package) and on 11 d3-* runtime packages, which is how \"v9, d3-based, stable\" is established rather than assumed."
+      },
+      {
+        "id": "index-ts",
+        "url": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/index.ts",
+        "detail": "The export surface: 26 `export * from` statements. Module count is NOT component count - src/types/index and src/utilities/colors export no component, while src/Popover re-exports two (ChartPopover, ChartAnnotationLayer)."
+      },
+      {
+        "id": "api-extractor",
+        "url": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/etc/react-charts.api.md",
+        "detail": "API-Extractor report for @fluentui/react-charts. Every component declaration, every prop name/type and every required flag in this dataset is read from here - the same source class the component catalog used. All 194 tagged symbols are @public; none is @beta or @alpha."
+      },
+      {
+        "id": "colors-ts",
+        "url": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/utilities/colors.ts",
+        "detail": "DataVizPalette and the QualitativePalette/SemanticPalette hex tables behind it, including the light/dark pairs and the Fluent colour name recorded in each row's trailing comment."
+      },
+      {
+        "id": "colors-doc",
+        "url": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charting/docs/colors.md",
+        "detail": "The published explanation of the three ways to colour a series (CSS colour / omit and let the palette cycle / DataVizPalette token) and of the qualitative-vs-semantic split. Written for the v8 package but the palette contract is identical in v9. 4288 chars read."
+      },
+      {
+        "id": "readme",
+        "url": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/README.md",
+        "detail": "The cross-platform availability table (Fluent v8 / v9 / web component) captured per chart as readmeAvailability, plus the accessibility claim quoted in this dataset's accessibility block."
+      },
+      {
+        "id": "stories",
+        "url": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src",
+        "detail": "<Chart>Description.md and <Chart>BestPractices.md per chart - the upstream prose for description, do's, don'ts and per-chart accessibility behaviour. Found for 15 of 27 components."
+      },
+      {
+        "id": "charts-storybook",
+        "url": "https://storybooks.fluentui.dev/charts/index.json",
+        "detail": "The published charts Storybook index: docs id and story variants per chart. There is no llms/*.txt companion under /charts (it 404s), which is why props come from the API-Extractor report instead of a docgen table."
+      },
+      {
+        "id": "npm-tarball",
+        "url": "https://unpkg.com/@fluentui/react-charts@9.3.24/lib/utilities/colors.js",
+        "detail": "The palette as actually published to npm, diffed against master at build time. The build fails if they differ."
+      }
+    ],
+    "packages": [
+      {
+        "name": "@fluentui/react-charts",
+        "version": "9.3.24",
+        "maturity": "stable",
+        "generation": "Fluent 2 (Fluent UI React v9)",
+        "use": "current",
+        "description": "React web chart controls for Microsoft fluentui v9 system.",
+        "evidence": "9.x version line; depends on @fluentui/react-theme@^9.2.2; every API-Extractor symbol is @public; beachball disallows major/prerelease bumps.",
+        "componentCount": 27,
+        "import": "import { LineChart } from '@fluentui/react-charts';",
+        "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/package.json"
+      },
+      {
+        "name": "@fluentui/react-charting",
+        "version": "5.25.11",
+        "maturity": "legacy",
+        "generation": "Fluent 1 (Fluent UI React v8 stack)",
+        "use": "do-not-start-new-work",
+        "description": "React web charting controls for Microsoft fluentui system.",
+        "evidence": "5.x version line. The upstream charts-migration guide states \"Fluent Charting controls are built on fluent v8 stack\" and works across v8/v9 only \"by using the v8ThemeShim\". Exports 43 value symbols with I-prefixed prop interfaces (IChartProps, ILineChartProps), the v8 naming convention.",
+        "import": "import { LineChart } from '@fluentui/react-charting';",
+        "collisionWarning": "27 symbols are exported under the SAME NAME by both @fluentui/react-charting and @fluentui/react-charts, so the wrong import compiles cleanly and then renders with the wrong design system: AnnotationOnlyChart, AreaChart, CartesianChart, ChartTable, DataVizPalette, DeclarativeChart, DonutChart, FunnelChart, GanttChart, GaugeChart, GroupedVerticalBarChart, HeatMapChart, HorizontalBarChart, HorizontalBarChartWithAxis, Legends, LineChart, PolarChart, ResponsiveContainer, SankeyChart, ScatterChart, Shape, Sparkline, Textbox, VerticalBarChart, VerticalStackedBarChart, getColorFromToken, getNextColor.",
+        "v8OnlyExports": [
+          "ChartHoverCard",
+          "DataVizGradientPalette",
+          "GaugeChartVariant",
+          "GaugeValueFormat",
+          "HorizontalBarChartVariant",
+          "MultiStackedBarChart",
+          "MultiStackedBarChartVariant",
+          "NodesComposition",
+          "PieChart",
+          "StackedBarChart",
+          "TreeChart",
+          "TreeTraverse",
+          "getChartHoverCardStyles",
+          "getGradientFromToken",
+          "getNextGradient",
+          "withResponsiveContainer"
+        ],
+        "migrationDoc": "https://react.fluentui.dev/?path=/docs/concepts-migration-from-v8-components-charts-migration--docs",
+        "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charting/package.json"
+      },
+      {
+        "name": "@fluentui/chart-web-components",
+        "version": "0.0.94",
+        "maturity": "preview",
+        "generation": "Fluent 2 web components (FAST)",
+        "use": "preview-only",
+        "description": "A library of Fluent Chart Web Components",
+        "evidence": "Version 0.0.94 - a 0.0.x line, i.e. pre-1.0 with no stability guarantee. src/index.ts exports only 1 charts (HorizontalBarChart); the react-charts README marks every other chart \"Planned\" for web components.",
+        "customElements": [
+          "<fluent-horizontal-bar-chart>",
+          "<fluent-donut-chart>"
+        ],
+        "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/chart-web-components/package.json"
+      },
+      {
+        "name": "@fluentui/chart-utilities",
+        "version": "1.1.39",
+        "maturity": "stable",
+        "generation": "shared internals",
+        "use": "transitive-dependency",
+        "description": "React web chart utilities.",
+        "evidence": "1.x; pulled in as a dependency of @fluentui/react-charts@9.3.24 (it supplies the Plotly/Vega schema plumbing behind DeclarativeChart and VegaDeclarativeChart). You do not normally install it directly.",
+        "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/chart-utilities/package.json"
+      }
+    ],
+    "chartsCatalogued": 27,
+    "moduleExports": 26,
+    "moduleExportNames": [
+      "HorizontalBarChart",
+      "DonutChart",
+      "Legends",
+      "LineChart",
+      "VerticalBarChart",
+      "VerticalStackedBarChart",
+      "GroupedVerticalBarChart",
+      "CartesianChart",
+      "types/index",
+      "Sparkline",
+      "ScatterChart",
+      "GaugeChart",
+      "utilities/colors",
+      "Popover",
+      "ResponsiveContainer",
+      "DeclarativeChart",
+      "AreaChart",
+      "HorizontalBarChartWithAxis",
+      "HeatMapChart",
+      "SankeyChart",
+      "FunnelChart",
+      "GanttChart",
+      "ChartTable",
+      "AnnotationOnlyChart",
+      "PolarChart",
+      "VegaDeclarativeChart"
+    ],
+    "maturityCounts": {
+      "stable": 27
+    },
+    "categories": [
+      "Cards, KPIs & gauges",
+      "Chart building blocks",
+      "Comparison & trends",
+      "Declarative & schema-driven",
+      "Distribution & relationships",
+      "Flow & hierarchy",
+      "Part-to-whole",
+      "Project & schedule",
+      "Tables & matrices"
+    ],
+    "chartOnlyCategories": [
+      "Flow & hierarchy",
+      "Project & schedule",
+      "Declarative & schema-driven",
+      "Chart building blocks"
+    ],
+    "fieldNotes": [
+      "maturity is a PACKAGE-level tier, not a per-chart guess: stable for @fluentui/react-charts (v9), legacy for @fluentui/react-charting (v8-era), preview for @fluentui/chart-web-components (0.0.x). Every export in the v9 package is tagged @public by API Extractor, so no chart in it is a preview within a stable package.",
+      "keyProps[].required is the absence of `?` on the declared member in the API-Extractor report, matching the convention in fluent-components.json. Props inherited from CartesianChartProps are merged in (nearest-wins) and the chain is listed in propsInheritedFrom.",
+      "keyProps[].undocumentedUpstream mirrors API Extractor's `// (undocumented)` marker: the prop exists, upstream just never wrote a doc comment for it. It is not a claim that the prop is private.",
+      "slots is always [] - Fluent charts are d3/SVG components and expose no Slot<> props. The field is kept so a reader can treat chart and component records uniformly.",
+      "category and whenToUse and powerbiEquivalent are CURATED (classification: \"curated\"), not upstream facts. Category names reuse mcp/data/powerbi-visuals.json wherever one fits so a single category filter spans both catalogs; powerbiEquivalent is validated against that file at build time and is null where Power BI has no first-party equivalent.",
+      "readmeAvailability is the react-charts README table verbatim (v8 / v9 / web component columns). Where it disagrees with the API-Extractor tier it is reported, not silently reconciled - see unverified.",
+      "description, dos, donts and a11y are the upstream Description.md / BestPractices.md prose, so they are the charting team's own guidance rather than ours."
+    ],
+    "unverified": {
+      "count": 15,
+      "names": [
+        "AnnotationOnlyChart",
+        "CartesianChart",
+        "ChartAnnotationLayer",
+        "ChartPopover",
+        "ChartTable",
+        "FunnelChart",
+        "GanttChart",
+        "PolarChart",
+        "ResponsiveContainer",
+        "Shape",
+        "Textbox",
+        "Textbox",
+        "VegaDeclarativeChart",
+        "VerticalStackedBarChart",
+        "ChartTable, FunnelChart, GanttChart"
+      ],
+      "entries": [
+        {
+          "name": "AnnotationOnlyChart",
+          "note": "AnnotationOnlyChart ships no <Chart>Description.md or docs/<Chart>Overview.md upstream, so there is no upstream description to quote. Its API facts come from the API-Extractor report; whenToUse is this plugin's curation."
+        },
+        {
+          "name": "CartesianChart",
+          "note": "CartesianChart ships no <Chart>Description.md or docs/<Chart>Overview.md upstream, so there is no upstream description to quote. Its API facts come from the API-Extractor report; whenToUse is this plugin's curation."
+        },
+        {
+          "name": "ChartAnnotationLayer",
+          "note": "ChartAnnotationLayer ships no <Chart>Description.md or docs/<Chart>Overview.md upstream, so there is no upstream description to quote. Its API facts come from the API-Extractor report; whenToUse is this plugin's curation."
+        },
+        {
+          "name": "ChartPopover",
+          "note": "ChartPopover ships no <Chart>Description.md or docs/<Chart>Overview.md upstream, so there is no upstream description to quote. Its API facts come from the API-Extractor report; whenToUse is this plugin's curation."
+        },
+        {
+          "name": "ChartTable",
+          "note": "ChartTable has upstream story doc files (ChartTableDescription.md / ChartTableBestPractices.md) but they are ZERO BYTES on master, so there is no upstream description to quote. whenToUse for it is this plugin's curation, not the charting team's wording."
+        },
+        {
+          "name": "FunnelChart",
+          "note": "FunnelChart has upstream story doc files (FunnelChartDescription.md / FunnelChartBestPractices.md) but they are ZERO BYTES on master, so there is no upstream description to quote. whenToUse for it is this plugin's curation, not the charting team's wording."
+        },
+        {
+          "name": "GanttChart",
+          "note": "GanttChart has upstream story doc files (GanttChartDescription.md / GanttChartBestPractices.md) but they are ZERO BYTES on master, so there is no upstream description to quote. whenToUse for it is this plugin's curation, not the charting team's wording."
+        },
+        {
+          "name": "PolarChart",
+          "note": "PolarChart ships no <Chart>Description.md or docs/<Chart>Overview.md upstream, so there is no upstream description to quote. Its API facts come from the API-Extractor report; whenToUse is this plugin's curation."
+        },
+        {
+          "name": "ResponsiveContainer",
+          "note": "ResponsiveContainer ships no <Chart>Description.md or docs/<Chart>Overview.md upstream, so there is no upstream description to quote. Its API facts come from the API-Extractor report; whenToUse is this plugin's curation."
+        },
+        {
+          "name": "Shape",
+          "note": "Shape ships no <Chart>Description.md or docs/<Chart>Overview.md upstream, so there is no upstream description to quote. Its API facts come from the API-Extractor report; whenToUse is this plugin's curation."
+        },
+        {
+          "name": "Textbox",
+          "note": "Textbox is declared against TextboxProps, which the API-Extractor report does not publish as an interface (it is a type alias or an inline type). No prop list could be read, so none is claimed."
+        },
+        {
+          "name": "Textbox",
+          "note": "Textbox ships no <Chart>Description.md or docs/<Chart>Overview.md upstream, so there is no upstream description to quote. Its API facts come from the API-Extractor report; whenToUse is this plugin's curation."
+        },
+        {
+          "name": "VegaDeclarativeChart",
+          "note": "VegaDeclarativeChart ships no <Chart>Description.md or docs/<Chart>Overview.md upstream, so there is no upstream description to quote. Its API facts come from the API-Extractor report; whenToUse is this plugin's curation."
+        },
+        {
+          "name": "VerticalStackedBarChart",
+          "note": "The react-charts README availability table lists VerticalStackedBarChart (row \"VerticalBarChart Stacked\") as v9 = \"Preview\", while the API-Extractor report tags its export @public in the stable 9.x package. This dataset reports maturity from the package tier (\"stable\") and preserves the README's own claim in readmeAvailability. Treat \"Preview\" as the charting team's own caveat."
+        },
+        {
+          "name": "ChartTable, FunnelChart, GanttChart",
+          "note": "Upstream ships ZERO-BYTE story doc files for 3 charts on master (<Chart>Description.md and <Chart>BestPractices.md exist but are empty). No description, do's, don'ts or accessibility prose could be quoted for them."
+        }
+      ]
+    }
+  },
+  "charts": [
+    {
+      "id": "charts-annotationonlychart",
+      "name": "AnnotationOnlyChart",
+      "category": "Chart building blocks",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": null,
+      "whenToUse": "A plot area that carries annotations only - callouts, markers and connectors with no series of its own.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { AnnotationOnlyChart } from '@fluentui/react-charts';",
+      "propsType": "AnnotationOnlyChartProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "annotations",
+          "type": "ChartAnnotation[]",
+          "required": true
+        },
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "componentRef",
+          "type": "React_2.Ref<Chart>",
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "fontColor",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "fontFamily",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "margin",
+          "type": "Partial<Margin>",
+          "required": false
+        },
+        {
+          "name": "paperBackgroundColor",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "plotBackgroundColor",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [
+        "annotations"
+      ],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": null,
+      "powerbiEquivalent": null,
+      "readmeAvailability": null,
+      "storybookVariants": [],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/AnnotationOnlyChart.ts",
+      "docsSourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/etc/react-charts.api.md"
+    },
+    {
+      "id": "charts-areachart",
+      "name": "AreaChart",
+      "category": "Comparison & trends",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "Area charts are graphical representations of data that display quantitative data points connected by lines and filled with colors to create a visual representation of trends and patterns. The area between the line and the x-axis is colored, which helps in emphasizing the cumulative total or the overall magnitude of the data. They are a slight variation of single line charts, and generally can be used interchangeably.",
+      "whenToUse": "A trend over time where the cumulative magnitude matters as much as the shape. `mode: \"tonexty\"` stacks the series; `mode: \"tozeroy\"` overlays them.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { AreaChart } from '@fluentui/react-charts';",
+      "propsType": "AreaChartProps",
+      "propsInheritedFrom": [
+        "CartesianChartProps"
+      ],
+      "keyProps": [
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "ChartProps",
+          "required": true
+        },
+        {
+          "name": "enableGradient",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "enablePerfOptimization",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "'tozeroy' | 'tonexty'",
+          "required": false
+        },
+        {
+          "name": "onRenderCalloutPerDataPoint",
+          "type": "RenderFunction<CustomizedCalloutData>",
+          "required": false
+        },
+        {
+          "name": "onRenderCalloutPerStack",
+          "type": "RenderFunction<CustomizedCalloutData>",
+          "required": false
+        },
+        {
+          "name": "optimizeLargeData",
+          "type": "boolean",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "styles",
+          "type": "CartesianChartStyles",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 58,
+      "requiredProps": [
+        "data"
+      ],
+      "slots": [],
+      "a11y": "- Users \"Enter\" into the graph and can use both arrow and tab keys to navigate through.\n- The first tab stop will stop on the graph and give a description of what type of graph it is.\n- Each section of the graph is readable via screen readers. The user can navigate through the entire area plot by using Left and Right arrow keys.",
+      "dos": [
+        "Remain consistent with one chart style if there are multiple instances of it on a page rather than using area and line charts interchangeably."
+      ],
+      "donts": [
+        "Prefer line charts to plot trends.",
+        "No more than 9 lines on a chart; fewer are better.",
+        "Do not remove axis titles unless it is clear to the user what is being visualized."
+      ],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/AreaChart/AreaChartBestPractices.md",
+      "powerbiEquivalent": "Area chart",
+      "readmeAvailability": {
+        "readmeRow": "AreaChart",
+        "v8": "Stable",
+        "v9": "April 2025",
+        "webComponent": "Planned"
+      },
+      "storybookVariants": [
+        "AreaChartAllNegative",
+        "AreaChartBasic",
+        "AreaChartCustomAccessibility",
+        "AreaChartLargeData",
+        "AreaChartMultiple",
+        "AreaChartMultipleNegative",
+        "AreaChartNegative",
+        "AreaChartSecondaryYAxis"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/AreaChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-areachart--docs"
+    },
+    {
+      "id": "charts-cartesianchart",
+      "name": "CartesianChart",
+      "category": "Chart building blocks",
+      "role": "container",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": null,
+      "whenToUse": "The shared axis/legend/callout frame every cartesian chart is built on. Use it to build a custom cartesian chart, not for ordinary charting.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { CartesianChart } from '@fluentui/react-charts';",
+      "propsType": "ModifiedCartesianChartProps",
+      "propsInheritedFrom": [
+        "CartesianChartProps"
+      ],
+      "keyProps": [
+        {
+          "name": "barwidth",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "calloutProps",
+          "type": "ChartPopoverProps",
+          "required": false
+        },
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "chartType",
+          "type": "ChartTypes",
+          "required": true
+        },
+        {
+          "name": "createStringYAxis",
+          "type": "(yAxisParams: IYAxisParams, dataPoints: string[], isRtl: boolean, axisData: IAxisData, barWidth: number | undefined, chartType?: ChartTypes) => ScaleBand<string>",
+          "required": true
+        },
+        {
+          "name": "createYAxis",
+          "type": "(yAxisParams: IYAxisParams, isRtl: boolean, axisData: IAxisData, isIntegralDataset: boolean, chartType: ChartTypes, useSecondaryYScale?: boolean, roundedTicks?: boolean, scaleType?: AxisScaleType, _useRtl?: boolean) => ScaleLinear<number, number, never>",
+          "required": true
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "customizedCallout",
+          "type": "any",
+          "required": false
+        },
+        {
+          "name": "datasetForXAxisDomain",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "enableFirstRenderOptimization",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "getAxisData",
+          "type": "any",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "getDomainMargins",
+          "type": "(containerWidth: number) => Margins",
+          "required": false
+        },
+        {
+          "name": "getDomainNRangeValues",
+          "type": "(points: LineChartPoints[] | VerticalBarChartDataPoint[] | VerticalStackedBarDataPoint[] | HorizontalBarChartWithAxisDataPoint[] | GroupedVerticalBarChartData[] | HeatMapChartDataPoint[] | GanttChartDataPoint[], margins: Margins, width: number, chartType: ChartTypes, isRTL: boolean, xAxisType: XAxisTypes, barWidth: number, tickValues: Date[] | number[] | string[] | undefined) => IDomainNRange",
+          "required": true
+        },
+        {
+          "name": "getGraphData",
+          "type": "any",
+          "required": false
+        },
+        {
+          "name": "getmargins",
+          "type": "(margins: Margins) => void",
+          "required": false
+        },
+        {
+          "name": "getMinMaxOfYAxis",
+          "type": "(points: LineChartPoints[] | HorizontalBarChartWithAxisDataPoint[] | VerticalBarChartDataPoint[] | DataPoint[] | ScatterChartPoints[] | GanttChartDataPoint[], yAxisType: YAxisType | undefined, useSecondaryYScale?: boolean) => { startValue: number; endValue: number; }",
+          "required": true
+        },
+        {
+          "name": "getYDomainMargins",
+          "type": "(containerHeight: number) => Margins",
+          "required": false
+        },
+        {
+          "name": "isCalloutForStack",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "legendBars",
+          "type": "JSXElement | null",
+          "required": true
+        },
+        {
+          "name": "maxOfYVal",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "onChartMouseLeave",
+          "type": "() => void",
+          "required": false
+        },
+        {
+          "name": "points",
+          "type": "any",
+          "required": true
+        },
+        {
+          "name": "showRoundOffXTickValues",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "showYAxisLables",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "showYAxisLablesTooltip",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "stringDatasetForYAxisDomain",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "tickParams",
+          "type": "{ tickValues?: number[] | Date[] | string[]; tickFormat?: string; }",
+          "required": false
+        },
+        {
+          "name": "xAxisInnerPadding",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xAxisOuterPadding",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xAxisPadding",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xAxisType",
+          "type": "XAxisTypes",
+          "required": true
+        },
+        {
+          "name": "yAxisPadding",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "yAxisType",
+          "type": "YAxisType",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 56,
+      "requiredProps": [
+        "chartType",
+        "createStringYAxis",
+        "createYAxis",
+        "getDomainNRangeValues",
+        "getMinMaxOfYAxis",
+        "legendBars",
+        "points",
+        "xAxisType"
+      ],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": null,
+      "powerbiEquivalent": null,
+      "readmeAvailability": null,
+      "storybookVariants": [],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/CartesianChart.ts",
+      "docsSourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/etc/react-charts.api.md"
+    },
+    {
+      "id": "charts-chartannotationlayer",
+      "name": "ChartAnnotationLayer",
+      "category": "Chart building blocks",
+      "role": "building-block",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": null,
+      "whenToUse": "Overlay annotations (text, connectors, arrow heads) on top of a chart plot area.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { ChartAnnotationLayer } from '@fluentui/react-charts';",
+      "propsType": "ChartAnnotationLayerProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "annotations",
+          "type": "ChartAnnotation[]",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "context",
+          "type": "ChartAnnotationContext",
+          "required": true,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "hideDefaultStyles",
+          "type": "boolean",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [
+        "context"
+      ],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": null,
+      "powerbiEquivalent": null,
+      "readmeAvailability": null,
+      "storybookVariants": [],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/Popover.ts",
+      "docsSourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/etc/react-charts.api.md"
+    },
+    {
+      "id": "charts-chartpopover",
+      "name": "ChartPopover",
+      "category": "Chart building blocks",
+      "role": "building-block",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": null,
+      "whenToUse": "The hover/click callout charts render; use it directly to build a custom callout.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { ChartPopover } from '@fluentui/react-charts';",
+      "propsType": "ChartPopoverProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "clickPosition",
+          "type": "{ x: number; y: number; }",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "customCallout",
+          "type": "{ customizedCallout?: JSXElement; customCalloutProps?: ChartPopoverProps; }",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "descriptionMessage",
+          "type": "string",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "hoverXValue",
+          "type": "string | number",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "isCalloutForStack",
+          "type": "boolean",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "isCartesian",
+          "type": "boolean",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "isPopoverOpen",
+          "type": "boolean",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "legend",
+          "type": "string | number | Date",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "positioning",
+          "type": "PositioningShorthand",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "ratio",
+          "type": "[number, number]",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "styles",
+          "type": "Partial<PopoverComponentStyles>",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "xAxisCalloutAccessibilityData",
+          "type": "{ ariaLabel?: string; data?: string; }",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "xCalloutValue",
+          "type": "string",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "XValue",
+          "type": "string",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "yCalloutValue",
+          "type": "string",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "YValue",
+          "type": "string | number | Date",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "YValueHover",
+          "type": "YValueHover[]",
+          "required": false,
+          "undocumentedUpstream": true
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": null,
+      "powerbiEquivalent": null,
+      "readmeAvailability": null,
+      "storybookVariants": [],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/Popover.ts",
+      "docsSourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/etc/react-charts.api.md"
+    },
+    {
+      "id": "charts-charttable",
+      "name": "ChartTable",
+      "category": "Tables & matrices",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": null,
+      "whenToUse": "Show the numbers themselves, styled with the same tokens as the surrounding charts.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { ChartTable } from '@fluentui/react-charts';",
+      "propsType": "ChartTableProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "componentRef",
+          "type": "React_2.Ref<Chart>",
+          "required": false
+        },
+        {
+          "name": "headers",
+          "type": "{ value: string | number | boolean | null; style?: React_2.CSSProperties; }[]",
+          "required": true
+        },
+        {
+          "name": "height",
+          "type": "string | number",
+          "required": false
+        },
+        {
+          "name": "rows",
+          "type": "{ value: string | number | boolean | null; style?: React_2.CSSProperties; }[][]",
+          "required": true
+        },
+        {
+          "name": "styles",
+          "type": "ChartTableStyles",
+          "required": false
+        },
+        {
+          "name": "titleStyles",
+          "type": "TitleStyles",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "string | number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [
+        "headers",
+        "rows"
+      ],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": null,
+      "powerbiEquivalent": "Table",
+      "readmeAvailability": null,
+      "storybookVariants": [
+        "ChartTableBasic"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/ChartTable.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-charttable--docs"
+    },
+    {
+      "id": "charts-declarativechart",
+      "name": "DeclarativeChart",
+      "category": "Declarative & schema-driven",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "DeclarativeChart enables developers to render interactive chart visualizations using Plotly's widely adopted JSON-based schema while ensuring a consistent Fluent UI design language.",
+      "whenToUse": "Render a Plotly-schema payload as native Fluent charts - the chart type comes from the data, not from your JSX.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { DeclarativeChart } from '@fluentui/react-charts';",
+      "propsType": "DeclarativeChartProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "chartSchema",
+          "type": "Schema",
+          "required": true
+        },
+        {
+          "name": "colorwayType",
+          "type": "ColorwayType",
+          "required": false
+        },
+        {
+          "name": "componentRef",
+          "type": "React_2.Ref<IDeclarativeChart>",
+          "required": false
+        },
+        {
+          "name": "onSchemaChange",
+          "type": "(eventData: Schema) => void",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [
+        "chartSchema"
+      ],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/DeclarativeChart/docs/DeclarativeChartBestPractices.md",
+      "powerbiEquivalent": null,
+      "readmeAvailability": {
+        "readmeRow": "Plotly schema Chart (new)",
+        "v8": "Stable",
+        "v9": "March 2025",
+        "webComponent": "-"
+      },
+      "storybookVariants": [
+        "DeclarativeChartBasicExample"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/DeclarativeChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-declarativechart--docs"
+    },
+    {
+      "id": "charts-donutchart",
+      "name": "DonutChart",
+      "category": "Part-to-whole",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "Donut charts are used to show proportion, which expresses a partial value in comparison to a total value. These types of charts are best to show percentage of individual parts in comparison to a whole, where the change over time is not important to visualize. They are circular statistical graphics divided into slices to illustrate numerical proportion.",
+      "whenToUse": "Share of a total across a small number of categories. Fluent v9 ships no PieChart - the README directs pie scenarios to DonutChart.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { DonutChart } from '@fluentui/react-charts';",
+      "propsType": "DonutChartProps",
+      "propsInheritedFrom": [
+        "CartesianChartProps"
+      ],
+      "keyProps": [
+        {
+          "name": "calloutProps",
+          "type": "ChartPopoverProps",
+          "required": false
+        },
+        {
+          "name": "calloutPropsPerDataPoint",
+          "type": "(dataPointCalloutProps: ChartDataPoint) => ChartPopoverProps",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "componentRef",
+          "type": "React_2.Ref<Chart>",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "ChartProps",
+          "required": false
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "hideLabels",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "hideLegend",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "hideTooltip",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "innerRadius",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "legendProps",
+          "type": "Partial<LegendsProps>",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "legendsOverflowText",
+          "type": "any",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "onRenderCalloutPerDataPoint",
+          "type": "(dataPointCalloutProps: ChartDataPoint) => JSXElement | undefined",
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "'default' | 'sorted'",
+          "required": false
+        },
+        {
+          "name": "parentRef",
+          "type": "HTMLElement | null",
+          "required": false
+        },
+        {
+          "name": "roundCorners",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "showLabelsInPercent",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "DonutChartStyles",
+          "required": false
+        },
+        {
+          "name": "titleStyles",
+          "type": "TitleStyles",
+          "required": false
+        },
+        {
+          "name": "valueInsideDonut",
+          "type": "string | number",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 45,
+      "requiredProps": [],
+      "slots": [],
+      "a11y": "- Users \"Enter\" into the graph and can use both arrowing and tabbing to navigate through.\n- The first tab stop will stop on the graph and give a description of what type of graph it is.\n- Each segment can define its own accessibility label to help the user understand the data better.",
+      "dos": [
+        "For scenarios with lots of categories, consider changing the type of graph to a stacked horizontal bar chart.",
+        "We recommend donut charts over pie charts as they are more readable."
+      ],
+      "donts": [
+        "Don't overuse donuts charts. They require a lot of space on the page and using more than one next to each other dilutes the intended message."
+      ],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/DonutChart/DonutChartBestPractices.md",
+      "powerbiEquivalent": "Pie & donut chart",
+      "readmeAvailability": {
+        "readmeRow": "DonutChart",
+        "v8": "Stable",
+        "v9": "Stable",
+        "webComponent": "Planned"
+      },
+      "storybookVariants": [
+        "DonutChartBasic",
+        "DonutChartCustomAccessibility",
+        "DonutChartCustomCallout",
+        "DonutChartDynamic",
+        "DonutChartResponsive",
+        "DonutChartStyled"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/DonutChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-donutchart--docs"
+    },
+    {
+      "id": "charts-funnelchart",
+      "name": "FunnelChart",
+      "category": "Part-to-whole",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": null,
+      "whenToUse": "Stage-by-stage drop-off through a linear process (pipeline, conversion).",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { FunnelChart } from '@fluentui/react-charts';",
+      "propsType": "FunnelChartProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "calloutProps",
+          "type": "ChartPopoverProps",
+          "required": false
+        },
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "componentRef",
+          "type": "React_2.Ref<Chart>",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "FunnelChartDataPoint[]",
+          "required": true
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "hideLegend",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "legendProps",
+          "type": "Partial<LegendsProps>",
+          "required": false
+        },
+        {
+          "name": "orientation",
+          "type": "'horizontal' | 'vertical'",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "FunnelChartStyles",
+          "required": false
+        },
+        {
+          "name": "titleStyles",
+          "type": "TitleStyles",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [
+        "data"
+      ],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": null,
+      "powerbiEquivalent": "Funnel chart",
+      "readmeAvailability": null,
+      "storybookVariants": [
+        "FunnelChartBasic",
+        "FunnelChartStacked"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/FunnelChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-funnelchart--docs"
+    },
+    {
+      "id": "charts-ganttchart",
+      "name": "GanttChart",
+      "category": "Project & schedule",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": null,
+      "whenToUse": "Tasks or phases spanning a start/end range on a time axis, optionally grouped.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { GanttChart } from '@fluentui/react-charts';",
+      "propsType": "GanttChartProps",
+      "propsInheritedFrom": [
+        "CartesianChartProps"
+      ],
+      "keyProps": [
+        {
+          "name": "barHeight",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "GanttChartDataPoint[]",
+          "required": false
+        },
+        {
+          "name": "enableGradient",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "maxBarHeight",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "onRenderCalloutPerDataPoint",
+          "type": "RenderFunction<GanttChartDataPoint>",
+          "required": false
+        },
+        {
+          "name": "roundCorners",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "yAxisPadding",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 59,
+      "requiredProps": [],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": null,
+      "powerbiEquivalent": "Custom visuals (AppSource / SDK)",
+      "powerbiNote": "Gantt is an AppSource custom visual in Power BI, not a first-party one.",
+      "readmeAvailability": {
+        "readmeRow": "Gantt Chart (new)",
+        "v8": "-",
+        "v9": "June 2025",
+        "webComponent": "-"
+      },
+      "storybookVariants": [
+        "GanttChartBasic",
+        "GanttChartGrouped"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/GanttChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-ganttchart--docs"
+    },
+    {
+      "id": "charts-gaugechart",
+      "name": "GaugeChart",
+      "category": "Cards, KPIs & gauges",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "A radial gauge chart uses a circular arc to show how a single value progresses toward a goal or a Key Performance Indicator (KPI). The gauge line (or needle) represents the goal or target value. The shading represents progress toward the goal. The value inside the arc represents the progress value.",
+      "whenToUse": "One value read against a target or a set of named ranges.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { GaugeChart } from '@fluentui/react-charts';",
+      "propsType": "GaugeChartProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "calloutProps",
+          "type": "Partial<ChartPopoverProps>",
+          "required": false
+        },
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "chartValue",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "chartValueFormat",
+          "type": "GaugeValueFormat | ((sweepFraction: [number, number]) => string)",
+          "required": false
+        },
+        {
+          "name": "componentRef",
+          "type": "React.Ref<Chart>",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "enableGradient",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "hideLegend",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "hideMinMax",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "hideTooltip",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "legendProps",
+          "type": "Partial<LegendsProps>",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "maxValue",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "minValue",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "roundCorners",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "segments",
+          "type": "GaugeChartSegment[]",
+          "required": true
+        },
+        {
+          "name": "styles",
+          "type": "GaugeChartStyles",
+          "required": false
+        },
+        {
+          "name": "sublabel",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "titleStyles",
+          "type": "TitleStyles",
+          "required": false
+        },
+        {
+          "name": "variant",
+          "type": "GaugeChartVariant",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [
+        "chartValue",
+        "segments"
+      ],
+      "slots": [],
+      "a11y": "- Users 'Enter' into the graph and can use both arrowing and tabbing to navigate through.\n- The first tab stop will stop on the graph and give a description of what type of graph it is.\n- Each section of the graph is readable via a screen reader.",
+      "dos": [
+        "Display min and max values to the left and the right if you’re showing a percentage within the gauge."
+      ],
+      "donts": [
+        "Don’t add min and mix if you’re already representing the part to whole ratio within the gauge because it’s redundant."
+      ],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/GaugeChart/GaugeChartBestPractices.md",
+      "powerbiEquivalent": "Gauge (radial gauge)",
+      "readmeAvailability": {
+        "readmeRow": "GaugeChart",
+        "v8": "Stable",
+        "v9": "March 2025",
+        "webComponent": "Planned"
+      },
+      "storybookVariants": [
+        "GaugeChartBasic",
+        "GaugeChartResponsive",
+        "GaugeChartSingleSegment"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/GaugeChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-gaugechart--docs"
+    },
+    {
+      "id": "charts-groupedverticalbarchart",
+      "name": "GroupedVerticalBarChart",
+      "category": "Comparison & trends",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "A grouped vertical bar chart displays multiple series of data as a group of bars, with each bar denoting a category. The bars are grouped together side by side, with each group denoting a different series.",
+      "whenToUse": "Compare several series side by side inside each category (clustered columns).",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { GroupedVerticalBarChart } from '@fluentui/react-charts';",
+      "propsType": "GroupedVerticalBarChartProps",
+      "propsInheritedFrom": [
+        "CartesianChartProps"
+      ],
+      "keyProps": [
+        {
+          "name": "barWidth",
+          "type": "number | 'default' | 'auto'",
+          "required": false
+        },
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "colors",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "GroupedVerticalBarChartData[]",
+          "required": false
+        },
+        {
+          "name": "dataV2",
+          "type": "(BarSeries<string, number> | LineSeries<string, number>)[]",
+          "required": false
+        },
+        {
+          "name": "hideLabels",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "isCalloutForStack",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "maxBarWidth",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "'default' | 'plotly'",
+          "required": false
+        },
+        {
+          "name": "roundCorners",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "GroupedVerticalBarChartStyles",
+          "required": false
+        },
+        {
+          "name": "useSingleColor",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "xAxisInnerPadding",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xAxisOuterPadding",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 58,
+      "requiredProps": [],
+      "slots": [],
+      "a11y": "Refer to Vertical Bar Chart page for common accessibility guidance.",
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/GroupedVerticalBarChart/GroupedVerticalBarChartBestPractices.md",
+      "powerbiEquivalent": "Column & bar charts",
+      "readmeAvailability": {
+        "readmeRow": "VerticalBarChart Grouped",
+        "v8": "Stable",
+        "v9": "April 2025",
+        "webComponent": "Planned"
+      },
+      "storybookVariants": [
+        "GroupedVerticalBarChartLine",
+        "GroupedVerticalBarDefault",
+        "GroupedVerticalBarNegative",
+        "GroupedVerticalBarSecondaryYAxis"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/GroupedVerticalBarChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-groupedverticalbarchart--docs"
+    },
+    {
+      "id": "charts-heatmapchart",
+      "name": "HeatMapChart",
+      "category": "Distribution & relationships",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "A heatmap is a 2D visualization that uses color to represent magnitude or intensity of values in the dataset. Generally, the color uses a sequential palette and corresponds to the value’s relative position within the represented ranges. This generally means larger values have darker colors.",
+      "whenToUse": "Magnitude across two categorical dimensions, encoded as cell colour on a sequential ramp.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { HeatMapChart } from '@fluentui/react-charts';",
+      "propsType": "HeatMapChartProps",
+      "propsInheritedFrom": [
+        "CartesianChartProps"
+      ],
+      "keyProps": [
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "HeatMapChartData[]",
+          "required": true
+        },
+        {
+          "name": "domainValuesForColorScale",
+          "type": "number[]",
+          "required": true
+        },
+        {
+          "name": "rangeValuesForColorScale",
+          "type": "string[]",
+          "required": true
+        },
+        {
+          "name": "sortOrder",
+          "type": "'none' | 'alphabetical'",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "HeatMapChartStyles",
+          "required": false
+        },
+        {
+          "name": "xAxisDateFormatString",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "xAxisNumberFormatString",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "xAxisStringFormatter",
+          "type": "(point: string) => string",
+          "required": false
+        },
+        {
+          "name": "yAxisDateFormatString",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "yAxisNumberFormatString",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "yAxisStringFormatter",
+          "type": "(point: string) => string",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 58,
+      "requiredProps": [
+        "data",
+        "domainValuesForColorScale",
+        "rangeValuesForColorScale"
+      ],
+      "slots": [],
+      "a11y": null,
+      "dos": [
+        "Use sequential or divergent color palettes."
+      ],
+      "donts": [
+        "Heatmap should not be used as a table as the color coding is tied to data intensity."
+      ],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/HeatMapChart/docs/HeatMapChartBestPractices.md",
+      "powerbiEquivalent": "Matrix",
+      "powerbiNote": "Power BI has no first-party heat map visual; the equivalent is a Matrix with background-colour conditional formatting (see the \"Conditional formatting\" feature page).",
+      "readmeAvailability": {
+        "readmeRow": "HeatMapChart",
+        "v8": "Stable",
+        "v9": "April 2025",
+        "webComponent": "Planned"
+      },
+      "storybookVariants": [
+        "HeatMapChartBasic",
+        "HeatMapChartCustomAccessibility"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/HeatMapChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-heatmapchart--docs"
+    },
+    {
+      "id": "charts-horizontalbarchart",
+      "name": "HorizontalBarChart",
+      "category": "Part-to-whole",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "A horizontal bar chart is a chart that presents categorical data with rectangular bars with lengths proportional to the values they represent. This type of chart is particularly useful when the intention is to show comparisons among various categories and the labels for those categories are long.",
+      "whenToUse": "A single value against its total - a ratio / progress bar per row. Variants via `variant` (absolute-scale or part-to-whole).",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { HorizontalBarChart } from '@fluentui/react-charts';",
+      "propsType": "HorizontalBarChartProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "barHeight",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "calloutProps",
+          "type": "ChartPopoverProps",
+          "required": false
+        },
+        {
+          "name": "calloutPropsPerDataPoint",
+          "type": "(dataPointCalloutProps: ChartDataPoint) => ChartPopoverProps",
+          "required": false
+        },
+        {
+          "name": "chartDataMode",
+          "type": "ChartDataMode",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "ChartProps[]",
+          "required": false
+        },
+        {
+          "name": "hideLabels",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "hideRatio",
+          "type": "boolean[]",
+          "required": false
+        },
+        {
+          "name": "hideTooltip",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "legendProps",
+          "type": "Partial<LegendsProps>",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "legendsOverflowText",
+          "type": "any",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "onRenderCalloutPerHorizontalBar",
+          "type": "(props: ChartDataPoint) => JSXElement | undefined",
+          "required": false
+        },
+        {
+          "name": "showLegendForSinglePointBar",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "showTriangle",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "HorizontalBarChartStyles",
+          "required": false
+        },
+        {
+          "name": "variant",
+          "type": "HorizontalBarChartVariant",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [],
+      "slots": [],
+      "a11y": "- Bar graphs should be flexible to their containers. They will change widths to fit their environment.\n- Each section of the bar chart is readable via screen readers. The user can navigate through the entire bar graph by using the tab keys.\n- The chart reflows to accommodate zooming in to 400%.",
+      "dos": [
+        "Use horizontal bar chart if the length of labels is longer.",
+        "Numerical units on labels are represented through abbreviations."
+      ],
+      "donts": [
+        "Avoid having more than 20 bars in the chart.",
+        "The n/M variant should be used only when a value has to be compared against its target value."
+      ],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/HorizontalBarChart/HorizontalBarChartBestPractices.md",
+      "powerbiEquivalent": "Column & bar charts",
+      "powerbiNote": "Closest first-party equivalent for the ratio bar is a bar chart or a KPI card; Power BI has no dedicated ratio-bar visual.",
+      "readmeAvailability": {
+        "readmeRow": "HorizontalBarChart",
+        "v8": "Stable",
+        "v9": "Stable",
+        "webComponent": "Stable"
+      },
+      "storybookVariants": [
+        "HorizontalBarAbsoluteScale",
+        "HorizontalBarBasic",
+        "HorizontalBarBenchmark",
+        "HorizontalBarCustomAccessibility",
+        "HorizontalBarCustomCallout",
+        "HorizontalBarStacked",
+        "HorizontalBarStackedAnnotatedInlineLegend"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/HorizontalBarChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-horizontalbarchart--docs"
+    },
+    {
+      "id": "charts-horizontalbarchartwithaxis",
+      "name": "HorizontalBarChartWithAxis",
+      "category": "Comparison & trends",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "A horizontal bar chart is a chart that presents categorical data with rectangular bars with lengths proportional to the values they represent. This type of chart is particularly useful when the intention is to show comparisons among various categories and the labels for those categories are long.",
+      "whenToUse": "Ranked categories, especially with long category labels that would not fit under a column chart.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { HorizontalBarChartWithAxis } from '@fluentui/react-charts';",
+      "propsType": "HorizontalBarChartWithAxisProps",
+      "propsInheritedFrom": [
+        "CartesianChartProps"
+      ],
+      "keyProps": [
+        {
+          "name": "barHeight",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "colors",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "HorizontalBarChartWithAxisDataPoint[]",
+          "required": false
+        },
+        {
+          "name": "enableGradient",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "hideLabels",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "onRenderCalloutPerDataPoint",
+          "type": "RenderFunction<HorizontalBarChartWithAxisDataPoint>",
+          "required": false
+        },
+        {
+          "name": "roundCorners",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "HorizontalBarChartWithAxisStyles",
+          "required": false
+        },
+        {
+          "name": "useSingleColor",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "yAxisPadding",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 58,
+      "requiredProps": [],
+      "slots": [],
+      "a11y": "- Bar graphs should be flexible to their containers. They will change width and height to fit their environment.\n\n- Type truncation should happen when the total value exceeds one thousand including 1 decimal place for the hundreds. For example, display full value for 600, 983, or 19.53. Truncate 6,000 to 6.0K, 9,801 to 9.8K, and 100,900 to 100.9K.\n\n- All the bars of the graph are accessible by screen readers and keyboard navigation using Up and Down arrow keys.",
+      "dos": [
+        "Try to keep the number of bars in the chart between 3 and 20 to maximize readability.",
+        "Use this chart if the bar labels are very long."
+      ],
+      "donts": [
+        "Don't keep the bar values in random order. Horizontal bar chart is most effective if the bars are sorted in either ascending or descending order."
+      ],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/HorizontalBarChartWithAxis/HorizontalBarChartWithAxisBestPractices.md",
+      "powerbiEquivalent": "Column & bar charts",
+      "readmeAvailability": {
+        "readmeRow": "HorizontalBarChart with Axis",
+        "v8": "Stable",
+        "v9": "April 2025",
+        "webComponent": "Planned"
+      },
+      "storybookVariants": [
+        "HorizontalBarWithAxisBasic",
+        "HorizontalBarWithAxisCategoryOrder",
+        "HorizontalBarWithAxisDynamic",
+        "HorizontalBarWithAxisNegative",
+        "HorizontalBarWithAxisStringAxisTooltip"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/HorizontalBarChartWithAxis.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-horizontalbarchartwithaxis--docs"
+    },
+    {
+      "id": "charts-legends",
+      "name": "Legends",
+      "category": "Chart building blocks",
+      "role": "building-block",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "A legend describes data visualized in the chart. The legends can wrap based upon the space available for them. If there is not enough space to show all legends on a single line, the legends fall into an overflow menu. A button is shown to open the overflow menu and displays the number of legends in it.",
+      "whenToUse": "A standalone or shared legend, including multi-select filtering and per-series shapes.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { Legends } from '@fluentui/react-charts';",
+      "propsType": "LegendsProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "allowFocusOnLegends",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "canSelectMultipleLegends",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "centerLegends",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "defaultSelectedLegend",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "defaultSelectedLegends",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "enabledWrapLines",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "legendRef",
+          "type": "React_2.Ref<LegendContainer>",
+          "required": false
+        },
+        {
+          "name": "legends",
+          "type": "Legend[]",
+          "required": true
+        },
+        {
+          "name": "onChange",
+          "type": "(selectedLegends: string[], event: React_2.MouseEvent<HTMLButtonElement>, currentLegend?: Legend) => void",
+          "required": false
+        },
+        {
+          "name": "overflowStyles",
+          "type": "React_2.CSSProperties",
+          "required": false
+        },
+        {
+          "name": "overflowText",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "selectedLegend",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "selectedLegends",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "shape",
+          "type": "LegendShape",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "LegendsStyles",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [
+        "legends"
+      ],
+      "slots": [],
+      "a11y": "- Legends are readable via screen readers. The user can navigate through the entire legend section by using the Left and Right arrow keys.\n- Legends can reflow to accommodate zooming in to 400%.",
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/Legends/LegendsBestPractices.md",
+      "powerbiEquivalent": null,
+      "readmeAvailability": {
+        "readmeRow": "Legends",
+        "v8": "Stable",
+        "v9": "Stable",
+        "webComponent": "Planned"
+      },
+      "storybookVariants": [
+        "LegendsBasic",
+        "LegendsControlled",
+        "LegendsOverflow",
+        "LegendsStyled",
+        "LegendsWrapLines"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/Legends.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-legends--docs"
+    },
+    {
+      "id": "charts-linechart",
+      "name": "LineChart",
+      "category": "Comparison & trends",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "A line chart is a visual representation of data that shows the relationship between two variables, often used to show trends over a period of time or number line. Line charts plot data at regular intervals connected by lines. Multi-line charts enable comparison between multiple series over the same x domain.",
+      "whenToUse": "A trend over time, or any continuous/number-line x domain. Multiple lines compare series over the same x domain. Upstream caps readability at 9 lines.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { LineChart } from '@fluentui/react-charts';",
+      "propsType": "LineChartProps",
+      "propsInheritedFrom": [
+        "CartesianChartProps"
+      ],
+      "keyProps": [
+        {
+          "name": "allowMultipleShapesForPoints",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "colorFillBars",
+          "type": "ColorFillBarsProps[]",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "ChartProps",
+          "required": true
+        },
+        {
+          "name": "enablePerfOptimization",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "eventAnnotationProps",
+          "type": "EventsAnnotationProps",
+          "required": false
+        },
+        {
+          "name": "getCalloutDescriptionMessage",
+          "type": "(calloutDataProps: CustomizedCalloutData) => string | undefined",
+          "required": false
+        },
+        {
+          "name": "isCalloutForStack",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "onRenderCalloutPerDataPoint",
+          "type": "RenderFunction<CustomizedCalloutData>",
+          "required": false
+        },
+        {
+          "name": "onRenderCalloutPerStack",
+          "type": "RenderFunction<CustomizedCalloutData>",
+          "required": false
+        },
+        {
+          "name": "optimizeLargeData",
+          "type": "boolean",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "styles",
+          "type": "LineChartStyles",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 58,
+      "requiredProps": [
+        "data"
+      ],
+      "slots": [],
+      "a11y": "- Users \"Enter\" into the graph and can use both arrow and tab keys to navigate through.\n- The first tab stop will stop on the graph and give a description of what type of graph it is.\n- Each section of the graph is readable via screen readers. The user can navigate through the entire area plot by using Left and Right arrow keys.",
+      "dos": [
+        "Use line chart to portray trends."
+      ],
+      "donts": [
+        "Don't use curved lines to represent data as it may show the data incorrectly.",
+        "While multiple lines on a line chart can provide some additional information and clarity, too many lines can make the chart difficult to read. Don't use for more than 9 data points. Too many lines make it hard to read."
+      ],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/LineChart/LineChartBestPractices.md",
+      "powerbiEquivalent": "Line chart",
+      "readmeAvailability": {
+        "readmeRow": "LineChart",
+        "v8": "Stable",
+        "v9": "Stable",
+        "webComponent": "Planned"
+      },
+      "storybookVariants": [
+        "LineChartAllNegative",
+        "LineChartAnnotationsExample",
+        "LineChartBasic",
+        "LineChartCustomAccessibility",
+        "LineChartCustomLocaleDateAxis",
+        "LineChartEvents",
+        "LineChartGaps",
+        "LineChartLargeData",
+        "LineChartLogAxisExample",
+        "LineChartMultiple",
+        "LineChartNegative",
+        "LineChartSecondaryYAxis",
+        "LineChartStyled"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/LineChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-linechart--docs"
+    },
+    {
+      "id": "charts-polarchart",
+      "name": "PolarChart",
+      "category": "Distribution & relationships",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": null,
+      "whenToUse": "Multivariate comparison on a radial axis (radar / area-polar / scatter-polar).",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { PolarChart } from '@fluentui/react-charts';",
+      "propsType": "PolarChartProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "angularAxis",
+          "type": "PolarAxisProps & { unit?: 'radians' | 'degrees'; }",
+          "required": false
+        },
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "componentRef",
+          "type": "React_2.Ref<Chart>",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "(AreaPolarSeries | LinePolarSeries | ScatterPolarSeries)[]",
+          "required": true
+        },
+        {
+          "name": "dateLocalizeOptions",
+          "type": "Intl.DateTimeFormatOptions",
+          "required": false
+        },
+        {
+          "name": "direction",
+          "type": "'clockwise' | 'counterclockwise'",
+          "required": false
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "hideLegend",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "hideTooltip",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "hole",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "legendProps",
+          "type": "Partial<LegendsProps>",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "margins",
+          "type": "Margins",
+          "required": false
+        },
+        {
+          "name": "radialAxis",
+          "type": "PolarAxisProps",
+          "required": false
+        },
+        {
+          "name": "shape",
+          "type": "'circle' | 'polygon'",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "PolarChartStyles",
+          "required": false
+        },
+        {
+          "name": "useUTC",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [
+        "data"
+      ],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": null,
+      "powerbiEquivalent": "Custom visuals (AppSource / SDK)",
+      "powerbiNote": "Radar/polar is an AppSource custom visual in Power BI, not a first-party one.",
+      "readmeAvailability": null,
+      "storybookVariants": [
+        "PolarChartBasic"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/PolarChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-polarchart--docs"
+    },
+    {
+      "id": "charts-responsivecontainer",
+      "name": "ResponsiveContainer",
+      "category": "Chart building blocks",
+      "role": "container",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": null,
+      "whenToUse": "Size a chart to its parent element, with optional aspect ratio and min/max bounds. Charts take numeric width/height, so this is how you make one fluid.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { ResponsiveContainer } from '@fluentui/react-charts';",
+      "propsType": "ResponsiveContainerProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "aspect",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "children",
+          "type": "React_2.ReactElement<ResponsiveChildProps>",
+          "required": true
+        },
+        {
+          "name": "height",
+          "type": "number | string",
+          "required": false
+        },
+        {
+          "name": "maxHeight",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "minHeight",
+          "type": "number | string",
+          "required": false
+        },
+        {
+          "name": "minWidth",
+          "type": "number | string",
+          "required": false
+        },
+        {
+          "name": "onResize",
+          "type": "(width: number, height: number) => void",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number | string",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [
+        "children"
+      ],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": null,
+      "powerbiEquivalent": null,
+      "readmeAvailability": null,
+      "storybookVariants": [],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/ResponsiveContainer.ts",
+      "docsSourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/etc/react-charts.api.md"
+    },
+    {
+      "id": "charts-sankeychart",
+      "name": "SankeyChart",
+      "category": "Flow & hierarchy",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "A Sankey chart visualizes a flow from one entity to another. Its goal is to clearly show the path of a depicted property. By hovering over a path, the user can highlight the source and destination of flow of this information.",
+      "whenToUse": "Flow volume between stages or nodes, where link thickness is the quantity.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { SankeyChart } from '@fluentui/react-charts';",
+      "propsType": "SankeyChartProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "accessibility",
+          "type": "SankeyChartAccessibilityProps",
+          "required": false
+        },
+        {
+          "name": "borderColorsForNodes",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "calloutProps",
+          "type": "ChartPopoverProps",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "colorsForNodes",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "componentRef",
+          "type": "Ref<Chart>",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "ChartProps",
+          "required": true
+        },
+        {
+          "name": "enableReflow",
+          "type": "boolean",
+          "required": false,
+          "deprecated": true
+        },
+        {
+          "name": "formatNumberOptions",
+          "type": "Intl.NumberFormatOptions",
+          "required": false
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "hideLegend",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "parentRef",
+          "type": "HTMLElement | null",
+          "required": false
+        },
+        {
+          "name": "pathColor",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "reflowProps",
+          "type": "{ mode: 'none' | 'min-width'; }",
+          "required": false
+        },
+        {
+          "name": "shouldResize",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "strings",
+          "type": "SankeyChartStrings",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "SankeyChartStyles",
+          "required": false
+        },
+        {
+          "name": "titleStyles",
+          "type": "TitleStyles",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [
+        "data"
+      ],
+      "slots": [],
+      "a11y": "In the case where data equates to 1 (which is 4px) the node does not show content. The text is shown when a user hovers over the node.\n\nIn the case where the node height reaches a minimum of 24 pixels, the title and number are on the same line. If the title is longer it is truncated.",
+      "dos": [
+        "Use sankey charts sparingly. They are complex and need time and explanation to be understood by the user.",
+        "Aggregate the data to fit into a simpler sankey chart when there are lot of layers involved."
+      ],
+      "donts": [
+        "Avoid having more than 4 layers in the Sankey chart."
+      ],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/SankeyChart/docs/SankeyChartBestPractices.md",
+      "powerbiEquivalent": "Custom visuals (AppSource / SDK)",
+      "powerbiNote": "Sankey is an AppSource custom visual in Power BI, not a first-party one.",
+      "readmeAvailability": {
+        "readmeRow": "SankeyChart",
+        "v8": "Stable",
+        "v9": "April 2025",
+        "webComponent": "Planned"
+      },
+      "storybookVariants": [
+        "SankeyChartBasic",
+        "SankeyChartInbox",
+        "SankeyChartRebalance",
+        "SankeyChartResponsive"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/SankeyChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-sankeychart--docs"
+    },
+    {
+      "id": "charts-scatterchart",
+      "name": "ScatterChart",
+      "category": "Distribution & relationships",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "A scatter (or bubble) chart is used to visualize relationships between two numerical variables, with data points plotted along the x and y axes. Bubble charts extend this by using the size of the markers to represent an additional variable, providing a third dimension of data visualization.",
+      "whenToUse": "Correlation between two measures; add a size dimension for a bubble plot.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { ScatterChart } from '@fluentui/react-charts';",
+      "propsType": "ScatterChartProps",
+      "propsInheritedFrom": [
+        "CartesianChartProps"
+      ],
+      "keyProps": [
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "ChartProps",
+          "required": true
+        },
+        {
+          "name": "getCalloutDescriptionMessage",
+          "type": "(calloutDataProps: CustomizedCalloutData) => string | undefined",
+          "required": false
+        },
+        {
+          "name": "onRenderCalloutPerDataPoint",
+          "type": "RenderFunction<CustomizedCalloutData>",
+          "required": false
+        },
+        {
+          "name": "onRenderCalloutPerStack",
+          "type": "RenderFunction<CustomizedCalloutData>",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "ScatterChartStyles",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 58,
+      "requiredProps": [
+        "data"
+      ],
+      "slots": [],
+      "a11y": "- Users \"Enter\" into the graph and can use both arrow and tab keys to navigate through.\n- The first tab stop will stop on the graph and give a description of what type of graph it is.\n- Each section of the graph is readable via screen readers. The user can navigate through the entire area plot by using Left and Right arrow keys.",
+      "dos": [
+        "Scatter charts are ideal for identifying relationships or correlations between two numerical variables (e.g., sales vs. profit)."
+      ],
+      "donts": [
+        "Avoid overcrowding the chart with too many data points, as it can make the visualization cluttered and hard to interpret.",
+        "In bubble charts, ensure the size of the bubbles is proportional to the third variable and does not obscure other data points."
+      ],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/ScatterChart/ScatterChartBestPractices.md",
+      "powerbiEquivalent": "Scatter, bubble & dot plot",
+      "readmeAvailability": {
+        "readmeRow": "Scatter Chart (new)",
+        "v8": "-",
+        "v9": "June 2025",
+        "webComponent": "-"
+      },
+      "storybookVariants": [
+        "ScatterChartDate",
+        "ScatterChartDefault",
+        "ScatterChartLogAxisExample",
+        "ScatterChartString"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/ScatterChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-scatterchart--docs"
+    },
+    {
+      "id": "charts-shape",
+      "name": "Shape",
+      "category": "Chart building blocks",
+      "role": "building-block",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": null,
+      "whenToUse": "Render a legend shape glyph (the SVG path for a LegendShape). This is the primitive behind non-colour series encoding.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { Shape } from '@fluentui/react-charts';",
+      "propsType": "ShapeProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "classNameForNonSvg",
+          "type": "string",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "pathProps",
+          "type": "React_2.SVGAttributes<SVGPathElement>",
+          "required": true,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "shape",
+          "type": "LegendShape",
+          "required": true,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "style",
+          "type": "React_2.CSSProperties | undefined",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "svgProps",
+          "type": "React_2.SVGAttributes<SVGElement>",
+          "required": true,
+          "undocumentedUpstream": true
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [
+        "pathProps",
+        "shape",
+        "svgProps"
+      ],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": null,
+      "powerbiEquivalent": null,
+      "readmeAvailability": null,
+      "storybookVariants": [],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/index.ts",
+      "docsSourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/etc/react-charts.api.md"
+    },
+    {
+      "id": "charts-sparkline",
+      "name": "Sparkline",
+      "category": "Comparison & trends",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "A sparkline is a very small area chart without axes or coordinates. It is useful for quick and high-level evaluation of trends. It can be an effective solution for presenting an overview of multiple series (high cardinality of data) simultaneously while maximizing legibility.",
+      "whenToUse": "A tiny, axis-less trend line to sit inline in a card, list row or table cell.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { Sparkline } from '@fluentui/react-charts';",
+      "propsType": "SparklineProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "ChartProps",
+          "required": false
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "showLegend",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "SparklineStyles",
+          "required": false
+        },
+        {
+          "name": "valueTextWidth",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [],
+      "slots": [],
+      "a11y": null,
+      "dos": [
+        "The most important value is displayed directly next to the chart.",
+        "Sparkline can be embedded within tables, paragraphs, lists and more."
+      ],
+      "donts": [
+        "Don’t enable a hover state. The most important value is displayed directly next to the chart."
+      ],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/Sparkline/SparklineBestPractices.md",
+      "powerbiEquivalent": "Table",
+      "powerbiNote": "Power BI has no standalone sparkline visual; sparklines are a per-cell feature of the Table and Matrix visuals.",
+      "readmeAvailability": {
+        "readmeRow": "Sparkline",
+        "v8": "Stable",
+        "v9": "Stable",
+        "webComponent": "-"
+      },
+      "storybookVariants": [
+        "SparklineBasic",
+        "SparklineDimensions"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/Sparkline.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-sparkline--docs"
+    },
+    {
+      "id": "charts-textbox",
+      "name": "Textbox",
+      "category": "Chart building blocks",
+      "role": "building-block",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": null,
+      "whenToUse": "An SVG text label used inside a chart surface.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { Textbox } from '@fluentui/react-charts';",
+      "propsType": "TextboxProps",
+      "propsInheritedFrom": [],
+      "keyProps": [],
+      "inheritedPropCount": 0,
+      "requiredProps": [],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": null,
+      "powerbiEquivalent": null,
+      "readmeAvailability": null,
+      "storybookVariants": [],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/index.ts",
+      "docsSourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/etc/react-charts.api.md"
+    },
+    {
+      "id": "charts-vegadeclarativechart",
+      "name": "VegaDeclarativeChart",
+      "category": "Declarative & schema-driven",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": null,
+      "whenToUse": "Render a Vega / Vega-Lite specification inside a Fluent surface.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { VegaDeclarativeChart } from '@fluentui/react-charts';",
+      "propsType": "VegaDeclarativeChartProps",
+      "propsInheritedFrom": [],
+      "keyProps": [
+        {
+          "name": "chartSchema",
+          "type": "VegaSchema",
+          "required": true
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "onSchemaChange",
+          "type": "(newSchema: VegaSchema) => void",
+          "required": false
+        },
+        {
+          "name": "style",
+          "type": "React_2.CSSProperties",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 0,
+      "requiredProps": [
+        "chartSchema"
+      ],
+      "slots": [],
+      "a11y": null,
+      "dos": [],
+      "donts": [],
+      "bestPracticesUrl": null,
+      "powerbiEquivalent": null,
+      "readmeAvailability": null,
+      "storybookVariants": [
+        "Default"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/VegaDeclarativeChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-vegadeclarativechart--docs"
+    },
+    {
+      "id": "charts-verticalbarchart",
+      "name": "VerticalBarChart",
+      "category": "Comparison & trends",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "A vertical bar chart displays data as a series of vertical bars, with each bar representing a category and the height of the bar representing the value of that category. It is commonly used to show comparisons between categories of one or more data sets, usually over a period of time. Categories are shown on the horizontal axis, while the data values are shown along the vertical axis. They could present data over time or in relationship to a whole.",
+      "whenToUse": "Compare one measure across a modest number of categories or time buckets, as columns. Supports an overlaid line series via `lineLegendText`/`lineData`.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { VerticalBarChart } from '@fluentui/react-charts';",
+      "propsType": "VerticalBarChartProps",
+      "propsInheritedFrom": [
+        "CartesianChartProps"
+      ],
+      "keyProps": [
+        {
+          "name": "barWidth",
+          "type": "number | 'default' | 'auto'",
+          "required": false
+        },
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "colors",
+          "type": "string[]",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "VerticalBarChartDataPoint[]",
+          "required": false
+        },
+        {
+          "name": "enableGradient",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "hideLabels",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "lineLegendColor",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "lineLegendText",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "lineOptions",
+          "type": "LineChartLineOptions",
+          "required": false
+        },
+        {
+          "name": "maxBarWidth",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "'default' | 'plotly' | 'histogram'",
+          "required": false
+        },
+        {
+          "name": "onRenderCalloutPerDataPoint",
+          "type": "RenderFunction<VerticalBarChartDataPoint>",
+          "required": false
+        },
+        {
+          "name": "roundCorners",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "Partial<VerticalBarChartStyles>",
+          "required": false
+        },
+        {
+          "name": "useSingleColor",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "xAxisInnerPadding",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xAxisOuterPadding",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xAxisPadding",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 58,
+      "requiredProps": [],
+      "slots": [],
+      "a11y": "Bar graphs should be flexible to their containers. They will change widths to fit their environment. This also means that bar labels will rotate or truncate to best fit the available space in the chart (Auto adjusting labels coming soon).\n\nType truncation should happen when the total value exceeds one thousand including 1 decimal place for the hundreds. For example, display full value for 600, 983, or 19.53. Truncate 6,000 to 6.0K, 9,801 to 9.8K, and 100,900 to 100.9K.",
+      "dos": [
+        "Try to keep the number of bars in the chart between 3 and 20 to maximize readability."
+      ],
+      "donts": [
+        "Don't use very long labels in vertical bar chart. Long labels use unnecessary space and make the chart skewed. For long labels use horizontal bar chart with axis."
+      ],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/VerticalBarChart/VerticalBarChartBestPractices.md",
+      "powerbiEquivalent": "Column & bar charts",
+      "readmeAvailability": {
+        "readmeRow": "VerticalBarChart",
+        "v8": "Stable",
+        "v9": "Stable",
+        "webComponent": "Planned"
+      },
+      "storybookVariants": [
+        "VerticalBarAllNegative",
+        "VerticalBarAxisTooltip",
+        "VerticalBarChartResponsive",
+        "VerticalBarCustomAccessibility",
+        "VerticalBarDateAxis",
+        "VerticalBarDefault",
+        "VerticalBarDynamic",
+        "VerticalBarNegative",
+        "VerticalBarRotateLabels",
+        "VerticalBarSecondaryYAxis",
+        "VerticalBarStyled"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/VerticalBarChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-verticalbarchart--docs"
+    },
+    {
+      "id": "charts-verticalstackedbarchart",
+      "name": "VerticalStackedBarChart",
+      "category": "Comparison & trends",
+      "role": "chart",
+      "maturity": "stable",
+      "maturityReason": "Exported @public from @fluentui/react-charts@9.3.24 - a 9.x package that depends on @fluentui/react-theme, i.e. the Fluent 2 (v9) design system. The API-Extractor report tags every export @public; no chart in this package is @beta or @alpha.",
+      "description": "Vertical stacked bar chart displays multiple series of data as stacked bars, with each bar representing a category. The bars are stacked on top of each other, with the height of each bar representing the value of the category of the series.",
+      "whenToUse": "Category totals broken into parts, where the total is the headline and the split is secondary.",
+      "classification": "curated",
+      "npmPackage": "@fluentui/react-charts",
+      "npmPackageVersion": "9.3.24",
+      "reactImport": "import { VerticalStackedBarChart } from '@fluentui/react-charts';",
+      "propsType": "VerticalStackedBarChartProps",
+      "propsInheritedFrom": [
+        "CartesianChartProps"
+      ],
+      "keyProps": [
+        {
+          "name": "allowHoverOnLegend",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "barCornerRadius",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "barGapMax",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "barMinimumHeight",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "barWidth",
+          "type": "number | 'default' | 'auto'",
+          "required": false
+        },
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "culture",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "data",
+          "type": "VerticalStackedChartProps[]",
+          "required": true
+        },
+        {
+          "name": "enableGradient",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "hideLabels",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "isCalloutForStack",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "lineOptions",
+          "type": "LineChartLineOptions",
+          "required": false
+        },
+        {
+          "name": "maxBarWidth",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "'default' | 'plotly'",
+          "required": false
+        },
+        {
+          "name": "onBarClick",
+          "type": "(event: React_2.MouseEvent<SVGElement>, data: VerticalStackedChartProps | VSChartDataPoint) => void",
+          "required": false
+        },
+        {
+          "name": "onRenderCalloutPerDataPoint",
+          "type": "RenderFunction<VSChartDataPoint>",
+          "required": false
+        },
+        {
+          "name": "onRenderCalloutPerStack",
+          "type": "RenderFunction<VerticalStackedChartProps>",
+          "required": false
+        },
+        {
+          "name": "roundCorners",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "Partial<VerticalStackedBarChartStyles>",
+          "required": false
+        },
+        {
+          "name": "xAxisInnerPadding",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xAxisOuterPadding",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xAxisPadding",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "yMinValue",
+          "type": "number | undefined",
+          "required": false
+        }
+      ],
+      "inheritedPropCount": 57,
+      "requiredProps": [
+        "data"
+      ],
+      "slots": [],
+      "a11y": "Refer to Vertical Bar Chart page for common accessibility guidance.",
+      "dos": [
+        "Refer to Vertical Bar Chart page for common dos."
+      ],
+      "donts": [
+        "Refer to Vertical Bar Chart page for common don'ts."
+      ],
+      "bestPracticesUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/VerticalStackedBarChart/VerticalStackedBarChartBestPractices.md",
+      "powerbiEquivalent": "Column & bar charts",
+      "readmeAvailability": {
+        "readmeRow": "VerticalBarChart Stacked",
+        "v8": "Stable",
+        "v9": "Preview",
+        "webComponent": "Planned"
+      },
+      "storybookVariants": [
+        "VerticalStackedBarAxisCategoryOrder",
+        "VerticalStackedBarAxisTooltip",
+        "VerticalStackedBarCallout",
+        "VerticalStackedBarCustomAccessibility",
+        "VerticalStackedBarDateAxis",
+        "VerticalStackedBarDefault",
+        "VerticalStackedBarNegative",
+        "VerticalStackedBarSecondaryYAxis"
+      ],
+      "verified": true,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/VerticalStackedBarChart.ts",
+      "docsSourceUrl": "https://storybooks.fluentui.dev/charts/?path=/docs/charts-verticalstackedbarchart--docs"
+    }
+  ],
+  "sharedPropsInterfaces": {
+    "CartesianChartProps": {
+      "extends": null,
+      "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/etc/react-charts.api.md",
+      "usedBy": [
+        "AreaChart",
+        "CartesianChart",
+        "DonutChart",
+        "GanttChart",
+        "GroupedVerticalBarChart",
+        "HeatMapChart",
+        "HorizontalBarChartWithAxis",
+        "LineChart",
+        "ScatterChart",
+        "VerticalBarChart",
+        "VerticalStackedBarChart"
+      ],
+      "props": [
+        {
+          "name": "annotations",
+          "type": "ChartAnnotation[]",
+          "required": false
+        },
+        {
+          "name": "calloutProps",
+          "type": "Partial<ChartPopoverProps>",
+          "required": false
+        },
+        {
+          "name": "calloutPropsPerDataPoint",
+          "type": "(dataPointCalloutProps: any) => ChartPopoverProps",
+          "required": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "componentRef",
+          "type": "React_2.Ref<Chart>",
+          "required": false
+        },
+        {
+          "name": "customDateTimeFormatter",
+          "type": "(dateTime: Date) => string",
+          "required": false
+        },
+        {
+          "name": "dateLocalizeOptions",
+          "type": "Intl.DateTimeFormatOptions",
+          "required": false
+        },
+        {
+          "name": "enabledLegendsWrapLines",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "enableReflow",
+          "type": "boolean",
+          "required": false,
+          "deprecated": true
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "hideLegend",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "hideTickOverlap",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "hideTooltip",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "legendProps",
+          "type": "Partial<LegendsProps>",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "legendsOverflowText",
+          "type": "any",
+          "required": false,
+          "undocumentedUpstream": true
+        },
+        {
+          "name": "margins",
+          "type": "Margins",
+          "required": false
+        },
+        {
+          "name": "noOfCharsToTruncate",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "parentRef",
+          "type": "HTMLElement | null",
+          "required": false
+        },
+        {
+          "name": "reflowProps",
+          "type": "{ mode: 'none' | 'min-width'; }",
+          "required": false
+        },
+        {
+          "name": "rotateXAxisLables",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "roundedTicks",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "secondaryYAxistitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "secondaryYScaleOptions",
+          "type": "{ yMinValue?: number; yMaxValue?: number; }",
+          "required": false
+        },
+        {
+          "name": "secondaryYScaleType",
+          "type": "AxisScaleType",
+          "required": false
+        },
+        {
+          "name": "showXAxisLablesTooltip",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "showYAxisLables",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "showYAxisLablesTooltip",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "strokeWidth",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "CartesianChartStyles",
+          "required": false
+        },
+        {
+          "name": "svgProps",
+          "type": "React_2.SVGProps<SVGSVGElement>",
+          "required": false
+        },
+        {
+          "name": "tickFormat",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "tickPadding",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "tickValues",
+          "type": "number[] | Date[] | string[] | undefined",
+          "required": false
+        },
+        {
+          "name": "timeFormatLocale",
+          "type": "TimeLocaleDefinition",
+          "required": false
+        },
+        {
+          "name": "titleStyles",
+          "type": "TitleStyles",
+          "required": false
+        },
+        {
+          "name": "useUTC",
+          "type": "string | boolean",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "wrapXAxisLables",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "xAxis",
+          "type": "AxisProps & { tickLayout?: 'default' | 'auto'; }",
+          "required": false
+        },
+        {
+          "name": "xAxisAnnotation",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "xAxisCategoryOrder",
+          "type": "AxisCategoryOrder",
+          "required": false
+        },
+        {
+          "name": "xAxisTickCount",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xAxisTickPadding",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xAxistickSize",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xAxisTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "xMaxValue",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xMinValue",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "xScaleType",
+          "type": "AxisScaleType",
+          "required": false
+        },
+        {
+          "name": "yAxis",
+          "type": "AxisProps",
+          "required": false
+        },
+        {
+          "name": "yAxisAnnotation",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "yAxisCategoryOrder",
+          "type": "AxisCategoryOrder",
+          "required": false
+        },
+        {
+          "name": "yAxisTickCount",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "yAxisTickFormat",
+          "type": "any",
+          "required": false
+        },
+        {
+          "name": "yAxisTickValues",
+          "type": "number[] | Date[] | string[]",
+          "required": false
+        },
+        {
+          "name": "yAxisTitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "yMaxValue",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "yMinValue",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "yScaleType",
+          "type": "AxisScaleType",
+          "required": false
+        }
+      ]
+    }
+  },
+  "dataVizPalette": {
+    "export": "DataVizPalette",
+    "package": "@fluentui/react-charts",
+    "packageVersion": "9.3.24",
+    "alsoExportedBy": "@fluentui/react-charting@5.25.11 (legacy) exports a DataVizPalette of the same name - importing the wrong one is a silent design-system mismatch.",
+    "sourceUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/src/utilities/colors.ts",
+    "docUrl": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charting/docs/colors.md",
+    "publishedCheck": "Diffed against https://unpkg.com/@fluentui/react-charts@9.3.24/lib/utilities/colors.js at build time: identical.",
+    "howItWorks": "DataVizPalette maps a friendly key to an INDIRECTION string, not a hex: DataVizPalette.color1 === \"qualitative.1\". The chart resolves it through getColorFromToken(token, isDarkTheme) at render time. That indirection is the whole point - it is what lets one series definition render correctly in light and dark themes.",
+    "howToUse": [
+      "Omit `color` on a series and the chart cycles the qualitative palette for you via getNextColor(index) - this is the default and the recommended path.",
+      "Set `color: DataVizPalette.color7` to pin a series to a specific qualitative slot.",
+      "Set `color: DataVizPalette.error` (or success/warning/info/disabled/highError/highSuccess) when the colour carries meaning rather than identity.",
+      "Any raw CSS colour also works, but then YOU own the light/dark and contrast story - getColorFromToken passes non-token strings straight through unchanged."
+    ],
+    "themeVariation": "Each palette entry is an array: index 0 is the light/default colour and index 1, when present, is the dark-theme override. 21 of 40 qualitative slots and 6 of 7 semantic colours ship a dark variant; the rest use one value in both themes. getThemeSpecificColor picks index Number(isDarkTheme) and falls back to index 0.",
+    "cycling": "getNextColor(index, offset, isDarkTheme) walks the 40 qualitative slots and wraps, so series 41 reuses slot 1.",
+    "qualitativeCount": 40,
+    "semanticCount": 7,
+    "tokenCount": 47,
+    "qualitative": [
+      {
+        "slot": 1,
+        "token": "DataVizPalette.color1",
+        "tokenValue": "qualitative.1",
+        "light": "#637cef",
+        "dark": "#637cef",
+        "hasDarkVariant": false,
+        "fluentPalette": "cornflower.tint10"
+      },
+      {
+        "slot": 2,
+        "token": "DataVizPalette.color2",
+        "tokenValue": "qualitative.2",
+        "light": "#e3008c",
+        "dark": "#e3008c",
+        "hasDarkVariant": false,
+        "fluentPalette": "hotPink.primary"
+      },
+      {
+        "slot": 3,
+        "token": "DataVizPalette.color3",
+        "tokenValue": "qualitative.3",
+        "light": "#2aa0a4",
+        "dark": "#2aa0a4",
+        "hasDarkVariant": false,
+        "fluentPalette": "teal.tint20"
+      },
+      {
+        "slot": 4,
+        "token": "DataVizPalette.color4",
+        "tokenValue": "qualitative.4",
+        "light": "#9373c0",
+        "dark": "#9373c0",
+        "hasDarkVariant": false,
+        "fluentPalette": "orchid.tint10"
+      },
+      {
+        "slot": 5,
+        "token": "DataVizPalette.color5",
+        "tokenValue": "qualitative.5",
+        "light": "#13a10e",
+        "dark": "#13a10e",
+        "hasDarkVariant": false,
+        "fluentPalette": "lightGreen.primary"
+      },
+      {
+        "slot": 6,
+        "token": "DataVizPalette.color6",
+        "tokenValue": "qualitative.6",
+        "light": "#3a96dd",
+        "dark": "#3a96dd",
+        "hasDarkVariant": false,
+        "fluentPalette": "lightBlue.primary"
+      },
+      {
+        "slot": 7,
+        "token": "DataVizPalette.color7",
+        "tokenValue": "qualitative.7",
+        "light": "#ca5010",
+        "dark": "#ca5010",
+        "hasDarkVariant": false,
+        "fluentPalette": "pumpkin.primary"
+      },
+      {
+        "slot": 8,
+        "token": "DataVizPalette.color8",
+        "tokenValue": "qualitative.8",
+        "light": "#57811b",
+        "dark": "#57811b",
+        "hasDarkVariant": false,
+        "fluentPalette": "lime.shade20"
+      },
+      {
+        "slot": 9,
+        "token": "DataVizPalette.color9",
+        "tokenValue": "qualitative.9",
+        "light": "#b146c2",
+        "dark": "#b146c2",
+        "hasDarkVariant": false,
+        "fluentPalette": "lilac.primary"
+      },
+      {
+        "slot": 10,
+        "token": "DataVizPalette.color10",
+        "tokenValue": "qualitative.10",
+        "light": "#ae8c00",
+        "dark": "#ae8c00",
+        "hasDarkVariant": false,
+        "fluentPalette": "gold.shade10"
+      },
+      {
+        "slot": 11,
+        "token": "DataVizPalette.color11",
+        "tokenValue": "qualitative.11",
+        "light": "#3c51b4",
+        "dark": "#93a4f4",
+        "hasDarkVariant": true,
+        "fluentPalette": "cornflower.shade20, cornflower.tint30"
+      },
+      {
+        "slot": 12,
+        "token": "DataVizPalette.color12",
+        "tokenValue": "qualitative.12",
+        "light": "#ad006a",
+        "dark": "#ee5fb7",
+        "hasDarkVariant": true,
+        "fluentPalette": "hotPink.shade20, hotPink.tint30"
+      },
+      {
+        "slot": 13,
+        "token": "DataVizPalette.color13",
+        "tokenValue": "qualitative.13",
+        "light": "#026467",
+        "dark": "#4cb4b7",
+        "hasDarkVariant": true,
+        "fluentPalette": "teal.shade20, teal.tint30"
+      },
+      {
+        "slot": 14,
+        "token": "DataVizPalette.color14",
+        "tokenValue": "qualitative.14",
+        "light": "#674c8c",
+        "dark": "#a083c9",
+        "hasDarkVariant": true,
+        "fluentPalette": "orchid.shade20, orchid.tint20"
+      },
+      {
+        "slot": 15,
+        "token": "DataVizPalette.color15",
+        "tokenValue": "qualitative.15",
+        "light": "#0e7a0b",
+        "dark": "#27ac22",
+        "hasDarkVariant": true,
+        "fluentPalette": "lightGreen.shade20, lightGreen.tint10"
+      },
+      {
+        "slot": 16,
+        "token": "DataVizPalette.color16",
+        "tokenValue": "qualitative.16",
+        "light": "#2c72a8",
+        "dark": "#4fa1e1",
+        "hasDarkVariant": true,
+        "fluentPalette": "lightBlue.shade20, lightBlue.tint10"
+      },
+      {
+        "slot": 17,
+        "token": "DataVizPalette.color17",
+        "tokenValue": "qualitative.17",
+        "light": "#9a3d0c",
+        "dark": "#d77440",
+        "hasDarkVariant": true,
+        "fluentPalette": "pumpkin.shade20, pumpkin.tint20"
+      },
+      {
+        "slot": 18,
+        "token": "DataVizPalette.color18",
+        "tokenValue": "qualitative.18",
+        "light": "#405f14",
+        "dark": "#73aa24",
+        "hasDarkVariant": true,
+        "fluentPalette": "lime.shade30, lime.primary"
+      },
+      {
+        "slot": 19,
+        "token": "DataVizPalette.color19",
+        "tokenValue": "qualitative.19",
+        "light": "#863593",
+        "dark": "#c36bd1",
+        "hasDarkVariant": true,
+        "fluentPalette": "lilac.shade20, lilac.tint20"
+      },
+      {
+        "slot": 20,
+        "token": "DataVizPalette.color20",
+        "tokenValue": "qualitative.20",
+        "light": "#6d5700",
+        "dark": "#d0b232",
+        "hasDarkVariant": true,
+        "fluentPalette": "gold.shade30, gold.tint20"
+      },
+      {
+        "slot": 21,
+        "token": "DataVizPalette.color21",
+        "tokenValue": "qualitative.21",
+        "light": "#4f6bed",
+        "dark": "#4f6bed",
+        "hasDarkVariant": false,
+        "fluentPalette": "cornflower.primary"
+      },
+      {
+        "slot": 22,
+        "token": "DataVizPalette.color22",
+        "tokenValue": "qualitative.22",
+        "light": "#ea38a6",
+        "dark": "#ea38a6",
+        "hasDarkVariant": false,
+        "fluentPalette": "hotPink.tint20"
+      },
+      {
+        "slot": 23,
+        "token": "DataVizPalette.color23",
+        "tokenValue": "qualitative.23",
+        "light": "#038387",
+        "dark": "#038387",
+        "hasDarkVariant": false,
+        "fluentPalette": "teal.primary"
+      },
+      {
+        "slot": 24,
+        "token": "DataVizPalette.color24",
+        "tokenValue": "qualitative.24",
+        "light": "#8764b8",
+        "dark": "#8764b8",
+        "hasDarkVariant": false,
+        "fluentPalette": "orchid.primary"
+      },
+      {
+        "slot": 25,
+        "token": "DataVizPalette.color25",
+        "tokenValue": "qualitative.25",
+        "light": "#11910d",
+        "dark": "#11910d",
+        "hasDarkVariant": false,
+        "fluentPalette": "lightGreen.shade10"
+      },
+      {
+        "slot": 26,
+        "token": "DataVizPalette.color26",
+        "tokenValue": "qualitative.26",
+        "light": "#3487c7",
+        "dark": "#3487c7",
+        "hasDarkVariant": false,
+        "fluentPalette": "lightBlue.shade10"
+      },
+      {
+        "slot": 27,
+        "token": "DataVizPalette.color27",
+        "tokenValue": "qualitative.27",
+        "light": "#d06228",
+        "dark": "#d06228",
+        "hasDarkVariant": false,
+        "fluentPalette": "pumpkin.tint10"
+      },
+      {
+        "slot": 28,
+        "token": "DataVizPalette.color28",
+        "tokenValue": "qualitative.28",
+        "light": "#689920",
+        "dark": "#689920",
+        "hasDarkVariant": false,
+        "fluentPalette": "lime.shade10"
+      },
+      {
+        "slot": 29,
+        "token": "DataVizPalette.color29",
+        "tokenValue": "qualitative.29",
+        "light": "#ba58c9",
+        "dark": "#ba58c9",
+        "hasDarkVariant": false,
+        "fluentPalette": "lilac.tint10"
+      },
+      {
+        "slot": 30,
+        "token": "DataVizPalette.color30",
+        "tokenValue": "qualitative.30",
+        "light": "#937700",
+        "dark": "#c19c00",
+        "hasDarkVariant": true,
+        "fluentPalette": "gold.shade20, gold.primary"
+      },
+      {
+        "slot": 31,
+        "token": "DataVizPalette.color31",
+        "tokenValue": "qualitative.31",
+        "light": "#2c3c85",
+        "dark": "#c8d1fa",
+        "hasDarkVariant": true,
+        "fluentPalette": "cornflower.shade30, cornflower.tint40"
+      },
+      {
+        "slot": 32,
+        "token": "DataVizPalette.color32",
+        "tokenValue": "qualitative.32",
+        "light": "#7f004e",
+        "dark": "#f7adda",
+        "hasDarkVariant": true,
+        "fluentPalette": "hotPink.shade30, hotPink.tint40"
+      },
+      {
+        "slot": 33,
+        "token": "DataVizPalette.color33",
+        "tokenValue": "qualitative.33",
+        "light": "#02494c",
+        "dark": "#9bd9db",
+        "hasDarkVariant": true,
+        "fluentPalette": "teal.shade30, teal.tint40"
+      },
+      {
+        "slot": 34,
+        "token": "DataVizPalette.color34",
+        "tokenValue": "qualitative.34",
+        "light": "#4c3867",
+        "dark": "#b29ad4",
+        "hasDarkVariant": true,
+        "fluentPalette": "orchid.shade30, orchid.tint30"
+      },
+      {
+        "slot": 35,
+        "token": "DataVizPalette.color35",
+        "tokenValue": "qualitative.35",
+        "light": "#0b5a08",
+        "dark": "#a7e3a5",
+        "hasDarkVariant": true,
+        "fluentPalette": "lightGreen.shade30, lightGreen.tint40"
+      },
+      {
+        "slot": 36,
+        "token": "DataVizPalette.color36",
+        "tokenValue": "qualitative.36",
+        "light": "#20547c",
+        "dark": "#83bdeb",
+        "hasDarkVariant": true,
+        "fluentPalette": "lightBlue.shade30, lightBlue.tint30"
+      },
+      {
+        "slot": 37,
+        "token": "DataVizPalette.color37",
+        "tokenValue": "qualitative.37",
+        "light": "#712d09",
+        "dark": "#df8e64",
+        "hasDarkVariant": true,
+        "fluentPalette": "pumpkin.shade30, pumpkin.tint30"
+      },
+      {
+        "slot": 38,
+        "token": "DataVizPalette.color38",
+        "tokenValue": "qualitative.38",
+        "light": "#23330b",
+        "dark": "#a4cc6c",
+        "hasDarkVariant": true,
+        "fluentPalette": "lime.shade40, lime.tint30"
+      },
+      {
+        "slot": 39,
+        "token": "DataVizPalette.color39",
+        "tokenValue": "qualitative.39",
+        "light": "#63276d",
+        "dark": "#cf87da",
+        "hasDarkVariant": true,
+        "fluentPalette": "lilac.shade30, lilac.tint30"
+      },
+      {
+        "slot": 40,
+        "token": "DataVizPalette.color40",
+        "tokenValue": "qualitative.40",
+        "light": "#3a2f00",
+        "dark": "#dac157",
+        "hasDarkVariant": true,
+        "fluentPalette": "gold.shade40, gold.tint30"
+      }
+    ],
+    "semantic": [
+      {
+        "key": "info",
+        "token": "DataVizPalette.info",
+        "tokenValue": "semantic.info",
+        "light": "#015cda",
+        "dark": "#015cda",
+        "hasDarkVariant": false,
+        "fluentPalette": null
+      },
+      {
+        "key": "disabled",
+        "token": "DataVizPalette.disabled",
+        "tokenValue": "semantic.disabled",
+        "light": "#dbdbdb",
+        "dark": "#4d4d4d",
+        "hasDarkVariant": true,
+        "fluentPalette": "grey[86], grey[30]"
+      },
+      {
+        "key": "highError",
+        "token": "DataVizPalette.highError",
+        "tokenValue": "semantic.highError",
+        "light": "#6e0811",
+        "dark": "#cc2635",
+        "hasDarkVariant": true,
+        "fluentPalette": "cranberry.shade30, cranberry.tint10"
+      },
+      {
+        "key": "error",
+        "token": "DataVizPalette.error",
+        "tokenValue": "semantic.error",
+        "light": "#c50f1f",
+        "dark": "#dc626d",
+        "hasDarkVariant": true,
+        "fluentPalette": "cranberry.primary, cranberry.tint30"
+      },
+      {
+        "key": "warning",
+        "token": "DataVizPalette.warning",
+        "tokenValue": "semantic.warning",
+        "light": "#f7630c",
+        "dark": "#f87528",
+        "hasDarkVariant": true,
+        "fluentPalette": "orange.primary, orange.tint10"
+      },
+      {
+        "key": "success",
+        "token": "DataVizPalette.success",
+        "tokenValue": "semantic.success",
+        "light": "#107c10",
+        "dark": "#54b054",
+        "hasDarkVariant": true,
+        "fluentPalette": "green.primary, green.tint30"
+      },
+      {
+        "key": "highSuccess",
+        "token": "DataVizPalette.highSuccess",
+        "tokenValue": "semantic.highSuccess",
+        "light": "#094509",
+        "dark": "#218c21",
+        "hasDarkVariant": true,
+        "fluentPalette": "green.shade30, green.tint10"
+      }
+    ],
+    "helpers": [
+      {
+        "name": "getNextColor",
+        "signature": "getNextColor(index: number, offset: number = 0, isDarkTheme: boolean = false): string",
+        "purpose": "Pick the next qualitative slot for series `index` (wraps at 40). This is what a chart does when a series omits `color`."
+      },
+      {
+        "name": "getColorFromToken",
+        "signature": "getColorFromToken(token: string, isDarkTheme: boolean = false): string",
+        "purpose": "Resolve a DataVizPalette token (\"qualitative.1\") to the hex for the current theme. Returns the input unchanged if it is not a token, so a raw CSS colour passes straight through."
+      },
+      {
+        "name": "getColorContrast",
+        "signature": "getColorContrast(c1: string, c2: string): number",
+        "purpose": "WCAG contrast ratio between two colours (per https://www.w3.org/TR/WCAG/#dfn-contrast-ratio)."
+      },
+      {
+        "name": "getInvertedTextColor",
+        "signature": "getInvertedTextColor(color: string, isDarkTheme: boolean = false): string",
+        "purpose": "Flip between colorNeutralForeground1 and colorNeutralBackground1."
+      },
+      {
+        "name": "getContrastTextColor",
+        "signature": "getContrastTextColor(backgroundColor: string, isDarkTheme: boolean = false): string",
+        "purpose": "Choose readable label text for a filled shape: keeps colorNeutralForeground1 unless contrast drops below 3, then inverts."
+      }
+    ],
+    "notInV9": [
+      {
+        "symbol": "DataVizGradientPalette / getGradientFromToken / getNextGradient",
+        "note": "Exported by @fluentui/react-charting@5.25.11 (legacy) but NOT by @fluentui/react-charts@9.3.24. Verified absent from the v9 API-Extractor report. Gradient fills in v9 are opted into per chart with enableGradient."
+      },
+      {
+        "symbol": "PieChart / TreeChart / StackedBarChart / MultiStackedBarChart",
+        "note": "Exported by @fluentui/react-charting@5.25.11 with no v9 counterpart in this build. The react-charts README directs pie scenarios to DonutChart."
+      }
+    ]
+  },
+  "powerbiAlignment": {
+    "why": "A Fluent-themed Power BI report and a Fluent-themed React chart on the same page should not use two different series palettes. fluent_generate_powerbi_theme therefore emits dataColors straight from the qualitative slots below, in slot order, so series N is the same colour in both.",
+    "dataColorsSource": "dataVizPalette.qualitative[].light (or .dark when paletteTheme=\"dark\"), in slot order, uppercased to match the rest of the theme JSON.",
+    "statusColors": {
+      "good": "dataVizPalette.semantic success",
+      "bad": "dataVizPalette.semantic error",
+      "neutral": "Left at the base theme value #C19C00. DataVizPalette has no \"neutral\"; its closest member is warning (#f7630c), which reads as an alert rather than a middle state. #C19C00 is Fluent gold.primary, which is qualitative slot 30's dark value, so it is still a Fluent data-viz colour."
+    },
+    "notAligned": [
+      "maximum / center / minimum stay brand-derived. They are a SEQUENTIAL ramp (a gradient across one measure); the qualitative palette is deliberately non-sequential, so reusing it there would be wrong.",
+      "tableAccent stays brand-derived - it is chrome, not a series colour."
+    ],
+    "schemaNote": "reportThemeSchema-2.156 declares dataColors as an unbounded array of colour strings (no maxItems), so all 40 slots are schema-valid. The schema is additionalProperties:false at the top level, so provenance cannot be embedded in the theme file itself - it lives here instead."
+  },
+  "accessibility": {
+    "upstreamClaim": "\"Our charts are among the very few charting solutions providing elaborate accessibility support. The charts are WCAG 2.1 MAS C compliant for accessibility.\" - https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/library/README.md",
+    "docUrl": "https://microsoft.github.io/fluentui-charting-contrib/docs/Accessibility",
+    "rules": [
+      {
+        "rule": "Never encode meaning with colour alone.",
+        "how": "LineChart exposes allowMultipleShapesForPoints so each series gets a distinct point shape; Legends takes a `shape` per legend and the Shape component renders the glyph. Pair the shape with the colour so the chart survives greyscale printing and colour-vision deficiency.",
+        "verifiedFrom": "LineChartProps.allowMultipleShapesForPoints, LegendsProps.shape and the exported Shape component in the API-Extractor report; the LineChart best-practices \"Pinpoints\" note calls this out as \"a unique shape to remove reliance on colors as sole identifier of data set\"."
+      },
+      {
+        "rule": "Do not hand-pick adjacent hexes.",
+        "how": "Let the chart cycle DataVizPalette (omit `color`). The qualitative slots are ordered so consecutive series stay distinguishable; picking your own adjacent colours discards that.",
+        "verifiedFrom": "docs/colors.md: \"We cycle through these colors sequentially to paint the data series without color.\" Custom CSS colours put the contrast burden on the caller by that doc's own wording."
+      },
+      {
+        "rule": "Check contrast, do not eyeball it.",
+        "how": "getColorContrast(c1, c2) returns the WCAG ratio and getContrastTextColor(background) picks readable label text (it inverts once contrast would drop below 3).",
+        "verifiedFrom": "Both are exported from src/utilities/colors.ts and implement the W3C relative-luminance formula the file links to."
+      },
+      {
+        "rule": "Respect the theme.",
+        "how": "Render charts inside FluentProvider. 21 of the 40 qualitative slots and 6 of the 7 semantic colours have a distinct dark-theme value; hardcoding the light hex breaks dark mode and high contrast.",
+        "verifiedFrom": "The two-element arrays in QualitativePalette/SemanticPalette and getThemeSpecificColor(colors, isDarkTheme)."
+      },
+      {
+        "rule": "Keep the keyboard path.",
+        "how": "Charts are enterable and arrow/tab navigable and expose per-point accessibility strings (xAxisCalloutAccessibilityData, callOutAccessibilityData, chartTitleAccessibilityData). Do not replace the built-in callout with a custom div that drops them.",
+        "verifiedFrom": "The Accessibility section of the upstream BestPractices.md files and AccessibilityProps in the API-Extractor report."
+      },
+      {
+        "rule": "Cap the series count.",
+        "how": "Upstream: \"Don't use for more than 9 data points. Too many lines make it hard to read.\" Beyond that the palette starts repeating shapes and the chart stops being readable before it stops being colourful.",
+        "verifiedFrom": "https://github.com/microsoft/fluentui/blob/master/packages/charts/react-charts/stories/src/LineChart/LineChartBestPractices.md"
+      }
+    ],
+    "powerbiParallel": "The same rules apply to a Power BI report: keep dataColors accessible against the background (>= 3:1), do not rely on colour alone (use markers/labels/conditional formatting icons), and prefer the shared DataVizPalette so the web and report surfaces agree."
+  },
+  "recipes": [
+    {
+      "id": "theme-a-chart",
+      "title": "Theme a Fluent chart",
+      "note": "Verified against the API-Extractor report at build time: every prop and export named below exists in @fluentui/react-charts@9.3.24.",
+      "code": "import { FluentProvider, webLightTheme } from '@fluentui/react-components';\nimport { LineChart, DataVizPalette, ResponsiveContainer } from '@fluentui/react-charts';\n\nconst data = {\n  chartTitle: 'Revenue',\n  lineChartData: [\n    { legend: 'FY25', data: [{ x: new Date('2025-01-01'), y: 10 }, { x: new Date('2025-02-01'), y: 18 }] },\n    { legend: 'FY24', data: [{ x: new Date('2024-01-01'), y: 8 }, { x: new Date('2024-02-01'), y: 12 }], color: DataVizPalette.color7 },\n  ],\n};\n\n<FluentProvider theme={webLightTheme}>\n  <ResponsiveContainer height={320}>\n    <LineChart data={data} allowMultipleShapesForPoints />\n  </ResponsiveContainer>\n</FluentProvider>",
+      "why": "FluentProvider supplies the tokens the charts read; omitting `color` lets the palette cycle; DataVizPalette.color7 pins one series; allowMultipleShapesForPoints adds the non-colour encoding."
+    },
+    {
+      "id": "match-powerbi",
+      "title": "Make a Power BI report and a React chart agree",
+      "code": "fluent_generate_powerbi_theme { brandColor: \"#0F6CBD\" }   // dataColors = DataVizPalette qualitative slots 1..40\n// React side: render the chart inside FluentProvider and omit `color` on each series.\n// Series N is then the same hex in both surfaces.",
+      "why": "Both sides now read the same ordered palette, so a slide that puts a Power BI visual next to a React chart no longer shows two different blues for the same series."
+    }
+  ]
+}

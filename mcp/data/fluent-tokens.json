@@ -5190,5 +5190,1766 @@
       "curveEasyEaseMax": "cubic-bezier(0.8,0,0.2,1)",
       "curveLinear": "cubic-bezier(0,0,1,1)"
     }
+  },
+  "designNameBridge": {
+    "$meta": {
+      "title": "Design-site name -> code token bridge",
+      "what": "Resolves the names Microsoft publishes on fluent2.microsoft.design (design-site names such as \"Large\" corner radius, \"size120\" spacing, \"Body 1\" text, \"dark\" theme) to the token names that actually ship in @fluentui/react-theme / @fluentui/tokens — matched by VALUE, never by name.",
+      "why": "The two radius scales are OFFSET BY ONE STEP. The design site's \"Large\" is 8px; tokens.borderRadiusLarge is 6px. Writing the design name as a token name compiles and silently renders the wrong value. Only None, Small and Medium line up.",
+      "method": "Generated from mcp/data/design-guidance.json (design names + published values) against mcp/data/fluent-tokens.json (code names + shipped values). A row maps only when a token carries the same number; where no token does, codeToken is null and a reason says why. Colour palettes map to a family, and themes to an exported symbol, so those carry valueMatch \"family\"/\"symbol\" instead of a number.",
+      "generatedBy": "scripts/build-design-token-bridge.mjs",
+      "generatedAt": "2026-08-16",
+      "sources": {
+        "designNames": "mcp/data/design-guidance.json (topics: shapes, layout, typography, color, accessibility)",
+        "codeTokens": "mcp/data/fluent-tokens.json (@fluentui/react-theme 9.2.1)",
+        "docBase": "https://fluent2.microsoft.design"
+      },
+      "counts": {
+        "entries": 52,
+        "mapped": 46,
+        "unmapped": 6,
+        "exact": 35,
+        "partial": 1,
+        "equivalent": 1,
+        "nameCollisions": 25,
+        "silentValueTraps": 2,
+        "doesNotCompile": 17
+      },
+      "biggestTrap": "borderRadiusLarge. The design site says Large = 8 pixels; the token is 6px. The 8px token is borderRadiusXLarge, and the 12px \"X-Large\" is borderRadius2XLarge.",
+      "resolveWith": "fluent_get_token { name: \"Large corner radius\" } or { name: \"size120\" }",
+      "valueMatchLegend": {
+        "exact": "the code token carries the same number the design site publishes",
+        "partial": "some attributes match and at least one does not — see mismatches",
+        "equivalent": "different literal, same rendered result — see reason",
+        "family": "a design palette name maps to a token family, not one value",
+        "symbol": "maps to an exported code symbol (a theme object), not a token",
+        "none": "no token carries this value — see reason. Do NOT substitute the nearest one silently"
+      },
+      "collisionSeverityLegend": {
+        "silent-value-trap": "the design name IS a real token name with a DIFFERENT value — compiles, renders wrong",
+        "does-not-compile": "the design name is not a token at all — tokens.<name> is undefined",
+        "naming-only": "the same thing under a different name; no value risk"
+      }
+    },
+    "collisionsByCodeToken": {
+      "borderRadiusLarge": {
+        "value": "6px",
+        "designSiteSays": "The design site's \"Large\" cornerRadius is 8 pixels, which is tokens.borderRadiusXLarge — not this token.",
+        "warning": "NAME COLLISION: the design site calls this \"Large\" (8 pixels), but tokens.borderRadiusLarge exists and is 6px — a different step. Writing tokens.borderRadiusLarge compiles and silently renders 6px. The token that actually yields 8 pixels is tokens.borderRadiusXLarge.",
+        "correctTokenForDesignName": "borderRadiusXLarge",
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      },
+      "borderRadiusXLarge": {
+        "value": "8px",
+        "designSiteSays": "The design site's \"X-Large\" cornerRadius is 12 pixels, which is tokens.borderRadius2XLarge — not this token.",
+        "warning": "NAME COLLISION: the design site calls this \"X-Large\" (12 pixels), but tokens.borderRadiusXLarge exists and is 8px — a different step. Writing tokens.borderRadiusXLarge compiles and silently renders 8px. The token that actually yields 12 pixels is tokens.borderRadius2XLarge.",
+        "correctTokenForDesignName": "borderRadius2XLarge",
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      },
+      "borderRadius2XLarge": {
+        "value": "12px",
+        "designSiteSays": "This token is what the design site calls \"X-Large\" (12 pixels) — the names are offset by one step.",
+        "warning": "NAME COLLISION: the design site calls this \"X-Large\" (12 pixels), but tokens.borderRadiusXLarge exists and is 8px — a different step. Writing tokens.borderRadiusXLarge compiles and silently renders 8px. The token that actually yields 12 pixels is tokens.borderRadius2XLarge.",
+        "correctTokenForDesignName": "borderRadius2XLarge",
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      }
+    },
+    "unmappedCodeTokens": {
+      "note": "Real code tokens with no row on the design site. Legitimate to use — just not documented there.",
+      "borderRadius": [
+        {
+          "codeToken": "borderRadius3XLarge",
+          "value": "16px"
+        },
+        {
+          "codeToken": "borderRadius4XLarge",
+          "value": "24px"
+        },
+        {
+          "codeToken": "borderRadius5XLarge",
+          "value": "32px"
+        },
+        {
+          "codeToken": "borderRadius6XLarge",
+          "value": "40px"
+        },
+        {
+          "codeToken": "borderRadiusLarge",
+          "value": "6px"
+        }
+      ],
+      "spacingHorizontal": [],
+      "typographyRamp": [
+        "body2"
+      ]
+    },
+    "entries": [
+      {
+        "id": "cornerRadius:None",
+        "topic": "shapes",
+        "kind": "cornerRadius",
+        "designName": "None",
+        "designLabel": "None corner radius",
+        "designValue": "0 pixels",
+        "designUsage": "Navigation bars, tab bars",
+        "codeToken": "borderRadiusNone",
+        "codeValue": "0",
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "griffel": "tokens.borderRadiusNone",
+        "cssVar": "--borderRadiusNone",
+        "lookupKeys": [
+          "None corner radius",
+          "corner radius None",
+          "None radius",
+          "borderRadiusNone",
+          "None",
+          "0px corner radius",
+          "0px radius"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      },
+      {
+        "id": "cornerRadius:Small",
+        "topic": "shapes",
+        "kind": "cornerRadius",
+        "designName": "Small",
+        "designLabel": "Small corner radius",
+        "designValue": "2 pixels",
+        "designUsage": "Small badges",
+        "codeToken": "borderRadiusSmall",
+        "codeValue": "2px",
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "griffel": "tokens.borderRadiusSmall",
+        "cssVar": "--borderRadiusSmall",
+        "lookupKeys": [
+          "Small corner radius",
+          "corner radius Small",
+          "Small radius",
+          "borderRadiusSmall",
+          "Small",
+          "2px corner radius",
+          "2px radius"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      },
+      {
+        "id": "cornerRadius:Medium",
+        "topic": "shapes",
+        "kind": "cornerRadius",
+        "designName": "Medium",
+        "designLabel": "Medium corner radius",
+        "designValue": "4 pixels",
+        "designUsage": "Buttons, dropdown",
+        "codeToken": "borderRadiusMedium",
+        "codeValue": "4px",
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "griffel": "tokens.borderRadiusMedium",
+        "cssVar": "--borderRadiusMedium",
+        "lookupKeys": [
+          "Medium corner radius",
+          "corner radius Medium",
+          "Medium radius",
+          "borderRadiusMedium",
+          "Medium",
+          "4px corner radius",
+          "4px radius"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      },
+      {
+        "id": "cornerRadius:Large",
+        "topic": "shapes",
+        "kind": "cornerRadius",
+        "designName": "Large",
+        "designLabel": "Large corner radius",
+        "designValue": "8 pixels",
+        "designUsage": "Large buttons",
+        "codeToken": "borderRadiusXLarge",
+        "codeValue": "8px",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "silent-value-trap",
+        "expectedCodeName": "borderRadiusLarge",
+        "expectedCodeNameActualValue": "6px",
+        "warning": "NAME COLLISION: the design site calls this \"Large\" (8 pixels), but tokens.borderRadiusLarge exists and is 6px — a different step. Writing tokens.borderRadiusLarge compiles and silently renders 6px. The token that actually yields 8 pixels is tokens.borderRadiusXLarge.",
+        "griffel": "tokens.borderRadiusXLarge",
+        "cssVar": "--borderRadiusXLarge",
+        "lookupKeys": [
+          "Large corner radius",
+          "corner radius Large",
+          "Large radius",
+          "borderRadiusLarge",
+          "Large",
+          "8px corner radius",
+          "8px radius"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      },
+      {
+        "id": "cornerRadius:X-Large",
+        "topic": "shapes",
+        "kind": "cornerRadius",
+        "designName": "X-Large",
+        "designLabel": "X-Large corner radius",
+        "designValue": "12 pixels",
+        "designUsage": "Button sheets, popovers",
+        "codeToken": "borderRadius2XLarge",
+        "codeValue": "12px",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "silent-value-trap",
+        "expectedCodeName": "borderRadiusXLarge",
+        "expectedCodeNameActualValue": "8px",
+        "warning": "NAME COLLISION: the design site calls this \"X-Large\" (12 pixels), but tokens.borderRadiusXLarge exists and is 8px — a different step. Writing tokens.borderRadiusXLarge compiles and silently renders 8px. The token that actually yields 12 pixels is tokens.borderRadius2XLarge.",
+        "griffel": "tokens.borderRadius2XLarge",
+        "cssVar": "--borderRadius2XLarge",
+        "lookupKeys": [
+          "X-Large corner radius",
+          "corner radius X-Large",
+          "X-Large radius",
+          "borderRadiusXLarge",
+          "X-Large",
+          "12px corner radius",
+          "12px radius"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      },
+      {
+        "id": "cornerRadius:Circle",
+        "topic": "shapes",
+        "kind": "cornerRadius",
+        "designName": "Circle",
+        "designLabel": "Circle corner radius",
+        "designValue": "50%",
+        "designUsage": "Personas",
+        "codeToken": "borderRadiusCircular",
+        "codeValue": "10000px",
+        "valueMatch": "equivalent",
+        "reason": "The site states 50%; the code token is a 10000px radius, which clamps to a full round on any realistic box. Same rendered shape, different literal — do not treat 10000px and 50% as interchangeable numbers.",
+        "nameCollision": true,
+        "collisionSeverity": "naming-only",
+        "expectedCodeName": "borderRadiusCircle",
+        "expectedCodeNameExists": false,
+        "warning": "The design name \"Circle\" is not the code name: use tokens.borderRadiusCircular. There is no tokens.borderRadiusCircle.",
+        "griffel": "tokens.borderRadiusCircular",
+        "cssVar": "--borderRadiusCircular",
+        "lookupKeys": [
+          "Circle corner radius",
+          "corner radius Circle",
+          "Circle radius",
+          "borderRadiusCircle",
+          "Circle"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      },
+      {
+        "id": "strokeWidth:Thin",
+        "topic": "shapes",
+        "kind": "strokeWidth",
+        "designName": "Thin",
+        "designLabel": "Thin stroke",
+        "designValue": "1 pixel",
+        "designValuePlatform": "web",
+        "codeToken": "strokeWidthThin",
+        "codeValue": "1px",
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "griffel": "tokens.strokeWidthThin",
+        "cssVar": "--strokeWidthThin",
+        "lookupKeys": [
+          "Thin stroke",
+          "stroke Thin",
+          "Thin stroke width",
+          "strokeWidthThin"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      },
+      {
+        "id": "strokeWidth:Thick",
+        "topic": "shapes",
+        "kind": "strokeWidth",
+        "designName": "Thick",
+        "designLabel": "Thick stroke",
+        "designValue": "2 pixels",
+        "designValuePlatform": "web",
+        "codeToken": "strokeWidthThick",
+        "codeValue": "2px",
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "griffel": "tokens.strokeWidthThick",
+        "cssVar": "--strokeWidthThick",
+        "lookupKeys": [
+          "Thick stroke",
+          "stroke Thick",
+          "Thick stroke width",
+          "strokeWidthThick"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      },
+      {
+        "id": "strokeWidth:Thicker",
+        "topic": "shapes",
+        "kind": "strokeWidth",
+        "designName": "Thicker",
+        "designLabel": "Thicker stroke",
+        "designValue": "3 pixels",
+        "designValuePlatform": "web",
+        "mobileDesignValue": "4 pixels",
+        "mobileNote": "The site publishes 4 pixels for mobile and 3 pixels for web. This mapping is the WEB value; mcp/data/fluent-tokens.json is the web (v9) token set. For iOS/Android use fluent_native_component.",
+        "codeToken": "strokeWidthThicker",
+        "codeValue": "3px",
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "griffel": "tokens.strokeWidthThicker",
+        "cssVar": "--strokeWidthThicker",
+        "lookupKeys": [
+          "Thicker stroke",
+          "stroke Thicker",
+          "Thicker stroke width",
+          "strokeWidthThicker"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      },
+      {
+        "id": "strokeWidth:Thickest",
+        "topic": "shapes",
+        "kind": "strokeWidth",
+        "designName": "Thickest",
+        "designLabel": "Thickest stroke",
+        "designValue": "4 pixels",
+        "designValuePlatform": "web",
+        "mobileDesignValue": "6 pixels",
+        "mobileNote": "The site publishes 6 pixels for mobile and 4 pixels for web. This mapping is the WEB value; mcp/data/fluent-tokens.json is the web (v9) token set. For iOS/Android use fluent_native_component.",
+        "codeToken": "strokeWidthThickest",
+        "codeValue": "4px",
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "griffel": "tokens.strokeWidthThickest",
+        "cssVar": "--strokeWidthThickest",
+        "lookupKeys": [
+          "Thickest stroke",
+          "stroke Thickest",
+          "Thickest stroke width",
+          "strokeWidthThickest"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/shapes"
+      },
+      {
+        "id": "spacing:sizeNone",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "sizeNone",
+        "designLabel": "sizeNone (0px spacing)",
+        "designValue": "0px",
+        "designPx": 0,
+        "codeToken": "spacingHorizontalNone",
+        "codeTokens": {
+          "horizontal": "spacingHorizontalNone",
+          "vertical": "spacingVerticalNone"
+        },
+        "codeValue": "0",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "sizeNone",
+        "expectedCodeNameExists": false,
+        "warning": "\"sizeNone\" is a design-language / Figma variable name, not a Griffel token. tokens.sizeNone does not exist and --sizeNone is never emitted by FluentProvider. The 0px code tokens are tokens.spacingHorizontalNone and tokens.spacingVerticalNone.",
+        "griffel": "tokens.spacingHorizontalNone",
+        "cssVar": "--spacingHorizontalNone",
+        "lookupKeys": [
+          "sizeNone",
+          "sizeNone spacing",
+          "0px spacing",
+          "0px horizontal spacing",
+          "0px vertical spacing",
+          "spacing 0px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size20",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size20",
+        "designLabel": "size20 (2px spacing)",
+        "designValue": "2px",
+        "designPx": 2,
+        "codeToken": "spacingHorizontalXXS",
+        "codeTokens": {
+          "horizontal": "spacingHorizontalXXS",
+          "vertical": "spacingVerticalXXS"
+        },
+        "codeValue": "2px",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size20",
+        "expectedCodeNameExists": false,
+        "warning": "\"size20\" is a design-language / Figma variable name, not a Griffel token. tokens.size20 does not exist and --size20 is never emitted by FluentProvider. The 2px code tokens are tokens.spacingHorizontalXXS and tokens.spacingVerticalXXS.",
+        "griffel": "tokens.spacingHorizontalXXS",
+        "cssVar": "--spacingHorizontalXXS",
+        "lookupKeys": [
+          "size20",
+          "size20 spacing",
+          "2px spacing",
+          "2px horizontal spacing",
+          "2px vertical spacing",
+          "spacing 2px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size40",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size40",
+        "designLabel": "size40 (4px spacing)",
+        "designValue": "4px",
+        "designPx": 4,
+        "codeToken": "spacingHorizontalXS",
+        "codeTokens": {
+          "horizontal": "spacingHorizontalXS",
+          "vertical": "spacingVerticalXS"
+        },
+        "codeValue": "4px",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size40",
+        "expectedCodeNameExists": false,
+        "warning": "\"size40\" is a design-language / Figma variable name, not a Griffel token. tokens.size40 does not exist and --size40 is never emitted by FluentProvider. The 4px code tokens are tokens.spacingHorizontalXS and tokens.spacingVerticalXS.",
+        "griffel": "tokens.spacingHorizontalXS",
+        "cssVar": "--spacingHorizontalXS",
+        "lookupKeys": [
+          "size40",
+          "size40 spacing",
+          "4px spacing",
+          "4px horizontal spacing",
+          "4px vertical spacing",
+          "spacing 4px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size60",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size60",
+        "designLabel": "size60 (6px spacing)",
+        "designValue": "6px",
+        "designPx": 6,
+        "codeToken": "spacingHorizontalSNudge",
+        "codeTokens": {
+          "horizontal": "spacingHorizontalSNudge",
+          "vertical": "spacingVerticalSNudge"
+        },
+        "codeValue": "6px",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size60",
+        "expectedCodeNameExists": false,
+        "warning": "\"size60\" is a design-language / Figma variable name, not a Griffel token. tokens.size60 does not exist and --size60 is never emitted by FluentProvider. The 6px code tokens are tokens.spacingHorizontalSNudge and tokens.spacingVerticalSNudge.",
+        "griffel": "tokens.spacingHorizontalSNudge",
+        "cssVar": "--spacingHorizontalSNudge",
+        "lookupKeys": [
+          "size60",
+          "size60 spacing",
+          "6px spacing",
+          "6px horizontal spacing",
+          "6px vertical spacing",
+          "spacing 6px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size80",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size80",
+        "designLabel": "size80 (8px spacing)",
+        "designValue": "8px",
+        "designPx": 8,
+        "codeToken": "spacingHorizontalS",
+        "codeTokens": {
+          "horizontal": "spacingHorizontalS",
+          "vertical": "spacingVerticalS"
+        },
+        "codeValue": "8px",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size80",
+        "expectedCodeNameExists": false,
+        "warning": "\"size80\" is a design-language / Figma variable name, not a Griffel token. tokens.size80 does not exist and --size80 is never emitted by FluentProvider. The 8px code tokens are tokens.spacingHorizontalS and tokens.spacingVerticalS.",
+        "griffel": "tokens.spacingHorizontalS",
+        "cssVar": "--spacingHorizontalS",
+        "lookupKeys": [
+          "size80",
+          "size80 spacing",
+          "8px spacing",
+          "8px horizontal spacing",
+          "8px vertical spacing",
+          "spacing 8px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size100",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size100",
+        "designLabel": "size100 (10px spacing)",
+        "designValue": "10px",
+        "designPx": 10,
+        "codeToken": "spacingHorizontalMNudge",
+        "codeTokens": {
+          "horizontal": "spacingHorizontalMNudge",
+          "vertical": "spacingVerticalMNudge"
+        },
+        "codeValue": "10px",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size100",
+        "expectedCodeNameExists": false,
+        "warning": "\"size100\" is a design-language / Figma variable name, not a Griffel token. tokens.size100 does not exist and --size100 is never emitted by FluentProvider. The 10px code tokens are tokens.spacingHorizontalMNudge and tokens.spacingVerticalMNudge.",
+        "griffel": "tokens.spacingHorizontalMNudge",
+        "cssVar": "--spacingHorizontalMNudge",
+        "lookupKeys": [
+          "size100",
+          "size100 spacing",
+          "10px spacing",
+          "10px horizontal spacing",
+          "10px vertical spacing",
+          "spacing 10px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size120",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size120",
+        "designLabel": "size120 (12px spacing)",
+        "designValue": "12px",
+        "designPx": 12,
+        "codeToken": "spacingHorizontalM",
+        "codeTokens": {
+          "horizontal": "spacingHorizontalM",
+          "vertical": "spacingVerticalM"
+        },
+        "codeValue": "12px",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size120",
+        "expectedCodeNameExists": false,
+        "warning": "\"size120\" is a design-language / Figma variable name, not a Griffel token. tokens.size120 does not exist and --size120 is never emitted by FluentProvider. The 12px code tokens are tokens.spacingHorizontalM and tokens.spacingVerticalM.",
+        "griffel": "tokens.spacingHorizontalM",
+        "cssVar": "--spacingHorizontalM",
+        "lookupKeys": [
+          "size120",
+          "size120 spacing",
+          "12px spacing",
+          "12px horizontal spacing",
+          "12px vertical spacing",
+          "spacing 12px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size160",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size160",
+        "designLabel": "size160 (16px spacing)",
+        "designValue": "16px",
+        "designPx": 16,
+        "codeToken": "spacingHorizontalL",
+        "codeTokens": {
+          "horizontal": "spacingHorizontalL",
+          "vertical": "spacingVerticalL"
+        },
+        "codeValue": "16px",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size160",
+        "expectedCodeNameExists": false,
+        "warning": "\"size160\" is a design-language / Figma variable name, not a Griffel token. tokens.size160 does not exist and --size160 is never emitted by FluentProvider. The 16px code tokens are tokens.spacingHorizontalL and tokens.spacingVerticalL.",
+        "griffel": "tokens.spacingHorizontalL",
+        "cssVar": "--spacingHorizontalL",
+        "lookupKeys": [
+          "size160",
+          "size160 spacing",
+          "16px spacing",
+          "16px horizontal spacing",
+          "16px vertical spacing",
+          "spacing 16px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size200",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size200",
+        "designLabel": "size200 (20px spacing)",
+        "designValue": "20px",
+        "designPx": 20,
+        "codeToken": "spacingHorizontalXL",
+        "codeTokens": {
+          "horizontal": "spacingHorizontalXL",
+          "vertical": "spacingVerticalXL"
+        },
+        "codeValue": "20px",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size200",
+        "expectedCodeNameExists": false,
+        "warning": "\"size200\" is a design-language / Figma variable name, not a Griffel token. tokens.size200 does not exist and --size200 is never emitted by FluentProvider. The 20px code tokens are tokens.spacingHorizontalXL and tokens.spacingVerticalXL.",
+        "griffel": "tokens.spacingHorizontalXL",
+        "cssVar": "--spacingHorizontalXL",
+        "lookupKeys": [
+          "size200",
+          "size200 spacing",
+          "20px spacing",
+          "20px horizontal spacing",
+          "20px vertical spacing",
+          "spacing 20px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size240",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size240",
+        "designLabel": "size240 (24px spacing)",
+        "designValue": "24px",
+        "designPx": 24,
+        "codeToken": "spacingHorizontalXXL",
+        "codeTokens": {
+          "horizontal": "spacingHorizontalXXL",
+          "vertical": "spacingVerticalXXL"
+        },
+        "codeValue": "24px",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size240",
+        "expectedCodeNameExists": false,
+        "warning": "\"size240\" is a design-language / Figma variable name, not a Griffel token. tokens.size240 does not exist and --size240 is never emitted by FluentProvider. The 24px code tokens are tokens.spacingHorizontalXXL and tokens.spacingVerticalXXL.",
+        "griffel": "tokens.spacingHorizontalXXL",
+        "cssVar": "--spacingHorizontalXXL",
+        "lookupKeys": [
+          "size240",
+          "size240 spacing",
+          "24px spacing",
+          "24px horizontal spacing",
+          "24px vertical spacing",
+          "spacing 24px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size280",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size280",
+        "designLabel": "size280 (28px spacing)",
+        "designValue": "28px",
+        "designPx": 28,
+        "codeToken": null,
+        "codeValue": null,
+        "valueMatch": "none",
+        "reason": "No spacing token in @fluentui/react-theme has the value 28px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size280 has no code equivalent. Use a raw 28px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size280",
+        "expectedCodeNameExists": false,
+        "warning": "\"size280\" is a design-language / Figma variable name, not a Griffel token. tokens.size280 does not exist and --size280 is never emitted by FluentProvider.",
+        "lookupKeys": [
+          "size280",
+          "size280 spacing",
+          "28px spacing",
+          "28px horizontal spacing",
+          "28px vertical spacing",
+          "spacing 28px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size320",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size320",
+        "designLabel": "size320 (32px spacing)",
+        "designValue": "32px",
+        "designPx": 32,
+        "codeToken": "spacingHorizontalXXXL",
+        "codeTokens": {
+          "horizontal": "spacingHorizontalXXXL",
+          "vertical": "spacingVerticalXXXL"
+        },
+        "codeValue": "32px",
+        "valueMatch": "exact",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size320",
+        "expectedCodeNameExists": false,
+        "warning": "\"size320\" is a design-language / Figma variable name, not a Griffel token. tokens.size320 does not exist and --size320 is never emitted by FluentProvider. The 32px code tokens are tokens.spacingHorizontalXXXL and tokens.spacingVerticalXXXL.",
+        "griffel": "tokens.spacingHorizontalXXXL",
+        "cssVar": "--spacingHorizontalXXXL",
+        "lookupKeys": [
+          "size320",
+          "size320 spacing",
+          "32px spacing",
+          "32px horizontal spacing",
+          "32px vertical spacing",
+          "spacing 32px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size360",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size360",
+        "designLabel": "size360 (36px spacing)",
+        "designValue": "36px",
+        "designPx": 36,
+        "codeToken": null,
+        "codeValue": null,
+        "valueMatch": "none",
+        "reason": "No spacing token in @fluentui/react-theme has the value 36px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size360 has no code equivalent. Use a raw 36px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size360",
+        "expectedCodeNameExists": false,
+        "warning": "\"size360\" is a design-language / Figma variable name, not a Griffel token. tokens.size360 does not exist and --size360 is never emitted by FluentProvider.",
+        "lookupKeys": [
+          "size360",
+          "size360 spacing",
+          "36px spacing",
+          "36px horizontal spacing",
+          "36px vertical spacing",
+          "spacing 36px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size400",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size400",
+        "designLabel": "size400 (40px spacing)",
+        "designValue": "40px",
+        "designPx": 40,
+        "codeToken": null,
+        "codeValue": null,
+        "valueMatch": "none",
+        "reason": "No spacing token in @fluentui/react-theme has the value 40px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size400 has no code equivalent. Use a raw 40px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size400",
+        "expectedCodeNameExists": false,
+        "warning": "\"size400\" is a design-language / Figma variable name, not a Griffel token. tokens.size400 does not exist and --size400 is never emitted by FluentProvider.",
+        "lookupKeys": [
+          "size400",
+          "size400 spacing",
+          "40px spacing",
+          "40px horizontal spacing",
+          "40px vertical spacing",
+          "spacing 40px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size480",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size480",
+        "designLabel": "size480 (48px spacing)",
+        "designValue": "48px",
+        "designPx": 48,
+        "codeToken": null,
+        "codeValue": null,
+        "valueMatch": "none",
+        "reason": "No spacing token in @fluentui/react-theme has the value 48px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size480 has no code equivalent. Use a raw 48px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size480",
+        "expectedCodeNameExists": false,
+        "warning": "\"size480\" is a design-language / Figma variable name, not a Griffel token. tokens.size480 does not exist and --size480 is never emitted by FluentProvider.",
+        "lookupKeys": [
+          "size480",
+          "size480 spacing",
+          "48px spacing",
+          "48px horizontal spacing",
+          "48px vertical spacing",
+          "spacing 48px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size520",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size520",
+        "designLabel": "size520 (52px spacing)",
+        "designValue": "52px",
+        "designPx": 52,
+        "codeToken": null,
+        "codeValue": null,
+        "valueMatch": "none",
+        "reason": "No spacing token in @fluentui/react-theme has the value 52px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size520 has no code equivalent. Use a raw 52px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size520",
+        "expectedCodeNameExists": false,
+        "warning": "\"size520\" is a design-language / Figma variable name, not a Griffel token. tokens.size520 does not exist and --size520 is never emitted by FluentProvider.",
+        "lookupKeys": [
+          "size520",
+          "size520 spacing",
+          "52px spacing",
+          "52px horizontal spacing",
+          "52px vertical spacing",
+          "spacing 52px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "spacing:size560",
+        "topic": "layout",
+        "kind": "spacing",
+        "designName": "size560",
+        "designLabel": "size560 (56px spacing)",
+        "designValue": "56px",
+        "designPx": 56,
+        "codeToken": null,
+        "codeValue": null,
+        "valueMatch": "none",
+        "reason": "No spacing token in @fluentui/react-theme has the value 56px. The code ramp is 0/2/4/6/8/10/12/16/20/24/32px (None, XXS, XS, SNudge, S, MNudge, M, L, XL, XXL, XXXL) and stops at 32px — size560 has no code equivalent. Use a raw 56px value and say so, or pick an adjacent step deliberately; do not invent a token name.",
+        "nameCollision": true,
+        "collisionSeverity": "does-not-compile",
+        "expectedCodeName": "size560",
+        "expectedCodeNameExists": false,
+        "warning": "\"size560\" is a design-language / Figma variable name, not a Griffel token. tokens.size560 does not exist and --size560 is never emitted by FluentProvider.",
+        "lookupKeys": [
+          "size560",
+          "size560 spacing",
+          "56px spacing",
+          "56px horizontal spacing",
+          "56px vertical spacing",
+          "spacing 56px"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/layout"
+      },
+      {
+        "id": "typeRamp:Caption 2",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Caption 2",
+        "designLabel": "Caption 2 (web type ramp)",
+        "designValue": "10px / 14px / Regular",
+        "codeToken": "caption2",
+        "codeStyle": "typographyStyles.caption2",
+        "codeTokens": {
+          "fontSize": "fontSizeBase100",
+          "lineHeight": "lineHeightBase100",
+          "fontWeight": "fontWeightRegular"
+        },
+        "codeValue": {
+          "fontSize": "10px",
+          "lineHeight": "14px",
+          "fontWeight": 400
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Caption 2\" -> caption2",
+        "usage": "Prefer the composed style (typographyStyles.caption2, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Caption 2",
+          "caption2",
+          "Caption 2 text",
+          "Caption 2 type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Caption 2 Strong",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Caption 2 Strong",
+        "designLabel": "Caption 2 Strong (web type ramp)",
+        "designValue": "10px / 14px / Semibold",
+        "codeToken": "caption2Strong",
+        "codeStyle": "typographyStyles.caption2Strong",
+        "codeTokens": {
+          "fontSize": "fontSizeBase100",
+          "lineHeight": "lineHeightBase100",
+          "fontWeight": "fontWeightSemibold"
+        },
+        "codeValue": {
+          "fontSize": "10px",
+          "lineHeight": "14px",
+          "fontWeight": 600
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Caption 2 Strong\" -> caption2Strong",
+        "usage": "Prefer the composed style (typographyStyles.caption2Strong, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Caption 2 Strong",
+          "caption2Strong",
+          "Caption 2 Strong text",
+          "Caption 2 Strong type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Caption 1",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Caption 1",
+        "designLabel": "Caption 1 (web type ramp)",
+        "designValue": "12px / 16px / Regular",
+        "codeToken": "caption1",
+        "codeStyle": "typographyStyles.caption1",
+        "codeTokens": {
+          "fontSize": "fontSizeBase200",
+          "lineHeight": "lineHeightBase200",
+          "fontWeight": "fontWeightRegular"
+        },
+        "codeValue": {
+          "fontSize": "12px",
+          "lineHeight": "16px",
+          "fontWeight": 400
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Caption 1\" -> caption1",
+        "usage": "Prefer the composed style (typographyStyles.caption1, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Caption 1",
+          "caption1",
+          "Caption 1 text",
+          "Caption 1 type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Caption 1 Strong",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Caption 1 Strong",
+        "designLabel": "Caption 1 Strong (web type ramp)",
+        "designValue": "12px / 16px / Semibold",
+        "codeToken": "caption1Strong",
+        "codeStyle": "typographyStyles.caption1Strong",
+        "codeTokens": {
+          "fontSize": "fontSizeBase200",
+          "lineHeight": "lineHeightBase200",
+          "fontWeight": "fontWeightSemibold"
+        },
+        "codeValue": {
+          "fontSize": "12px",
+          "lineHeight": "16px",
+          "fontWeight": 600
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Caption 1 Strong\" -> caption1Strong",
+        "usage": "Prefer the composed style (typographyStyles.caption1Strong, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Caption 1 Strong",
+          "caption1Strong",
+          "Caption 1 Strong text",
+          "Caption 1 Strong type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Caption 1 Stronger",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Caption 1 Stronger",
+        "designLabel": "Caption 1 Stronger (web type ramp)",
+        "designValue": "12px / 16px / Bold",
+        "codeToken": "caption1Stronger",
+        "codeStyle": "typographyStyles.caption1Stronger",
+        "codeTokens": {
+          "fontSize": "fontSizeBase200",
+          "lineHeight": "lineHeightBase200",
+          "fontWeight": "fontWeightBold"
+        },
+        "codeValue": {
+          "fontSize": "12px",
+          "lineHeight": "16px",
+          "fontWeight": 700
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Caption 1 Stronger\" -> caption1Stronger",
+        "usage": "Prefer the composed style (typographyStyles.caption1Stronger, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Caption 1 Stronger",
+          "caption1Stronger",
+          "Caption 1 Stronger text",
+          "Caption 1 Stronger type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Body 1",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Body 1",
+        "designLabel": "Body 1 (web type ramp)",
+        "designValue": "14px / 20px / Regular",
+        "codeToken": "body1",
+        "codeStyle": "typographyStyles.body1",
+        "codeTokens": {
+          "fontSize": "fontSizeBase300",
+          "lineHeight": "lineHeightBase300",
+          "fontWeight": "fontWeightRegular"
+        },
+        "codeValue": {
+          "fontSize": "14px",
+          "lineHeight": "20px",
+          "fontWeight": 400
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Body 1\" -> body1",
+        "usage": "Prefer the composed style (typographyStyles.body1, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Body 1",
+          "body1",
+          "Body 1 text",
+          "Body 1 type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Body 1 Strong",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Body 1 Strong",
+        "designLabel": "Body 1 Strong (web type ramp)",
+        "designValue": "14px / 20px / Semibold",
+        "codeToken": "body1Strong",
+        "codeStyle": "typographyStyles.body1Strong",
+        "codeTokens": {
+          "fontSize": "fontSizeBase300",
+          "lineHeight": "lineHeightBase300",
+          "fontWeight": "fontWeightSemibold"
+        },
+        "codeValue": {
+          "fontSize": "14px",
+          "lineHeight": "20px",
+          "fontWeight": 600
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Body 1 Strong\" -> body1Strong",
+        "usage": "Prefer the composed style (typographyStyles.body1Strong, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Body 1 Strong",
+          "body1Strong",
+          "Body 1 Strong text",
+          "Body 1 Strong type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Body 1 Stronger",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Body 1 Stronger",
+        "designLabel": "Body 1 Stronger (web type ramp)",
+        "designValue": "14px / 20px / Bold",
+        "codeToken": "body1Stronger",
+        "codeStyle": "typographyStyles.body1Stronger",
+        "codeTokens": {
+          "fontSize": "fontSizeBase300",
+          "lineHeight": "lineHeightBase300",
+          "fontWeight": "fontWeightBold"
+        },
+        "codeValue": {
+          "fontSize": "14px",
+          "lineHeight": "20px",
+          "fontWeight": 700
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Body 1 Stronger\" -> body1Stronger",
+        "usage": "Prefer the composed style (typographyStyles.body1Stronger, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Body 1 Stronger",
+          "body1Stronger",
+          "Body 1 Stronger text",
+          "Body 1 Stronger type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Subtitle 2",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Subtitle 2",
+        "designLabel": "Subtitle 2 (web type ramp)",
+        "designValue": "16px / 22px / Semibold",
+        "codeToken": "subtitle2",
+        "codeStyle": "typographyStyles.subtitle2",
+        "codeTokens": {
+          "fontSize": "fontSizeBase400",
+          "lineHeight": "lineHeightBase400",
+          "fontWeight": "fontWeightSemibold"
+        },
+        "codeValue": {
+          "fontSize": "16px",
+          "lineHeight": "22px",
+          "fontWeight": 600
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Subtitle 2\" -> subtitle2",
+        "usage": "Prefer the composed style (typographyStyles.subtitle2, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Subtitle 2",
+          "subtitle2",
+          "Subtitle 2 text",
+          "Subtitle 2 type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Subtitle 2 Stronger",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Subtitle 2 Stronger",
+        "designLabel": "Subtitle 2 Stronger (web type ramp)",
+        "designValue": "16px / 22px / Bold",
+        "codeToken": "subtitle2Stronger",
+        "codeStyle": "typographyStyles.subtitle2Stronger",
+        "codeTokens": {
+          "fontSize": "fontSizeBase400",
+          "lineHeight": "lineHeightBase400",
+          "fontWeight": "fontWeightBold"
+        },
+        "codeValue": {
+          "fontSize": "16px",
+          "lineHeight": "22px",
+          "fontWeight": 700
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Subtitle 2 Stronger\" -> subtitle2Stronger",
+        "usage": "Prefer the composed style (typographyStyles.subtitle2Stronger, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Subtitle 2 Stronger",
+          "subtitle2Stronger",
+          "Subtitle 2 Stronger text",
+          "Subtitle 2 Stronger type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Subtitle 1",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Subtitle 1",
+        "designLabel": "Subtitle 1 (web type ramp)",
+        "designValue": "20px / 26px / Semibold",
+        "codeToken": "subtitle1",
+        "codeStyle": "typographyStyles.subtitle1",
+        "codeTokens": {
+          "fontSize": "fontSizeBase500",
+          "lineHeight": "lineHeightBase500",
+          "fontWeight": "fontWeightSemibold"
+        },
+        "codeValue": {
+          "fontSize": "20px",
+          "lineHeight": "28px",
+          "fontWeight": 600
+        },
+        "valueMatch": "partial",
+        "mismatches": {
+          "lineHeight": {
+            "design": "26px",
+            "code": "28px",
+            "codeToken": "lineHeightBase500",
+            "note": "No lineHeight token has the value 26px. The shipped subtitle1 style is 28px (the code package wins at runtime); the site's number is not reachable through a token."
+          }
+        },
+        "reason": "The site's published values and the shipped subtitle1 style disagree on lineHeight. Everything else matches. The npm package is what renders.",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Subtitle 1\" -> subtitle1",
+        "usage": "Prefer the composed style (typographyStyles.subtitle1, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Subtitle 1",
+          "subtitle1",
+          "Subtitle 1 text",
+          "Subtitle 1 type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Title 3",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Title 3",
+        "designLabel": "Title 3 (web type ramp)",
+        "designValue": "24px / 32px / Semibold",
+        "codeToken": "title3",
+        "codeStyle": "typographyStyles.title3",
+        "codeTokens": {
+          "fontSize": "fontSizeBase600",
+          "lineHeight": "lineHeightBase600",
+          "fontWeight": "fontWeightSemibold"
+        },
+        "codeValue": {
+          "fontSize": "24px",
+          "lineHeight": "32px",
+          "fontWeight": 600
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Title 3\" -> title3",
+        "usage": "Prefer the composed style (typographyStyles.title3, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Title 3",
+          "title3",
+          "Title 3 text",
+          "Title 3 type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Title 2",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Title 2",
+        "designLabel": "Title 2 (web type ramp)",
+        "designValue": "28px / 36px / Semibold",
+        "codeToken": "title2",
+        "codeStyle": "typographyStyles.title2",
+        "codeTokens": {
+          "fontSize": "fontSizeHero700",
+          "lineHeight": "lineHeightHero700",
+          "fontWeight": "fontWeightSemibold"
+        },
+        "codeValue": {
+          "fontSize": "28px",
+          "lineHeight": "36px",
+          "fontWeight": 600
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Title 2\" -> title2",
+        "usage": "Prefer the composed style (typographyStyles.title2, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Title 2",
+          "title2",
+          "Title 2 text",
+          "Title 2 type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Title 1",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Title 1",
+        "designLabel": "Title 1 (web type ramp)",
+        "designValue": "32px / 40px / Semibold",
+        "codeToken": "title1",
+        "codeStyle": "typographyStyles.title1",
+        "codeTokens": {
+          "fontSize": "fontSizeHero800",
+          "lineHeight": "lineHeightHero800",
+          "fontWeight": "fontWeightSemibold"
+        },
+        "codeValue": {
+          "fontSize": "32px",
+          "lineHeight": "40px",
+          "fontWeight": 600
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Title 1\" -> title1",
+        "usage": "Prefer the composed style (typographyStyles.title1, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Title 1",
+          "title1",
+          "Title 1 text",
+          "Title 1 type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Large Title",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Large Title",
+        "designLabel": "Large Title (web type ramp)",
+        "designValue": "40px / 52px / Semibold",
+        "codeToken": "largeTitle",
+        "codeStyle": "typographyStyles.largeTitle",
+        "codeTokens": {
+          "fontSize": "fontSizeHero900",
+          "lineHeight": "lineHeightHero900",
+          "fontWeight": "fontWeightSemibold"
+        },
+        "codeValue": {
+          "fontSize": "40px",
+          "lineHeight": "52px",
+          "fontWeight": 600
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Large Title\" -> largeTitle",
+        "usage": "Prefer the composed style (typographyStyles.largeTitle, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Large Title",
+          "largeTitle",
+          "Large Title text",
+          "Large Title type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "typeRamp:Display",
+        "topic": "typography",
+        "kind": "typeRamp",
+        "designName": "Display",
+        "designLabel": "Display (web type ramp)",
+        "designValue": "68px / 92px / Semibold",
+        "codeToken": "display",
+        "codeStyle": "typographyStyles.display",
+        "codeTokens": {
+          "fontSize": "fontSizeHero1000",
+          "lineHeight": "lineHeightHero1000",
+          "fontWeight": "fontWeightSemibold"
+        },
+        "codeValue": {
+          "fontSize": "68px",
+          "lineHeight": "92px",
+          "fontWeight": 600
+        },
+        "valueMatch": "exact",
+        "nameCollision": false,
+        "nameNormalization": "spaces removed and camelCased: \"Display\" -> display",
+        "usage": "Prefer the composed style (typographyStyles.display, or the <Text> / <Title3> components) over pasting the three tokens by hand — the composed style also carries fontFamily.",
+        "lookupKeys": [
+          "Display",
+          "display",
+          "Display text",
+          "Display type ramp"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/typography"
+      },
+      {
+        "id": "color:neutral",
+        "topic": "color",
+        "kind": "color",
+        "designName": "Neutral",
+        "designLabel": "Neutral palette",
+        "designValue": "Surfaces, text and layout — the greys that ground the UI and carry component state.",
+        "codeToken": "colorNeutralBackground1",
+        "codeValue": "#ffffff",
+        "codeTokens": [
+          "colorNeutralBackground1",
+          "colorNeutralBackground2",
+          "colorNeutralForeground1",
+          "colorNeutralForeground2",
+          "colorNeutralForegroundDisabled",
+          "colorNeutralStroke1",
+          "colorNeutralStrokeAccessible"
+        ],
+        "codeTokenFamilies": [
+          "colorNeutralBackground*",
+          "colorNeutralForeground*",
+          "colorNeutralStroke*"
+        ],
+        "tokenCount": 117,
+        "valueMatch": "family",
+        "reason": "A design-site palette name maps to a token FAMILY, not to one value. codeToken is a representative member; codeTokens lists the ones worth knowing and codeTokenFamilies the prefixes. Resolve exact values with fluent_list_tokens { category: \"color\" }.",
+        "nameCollision": false,
+        "griffel": "tokens.colorNeutralBackground1",
+        "cssVar": "--colorNeutralBackground1",
+        "lookupKeys": [
+          "neutral palette",
+          "neutral colors",
+          "neutral colours",
+          "neutral tokens"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/color"
+      },
+      {
+        "id": "color:brand",
+        "topic": "color",
+        "kind": "color",
+        "designName": "Brand",
+        "designLabel": "Brand palette",
+        "designValue": "Product recognition: primary buttons, CTAs, selected states. The 16-slot brand ramp feeds these.",
+        "codeToken": "colorBrandBackground",
+        "codeValue": "#0f6cbd",
+        "codeTokens": [
+          "colorBrandBackground",
+          "colorBrandBackgroundHover",
+          "colorBrandBackgroundPressed",
+          "colorBrandBackgroundSelected",
+          "colorBrandForeground1",
+          "colorBrandForegroundLink",
+          "colorBrandStroke1",
+          "colorNeutralForegroundOnBrand",
+          "colorCompoundBrandBackground",
+          "colorCompoundBrandForeground1",
+          "colorCompoundBrandStroke"
+        ],
+        "codeTokenFamilies": [
+          "colorBrand*",
+          "colorCompoundBrand*"
+        ],
+        "tokenCount": 45,
+        "valueMatch": "family",
+        "reason": "A design-site palette name maps to a token FAMILY, not to one value. codeToken is a representative member; codeTokens lists the ones worth knowing and codeTokenFamilies the prefixes. Resolve exact values with fluent_list_tokens { category: \"color\" }.",
+        "nameCollision": false,
+        "note": "A custom brand comes from createLightTheme/createDarkTheme over a BrandVariants ramp — see fluent_generate_theme. Never hand-write a brand hex into a component.",
+        "griffel": "tokens.colorBrandBackground",
+        "cssVar": "--colorBrandBackground",
+        "lookupKeys": [
+          "brand palette",
+          "brand colors",
+          "brand colours",
+          "brand tokens"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/color"
+      },
+      {
+        "id": "color:shared",
+        "topic": "color",
+        "kind": "color",
+        "designName": "Shared",
+        "designLabel": "Shared palette",
+        "designValue": "The M365-wide accent hues used by avatars, calendars and badges.",
+        "codeToken": "colorPaletteBerryBackground2",
+        "codeValue": "#edbbe7",
+        "codeTokens": [
+          "colorPaletteBerryBackground2",
+          "colorPaletteBerryForeground2",
+          "colorPaletteBerryBorderActive"
+        ],
+        "codeTokenFamilies": [
+          "colorPaletteAnchor*",
+          "colorPaletteBeige*",
+          "colorPaletteBerry*",
+          "colorPaletteBlue*",
+          "colorPaletteBrass*",
+          "colorPaletteBrown*",
+          "colorPaletteCornflower*",
+          "colorPaletteCranberry*",
+          "colorPaletteDark*",
+          "colorPaletteForest*",
+          "colorPaletteGold*",
+          "colorPaletteGrape*",
+          "colorPaletteGreen*",
+          "colorPaletteLavender*",
+          "colorPaletteLight*",
+          "colorPaletteLilac*",
+          "colorPaletteMagenta*",
+          "colorPaletteMarigold*",
+          "colorPaletteMink*",
+          "colorPaletteNavy*",
+          "colorPalettePeach*",
+          "colorPalettePink*",
+          "colorPalettePlatinum*",
+          "colorPalettePlum*",
+          "colorPalettePumpkin*",
+          "colorPalettePurple*",
+          "colorPaletteRed*",
+          "colorPaletteRoyal*",
+          "colorPaletteSeafoam*",
+          "colorPaletteSteel*",
+          "colorPaletteTeal*",
+          "colorPaletteYellow*"
+        ],
+        "tokenCount": 150,
+        "valueMatch": "family",
+        "reason": "A design-site palette name maps to a token FAMILY, not to one value. codeToken is a representative member; codeTokens lists the ones worth knowing and codeTokenFamilies the prefixes. Resolve exact values with fluent_list_tokens { category: \"color\" }.",
+        "nameCollision": false,
+        "hues": [
+          "Anchor",
+          "Beige",
+          "Berry",
+          "Blue",
+          "Brass",
+          "Brown",
+          "Cornflower",
+          "Cranberry",
+          "Dark",
+          "Forest",
+          "Gold",
+          "Grape",
+          "Green",
+          "Lavender",
+          "Light",
+          "Lilac",
+          "Magenta",
+          "Marigold",
+          "Mink",
+          "Navy",
+          "Peach",
+          "Pink",
+          "Platinum",
+          "Plum",
+          "Pumpkin",
+          "Purple",
+          "Red",
+          "Royal",
+          "Seafoam",
+          "Steel",
+          "Teal",
+          "Yellow"
+        ],
+        "note": "32 hue families ship as colorPalette<Hue>Background|Foreground|Border<n>. Most hues ship the Background2 / Foreground2 / BorderActive trio; Red, Green, Yellow, Berry, Marigold and the Dark/Light sets ship more.",
+        "griffel": "tokens.colorPaletteBerryBackground2",
+        "cssVar": "--colorPaletteBerryBackground2",
+        "lookupKeys": [
+          "shared palette",
+          "shared colors",
+          "shared colours",
+          "accent palette"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/color"
+      },
+      {
+        "id": "color:semanticstatus",
+        "topic": "color",
+        "kind": "color",
+        "designName": "Semantic status",
+        "designLabel": "Semantic status colours",
+        "designValue": "Feedback and urgency: danger = red, caution = yellow, positive = green.",
+        "codeToken": "colorStatusDangerBackground3",
+        "codeValue": "#c50f1f",
+        "codeTokens": [
+          "colorStatusDangerBackground3",
+          "colorStatusDangerForeground1",
+          "colorStatusWarningBackground3",
+          "colorStatusWarningForeground1",
+          "colorStatusSuccessBackground3",
+          "colorStatusSuccessForeground1"
+        ],
+        "codeTokenFamilies": [
+          "colorStatusDanger*",
+          "colorStatusWarning*",
+          "colorStatusSuccess*"
+        ],
+        "tokenCount": 32,
+        "valueMatch": "family",
+        "reason": "A design-site palette name maps to a token FAMILY, not to one value. codeToken is a representative member; codeTokens lists the ones worth knowing and codeTokenFamilies the prefixes. Resolve exact values with fluent_list_tokens { category: \"color\" }.",
+        "nameCollision": true,
+        "collisionSeverity": "naming-only",
+        "warning": "The site's words are danger / caution / positive; the token names are Danger / Warning / Success. There is no colorStatusCaution* or colorStatusPositive*.",
+        "designNameToCodeName": {
+          "danger": "colorStatusDanger* (red)",
+          "caution": "colorStatusWarning* — the site says \"caution\", the code says Warning",
+          "positive": "colorStatusSuccess* — the site says \"positive\", the code says Success"
+        },
+        "note": "Never signal status with colour alone — pair it with an icon or text (WCAG 1.4.1).",
+        "griffel": "tokens.colorStatusDangerBackground3",
+        "cssVar": "--colorStatusDangerBackground3",
+        "lookupKeys": [
+          "semantic status",
+          "status colors",
+          "status colours",
+          "caution color",
+          "positive color",
+          "danger color"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/color"
+      },
+      {
+        "id": "color:interactionstates",
+        "topic": "color",
+        "kind": "color",
+        "designName": "Interaction states",
+        "designLabel": "Interaction state colours",
+        "designValue": "Rest -> Hover -> Pressed / Selected darken in sequence; focus thickens the stroke instead.",
+        "codeToken": "colorNeutralBackground1Hover",
+        "codeValue": "#f5f5f5",
+        "codeTokens": [
+          "colorNeutralBackground1Hover",
+          "colorNeutralBackground1Pressed",
+          "colorNeutralBackground1Selected",
+          "colorSubtleBackgroundHover",
+          "colorStrokeFocus1",
+          "colorStrokeFocus2"
+        ],
+        "codeTokenFamilies": [
+          "*Hover",
+          "*Pressed",
+          "*Selected",
+          "colorStrokeFocus1/2"
+        ],
+        "tokenCount": 103,
+        "valueMatch": "family",
+        "reason": "A design-site palette name maps to a token FAMILY, not to one value. codeToken is a representative member; codeTokens lists the ones worth knowing and codeTokenFamilies the prefixes. Resolve exact values with fluent_list_tokens { category: \"color\" }.",
+        "nameCollision": false,
+        "note": "The state is a SUFFIX on the rest token, not a separate family: colorNeutralBackground1 -> colorNeutralBackground1Hover. Focus uses the two-tone colorStrokeFocus1/colorStrokeFocus2 outline.",
+        "griffel": "tokens.colorNeutralBackground1Hover",
+        "cssVar": "--colorNeutralBackground1Hover",
+        "lookupKeys": [
+          "interaction states",
+          "hover color",
+          "pressed color",
+          "selected color",
+          "focus stroke"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/color"
+      },
+      {
+        "id": "theme:light",
+        "topic": "accessibility",
+        "kind": "theme",
+        "designName": "light",
+        "designLabel": "light theme",
+        "designValue": "light",
+        "codeToken": null,
+        "codeSymbol": "webLightTheme",
+        "codePackage": "@fluentui/react-components",
+        "webComponentsPackage": "@fluentui/tokens (setTheme(...) for @fluentui/web-components v3)",
+        "tokenSet": "semanticLight",
+        "usage": "<FluentProvider theme={webLightTheme}>",
+        "valueMatch": "symbol",
+        "reason": "A theme is an object of resolved token values, not a token, so it has no entry in fluent-tokens.json under a token name. The values it resolves to are mcp/data/fluent-tokens.json -> color.semanticLight.",
+        "nameCollision": true,
+        "collisionSeverity": "naming-only",
+        "warning": "The design site calls this \"light\"; the exported symbol is webLightTheme. There is no theme named \"light\"/\"dark\"/\"high-contrast\"/\"branded\" in the package.",
+        "allThemeExports": [
+          "webLightTheme",
+          "webDarkTheme",
+          "teamsLightTheme",
+          "teamsDarkTheme",
+          "teamsHighContrastTheme"
+        ],
+        "lookupKeys": [
+          "light theme",
+          "theme light",
+          "light mode"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/accessibility"
+      },
+      {
+        "id": "theme:dark",
+        "topic": "accessibility",
+        "kind": "theme",
+        "designName": "dark",
+        "designLabel": "dark theme",
+        "designValue": "dark",
+        "codeToken": null,
+        "codeSymbol": "webDarkTheme",
+        "codePackage": "@fluentui/react-components",
+        "webComponentsPackage": "@fluentui/tokens (setTheme(...) for @fluentui/web-components v3)",
+        "tokenSet": "semanticDark",
+        "usage": "<FluentProvider theme={webDarkTheme}>",
+        "valueMatch": "symbol",
+        "reason": "A theme is an object of resolved token values, not a token, so it has no entry in fluent-tokens.json under a token name. The values it resolves to are mcp/data/fluent-tokens.json -> color.semanticDark.",
+        "nameCollision": true,
+        "collisionSeverity": "naming-only",
+        "warning": "The design site calls this \"dark\"; the exported symbol is webDarkTheme. There is no theme named \"light\"/\"dark\"/\"high-contrast\"/\"branded\" in the package.",
+        "allThemeExports": [
+          "webLightTheme",
+          "webDarkTheme",
+          "teamsLightTheme",
+          "teamsDarkTheme",
+          "teamsHighContrastTheme"
+        ],
+        "lookupKeys": [
+          "dark theme",
+          "theme dark",
+          "dark mode",
+          "dark mode theme",
+          "dark theme object"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/accessibility"
+      },
+      {
+        "id": "theme:high-contrast",
+        "topic": "accessibility",
+        "kind": "theme",
+        "designName": "high-contrast",
+        "designLabel": "high-contrast theme",
+        "designValue": "high-contrast",
+        "codeToken": null,
+        "codeSymbol": "teamsHighContrastTheme",
+        "codePackage": "@fluentui/react-components",
+        "webComponentsPackage": "@fluentui/tokens (setTheme(...) for @fluentui/web-components v3)",
+        "tokenSet": "semanticHighContrast",
+        "usage": "<FluentProvider theme={teamsHighContrastTheme}>",
+        "valueMatch": "symbol",
+        "reason": "A theme is an object of resolved token values, not a token, so it has no entry in fluent-tokens.json under a token name. The values it resolves to are mcp/data/fluent-tokens.json -> color.semanticHighContrast.",
+        "nameCollision": true,
+        "collisionSeverity": "naming-only",
+        "warning": "The design site calls this \"high-contrast\"; the exported symbol is teamsHighContrastTheme. There is no theme named \"light\"/\"dark\"/\"high-contrast\"/\"branded\" in the package.",
+        "caution": "This is the only high-contrast theme upstream exports and it is the legacy Teams one. On Windows, browser forced-colors mode is what users actually get: ship webLightTheme/webDarkTheme and handle @media (forced-colors: active). Reach for teamsHighContrastTheme only when a host mirrors the Teams HC setting.",
+        "allThemeExports": [
+          "webLightTheme",
+          "webDarkTheme",
+          "teamsLightTheme",
+          "teamsDarkTheme",
+          "teamsHighContrastTheme"
+        ],
+        "lookupKeys": [
+          "high-contrast theme",
+          "theme high-contrast",
+          "high contrast theme",
+          "high contrast",
+          "hc theme"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/accessibility"
+      },
+      {
+        "id": "theme:branded",
+        "topic": "accessibility",
+        "kind": "theme",
+        "designName": "branded",
+        "designLabel": "branded theme",
+        "designValue": "branded",
+        "codeToken": null,
+        "codeSymbol": "createLightTheme(brandVariants) / createDarkTheme(brandVariants)",
+        "codePackage": "@fluentui/react-components",
+        "webComponentsPackage": "@fluentui/tokens (setTheme(...) for @fluentui/web-components v3)",
+        "tokenSet": "generated from a 16-slot BrandVariants ramp (slots 10..160, brand at 80)",
+        "usage": "const light = createLightTheme(myBrand); <FluentProvider theme={light}>",
+        "valueMatch": "symbol",
+        "reason": "A theme is an object of resolved token values, not a token, so it has no entry in fluent-tokens.json under a token name. The values it resolves to are generated at runtime.",
+        "nameCollision": true,
+        "collisionSeverity": "naming-only",
+        "warning": "The design site calls this \"branded\"; the exported symbol is createLightTheme(brandVariants) / createDarkTheme(brandVariants). There is no theme named \"light\"/\"dark\"/\"high-contrast\"/\"branded\" in the package.",
+        "note": "fluent_generate_theme turns one brand hex into the ramp plus both themes.",
+        "allThemeExports": [
+          "webLightTheme",
+          "webDarkTheme",
+          "teamsLightTheme",
+          "teamsDarkTheme",
+          "teamsHighContrastTheme"
+        ],
+        "lookupKeys": [
+          "branded theme",
+          "theme branded",
+          "branded mode"
+        ],
+        "docUrl": "https://fluent2.microsoft.design/accessibility"
+      }
+    ]
   }
 }
