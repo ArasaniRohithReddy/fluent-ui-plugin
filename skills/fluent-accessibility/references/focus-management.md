@@ -281,6 +281,37 @@ Without the debounce, the announcement collides with the screen reader's own key
 
 ---
 
+## Two ways to lose the framework's accessibility without an error
+
+### Shadow DOM hides the page from tabster
+
+> "Fluent React uses [Tabster](https://tabster.io/) to control keyboarding and **it must be able to 'see' the entire DOM of a page to function correctly**. Since shadow DOM 'hides' parts of the DOM from Tabster, you must opt into shadow DOM support when using shadow DOM and Tabster together."
+> — [Using Fluent React with Web Components](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-web-components-interop-using-fluent-react-with-web-components--docs)
+
+Every hook on this page is tabster-backed, so every one of them degrades inside a shadow root. Nothing throws; arrow navigation, focus traps and focus restore just behave as if half the tree were not there.
+
+```tsx
+import { useShadowDOMSupport } from '@fluentui-contrib/pierce-dom';
+
+const AppComponent = () => {
+  // "This must be called _before_ you render any Fluent React controls"
+  useShadowDOMSupport();
+  return (/* ThemelessFluentProvider > shadow root > Fluent components */);
+};
+```
+`@fluentui-contrib/pierce-dom` is a separate `0.x` package from [microsoft/fluentui-contrib](https://github.com/microsoft/fluentui-contrib), not part of `@fluentui/react-components`. Setup details: `fluent-web-ui` → `references/web-components-interop.md`.
+
+### Custom rendering hands the visual half back to you
+
+Two escape hatches drop Fluent's own markup, and each moves an accessibility obligation onto your code:
+
+- **A slot render function replaces the slot's element**, classes and all. *"This is an escape hatch in the slots API, so prefer the other techniques whenever possible. If you replace the entire slot, **verify accessibility, layout, and styling still work properly**."* — [Customizing components with slots](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-customizing-components-with-slots--docs)
+- **Base state hooks (`use{Component}Base_unstable`) give behaviour, not appearance.** *"Base state hooks provide ARIA attributes and interaction patterns, but they **do not enforce visual accessibility**."* You must supply visible focus indicators on all interactive elements, sufficient colour contrast, and distinct hover/pressed/disabled visual states. And: *"always pass the ref to `use{Component}Base_unstable`, never attach it yourself"* — the base hook needs that node for focus management. Re-verify keyboard behaviour, ARIA semantics and focus handling after **any** rendering change, and re-test with a screen reader. — [Building custom controls](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-building-custom-controls--docs)
+
+Use `createFocusOutlineStyle` (above) for the indicator rather than inventing one, and keep the `fluent-web-ui` skill's `references/custom-components.md` checklist next to the code.
+
+---
+
 ## Review checklist
 
 - [ ] No hand-rolled focus trap, roving tabindex, or focus-restore stack — a hook above covers it
@@ -292,3 +323,5 @@ Without the debounce, the announcement collides with the screen reader's own key
 - [ ] Custom indicators reviewed by an accessibility champ; contrast ≥ 3:1
 - [ ] Status changes announced via `AriaLiveAnnouncer` + `useAnnounce` / `useTypingAnnounce`, with a single `AriaLiveAnnouncer` at the root
 - [ ] Foreign focus frameworks (v8 `FocusZone` / `FocusTrapZone`) fenced off with `useUncontrolledFocus`
+- [ ] Any shadow DOM in the tree? `useShadowDOMSupport()` called **before** the first Fluent control
+- [ ] Slot render functions and base-state-hook components re-tested for keyboard, ARIA, focus indicator and contrast — the framework stopped guaranteeing them

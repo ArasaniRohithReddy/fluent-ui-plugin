@@ -40,6 +40,17 @@ Focus is handled by [tabster](https://github.com/microsoft/tabster) + [keyborg](
 
 Full API, options tables, copy-pasteable snippets and a review checklist: **`references/focus-management.md`**.
 
+## Two ways to silently opt out of Fluent's accessibility
+Both compile, render, and look right in a screenshot.
+
+| What you did | What broke | Rule |
+|---|---|---|
+| Rendered Fluent React inside **shadow DOM** | Tabster *"must be able to 'see' the entire DOM of a page to function correctly"* — arrow navigation, focus traps and focus restore all degrade | Call `useShadowDOMSupport()` (`@fluentui-contrib/pierce-dom`) *"before you render any Fluent React controls"* ([Web Components interop](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-web-components-interop-using-fluent-react-with-web-components--docs)) |
+| Passed a **render function** to a slot | The slot's own element — and every class and attribute Fluent put on it — is gone | *"verify accessibility, layout, and styling still work properly"* ([Slots](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-customizing-components-with-slots--docs)) |
+| Built a control on **`use{Component}Base_unstable`** | You now own *visual* accessibility: focus indicators, contrast, and distinct hover/pressed/disabled states | *"Base state hooks provide ARIA attributes and interaction patterns, but they do not enforce visual accessibility."* Also *"always pass the ref to `use{Component}Base_unstable`, never attach it yourself."* ([Building custom controls](https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-building-custom-controls--docs)) |
+
+Details in `references/focus-management.md`.
+
 ## Do it with Fluent
 - Wrap web apps in `FluentProvider` (drives themed, accessible tokens incl. high contrast) and set `dir` for RTL.
 - Use `Field` to wire label + validation message + `aria-describedby` automatically.
@@ -53,6 +64,7 @@ Full API, options tables, copy-pasteable snippets and a review checklist: **`ref
 | Topic | How to find |
 |---|---|
 | Focus hooks, focus indicators, aria-live utilities | `references/focus-management.md` |
+| Shadow DOM + tabster, custom-control a11y duties | `references/focus-management.md` → *Two ways to lose the framework's accessibility* |
 | Fluent 2 accessibility guidance | `https://fluent2.microsoft.design/accessibility` |
 | Component accessibility scope (upstream) | `https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-accessibility-components-overview--docs` |
 | Designing an accessible experience (checklist) | `https://storybooks.fluentui.dev/react/?path=/docs/concepts-developer-accessibility-experiences--docs` |

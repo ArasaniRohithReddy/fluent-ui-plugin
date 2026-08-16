@@ -6951,5 +6951,63 @@
         "docUrl": "https://fluent2.microsoft.design/accessibility"
       }
     ]
+  },
+  "shadowByTheme": {
+    "light": {
+      "shadow2": "0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14)",
+      "shadow4": "0 0 2px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.14)",
+      "shadow8": "0 0 2px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.14)",
+      "shadow16": "0 0 2px rgba(0,0,0,0.12), 0 8px 16px rgba(0,0,0,0.14)",
+      "shadow28": "0 0 8px rgba(0,0,0,0.12), 0 14px 28px rgba(0,0,0,0.14)",
+      "shadow64": "0 0 8px rgba(0,0,0,0.12), 0 32px 64px rgba(0,0,0,0.14)",
+      "shadow2Brand": "0 0 2px rgba(0,0,0,0.30), 0 1px 2px rgba(0,0,0,0.25)",
+      "shadow4Brand": "0 0 2px rgba(0,0,0,0.30), 0 2px 4px rgba(0,0,0,0.25)",
+      "shadow8Brand": "0 0 2px rgba(0,0,0,0.30), 0 4px 8px rgba(0,0,0,0.25)",
+      "shadow16Brand": "0 0 2px rgba(0,0,0,0.30), 0 8px 16px rgba(0,0,0,0.25)",
+      "shadow28Brand": "0 0 8px rgba(0,0,0,0.30), 0 14px 28px rgba(0,0,0,0.25)",
+      "shadow64Brand": "0 0 8px rgba(0,0,0,0.30), 0 32px 64px rgba(0,0,0,0.25)"
+    },
+    "dark": {
+      "shadow2": "0 0 2px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.28)",
+      "shadow4": "0 0 2px rgba(0,0,0,0.24), 0 2px 4px rgba(0,0,0,0.28)",
+      "shadow8": "0 0 2px rgba(0,0,0,0.24), 0 4px 8px rgba(0,0,0,0.28)",
+      "shadow16": "0 0 2px rgba(0,0,0,0.24), 0 8px 16px rgba(0,0,0,0.28)",
+      "shadow28": "0 0 8px rgba(0,0,0,0.24), 0 14px 28px rgba(0,0,0,0.28)",
+      "shadow64": "0 0 8px rgba(0,0,0,0.24), 0 32px 64px rgba(0,0,0,0.28)",
+      "shadow2Brand": "0 0 2px rgba(0,0,0,0.30), 0 1px 2px rgba(0,0,0,0.25)",
+      "shadow4Brand": "0 0 2px rgba(0,0,0,0.30), 0 2px 4px rgba(0,0,0,0.25)",
+      "shadow8Brand": "0 0 2px rgba(0,0,0,0.30), 0 4px 8px rgba(0,0,0,0.25)",
+      "shadow16Brand": "0 0 2px rgba(0,0,0,0.30), 0 8px 16px rgba(0,0,0,0.25)",
+      "shadow28Brand": "0 0 8px rgba(0,0,0,0.30), 0 14px 28px rgba(0,0,0,0.25)",
+      "shadow64Brand": "0 0 8px rgba(0,0,0,0.30), 0 32px 64px rgba(0,0,0,0.25)"
+    },
+    "highContrast": {
+      "shadow2": "0 0 2px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.28)",
+      "shadow4": "0 0 2px rgba(0,0,0,0.24), 0 2px 4px rgba(0,0,0,0.28)",
+      "shadow8": "0 0 2px rgba(0,0,0,0.24), 0 4px 8px rgba(0,0,0,0.28)",
+      "shadow16": "0 0 2px rgba(0,0,0,0.24), 0 8px 16px rgba(0,0,0,0.28)",
+      "shadow28": "0 0 8px rgba(0,0,0,0.24), 0 14px 28px rgba(0,0,0,0.28)",
+      "shadow64": "0 0 8px rgba(0,0,0,0.24), 0 32px 64px rgba(0,0,0,0.28)",
+      "shadow2Brand": "0 0 2px rgba(0,0,0,0.30), 0 1px 2px rgba(0,0,0,0.25)",
+      "shadow4Brand": "0 0 2px rgba(0,0,0,0.30), 0 2px 4px rgba(0,0,0,0.25)",
+      "shadow8Brand": "0 0 2px rgba(0,0,0,0.30), 0 4px 8px rgba(0,0,0,0.25)",
+      "shadow16Brand": "0 0 2px rgba(0,0,0,0.30), 0 8px 16px rgba(0,0,0,0.25)",
+      "shadow28Brand": "0 0 8px rgba(0,0,0,0.30), 0 14px 28px rgba(0,0,0,0.25)",
+      "shadow64Brand": "0 0 8px rgba(0,0,0,0.30), 0 32px 64px rgba(0,0,0,0.25)"
+    }
+  },
+  "shadowByThemeMeta": {
+    "derivedFrom": "color.semantic{Light,Dark,HighContrast}.color{Neutral,Brand}Shadow{Ambient,Key}",
+    "formula": "@fluentui/tokens lib/utils/shadows.js createShadowTokens(ambient, key, suffix)",
+    "upstreamVersion": "1.0.0-alpha.24",
+    "note": "Shadow GEOMETRY is identical across themes; the COLOURS differ. Light uses rgba(0,0,0,0.12)/0.14, dark uses rgba(0,0,0,0.24)/0.28, so dark shadows are roughly twice as opaque. 6 of 12 tokens differ between light and dark; the Brand variants are theme-invariant because their ambient/key colours are. Regenerate with scripts/build-shadow-tokens.mjs.",
+    "differingTokens": [
+      "shadow2",
+      "shadow4",
+      "shadow8",
+      "shadow16",
+      "shadow28",
+      "shadow64"
+    ]
   }
 }

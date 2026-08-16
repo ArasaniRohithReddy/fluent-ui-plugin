@@ -1842,9 +1842,16 @@ const figPlugins = (await client.callTool({ name: 'fluent_figma_guidance', argum
       if (/^No token matching/.test(r) || !r.includes(n)) famOk = false;
     }
     console.log('the 3 fontFamily tokens resolve under their shipped names: ok=' + famOk);
-    const shadow = await text('fluent_list_tokens', { category: 'shadow', theme: 'dark' });
-    console.log('list_tokens states that theme is a no-op for shadow: ok='
-      + (/theme does NOT affect this category/.test(shadow) && /dark-theme shadow/.test(shadow)));
+    // This check used to assert that `theme` was a no-op for shadows, which
+    // encoded a data gap as if it were correct behaviour. Shadows ARE
+    // theme-dependent and the dataset now carries all three sets, so assert the
+    // real contract: dark differs from light, and the Brand caveat is stated.
+    const shadowDark = await text('fluent_list_tokens', { category: 'shadow', theme: 'dark' });
+    const shadowLight = await text('fluent_list_tokens', { category: 'shadow', theme: 'light' });
+    console.log('list_tokens honours theme for shadow and explains the Brand exception: ok='
+      + (shadowDark !== shadowLight
+        && /shadow\*Brand variants are theme-invariant/.test(shadowDark)
+        && !/theme does NOT affect this category/.test(shadowDark)));
   }
 
   // ---- P4: config tools used to accept anything and destroy malformed files.
@@ -2582,6 +2589,206 @@ const figPlugins = (await client.callTool({ name: 'fluent_figma_guidance', argum
       + (a11yRules.length >= 5 && a11yRules.every((r) => r.rule && r.how && r.verifiedFrom)
         && a11yRules.some((r) => /colour alone|color alone/i.test(r.rule))
         && a11yRules.some((r) => /contrast/i.test(r.rule))));
+  }
+}
+
+// Shadows are theme-dependent: the geometry matches across themes but the
+// colours do not (light rgba(0,0,0,0.12)/0.14 vs dark 0.24/0.28, so a dark
+// shadow is about twice as opaque). The dataset used to carry a single set and
+// hand back the light values for every theme.
+{
+  const pick = (payloadText) => (payloadText.match(/"shadow16"\s*:\s*"([^"]+)"/) || [])[1];
+  const lightPayload = (await client.callTool({ name: 'fluent_list_tokens', arguments: { category: 'shadow', theme: 'light' } })).content[0].text;
+  const darkPayload = (await client.callTool({ name: 'fluent_list_tokens', arguments: { category: 'shadow', theme: 'dark' } })).content[0].text;
+  const l = pick(lightPayload);
+  const d = pick(darkPayload);
+  console.log('shadow theme is honoured (light !== dark): ok=' + (!!l && !!d && l !== d && d.includes('0.24')));
+
+  const tok = JSON.parse(readFileSync(new URL('data/fluent-tokens.json', import.meta.url), 'utf8'));
+  const byTheme = tok.shadowByTheme || {};
+  // Derived with upstream's own createShadowTokens formula, so assert the exact
+  // string rather than "looks different" - an approximation would still pass that.
+  const amb = tok.color?.semanticDark?.colorNeutralShadowAmbient;
+  const key = tok.color?.semanticDark?.colorNeutralShadowKey;
+  const expected = '0 0 2px ' + amb + ', 0 8px 16px ' + key;
+  console.log('derived shadows match upstream createShadowTokens formula: ok=' + (byTheme.dark?.shadow16 === expected));
+  console.log('shadowByTheme covers 3 themes x 12 tokens: ok='
+    + (Object.keys(byTheme).length === 3 && Object.keys(byTheme.light || {}).length === 12));
+}
+
+// --- Second-pass Storybook Concepts mining ---------------------------------
+// Positioning, slots, custom controls, advanced styling, web-components interop
+// and platform support. Every one of these pages documents a constraint that
+// fails SILENTLY - a popup that leaves the viewport, an `align` that collapses
+// to `center`, a nested style-hook provider that overwrites instead of merging,
+// a shadow root that blinds tabster. Guidance like that is only useful if it is
+// present, reachable from the SKILL.md, and carries the URL it came from, so
+// assert all three rather than trusting that a file exists.
+{
+  const root = new URL('../', import.meta.url);
+  const read = (p) => readFileSync(new URL(p, root), 'utf8');
+
+  // 1. The new reference files exist AND are linked from their own SKILL.md.
+  //    An orphaned reference is invisible to an agent that only loads SKILL.md.
+  {
+    const WEB_REFS = ['positioning.md', 'slots.md', 'custom-components.md', 'web-components-interop.md', 'platform-support.md'];
+    let webSkill = '';
+    const missing = [], unlinked = [], unsourced = [];
+    try {
+      webSkill = read('skills/fluent-web-ui/SKILL.md');
+      for (const f of WEB_REFS) {
+        let body = '';
+        try { body = read('skills/fluent-web-ui/references/' + f); } catch { missing.push(f); continue; }
+        if (!webSkill.includes('references/' + f)) unlinked.push(f);
+        // Unsourced assertions are how the earlier defects got in - every
+        // reference has to point back at the Storybook page it was mined from.
+        if (!hasLinkTo(body, 'storybooks.fluentui.dev', '/react/')) unsourced.push(f);
+      }
+    } catch (e) {
+      missing.push('skills/fluent-web-ui/SKILL.md: ' + (e && e.message ? e.message : e));
+    }
+    const problems = [
+      missing.length ? 'missing: ' + missing.join(', ') : '',
+      unlinked.length ? 'not linked from SKILL.md: ' + unlinked.join(', ') : '',
+      unsourced.length ? 'no storybooks.fluentui.dev source: ' + unsourced.join(', ') : '',
+    ].filter(Boolean);
+    const note = problems.join(' | ') || WEB_REFS.length + ' references';
+    console.log('fluent-web-ui concept references shipped, linked and sourced (' + note + '): ok=' + (problems.length === 0));
+  }
+
+  // 2. Frontmatter is still parseable for every skill and `name` matches its
+  //    folder. A skill whose name drifts from its directory silently stops
+  //    resolving when an agent asks for it by folder name.
+  {
+    let count = 0;
+    const bad = [];
+    try {
+      const dirs = readdirSync(new URL('skills/', root), { withFileTypes: true })
+        .filter((e) => e.isDirectory()).map((e) => e.name).sort();
+      count = dirs.length;
+      for (const d of dirs) {
+        let text = '';
+        try { text = read('skills/' + d + '/SKILL.md'); } catch { bad.push(d + ': no SKILL.md'); continue; }
+        const fm = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+        if (!fm) { bad.push(d + ': no frontmatter'); continue; }
+        const name = (fm[1].match(/^name:[ \t]*(\S+)[ \t]*$/m) || [])[1];
+        const desc = (fm[1].match(/^description:[ \t]*(\S)/m) || [])[1];
+        if (name !== d) bad.push(d + ': name=' + (name ?? 'absent'));
+        if (!desc) bad.push(d + ': empty description');
+      }
+    } catch (e) {
+      bad.push(String(e && e.message ? e.message : e));
+    }
+    console.log('all skills carry valid frontmatter with name matching folder (' + count + ' skills'
+      + (bad.length ? '; ' + bad.join('; ') : '') + '): ok=' + (count === 18 && bad.length === 0));
+  }
+
+  // 3. The positioning rules. `pinned` and a lone `align` are exactly how a
+  //    menu ends up off-screen, and flipBoundary/overflowBoundary bound two
+  //    DIFFERENT behaviours - setting one and assuming the other is the bug.
+  {
+    let skill = '', ref = '';
+    try { skill = read('skills/fluent-web-ui/SKILL.md'); ref = read('skills/fluent-web-ui/references/positioning.md'); } catch { /* reported below */ }
+    const both = skill + '\n' + ref;
+    const rules = {
+      'flip + overflow boundary are distinct': /flipBoundary/.test(skill) && /overflowBoundary/.test(skill),
+      'position outranks align': /position[^\n]*outranks[^\n]*align/i.test(skill),
+      'pinned disables repositioning': /pinned/.test(both) && /repositioning/i.test(both),
+      'matchTargetSize needs border-box': /matchTargetSize/.test(both) && /border-box/.test(both),
+      'obsolete autoSize aliases flagged': /autoSize/.test(ref) && /obsolete/i.test(ref),
+      'arrow offset must be merged': /mergeArrowOffset/.test(ref),
+      '12 shorthand placements': /above-start/.test(ref) && /after-bottom/.test(ref),
+    };
+    const absent = Object.keys(rules).filter((k) => !rules[k]);
+    console.log('positioning rules present (' + (absent.length ? 'absent: ' + absent.join(', ') : Object.keys(rules).length + ' rules') + '): ok=' + (absent.length === 0));
+  }
+
+  // 4. The slots rules, including the two "don't" cases - reaching for a slot
+  //    when a theme or a className is the right tool is the most common misuse.
+  {
+    let skill = '', ref = '';
+    try { skill = read('skills/fluent-web-ui/SKILL.md'); ref = read('skills/fluent-web-ui/references/slots.md'); } catch { /* reported below */ }
+    const both = skill + '\n' + ref;
+    const rules = {
+      'render function is an escape hatch': /escape hatch/i.test(both),
+      'className/style land on root slot': /root/.test(skill) && /className/.test(skill),
+      'Slot<Type, AlternateAs> documented': /AlternateAs/.test(ref),
+      'slot.always vs slot.optional': /slot\.always/.test(ref) && /slot\.optional/.test(ref),
+      'assertSlots + jsx pragma': /assertSlots/.test(ref) && /react-jsx-runtime/.test(ref),
+      'as prop restricted to supported types': /\bas\b/.test(ref) && /intrinsic element types/i.test(ref),
+    };
+    const absent = Object.keys(rules).filter((k) => !rules[k]);
+    console.log('slots rules present (' + (absent.length ? 'absent: ' + absent.join(', ') : Object.keys(rules).length + ' rules') + '): ok=' + (absent.length === 0));
+  }
+
+  // 5. `_unstable` is easy to over-warn about. Upstream's own framing has to
+  //    survive in the text, or agents start steering users away from APIs that
+  //    are perfectly fine to ship.
+  {
+    let ok = false, note = 'not found';
+    try {
+      const texts = ['skills/fluent-web-ui/references/slots.md', 'skills/fluent-web-ui/references/package-maturity.md'].map(read);
+      const framed = texts.filter((t) => /not[^\n]*mean the code is unstable or unfit for production/i.test(t));
+      ok = framed.length === texts.length;
+      note = framed.length + '/' + texts.length + ' carry the upstream framing';
+    } catch (e) { note = String(e && e.message ? e.message : e); }
+    console.log('_unstable framed as "API may change", not "unfit for production" (' + note + '): ok=' + ok);
+  }
+
+  // 6. The two silent accessibility opt-outs. Shadow DOM blinds tabster and
+  //    base state hooks hand visual accessibility back to the caller; neither
+  //    throws, so the skill is the only place a user finds out.
+  {
+    let skill = '', ref = '';
+    try {
+      skill = read('skills/fluent-accessibility/SKILL.md');
+      ref = read('skills/fluent-accessibility/references/focus-management.md');
+    } catch { /* reported below */ }
+    const both = skill + '\n' + ref;
+    const rules = {
+      'shadow DOM hides the DOM from tabster': /shadow DOM/i.test(both) && /tabster/i.test(both),
+      'useShadowDOMSupport before rendering': /useShadowDOMSupport/.test(both) && /before/i.test(both),
+      'base hooks do not enforce visual a11y': /do not enforce visual accessibility/i.test(both),
+      'ref goes to the base hook': /never attach it yourself/i.test(both),
+      'slot render function needs re-verification': /verify accessibility/i.test(both),
+      'sourced to storybooks.fluentui.dev': hasLinkTo(ref, 'storybooks.fluentui.dev', '/react/'),
+    };
+    const absent = Object.keys(rules).filter((k) => !rules[k]);
+    console.log('accessibility skill covers the silent opt-outs (' + (absent.length ? 'absent: ' + absent.join(', ') : Object.keys(rules).length + ' rules') + '): ok=' + (absent.length === 0));
+  }
+
+  // 7. Platform facts are load-bearing ("can we ship this?") and cheap to get
+  //    wrong from memory, so pin the numbers that came off the matrix page.
+  {
+    let ref = '';
+    try { ref = read('skills/fluent-web-ui/references/platform-support.md'); } catch { /* reported below */ }
+    const facts = {
+      'full matrix Chrome/Edge 84': /84/.test(ref),
+      'partial matrix Chrome/Edge 79': /79/.test(ref),
+      'IE not supported': /Not Supported|not supported at any level/i.test(ref),
+      'ES2020 target': /ES2020/.test(ref),
+      'React 17/18/19': /17,?\s*18 and 19|17, 18 and 19/.test(ref),
+      'three latest major TypeScript': /three latest \*?\*?major/i.test(ref),
+    };
+    const absent = Object.keys(facts).filter((k) => !facts[k]);
+    console.log('platform support facts recorded (' + (absent.length ? 'absent: ' + absent.join(', ') : Object.keys(facts).length + ' facts') + '): ok=' + (absent.length === 0));
+  }
+
+  // 8. Web-components interop: the packages are in fluentui-contrib, NOT in
+  //    @fluentui/react-components. Telling someone to import them from the core
+  //    package sends them to a build error.
+  {
+    let ref = '';
+    try { ref = read('skills/fluent-web-ui/references/web-components-interop.md'); } catch { /* reported below */ }
+    const rules = {
+      'contrib packages named': /@fluentui-contrib\/react-shadow/.test(ref) && /@fluentui-contrib\/pierce-dom/.test(ref),
+      'FluentProvider must be light DOM': /light DOM/i.test(ref),
+      'ThemelessFluentProvider inserts no styles': /ThemelessFluentProvider/.test(ref) && /does not insert styles/i.test(ref),
+      'insertion point for non-Griffel CSS': /insertionPoint/.test(ref),
+      'lives in fluentui-contrib': hasLinkTo(ref, 'github.com', '/microsoft/fluentui-contrib'),
+    };
+    const absent = Object.keys(rules).filter((k) => !rules[k]);
+    console.log('web components interop rules present (' + (absent.length ? 'absent: ' + absent.join(', ') : Object.keys(rules).length + ' rules') + '): ok=' + (absent.length === 0));
   }
 }
 
