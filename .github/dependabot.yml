@@ -1,0 +1,67 @@
+# Dependabot configuration.
+#
+# Security alerts were already on, but with no config here Dependabot only ever
+# opened security PRs — one per vulnerable package, ungrouped. Three arrived at
+# once (fast-uri, hono, qs) and each had to be merged separately with a rebase
+# in between, because they all touch the same package-lock.json.
+#
+# Grouping fixes that: related bumps land in one PR with one lockfile change.
+#
+# Note our own direct dependencies are tiny (@modelcontextprotocol/sdk and zod
+# in mcp/). Everything Dependabot has flagged so far has been transitive, pulled
+# in through the SDK's HTTP transport — which this server does not use, since it
+# runs over stdio. That lowers the real risk but is not a reason to leave them
+# unpatched, so we take the updates.
+version: 2
+
+updates:
+  # The MCP server — the part users actually run.
+  - package-ecosystem: npm
+    directory: /mcp
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      # One PR for routine bumps keeps the lockfile conflicts down. Security
+      # fixes are deliberately NOT grouped — they should be reviewable and
+      # mergeable on their own, without waiting on unrelated updates.
+      mcp-minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+
+  # The GitHub Pages site.
+  - package-ecosystem: npm
+    directory: /site
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      site-minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+
+  # Workflow actions go stale silently — nothing fails, they just drift onto
+  # unsupported runners until a deprecation breaks CI without warning.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "chore(ci)"
+    groups:
+      github-actions:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
