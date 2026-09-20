@@ -24,6 +24,14 @@ updates:
     open-pull-requests-limit: 5
     commit-message:
       prefix: "chore(deps)"
+    ignore:
+      # TypeScript 7 is a migration, not a bump: it changes module resolution
+      # and the build fails repo-wide ("Cannot find name 'node:fs'",
+      # "Cannot find name 'process'", "Property 'url' does not exist on type
+      # 'ImportMeta'"). Reopening it weekly just produces a permanently red PR.
+      # Remove this entry when someone takes the migration on deliberately.
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
     groups:
       # One PR for routine bumps keeps the lockfile conflicts down. Security
       # fixes are deliberately NOT grouped — they should be reviewable and
@@ -43,6 +51,21 @@ updates:
     open-pull-requests-limit: 5
     commit-message:
       prefix: "chore(deps)"
+    ignore:
+      # react and react-dom are peer partners and must move together, but
+      # Dependabot raises them as separate PRs — so each one alone fails to
+      # install with ERESOLVE and can never be merged. A React 19 move needs
+      # both in one PR plus a real render check, since a passing build is not
+      # proof the Fluent UI v9 site still looks right. Remove both entries when
+      # doing that upgrade on purpose.
+      - dependency-name: react
+        update-types: [version-update:semver-major]
+      - dependency-name: react-dom
+        update-types: [version-update:semver-major]
+      - dependency-name: "@types/react"
+        update-types: [version-update:semver-major]
+      - dependency-name: "@types/react-dom"
+        update-types: [version-update:semver-major]
     groups:
       site-minor-and-patch:
         applies-to: version-updates
