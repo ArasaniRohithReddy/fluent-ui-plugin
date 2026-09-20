@@ -9,15 +9,15 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@fluentui/react-components": "9.74.3",
-    "@fluentui/react-icons": "2.0.333",
+    "@fluentui/react-components": "9.74.7",
+    "@fluentui/react-icons": "2.0.341",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
   "devDependencies": {
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.0",
-    "@vitejs/plugin-react": "^6.0.5",
-    "vite": "^8.2.0"
+    "@vitejs/plugin-react": "^6.1.1",
+    "vite": "^8.3.0"
   }
 }
