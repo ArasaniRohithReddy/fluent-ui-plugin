@@ -542,6 +542,10 @@
     ],
     "behavior": [
       "Toggle button",
+      "Toggle button: a two-state control — the rest appearance reads as off, the selected appearance reads as on.",
+      "Types that support toggle behavior: Button and Compound button.",
+      "Toolbars are the usual home for toggle buttons.",
+      "For a settings panel, prefer Switch where the two options are mutually exclusive and the change takes effect right away.",
       "To display toggle behavior, manipulate a button’s state properties. In the code, use the ToggleButton component and pass the checked prop.",
       "Only use one primary button in a layout for the most important action. If there are more than two buttons with equal priority, all buttons should have neutral backgrounds.",
       "When there are many available minor actions, use the outline, subtle, or transparent appearances on all buttons to avoid a busy layout.",
@@ -746,7 +750,17 @@
       "Apply versus Save"
     ],
     "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-button-button--docs",
-    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/button/usage",
+    "changeLog": [
+      {
+        "date": "2026-09-21",
+        "change": "added",
+        "field": "behavior",
+        "count": 4,
+        "note": "Live Behavior / Toggle button carries four facts this record lacked (two-state semantics, which types support it, toolbar placement, Switch as the settings-panel alternative). Added as paraphrase.",
+        "source": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+      }
+    ]
   },
   {
     "name": "Card",
@@ -771,7 +785,7 @@
     ],
     "accessibility": [
       "Aria labels: Make sure to provide meaningful aria-label, aria-describedby and aria-labelledby whenever needed, especially for selectable cards.",
-      "Focus order in cards: Cards can treat focus in different ways to ensure they meet the needs of each experience. Use the focusMode prop to specify the focus behavior of the card and the actions it contains. The four values are off, no-tab, tab-exit and tab-only; see tables (Accessibility / focusMode) for what each one does."
+      "Focus order in cards: a card can take focus in more than one way so it can suit each experience. The focusMode prop sets how the card and the actions inside it receive focus; the four accepted values are off, no-tab, tab-exit and tab-only — see tables (Accessibility / focusMode) for what each one does."
     ],
     "content": [
       "No matter the type of content in a card, they should offer bite-sized pieces of information that people need to know first. This information should encourage them to take an action directly from the card or click through for more info.",
@@ -905,27 +919,55 @@
       {
         "section": "Accessibility / focusMode",
         "headers": [
-          "focusMode",
-          "Behavior"
+          "Value",
+          "Description"
         ],
         "rows": [
           [
             "off",
-            "The actions in the card will be focusable but the card container will not receive or manage focus."
+            "Actions inside the card are focusable; the card container itself neither takes nor manages focus."
           ],
           [
             "no-tab",
-            "The card will be focusable and trap focus inside it. Tab cycles through the card actions. ESC exits the card."
+            "The card takes focus and traps it — Tab moves between the card's actions, Esc leaves the card."
           ],
           [
             "tab-exit",
-            "The card will be focusable and trap focus inside it. Tab and ESC exit the card."
+            "The card takes focus and traps it; Tab and Esc both leave the card."
           ],
           [
             "tab-only",
-            "The card will be focusable but will not trap focus."
+            "The card takes focus but does not trap it."
           ]
         ]
+      }
+    ],
+    "changeLog": [
+      {
+        "date": "2026-09-21",
+        "change": "changed",
+        "field": "accessibility (Focus order in cards)",
+        "note": "Upstream rewrote the focusMode sentence. Our text still described the older revision, so it was rebuilt from the current page (facts unchanged: the prop still takes off, no-tab, tab-exit, tab-only).",
+        "source": "https://fluent2.microsoft.design/components/web/react/core/card/usage",
+        "previous": "Focus order in cards: Cards can treat focus in different ways to ensure they meet the needs of each experience. Use the focusMode prop to specify the focus behavior of the card and the actions it contains. The four values are off, no-tab, tab-exit and tab-only; see tables (Accessibility / focusMode) for what each one does."
+      },
+      {
+        "date": "2026-09-21",
+        "change": "changed",
+        "field": "tables[Accessibility / focusMode].headers",
+        "note": "The live table header row is now \"Value | Description\"; it used to be \"focusMode | Behavior\".",
+        "source": "https://fluent2.microsoft.design/components/web/react/core/card/usage",
+        "previous": [
+          "focusMode",
+          "Behavior"
+        ]
+      },
+      {
+        "date": "2026-09-21",
+        "change": "changed",
+        "field": "tables[Accessibility / focusMode].rows",
+        "note": "Every focusMode description was reworded upstream (contractions, no terminal periods). Row values re-derived from the current page and paraphrased; the four keys are unchanged.",
+        "source": "https://fluent2.microsoft.design/components/web/react/core/card/usage"
       }
     ]
   },
@@ -1038,10 +1080,10 @@
     "types": [],
     "states": [],
     "behavior": [
-      "Indeterminate state",
+      "Indeterminate state: a parent checkbox can govern a group of child checkboxes — toggling the parent applies the same choice to all of them. Show the indeterminate state while only part of the group is selected.",
       "Create a visual separation between parent and child checkboxes to increase scannability. For example, indenting the children makes it easy to infer what will happen if someone selects the parent.",
-      "Single",
-      "Group"
+      "Single: one checkbox suits a yes-or-no choice.",
+      "Group: use a checkbox group where more than one option can be chosen. Cap a group at roughly seven options; beyond that, split it into separate groups for scannability or move the choices into a Combobox or Dropdown."
     ],
     "accessibility": [
       "Checkbox groups should be associated with a descriptive label component. Use the checkbox field component for built-in label functionality.",
@@ -1146,7 +1188,17 @@
       "Logical order"
     ],
     "storybookUrl": "https://react.fluentui.dev/?path=/docs/components-checkbox--docs",
-    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/checkbox/usage"
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/core/checkbox/usage",
+    "changeLog": [
+      {
+        "date": "2026-09-21",
+        "change": "added",
+        "field": "behavior",
+        "count": 3,
+        "note": "Three behavior/layout captions were stored as bare labels. Enriched in place with the guidance the live page puts under them (indeterminate cascade, single vs group, the seven-option ceiling). Each string still begins with the original label. Added as paraphrase.",
+        "source": "https://fluent2.microsoft.design/components/web/react/core/checkbox/usage"
+      }
+    ]
   },
   {
     "name": "Combobox",
@@ -5538,7 +5590,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "Attachment",
@@ -5603,7 +5661,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/attachment/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "Suggestions",
@@ -5667,7 +5731,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatinput/suggestions/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "Chat output",
@@ -5711,7 +5781,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "Citations and references",
@@ -5778,7 +5854,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/citationsandreferences/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "Copilot message",
@@ -5843,7 +5925,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/copilotmessage/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "Sensitivity",
@@ -5895,7 +5983,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/sensitivity/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "Timestamp",
@@ -5928,7 +6022,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/timestamp/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "User message",
@@ -5961,7 +6061,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/chatoutput/usermessage/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "Copilot FRE",
@@ -6065,7 +6171,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/copilotfre/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "Entity cards",
@@ -6299,7 +6411,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/entitycards/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "Ghost text",
@@ -6355,7 +6473,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/ghosttext/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "Prompt starters",
@@ -6446,7 +6570,13 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/promptstarters/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
   },
   {
     "name": "System message",
@@ -6499,6 +6629,113 @@
     "docUrl": "https://fluent2.microsoft.design/components/web/react/ai/systemmessage/usage",
     "contentSource": "gated-capture",
     "contentSourceNote": "This usage page requires Microsoft employee sign-in, so it cannot be re-validated from a public crawl. The guidance, section list and images here come from a signed-in capture taken 2026-08.",
-    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine."
+    "gatedNotice": "The guidance on this page is published by Microsoft behind an employee sign-in, so it is not redistributed here. Read it at the official docUrl. If you have access, restore mcp/data/local/ (or re-run the capture) to merge the full guidance back in on your own machine.",
+    "gatedCheck": {
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "note": "Route still redirects to Microsoft employee sign-in. Confirmed by reading the redirect header only; the page was never fetched and no sign-in was attempted."
+    }
+  },
+  {
+    "$meta": true,
+    "record": "dataset-metadata",
+    "name": "$meta",
+    "slug": "$meta",
+    "category": "$meta",
+    "platform": "web/react",
+    "dataset": "mcp/data/fluent-components-usage.json",
+    "description": "Provenance for this dataset. Not a component; skip records where $meta is true.",
+    "capturedAt": "2026-09-21",
+    "previousCapture": "2026-08",
+    "entries": 61,
+    "entriesByCategory": {
+      "core": 47,
+      "ai": 14
+    },
+    "source": {
+      "site": "https://fluent2.microsoft.design",
+      "routeShape": "/components/web/react/{core|ai}/<name>/usage/",
+      "sitemap": "https://fluent2.microsoft.design/sitemap-0.xml",
+      "sitemapRoutes": 131,
+      "webReactUsageRoutes": 61,
+      "checkedAt": "2026-09-21"
+    },
+    "coverage": {
+      "note": "Every web/react usage route in the sitemap has a record here, and every record points at a route the sitemap still lists.",
+      "onSiteNotHere": [],
+      "hereNotOnSite": [],
+      "otherPlatforms": "The 12 iOS and 5 Android usage routes are covered by mcp/data/fluent-native.json, not this file."
+    },
+    "verification": {
+      "method": "All 47 public core pages were fetched and parsed; headings, images, tables, captions, list items, table cells and every <p> were diffed against this file. The 14 AI routes were probed for their redirect only.",
+      "pagesFetched": 47,
+      "headingDrift": 0,
+      "imageDrift": 0,
+      "tableDrift": 1,
+      "newContentAdded": 7,
+      "changedUpstream": 3,
+      "removedUpstream": 0,
+      "falsePositivesResolved": [
+        "Nav — a stored behavior string concatenates several captions; each phrase is still live."
+      ],
+      "fakeNotFound": "fluent2.microsoft.design answers unknown paths with HTTP 200 and a body whose <title> starts with \"404\", so titles and body size were used, not status codes."
+    },
+    "gatedRoutes": {
+      "count": 14,
+      "checkedAt": "2026-09-21",
+      "status": 302,
+      "redirectsTo": "https://fluent2.microsoft.design/.auth/login/aad",
+      "policy": "Prose from these pages is not redistributed (see NOTICE). Each record keeps factual scaffolding, docUrl and gatedNotice. Readers with access restore the text into gitignored mcp/data/local/."
+    },
+    "contentPolicy": "Facts and structured data only — component names, section headings, anatomy part names, state names, table keys. Descriptive prose is paraphrased or omitted and docUrl always points at the source.",
+    "knownGaps": [
+      "Fluent provider carries authored guidance (contentSource: \"authored\") because its live page ships only a Resources section; it cannot be diffed against the site.",
+      "Icon has no usage prose upstream, so its lists are intentionally empty.",
+      "Tag picker's live page has no Resources section, so its storybookUrl is supplied by this plugin rather than read off the page."
+    ],
+    "changeLog": [
+      {
+        "date": "2026-09-21",
+        "entry": "Button",
+        "change": "added",
+        "field": "behavior",
+        "detail": "4 toggle-button facts"
+      },
+      {
+        "date": "2026-09-21",
+        "entry": "Checkbox",
+        "change": "added",
+        "field": "behavior",
+        "detail": "3 captions enriched with the guidance beneath them"
+      },
+      {
+        "date": "2026-09-21",
+        "entry": "Card",
+        "change": "changed",
+        "field": "accessibility + tables",
+        "detail": "focusMode wording and table header row changed upstream"
+      }
+    ],
+    "docUrl": "https://fluent2.microsoft.design/components/web/react/",
+    "licensingAudit": {
+      "checkedAt": "2026-09-21",
+      "method": "8-word shingle test: every string in a record is normalised (lowercased, punctuation stripped) and cut into overlapping 8-word windows, then matched against the same windows taken from the live page text.",
+      "addedOrChangedThisPass": {
+        "shingles": 164,
+        "verbatimOverlaps": 0,
+        "ok": true
+      },
+      "publishedCorpus": {
+        "shingles": 26216,
+        "verbatimOverlaps": 22947,
+        "percent": 87.5,
+        "ok": false,
+        "finding": "RISK, PRE-EXISTING AND NOT INTRODUCED BY THIS PASS: the descriptive prose captured for the 47 public core records is still largely verbatim from the source pages (87.5% of 8-word windows match). Only the strings added or rewritten on 2026-09-21 are paraphrased. Rewriting the remaining prose is a separate, deliberate remediation — it was not done here because a blind mass-paraphrase risks changing the facts and destroys the ability to diff future captures.",
+        "lowestOverlap": "fluentprovider 5.5% (authored, not captured)",
+        "highestOverlap": "icon 100% (38 shingles only), tree 94.7%, list 94.1%"
+      },
+      "policy": "NOTICE — ship facts and structured data, paraphrase or omit descriptive prose, always keep docUrl."
+    }
   }
 ]
