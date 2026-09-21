@@ -8,6 +8,30 @@ Design guidance and reference data in this repository are derived from the publi
 available, MIT-licensed @fluentui/* npm packages and publicly available Fluent 2
 documentation, and are provided for interoperability and developer reference.
 
+Quoted Microsoft documentation
+------------------------------
+Some records in mcp/data/ carry short passages quoted verbatim from Microsoft's public
+Fluent 2 documentation — principally the `description`, `whenToUse`, `behavior`,
+`accessibility` and `content` fields of component usage records, and equivalent prose in
+the design-language topics. A measured audit puts the verbatim proportion of that prose
+at roughly 60-90% depending on the page and the measurement method.
+
+This is stated plainly because an earlier version of this file implied that only
+paraphrased facts were shipped, and that was not accurate.
+
+Those quoted passages remain the copyright of Microsoft Corporation. They are NOT covered
+by this repository's MIT licence, which applies to the plugin's own code, structure,
+tooling and original content. Every record carries a `docUrl` pointing at the official
+Microsoft page it came from, and the tools surface that URL alongside the text so readers
+are directed to the authoritative source rather than treating this copy as canonical.
+
+Purely factual elements — component names, anatomy part names, section headings, token
+names and their values, table rows, counts and links — are not treated as protected
+expression and form the bulk of the datasets.
+
+If Microsoft would prefer any quoted passage removed, paraphrased, or replaced with a
+link, open an issue and it will be actioned promptly.
+
 Sign-in-gated material
 ----------------------
 A small number of Fluent 2 pages — notably the AI/Copilot component usage pages and four

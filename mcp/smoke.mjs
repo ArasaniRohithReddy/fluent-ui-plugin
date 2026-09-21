@@ -2792,6 +2792,495 @@ const figPlugins = (await client.callTool({ name: 'fluent_figma_guidance', argum
   }
 }
 
+// ===========================================================================
+// Design-guidance refresh against the live site (ADDED).
+//
+// fluent2.microsoft.design keeps moving while this dataset sits still, and the
+// drift is invisible: a page grows an H2 or changes a number and every answer
+// built on the stale record is confidently wrong. The 2026-09-21 re-capture
+// diffed all 42 topics against their live pages and found the gap was almost
+// entirely STRUCTURAL - H2 groupings the flat `sections` array had dropped -
+// plus one genuinely uncaptured value block (the elevation shadow-generation
+// parameters) and one sitemap route that was delisted upstream.
+//
+// These checks pin that state so the next drift is a test failure rather than a
+// discovery. Every topic touched below is a PUBLIC page, so all of them pass
+// identically with and without the gitignored mcp/data/local/ overlay.
+// ===========================================================================
+{
+  const text = async (name, args = {}) => {
+    try {
+      const r = await client.callTool({ name, arguments: args });
+      return r.content[0].text;
+    } catch (e) {
+      return String(e && e.message ? e.message : e);
+    }
+  };
+  const jsonOf = (s) => { try { return JSON.parse(s); } catch { return null; } };
+  const guidance = JSON.parse(readFileSync(new URL('data/design-guidance.json', import.meta.url), 'utf8'));
+  const topics = guidance.topics ?? {};
+
+  // 1. The topic count is asserted in three places (the tool enum, the `all`
+  //    index and $meta) and they have silently disagreed before - 36 vs 40 vs
+  //    42. Tie the data to its own declared count.
+  {
+    const declared = guidance.$meta?.topicCount;
+    const actual = Object.keys(topics).length;
+    const idx = jsonOf(await text('fluent_design_guidance', { topic: 'all' }));
+    const fromTool = Object.keys(idx?.topics ?? {}).length;
+    console.log('design-guidance topic count agrees with $meta (' + actual + ' topics, $meta says ' + declared
+      + ', tool index returns ' + fromTool + '): ok=' + (actual === declared && fromTool === declared));
+  }
+
+  // 2. The capture is only trustworthy if it says when it happened. $meta.refresh
+  //    also has to state the finding that matters most - whether any stored value
+  //    disagreed with the live page - because "we checked and found nothing" and
+  //    "we never checked" are indistinguishable without it.
+  {
+    const r = guidance.$meta?.refresh ?? {};
+    const ok = /^\d{4}-\d{2}-\d{2}$/.test(guidance.$meta?.refreshedAt ?? '')
+      && r.capturedAt === guidance.$meta.refreshedAt
+      && r.topicsChecked === Object.keys(topics).length
+      && r.gatedTopicsSkipped === 4
+      && typeof r.findings?.changedValues === 'number'
+      && typeof r.licensing === 'string';
+    console.log('design-guidance $meta records the refresh date and its findings ('
+      + (guidance.$meta?.refreshedAt ?? 'no date') + ', changedValues=' + (r.findings?.changedValues ?? '?')
+      + '): ok=' + ok);
+  }
+
+  // 3. pageOutline is the drift detector: the live heading tree with anchor ids,
+  //    for every topic whose page is publicly readable. Gated topics must NOT
+  //    have one - capturing structure from a page we refuse to read would be the
+  //    NOTICE violation wearing a different hat.
+  {
+    const withOutline = Object.entries(topics).filter(([, t]) => t.pageOutline);
+    const gatedWithOutline = Object.entries(topics).filter(([, t]) => t.gatedNotice && t.pageOutline);
+    const headings = withOutline.reduce((n, [, t]) => n + (t.pageOutline.headings?.length ?? 0), 0);
+    const countsAgree = withOutline.every(([, t]) => t.pageOutline.headingCount === t.pageOutline.headings.length);
+    const dated = withOutline.every(([, t]) => t.pageOutline.capturedAt === guidance.$meta.refreshedAt);
+    console.log('every public topic carries a live pageOutline (' + withOutline.length + ' topics, ' + headings
+      + ' headings, ' + gatedWithOutline.length + ' gated): ok='
+      + (withOutline.length === 37 && headings >= 450 && countsAgree && dated && gatedWithOutline.length === 0));
+  }
+
+  // 4. pageOutline must stay STRUCTURE. A heading is a label; if entries start
+  //    carrying paragraphs this file has quietly become a copy of the page.
+  {
+    const offenders = [];
+    for (const [key, t] of Object.entries(topics)) {
+      for (const h of t.pageOutline?.headings ?? []) {
+        if (typeof h.text !== 'string' || h.text.length > 80) offenders.push(key + ':' + String(h.text).slice(0, 40));
+        if (h.body || h.paragraph || h.sourceText) offenders.push(key + ': carries page text');
+      }
+    }
+    console.log('pageOutline carries headings only, never page prose ('
+      + (offenders.join(', ') || 'no offenders') + '): ok=' + (offenders.length === 0));
+  }
+
+  // 5. Every anchor the dataset hands out has to exist on the page, or a
+  //    deep link lands the reader at the top of a long page with no explanation.
+  {
+    const ghosts = [];
+    let anchored = 0;
+    for (const [key, t] of Object.entries(topics)) {
+      const ids = new Set((t.pageOutline?.headings ?? []).map((h) => h.id).filter(Boolean));
+      if (!ids.size) continue;
+      for (const s of t.sections ?? []) {
+        if (!s.anchor) continue;
+        anchored++;
+        if (!ids.has(s.anchor)) ghosts.push(key + '#' + s.anchor);
+      }
+    }
+    console.log('every section anchor resolves to a real heading id (' + anchored + ' anchored sections, '
+      + (ghosts.join(', ') || 'no ghosts') + '): ok=' + (anchored >= 350 && ghosts.length === 0));
+  }
+
+  // 6. The nine sections this pass added - the whole point of the re-capture.
+  //    Requested by name through the tool, because "it is in the JSON" and "a
+  //    caller can reach it" are different claims.
+  {
+    const want = [
+      ['typography', 'Fluent font stacks', 'fluent-font-stacks'],
+      ['content-design', 'Some best practices', 'some-best-practices'],
+      ['wait-ux', 'Visual patterns', 'visual-patterns'],
+      ['wait-ux', 'Content patterns', 'content-patterns'],
+      ['responsible-ai', 'Visual patterns', 'visual-patterns'],
+      ['content-engineering-evals', 'Key decisions in human-centered evals', 'key-decisions-in-human-centered-evals'],
+      ['content-engineering-evals', 'Evaluation pages', 'evaluation-pages'],
+      ['get-started-design', 'Fluent 2 Core in Figma', 'fluent-2-core-in-figma'],
+    ];
+    const missed = [];
+    for (const [topic, heading, anchor] of want) {
+      const j = jsonOf(await text('fluent_design_guidance', { topic, section: heading, maxChars: 120000 }));
+      const hit = (j?.sections ?? []).find((s) => s.heading === heading);
+      if (!hit || hit.anchor !== anchor || !hit.addedAt) missed.push(topic + '/' + heading);
+    }
+    console.log('sections added by the ' + guidance.$meta.refreshedAt + ' re-capture are retrievable through the tool ('
+      + want.length + ' requested, ' + (missed.join(', ') || 'none missing') + '): ok=' + (missed.length === 0));
+  }
+
+  // 7. No topic may lose what it already had. Counts pinned from the state
+  //    before the re-capture, so a future "cleanup" that drops sections or key
+  //    points fails here instead of shipping.
+  {
+    const floor = {
+      'design-principles': [12, 4], color: [9, 13], typography: [8, 9], layout: [17, 13], elevation: [6, 10],
+      shapes: [8, 7], iconography: [13, 11], motion: [13, 12], material: [5, 6], accessibility: [15, 13],
+      'content-design': [18, 12], 'design-tokens': [4, 7], handoffs: [18, 13], onboarding: [15, 7],
+      'wait-ux': [18, 10], 'responsible-ai': [34, 13], 'ai-harm': [9, 11], 'content-engineering': [17, 15],
+      'content-engineering-evals': [12, 8], 'content-engineering-system-prompt-engineering': [3, 9],
+      'content-engineering-define-system-level-behavior': [7, 10],
+      'content-engineering-define-task-behavior-patterns': [6, 8],
+      'content-engineering-define-prompts-for-complex-tasks': [7, 9],
+      'content-engineering-design-interaction-behavior': [7, 10],
+      'content-engineering-define-tone-and-context-behavior': [9, 10],
+      'content-engineering-define-good-output-quality': [13, 10],
+      'content-engineering-decide-what-to-evaluate-first': [10, 10],
+      'content-engineering-define-output-requirements-by-experience-type': [12, 11],
+      'content-engineering-build-a-prompt-set-and-assertions-for-an-eval': [8, 11],
+      'content-engineering-understand-eval-results': [9, 11],
+      'content-engineering-turn-eval-results-into-the-right-fixes': [10, 10],
+      'content-engineering-track-quality-over-time': [8, 11],
+      'component-roadmap': [3, 7], 'whats-new': [2, 4], 'web-component-index': [2, 6], 'site-routes': [0, 5],
+      'get-started-design': [6, 7], 'get-started-develop': [4, 7],
+    };
+    const shrunk = [];
+    for (const [key, [minSections, minKeyPoints]] of Object.entries(floor)) {
+      const t = topics[key];
+      if (!t) { shrunk.push(key + ': gone'); continue; }
+      if ((t.sections ?? []).length < minSections) shrunk.push(key + ': sections ' + t.sections.length + ' < ' + minSections);
+      if ((t.keyPoints ?? []).length < minKeyPoints) shrunk.push(key + ': keyPoints ' + t.keyPoints.length + ' < ' + minKeyPoints);
+    }
+    console.log('no topic lost content it already carried (' + Object.keys(floor).length + ' topics checked, '
+      + (shrunk.join('; ') || 'none shrank') + '): ok=' + (shrunk.length === 0));
+  }
+
+  // 8. The elevation shadow-generation parameters: the one block of real values
+  //    the site publishes that this dataset never had.
+  {
+    const j = jsonOf(await text('fluent_design_guidance', { topic: 'elevation', maxChars: 120000 }));
+    const g = j?.shadowGeneration ?? {};
+    const rows = g.rows ?? [];
+    const byRamp = (ramp, theme, shadow) => rows.find((r) => r.ramp === ramp && r.theme === theme && r.shadow === shadow);
+    const ok = rows.length === 8
+      && byRamp('low', 'light', 'Shadow 1')?.opacity === '14%'
+      && byRamp('low', 'dark', 'Shadow 1')?.opacity === '28%'
+      && byRamp('high', 'light', 'Shadow 1')?.opacity === '24%'
+      && byRamp('high', 'light', 'Shadow 2')?.blur === '8'
+      && byRamp('high', 'dark', 'Shadow 2')?.blur === '2'
+      && rows.every((r) => r.xAxis === '0');
+    console.log('elevation publishes the shadow generation parameters (' + rows.length + ' rows): ok=' + ok);
+  }
+
+  // 9. And the trap that comes with them. blur = n / Y = n/2 reproduces the KEY
+  //    layer of every shadowN token exactly, which is precisely why someone will
+  //    hand-compute the rest and get it wrong: the shipped low-ramp ambient
+  //    layer is a fixed 0 0 2px and the shipped opacities are 0.12/0.14, not the
+  //    site's 14/20/24/28%. Recompute it here so the warning is verified, not
+  //    just asserted.
+  {
+    const tokenData = JSON.parse(readFileSync(new URL('data/fluent-tokens.json', import.meta.url), 'utf8'));
+    const layers = (s) => [...String(s).matchAll(/(-?\d+)(?:px)?\s+(-?\d+)(?:px)?\s+(-?\d+)px\s+rgba\(0,0,0,([\d.]+)\)/g)]
+      .map((m) => ({ x: +m[1], y: +m[2], blur: +m[3], op: +m[4] }));
+    const keyMatches = [], ambientDiffers = [];
+    for (const n of [2, 4, 8, 16, 28, 64]) {
+      const [ambient, key] = layers(tokenData.shadow['shadow' + n]);
+      if (key && key.x === 0 && key.y === n / 2 && key.blur === n) keyMatches.push(n);
+      // Low ramp only: the site's formula scales the ambient blur with n, the
+      // token does not. shadow2 is the one step where they coincide.
+      if (n < 28 && ambient && !(ambient.blur === n && ambient.y === n / 2)) ambientDiffers.push(n);
+    }
+    const g = topics.elevation?.shadowGeneration?.codeTokenReality ?? {};
+    const documented = /tokens\.shadow/i.test(g.warning ?? '') && /fluent-tokens\.json/.test(g.checkedAgainst ?? '')
+      && /match/i.test(g.keyShadowGeometry ?? '') && /0 0 2px/.test(g.ambientShadowGeometry ?? '')
+      && /0\.12/.test(g.opacity ?? '');
+    console.log('shadow formulas match the key layer (' + keyMatches.length + '/6) but not the low-ramp ambient ('
+      + ambientDiffers.length + '/4 differ), and the dataset says so: ok='
+      + (keyMatches.length === 6 && ambientDiffers.length === 4 && documented));
+  }
+
+  // 10. The eval track's own index. Each link has to resolve to a topic that
+  //     really exists here, or the map points at nothing.
+  {
+    const j = jsonOf(await text('fluent_design_guidance', { topic: 'content-engineering-evals', maxChars: 120000 }));
+    const pages = j?.evaluationPages ?? [];
+    const dangling = pages.filter((p) => !topics[p.topic]);
+    const bad = pages.filter((p) => !hasLinkTo(JSON.stringify(p), 'fluent2.microsoft.design', '/content-engineering/'));
+    console.log('the evaluation-page index resolves to real topics (' + pages.length + ' pages, '
+      + (dangling.map((p) => p.topic).join(', ') || 'none dangling') + '): ok='
+      + (pages.length === 7 && dangling.length === 0 && bad.length === 0));
+  }
+
+  // 11. The sitemap shrank 132 -> 131 and the route that left is one we carry.
+  //     It still answers 302, so deleting the row would report a live gated page
+  //     as missing - on a site that never returns 404, that is the worst
+  //     possible answer. It is delisted, and says so.
+  {
+    const j = jsonOf(await text('fluent_design_guidance', { topic: 'site-routes', maxChars: 120000 }));
+    const gated = j?.gatedRoutes ?? [];
+    const oh = gated.find((r) => r.route === '/fluent-helpdesk/officehours/');
+    const removed = j?.removedUpstream ?? [];
+    const ok = j?.sitemap?.routeCount === 131 && j?.sitemap?.previousRouteCount === 132
+      && gated.length === 6 && oh?.inSitemap === false && oh?.httpStatus === 302
+      && oh?.delistedFromSitemap === guidance.$meta.refreshedAt
+      && removed.length === 1 && removed[0].stillResolves === true
+      && gated.filter((r) => r.inSitemap === true).length === 5
+      && gated.every((r) => !r.sections && !r.summary && !r.text);
+    console.log('the delisted sitemap route is flagged, not deleted (131 routes, ' + gated.length
+      + ' gated, officehours inSitemap=' + oh?.inSitemap + '): ok=' + ok);
+  }
+
+  // 12. This repo has had one licensing incident, so an unverified "we
+  //     paraphrased" is worth nothing. The re-capture ran an 8-word shingle test
+  //     over the text it authored and the result has to travel with the file -
+  //     including the one overlap, which is a page HEADING carried as structure.
+  {
+    const s = guidance.$meta?.refresh?.shingleTest ?? {};
+    const ok = s.n === 8 && s.shinglesTested >= 800 && s.proseOverlaps === 0
+      && typeof s.theOverlap === 'string' && /heading/i.test(s.theOverlap)
+      && s.verifiedAt === guidance.$meta.refreshedAt && typeof s.corpus === 'string';
+    console.log('design-guidance $meta records the 8-word shingle result for what this pass added ('
+      + (s.shinglesTested ?? 0) + ' shingles, ' + (s.proseOverlaps ?? '?') + ' verbatim prose): ok=' + ok);
+  }
+}
+
+// ---- Media index integrity (mcp/data/fluent-images.json) --------------------
+// The index is re-synced against fluent2.microsoft.design periodically, and the
+// $meta counts are what fluent_get_images hands back when called with no
+// filters. Counts that drift from the array are a silent lie, so assert them
+// against the real contents rather than trusting the file.
+{
+  const mediaDoc = JSON.parse(readFileSync(new URL('data/fluent-images.json', import.meta.url), 'utf8'));
+  const items = mediaDoc.media || [];
+  const declared = mediaDoc.$meta?.counts || {};
+  const actual = { total: items.length, images: 0, videos: 0, byKind: {}, withOcrText: 0, distinctUrls: 0 };
+  const seenUrls = new Set();
+  for (const m of items) {
+    if (m.type === 'video') actual.videos++; else actual.images++;
+    actual.byKind[m.kind] = (actual.byKind[m.kind] || 0) + 1;
+    if (m.ocrText && m.ocrText.trim()) actual.withOcrText++;
+    seenUrls.add(m.url);
+  }
+  actual.distinctUrls = seenUrls.size;
+  const kindsMatch =
+    Object.keys(actual.byKind).length === Object.keys(declared.byKind || {}).length &&
+    Object.keys(actual.byKind).every((k) => actual.byKind[k] === declared.byKind?.[k]);
+  const countsOk =
+    declared.total === actual.total && declared.images === actual.images && declared.videos === actual.videos &&
+    declared.withOcrText === actual.withOcrText && declared.distinctUrls === actual.distinctUrls && kindsMatch;
+  console.log(
+    'images $meta.counts match the media array (total=' + actual.total + ', images=' + actual.images +
+      ', videos=' + actual.videos + ', distinctUrls=' + actual.distinctUrls + '): ok=' + countsOk
+  );
+
+  // Every record must be dereferenceable: fluent_get_images hands out the url
+  // and cites docUrl as the source page. A record missing either is unusable.
+  const incomplete = items.filter((m) => !m.url || !m.docUrl || !m.id || !m.owner || !m.kind);
+  console.log('every media record has url + docUrl (+ id/owner/kind) (' + incomplete.length + ' incomplete): ok=' + (incomplete.length === 0));
+  const dupIds = items.length - new Set(items.map((m) => m.id)).size;
+  console.log('media record ids are unique (' + dupIds + ' duplicates): ok=' + (dupIds === 0));
+
+  // Do/don't polarity. The tool resolves it as `verdict || inferVerdict(alt)`,
+  // and the negative pattern MUST be tested first because \bdo\b also matches
+  // "do not". Anything unclassified silently disappears from a verdict filter.
+  const inferVerdictHere = (alt) => {
+    const a = (alt || '').toLowerCase();
+    if (/\bdon'?t\b|\bdo not\b|incorrect|\bavoid\b|\bwrong\b|not recommended/.test(a)) return 'dont';
+    if (/\bdo\b|correct|\bright\b|recommended/.test(a)) return 'do';
+    return undefined;
+  };
+  const doDont = items.filter((m) => m.kind === 'dodont');
+  const resolved = doDont.map((m) => m.verdict || inferVerdictHere(m.alt));
+  const unclassified = resolved.filter((v) => v !== 'do' && v !== 'dont').length;
+  const doCount = resolved.filter((v) => v === 'do').length;
+  const dontCount = resolved.filter((v) => v === 'dont').length;
+  console.log(
+    'dodont media classify (' + doDont.length + ' items: ' + doCount + ' do / ' + dontCount + " don't, " +
+      unclassified + ' unclassified): ok=' + (doDont.length > 0 && unclassified === 0 && doCount + dontCount === doDont.length)
+  );
+
+  // Kinds are a closed vocabulary - fluent_get_images documents them in its
+  // input schema, so an invented kind is unreachable through the tool.
+  const KNOWN_KINDS = ['anatomy', 'dodont', 'behavior', 'layout', 'state', 'content', 'type', 'example', 'hero', 'principle', 'accessibility', 'video', 'pattern', 'workflow', 'other'];
+  const strayKinds = [...new Set(items.map((m) => m.kind))].filter((k) => !KNOWN_KINDS.includes(k));
+  console.log('media kinds stay inside the documented vocabulary (' + (strayKinds.join(', ') || 'none stray') + '): ok=' + (strayKinds.length === 0));
+
+  // Alt text is the only description an agent can relay. The index's rule is
+  // that every record carries one (vision-recovered or page-derived), and a
+  // page-derived one is flagged with altNote so it is never passed off as a
+  // description of the artwork.
+  const emptyAlt = items.filter((m) => !m.alt || !m.alt.trim()).length;
+  console.log('every media record carries non-empty alt (' + emptyAlt + ' empty): ok=' + (emptyAlt === 0));
+}
+
+// The native platforms (iOS / Android / Windows) document their own figures;
+// those pages are the reason fluent_native_component exists, so their visuals
+// have to be reachable through fluent_get_images too.
+{
+  const imgIos = await client.callTool({ name: 'fluent_get_images', arguments: { owner: 'Button (iOS)' } });
+  const imgIosText = imgIos.content[0].text;
+  console.log('get_images(Button (iOS)): ok=' + (imgIosText.includes('fluent2websitecdn') && imgIosText.includes('/components/ios/core/button/usage')));
+  const imgDroid = await client.callTool({ name: 'fluent_get_images', arguments: { owner: 'Progress indicator (Android)', kind: 'dodont' } });
+  const imgDroidText = imgDroid.content[0].text;
+  console.log('get_images(Android progress indicator dodont): ok=' + (imgDroidText.includes('fluent2websitecdn') && imgDroidText.includes('DONT')));
+  const imgIcon = await client.callTool({ name: 'fluent_get_images', arguments: { owner: 'iconography', query: 'modifiers' } });
+  const imgIconText = imgIcon.content[0].text;
+  console.log('get_images(iconography modifiers): ok=' + (imgIconText.includes('designlanguage-iconography-modifiers') && /modifier/i.test(imgIconText)));
+}
+
+// ---------------------------------------------------------------------------
+// Component usage dataset — re-verified against the live Fluent 2 site
+// 2026-09-21. These checks are additive; they guard the capture's integrity:
+// the count matches what $meta claims, the content added in that pass is
+// actually reachable through fluent_get_component, the sign-in-gated records
+// still carry their pointer instead of prose, and no record silently shrank.
+// ---------------------------------------------------------------------------
+{
+  const usagePath = new URL('data/fluent-components-usage.json', import.meta.url);
+  let usage = [];
+  try { usage = JSON.parse(readFileSync(usagePath, 'utf8')); } catch {}
+  const meta = usage.find((e) => e && e.$meta === true) || null;
+  const records = usage.filter((e) => e && e.$meta !== true);
+
+  // 1. $meta has to describe the file it sits in, or it is just a comment.
+  const byCat = records.reduce((a, e) => ({ ...a, [e.category]: (a[e.category] || 0) + 1 }), {});
+  const countOk = !!meta
+    && meta.entries === records.length
+    && meta.entriesByCategory?.core === byCat.core
+    && meta.entriesByCategory?.ai === byCat.ai
+    && typeof meta.capturedAt === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(meta.capturedAt);
+  console.log('usage $meta matches the file (' + (meta ? `${meta.entries} entries, core ${meta.entriesByCategory?.core}/ai ${meta.entriesByCategory?.ai}, captured ${meta.capturedAt}` : 'no $meta record') + '): ok=' + countOk);
+
+  // 2. The $meta record must stay inert - it is in the same array as the real
+  //    records, so a lookup for a real component must never resolve to it.
+  const metaShapeOk = !!meta && meta.name === '$meta' && meta.slug === '$meta' && meta.category === '$meta'
+    && !records.some((e) => e.name === '$meta' || e.slug === '$meta');
+  console.log('usage $meta record is inert and cannot collide with a component: ok=' + metaShapeOk);
+
+  // 3. Every record still points at a real usage route, which is the one field
+  //    NOTICE requires us to keep for material we do not redistribute.
+  const badUrl = records.filter((e) => !/^https:\/\/fluent2\.microsoft\.design\/components\/web\/react\/(core|ai)\/.+\/usage$/.test(String(e.docUrl || '')));
+  console.log('every usage record keeps a real docUrl (' + badUrl.length + ' bad): ok=' + (badUrl.length === 0));
+
+  // 4. No record lost content it previously had. Floor captured from the
+  //    dataset as it stood before the 2026-09-21 re-verification.
+  const FLOOR = 'accordion:0,0,0,3,1,3,1,1,6,5 avatar:0,2,0,2,3,0,0,0,3,4 avatargroup:0,3,0,2,3,0,0,0,5,5 badge:0,0,1,6,2,4,3,2,9,7 breadcrumb:0,0,1,8,5,2,9,2,15,18 button:0,4,1,7,3,8,9,2,13,21 card:2,0,0,6,2,2,2,0,10,6 carousel:0,0,0,10,1,0,2,0,9,7 checkbox:0,0,0,4,2,7,6,1,9,9 combobox:0,0,0,4,3,3,3,0,10,5 dialog:0,3,0,9,2,3,3,2,13,8 divider:0,2,0,2,1,2,1,1,6,7 drawer:5,2,1,12,0,3,5,2,16,15 dropdown:0,0,0,3,2,3,3,0,8,4 field:0,1,1,10,2,4,1,1,12,13 fluentprovider:0,0,0,5,3,0,4,2,0,0 icon:0,0,0,0,0,0,0,0,0,0 image:0,0,0,1,3,0,0,1,2,1 infolabel:0,0,0,6,5,2,2,5,8,6 input:0,0,0,2,2,1,0,2,6,6 label:0,0,1,3,1,3,2,2,6,8 link:0,4,0,5,3,3,6,4,15,18 list:0,0,0,7,1,4,2,2,15,14 menu:0,3,0,4,0,2,3,0,9,11 messagebar:5,4,0,12,2,10,10,1,16,19 nav:0,0,0,15,1,3,5,1,18,17 persona:0,0,0,2,2,2,1,0,5,2 popover:0,0,0,4,2,2,1,1,7,4 progressbar:2,0,0,7,0,4,8,1,8,10 radiogroup:0,0,0,6,2,3,4,0,8,5 rating:0,3,11,12,1,0,0,0,8,26 searchbox:0,0,0,2,2,1,1,0,6,4 select:0,0,0,1,0,3,3,0,3,2 skeleton:0,0,0,3,2,0,2,0,6,2 slider:0,2,0,6,1,1,2,0,5,9 spin:0,0,2,2,1,2,3,0,7,3 spinner:0,0,1,1,1,5,2,0,3,6 switch:0,0,0,2,1,2,4,0,5,9 tablist:0,0,0,7,3,5,4,1,5,5 tag:0,2,1,9,2,2,5,1,12,14 tagpicker:0,0,0,5,2,0,1,0,10,6 text:0,2,0,2,2,0,2,2,5,2 textarea:0,0,0,2,4,1,1,3,5,5 toast:0,4,0,8,2,4,10,4,13,14 toolbar:0,0,0,3,2,1,1,0,9,6 tooltip:0,0,0,3,1,2,0,0,4,2 tree:0,5,0,12,3,5,1,0,12,18 chatinput:8,0,0,0,0,0,0,0,0,5 attachment:0,0,0,0,0,0,0,0,0,5 suggestions:0,0,0,0,0,0,0,0,0,5 chatoutput:10,0,0,0,0,0,0,0,0,1 citationsandreferences:0,2,0,0,0,0,0,0,0,5 copilotmessage:0,0,0,0,0,0,0,0,0,5 sensitivity:0,2,0,0,0,0,0,0,0,3 timestamp:0,0,0,0,0,0,0,0,0,1 usermessage:0,0,0,0,0,0,0,0,0,1 copilotfre:7,0,0,0,0,0,0,0,0,9 entitycards:9,4,0,0,0,0,0,0,0,15 ghosttext:0,0,0,0,0,0,0,0,0,4 promptstarters:0,2,0,0,0,0,0,0,0,8 systemmessage:1,0,0,0,0,0,0,0,0,3';
+  const bySlug = new Map(records.map((e) => [e.slug, e]));
+  const shrunk = [];
+  const FIELDS = ['anatomy', 'types', 'states', 'behavior', 'accessibility', 'content', 'do', 'dont', 'sections', 'images'];
+  for (const spec of FLOOR.split(' ')) {
+    const [slug, nums] = spec.split(':');
+    const e = bySlug.get(slug);
+    if (!e) { shrunk.push(slug + ' (record gone)'); continue; }
+    const now = [
+      (e.anatomy || []).length, (e.types || []).length, (e.states || []).length, (e.behavior || []).length,
+      (e.accessibility || []).length, (e.content || []).length,
+      (e.bestPractices?.do || []).length, (e.bestPractices?.dont || []).length,
+      (e.sections || []).length, (e.images || []).length,
+    ];
+    nums.split(',').map(Number).forEach((was, i) => {
+      if (now[i] < was) shrunk.push(`${slug}.${FIELDS[i]} ${was}->${now[i]}`);
+    });
+  }
+  console.log('no usage record lost content it previously had (' + (shrunk.join(', ') || 'all ' + records.length + ' at or above the 2026-08 floor') + '): ok=' + (shrunk.length === 0));
+
+  // 5. The gated AI records were re-probed, never read. Each must still carry
+  //    the pointer, a dated redirect check, and no prose.
+  const gated = records.filter((e) => e.contentSource === 'gated-capture');
+  const gatedOk = gated.length === 14
+    && gated.every((e) => typeof e.gatedNotice === 'string' && /employee sign-in/i.test(e.gatedNotice))
+    && gated.every((e) => e.gatedCheck && e.gatedCheck.status === 302 && /\/\.auth\/login\/aad$/.test(String(e.gatedCheck.redirectsTo || '')) && /^\d{4}-\d{2}-\d{2}$/.test(String(e.gatedCheck.checkedAt || '')))
+    && gated.every((e) => !(e.description && e.description.length) && !(e.behavior && e.behavior.length));
+  console.log('gated AI usage records keep their notice + a dated 302 re-check (' + gated.length + ' records): ok=' + gatedOk);
+
+  // 6. The licensing rule is only worth anything if the numbers are recorded.
+  const lic = meta && meta.licensingAudit;
+  const licOk = !!lic && lic.addedOrChangedThisPass?.verbatimOverlaps === 0 && lic.addedOrChangedThisPass?.shingles > 0
+    && typeof lic.method === 'string' && /shingle/i.test(lic.method);
+  console.log('usage $meta records the 8-word shingle result for what this pass added (' + (lic ? `${lic.addedOrChangedThisPass?.shingles} shingles, ${lic.addedOrChangedThisPass?.verbatimOverlaps} verbatim` : 'no licensingAudit') + '): ok=' + licOk);
+
+  // 7. The content added on 2026-09-21 has to be reachable through the tool,
+  //    not merely present in the file - that is the only path a caller uses.
+  const btn = await client.callTool({ name: 'fluent_get_component', arguments: { name: 'Button' } });
+  const btnText = btn.content[0].text;
+  const btnOk = /toggle behavior/i.test(btnText) && /Compound button/.test(btnText) && /Toolbars/i.test(btnText);
+  console.log('get_component(Button) surfaces the toggle-button behavior facts: ok=' + btnOk);
+
+  const cb = await client.callTool({ name: 'fluent_get_component', arguments: { name: 'Checkbox' } });
+  const cbText = cb.content[0].text;
+  const cbOk = /Indeterminate state:/.test(cbText) && /seven options/.test(cbText) && /Group:/.test(cbText);
+  console.log('get_component(Checkbox) surfaces the indeterminate + group guidance: ok=' + cbOk);
+
+  const cd = await client.callTool({ name: 'fluent_get_component', arguments: { name: 'Card' } });
+  let cdOk = false, cdNote = 'response was not JSON';
+  try {
+    const payload = JSON.parse(cd.content[0].text);
+    const focusTable = (payload.usage?.tables || []).find((t) => /focusMode/i.test(String(t.section || '')));
+    const headers = focusTable ? focusTable.headers.join(' | ') : '(no focusMode table)';
+    const keys = focusTable ? focusTable.rows.map((r) => r[0]).join(',') : '';
+    cdOk = headers === 'Value | Description'
+      && keys === 'off,no-tab,tab-exit,tab-only'
+      && /focusMode prop/.test(String(payload.usage?.accessibility?.join(' ') || ''));
+    cdNote = headers + ' / ' + keys;
+  } catch {}
+  console.log('get_component(Card) returns the current focusMode table (' + cdNote + '): ok=' + cdOk);
+
+  // 8. Upstream changes must leave a dated trail rather than being swapped in
+  //    silently - confidently stale is worse than visibly incomplete.
+  const logged = records.filter((e) => Array.isArray(e.changeLog) && e.changeLog.length);
+  const logOk = logged.length >= 3
+    && logged.every((e) => e.changeLog.every((c) => /^\d{4}-\d{2}-\d{2}$/.test(String(c.date || '')) && ['added', 'changed', 'removed'].includes(c.change)))
+    && logged.some((e) => e.name === 'Card' && e.changeLog.some((c) => c.change === 'changed'));
+  console.log('upstream edits are recorded in a dated changeLog (' + logged.length + ' records, Card flagged changed): ok=' + logOk);
+
+  // 9. A gated record must answer identically whether or not this checkout has
+  //    the gitignored overlay - only the $provenance line may differ.
+  const gatedCall = await client.callTool({ name: 'fluent_get_component', arguments: { name: 'Chat input' } });
+  const gatedText = gatedCall.content[0].text;
+  const overlayHere = existsSync(new URL('data/local/fluent-components-usage.json', import.meta.url));
+  const src = (gatedText.match(/"source":\s*"([a-z-]+)"/) || [])[1];
+  const gatedCallOk = /chatinput\/usage/.test(gatedText)
+    && src === (overlayHere ? 'local-overlay' : 'published')
+    && (overlayHere || /employee sign-in/i.test(gatedText));
+  console.log('get_component(Chat input) is honest about which dataset answered (' + (overlayHere ? 'overlay present' : 'clone view') + ', source=' + src + '): ok=' + gatedCallOk);
+}
+
+// NOTICE must describe what we actually ship. An audit measured roughly 60-90%
+// verbatim overlap between our component-usage prose and Microsoft's public
+// pages, while NOTICE implied only paraphrased facts were redistributed — the
+// same class of mistake as the earlier gated-content claim, on the pages we had
+// assumed were safe. Assert the disclosure is present and specific.
+{
+  let nOk = false, nNote = '';
+  try {
+    const raw = readFileSync(new URL('../NOTICE', import.meta.url), 'utf8');
+    // NOTICE is hard-wrapped, so phrases span line breaks. Normalise whitespace
+    // before matching or the assertions fail on formatting rather than content.
+    const notice = raw.replace(/\s+/g, ' ');
+    const discloses = /Quoted Microsoft documentation/.test(notice)
+      && /verbatim/i.test(notice)
+      && /NOT covered by this repository[’']s MIT licence/i.test(notice);
+    // Guard the specific claim that was false, not any sentence resembling it.
+    // The gated section legitimately says the datasets "carry only factual
+    // scaffolding" for gated records — that one is true, and an over-broad
+    // pattern here flags correct text and trains people to ignore the check.
+    const noFalseClaim = !/No Microsoft-internal or sign-in-gated content is redistributed/i.test(notice);
+    // Every quoted record must still point at its source, which is what makes
+    // the quotation attributable rather than anonymous.
+    const usage = JSON.parse(readFileSync(new URL('data/fluent-components-usage.json', import.meta.url), 'utf8'));
+    const records = Object.values(usage).filter((u) => u && typeof u === 'object' && u.name && u.name !== '$meta');
+    const missingDocUrl = records.filter((u) => !u.docUrl).length;
+    nOk = discloses && noFalseClaim && missingDocUrl === 0;
+    nNote = nOk
+      ? `verbatim quotation disclosed, MIT carve-out stated, all ${records.length} records cite docUrl`
+      : [discloses ? '' : 'NOTICE does not disclose verbatim quotation',
+         noFalseClaim ? '' : 'NOTICE repeats a claim the data contradicts',
+         missingDocUrl ? `${missingDocUrl} records quote without citing docUrl` : ''].filter(Boolean).join('; ');
+  } catch (e) { nNote = String(e && e.message ? e.message : e); }
+  console.log('NOTICE discloses quoted Microsoft prose (' + nNote + '): ok=' + nOk);
+}
+
 await client.close();
 
 const failures = _lines.filter((l) => /ok\s*=\s*false/i.test(l));

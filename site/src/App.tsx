@@ -201,7 +201,7 @@ const FEATURES: Feat[] = [
   { c: '#107c10', Icon: PaintBrush24Regular, t: 'Tokens and theming', d: '366 design tokens across light, dark and high-contrast. Turn any brand color into a full Fluent theme.' },
   { c: '#ca5010', Icon: ArrowSwap24Regular, t: 'Migration', d: 'Adopt Fluent 2 in existing apps: Fluent UI v8 to v9, other design systems, or hardcoded values to tokens.' },
   { c: '#a4262c', Icon: Accessibility24Regular, t: 'Accessibility built in', d: 'A WCAG-aligned Fluent 2 checklist is enforced by default: names, roles, focus order, 4.5:1 contrast, and target sizes.' },
-  { c: '#e3008c', Icon: Image24Regular, t: 'Source visuals on demand', d: '753 diagrams, do/don\'t examples, anatomy illustrations and Motion videos, each with its real source URL.' },
+  { c: '#e3008c', Icon: Image24Regular, t: 'Source visuals on demand', d: '873 diagrams, do/don\'t examples, anatomy illustrations and Motion videos, each with its real source URL.' },
   { c: '#0f6cbd', Icon: Brain24Regular, t: 'Presets and memory', d: 'Optional per-team brand and accessibility presets, plus persistent memory so agents respect your conventions.' },
 ];
 
@@ -452,7 +452,7 @@ export function App() {
                 <Button appearance="secondary" size="large" icon={<Star20Regular />} as="a" href={REPO}>View on GitHub</Button>
               </div>
               <div className={s.stats}>
-                {[[String(AGENTS.length), 'Specialist agents'], [String(SKILLS.length), 'Skills'], [String(TOOLS.length), 'MCP tools'], ['353', 'React components catalogued'], ['2,976', 'Icons, searchable by meaning'], ['366', 'Design tokens, 3 themes'], ['27', 'Fluent charts + data-viz palette'], ['42', 'Design-language topics'], ['753', 'Source visuals indexed'], ['185', 'Native types (iOS/Android/Windows)']].map(([b, l]) => (
+                {[[String(AGENTS.length), 'Specialist agents'], [String(SKILLS.length), 'Skills'], [String(TOOLS.length), 'MCP tools'], ['353', 'React components catalogued'], ['2,976', 'Icons, searchable by meaning'], ['366', 'Design tokens, 3 themes'], ['27', 'Fluent charts + data-viz palette'], ['42', 'Design-language topics'], ['873', 'Source visuals indexed'], ['185', 'Native types (iOS/Android/Windows)']].map(([b, l]) => (
                   <div key={l} className={`${glass} ${s.stat}`}><span className={s.statB}>{b}</span><Caption1 style={{ color: tokens.colorNeutralForeground3 }}>{l}</Caption1></div>
                 ))}
               </div>
@@ -600,7 +600,7 @@ export function App() {
                   <Body1 block style={{ color: 'rgba(255,255,255,.9)' }}>Every route in the official Fluent 2 site's own sitemap (132 routes) was cross-checked, so this is measured coverage, not an estimate.</Body1>
                 </div>
                 <div className={s.bandGrid}>
-                  {[['61 / 61', 'Documented web components'], ['36 / 36', 'Design and UX topics'], ['753', 'Source visuals with URLs'], ['35', 'Power BI visuals catalogued'], [String(HOSTS.length), 'AI IDEs supported'], ['MIT', 'Open source license']].map(([b, l]) => (
+                  {[['61 / 61', 'Documented web components'], ['36 / 36', 'Design and UX topics'], ['873', 'Source visuals with URLs'], ['35', 'Power BI visuals catalogued'], [String(HOSTS.length), 'AI IDEs supported'], ['MIT', 'Open source license']].map(([b, l]) => (
                     <div key={l} className={s.bandStat}><span className={s.statB} style={{ color: '#fff' }}>{b}</span><Caption1 style={{ color: 'rgba(255,255,255,.82)' }}>{l}</Caption1></div>
                   ))}
                 </div>
